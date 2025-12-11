@@ -22,7 +22,7 @@ def provide_database() -> Database:
     return Database()
 
 
-class DatabaseModule(Module):
+class DatabaseTestModule(Module):
     def configure(self, binder: Binder) -> None:
         super().configure(binder)
         binder[Database] = CallableProvider(provide_database, is_singleton=True)

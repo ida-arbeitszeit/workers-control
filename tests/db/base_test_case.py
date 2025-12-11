@@ -11,7 +11,7 @@ from arbeitszeit_db.repositories import DatabaseGatewayImpl
 from tests import data_generators
 from tests.datetime_service import FakeDatetimeService
 from tests.db.dependency_injection import (
-    DatabaseModule,
+    DatabaseTestModule,
     provide_test_database_uri,
 )
 from tests.dependency_injection import TestingModule
@@ -26,7 +26,7 @@ class TestCaseWithResettedDatabase(TestCase):
 
     def setUp(self):
         super().setUp()
-        self.dependencies = [DatabaseModule()]
+        self.dependencies = [DatabaseTestModule()]
         self.injector = Injector(self.dependencies)
         self.db = self.injector.get(Database)
         self.reset_test_db_once_per_testrun()

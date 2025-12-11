@@ -3,7 +3,7 @@ from arbeitszeit.interactors import show_r_account_details
 from arbeitszeit_db.db import Database
 from tests.data_generators import CompanyGenerator, ConsumptionGenerator, PlanGenerator
 from tests.db.base_test_case import reset_test_db
-from tests.db.dependency_injection import DatabaseModule
+from tests.db.dependency_injection import DatabaseTestModule
 from tests.dependency_injection import TestingModule
 
 
@@ -11,7 +11,7 @@ class ShowRAccountDetailsBenchmark:
     """This measures the speed of the ShowRAccountDetailsInteractor."""
 
     def __init__(self) -> None:
-        self.injector = Injector([TestingModule(), DatabaseModule()])
+        self.injector = Injector([TestingModule(), DatabaseTestModule()])
         reset_test_db()
         self.db = self.injector.get(Database)
         self.db.engine.dispose()

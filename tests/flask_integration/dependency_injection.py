@@ -6,7 +6,7 @@ from tests.db.dependency_injection import provide_test_database_uri
 from tests.flask_integration.mail_service import MockEmailService
 
 
-class FlaskConfiguration(dict):
+class FlaskTestConfiguration(dict):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for key, value in self.items():
@@ -14,7 +14,7 @@ class FlaskConfiguration(dict):
                 setattr(self, key, value)
 
     @classmethod
-    def default(cls) -> "FlaskConfiguration":
+    def default(cls) -> "FlaskTestConfiguration":
         return cls(
             {
                 "SQLALCHEMY_DATABASE_URI": provide_test_database_uri(),
@@ -64,7 +64,7 @@ class FlaskConfiguration(dict):
     template_folder = property(_get_template_folder, _set_template_folder)
 
 
-def provide_app(config: FlaskConfiguration) -> Flask:
+def provide_app(config: FlaskTestConfiguration) -> Flask:
     return create_app(config=config, template_folder=config.template_folder)
 
 
@@ -72,4 +72,6 @@ class FlaskTestingModule(Module):
     def configure(self, binder: Binder) -> None:
         super().configure(binder)
         binder[Flask] = CallableProvider(provide_app, is_singleton=True)
-        binder[FlaskConfiguration] = CallableProvider(FlaskConfiguration.default)
+        binder[FlaskTestConfiguration] = CallableProvider(
+            FlaskTestConfiguration.default
+        )

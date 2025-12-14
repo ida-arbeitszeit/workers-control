@@ -7,7 +7,7 @@ from arbeitszeit_db.db import Base
 from arbeitszeit_flask import create_app
 from tests.db.base_test_case import TestCaseWithResettedDatabase
 
-from .dependency_injection import FlaskConfiguration
+from .dependency_injection import FlaskTestConfiguration
 
 
 class MigrationsTestCase(TestCaseWithResettedDatabase):
@@ -24,7 +24,7 @@ class MigrationsTestCase(TestCaseWithResettedDatabase):
             conn.execute(text("DROP TABLE IF EXISTS alembic_version;"))
 
         self.alembic_config = Config("tests/flask_integration/alembic.ini")
-        self.flask_config = FlaskConfiguration.default()
+        self.flask_config = FlaskTestConfiguration.default()
 
     def tearDown(self) -> None:
         with self.db.engine.begin() as conn:

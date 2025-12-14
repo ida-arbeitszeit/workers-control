@@ -1,17 +1,20 @@
 from uuid import uuid4
 
-from arbeitszeit_development.dev_cli import generate
-from tests.flask_integration.base_test_case import FlaskTestCase
+from click.testing import CliRunner
+
+from arbeitszeit_development.dev_cli import create_generate_cli_group
+from tests.db.base_test_case import DatabaseTestCase
 
 
-class DataGenerationCliTester(FlaskTestCase):
+class DataGenerationCliTester(DatabaseTestCase):
     def setUp(self) -> None:
         super().setUp()
-        self.runner = self.app.test_cli_runner()
+        self.runner = CliRunner()
+        self.generate = create_generate_cli_group(self.injector)
 
     def test_generate_member(self) -> None:
         result = self.runner.invoke(
-            generate,
+            self.generate,
             [
                 "member",
                 "--name",
@@ -26,7 +29,7 @@ class DataGenerationCliTester(FlaskTestCase):
 
     def test_generate_plan(self) -> None:
         result = self.runner.invoke(
-            generate,
+            self.generate,
             [
                 "plan",
                 "--name",
@@ -52,7 +55,7 @@ class DataGenerationCliTester(FlaskTestCase):
     def test_generate_company(self) -> None:
         worker = self.member_generator.create_member()
         result = self.runner.invoke(
-            generate,
+            self.generate,
             [
                 "company",
                 "--name",
@@ -69,21 +72,21 @@ class DataGenerationCliTester(FlaskTestCase):
 
     def test_generate_private_consumption(self) -> None:
         result = self.runner.invoke(
-            generate,
+            self.generate,
             ["private-consumption"],
         )
         assert result.exit_code == 0
 
     def test_generate_productive_consumption_of_r(self) -> None:
         result = self.runner.invoke(
-            generate,
+            self.generate,
             ["productive-consumption-of-r"],
         )
         assert result.exit_code == 0
 
     def test_generate_productive_consumption_of_p(self) -> None:
         result = self.runner.invoke(
-            generate,
+            self.generate,
             ["productive-consumption-of-p"],
         )
         assert result.exit_code == 0
@@ -92,7 +95,7 @@ class DataGenerationCliTester(FlaskTestCase):
         coordinator = self.company_generator.create_company()
         plan = self.plan_generator.create_plan()
         result = self.runner.invoke(
-            generate,
+            self.generate,
             [
                 "cooperation",
                 "--name",
@@ -110,7 +113,7 @@ class DataGenerationCliTester(FlaskTestCase):
         worker2 = self.member_generator.create_member()
         company = self.company_generator.create_company()
         result = self.runner.invoke(
-            generate,
+            self.generate,
             [
                 "worker-company-affiliation",
                 str(company),

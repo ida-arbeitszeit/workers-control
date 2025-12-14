@@ -4,6 +4,7 @@ from arbeitszeit.injector import (
     AliasProvider,
     Binder,
     CallableProvider,
+    Injector,
     Module,
 )
 from arbeitszeit.records import SocialAccounting
@@ -11,20 +12,26 @@ from arbeitszeit.repositories import DatabaseGateway
 from arbeitszeit_db import get_social_accounting
 from arbeitszeit_db.db import Database
 from arbeitszeit_db.repositories import DatabaseGatewayImpl
+from tests.dependency_injection import TestingModule
 
 
-def provide_test_database_uri() -> str:
-    return os.environ["ARBEITSZEITAPP_TEST_DB"]
-
-
-def provide_database() -> Database:
-    Database().configure(uri=provide_test_database_uri())
+def provide_dev_database() -> Database:
+    Database().configure(uri=os.environ["ARBEITSZEITAPP_DEV_DB"])
     return Database()
 
 
-class DatabaseTestModule(Module):
+class DatabaseDevModule(Module):
     def configure(self, binder: Binder) -> None:
         super().configure(binder)
-        binder[Database] = CallableProvider(provide_database, is_singleton=True)
+        binder[Database] = CallableProvider(provide_dev_database, is_singleton=True)
         binder[DatabaseGateway] = AliasProvider(DatabaseGatewayImpl)
         binder[SocialAccounting] = CallableProvider(get_social_accounting)
+
+
+def create_dependency_injector() -> Injector:
+    return Injector(
+        [
+            DatabaseDevModule(),
+            TestingModule(),
+        ]
+    )

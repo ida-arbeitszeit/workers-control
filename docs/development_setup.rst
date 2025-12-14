@@ -16,7 +16,6 @@ document.
 
   export FLASK_APP=arbeitszeit_development.development_server:main
   export ARBEITSZEITAPP_SERVER_NAME=127.0.0.1:5000
-  export ARBEITSZEITAPP_CONFIGURATION_PATH=${PWD}/arbeitszeit_development/development_settings.py
   export DEV_SECRET_KEY="my_secret_key"
   export ALEMBIC_CONFIG=${PWD}/arbeitszeit_development/alembic.ini
   export ARBEITSZEITAPP_TEST_DB=sqlite:///${PWD}/arbeitszeitapp_test.db
@@ -172,7 +171,6 @@ Commented out variables are optional.
 
   export FLASK_APP=arbeitszeit_development.development_server:main
   export ARBEITSZEITAPP_SERVER_NAME=127.0.0.1:5000
-  export ARBEITSZEITAPP_CONFIGURATION_PATH=${PWD}/arbeitszeit_development/development_settings.py
   export DEV_SECRET_KEY="my_secret_key"
   export ALEMBIC_CONFIG=${PWD}/arbeitszeit_development/alembic.ini
   export ARBEITSZEITAPP_TEST_DB=sqlite:///${PWD}/arbeitszeitapp_test.db

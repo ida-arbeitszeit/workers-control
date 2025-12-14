@@ -1,7 +1,7 @@
 from parameterized import parameterized
 
 from arbeitszeit.injector import Binder, CallableProvider, Module
-from tests.flask_integration.dependency_injection import FlaskConfiguration
+from tests.flask_integration.dependency_injection import FlaskTestConfiguration
 
 from .base_test_case import LogInUser, ViewTestCase
 
@@ -110,13 +110,13 @@ class SentEmailTestCase(ViewTestCase):
         class _Module(Module):
             def configure(self, binder: Binder) -> None:
                 super().configure(binder)
-                binder[FlaskConfiguration] = CallableProvider(
+                binder[FlaskTestConfiguration] = CallableProvider(
                     _Module.provide_flask_configuration
                 )
 
             @staticmethod
-            def provide_flask_configuration() -> FlaskConfiguration:
-                configuration = FlaskConfiguration.default()
+            def provide_flask_configuration() -> FlaskTestConfiguration:
+                configuration = FlaskTestConfiguration.default()
                 if expected_admin_mail is None:
                     configuration.pop("MAIL_ADMIN", None)
                 else:

@@ -3,7 +3,7 @@ from typing import Optional
 from parameterized import parameterized
 
 from arbeitszeit.injector import Binder, CallableProvider, Module
-from tests.flask_integration.dependency_injection import FlaskConfiguration
+from tests.flask_integration.dependency_injection import FlaskTestConfiguration
 
 from .base_test_case import LogInUser, ViewTestCase
 
@@ -62,13 +62,13 @@ class DateAndTimezoneTestsBase(ViewTestCase):
         class _Module(Module):
             def configure(self, binder: Binder) -> None:
                 super().configure(binder)
-                binder[FlaskConfiguration] = CallableProvider(
+                binder[FlaskTestConfiguration] = CallableProvider(
                     _Module.provide_flask_configuration
                 )
 
             @staticmethod
-            def provide_flask_configuration() -> FlaskConfiguration:
-                configuration = FlaskConfiguration.default()
+            def provide_flask_configuration() -> FlaskTestConfiguration:
+                configuration = FlaskTestConfiguration.default()
                 configuration["DEFAULT_USER_TIMEZONE"] = configured_timezone
                 return configuration
 

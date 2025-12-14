@@ -4,7 +4,7 @@ from arbeitszeit.injector import Binder, CallableProvider, Module
 from arbeitszeit_flask.language_repository import LanguageRepositoryImpl
 
 from .base_test_case import FlaskTestCase
-from .dependency_injection import FlaskConfiguration
+from .dependency_injection import FlaskTestConfiguration
 
 
 class LanguageRepositoryTestCase(FlaskTestCase):
@@ -18,13 +18,13 @@ class LanguageRepositoryTestCase(FlaskTestCase):
         class _Module(Module):
             def configure(self, binder: Binder) -> None:
                 super().configure(binder)
-                binder[FlaskConfiguration] = CallableProvider(
+                binder[FlaskTestConfiguration] = CallableProvider(
                     _Module.provide_flask_configuration
                 )
 
             @staticmethod
-            def provide_flask_configuration() -> FlaskConfiguration:
-                configuration = FlaskConfiguration.default()
+            def provide_flask_configuration() -> FlaskTestConfiguration:
+                configuration = FlaskTestConfiguration.default()
                 configuration["LANGUAGES"] = expected_languages
                 return configuration
 

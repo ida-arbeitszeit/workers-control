@@ -34,7 +34,6 @@ include = [
 target-version = ['py312']
 extend-exclude = '''
 (
-  ^/arbeitszeit_flask/development_settings\.py |
   ^/arbeitszeit_db/migrations/versions/
 )
 '''

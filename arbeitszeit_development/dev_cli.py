@@ -3,9 +3,13 @@ from uuid import UUID
 
 import click
 
+from arbeitszeit.datetime_service import DatetimeService
 from arbeitszeit.injector import Injector
 from arbeitszeit.records import ProductionCosts
+from arbeitszeit.repositories import DatabaseGateway
+from arbeitszeit.services.payout_factor import WINDOW_LENGTH_DAYS, PayoutFactorService
 from arbeitszeit_db import commit_changes
+from arbeitszeit_development.timeline_printer import TimelinePrinter
 from tests.data_generators import (
     CompanyGenerator,
     ConsumptionGenerator,
@@ -14,6 +18,38 @@ from tests.data_generators import (
     PlanGenerator,
     WorkerAffiliationGenerator,
 )
+
+
+def create_fic_cli_group(injector: Injector) -> click.Group:
+    fic = click.Group(
+        name="fic",
+        help="""
+        Commands related to the Factor of Individual Consumption (FIC).
+        """,
+    )
+
+    @fic.command("calculate")
+    def calculate_fic() -> None:
+        """Calculate the current FIC."""
+        payout_factor_service = injector.get(PayoutFactorService)
+        fic = payout_factor_service.calculate_current_payout_factor()
+        click.echo(f"Current FIC: {fic}")
+
+    @fic.command("print-timeline")
+    def print_timeline() -> None:
+        """Print timeline of plans and calculation window."""
+        datatime_service = injector.get(DatetimeService)
+        database_gateway = injector.get(DatabaseGateway)
+        now = datatime_service.now()
+        plans = list(database_gateway.get_plans().that_are_approved())
+        tp = TimelinePrinter(
+            now,
+            plans,
+            WINDOW_LENGTH_DAYS,
+        )
+        click.echo(tp.render())
+
+    return fic
 
 
 def create_generate_cli_group(injector: Injector) -> click.Group:

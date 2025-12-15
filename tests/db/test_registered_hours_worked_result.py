@@ -118,7 +118,8 @@ class RegisteredHoursWorkedResultTests(DatabaseTestCase):
         )
 
     def test_that_entries_are_ordered_descendingly_if_so_requested(self) -> None:
-        self.datetime_service.freeze_time()
+        now = datetime_utc(2000, 1, 1)
+        self.datetime_service.freeze_time(now)
         worker = self.member_generator.create_member()
         company = self.company_generator.create_company(workers=[worker])
         self.register_hours_worked(company=company, worker=worker)
@@ -132,7 +133,8 @@ class RegisteredHoursWorkedResultTests(DatabaseTestCase):
         assert records[0].registered_on > records[1].registered_on
 
     def test_that_entries_are_ordered_ascendingly_if_so_requested(self) -> None:
-        self.datetime_service.freeze_time()
+        now = datetime_utc(2000, 1, 1)
+        self.datetime_service.freeze_time(now)
         worker = self.member_generator.create_member()
         company = self.company_generator.create_company(workers=[worker])
         self.register_hours_worked(company=company, worker=worker)

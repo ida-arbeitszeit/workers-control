@@ -10,6 +10,7 @@ from arbeitszeit.interactors.get_statistics import GetStatisticsInteractor
 from arbeitszeit.records import ProductionCosts
 from arbeitszeit.repositories import DatabaseGateway
 from arbeitszeit.services.payout_factor import PayoutFactorService
+from tests.datetime_service import datetime_utc
 from tests.interactors.base_test_case import BaseTestCase
 
 Number = Union[int, Decimal]
@@ -232,7 +233,7 @@ class CountCertificatesTests(StatisticsBaseTestCase):
         )
 
     def assertCertificatesAreEstimatedCorrectly(self) -> None:
-        fic = self.fic_service.get_current_payout_factor()
+        fic = self.fic_service.calculate_current_payout_factor()
         stats = self.interactor.get_statistics()
         certs_in_member_accounts = self._count_certs_in_member_accounts()
         certs_in_company_accounts = self._count_certs_in_company_accounts()
@@ -369,7 +370,8 @@ class CountActivePlansTests(StatisticsBaseTestCase):
         assert stats.active_plans_count == 3
 
     def test_that_expired_plans_are_ignored(self) -> None:
-        self.datetime_service.freeze_time()
+        now = datetime_utc(2000, 1, 1)
+        self.datetime_service.freeze_time(now)
         self.plan_generator.create_plan(
             timeframe=1,
         )
@@ -407,7 +409,8 @@ class CountActivePublicPlansTests(StatisticsBaseTestCase):
     def test_that_expired_public_plans_are_ignored(
         self,
     ) -> None:
-        self.datetime_service.freeze_time()
+        now = datetime_utc(2000, 1, 1)
+        self.datetime_service.freeze_time(now)
         self.plan_generator.create_plan(
             is_public_service=True,
             timeframe=1,

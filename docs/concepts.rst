@@ -106,6 +106,16 @@ The FIC ranges from 0 to 1.
 * If FIC = 0, all labor is allocated to public plans, making all goods and services freely available. When workers register hours worked, they do not receive any work certificates, since their work goes entirely to freely available public-sector goods and services and thus cannot be exchanged for private consumption.
 * If FIC = 1, all labor is dedicated to productive plans, meaning nothing is freely available. Work certificates are issued in full without deductions.
 
+Now, which plans are taken into account for the FIC calculation? We decided that the FIC should 
+be captured over a defined time window. The procedure is as follows:
+We define a time window of t days that extends from the current time t/2 backwards into the past
+and t/2 forwards into the future.
+
+Planned labour and means of production that fall within this window are weighted in the FIC: If a
+plan lies 100% within the current time window (i.e. it starts and ends within the window), its planned costs
+enter the FIC at 100%. If it lies 50% within the window, they enter at
+only 50%. If it lies entirely outside the window, it does not contribute at all, and so on.
+
 .. _cooperations:
 
 Cooperations 

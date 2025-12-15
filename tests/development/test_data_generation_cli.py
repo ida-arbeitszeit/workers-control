@@ -2,8 +2,26 @@ from uuid import uuid4
 
 from click.testing import CliRunner
 
-from arbeitszeit_development.dev_cli import create_generate_cli_group
+from arbeitszeit_development.dev_cli import (
+    create_fic_cli_group,
+    create_generate_cli_group,
+)
 from tests.db.base_test_case import DatabaseTestCase
+
+
+class FicCliTester(DatabaseTestCase):
+    def setUp(self):
+        super().setUp()
+        self.runner = CliRunner()
+        self.fic = create_fic_cli_group(self.injector)
+
+    def test_calculate_fic(self) -> None:
+        result = self.runner.invoke(self.fic, ["calculate"])
+        assert result.exit_code == 0
+
+    def test_print_timeline(self) -> None:
+        result = self.runner.invoke(self.fic, ["print-timeline"])
+        assert result.exit_code == 0
 
 
 class DataGenerationCliTester(DatabaseTestCase):
@@ -48,6 +66,7 @@ class DataGenerationCliTester(DatabaseTestCase):
                 "20.00",
                 "--timeframe",
                 "11",
+                "--public",
             ],
         )
         assert result.exit_code == 0

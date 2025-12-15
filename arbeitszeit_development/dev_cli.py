@@ -131,6 +131,14 @@ def create_generate_cli_group(injector: Injector) -> click.Group:
         default=14,
         show_default=True,
     )
+    @click.option(
+        "--public",
+        "-pub",
+        help="Whether the plan is a public service plan.",
+        is_flag=True,
+        default=False,
+        show_default=True,
+    )
     @commit_changes
     def generate_plan(
         name: str,
@@ -142,6 +150,7 @@ def create_generate_cli_group(injector: Injector) -> click.Group:
         planner: UUID | None,
         amount: int,
         timeframe: int,
+        public: bool,
     ) -> None:
         """Create a plan."""
         costs = ProductionCosts(
@@ -154,6 +163,7 @@ def create_generate_cli_group(injector: Injector) -> click.Group:
             amount=amount,
             product_name=name,
             description=description,
+            is_public_service=public,
             production_unit=production_unit,
             costs=costs,
             planner=planner if planner else None,

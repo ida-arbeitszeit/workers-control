@@ -184,40 +184,31 @@ Commented out variables are optional.
 Development server
 ------------------
 
-You can run the workers control app in a development environment to manually test your 
-latest changes from a user interface perspective. Start the development 
-server with ``flask run --debug``.
+You can start a development app on your local machine to test your
+latest changes with the command `flask run --debug`.
 
-The app will use the configured development database. You can
-manually upgrade or downgrade the development database using the
-`alembic` command line tool. Run `alembic --help` to see the
-options. The tool has been customized to always upgrade to the newest
-migration version if it detects a fresh database. Moreover, if the environment
-variable ``AUTO_MIGRATE`` is set to ``true``, it will always
-upgrade the database automatically when you start the development server.
+Note the following features of the development app:
 
-In the development app, you might want to sign up a company or a member. While doing this,
-you will be redirected to a site that asks to click a confirmation link provided in an e-mail. 
-You find this invitation mail printed to ``stdout``. In general, mails are printed to ``stdout``
-in the development environment. 
+- There are several CLI commands to perform automated actions against
+  the development database (create companies, file plans, register consumption, etc.)
+  and to investigate its current state. Run
+  `flask --help` to see the available options.
 
-Moreover, when manually filing plans in the development environment, you need 
-at least one accountant to approve these files. You can invite 
-accountants from the terminal, using the following command:
+- When manually filing plans, you need
+  at least one accountant to approve them. Invite
+  accountants from the terminal, using the command
+  `flask invite-accountant example@mail.de`.
 
-.. code-block:: bash
+- Confirmation emails (e.g., for user account creation) are
+  printed to `stdout` (your terminal). Click the confirmation
+  links shown there.
 
-  flask invite-accountant example@mail.de
-
-Again, an invitation mail with a confirmation link will be printed to ``stdout``.
-
-Developers can populate the development database automatically with test data. Run
-
-.. code-block:: bash
-
-  flask generate --help
-
-to see the available options.
+- The app uses the configured development database. You can
+  manually upgrade or downgrade the development database using the
+  `alembic` command-line tool. Run `alembic --help` to see the
+  options. If the environment variable `AUTO_MIGRATE` is set
+  to `true`, the database will automatically
+  be upgraded when the development server starts.
 
 
 Code Formatting and Analysis

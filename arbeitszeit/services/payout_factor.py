@@ -6,6 +6,8 @@ from typing import Iterable
 from arbeitszeit.datetime_service import DatetimeService
 from arbeitszeit.repositories import DatabaseGateway
 
+WINDOW_LENGTH_DAYS = 180
+
 
 @dataclass
 class PlanInfo:
@@ -24,7 +26,7 @@ class PayoutFactorService:
     database_gateway: DatabaseGateway
 
     def calculate_current_payout_factor(
-        self, window_length_in_days: int = 180
+        self, window_length_in_days: int = WINDOW_LENGTH_DAYS
     ) -> Decimal:
         """
         The payout factor is calculated over a time window.

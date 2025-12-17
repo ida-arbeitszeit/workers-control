@@ -489,6 +489,26 @@ we override. This includes specifically ``setUp`` and
 Note how the order of the super() call in ``setUp`` and ``tearDown``
 is flipped.
 
+
+Dependency Injection
+--------------------
+
+We use a custom dependency injection framework located in
+``arbeitszeit.injector``. It is inspired by the
+`Injector <https://injector.readthedocs.io/>`_ framework and shares
+core concepts with it.
+
+This framework allows us to create ``Injector`` instances that manage
+the creation and wiring of class instances. Each injector uses a set of *modules* 
+to configure how instances of specific classes should be created. Each 
+module declares bindings that instruct the injector on the instantiation 
+process for particular classes.
+
+The modular design is particularly beneficial for testing. We maintain 
+specialized injection modules for integration tests, database tests,
+domain logic tests, and other testing scenarios.
+
+
 HTTP Routing
 ------------
 
@@ -719,6 +739,20 @@ If you want to extend or override SVG attributes, do the following:
 
 More info, concerning the ``icon`` filter implementation, can be found in
 ``arbeitszeit_flask/filters.py:icon_filter``.
+
+
+Configuration options
+---------------------
+
+The behavior of flask app instances is customized by providing configuration options.
+On app startup, these options are read from files or Python objects into flask's
+``app.config``.
+
+For example, the database connection string is read from the config and defines
+which database the app connects to.
+
+This allows developers to use different configs for test and dev instances.
+Server admins may configure production instances to their needs (see :doc:`hosting`).
 
 
 .. _Liskov Substitution Principle: https://en.wikipedia.org/wiki/Liskov_substitution_principle

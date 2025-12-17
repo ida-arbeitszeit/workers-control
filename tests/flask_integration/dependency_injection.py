@@ -41,6 +41,14 @@ class FlaskTestConfiguration(dict):
                 "DEFAULT_USER_TIMEZONE": "UTC",
                 "ALEMBIC_CONFIG": "tests/flask_integration/alembic.ini",
                 "ALLOWED_OVERDRAW_MEMBER": "unlimited",
+                "ACCEPTABLE_RELATIVE_ACCOUNT_DEVIATION": 33,
+                "FORCE_HTTPS": True,
+                # swagger placeholders are necessary until fix of bug in flask-restx:
+                # https://github.com/python-restx/flask-restx/issues/565
+                "SWAGGER_UI_OAUTH_CLIENT_ID": "placeholder",
+                "SWAGGER_VALIDATOR_URL": "placeholder",
+                "SWAGGER_UI_OAUTH_REALM": "placeholder",
+                "SWAGGER_UI_OAUTH_APP_NAME": "placeholder",
             }
         )
 
@@ -65,7 +73,7 @@ class FlaskTestConfiguration(dict):
 
 
 def provide_app(config: FlaskTestConfiguration) -> Flask:
-    return create_app(config=config, template_folder=config.template_folder)
+    return create_app(dev_or_test_config=config, template_folder=config.template_folder)
 
 
 class FlaskTestingModule(Module):

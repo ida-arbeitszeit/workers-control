@@ -90,7 +90,7 @@ class DatabaseDevModule(Module):
 
 
 def provide_dev_app(config: FlaskDevConfiguration) -> Flask:
-    return create_app(config=config)
+    return create_app(dev_or_test_config=config)
 
 
 class DevAppModule(Module):

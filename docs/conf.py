@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.abspath(".."))
 
 
 project = "workers-control"
-copyright = "2026, ida-arbeitszeit"
+copyright = "2021-2026, ida-arbeitszeit"
 author = "ida-arbeitszeit"
 html_theme = "sphinx_rtd_theme"
 extensions = [

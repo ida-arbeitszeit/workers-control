@@ -1,7 +1,7 @@
-Important Concepts
-==================
+Core Concepts
+==============
 
-The core principle of labor time accounting is to prevent the exploitation of others' work. To achieve this, all transfers of working hours must be recorded, with clear rules on what is allowed. Based on the "Group of International Communists" (GIC), this goal is achieved through bookkeeping of transfers between accounts. These accounts belong to different kind of users.
+The core principle of labor time accounting is to prevent the exploitation of others' work. To achieve this, all transfers of working hours must be recorded through bookkeeping of transfers between accounts. These accounts belong to different kind of users.
 
 User Roles
 ----------
@@ -67,7 +67,7 @@ When a plan gets approved, a couple of transfers of labour time are happening: T
 
 We consider a plan "active" when it has been approved and not yet expired. The expiration date is approval date plus planned timeframe. After expiration, consumption cannot be registered anymore on that plan.
 
-See the "PlanDraft" and "Plan" records in ``arbeitszeit.records.py`` for details and actual implementation. To dive deeper, you could also have a look at the following interactors in ``arbeitszeit/interactors``:
+See the "PlanDraft" and "Plan" records in :py:mod:`arbeitszeit.records` for details and actual implementation. To dive deeper, you could also have a look at the following interactors in :py:mod:`arbeitszeit.interactors`:
 
 * CreatePlanDraft
 * FilePlanWithAccounting

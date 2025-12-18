@@ -1,22 +1,25 @@
-Workers control app's developer documentation
-=============================================
+Developer documentation of *Workers Control* app
+====================================================
 
-Source code: `<https://github.com/arbeitszeit/workers-control>`_
+.. include:: ../README.rst
+  :start-after: start-introduction
+  :end-before: end-introduction
+
+.. note::
+
+   Source code: `<https://github.com/ida-arbeitszeit/workers-control>`_
+
+
+Contents
+--------
 
 .. toctree::
    :maxdepth: 2
 
-   introduction
-   how_to_contribute
-   development_setup
    concepts
-   development_guide
+   how_to_contribute
+   architecture
+   getting_started
+   coding_guidelines
    hosting
    license
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

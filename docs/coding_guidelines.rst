@@ -1,5 +1,6 @@
-Development guide
-==================
+Coding Guidelines
+=================
+
 
 Implementing Business Logic
 ----------------------------
@@ -52,6 +53,7 @@ contains a method called ``file_plan``.
 Inside this method, we'd implement the specific business logic
 needed for filing plans. For now, we're just returning a simple
 response to demonstrate the structure.
+
 
 Testing the Business Logic
 --------------------------
@@ -117,8 +119,9 @@ from ``BaseTestCase`` to leverage its setup functionality. Within this
 class, we have methods to test different scenarios, ensuring that our
 business logic behaves as expected under various conditions.
 
-Implementing calls to relational database servers
--------------------------------------------------
+
+Calls to relational database servers
+------------------------------------
 
 We segregate our business logic from implementation details as much as
 possible. One such implementation detail is persistent storage, which
@@ -134,11 +137,11 @@ protocol. It has two types of methods: ``create_*`` methods to persist
 new data records in the DB and ``get_*`` methods that allow us to
 query existing data records. The kinds of data records that DB
 implementations should understand are defined in
-``arbeitszeit/records.py``. These simple dataclasses defined will be
+:py:mod:`arbeitszeit.records`. These simple dataclasses defined will be
 called *records*.
 
-Object creation
-...............
+.. rubric:: Object creation
+    :heading-level: 3
 
 Methods that are supposed to create a new data record in the DB are
 expected to follow some basic principles.
@@ -175,8 +178,8 @@ To give a small example::
       ) -> CouncilReport:
 	  ...
 
-Querying
-........
+.. rubric:: Querying
+    :heading-level: 3
 
 Obviously we want to query the records that we created. To that end we
 declare *get methods* on the database gateway interface.
@@ -187,7 +190,7 @@ DB the appropriate name for the *get method* would be
 ``get_council_records``. Note the plural in the method name.
 
 The return value of those *get methods* must be a subclass of
-``arbeitszeit.repositories.QueryResult`` with the proper type
+:py:class:`arbeitszeit.repositories.QueryResult` with the proper type
 parameter. Those result types are also protocols. Here would be an
 example for the ``CouncilReport`` record type::
 
@@ -245,8 +248,8 @@ part of the iteration the for loop::
       # the record created two lines above will also be printed.
       print(record)
 
-Updating
-........
+.. rubric:: Updating
+    :heading-level: 3
 
 Sometimes it is necessary to change records stored in the DB.  We
 facilitate these updates via an update protocol.  We declare an
@@ -293,8 +296,8 @@ single UPDATE statement to the SQL database server since only the
 to it.
 
 
-Handling transfers of labor time
----------------------------------
+Transfers of labor time
+------------------------
 
 Transfers of labor time between accounts are at the core of the workers control app. 
 A ``Transfer`` object follows roughly this structure::
@@ -305,8 +308,8 @@ A ``Transfer`` object follows roughly this structure::
         credit_account: UUID
         value: Decimal
 
-You will find the ``Transfer`` object in the business logic, in ``arbeitszeit/records.py``,
-as well as a database implementation in ``arbeitszeit_flask/database/models.py``.  
+You will find the ``Transfer`` object in the business logic, in :py:mod:`arbeitszeit.records`,
+as well as a database implementation in :py:mod:`arbeitszeit_flask.database.models`.  
 
 Apart from these Transfer objects, we have other objects that may reference 
 one or more transfers. For example, there might be a ``Consumption`` object, 
@@ -340,6 +343,7 @@ in a ``ConsumptionInteractor``::
 Following this pattern, we can be sure to have all transfers of labor time recorded in the system as
 ``Transfer`` records, while we can query more detailed information through 
 ``Consumption`` and similar objects.
+
 
 Presenters
 ----------
@@ -434,14 +438,12 @@ this::
 		  ),
 	      )
 
+
 User identification
 -------------------
 
 Workers control app knows 3 different types of users: members, companies
-and accountants. Members represent individual workers, companies
-represent worker organized production units, e.g. workshops, factories
-or offices. Accountants keep track of all transfers and review
-plans. Each of these different user types is represented by a
+and accountants. Each of these different user types is represented by a
 dedicated user account with a universally unique identifier (UUID).
 
 The application disallows the reuse of email addresses per account
@@ -452,6 +454,7 @@ this email address. Passwords for logging into the application
 company with the email address ``test@test.test`` and a member with
 the same email address share a password and it is not possible to set
 differing passwords for these two accounts.
+
 
 Subclassing unittest.TestCase
 -----------------------------
@@ -490,25 +493,6 @@ Note how the order of the super() call in ``setUp`` and ``tearDown``
 is flipped.
 
 
-Dependency Injection
---------------------
-
-We use a custom dependency injection framework located in
-``arbeitszeit.injector``. It is inspired by the
-`Injector <https://injector.readthedocs.io/>`_ framework and shares
-core concepts with it.
-
-This framework allows us to create ``Injector`` instances that manage
-the creation and wiring of class instances. Each injector uses a set of *modules* 
-to configure how instances of specific classes should be created. Each 
-module declares bindings that instruct the injector on the instantiation 
-process for particular classes.
-
-The modular design is particularly beneficial for testing. We maintain 
-specialized injection modules for integration tests, database tests,
-domain logic tests, and other testing scenarios.
-
-
 HTTP Routing
 ------------
 
@@ -527,8 +511,9 @@ authorization requirements. For instance, request handlers that only
 allow companies to access are grouped together, while those requiring
 the user to be authenticated as an accountant are placed in a
 different group. To organize this, we use `Flask blueprints`_, which
-are structured in direct subdirectories of the ``arbeitszeit_flask``
+are structured in subdirectories of the :py:mod:`arbeitszeit_flask.routes`
 directory in our codebase.
+
 
 Request handling
 ----------------
@@ -584,8 +569,8 @@ handler for this path must accept a ``member_id`` argument of type
             return f"Deleting member account for member {member_id}"
 
 
-Date and Time Handling
------------------------
+Date and Time
+-------------
 
 We work internally with the UTC timezone. To this end we use timezone-aware python 
 datetime objects wherever possible. We convert datetime to the required timezone 
@@ -595,8 +580,8 @@ Currently the user timezone can only set application-wide by the server admin.
 Per-user timezones are not implemented yet.  
 
 
-Icon Templates: Integration and Usage
------------------------------------------
+Icons
+-----
 
 The icon template directory ``arbeitszeit_flask/templates/icons``
 contains Flask-based (Jinja2) HTML template icon files of form
@@ -604,7 +589,8 @@ contains Flask-based (Jinja2) HTML template icon files of form
 must follow a simple but specific code style to ensure proper integration
 within the application.
 
-**Icon Template Format**
+.. rubric:: Template Format
+    :heading-level: 3
 
 Each icon template file must adhere to the following structure:
 
@@ -660,7 +646,8 @@ Each icon template file must adhere to the following structure:
      ></path>
    </svg>
 
-**Adding Existing SVGs**
+.. rubric:: Adding Existing SVGs
+    :heading-level: 3
 
 To add an existing SVG, remove all attributes from the SVG icon except
 the ``viewBox`` attribute. The ``viewBox`` attribute might have
@@ -695,7 +682,8 @@ app will populate the proper attributes in a later step automatically.
      ></path>
    </svg>
 
-**Icon Resources**
+.. rubric:: Icon Resources
+    :heading-level: 3
 
 A comprehensive collection of icon sets can be found on
 `Iconify <https://icon-sets.iconify.design/>`__. This project mostly
@@ -705,7 +693,8 @@ uses icons from the FontAwesome
 However, you are free to use icons from other collections as long as
 they fit into the visual style.
 
-**Best Practices**
+.. rubric:: Best Practices
+    :heading-level: 3
 
 -  **Naming Conventions**: Use meaningful names for your icon template
    files that reflect the icon’s purpose or design.
@@ -715,7 +704,8 @@ they fit into the visual style.
 By following these guidelines, you ensure that SVG icons are displayed
 correctly and consistently throughout the application.
 
-**Usage**
+.. rubric:: Usage
+    :heading-level: 3
 
 Assuming your icon template file is named ``name.html`` in the icon template
 directory, you can use the ``icon`` filter in Flask template file as follows:
@@ -735,14 +725,13 @@ If you want to extend or override SVG attributes, do the following:
 
    {{ "name"|icon(attrs={"data-type": "toggle", "class": "foo bar baz"}) }}
 
-**Icon Filter Implementation**
 
 More info, concerning the ``icon`` filter implementation, can be found in
-``arbeitszeit_flask/filters.py:icon_filter``.
+:py:func:`arbeitszeit_flask.filters.icon_filter`.
 
 
-Configuration options
----------------------
+App Configuration
+------------------
 
 The behavior of flask app instances is customized by providing configuration options.
 On app startup, these options are read from files or Python objects into flask's
@@ -753,6 +742,92 @@ which database the app connects to.
 
 This allows developers to use different configs for test and dev instances.
 Server admins may configure production instances to their needs (see :doc:`hosting`).
+
+
+Dependency Injection
+--------------------
+
+We use a custom dependency injection framework located in
+:py:mod:`arbeitszeit.injector`. It is inspired by the
+`Injector <https://injector.readthedocs.io/>`_ framework and shares
+core concepts with it.
+
+This framework allows us to create ``Injector`` instances that manage
+the creation and wiring of class instances. Each injector uses a set of *modules* 
+to configure how instances of specific classes should be created. Each 
+module declares bindings that instruct the injector on the instantiation 
+process for particular classes.
+
+The modular design is particularly beneficial for testing. We maintain 
+specialized injection modules for integration tests, database tests,
+domain logic tests, and other testing scenarios.
+
+
+Translations
+------------
+
+We use `Flask-Babel <https://python-babel.github.io/flask-babel/>`_
+for translation. The translation files reside in :py:mod:`arbeitszeit_flask.translations`.
+You find there a ``.pot`` file as well as language-specific ``.po`` files.
+
+The workflow for updating the translations is as follows:
+
+**1. Add a language (optional)**
+
+  Initialize a new language::
+
+    python -m build_support.translations initialize LOCALE
+    # For example French
+    python -m build_support.translations initialize fr
+
+
+  Add the language to the LANGUAGES variable in :py:mod:`arbeitszeit_flask.config.configuration_base`.
+
+**2. Mark strings**
+
+  Mark translatable, user-facing strings in source code files.
+  In Python files, use one of those functions::
+
+    translator.gettext(message: str)
+    translator.pgettext(comment: str, message: str)
+    translator.ngettext(self, singular: str, plural: str, n: Number)
+
+  In Jinja templates use:
+
+  .. code-block:: bash
+
+    gettext(message: str)
+    ngettext(singular: str, plural: str, n)
+
+**3. Update language files**
+
+  Update the ``.pot`` file with new translatable strings found
+  in the source code::
+
+    python -m build_support.translations extract
+
+  Update language-specific ``.po`` files based on the updated
+  ``.pot`` file::
+
+    python -m build_support.translations update
+  
+**4. Translate**
+
+  Translate language-specific ``.po`` files. This is the actual translation step.
+  
+  For programs that help with editing, see `this page
+  <https://www.gnu.org/software/trans-coord/manual/web-trans/html_node/PO-Editors.html>`_. 
+  There is also an extension for the VS Code editor called "gettext".
+
+**5. Compile (optional)**
+
+  Compile ``.po`` files to ``.mo`` files. This is only necessary if you
+  want to update the translations in your local development
+  environment. For deployment this step is automatically done by the build system.
+
+  .. code-block::  bash
+
+    python -m build_support.translations compile
 
 
 .. _Liskov Substitution Principle: https://en.wikipedia.org/wiki/Liskov_substitution_principle

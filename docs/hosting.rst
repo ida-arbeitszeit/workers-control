@@ -1,9 +1,14 @@
 Hosting
 =======
 
+
+Getting support
+---------------
+
 This application is designed to be self-hosted. The `IDA github organization <https://github.com/ida-arbeitszeit>`_ 
 provides a repository that helps with hosting. If you are a community or organization that wants to host this application, 
 feel free to contact IDA (`gruppe_arbeitszeit@riseup.net <mailto:gruppe_arbeitszeit@riseup.net>`_) for help.
+
 
 Configuration of the web server
 -------------------------------

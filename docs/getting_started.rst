@@ -1,5 +1,6 @@
-Development Setup
-=================
+Getting Started
+===============
+
 
 Quickstart
 -----------
@@ -25,59 +26,6 @@ document.
 - Run ``pytest`` to run the testsuite.
 - Run ``python -m build_support.translations compile`` (only if you need translations in the development app)
 - Run ``flask run --debug`` to start the development app.
-
-
-Development Philosophy
------------------------
-
-We employ rigorous testing when developing new features for the
-application or fixing bugs.  This might seem at first like a burden to 
-"rapid" development, but in our experience the opposite is the case.
-The extensive test coverage allows us to work on the code without the
-constant fear that it might be broken because of one of our changes.
-
-The architecture of the program is modeled after the principles of
-Clean Architecture (Robert C. Martin, *Clean Architecture*, Pearson, 2018).  Here
-is a small overview of the most important
-directories in the source code.
-
-``arbeitszeit/``
-    Contains the business logic of the program.  A useful heuristic for
-    deciding whether your code belongs there is "Would my code still
-    make sense if this app were a CLI application without a SQL
-    database?"
-    Use case "interactors" implement the business logic. They make use of
-    the "Database Gateway" interface to persist and retrieve data. "Records"
-    are business-level data structures.
-
-``arbeitszeit_web/``
-    Contains the code for implementing the Web interface.  The code in
-    this directory should format and translate strings for display to
-    the user and parse input data from forms and URLs.  This code is
-    completly framework agnostic and is only concerned with engaging
-    the business logic through the develivery mechanism of the World
-    Wide Web.
-
-``arbeitszeit_db/``
-    The concrete implementation for persistence. Currently we support
-    Postgres and SQLite databases via SQLAlchemy.
-
-``arbeitszeit_flask/``
-    Contains the conrete implementation for IO. We use the ``flask``
-    framework.
-
-``tests/``
-   Contains all the tests.  You should find at least one test for
-   every line of code in the other directories in here.
-
-Here is a diagram that shows the main components of the application:
-
-  .. image:: images/components_overview.svg
-    :alt: Overview of the main components of workers control app
-    :width: 500px
-
-We use our own dependency injection logic to achieve the inversion of control depicted
-in the diagram.
 
 
 Database Setup
@@ -185,29 +133,29 @@ Development server
 ------------------
 
 You can start a development app on your local machine to test your
-latest changes with the command `flask run --debug`.
+latest changes with the command ``flask run --debug``.
 
 Note the following features of the development app:
 
 - There are several CLI commands to perform automated actions against
   the development database (create companies, file plans, register consumption, etc.)
   and to investigate its current state. Run
-  `flask --help` to see the available options.
+  ``flask --help`` to see the available options.
 
 - When manually filing plans, you need
   at least one accountant to approve them. Invite
   accountants from the terminal, using the command
-  `flask invite-accountant example@mail.de`.
+  ``flask invite-accountant example@mail.de``.
 
 - Confirmation emails (e.g., for user account creation) are
-  printed to `stdout` (your terminal). Click the confirmation
+  printed to ``stdout`` (your terminal). Click the confirmation
   links shown there.
 
 - The app uses the configured development database. You can
   manually upgrade or downgrade the development database using the
-  `alembic` command-line tool. Run `alembic --help` to see the
-  options. If the environment variable `AUTO_MIGRATE` is set
-  to `true`, the database will automatically
+  ``alembic`` command-line tool. Run ``alembic --help`` to see the
+  options. If the environment variable ``AUTO_MIGRATE`` is set
+  to ``true``, the database will automatically
   be upgraded when the development server starts.
 
 
@@ -277,74 +225,8 @@ maintenance effort. You can update the
 dependencies via ``python -m arbeitszeit_development.update_dependencies``.
 Some packages, however, are currently managed outside
 of ``nixpkgs``, through custom mechanisms. The Python program
-``arbeitszeit_development/update_dependencies.py`` automates this
+:py:mod:`arbeitszeit_development.update_dependencies` automates this
 custom package management as much as possible.
-
-
-Translation
------------
-
-We use `Flask-Babel <https://python-babel.github.io/flask-babel/>`_
-for translation.
-
-1. Add a new language:
-
-  .. code-block::  bash
-
-    python -m build_support.translations initialize LOCALE
-    # For example for adding french
-    python -m build_support.translations initialize fr
-
-
-2. Add the new language to the LANGUAGES variable in
-   ``arbeitszeit_flask/config/configuration_base.py``.
-
-3. Mark translatable, user-facing strings in the code.
-
-  In Python files, use the following code:
-
-  .. code-block:: bash
-
-    translator.gettext(message: str)
-    translator.pgettext(comment: str, message: str)
-    translator.ngettext(self, singular: str, plural: str, n: Number)
-
-  In Jinja templates, use the following code:
-
-  .. code-block:: bash
-
-    gettext(message: str)
-    ngettext(singular: str, plural: str, n)
-
-
-4. Parse code for translatable strings (update ``.pot`` file):
-
-  .. code-block:: bash
-
-    python -m build_support.translations extract
-
-
-5. Update language-specific ``.po`` files:
-
-  .. code-block::  bash
-
-    python -m build_support.translations update
-
-
-6. Translate language-specific ``.po`` files. For translation
-   programs, see `this page
-   <https://www.gnu.org/software/trans-coord/manual/web-trans/html_node/PO-Editors.html>`_. 
-   There is also an extension for VS Code called "gettext".
-
-
-7. Compile translation files (.mo-files): This is necessary if you
-   want to update the translations in your local development
-   environment only. For creating build artifacts (binary and source
-   distributions) this step is automatically done by the build system.
-
-  .. code-block::  bash
-
-    python -m build_support.translations compile
 
 
 Profiling
@@ -358,21 +240,20 @@ at ``/profiling`` in the development server.
 Documentation
 -------------
 
-Run:
+To generate the developer documentation, run from the root folder of the project:
 
 .. code-block:: bash
 
   make clean
   make html
 
-in the root folder of the project to generate developer documentation,
-including auto-generated API docs.  Open the documentation in your
+Open the documentation in your
 browser at ``build/html/index.html``. The HTML code is generated from
-documentation files in the ``docs`` folder, using parts of the 
-top-level file ``README.rst``. 
+documentation files in the ``docs`` folder. 
 
 The docs are hosted on `Read the Docs <https://workers-control.readthedocs.io/en/latest/>`_
 and are automatically updated when changes are pushed to the master branch. 
+
 
 Benchmarking
 ------------
@@ -386,6 +267,7 @@ used to compare runtime characteristics across changes to the codebase.
 A contributor to the ``workers control app`` might want to compare
 the results of those benchmarks from the master branch to the results
 from their changes. The output of this tool is in JSON.
+
 
 Using a Binary Cache for Nix
 ----------------------------

@@ -1,18 +1,20 @@
-How to contribute
+How to Contribute
 =================
 
-You can contribute in various ways, if you wish to do so:
 
 Translating the app
 -------------------
 
-We want people around the world to use the workers control app. To achieve this, it's crucial to translate the app into as many languages as we can. We are happy to help you with the translation process.
+We want people around the world to use the workers control app.
+To achieve this, it's crucial to translate the app into as many
+languages as we can. We are happy to help you with the translation process.
+
 
 Contributing code
 ------------------
 
 We appreciate contributions to the code! Before you start contributing, you'll need to set up your development environment. The setup process is
-detailed in our :doc:`development_setup` guide.
+detailed in our :doc:`getting_started` guide.
 
 You can propose changes by `forking the repository <https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo>`_ and creating a pull request on GitHub.
 Before submitting changes, run ``./run-checks`` to ensure your code meets our standards.
@@ -23,8 +25,8 @@ Working on Milestones
 
 Milestones are our way of organizing larger work packages (>50h of work) that have been identified as important for the project. Unlike regular Issues or Pull Requests, milestones follow a formal approval process that includes an obligatory RFC (Request For Comments). This structured approach helps us plan better and ensures that all developers are aligned with the project's direction.
 
-Milestone Lifecycle
-~~~~~~~~~~~~~~~~~~~
+.. rubric:: Milestone Lifecycle
+    :heading-level: 3
 
 1. RFC Candidate
     - An Issue on GitHub that has potential to become a Milestone

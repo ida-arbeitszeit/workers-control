@@ -89,7 +89,7 @@ class ConfigValidatorTests(TestCase):
         self.validate(config, expected_options)
 
     def create_option(self, name: str, type_: type = str) -> ConfigOption:
-        return ConfigOption(name=name, converts_to_types=(type_,))
+        return ConfigOption(name=name, converts_to_types=(type_,), default=None)
 
     def validate(self, config: dict, expected_options: list[ConfigOption]) -> None:
         verifyer = ConfigValidator(config=config, expected_options=expected_options)

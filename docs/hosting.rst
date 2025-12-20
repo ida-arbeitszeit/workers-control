@@ -5,24 +5,60 @@ Hosting
 Getting support
 ---------------
 
-This application is designed to be self-hosted. The `IDA github organization <https://github.com/ida-arbeitszeit>`_ 
-provides a repository that helps with hosting. If you are a community or organization that wants to host this application, 
+This application is designed to be self-hosted. If you are a community or organization that wants to host this application, 
 feel free to contact IDA (`gruppe_arbeitszeit@riseup.net <mailto:gruppe_arbeitszeit@riseup.net>`_) for help.
 
 
 Configuration of the web server
 -------------------------------
 
-The application needs to be configured to function properly. This is
-done via a configuration file. When starting ``workers control app`` it
-looks for configuration files in the following locations from top to
-bottom. It loads the first configuration file it finds:
 
-* Path set in ``ARBEITSZEITAPP_CONFIGURATION_PATH`` environment variable
+The web server is configured via environment variables and a Python configuration file.
+
+
+Environment variables
+.....................
+
+
+.. py:data:: ARBEITSZEITAPP_CONFIGURATION_PATH
+   :no-index:
+    
+    (optional)
+
+    If set, this value is used as the path to the configuration file (see below)
+    instead of the default locations.
+
+
+.. py:data:: ALEMBIC_CONFIG
+   :no-index:
+
+    (required)
+   
+    Path to the alembic configuration. Alembic is used to manage database migrations.
+    This file contains settings like the location of the migration scripts or the
+    database connection string. See the `alembic documentation <https://alembic.sqlalchemy.org/>`_
+    for details.
+
+
+Configuration file
+...................
+
+
+The application loads the first config file found from these locations:
+
+* Path set in ``ARBEITSZEITAPP_CONFIGURATION_PATH`` environment variable (see above)
 * ``/etc/arbeitszeitapp/arbeitszeitapp.py``
 
-The configuration file must be a valid python script.  Configuration
-options are set as variables on the top level. The following
-configuration options are available:
+The configuration file must be a valid python script.
+Configuration options are set as top-level variables. The following
+options are available (options without defaults are required):
 
 .. include:: config_options_GENERATED.rst
+
+
+NixOS Deployment
+----------------
+
+The IDA github organization maintains a repository with a NixOS
+module for deployment on NixOS servers:
+`<https://github.com/ida-arbeitszeit/workers-control-deployment>`_.

@@ -18,7 +18,7 @@ from arbeitszeit_flask.profiling import initialize_flask_profiler  # type: ignor
 
 
 def create_app(
-    config: Any = None,
+    dev_or_test_config: Any = None,
     template_folder: Any = None,
 ) -> Flask:
     if template_folder is None:
@@ -28,18 +28,14 @@ def create_app(
         __name__, instance_relative_config=False, template_folder=template_folder
     )
 
-    load_configuration(app=app, configuration=config)
+    load_configuration(app=app, dev_or_test_config=dev_or_test_config)
 
     config_validator = ConfigValidator(app.config, CONFIG_OPTIONS)
     config_validator.validate_options()
     config_validator.validate_option_types()
 
     db = Database()
-    db.configure(
-        uri=app.config.get(
-            "SQLALCHEMY_DATABASE_URI", "sqlite:////tmp/arbeitszeitapp.db"
-        )
-    )
+    db.configure(uri=app.config["SQLALCHEMY_DATABASE_URI"])
     run_db_migrations(app.config, db)
 
     # Where to redirect the user when he attempts to access a login_required

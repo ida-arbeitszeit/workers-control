@@ -5,9 +5,9 @@ from dataclasses import dataclass, field
 class ConfigOption:
     name: str
     converts_to_types: tuple[type, ...]
+    default: str | None
     description_paragraphs: list[str] = field(default_factory=list)
     example: str = ""
-    default: str = ""
 
     def __hash__(self) -> int:
         return hash(self.name)
@@ -22,14 +22,6 @@ CONFIG_OPTIONS = [
         ],
         example='DEFAULT_USER_TIMEZONE = "Europe/Berlin"',
         default='"UTC"',
-    ),
-    ConfigOption(
-        name="ALEMBIC_CONFIG",
-        converts_to_types=(str,),
-        description_paragraphs=[
-            "Path to the alembic configuration. Alembic is used to manage database migrations. See the alembic documentation for further information.",
-            'The target database for migrations is set via the "sqlalchemy.url" option in this file or via the ALEMBIC_SQLALCHEMY_DATABASE_URI environment variable.',
-        ],
     ),
     ConfigOption(
         name="AUTO_MIGRATE",
@@ -71,6 +63,7 @@ CONFIG_OPTIONS = [
         description_paragraphs=[
             "The hostname of the SMTP server used for sending emails."
         ],
+        default=None,
     ),
     ConfigOption(
         name="MAIL_PORT",
@@ -86,6 +79,7 @@ CONFIG_OPTIONS = [
         description_paragraphs=[
             "The username used to authenticate with the SMTP server."
         ],
+        default=None,
     ),
     ConfigOption(
         name="MAIL_PASSWORD",
@@ -93,11 +87,13 @@ CONFIG_OPTIONS = [
         description_paragraphs=[
             "The password used to authenticate with the SMTP server."
         ],
+        default=None,
     ),
     ConfigOption(
         name="MAIL_DEFAULT_SENDER",
         converts_to_types=(str,),
         description_paragraphs=["The sender address used for outgoing emails."],
+        default=None,
     ),
     ConfigOption(
         name="MAIL_ADMIN",
@@ -105,6 +101,7 @@ CONFIG_OPTIONS = [
         description_paragraphs=[
             "The email address of the administrator for the application. Users may use this email address to contact the administrator."
         ],
+        default=None,
     ),
     ConfigOption(
         name="MAIL_USE_TLS",
@@ -128,6 +125,7 @@ CONFIG_OPTIONS = [
         description_paragraphs=[
             "A password used for protecting against Cross-site request forgery and more. Setting this option is obligatory for many security measures."
         ],
+        default=None,
     ),
     ConfigOption(
         name="SECURITY_PASSWORD_SALT",
@@ -135,6 +133,7 @@ CONFIG_OPTIONS = [
         description_paragraphs=[
             "This option is used when encrypting passwords. Don't lose it."
         ],
+        default=None,
     ),
     ConfigOption(
         name="SERVER_NAME",
@@ -143,6 +142,7 @@ CONFIG_OPTIONS = [
             "This variable tells the application how it is addressed. This is important to generate links in emails it sends out."
         ],
         example='SERVER_NAME = "arbeitszeitapp.cp.org"',
+        default=None,
     ),
     ConfigOption(
         name="SQLALCHEMY_DATABASE_URI",

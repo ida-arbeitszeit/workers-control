@@ -23,7 +23,7 @@ class FlaskTestConfiguration(dict):
                 "WTF_CSRF_ENABLED": False,
                 "SERVER_NAME": "test.name",
                 "DEBUG": True,
-                "SECURITY_PASSWORD_SALT": "dev password salt",
+                "SECURITY_PASSWORD_SALT": "test password salt",
                 "TESTING": True,
                 "MAIL_DEFAULT_SENDER": "test_sender@cp.org",
                 "MAIL_ADMIN": "test_admin@cp.org",

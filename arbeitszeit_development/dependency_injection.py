@@ -55,9 +55,7 @@ class FlaskDevConfiguration:
     LANGUAGES = {"en": "English", "de": "Deutsch", "es": "Español"}
     DEFAULT_USER_TIMEZONE = os.environ.get("DEFAULT_USER_TIMEZONE", "UTC")
 
-    SECURITY_PASSWORD_SALT = os.environ.get(
-        "SECURITY_PASSWORD_SALT", "dev password salt"
-    )
+    SECURITY_PASSWORD_SALT = "dev password salt"
     SECRET_KEY = os.environ.get("DEV_SECRET_KEY", "dev secret key")
     WTF_CSRF_ENABLED = False
     ARBEITSZEIT_PASSWORD_HASHER = "tests.password_hasher:PasswordHasherImpl"

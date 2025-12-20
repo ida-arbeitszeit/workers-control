@@ -40,7 +40,6 @@
             nixos-25-11 = pkgs-25-11.callPackage nix/devShell.nix { includeGlibcLocales = !isMacOs; };
             nixos-unstable = pkgs.callPackage nix/devShell.nix {
               includeGlibcLocales = !isMacOs;
-              nixfmt = pkgs.nixfmt-rfc-style;
             };
             python312 = pkgs.callPackage nix/devShell.nix {
               python3 = pkgs.python312;

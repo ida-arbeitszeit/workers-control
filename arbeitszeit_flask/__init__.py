@@ -35,11 +35,7 @@ def create_app(
     config_validator.validate_option_types()
 
     db = Database()
-    db.configure(
-        uri=app.config.get(
-            "SQLALCHEMY_DATABASE_URI", "sqlite:////tmp/arbeitszeitapp.db"
-        )
-    )
+    db.configure(uri=app.config["SQLALCHEMY_DATABASE_URI"])
     run_db_migrations(app.config, db)
 
     # Where to redirect the user when he attempts to access a login_required

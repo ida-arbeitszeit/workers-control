@@ -1,7 +1,6 @@
 import os
 
 ARBEITSZEIT_PASSWORD_HASHER = "arbeitszeit_flask.password_hasher:PasswordHasherImpl"
-SECURITY_PASSWORD_SALT = os.environ["SECURITY_PASSWORD_SALT"]
 
 FLASK_DEBUG = 0
 TESTING = False

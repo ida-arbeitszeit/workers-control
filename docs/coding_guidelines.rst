@@ -747,7 +747,11 @@ Server admins may configure production instances to their needs (see :doc:`hosti
 Dependency Injection
 --------------------
 
-We use a custom dependency injection framework located in
+
+DI Framework
+.............
+
+We use a custom dependency injection (DI) framework located in
 :py:mod:`arbeitszeit.injector`. It is inspired by the
 `Injector <https://injector.readthedocs.io/>`_ framework and shares
 core concepts with it.
@@ -761,6 +765,48 @@ process for particular classes.
 The modular design is particularly beneficial for testing. We maintain 
 specialized injection modules for integration tests, database tests,
 domain logic tests, and other testing scenarios.
+
+
+Business Logic Injection
+........................
+
+Injecting dependencies directly into business logic classes like Interactors 
+is straightforward. Here is an example with a test module that
+injects a fake translator::
+
+  from arbeitszeit.interactors.create_plan import ExampleInteractor
+  from arbeitszeit.injector import AliasProvider, Binder, Injector, Module
+  from arbeitszeit_web.translator import Translator
+  from tests.translator import FakeTranslator
+
+  class TestModule(Module):
+      def configure(self, binder: Binder) -> None:
+        super().configure(binder)
+        binder[Translator] = AliasProvider(FakeTranslator)
+
+  injector = Injector([TestModule()])
+  test_interactor = injector.get(ExampleInteractor)
+
+We use this kind of injection in most of our unit tests.
+
+
+Flask App Injection
+...................
+
+Dependency injection in the Flask app is less straightforward
+due to the nature of Flask's request
+context. Flask uses thread-local globals such as ``request``, ``session``, and
+``current_user``, which are only available within a request context.
+Therefore, a new ``Injector`` is created for each request
+(see ``create_dependency_injector()`` in
+:py:mod:`arbeitszeit_flask.dependency_injection`).
+
+In order to use different Flask app instances with different
+configurations (e.g., for testing, development, production), we pass different 
+configs into the :py:func:`create_app()` function. These are loaded into
+Flask's `app.config` dictionary on startup and define app-wide settings
+like database connection strings or secret keys, but also paths to
+implementation classes for specific interfaces.
 
 
 Translations

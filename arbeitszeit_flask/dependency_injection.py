@@ -115,7 +115,7 @@ class FlaskModule(Module):
 
     @staticmethod
     def provide_database() -> Database:
-        #  db gets confiured in create_app
+        #  db gets configured in create_app
         return Database()
 
 

@@ -4,11 +4,11 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import format_code
-from arbeitszeit_development import generate_type_stubs
+from arbeitszeit_development.update_dependencies import generate_type_stubs
 
+from ..command import LoggingSubprocessRunner, Shell, Subprocess, SubprocessRunner
+from ..nix import NixFlake
 from . import update_bulma, update_constraints, update_python_packages
-from .command import LoggingSubprocessRunner, Shell, Subprocess, SubprocessRunner
-from .nix import NixFlake
 
 
 def main() -> None:
@@ -61,7 +61,6 @@ def parse_arguments() -> Options:
     return Options(log_level=log_level)
 
 
-if __name__ == "__main__":
-    options = parse_arguments()
-    logging.basicConfig(level=options.log_level)
-    main()
+options = parse_arguments()
+logging.basicConfig(level=options.log_level)
+main()

@@ -4,7 +4,7 @@ import re
 import urllib.request
 from urllib.parse import quote
 
-from .command import Shell, Subprocess, SubprocessRunner
+from ..command import Shell, Subprocess, SubprocessRunner
 
 logger = logging.getLogger(name=__name__)
 

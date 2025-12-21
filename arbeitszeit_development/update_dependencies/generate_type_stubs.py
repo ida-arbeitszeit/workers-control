@@ -2,7 +2,7 @@ import shutil
 from logging import getLogger
 from typing import Generator, Iterable, TypeVar
 
-from .command import Shell, Subprocess, SubprocessRunner
+from ..command import Shell, Subprocess, SubprocessRunner
 
 LOGGER = getLogger(__name__)
 

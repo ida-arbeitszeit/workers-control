@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, Iterable, Iterator, Optional, Tuple
 
-from .command import Shell, Subprocess, SubprocessRunner
+from ..command import Shell, Subprocess, SubprocessRunner
 
 
 def main(subprocess_runner: SubprocessRunner) -> None:

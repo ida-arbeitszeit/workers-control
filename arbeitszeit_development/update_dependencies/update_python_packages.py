@@ -4,7 +4,7 @@ import re
 import urllib.request
 from urllib.parse import quote
 
-from .command import Shell, Subprocess, SubprocessRunner
+from ..command import Shell, Subprocess, SubprocessRunner
 
 logger = logging.getLogger(name=__name__)
 
@@ -13,8 +13,6 @@ def main(subprocess_runner: SubprocessRunner) -> None:
     update_python_package(
         subprocess_runner, "nix/pythonPackages/flask-restx.json", "flask-restx"
     )
-    update_python_package(subprocess_runner, "nix/pythonPackages/grimp.json", "grimp")
-    # do not update import-linter
 
 
 def update_python_package(

@@ -22,7 +22,6 @@ mkShell (
         pip
         psycopg2
         types-setuptools
-        import-linter
       ])
       ++ [
         nixfmt

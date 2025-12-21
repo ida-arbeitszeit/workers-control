@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from functools import wraps
-from typing import List, Optional
 
 from arbeitszeit import records
 from arbeitszeit import repositories as interfaces
@@ -120,8 +119,8 @@ class FlaskModule(Module):
 
 
 class with_injection:
-    def __init__(self, modules: Optional[List[Module]] = None) -> None:
-        self._injector = create_dependency_injector(modules)
+    def __init__(self) -> None:
+        self._injector = create_dependency_injector()
 
     def __call__(self, original_function):
         """When you wrap a function, make sure that the parameters to be
@@ -137,14 +136,6 @@ class with_injection:
 
         return wrapped_function
 
-    @property
-    def injector(self) -> Injector:
-        return self._injector
 
-
-def create_dependency_injector(
-    additional_modules: Optional[List[Module]] = None,
-) -> Injector:
-    return Injector(
-        [FlaskModule()] + (additional_modules if additional_modules else [])
-    )
+def create_dependency_injector() -> Injector:
+    return Injector([FlaskModule()])

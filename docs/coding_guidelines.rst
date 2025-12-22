@@ -733,23 +733,76 @@ More info, concerning the ``icon`` filter implementation, can be found in
 App Configuration
 ------------------
 
-The behavior of flask app instances is customized by providing configuration options.
-On app startup, these options are read from files or Python objects into flask's
-``app.config``.
 
-For example, the database connection string is read from the config and defines
-which database the app connects to.
+In production, the app is configured via a configuration file (see :doc:`hosting`).
+When the app starts, the options defined in that file are loaded into Flask's ``app.config``
+dictionary. On runtime, objects stored in ``app.config`` should be treated as immutable
+(at least in production), even though it is possible to change them.
 
-This allows developers to use different configs for test and dev instances.
-Server admins may configure production instances to their needs (see :doc:`hosting`).
+Let's assume we want to activate a hypothetical feature that allows "automatic" plan approval
+(i.e. approval without review). The following line is added to the configuration file::
 
+  AUTOMATIC_APPROVAL="1"
+
+We can read this value from Flask's config object after starting the app::
+
+  from flask import current_app
+  automatic_approval_config = current_app.config["AUTOMATIC_APPROVAL"]
+
+However, if we were to read the configuration directly in this way in higher-level
+components (e.g., business logic), we would marry the Flask framework
+and its specific configuration design. We need access to the config without depending
+on it.
+
+One solution that you will find in our code is that we define a "Protocol" class
+in higher-level components and provide implementations in lower-level components::
+
+  # Base class in Business Logic
+  from typing import Protocol
+
+  class ApprovalConfig(Protocol):
+    def get_config(self) -> bool:
+      ...
+
+
+  # Flask layer implementation
+  from flask import current_app
+
+  class ApprovalConfigImpl:
+    def get_config(self) -> bool:
+      config = current_app.config["AUTOMATIC_APPROVAL"]
+      return bool(int(config))
+
+
+  # Test layer implementation
+  class ApprovalConfigTestImpl:
+    def __init__(self) -> None:
+      self._automatic_approval: bool = False
+
+    def get_config(self) -> bool:
+      return self._automatic_approval
+
+    def set_config(self, value: bool) -> None:
+      self._automatic_approval = value
+
+
+Injection of a implementation into higher-level code is achieved
+through our Dependency Injection framework (see :ref:`dependency_injection`).
+
+Moreover, in order to use different Flask app instances with different
+configuration values (e.g., for testing, development, production), we pass specific
+test and dev configs into the :py:func:`create_app()` function in
+:py:mod:`arbeitszeit_flask.__init__`. Just like the
+production configs, they are loaded into Flask's ``app.config`` dictionary on startup.
+In an app instances intended for manual testing, for example, we might want to set
+``AUTOMATIC_APPROVAL="0"``.
+
+
+.. _dependency_injection:
 
 Dependency Injection
 --------------------
 
-
-DI Framework
-.............
 
 We use a custom dependency injection (DI) framework located in
 :py:mod:`arbeitszeit.injector`. It is inspired by the
@@ -766,47 +819,49 @@ The modular design is particularly beneficial for testing. We maintain
 specialized injection modules for integration tests, database tests,
 domain logic tests, and other testing scenarios.
 
+Let's say we have a ``BusinessObject``, that has two
+dependencies: a ``Translator`` and a ``DatetimeService``::
 
-Business Logic Injection
-........................
+  from arbeitszeit import DatetimeService, Translator
 
-Injecting dependencies directly into business logic classes like Interactors 
-is straightforward. Here is an example with a test module that
-injects a fake translator::
+  class BusinessObject:
+      def __init__(
+          self,
+          translator: Translator,
+          datetime_service: DatetimeService,
+      ) -> None:
+          self._translator = translator
+          self._datetime_service = datetime_service
 
-  from arbeitszeit.interactors.create_plan import ExampleInteractor
+
+Now we can configure an Injector instance with test bindings and
+instantiate the ``BusinessObject`` with subtypes of its dependencies
+for testing purposes::
+
+  from arbeitszeit import BusinessObject, DatetimeService, Translator
   from arbeitszeit.injector import AliasProvider, Binder, Injector, Module
-  from arbeitszeit_web.translator import Translator
-  from tests.translator import FakeTranslator
+  from tests import FakeDatetimeService, FakeTranslator
 
   class TestModule(Module):
       def configure(self, binder: Binder) -> None:
         super().configure(binder)
         binder[Translator] = AliasProvider(FakeTranslator)
+        binder[DatetimeService] = AliasProvider(FakeDatetimeService)
 
   injector = Injector([TestModule()])
-  test_interactor = injector.get(ExampleInteractor)
+  business_object = injector.get(BusinessObject)
 
 We use this kind of injection in most of our unit tests.
 
+Note that singleton instances can be created by using the ``arbeitszeit.injector.singleton``
+decorator.
 
-Flask App Injection
-...................
-
-Dependency injection in the Flask app is less straightforward
-due to the nature of Flask's request
-context. Flask uses thread-local globals such as ``request``, ``session``, and
+Dependency injection in the Flask app is less straightforward, due to the
+Flask's request context. Flask uses thread-local globals such as ``request``, ``session``, and
 ``current_user``, which are only available within a request context.
 Therefore, a new ``Injector`` is created for each request
 (see ``create_dependency_injector()`` in
 :py:mod:`arbeitszeit_flask.dependency_injection`).
-
-In order to use different Flask app instances with different
-configurations (e.g., for testing, development, production), we pass different 
-configs into the :py:func:`create_app()` function. These are loaded into
-Flask's `app.config` dictionary on startup and define app-wide settings
-like database connection strings or secret keys, but also paths to
-implementation classes for specific interfaces.
 
 
 Translations

@@ -128,3 +128,11 @@
    Unacceptable high deviations might get labeled as such or highlighted by the application.
 
    Default: ``33``
+
+.. py:data:: PAYOUT_FACTOR_CALCULATION_WINDOW
+   :no-index:
+
+   A time window in days, over which the payout factor is calculated.
+   Must be an integer larger than zero.
+
+   Default: ``180``

@@ -15,6 +15,7 @@ from arbeitszeit.injector import (
     Module,
 )
 from arbeitszeit.password_hasher import PasswordHasher
+from arbeitszeit.services.payout_factor import PayoutFactorConfig
 from arbeitszeit_db import get_social_accounting
 from arbeitszeit_db.db import Database
 from arbeitszeit_db.repositories import DatabaseGatewayImpl
@@ -33,6 +34,7 @@ from arbeitszeit_flask.language_repository import LanguageRepositoryImpl
 from arbeitszeit_flask.mail_service import get_mail_service
 from arbeitszeit_flask.notifications import FlaskFlashNotifier
 from arbeitszeit_flask.password_hasher import provide_password_hasher
+from arbeitszeit_flask.payout_factor import PayoutFactorConfigImpl
 from arbeitszeit_flask.text_renderer import TextRendererImpl
 from arbeitszeit_flask.token import FlaskTokenService
 from arbeitszeit_flask.translator import FlaskTranslator
@@ -95,6 +97,7 @@ class FlaskModule(Module):
         binder[ControlThresholds] = AliasProvider(ControlThresholdsFlask)
         binder[DatetimeFormatter] = AliasProvider(FlaskDatetimeFormatter)
         binder[TimezoneConfiguration] = AliasProvider(FlaskTimezoneConfiguration)
+        binder[PayoutFactorConfig] = AliasProvider(PayoutFactorConfigImpl)
         binder.bind(
             AccountantInvitationEmailView,
             to=AliasProvider(AccountantInvitationEmailViewImpl),

@@ -171,4 +171,13 @@ CONFIG_OPTIONS = [
         ],
         default="33",
     ),
+    ConfigOption(
+        name="PAYOUT_FACTOR_CALCULATION_WINDOW",
+        converts_to_types=(int,),
+        description_paragraphs=[
+            "A time window in days, over which the payout factor is calculated.",
+            "Must be an integer larger than zero.",
+        ],
+        default="180",
+    ),
 ]

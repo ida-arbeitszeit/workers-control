@@ -11,11 +11,13 @@ from arbeitszeit.injector import (
 )
 from arbeitszeit.records import SocialAccounting
 from arbeitszeit.repositories import DatabaseGateway
+from arbeitszeit.services.payout_factor import PayoutFactorConfig
 from arbeitszeit_db import get_social_accounting
 from arbeitszeit_db.db import Database
 from arbeitszeit_db.repositories import DatabaseGatewayImpl
 from arbeitszeit_flask import create_app
 from arbeitszeit_flask.mail_service.debug_mail_service import DebugMailService
+from arbeitszeit_flask.payout_factor import PayoutFactorConfigImpl
 from tests.dependency_injection import TestingModule
 
 
@@ -54,6 +56,7 @@ class FlaskDevConfiguration:
     )
     LANGUAGES = {"en": "English", "de": "Deutsch", "es": "Español"}
     DEFAULT_USER_TIMEZONE = os.environ.get("DEFAULT_USER_TIMEZONE", "UTC")
+    PAYOUT_FACTOR_CALCULATION_WINDOW = 180
 
     SECURITY_PASSWORD_SALT = "dev password salt"
     SECRET_KEY = os.environ.get("DEV_SECRET_KEY", "dev secret key")
@@ -95,13 +98,14 @@ class DevAppModule(Module):
     def configure(self, binder: Binder) -> None:
         super().configure(binder)
         binder[Flask] = CallableProvider(provide_dev_app, is_singleton=True)
+        binder[PayoutFactorConfig] = AliasProvider(PayoutFactorConfigImpl)
 
 
 def create_dependency_injector() -> Injector:
     return Injector(
         [
-            DevAppModule(),
-            DatabaseDevModule(),
             TestingModule(),
+            DatabaseDevModule(),
+            DevAppModule(),
         ]
     )

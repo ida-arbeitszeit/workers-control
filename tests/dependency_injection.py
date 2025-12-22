@@ -3,6 +3,7 @@ from arbeitszeit.datetime_service import DatetimeService
 from arbeitszeit.email_notifications import EmailSender
 from arbeitszeit.injector import AliasProvider, Binder, CallableProvider, Module
 from arbeitszeit.password_hasher import PasswordHasher
+from arbeitszeit.services.payout_factor import PayoutFactorConfig
 from arbeitszeit_web.colors import HexColors
 from arbeitszeit_web.plotter import Plotter
 from arbeitszeit_web.request import Request
@@ -12,6 +13,7 @@ from tests.control_thresholds import ControlThresholdsTestImpl
 from tests.datetime_service import FakeDatetimeService
 from tests.email_notifications import EmailSenderTestImpl
 from tests.password_hasher import PasswordHasherImpl
+from tests.payout_factor import PayoutFactorConfigTestImpl
 from tests.plotter import FakePlotter
 from tests.request import FakeRequest
 from tests.text_renderer import TextRendererImpl
@@ -34,6 +36,7 @@ class TestingModule(Module):
             self.provide_fake_request, is_singleton=True
         )
         binder[PasswordHasher] = AliasProvider(PasswordHasherImpl)
+        binder[PayoutFactorConfig] = AliasProvider(PayoutFactorConfigTestImpl)
 
     @classmethod
     def provide_fake_request(self) -> FakeRequest:

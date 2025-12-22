@@ -8,8 +8,8 @@ from parameterized import parameterized
 from arbeitszeit.records import ProductionCosts
 from arbeitszeit.services.payout_factor import PayoutFactorService
 from tests.interactors.base_test_case import BaseTestCase
+from tests.payout_factor import PayoutFactorConfigTestImpl
 
-WINDOW_SIZE = 180
 DEFAULT_COSTS = ProductionCosts(
     means_cost=Decimal(1), resource_cost=Decimal(1), labour_cost=Decimal(1)
 )
@@ -296,9 +296,10 @@ TWO_PLAN_TEST_CASES = [
 
 
 class PayoutFactorTests(BaseTestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp()
         self.service = self.injector.get(PayoutFactorService)
+        self.payout_factor_config = self.injector.get(PayoutFactorConfigTestImpl)
 
     def test_that_payout_factor_is_1_if_no_plans_exist(self) -> None:
         pf = self.service.calculate_current_payout_factor()
@@ -332,6 +333,39 @@ class PayoutFactorTests(BaseTestCase):
         pf = self.service.calculate_current_payout_factor()
         self.assertAlmostEqual(pf, expected_payout_factor)
 
+    def test_that_pf_decreases_with_increasing_calculation_window_if_public_plan_lasts_longer_than_productive_plan(
+        self,
+    ) -> None:
+        # shorter productive plan
+        self.plan_generator.create_plan(costs=HIGHER_COSTS, timeframe=1)
+        # longer public plan
+        self.plan_generator.create_plan(
+            costs=DEFAULT_COSTS, timeframe=10, is_public_service=True
+        )
+
+        self.payout_factor_config.set_window_length(2)
+        pf_short = self.service.calculate_current_payout_factor()
+        self.payout_factor_config.set_window_length(10)
+        pf_long = self.service.calculate_current_payout_factor()
+
+        assert pf_long < pf_short
+
+    def test_that_pf_increases_with_increasing_calculation_window_if_productive_plan_lasts_longer_than_public_plan(
+        self,
+    ) -> None:
+        # longer productive plan
+        self.plan_generator.create_plan(costs=HIGHER_COSTS, timeframe=10)
+        # shorter public plan
+        self.plan_generator.create_plan(
+            costs=DEFAULT_COSTS, timeframe=1, is_public_service=True
+        )
+
+        self.payout_factor_config.set_window_length(2)
+        pf_short = self.service.calculate_current_payout_factor()
+        self.payout_factor_config.set_window_length(10)
+        pf_long = self.service.calculate_current_payout_factor()
+        assert pf_long > pf_short
+
     def _create_plan(self, plan: PlanConfig) -> None:
         now = datetime(2025, 12, 1)
         self.datetime_service.freeze_time(now)
@@ -347,21 +381,22 @@ class PayoutFactorTests(BaseTestCase):
     def _calculate_plan_duration_and_plan_start(
         self, plan_position: PlanPosition
     ) -> tuple[int, datetime]:
+        window_size = self.payout_factor_config.get_window_length_in_days()
         now = self.datetime_service.now()
         match plan_position:
             case PlanPosition.out_left:
-                plan_duration = WINDOW_SIZE
-                plan_start = now - timedelta(days=WINDOW_SIZE * 3)
+                plan_duration = window_size
+                plan_start = now - timedelta(days=window_size * 3)
             case PlanPosition.out_left_one_half:
-                plan_duration = WINDOW_SIZE
-                plan_start = now - timedelta(days=WINDOW_SIZE)
+                plan_duration = window_size
+                plan_start = now - timedelta(days=window_size)
             case PlanPosition.inside:
-                plan_duration = WINDOW_SIZE // 4
+                plan_duration = window_size // 4
                 plan_start = now
             case PlanPosition.out_right_one_half:
-                plan_duration = WINDOW_SIZE
+                plan_duration = window_size
                 plan_start = now
             case PlanPosition.out_right:
-                plan_duration = WINDOW_SIZE * 2
-                plan_start = now - timedelta(days=WINDOW_SIZE)
+                plan_duration = window_size * 2
+                plan_start = now - timedelta(days=window_size)
         return int(plan_duration), plan_start

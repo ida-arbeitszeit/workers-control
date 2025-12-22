@@ -7,7 +7,7 @@ from arbeitszeit.datetime_service import DatetimeService
 from arbeitszeit.injector import Injector
 from arbeitszeit.records import ProductionCosts
 from arbeitszeit.repositories import DatabaseGateway
-from arbeitszeit.services.payout_factor import WINDOW_LENGTH_DAYS, PayoutFactorService
+from arbeitszeit.services.payout_factor import PayoutFactorConfig, PayoutFactorService
 from arbeitszeit_db import commit_changes
 from arbeitszeit_development.timeline_printer import TimelinePrinter
 from tests.data_generators import (
@@ -31,6 +31,9 @@ def create_fic_cli_group(injector: Injector) -> click.Group:
     @fic.command("calculate")
     def calculate_fic() -> None:
         """Calculate the current FIC."""
+        config = injector.get(PayoutFactorConfig)
+        window_length = config.get_window_length_in_days()
+        click.echo(f"Using fic window length: {window_length} days")
         payout_factor_service = injector.get(PayoutFactorService)
         fic = payout_factor_service.calculate_current_payout_factor()
         click.echo(f"Current FIC: {fic}")
@@ -40,12 +43,14 @@ def create_fic_cli_group(injector: Injector) -> click.Group:
         """Print timeline of plans and calculation window."""
         datatime_service = injector.get(DatetimeService)
         database_gateway = injector.get(DatabaseGateway)
+        config = injector.get(PayoutFactorConfig)
+        window_length = config.get_window_length_in_days()
         now = datatime_service.now()
         plans = list(database_gateway.get_plans().that_are_approved())
         tp = TimelinePrinter(
             now,
             plans,
-            WINDOW_LENGTH_DAYS,
+            window_length,
         )
         click.echo(tp.render())
 

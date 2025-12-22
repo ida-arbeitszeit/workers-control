@@ -1,12 +1,14 @@
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from decimal import Decimal
-from typing import Iterable
+from typing import Iterable, Protocol
 
 from arbeitszeit.datetime_service import DatetimeService
 from arbeitszeit.repositories import DatabaseGateway
 
-WINDOW_LENGTH_DAYS = 180
+
+class PayoutFactorConfig(Protocol):
+    def get_window_length_in_days(self) -> int: ...
 
 
 @dataclass
@@ -24,21 +26,19 @@ class PlanInfo:
 class PayoutFactorService:
     datetime_service: DatetimeService
     database_gateway: DatabaseGateway
+    payout_factor_config: PayoutFactorConfig
 
-    def calculate_current_payout_factor(
-        self, window_length_in_days: int = WINDOW_LENGTH_DAYS
-    ) -> Decimal:
+    def calculate_current_payout_factor(self) -> Decimal:
         """
         The payout factor is calculated over a time window.
         See dev docs for an explanation.
         """
         now = self.datetime_service.now()
-        relevant_plans = self._get_info_of_relevant_plans(now, window_length_in_days)
+        relevant_plans = self._get_info_of_relevant_plans(now)
         return self._calculate_payout_factor(relevant_plans)
 
-    def _get_info_of_relevant_plans(
-        self, now: datetime, window_length_in_days: int
-    ) -> Iterable[PlanInfo]:
+    def _get_info_of_relevant_plans(self, now: datetime) -> Iterable[PlanInfo]:
+        window_length_in_days = self.payout_factor_config.get_window_length_in_days()
         window_start = now - timedelta(days=window_length_in_days / 2)
         window_end = now + timedelta(days=window_length_in_days / 2)
         plans = (

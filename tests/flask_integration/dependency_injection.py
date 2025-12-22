@@ -42,6 +42,7 @@ class FlaskTestConfiguration(dict):
                 "ALEMBIC_CONFIG": "tests/flask_integration/alembic.ini",
                 "ALLOWED_OVERDRAW_MEMBER": "unlimited",
                 "ACCEPTABLE_RELATIVE_ACCOUNT_DEVIATION": 33,
+                "PAYOUT_FACTOR_CALCULATION_WINDOW": 180,
                 "FORCE_HTTPS": True,
                 # swagger placeholders are necessary until fix of bug in flask-restx:
                 # https://github.com/python-restx/flask-restx/issues/565

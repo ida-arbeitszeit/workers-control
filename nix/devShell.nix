@@ -21,6 +21,7 @@ mkShell (
         mypy
         pip
         psycopg2
+        twine
         types-setuptools
       ])
       ++ [

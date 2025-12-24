@@ -21,5 +21,6 @@ Contents
    architecture
    getting_started
    coding_guidelines
+   maintenance
    hosting
    license

@@ -10,6 +10,7 @@ psycopg2
 pytest
 sphinx
 sphinx-rtd-theme
+twine
 types-setuptools
 
 git+https://github.com/seppeljordan/flask-profiler.git#egg=flask-profiler

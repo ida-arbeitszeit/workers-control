@@ -3,11 +3,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, Iterable, Iterator, Optional, Tuple
 
 from ..command import Shell, Subprocess, SubprocessRunner
+
+logger = logging.getLogger(name=__name__)
 
 
 def main(subprocess_runner: SubprocessRunner) -> None:
@@ -16,6 +19,7 @@ def main(subprocess_runner: SubprocessRunner) -> None:
             packages=dict(),
             path=Path("constraints.txt"),
             version_string_cleaner=VersionStringCleaner(),
+            version_downgrader=VersionDowngrader(),
         ),
         python_environment=PythonEnvironment(subprocess_runner),
         package_filter=PackageFilter(),
@@ -43,6 +47,7 @@ class RequirementsFile:
     packages: Dict[str, str]
     path: Path
     version_string_cleaner: VersionStringCleaner
+    version_downgrader: VersionDowngrader
 
     def save_to_disk(self) -> None:
         with open(self.path, "w") as handle:
@@ -50,9 +55,14 @@ class RequirementsFile:
                 print(f"{name}=={version}", file=handle)
 
     def update_package(self, package_name: str, package_version: str) -> None:
-        self.packages[package_name] = self.version_string_cleaner.clean_version_string(
+        if self.version_downgrader.pypi_version_number_is_lower_than_nixpkgs(
+            package_name
+        ):
+            package_version = self.version_downgrader.downgrade_to_pypi(package_name)
+        cleaned_version_string = self.version_string_cleaner.clean_version_string(
             package_version
         )
+        self.packages[package_name] = cleaned_version_string
 
     def packages_sorted_by_name(self) -> Iterable[Tuple[str, str]]:
         return sorted(
@@ -122,20 +132,38 @@ class VersionStringCleaner:
         return ".".join([major, minor])
 
 
+class VersionDowngrader:
+    LOWER_PYPI_VERSIONS = {
+        "Flask-Login": (
+            "0.6.3",
+            "Flask-Login in nixpkgs is a 0.7 prerelease which is not available on PyPI currently.",
+        ),
+        "flask-babel": (
+            "4.0.0",
+            "Flask_Babel in nixpkgs is 4.1.0 while in PyPi it is still 4.0.0.",
+        ),
+    }
+
+    def pypi_version_number_is_lower_than_nixpkgs(self, package_name: str) -> bool:
+        return package_name in self.LOWER_PYPI_VERSIONS
+
+    def downgrade_to_pypi(self, package_name: str) -> str:
+        pypi_version = self.LOWER_PYPI_VERSIONS[package_name][0]
+        reason = self.LOWER_PYPI_VERSIONS[package_name][1]
+        logger.info(
+            "Using lower version from PyPI %s for package %s (%s)",
+            pypi_version,
+            package_name,
+            reason,
+        )
+        return pypi_version
+
+
 class PackageFilter:
     PACKAGE_BLACKLIST = {
-        "arbeitszeitapp",
-        # docutils as distributed by nixpkgs is not officially supported by the
-        # current sphinx version.
-        "docutils",
-        # Flask-Login in nixpkgs is a 0.7 prerelease which is not available on
-        # PyPI at the time of writing this comment.
-        "Flask-Login",
         # Since we use a custom flask-profiler package we need to exclude it
         # from constraints.txt.
         "flask_profiler",
-        # Flask_Babel in nixpkgs is 4.1.0 while in PyPi it is still 4.0.0.
-        "flask-babel",
     }
 
     def is_package_to_be_included_in_requirements(self, package_name: str) -> bool:
@@ -150,11 +178,12 @@ class PackageFilter:
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
-        description="Synchronize requirements.txt file with nix python environment.  This command must be run in a shell/process environment where the current project dependecies are installed."
+        description="Synchronize constraints.txt file with nix python environment.  This command must be run in a shell/process environment where the current project dependecies are installed."
     )
     parser.parse_args()
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
     parse_arguments()
     main(Shell())

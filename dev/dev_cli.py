@@ -9,7 +9,7 @@ from arbeitszeit.records import ProductionCosts
 from arbeitszeit.repositories import DatabaseGateway
 from arbeitszeit.services.payout_factor import PayoutFactorConfig, PayoutFactorService
 from arbeitszeit_db import commit_changes
-from arbeitszeit_development.timeline_printer import TimelinePrinter
+from dev.timeline_printer import TimelinePrinter
 from tests.data_generators import (
     CompanyGenerator,
     ConsumptionGenerator,

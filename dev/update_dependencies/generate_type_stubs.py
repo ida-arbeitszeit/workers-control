@@ -22,9 +22,9 @@ T = TypeVar("T")
 def main(subprocess_runner: SubprocessRunner):
     LOGGER.info("Update type stubs from dependencies")
     packages = list(flatten(["-p", package_name] for package_name in TARGET_PACKAGES))
-    shutil.rmtree("type_stubs")
+    shutil.rmtree("dev/type_stubs")
     subprocess_runner.run_command(
-        Subprocess(command=["stubgen", "-o", "type_stubs"] + packages)
+        Subprocess(command=["stubgen", "-o", "dev/type_stubs"] + packages)
     )
 
 

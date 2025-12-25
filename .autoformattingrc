@@ -1,5 +1,5 @@
 arbeitszeit/
-arbeitszeit_development/
+dev/
 arbeitszeit_flask/
 arbeitszeit_web/
 arbeitszeit_db/
@@ -8,4 +8,3 @@ build_support
 format_code.py
 run-checks
 tests/
-type_stubs/

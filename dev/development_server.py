@@ -1,9 +1,9 @@
 from flask import Flask
 
-from arbeitszeit_development.dependency_injection import (
+from dev.dependency_injection import (
     create_dependency_injector,
 )
-from arbeitszeit_development.dev_cli import (
+from dev.dev_cli import (
     create_fic_cli_group,
     create_generate_cli_group,
 )
@@ -19,7 +19,7 @@ def register_cli_commands(app: Flask) -> Flask:
     return app
 
 
-def main() -> Flask:
+def create_app() -> Flask:
     app = injector.get(Flask)
     app = register_cli_commands(app)
     return app

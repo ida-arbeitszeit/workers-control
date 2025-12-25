@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import format_code
-from arbeitszeit_development.update_dependencies import generate_type_stubs
+from dev.update_dependencies import generate_type_stubs
 
 from ..command import LoggingSubprocessRunner, Shell, Subprocess, SubprocessRunner
 from ..nix import NixFlake

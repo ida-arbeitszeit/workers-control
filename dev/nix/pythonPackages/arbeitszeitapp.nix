@@ -24,7 +24,7 @@
 buildPythonPackage {
   pname = "arbeitszeitapp";
   version = "0.1.1";
-  src = ../..;
+  src = ../../..;
   outputs = [
     "out"
     "doc"

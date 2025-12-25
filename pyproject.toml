@@ -66,7 +66,7 @@ skip = "arbeitszeit_db/migrations/versions/"
 [tool.mypy]
 files = [
     "arbeitszeit",
-    "arbeitszeit_development",
+    "dev",
     "arbeitszeit_flask",
     "arbeitszeit_web",
     "arbeitszeit_db",
@@ -75,9 +75,9 @@ files = [
     "run-checks",
     "format_code.py",
 ]
-mypy_path = "type_stubs"
+mypy_path = "dev/type_stubs"
 exclude = '''
-    migrations/versions/
+    migrations/versions/|dev/type_stubs/
 '''
 disable_error_code = "type-abstract"
 
@@ -86,7 +86,7 @@ module = [
     "arbeitszeit",
     "arbeitszeit_web",
     "arbeitszeit_flask",
-    "arbeitszeit_development",
+    "dev",
     "arbeitszeit_db",
     "tests"
 ]

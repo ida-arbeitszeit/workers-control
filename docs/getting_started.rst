@@ -15,10 +15,10 @@ document.
 
 .. code-block:: bash
 
-  export FLASK_APP=arbeitszeit_development.development_server:main
+  export FLASK_APP=dev.development_server
   export ARBEITSZEITAPP_SERVER_NAME=127.0.0.1:5000
   export DEV_SECRET_KEY="my_secret_key"
-  export ALEMBIC_CONFIG=${PWD}/arbeitszeit_development/alembic.ini
+  export ALEMBIC_CONFIG=${PWD}/dev/alembic.ini
   export ARBEITSZEITAPP_TEST_DB=sqlite:///${PWD}/arbeitszeitapp_test.db
   export ARBEITSZEITAPP_DEV_DB=sqlite:///${PWD}/arbeitszeitapp_dev.db
   export ALEMBIC_SQLALCHEMY_DATABASE_URI=${ARBEITSZEITAPP_DEV_DB}
@@ -117,10 +117,10 @@ Commented out variables are optional.
 
 .. code-block:: bash
 
-  export FLASK_APP=arbeitszeit_development.development_server:main
+  export FLASK_APP=dev.development_server
   export ARBEITSZEITAPP_SERVER_NAME=127.0.0.1:5000
   export DEV_SECRET_KEY="my_secret_key"
-  export ALEMBIC_CONFIG=${PWD}/arbeitszeit_development/alembic.ini
+  export ALEMBIC_CONFIG=${PWD}/dev/alembic.ini
   export ARBEITSZEITAPP_TEST_DB=sqlite:///${PWD}/arbeitszeitapp_test.db
   export ARBEITSZEITAPP_DEV_DB=sqlite:///${PWD}/arbeitszeitapp_dev.db
   export ALEMBIC_SQLALCHEMY_DATABASE_URI=${ARBEITSZEITAPP_DEV_DB}
@@ -245,7 +245,7 @@ Benchmarking
 Included in the source code for this project is a rudimentary
 framework for testing the running time of our code. 
 You can run all the benchmarks via
-``python -m arbeitszeit_development.benchmark``.
+``python -m dev.benchmark``.
 This benchmarking tool can be
 used to compare runtime characteristics across changes to the codebase. 
 A contributor to the ``workers control app`` might want to compare

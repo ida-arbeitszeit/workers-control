@@ -5,7 +5,7 @@ backend-path = ["."]
 
 [project]
 name = "workers-control"
-version = "0.0.0"
+version = "0.1.0"
 description = "A flask app for labour time accounting."
 license = "AGPL-3.0-or-later"
 requires-python = ">=3.12"
@@ -21,8 +21,9 @@ readme = "README.rst"
 profiling = ["flask_profiler"]
 
 [project.urls]
-Homepage = "https://github.com/ida-arbeitszeit/workers-control"
+Source = "https://github.com/ida-arbeitszeit/workers-control"
 Documentation = "https://workers-control.readthedocs.io/"
+Changelog = "https://github.com/ida-arbeitszeit/workers-control/blob/master/CHANGELOG.md"
 
 [tool.setuptools.packages.find]
 include = [

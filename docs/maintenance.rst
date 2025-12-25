@@ -15,9 +15,10 @@ As described earlier in this documentation, we support two different development
 We try to keep the installed packages in both environments as identical as possible. Since
 nixpkgs usually provides older versions than pip, this means that we let nixpkgs handle dependency
 resolution and are satisfied with the older versions from nixpkgs in both environments.
-If, exceptionally, nixpkgs has a newer version, we use the older version from pip in both environments.
+If, exceptionally, nixpkgs has a newer version, we use the older version from pip in both environments,
+i.e. we have to maintain custom nix expressions for the affected packages.
 
-This process is automated by the command ``python -m arbeitszeit_development.update_dependencies``.
+This process is largely automated by the command ``python -m arbeitszeit_development.update_dependencies``.
 It updates the Python packages in the nix environment and then writes the discovered version numbers
 into the pip-consumable :py:mod:`constraints.txt`. To run the command, nix must be installed.
 

@@ -213,22 +213,6 @@ the command:
   coverage run -m pytest && coverage html
 
 
-.. _updating-dependencies:
-
-Update Dependencies
---------------------
-
-We use Nix to manage the dependencies of
-``workers control app``. We try to leverage ``nixpkgs`` as a source for our
-dependencies as much as possible, so as to reduce the required
-maintenance effort. You can update the
-dependencies via ``python -m arbeitszeit_development.update_dependencies``.
-Some packages, however, are currently managed outside
-of ``nixpkgs``, through custom mechanisms. The Python program
-:py:mod:`arbeitszeit_development.update_dependencies` automates this
-custom package management as much as possible.
-
-
 Profiling
 ---------
 

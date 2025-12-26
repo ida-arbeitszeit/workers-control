@@ -24,17 +24,15 @@ to learn more about how to contribute to the project, set up a development envir
 and host the application.
 
 
-Note on Stability and Breaking Changes
-======================================
-
-This project is currently in an early development stage (version 0.0.0).
-At this point, we do not guarantee stability or backward compatibility. 
-Breaking changes may occur at any time without notice.
-
-
 License
 =======
 
 All source code is distributed under the conditions of the APGL. For
 the full license text, see the file ``LICENSE`` contained in this
 repository.
+
+
+Changelog
+=========
+
+See the ``CHANGELOG.md`` file in this repository.

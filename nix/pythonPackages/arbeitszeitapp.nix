@@ -24,22 +24,27 @@
 }:
 buildPythonPackage {
   pname = "arbeitszeitapp";
-  version = "0.0.0";
+  version = "0.1.0";
   src = ../..;
   outputs = [
     "out"
     "doc"
   ];
   postPhases = [ "buildDocsPhase" ];
-  format = "pyproject";
+  pyproject = true;
+  nativeCheckInputs = [
+    pytest
+    postgresql
+    psycopg2
+    parameterized
+  ];
   buildInputs = [
     sphinx
     sphinx-rtd-theme
-    parameterized
     babel
     setuptools
   ];
-  propagatedBuildInputs = [
+  dependencies = [
     alembic
     email-validator
     flask
@@ -50,11 +55,6 @@ buildPythonPackage {
     flask-restx
     flask-wtf
     matplotlib
-  ];
-  nativeBuildInputs = [
-    pytest
-    postgresql
-    psycopg2
   ];
   buildDocsPhase = ''
     mkdir -p $doc/share/doc/arbeitszeitapp

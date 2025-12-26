@@ -9,3 +9,5 @@ user_unauthorized: Incomplete
 user_needs_refresh: Incomplete
 user_accessed: Incomplete
 session_protected: Incomplete
+
+def __getattr__(name): ...

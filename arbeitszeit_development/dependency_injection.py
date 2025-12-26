@@ -68,14 +68,6 @@ class FlaskDevConfiguration:
     ALEMBIC_CONFIG = os.getenv("ALEMBIC_CONFIG")
     AUTO_MIGRATE = os.getenv("AUTO_MIGRATE", False)
 
-    RESTX_MASK_SWAGGER = False
-    # swagger placeholders are necessary until fix of bug in flask-restx:
-    # https://github.com/python-restx/flask-restx/issues/565
-    SWAGGER_UI_OAUTH_CLIENT_ID = "placeholder"
-    SWAGGER_VALIDATOR_URL = "placeholder"
-    SWAGGER_UI_OAUTH_REALM = "placeholder"
-    SWAGGER_UI_OAUTH_APP_NAME = "placeholder"
-
 
 def provide_dev_database() -> Database:
     Database().configure(uri=os.environ["ARBEITSZEITAPP_DEV_DB"])

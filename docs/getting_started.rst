@@ -264,11 +264,3 @@ is called "arbeitszeit".  Check the `cachix docs
 how to set this up locally.  The benefit of this for you is that you
 can avoid building dependencies that are already built once in the 
 continuous integration (CI) pipeline.
-
-
-Web API
---------
-
-We are currently developing a JSON Web API that provides access to 
-core features of workers control app. Its OpenAPI specification can be 
-found in `/api/v1/doc/`

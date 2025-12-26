@@ -94,7 +94,6 @@ def create_app(
             return None
 
         # register blueprints
-        from .api import blueprint as api_blueprint
         from .context_processors import add_template_variables
         from .plots import routes as plots_routes
         from .routes import accountant as accountant_routes
@@ -114,7 +113,6 @@ def create_app(
         )
         app.register_blueprint(accountant_routes.blueprint.main_accountant)
         app.register_blueprint(user_routes.blueprint, url_prefix="/user")
-        app.register_blueprint(api_blueprint)
         app.register_blueprint(healthcheck_routes.blueprint.healthcheck_blueprint)
         app.context_processor(add_template_variables)
 

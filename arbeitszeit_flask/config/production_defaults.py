@@ -20,14 +20,6 @@ FLASK_PROFILER = {
     "enabled": False,
 }
 
-RESTX_MASK_SWAGGER = False
-# swagger placeholders are necessary until fix of bug in flask-restx:
-# https://github.com/python-restx/flask-restx/issues/565
-SWAGGER_UI_OAUTH_CLIENT_ID = "placeholder"
-SWAGGER_VALIDATOR_URL = "placeholder"
-SWAGGER_UI_OAUTH_REALM = "placeholder"
-SWAGGER_UI_OAUTH_APP_NAME = "placeholder"
-
 ALEMBIC_CONFIG = os.environ["ALEMBIC_CONFIG"]
 
 DEFAULT_USER_TIMEZONE = "UTC"

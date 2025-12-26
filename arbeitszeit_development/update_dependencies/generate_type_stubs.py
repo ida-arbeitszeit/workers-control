@@ -11,7 +11,6 @@ TARGET_PACKAGES = [
     "flask_babel",
     "flask_login",
     "flask_profiler",
-    "flask_restx",
     "flask_talisman",
     "flask_wtf",
     "parameterized",

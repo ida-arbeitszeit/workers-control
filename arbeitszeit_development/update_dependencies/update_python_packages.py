@@ -10,10 +10,6 @@ logger = logging.getLogger(name=__name__)
 
 
 def main(subprocess_runner: SubprocessRunner) -> None:
-    # nixpkgs version breaks our tests
-    update_python_package(
-        subprocess_runner, "nix/pythonPackages/flask-restx.json", "flask-restx"
-    )
     # we use lower version, as in pypi
     update_python_package(
         subprocess_runner, "nix/pythonPackages/flask-login.json", "Flask-Login"

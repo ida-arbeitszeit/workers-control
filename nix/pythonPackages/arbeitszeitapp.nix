@@ -11,7 +11,6 @@
   flask-babel,
   flask-mail,
   flask-profiler,
-  flask-restx,
   flask-talisman,
   flask-login,
   flask-wtf,
@@ -52,7 +51,6 @@ buildPythonPackage {
     flask-mail
     flask-talisman
     flask-login
-    flask-restx
     flask-wtf
     matplotlib
   ];

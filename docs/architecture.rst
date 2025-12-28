@@ -12,7 +12,7 @@ Clean Architecture (Robert C. Martin, *Clean Architecture*, Pearson, 2018).  Her
 is a small overview of the most important
 directories in the source code.
 
-``arbeitszeit/``
+``src/workers_control/core/``
     Contains the business logic of the program.  A useful heuristic for
     deciding whether your code belongs there is "Would my code still
     make sense if this app were a CLI application without a SQL
@@ -21,7 +21,7 @@ directories in the source code.
     the "Database Gateway" interface to persist and retrieve data. "Records"
     are business-level data structures.
 
-``arbeitszeit_web/``
+``src/workers_control/web/``
     Contains the code for implementing the Web interface.  The code in
     this directory should format and translate strings for display to
     the user and parse input data from forms and URLs.  This code is
@@ -29,11 +29,11 @@ directories in the source code.
     the business logic through the develivery mechanism of the World
     Wide Web.
 
-``arbeitszeit_db/``
+``src/workers_control/db/``
     The concrete implementation for persistence. Currently we support
     Postgres and SQLite databases via SQLAlchemy.
 
-``arbeitszeit_flask/``
+``src/workers_control/flask/``
     Contains the conrete implementation for IO. We use the ``flask``
     framework.
 

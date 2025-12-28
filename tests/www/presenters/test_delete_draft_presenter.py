@@ -1,6 +1,8 @@
-from arbeitszeit.interactors.delete_draft import DeleteDraftInteractor
-from arbeitszeit_web.www.presenters.delete_draft_presenter import DeleteDraftPresenter
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.delete_draft import DeleteDraftInteractor
+from workers_control.web.www.presenters.delete_draft_presenter import (
+    DeleteDraftPresenter,
+)
 
 
 class PresenterTests(BaseTestCase):

@@ -2,23 +2,23 @@ import os
 
 from flask import Flask
 
-from arbeitszeit.injector import (
+from tests.dependency_injection import TestingModule
+from workers_control.core.injector import (
     AliasProvider,
     Binder,
     CallableProvider,
     Injector,
     Module,
 )
-from arbeitszeit.records import SocialAccounting
-from arbeitszeit.repositories import DatabaseGateway
-from arbeitszeit.services.payout_factor import PayoutFactorConfig
-from arbeitszeit_db import get_social_accounting
-from arbeitszeit_db.db import Database
-from arbeitszeit_db.repositories import DatabaseGatewayImpl
-from arbeitszeit_flask import create_app
-from arbeitszeit_flask.mail_service.debug_mail_service import DebugMailService
-from arbeitszeit_flask.payout_factor import PayoutFactorConfigImpl
-from tests.dependency_injection import TestingModule
+from workers_control.core.records import SocialAccounting
+from workers_control.core.repositories import DatabaseGateway
+from workers_control.core.services.payout_factor import PayoutFactorConfig
+from workers_control.db import get_social_accounting
+from workers_control.db.db import Database
+from workers_control.db.repositories import DatabaseGatewayImpl
+from workers_control.flask import create_app
+from workers_control.flask.mail_service.debug_mail_service import DebugMailService
+from workers_control.flask.payout_factor import PayoutFactorConfigImpl
 
 
 class FlaskDevConfiguration:

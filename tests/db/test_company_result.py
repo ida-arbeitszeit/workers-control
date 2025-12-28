@@ -1,8 +1,8 @@
 from typing import List
 from uuid import UUID, uuid4
 
-from arbeitszeit import records
 from tests.db.base_test_case import DatabaseTestCase
+from workers_control.core import records
 
 from .utility import Utility
 

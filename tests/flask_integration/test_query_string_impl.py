@@ -1,6 +1,6 @@
 from werkzeug.datastructures import MultiDict
 
-from arbeitszeit_flask.flask_request import QueryStringImpl
+from workers_control.flask.flask_request import QueryStringImpl
 
 from .base_test_case import FlaskTestCase
 

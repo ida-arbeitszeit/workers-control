@@ -23,9 +23,9 @@ from typing import (
 )
 from uuid import UUID, uuid4
 
-from arbeitszeit import records
-from arbeitszeit.injector import singleton
-from arbeitszeit.records import (
+from workers_control.core import records
+from workers_control.core.injector import singleton
+from workers_control.core.records import (
     Account,
     Accountant,
     Company,
@@ -41,7 +41,7 @@ from arbeitszeit.records import (
     SocialAccounting,
     Transfer,
 )
-from arbeitszeit.transfers import TransferType
+from workers_control.core.transfers import TransferType
 
 Many = TypeVar("Many", bound=Hashable)
 One = TypeVar("One", bound=Hashable)

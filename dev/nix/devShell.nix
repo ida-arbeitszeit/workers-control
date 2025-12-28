@@ -31,6 +31,9 @@ mkShell (
       ]
       ++ python3.pkgs.arbeitszeitapp.optional-dependencies.profiling;
     inputsFrom = [ python3.pkgs.arbeitszeitapp ];
+    shellHook = ''
+      export PYTHONPATH="$PWD/src:$PYTHONPATH"
+    '';
   }
   // lib.optionalAttrs includeGlibcLocales {
     LOCALE_ARCHIVE = "${glibcLocales}/lib/locale/locale-archive";

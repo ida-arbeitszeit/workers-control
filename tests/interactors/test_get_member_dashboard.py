@@ -1,9 +1,11 @@
-from arbeitszeit.interactors import get_member_dashboard
-from arbeitszeit.interactors.get_member_dashboard import GetMemberDashboardInteractor
-from arbeitszeit.interactors.invite_worker_to_company import (
+from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.interactors import get_member_dashboard
+from workers_control.core.interactors.get_member_dashboard import (
+    GetMemberDashboardInteractor,
+)
+from workers_control.core.interactors.invite_worker_to_company import (
     InviteWorkerToCompanyInteractor,
 )
-from tests.interactors.base_test_case import BaseTestCase
 
 
 class InteractorTests(BaseTestCase):

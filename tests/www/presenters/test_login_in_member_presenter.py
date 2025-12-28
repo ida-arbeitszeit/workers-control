@@ -1,11 +1,13 @@
 from typing import Optional
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors.log_in_member import LogInMemberInteractor
-from arbeitszeit_web.session import UserRole
-from arbeitszeit_web.www.presenters.log_in_member_presenter import LogInMemberPresenter
 from tests.forms import LoginForm
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.log_in_member import LogInMemberInteractor
+from workers_control.web.session import UserRole
+from workers_control.web.www.presenters.log_in_member_presenter import (
+    LogInMemberPresenter,
+)
 
 
 class PresenterTests(BaseTestCase):

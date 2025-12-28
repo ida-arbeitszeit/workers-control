@@ -1,9 +1,9 @@
 from datetime import timedelta
 from uuid import UUID
 
-from arbeitszeit.interactors import show_r_account_details
-from arbeitszeit.transfers import TransferType
 from tests.datetime_service import datetime_min_utc
+from workers_control.core.interactors import show_r_account_details
+from workers_control.core.transfers import TransferType
 
 from .base_test_case import BaseTestCase
 

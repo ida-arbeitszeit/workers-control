@@ -2,12 +2,12 @@ from unittest import TestCase
 
 from parameterized import parameterized
 
-from arbeitszeit_flask.config.checks import (
+from workers_control.flask.config.checks import (
     ConfigOptionMissing,
     ConfigOptionTypeInvalid,
     ConfigValidator,
 )
-from arbeitszeit_flask.config.options import ConfigOption
+from workers_control.flask.config.options import ConfigOption
 
 
 class ConfigValidatorTests(TestCase):

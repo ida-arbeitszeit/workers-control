@@ -3,12 +3,12 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors import (
+from tests.datetime_service import datetime_utc
+from workers_control.core.interactors import (
     confirm_company,
     confirm_member,
     get_user_account_details,
 )
-from tests.datetime_service import datetime_utc
 
 from .base_test_case import BaseTestCase
 

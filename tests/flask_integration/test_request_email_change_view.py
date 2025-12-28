@@ -1,7 +1,7 @@
 from parameterized import parameterized
 
-from arbeitszeit.injector import Binder, CallableProvider, Module
 from tests.flask_integration.dependency_injection import FlaskTestConfiguration
+from workers_control.core.injector import Binder, CallableProvider, Module
 
 from .base_test_case import LogInUser, ViewTestCase
 

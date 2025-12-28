@@ -161,6 +161,7 @@ class VersionDowngrader:
 
 class PackageFilter:
     PACKAGE_BLACKLIST = {
+        "workers-control",
         # Since we use a custom flask-profiler package we need to exclude it
         # from constraints.txt.
         "flask_profiler",

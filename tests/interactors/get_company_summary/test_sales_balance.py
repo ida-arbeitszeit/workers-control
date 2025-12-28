@@ -1,12 +1,12 @@
 from decimal import Decimal
 from typing import Union
 
-from arbeitszeit.interactors.get_company_summary import (
+from workers_control.core.interactors.get_company_summary import (
     GetCompanySummaryInteractor,
     GetCompanySummarySuccess,
     PlanDetails,
 )
-from arbeitszeit.records import ProductionCosts
+from workers_control.core.records import ProductionCosts
 
 from ..base_test_case import BaseTestCase
 

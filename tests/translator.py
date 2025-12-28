@@ -1,4 +1,4 @@
-from arbeitszeit_web.translator import Number, Translator
+from workers_control.web.translator import Number, Translator
 
 
 class FakeTranslator(Translator):

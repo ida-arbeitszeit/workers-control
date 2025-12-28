@@ -3,10 +3,12 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Optional
 
-from arbeitszeit.interactors.query_plans import PlanFilter, PlanSorting
-from arbeitszeit_web.www.controllers.query_plans_controller import QueryPlansController
 from tests.request import FakeRequest
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.query_plans import PlanFilter, PlanSorting
+from workers_control.web.www.controllers.query_plans_controller import (
+    QueryPlansController,
+)
 
 
 class QueryPlansControllerTests(BaseTestCase):

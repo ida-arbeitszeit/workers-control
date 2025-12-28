@@ -1,14 +1,3 @@
-from arbeitszeit.control_thresholds import ControlThresholds
-from arbeitszeit.datetime_service import DatetimeService
-from arbeitszeit.email_notifications import EmailSender
-from arbeitszeit.injector import AliasProvider, Binder, CallableProvider, Module
-from arbeitszeit.password_hasher import PasswordHasher
-from arbeitszeit.services.payout_factor import PayoutFactorConfig
-from arbeitszeit_web.colors import HexColors
-from arbeitszeit_web.plotter import Plotter
-from arbeitszeit_web.request import Request
-from arbeitszeit_web.text_renderer import TextRenderer
-from arbeitszeit_web.translator import Translator
 from tests.control_thresholds import ControlThresholdsTestImpl
 from tests.datetime_service import FakeDatetimeService
 from tests.email_notifications import EmailSenderTestImpl
@@ -19,6 +8,22 @@ from tests.request import FakeRequest
 from tests.text_renderer import TextRendererImpl
 from tests.translator import FakeTranslator
 from tests.www.presenters.test_colors import ColorsTestImpl
+from workers_control.core.control_thresholds import ControlThresholds
+from workers_control.core.datetime_service import DatetimeService
+from workers_control.core.email_notifications import EmailSender
+from workers_control.core.injector import (
+    AliasProvider,
+    Binder,
+    CallableProvider,
+    Module,
+)
+from workers_control.core.password_hasher import PasswordHasher
+from workers_control.core.services.payout_factor import PayoutFactorConfig
+from workers_control.web.colors import HexColors
+from workers_control.web.plotter import Plotter
+from workers_control.web.request import Request
+from workers_control.web.text_renderer import TextRenderer
+from workers_control.web.translator import Translator
 
 
 class TestingModule(Module):

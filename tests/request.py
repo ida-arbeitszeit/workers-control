@@ -2,7 +2,7 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Dict, Iterable, Optional
 
-from arbeitszeit_web.json import JsonValue
+from workers_control.web.json import JsonValue
 
 
 @dataclass

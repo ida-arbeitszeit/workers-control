@@ -1,7 +1,7 @@
 from typing import Dict, List
 
-from arbeitszeit.injector import Binder, CallableProvider, Module
-from arbeitszeit_flask.language_repository import LanguageRepositoryImpl
+from workers_control.core.injector import Binder, CallableProvider, Module
+from workers_control.flask.language_repository import LanguageRepositoryImpl
 
 from .base_test_case import FlaskTestCase
 from .dependency_injection import FlaskTestConfiguration

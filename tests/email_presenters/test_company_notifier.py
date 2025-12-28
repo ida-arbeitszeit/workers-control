@@ -2,11 +2,11 @@ from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.email_notifications import RejectedPlanNotification
-from arbeitszeit_web.email.company_notifier import CompanyNotifier
 from tests.email import FakeEmailConfiguration
 from tests.text_renderer import TextRendererImpl
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.email_notifications import RejectedPlanNotification
+from workers_control.web.email.company_notifier import CompanyNotifier
 
 Notification = RejectedPlanNotification
 

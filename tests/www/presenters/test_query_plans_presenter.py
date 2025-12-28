@@ -3,11 +3,11 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit_web.pagination import PAGE_PARAMETER_NAME
-from arbeitszeit_web.session import UserRole
-from arbeitszeit_web.www.presenters.query_plans_presenter import QueryPlansPresenter
 from tests.www.base_test_case import BaseTestCase
 from tests.www.presenters.data_generators import QueriedPlanGenerator
+from workers_control.web.pagination import PAGE_PARAMETER_NAME
+from workers_control.web.session import UserRole
+from workers_control.web.www.presenters.query_plans_presenter import QueryPlansPresenter
 
 
 class QueryPlansPresenterTests(BaseTestCase):

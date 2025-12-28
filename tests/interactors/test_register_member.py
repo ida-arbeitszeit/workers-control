@@ -1,9 +1,11 @@
-from arbeitszeit import email_notifications
-from arbeitszeit.interactors import get_member_dashboard
-from arbeitszeit.interactors.confirm_company import ConfirmCompanyInteractor
-from arbeitszeit.interactors.get_member_dashboard import GetMemberDashboardInteractor
-from arbeitszeit.interactors.log_in_member import LogInMemberInteractor
-from arbeitszeit.interactors.register_member import RegisterMemberInteractor
+from workers_control.core import email_notifications
+from workers_control.core.interactors import get_member_dashboard
+from workers_control.core.interactors.confirm_company import ConfirmCompanyInteractor
+from workers_control.core.interactors.get_member_dashboard import (
+    GetMemberDashboardInteractor,
+)
+from workers_control.core.interactors.log_in_member import LogInMemberInteractor
+from workers_control.core.interactors.register_member import RegisterMemberInteractor
 
 from .base_test_case import BaseTestCase
 

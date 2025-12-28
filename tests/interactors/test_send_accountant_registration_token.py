@@ -1,5 +1,5 @@
-from arbeitszeit import email_notifications
-from arbeitszeit.interactors.send_accountant_registration_token import (
+from workers_control.core import email_notifications
+from workers_control.core.interactors.send_accountant_registration_token import (
     SendAccountantRegistrationTokenInteractor,
 )
 

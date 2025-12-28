@@ -1,8 +1,8 @@
 from uuid import UUID
 
-from arbeitszeit.records import CoordinationTransferRequest
 from tests.datetime_service import datetime_utc
 from tests.db.base_test_case import DatabaseTestCase
+from workers_control.core.records import CoordinationTransferRequest
 
 
 class CoordinationTransferRequestResultTests(DatabaseTestCase):

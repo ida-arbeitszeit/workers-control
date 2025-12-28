@@ -4,18 +4,18 @@ from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors import show_a_account_details
-from arbeitszeit.services.account_details import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors import show_a_account_details
+from workers_control.core.services.account_details import (
     AccountTransfer,
     PlotDetails,
     TransferParty,
     TransferPartyType,
 )
-from arbeitszeit.transfers import TransferType
-from arbeitszeit_web.www.presenters.show_a_account_details_presenter import (
+from workers_control.core.transfers import TransferType
+from workers_control.web.www.presenters.show_a_account_details_presenter import (
     ShowAAccountDetailsPresenter,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 class ShowAAccountDetailsPresenterTests(BaseTestCase):

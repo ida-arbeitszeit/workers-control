@@ -1,8 +1,8 @@
 from parameterized import parameterized
 
-from arbeitszeit.interactors.edit_draft import Response
-from arbeitszeit_web.www.presenters.edit_draft_presenter import EditDraftPresenter
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.edit_draft import Response
+from workers_control.web.www.presenters.edit_draft_presenter import EditDraftPresenter
 
 
 class EditDraftPresenterTests(BaseTestCase):

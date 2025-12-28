@@ -1,4 +1,4 @@
-from arbeitszeit.interactors.confirm_company import (
+from workers_control.core.interactors.confirm_company import (
     ConfirmCompanyInteractor as Interactor,
 )
 

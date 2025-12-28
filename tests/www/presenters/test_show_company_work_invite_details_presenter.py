@@ -1,13 +1,13 @@
 from typing import Optional
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors.show_company_work_invite_details import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.show_company_work_invite_details import (
     ShowCompanyWorkInviteDetailsResponse,
 )
-from arbeitszeit_web.www.presenters.show_company_work_invite_details_presenter import (
+from workers_control.web.www.presenters.show_company_work_invite_details_presenter import (
     ShowCompanyWorkInviteDetailsPresenter,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 class PresenterTests(BaseTestCase):

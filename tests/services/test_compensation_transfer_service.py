@@ -3,11 +3,13 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.records import Transfer
-from arbeitszeit.services.compensation_transfers import CompensationTransferService
-from arbeitszeit.transfers import TransferType
 from tests.datetime_service import datetime_utc
 from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.records import Transfer
+from workers_control.core.services.compensation_transfers import (
+    CompensationTransferService,
+)
+from workers_control.core.transfers import TransferType
 
 
 class CompensationTransferServiceTests(BaseTestCase):

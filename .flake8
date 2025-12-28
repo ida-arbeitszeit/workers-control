@@ -1,12 +1,12 @@
 [flake8]
 ignore = E501,W503,E712,E704,E701
 per-file-ignores =
-    arbeitszeit_db/repositories.py: E711
+    src/workers_control/db/repositories.py: E711
 exclude =
     .git/**
     .direnv/**
     custom_settings.py
-    arbeitszeit_db/migrations/versions/**
+    src/workers_control/db/migrations/versions/**
     venv/**
     node_modules/**
     build/**

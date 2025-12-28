@@ -1,8 +1,8 @@
-from arbeitszeit.interactors import change_user_email_address
-from arbeitszeit_web.www.presenters.change_user_email_address_presenter import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors import change_user_email_address
+from workers_control.web.www.presenters.change_user_email_address_presenter import (
     ChangeUserEmailAddressPresenter,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 class ChangeUserEmailAddressPresenterTests(BaseTestCase):

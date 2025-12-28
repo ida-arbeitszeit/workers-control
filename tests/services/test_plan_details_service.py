@@ -5,12 +5,12 @@ from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors.approve_plan import ApprovePlanInteractor
-from arbeitszeit.records import ProductionCosts
-from arbeitszeit.services.plan_details import PlanDetails, PlanDetailsService
 from tests.data_generators import CompanyGenerator, CooperationGenerator, PlanGenerator
 from tests.datetime_service import FakeDatetimeService, datetime_utc
 from tests.interactors.dependency_injection import get_dependency_injector
+from workers_control.core.interactors.approve_plan import ApprovePlanInteractor
+from workers_control.core.records import ProductionCosts
+from workers_control.core.services.plan_details import PlanDetails, PlanDetailsService
 
 
 class PlanDetailsServiceTests(TestCase):

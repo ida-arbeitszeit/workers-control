@@ -1,9 +1,9 @@
 from typing import Union
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors import list_workers
-from arbeitszeit.records import Member
 from tests.data_generators import CompanyGenerator, MemberGenerator
+from workers_control.core.interactors import list_workers
+from workers_control.core.records import Member
 
 from .dependency_injection import injection_test
 

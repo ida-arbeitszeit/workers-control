@@ -1,11 +1,13 @@
 from typing import List
 from uuid import uuid4
 
-from arbeitszeit.interactors.create_cooperation import CreateCooperationResponse
-from arbeitszeit_web.www.presenters.create_cooperation_presenter import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.create_cooperation import (
+    CreateCooperationResponse,
+)
+from workers_control.web.www.presenters.create_cooperation_presenter import (
     CreateCooperationPresenter,
 )
-from tests.www.base_test_case import BaseTestCase
 
 SUCCESSFUL_CREATE_RESPONSE = CreateCooperationResponse(
     rejection_reason=None, cooperation_id=uuid4()

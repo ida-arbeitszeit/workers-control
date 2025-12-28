@@ -1,9 +1,9 @@
 from datetime import timedelta
 from uuid import uuid4
 
-from arbeitszeit.records import Cooperation
 from tests.datetime_service import datetime_utc
 from tests.db.base_test_case import DatabaseTestCase
+from workers_control.core.records import Cooperation
 
 
 class CooperationResultTests(DatabaseTestCase):

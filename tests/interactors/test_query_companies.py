@@ -1,13 +1,13 @@
 from typing import Optional
 
-from arbeitszeit.interactors.query_companies import (
+from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.interactors.query_companies import (
     CompanyFilter,
     CompanyQueryResponse,
     QueryCompaniesInteractor,
     QueryCompaniesRequest,
 )
-from arbeitszeit.records import Company
-from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.records import Company
 
 
 class TestQueryCompanies(BaseTestCase):

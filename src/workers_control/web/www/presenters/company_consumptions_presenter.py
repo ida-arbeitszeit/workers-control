@@ -1,0 +1,66 @@
+from dataclasses import dataclass
+from typing import Iterator, List
+
+from workers_control.core.interactors.query_company_consumptions import (
+    ConsumptionQueryResponse,
+)
+from workers_control.core.records import ConsumptionType
+from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
+from workers_control.web.translator import Translator
+
+
+@dataclass
+class ViewModel:
+    @dataclass
+    class Consumption:
+        consumption_date: str
+        product_name: str
+        product_description: str
+        consumption_type: str
+        price_per_unit: str
+        amount: str
+        price_total: str
+
+    consumptions: List[Consumption]
+    show_consumptions: bool
+
+
+@dataclass
+class CompanyConsumptionsPresenter:
+    datetime_formatter: DatetimeFormatter
+    translator: Translator
+
+    def present(
+        self, interactor_response: Iterator[ConsumptionQueryResponse]
+    ) -> ViewModel:
+        consumptions = [
+            self._format_consumption(consumption) for consumption in interactor_response
+        ]
+        show_consumptions = True if (len(consumptions) > 0) else False
+        return ViewModel(consumptions=consumptions, show_consumptions=show_consumptions)
+
+    def _format_consumption(
+        self, consumption: ConsumptionQueryResponse
+    ) -> ViewModel.Consumption:
+        return ViewModel.Consumption(
+            consumption_date=self.datetime_formatter.format_datetime(
+                date=consumption.consumption_date,
+                fmt="%d.%m.%Y %H:%M",
+            ),
+            product_name=consumption.product_name,
+            product_description=consumption.product_description,
+            consumption_type=self._format_consumption_type(
+                consumption.consumption_type
+            ),
+            price_per_unit=str(round(consumption.paid_price_per_unit, 2)),
+            amount=str(consumption.amount),
+            price_total=str(
+                round(consumption.paid_price_per_unit * consumption.amount, 2)
+            ),
+        )
+
+    def _format_consumption_type(self, consumption_type: ConsumptionType) -> str:
+        if consumption_type == ConsumptionType.raw_materials:
+            return self.translator.gettext("Liquid means of production")
+        else:
+            return self.translator.gettext("Fixed means of production")

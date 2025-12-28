@@ -1,8 +1,5 @@
-arbeitszeit/
+src/
 dev/
-arbeitszeit_flask/
-arbeitszeit_web/
-arbeitszeit_db/
 docs/
 build_support
 format_code.py

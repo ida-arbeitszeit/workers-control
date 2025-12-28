@@ -1,9 +1,9 @@
 from uuid import uuid4
 
-from arbeitszeit_web.email.invite_worker_presenter import InviteWorkerPresenterImpl
 from tests.email import FakeEmailConfiguration
 from tests.text_renderer import TextRendererImpl
 from tests.www.base_test_case import BaseTestCase
+from workers_control.web.email.invite_worker_presenter import InviteWorkerPresenterImpl
 
 
 class SendMailTests(BaseTestCase):

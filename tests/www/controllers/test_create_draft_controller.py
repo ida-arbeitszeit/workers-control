@@ -3,13 +3,13 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors import create_plan_draft
-from arbeitszeit_web.forms import DraftForm
-from arbeitszeit_web.www.controllers.create_draft_controller import (
-    CreateDraftController,
-)
 from tests.request import FakeRequest
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors import create_plan_draft
+from workers_control.web.forms import DraftForm
+from workers_control.web.www.controllers.create_draft_controller import (
+    CreateDraftController,
+)
 
 VALID_PRODUCT_NAME: str = "product name"
 VALID_DESCRIPTION: str = "some description"

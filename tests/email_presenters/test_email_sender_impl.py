@@ -1,12 +1,12 @@
 from parameterized import parameterized
 
-from arbeitszeit.email_notifications import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.email_notifications import (
     CooperationRequestEmail,
     EmailChangeConfirmation,
     Message,
 )
-from arbeitszeit_web.email.email_sender import EmailSender
-from tests.www.base_test_case import BaseTestCase
+from workers_control.web.email.email_sender import EmailSender
 
 
 class EmailSenderImplTests(BaseTestCase):

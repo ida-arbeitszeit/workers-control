@@ -1,20 +1,20 @@
 from typing import Optional
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors.accept_coordination_transfer import (
+from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.interactors.accept_coordination_transfer import (
     AcceptCoordinationTransferInteractor,
 )
-from arbeitszeit.interactors.get_coop_summary import (
+from workers_control.core.interactors.get_coop_summary import (
     GetCoopSummaryInteractor,
     GetCoopSummaryRequest,
 )
-from arbeitszeit.interactors.list_coordinations_of_cooperation import (
+from workers_control.core.interactors.list_coordinations_of_cooperation import (
     ListCoordinationsOfCooperationInteractor,
 )
-from arbeitszeit.interactors.request_coordination_transfer import (
+from workers_control.core.interactors.request_coordination_transfer import (
     RequestCoordinationTransferInteractor,
 )
-from tests.interactors.base_test_case import BaseTestCase
 
 
 class TestAcceptCoordinationTransferInteractor(BaseTestCase):

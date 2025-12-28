@@ -50,7 +50,9 @@ class BulmaUpdater:
         module_path = Path(__file__)
         return (
             module_path.parent.parent.parent
-            / "arbeitszeit_flask"
+            / "src"
+            / "workers_control"
+            / "flask"
             / "static"
             / "bulma.css"
         )

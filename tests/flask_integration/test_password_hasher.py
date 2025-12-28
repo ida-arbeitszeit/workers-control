@@ -1,4 +1,4 @@
-from arbeitszeit_flask.password_hasher import PasswordHasherImpl
+from workers_control.flask.password_hasher import PasswordHasherImpl
 
 from .base_test_case import FlaskTestCase
 

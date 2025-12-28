@@ -39,55 +39,41 @@ Documentation = "https://workers-control.readthedocs.io/"
 Changelog = "https://github.com/ida-arbeitszeit/workers-control/blob/master/CHANGELOG.md"
 
 [tool.setuptools.packages.find]
-include = [
-    "arbeitszeit",
-    "arbeitszeit.*",
-    "arbeitszeit_flask",
-    "arbeitszeit_flask.*",
-    "arbeitszeit_web",
-    "arbeitszeit_web.*",
-    "arbeitszeit_db",
-    "arbeitszeit_db.*",
-]
+where = [ "src" ]
 
 [tool.black]
 target-version = ['py312']
 extend-exclude = '''
 (
-  ^/arbeitszeit_db/migrations/versions/
+  ^/src/workers_control/db/migrations/versions/
 )
 '''
 
 [tool.isort]
 profile = "black"
 multi_line_output = 3
-skip = "arbeitszeit_db/migrations/versions/"
+skip = "src/workers_control/db/migrations/versions/"
 
 [tool.mypy]
 files = [
-    "arbeitszeit",
+    "src",
     "dev",
-    "arbeitszeit_flask",
-    "arbeitszeit_web",
-    "arbeitszeit_db",
     "build_support",
     "tests",
     "run-checks",
     "format_code.py",
 ]
-mypy_path = "dev/type_stubs"
+mypy_path = "src:dev/type_stubs"
 exclude = '''
-    migrations/versions/|dev/type_stubs/
+    dev/type_stubs
 '''
 disable_error_code = "type-abstract"
+explicit_package_bases = true
 
 [[tool.mypy.overrides]]
 module = [
-    "arbeitszeit",
-    "arbeitszeit_web",
-    "arbeitszeit_flask",
+    "src",
     "dev",
-    "arbeitszeit_db",
     "tests"
 ]
 allow_untyped_defs = false
@@ -104,13 +90,10 @@ ignore_errors = true
 
 [tool.coverage.run]
 source = [
-    "arbeitszeit",
-    "arbeitszeit_flask",
-    "arbeitszeit_web",
-    "arbeitszeit_db",
+    "src",
 ]
 omit = [
-    "arbeitszeit_db/migrations/versions/*",
+    "src/workers_control/db/migrations/versions/*",
 ]
 
 [tool.coverage.report]

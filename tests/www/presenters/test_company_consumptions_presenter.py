@@ -2,17 +2,17 @@ from decimal import Decimal
 from typing import Iterator
 from uuid import uuid4
 
-from arbeitszeit.interactors.query_company_consumptions import (
+from tests.data_generators import ConsumptionGenerator
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.query_company_consumptions import (
     ConsumptionQueryResponse,
     QueryCompanyConsumptionsInteractor,
 )
-from arbeitszeit.records import ConsumptionType
-from arbeitszeit_web.www.presenters.company_consumptions_presenter import (
+from workers_control.core.records import ConsumptionType
+from workers_control.web.www.presenters.company_consumptions_presenter import (
     CompanyConsumptionsPresenter,
     ViewModel,
 )
-from tests.data_generators import ConsumptionGenerator
-from tests.www.base_test_case import BaseTestCase
 
 
 class TestPresenter(BaseTestCase):

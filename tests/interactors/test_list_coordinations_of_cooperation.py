@@ -1,11 +1,11 @@
 from datetime import timedelta
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors.list_coordinations_of_cooperation import (
-    ListCoordinationsOfCooperationInteractor,
-)
 from tests.datetime_service import datetime_utc
 from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.interactors.list_coordinations_of_cooperation import (
+    ListCoordinationsOfCooperationInteractor,
+)
 
 
 class ListCoordinationsOfCooperationTest(BaseTestCase):

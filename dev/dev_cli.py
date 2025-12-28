@@ -3,12 +3,6 @@ from uuid import UUID
 
 import click
 
-from arbeitszeit.datetime_service import DatetimeService
-from arbeitszeit.injector import Injector
-from arbeitszeit.records import ProductionCosts
-from arbeitszeit.repositories import DatabaseGateway
-from arbeitszeit.services.payout_factor import PayoutFactorConfig, PayoutFactorService
-from arbeitszeit_db import commit_changes
 from dev.timeline_printer import TimelinePrinter
 from tests.data_generators import (
     CompanyGenerator,
@@ -18,6 +12,15 @@ from tests.data_generators import (
     PlanGenerator,
     WorkerAffiliationGenerator,
 )
+from workers_control.core.datetime_service import DatetimeService
+from workers_control.core.injector import Injector
+from workers_control.core.records import ProductionCosts
+from workers_control.core.repositories import DatabaseGateway
+from workers_control.core.services.payout_factor import (
+    PayoutFactorConfig,
+    PayoutFactorService,
+)
+from workers_control.db import commit_changes
 
 
 def create_fic_cli_group(injector: Injector) -> click.Group:

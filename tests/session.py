@@ -4,8 +4,8 @@ from dataclasses import dataclass
 from typing import List, Optional
 from uuid import UUID
 
-from arbeitszeit.injector import singleton
-from arbeitszeit_web.session import UserRole
+from workers_control.core.injector import singleton
+from workers_control.web.session import UserRole
 
 
 @singleton

@@ -67,7 +67,7 @@ When a plan gets approved, a couple of transfers of labour time are happening: T
 
 We consider a plan "active" when it has been approved and not yet expired. The expiration date is approval date plus planned timeframe. After expiration, consumption cannot be registered anymore on that plan.
 
-See the "PlanDraft" and "Plan" records in :py:mod:`arbeitszeit.records` for details and actual implementation. To dive deeper, you could also have a look at the following interactors in :py:mod:`arbeitszeit.interactors`:
+See the "PlanDraft" and "Plan" records in :py:mod:`workers_control.core.records` for details and actual implementation. To dive deeper, you could also have a look at the following interactors in :py:mod:`workers_control.core.interactors`:
 
 * CreatePlanDraft
 * FilePlanWithAccounting

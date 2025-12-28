@@ -3,17 +3,19 @@ from decimal import Decimal
 from typing import Optional
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors.get_draft_details import (
+from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.interactors.get_draft_details import (
     DraftDetailsSuccess,
     GetDraftDetailsInteractor,
 )
-from arbeitszeit.interactors.revoke_plan_filing import RevokePlanFilingInteractor
-from arbeitszeit.interactors.show_my_plans import (
+from workers_control.core.interactors.revoke_plan_filing import (
+    RevokePlanFilingInteractor,
+)
+from workers_control.core.interactors.show_my_plans import (
     ShowMyPlansInteractor,
     ShowMyPlansRequest,
 )
-from arbeitszeit.records import ProductionCosts
-from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.records import ProductionCosts
 
 rejection_reason = RevokePlanFilingInteractor.Response.RejectionReason
 

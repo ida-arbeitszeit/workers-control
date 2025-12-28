@@ -1,14 +1,14 @@
 import random
 from decimal import Decimal
 
-from arbeitszeit.injector import Injector
-from arbeitszeit.interactors import get_statistics
-from arbeitszeit.records import ProductionCosts
-from arbeitszeit_db.db import Database
 from tests.data_generators import PlanGenerator
 from tests.db.base_test_case import reset_test_db
 from tests.db.dependency_injection import DatabaseTestModule
 from tests.dependency_injection import TestingModule
+from workers_control.core.injector import Injector
+from workers_control.core.interactors import get_statistics
+from workers_control.core.records import ProductionCosts
+from workers_control.db.db import Database
 
 
 class GetStatisticsBenchmark:

@@ -1,8 +1,8 @@
 from datetime import UTC, datetime, timedelta
 from typing import Optional
 
-from arbeitszeit.datetime_service import DatetimeService
-from arbeitszeit.injector import singleton
+from workers_control.core.datetime_service import DatetimeService
+from workers_control.core.injector import singleton
 
 
 def datetime_utc(

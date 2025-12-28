@@ -1,12 +1,12 @@
 from uuid import uuid4
 
-from arbeitszeit.interactors.get_accountant_dashboard import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.get_accountant_dashboard import (
     GetAccountantDashboardInteractor,
 )
-from arbeitszeit_web.www.presenters.get_accountant_dashboard_presenter import (
+from workers_control.web.www.presenters.get_accountant_dashboard_presenter import (
     GetAccountantDashboardPresenter,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 class PresenterTests(BaseTestCase):

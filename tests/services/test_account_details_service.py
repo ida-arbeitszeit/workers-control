@@ -4,18 +4,18 @@ from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.anonymization import ANONYMIZED_STR, ANONYMIZED_UUID
-from arbeitszeit.records import SocialAccounting
-from arbeitszeit.services.account_details import (
+from tests.datetime_service import datetime_utc
+from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.anonymization import ANONYMIZED_STR, ANONYMIZED_UUID
+from workers_control.core.records import SocialAccounting
+from workers_control.core.services.account_details import (
     AccountDetailsService,
     AccountTransfer,
     TransferParty,
     TransferPartyType,
     construct_plot_data,
 )
-from arbeitszeit.transfers import TransferType
-from tests.datetime_service import datetime_utc
-from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.transfers import TransferType
 
 
 class ServiceBase(BaseTestCase):

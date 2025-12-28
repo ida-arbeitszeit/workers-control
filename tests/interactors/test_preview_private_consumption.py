@@ -2,8 +2,8 @@ from decimal import Decimal
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors import preview_private_consumption
-from arbeitszeit.records import ProductionCosts
+from workers_control.core.interactors import preview_private_consumption
+from workers_control.core.records import ProductionCosts
 
 from .base_test_case import BaseTestCase
 

@@ -2,8 +2,8 @@ from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors import confirm_member, log_in_member
-from arbeitszeit.interactors.change_user_email_address import (
+from workers_control.core.interactors import confirm_member, log_in_member
+from workers_control.core.interactors.change_user_email_address import (
     ChangeUserEmailAddressInteractor,
     Request,
 )

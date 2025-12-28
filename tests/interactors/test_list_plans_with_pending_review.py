@@ -1,8 +1,10 @@
 from typing import Optional
 from uuid import UUID
 
-from arbeitszeit.interactors.file_plan_with_accounting import FilePlanWithAccounting
-from arbeitszeit.interactors.list_plans_with_pending_review import (
+from workers_control.core.interactors.file_plan_with_accounting import (
+    FilePlanWithAccounting,
+)
+from workers_control.core.interactors.list_plans_with_pending_review import (
     ListPlansWithPendingReviewInteractor,
 )
 

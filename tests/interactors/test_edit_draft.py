@@ -3,13 +3,13 @@ from typing import Callable, Optional
 from unittest import TestCase
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors import edit_draft
-from arbeitszeit.interactors.get_draft_details import (
+from tests.data_generators import CompanyGenerator, PlanGenerator
+from workers_control.core.interactors import edit_draft
+from workers_control.core.interactors.get_draft_details import (
     DraftDetailsSuccess,
     GetDraftDetailsInteractor,
 )
-from arbeitszeit.records import ProductionCosts
-from tests.data_generators import CompanyGenerator, PlanGenerator
+from workers_control.core.records import ProductionCosts
 
 from .dependency_injection import get_dependency_injector
 

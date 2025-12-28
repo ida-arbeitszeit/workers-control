@@ -4,13 +4,15 @@ from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors.show_my_plans import (
+from tests.datetime_service import datetime_utc
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.show_my_plans import (
     PlanInfo,
     ShowMyPlansResponse,
 )
-from arbeitszeit_web.www.presenters.show_my_plans_presenter import ShowMyPlansPresenter
-from tests.datetime_service import datetime_utc
-from tests.www.base_test_case import BaseTestCase
+from workers_control.web.www.presenters.show_my_plans_presenter import (
+    ShowMyPlansPresenter,
+)
 
 
 class PresenterBase(BaseTestCase):

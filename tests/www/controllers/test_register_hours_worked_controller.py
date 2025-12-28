@@ -1,13 +1,15 @@
 from decimal import Decimal
 from uuid import uuid4
 
-from arbeitszeit.interactors.register_hours_worked import RegisterHoursWorkedRequest
-from arbeitszeit_web.www.controllers.register_hours_worked_controller import (
+from tests.request import FakeRequest
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.register_hours_worked import (
+    RegisterHoursWorkedRequest,
+)
+from workers_control.web.www.controllers.register_hours_worked_controller import (
     ControllerRejection,
     RegisterHoursWorkedController,
 )
-from tests.request import FakeRequest
-from tests.www.base_test_case import BaseTestCase
 
 
 class RegisterHoursWorkedControllerTests(BaseTestCase):

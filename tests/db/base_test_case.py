@@ -5,9 +5,6 @@ from unittest import TestCase
 from sqlalchemy import create_engine, event, text
 from sqlalchemy.orm import Session, SessionTransaction, scoped_session, sessionmaker
 
-from arbeitszeit.injector import Injector
-from arbeitszeit_db.db import Base, Database
-from arbeitszeit_db.repositories import DatabaseGatewayImpl
 from tests import data_generators
 from tests.datetime_service import FakeDatetimeService
 from tests.db.dependency_injection import (
@@ -18,6 +15,9 @@ from tests.dependency_injection import TestingModule
 from tests.lazy_property import _lazy_property
 from tests.markers import database_required
 from tests.www.datetime_formatter import FakeTimezoneConfiguration
+from workers_control.core.injector import Injector
+from workers_control.db.db import Base, Database
+from workers_control.db.repositories import DatabaseGatewayImpl
 
 
 @database_required

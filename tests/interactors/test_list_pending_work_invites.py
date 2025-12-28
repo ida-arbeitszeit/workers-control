@@ -2,8 +2,11 @@ from uuid import UUID
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors import invite_worker_to_company, list_pending_work_invites
 from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.interactors import (
+    invite_worker_to_company,
+    list_pending_work_invites,
+)
 
 
 class ListPendingWorkInvitesTests(BaseTestCase):

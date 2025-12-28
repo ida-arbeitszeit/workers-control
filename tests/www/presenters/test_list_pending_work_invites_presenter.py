@@ -2,11 +2,11 @@ from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors import list_pending_work_invites as interactor
-from arbeitszeit_web.www.presenters.list_pending_work_invites_presenter import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors import list_pending_work_invites as interactor
+from workers_control.web.www.presenters.list_pending_work_invites_presenter import (
     ListPendingWorkInvitesPresenter,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 class ListPendingWorkInvitesPresenterTests(BaseTestCase):

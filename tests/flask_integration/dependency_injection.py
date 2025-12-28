@@ -1,9 +1,9 @@
 from flask import Flask
 
-from arbeitszeit.injector import Binder, CallableProvider, Module
-from arbeitszeit_flask import create_app
 from tests.db.dependency_injection import provide_test_database_uri
 from tests.flask_integration.mail_service import MockEmailService
+from workers_control.core.injector import Binder, CallableProvider, Module
+from workers_control.flask import create_app
 
 
 class FlaskTestConfiguration(dict):

@@ -2,12 +2,12 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit_web.pagination import DEFAULT_PAGE_SIZE, PAGE_PARAMETER_NAME
-from arbeitszeit_web.www.presenters.query_companies_presenter import (
-    QueryCompaniesPresenter,
-)
 from tests.www.base_test_case import BaseTestCase
 from tests.www.presenters.data_generators import QueriedCompanyGenerator
+from workers_control.web.pagination import DEFAULT_PAGE_SIZE, PAGE_PARAMETER_NAME
+from workers_control.web.www.presenters.query_companies_presenter import (
+    QueryCompaniesPresenter,
+)
 
 
 class QueryCompaniesPresenterTests(BaseTestCase):

@@ -1,9 +1,9 @@
 from uuid import uuid4
 
-from arbeitszeit_web.www.controllers.show_a_account_details_controller import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.web.www.controllers.show_a_account_details_controller import (
     ShowAAccountDetailsController,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 class ControllerTests(BaseTestCase):

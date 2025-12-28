@@ -1,14 +1,14 @@
 from parameterized import parameterized
 
-from arbeitszeit.interactors.remove_worker_from_company import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.remove_worker_from_company import (
     Response as InteractorResponse,
 )
-from arbeitszeit_web.www.presenters import remove_worker_from_company_presenter
-from arbeitszeit_web.www.presenters.remove_worker_from_company_presenter import (
+from workers_control.web.www.presenters import remove_worker_from_company_presenter
+from workers_control.web.www.presenters.remove_worker_from_company_presenter import (
     RemoveWorkerFromCompanyPresenter as Presenter,
 )
-from arbeitszeit_web.www.response import Redirect
-from tests.www.base_test_case import BaseTestCase
+from workers_control.web.www.response import Redirect
 
 
 class TestRemoveWorkerFromCompanyPresenter(BaseTestCase):

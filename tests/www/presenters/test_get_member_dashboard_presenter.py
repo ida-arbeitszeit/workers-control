@@ -4,12 +4,12 @@ from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors import get_member_dashboard
-from arbeitszeit_web.session import UserRole
-from arbeitszeit_web.www.presenters.get_member_dashboard_presenter import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors import get_member_dashboard
+from workers_control.web.session import UserRole
+from workers_control.web.www.presenters.get_member_dashboard_presenter import (
     GetMemberDashboardPresenter,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 class GetMemberDashboardPresenterTests(BaseTestCase):

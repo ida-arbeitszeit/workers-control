@@ -1,13 +1,13 @@
 from unittest import TestCase
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors import get_coop_summary
-from arbeitszeit.interactors.end_cooperation import (
+from tests.data_generators import CompanyGenerator, CooperationGenerator, PlanGenerator
+from workers_control.core.interactors import get_coop_summary
+from workers_control.core.interactors.end_cooperation import (
     EndCooperationInteractor,
     EndCooperationRequest,
     EndCooperationResponse,
 )
-from tests.data_generators import CompanyGenerator, CooperationGenerator, PlanGenerator
 
 from .dependency_injection import get_dependency_injector
 

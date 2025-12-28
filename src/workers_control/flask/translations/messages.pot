@@ -1,0 +1,2363 @@
+# Translations template for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-12-28 20:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: src/workers_control/flask/forms.py:38
+#: src/workers_control/web/www/controllers/register_productive_consumption_controller.py:42
+msgid "Invalid ID."
+msgstr ""
+
+#: src/workers_control/flask/forms.py:39
+msgid "Number must be at least 0."
+msgstr ""
+
+#: src/workers_control/flask/forms.py:45 src/workers_control/flask/forms.py:259
+#: src/workers_control/flask/templates/company/register_productive_consumption.html:31
+#: src/workers_control/flask/templates/company/register_productive_consumption.html:43
+#: src/workers_control/flask/templates/member/register_private_consumption.html:27
+#: src/workers_control/flask/templates/member/register_private_consumption.html:33
+#: src/workers_control/web/formatters/plan_details_formatter.py:42
+msgid "Plan ID"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:46
+#: src/workers_control/flask/templates/macros/draft_form.html:22
+msgid "Product name"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:49
+msgid "Search Plans"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:55 src/workers_control/flask/forms.py:218
+msgid "Search term"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:60
+msgid "Newest"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:61
+#: src/workers_control/flask/templates/auth/signup_company.html:26
+msgid "Company name"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:69
+msgid "Search also for expired plans"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:87 src/workers_control/flask/forms.py:132
+#: src/workers_control/flask/forms.py:181
+#: src/workers_control/flask/forms.py:210
+#: src/workers_control/flask/templates/auth/login_accountant.html:18
+#: src/workers_control/flask/templates/auth/login_company.html:18
+#: src/workers_control/flask/templates/auth/login_member.html:18
+#: src/workers_control/flask/templates/auth/signup_accountant.html:18
+#: src/workers_control/flask/templates/auth/signup_company.html:18
+#: src/workers_control/flask/templates/auth/signup_member.html:18
+#: src/workers_control/flask/templates/macros/company_summary.html:24
+msgid "Email"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:90
+msgid "Proper email address required"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:95 src/workers_control/flask/forms.py:140
+#: src/workers_control/flask/forms.py:209
+#: src/workers_control/flask/forms.py:231
+#: src/workers_control/flask/templates/auth/signup_accountant.html:27
+#: src/workers_control/flask/templates/auth/signup_member.html:27
+#: src/workers_control/flask/templates/company/invite_worker_to_company.html:23
+#: src/workers_control/flask/templates/company/my_consumptions.html:24
+#: src/workers_control/flask/templates/macros/company_summary.html:20
+#: src/workers_control/flask/templates/member/consumptions.html:27
+#: src/workers_control/flask/templates/user/coop_summary.html:22
+#: src/workers_control/flask/templates/user/list_all_cooperations.html:18
+msgid "Name"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:97 src/workers_control/flask/forms.py:142
+msgid "Name is required"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:101
+#: src/workers_control/flask/forms.py:146
+#: src/workers_control/flask/forms.py:190
+#: src/workers_control/flask/templates/auth/login_accountant.html:27
+#: src/workers_control/flask/templates/auth/login_company.html:27
+#: src/workers_control/flask/templates/auth/login_member.html:27
+#: src/workers_control/flask/templates/auth/signup_accountant.html:36
+#: src/workers_control/flask/templates/auth/signup_company.html:34
+#: src/workers_control/flask/templates/auth/signup_member.html:36
+msgid "Password"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:106
+#: src/workers_control/flask/forms.py:151
+msgid "The password must be at least 8 characters in length"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:110
+msgid "Passwords must match"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:114
+#: src/workers_control/flask/templates/auth/signup_company.html:48
+#: src/workers_control/flask/templates/auth/signup_member.html:51
+msgid "Repeat Password"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:135
+msgid "Email address is required"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:164
+msgid "The entered email is not the one the invitation was sent to"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:184
+msgid "Email address required"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:192
+#: src/workers_control/flask/forms.py:325
+msgid "Password is required"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:195
+msgid "Remember login?"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:213
+msgid "Search for company"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:235
+#: src/workers_control/flask/templates/user/coop_summary.html:26
+msgid "Definition"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:265
+#: src/workers_control/flask/plots/routes.py:102
+#: src/workers_control/flask/templates/company/my_consumptions.html:28
+#: src/workers_control/flask/templates/company/register_hours_worked.html:20
+#: src/workers_control/flask/templates/company/register_productive_consumption.html:54
+#: src/workers_control/flask/templates/macros/draft_form.html:72
+#: src/workers_control/flask/templates/member/consumptions.html:30
+#: src/workers_control/flask/templates/member/register_private_consumption.html:48
+#: src/workers_control/flask/templates/member/register_private_consumption.html:54
+#: src/workers_control/web/formatters/plan_details_formatter.py:76
+msgid "Amount"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:272
+#: src/workers_control/web/www/presenters/company_consumptions_presenter.py:66
+msgid "Fixed means of production"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:275
+#: src/workers_control/web/www/presenters/company_consumptions_presenter.py:64
+msgid "Liquid means of production"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:279
+msgid "Type of consumption"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:314
+msgid "New email address"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:317
+msgid "Email address is required."
+msgstr ""
+
+#: src/workers_control/flask/forms.py:323
+msgid "Current password"
+msgstr ""
+
+#: src/workers_control/flask/plots/routes.py:41
+#: src/workers_control/web/www/presenters/transfers.py:110
+msgid "Work certificates"
+msgstr ""
+
+#: src/workers_control/flask/plots/routes.py:42
+msgid "Available product"
+msgstr ""
+
+#: src/workers_control/flask/plots/routes.py:50
+#: src/workers_control/flask/plots/routes.py:81
+#: src/workers_control/flask/templates/macros/draft_form.html:88
+#: src/workers_control/flask/templates/macros/draft_form.html:100
+#: src/workers_control/flask/templates/macros/draft_form.html:112
+msgid "Hours"
+msgstr ""
+
+#: src/workers_control/flask/plots/routes.py:66
+msgctxt "Text should be short"
+msgid "Fixed means"
+msgstr ""
+
+#: src/workers_control/flask/plots/routes.py:67
+msgctxt "Text should be short"
+msgid "Liquid means"
+msgstr ""
+
+#: src/workers_control/flask/plots/routes.py:68
+msgid "Work"
+msgstr ""
+
+#: src/workers_control/flask/plots/routes.py:96
+msgid "Productive plans"
+msgstr ""
+
+#: src/workers_control/flask/plots/routes.py:97
+msgid "Public plans"
+msgstr ""
+
+#: src/workers_control/flask/templates/accountant/dashboard.html:7
+#: src/workers_control/flask/templates/company/dashboard.html:7
+#, python-format
+msgid "Welcome, %(name)s!"
+msgstr ""
+
+#: src/workers_control/flask/templates/accountant/dashboard.html:12
+#: src/workers_control/flask/templates/company/dashboard.html:12
+#: src/workers_control/flask/templates/member/dashboard.html:11
+msgid "Your ID"
+msgstr ""
+
+#: src/workers_control/flask/templates/accountant/dashboard.html:14
+#: src/workers_control/flask/templates/company/dashboard.html:14
+#: src/workers_control/flask/templates/member/dashboard.html:13
+msgid "Your email"
+msgstr ""
+
+#: src/workers_control/flask/templates/accountant/dashboard.html:23
+#: src/workers_control/flask/templates/company/dashboard.html:34
+msgid "Frequent actions"
+msgstr ""
+
+#: src/workers_control/flask/templates/accountant/dashboard.html:31
+#: src/workers_control/flask/templates/accountant/plans-to-review-list.html:4
+msgid "List unreviewed plans"
+msgstr ""
+
+#: src/workers_control/flask/templates/accountant/notification-about-new-plan.html:2
+#, python-format
+msgid "Hello %(accountant_name)s,"
+msgstr ""
+
+#: src/workers_control/flask/templates/accountant/notification-about-new-plan.html:7
+#, python-format
+msgid ""
+"A company filed a new plan for \"%(product_name)s\". Log in as an "
+"accountant to conduct a review."
+msgstr ""
+
+#: src/workers_control/flask/templates/accountant/plan_details.html:4
+#: src/workers_control/flask/templates/company/plan_details.html:4
+#: src/workers_control/flask/templates/macros/plan_details.html:7
+#: src/workers_control/flask/templates/member/plan_details.html:4
+msgid "Plan information"
+msgstr ""
+
+#: src/workers_control/flask/templates/accountant/plans-to-review-list.html:9
+msgid "Unreviewed plans"
+msgstr ""
+
+#: src/workers_control/flask/templates/accountant/plans-to-review-list.html:27
+msgid "Approve plan"
+msgstr ""
+
+#: src/workers_control/flask/templates/accountant/plans-to-review-list.html:33
+msgid "Reject plan"
+msgstr ""
+
+#: src/workers_control/flask/templates/accountant/plans-to-review-list.html:43
+msgid "There are currently no plans waiting for review"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/accountant_invitation.html:3
+#, python-format
+msgid ""
+"Hello. You were invited to be a public accountant at Arbeitszeitapp. Go "
+"to %(link)s to register."
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/activate.html:1
+msgid ""
+"Welcome and thank you for registering! Please follow this link to "
+"activate your account:"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/help.html:6
+msgid "Start"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/help.html:13
+msgid "User manual"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/help.html:21
+#: src/workers_control/flask/templates/auth/help.html:35
+msgid "User roles"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/help.html:23
+#: src/workers_control/flask/templates/auth/help.html:38
+msgid "Members"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/help.html:24
+#: src/workers_control/flask/templates/auth/help.html:63
+#: src/workers_control/flask/templates/user/statistics.html:18
+msgid "Companies"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/help.html:26
+#: src/workers_control/flask/templates/auth/help.html:78
+msgid "Accountants"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/help.html:40
+msgid ""
+"Members are employed in companies and receive work certificates for work "
+"done."
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/help.html:43
+#: src/workers_control/flask/templates/auth/help.html:70
+#: src/workers_control/flask/templates/auth/help.html:85
+msgid "Registration and login"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/help.html:45
+#: src/workers_control/flask/templates/auth/help.html:73
+msgid "Registration and login are done on the start page."
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/help.html:47
+msgid "Company Affiliation"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/help.html:50
+msgid ""
+"Companies send invitations to registered members. If the member confirms "
+"the invitation, they are considered employed by the inviting company."
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/help.html:54
+msgid "Work certificates and consumption"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/help.html:57
+msgid ""
+"When a company registers that a member has worked, the member receives "
+"work certificates on their account."
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/help.html:66
+msgid ""
+"Companies use this application, among other things, for planning, viewing"
+" statistics, and passing on work certificates to workers."
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/help.html:81
+msgid "Accountants approve the plans of the companies on behalf of the society."
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/help.html:88
+msgid ""
+"Accountants receive an invitation link from the system administrator, "
+"with which they can register and log in."
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/login_accountant.html:8
+msgid "Login accountant"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/login_accountant.html:42
+#: src/workers_control/flask/templates/auth/login_company.html:42
+#: src/workers_control/flask/templates/auth/login_member.html:42
+msgid "Login"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/login_company.html:8
+msgid "Login company"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/login_company.html:47
+#: src/workers_control/flask/templates/auth/login_member.html:47
+msgid "Click here to create a new account."
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/login_member.html:8
+msgid "Login member"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/signup_accountant.html:8
+msgid "Sign up accountant"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/signup_accountant.html:49
+#: src/workers_control/flask/templates/auth/signup_company.html:60
+#: src/workers_control/flask/templates/auth/signup_member.html:64
+msgid "Sign Up"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/signup_company.html:8
+msgid "Sign up company"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/signup_company.html:65
+#: src/workers_control/flask/templates/auth/signup_member.html:69
+msgid "Click here to log in with an existing account."
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/signup_member.html:8
+msgid "Sign up member"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/start.html:10
+#: src/workers_control/flask/templates/auth/unconfirmed_company.html:9
+#: src/workers_control/flask/templates/auth/unconfirmed_member.html:9
+msgid "A platform for working time calculation."
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/start.html:13
+#: src/workers_control/web/www/presenters/list_transfers_presenter.py:116
+msgid "Member"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/start.html:14
+#: src/workers_control/flask/templates/company/dashboard.html:71
+#: src/workers_control/flask/templates/company/my_cooperations.html:68
+msgid "Company"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/start.html:15
+msgid "Accountant"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/start.html:18
+#: src/workers_control/flask/templates/company/dashboard.html:140
+#: src/workers_control/flask/templates/member/dashboard.html:87
+msgid "Latest plans"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/unconfirmed_company.html:14
+#: src/workers_control/flask/templates/auth/unconfirmed_member.html:13
+msgid "Welcome!"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/unconfirmed_company.html:16
+#: src/workers_control/flask/templates/auth/unconfirmed_member.html:15
+msgid "Please confirm your account."
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/unconfirmed_company.html:17
+#: src/workers_control/flask/templates/auth/unconfirmed_member.html:15
+msgid ""
+"Check your mailbox (and your spam folder) - you should have received an "
+"email with a confirmation link."
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/unconfirmed_company.html:18
+#: src/workers_control/flask/templates/auth/unconfirmed_member.html:16
+msgid "You did not get an email?"
+msgstr ""
+
+#: src/workers_control/flask/templates/auth/unconfirmed_company.html:19
+#: src/workers_control/flask/templates/auth/unconfirmed_member.html:17
+msgid "Resend mail"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/create_cooperation.html:4
+#: src/workers_control/flask/templates/company/my_cooperations.html:4
+#: src/workers_control/flask/templates/company/my_cooperations.html:10
+msgid "My cooperations"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/create_cooperation.html:5
+#: src/workers_control/flask/templates/company/create_cooperation.html:11
+msgid "Create Cooperation"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/create_cooperation.html:18
+msgid "Here you can create a new cooperation."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/create_cooperation.html:20
+msgid ""
+"A cooperation contains similar products.  The prices for all products in "
+"a cooperation are averaged to reduce price competition.  All producers "
+"still receive the credits on sale corresponding to how they planned "
+"production."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/create_cooperation.html:27
+msgid "Cooperation name"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/create_cooperation.html:35
+msgid "Definition of the cooperation"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/create_cooperation.html:44
+msgid "Create cooperation"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/create_draft.html:6
+#: src/workers_control/flask/templates/company/create_draft.html:12
+msgid "Create plan"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/create_draft.html:24
+msgid "Save as draft"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/create_draft.html:30
+#: src/workers_control/flask/templates/company/draft_details.html:29
+#: src/workers_control/flask/templates/company/my_cooperations.html:142
+#: src/workers_control/flask/templates/company/register_productive_consumption.html:75
+msgid "Cancel"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:21
+msgid "No workers are registered with your company. Click here to add some."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:42
+msgid "Create new plan"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:50
+msgid "Register productive consumption"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:57
+#: src/workers_control/flask/templates/company/register_hours_worked.html:4
+#: src/workers_control/flask/templates/company/register_hours_worked.html:13
+msgid "Register hours worked"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:64
+msgid "Company accounting"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:73
+msgid "Your company"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:78
+#: src/workers_control/flask/templates/macros/company_summary.html:134
+#: src/workers_control/flask/templates/user/query_plans.html:13
+#: src/workers_control/flask/templates/user/statistics.html:26
+#: src/workers_control/flask/templates/user/statistics.html:51
+msgid "Plans"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:81
+msgid "Your plans"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:96
+#: src/workers_control/flask/templates/user/statistics.html:30
+msgid "Cooperations"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:98
+msgid "Your cooperations"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:104
+msgid "Consumptions"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:106
+msgid "Your consumptions"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:112
+msgid "Product transfers"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:114
+msgid "Your product transfers"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:120
+#: src/workers_control/flask/templates/company/invite_worker_to_company.html:4
+#: src/workers_control/flask/templates/user/statistics.html:22
+#: src/workers_control/web/www/presenters/list_pending_work_invites_presenter.py:38
+msgid "Workers"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:121
+msgid "Members of your collective"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:127
+msgid "Hours worked"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:128
+msgid "Your registered working hours"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:134
+#: src/workers_control/flask/templates/member/dashboard.html:81
+msgid "Public accounting"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:158
+#: src/workers_control/flask/templates/member/dashboard.html:108
+#: src/workers_control/flask/templates/user/statistics.html:4
+#: src/workers_control/flask/templates/user/statistics.html:11
+msgid "Global statistics"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:166
+#: src/workers_control/flask/templates/member/dashboard.html:130
+#: src/workers_control/flask/templates/user/query_companies.html:4
+msgid "All companies"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:173
+#: src/workers_control/flask/templates/member/dashboard.html:116
+#: src/workers_control/flask/templates/user/query_plans.html:5
+msgid "All plans"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:180
+#: src/workers_control/flask/templates/member/dashboard.html:123
+#: src/workers_control/flask/templates/user/list_transfers.html:5
+msgid "All transfers"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/dashboard.html:187
+#: src/workers_control/flask/templates/user/list_all_cooperations.html:4
+#: src/workers_control/flask/templates/user/list_all_cooperations.html:11
+msgid "All cooperations"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/draft_details.html:6
+#: src/workers_control/flask/templates/company/draft_details.html:12
+msgid "Edit draft"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/draft_details.html:23
+msgid "Save draft"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/invite_worker_to_company.html:15
+msgid "Workers of the company"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/invite_worker_to_company.html:17
+#: src/workers_control/flask/templates/company/invite_worker_to_company.html:39
+msgid "No workers found."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/invite_worker_to_company.html:22
+#: src/workers_control/flask/templates/company/invite_worker_to_company.html:56
+msgid "Member ID"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/invite_worker_to_company.html:37
+msgid "Remove a worker"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/invite_worker_to_company.html:41
+msgid "Click here to remove a worker:"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/invite_worker_to_company.html:42
+#: src/workers_control/flask/templates/company/remove_worker_from_company.html:4
+#: src/workers_control/flask/templates/company/remove_worker_from_company.html:14
+#: src/workers_control/flask/templates/company/remove_worker_from_company.html:33
+msgid "Remove worker"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/invite_worker_to_company.html:48
+msgid "Invite worker"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/invite_worker_to_company.html:67
+msgid "Invite"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/invite_worker_to_company.html:72
+#: src/workers_control/flask/templates/company/invite_worker_to_company.html:74
+#: src/workers_control/web/www/presenters/list_pending_work_invites_presenter.py:42
+msgid "Pending work invites"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/invite_worker_to_company.html:73
+msgid "Click here to check for pending work invites:"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/list_pending_work_invites.html:13
+msgid "Pending Work Invites"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/list_pending_work_invites.html:15
+msgid "No pending work invites found."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/list_pending_work_invites.html:20
+msgid "Worker Id"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/list_pending_work_invites.html:21
+msgid "Worker Name"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/list_pending_work_invites.html:22
+#: src/workers_control/flask/templates/company/list_pending_work_invites.html:34
+msgid "Resend Invite"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/list_registered_hours_worked.html:4
+#: src/workers_control/flask/templates/company/list_registered_hours_worked.html:11
+msgid "Registered working hours"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_consumptions.html:4
+#: src/workers_control/flask/templates/member/consumptions.html:4
+#: src/workers_control/flask/templates/member/dashboard.html:74
+msgid "My consumptions"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_consumptions.html:10
+#: src/workers_control/flask/templates/member/consumptions.html:12
+msgid "My past consumptions"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_consumptions.html:15
+msgid "Here you can view your past consumptions."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_consumptions.html:23
+#: src/workers_control/flask/templates/member/consumptions.html:26
+msgid "Date"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_consumptions.html:25
+#: src/workers_control/flask/templates/member/consumptions.html:28
+msgid "Description"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_consumptions.html:26
+msgid "Purpose"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_consumptions.html:27
+msgid "Unit price"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_consumptions.html:29
+#: src/workers_control/flask/templates/member/consumptions.html:31
+msgid "Total price"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_consumptions.html:46
+msgid "You haven't consumed anything yet."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_cooperations.html:19
+msgid "Create cooperation "
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_cooperations.html:27
+msgid "Cooperations that I coordinate"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_cooperations.html:41
+#: src/workers_control/flask/templates/user/list_all_cooperations.html:19
+msgid "Number of plans"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_cooperations.html:48
+msgid "You do not coordinate any cooperation"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_cooperations.html:56
+msgid "Incoming cooperation request (by others)"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_cooperations.html:73
+#: src/workers_control/flask/templates/company/my_cooperations.html:128
+msgid "Plan"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_cooperations.html:77
+msgid "My cooperation"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_cooperations.html:88
+#: src/workers_control/flask/templates/member/show_company_work_invite_details.html:10
+msgid "Accept"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_cooperations.html:98
+msgid "Decline"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_cooperations.html:109
+msgid "You don't have open requests"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_cooperations.html:116
+msgid "Outgoing cooperation requests (own requests)"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_cooperations.html:132
+#: src/workers_control/flask/templates/company/my_cooperations.html:173
+#: src/workers_control/flask/templates/company/request_coordination_transfer.html:26
+#: src/workers_control/flask/templates/company/show_coordination_transfer_request.html:19
+#: src/workers_control/flask/templates/user/coop_summary.html:4
+#: src/workers_control/flask/templates/user/coop_summary.html:11
+#: src/workers_control/flask/templates/user/list_coordinations_of_cooperation.html:19
+#: src/workers_control/web/www/presenters/list_coordinations_of_cooperation_presenter.py:67
+#: src/workers_control/web/www/presenters/request_coordination_transfer_presenter.py:28
+msgid "Cooperation"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_cooperations.html:150
+msgid "You haven't requested any cooperation"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_cooperations.html:158
+msgid "My cooperating plans"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_cooperations.html:180
+msgid "You don't have any cooperating plans."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:4
+#: src/workers_control/flask/templates/company/my_plans.html:9
+msgid "My plans"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:13
+#: src/workers_control/web/formatters/plan_details_formatter.py:46
+#: src/workers_control/web/www/presenters/get_company_summary_presenter.py:128
+msgid "Active"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:17
+msgid "Your active plans."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:27
+msgid "Activation date"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:28
+msgid "Expiration date"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:33
+#: src/workers_control/flask/templates/user/query_plans.html:75
+msgid "Cooperating plan"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:36
+#: src/workers_control/flask/templates/company/my_plans.html:75
+#: src/workers_control/flask/templates/user/query_plans.html:78
+#: src/workers_control/web/formatters/plan_details_formatter.py:92
+#: src/workers_control/web/www/presenters/show_my_plans_presenter.py:232
+msgid "Public"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:50
+msgid "You don't have active plans."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:55
+msgid "Rejected"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:59
+msgid "Plans rejected by social accounting."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:69
+#: src/workers_control/flask/templates/company/my_plans.html:151
+#: src/workers_control/flask/templates/company/my_plans.html:202
+msgid "Creation date"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:70
+msgid "Rejection date"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:89
+msgid "You don't have rejected plans."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:94
+msgid "Waiting"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:97
+msgid "Plans waiting for approval by social accounting."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:102
+msgid "Costs"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:103
+#: src/workers_control/web/formatters/plan_details_formatter.py:90
+msgid "Type"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:104
+msgid "Plan created"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:105
+msgid "Revoke"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:117
+msgid "Revoke plan filing"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:130
+msgid "You don't have plans waiting for activation."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:137
+msgid "Drafts"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:141
+msgid ""
+"Your drafts. Click the envelope button to submit a plan to social "
+"accounting."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:159
+msgid "File plan"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:166
+msgid "Delete plan"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:173
+msgid "Edit plan"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:184
+msgid "You don't have any drafts saved."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:189
+#: src/workers_control/flask/templates/user/query_plans.html:81
+msgid "Expired"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:210
+msgid "Renew plan"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_plans.html:223
+msgid "You don't have expired plans."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/plan_details.html:15
+#: src/workers_control/flask/templates/company/plan_details.html:30
+#: src/workers_control/flask/templates/member/plan_details.html:12
+msgid "Actions"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/plan_details.html:20
+#: src/workers_control/flask/templates/company/plan_details.html:22
+#: src/workers_control/flask/templates/member/plan_details.html:17
+#: src/workers_control/flask/templates/member/plan_details.html:19
+#: src/workers_control/flask/templates/member/register_private_consumption.html:4
+#: src/workers_control/flask/templates/member/register_private_consumption.html:13
+msgid "Register consumption"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/plan_details.html:36
+msgid "End cooperation:"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/plan_details.html:42
+msgid "End"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/plan_details.html:46
+msgid "Join a cooperation"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/plan_details.html:48
+msgid "Join"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/register_hours_worked.html:31
+#: src/workers_control/flask/templates/company/remove_worker_from_company.html:20
+msgid "Worker"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/register_hours_worked.html:42
+#: src/workers_control/flask/templates/company/register_productive_consumption.html:74
+#: src/workers_control/flask/templates/member/register_private_consumption.html:70
+msgid "Register"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/register_hours_worked.html:47
+msgid "You can register workers here"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/register_hours_worked.html:50
+msgid "No workers registered yet"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/register_productive_consumption.html:4
+#: src/workers_control/flask/templates/company/register_productive_consumption.html:14
+msgid "Registration of productive consumption"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/register_productive_consumption.html:46
+msgid "Plan name"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/register_productive_consumption.html:49
+msgid "Plan description"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/register_productive_consumption.html:77
+msgid "Select"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/rejected_plan_notification.html:2
+#, python-format
+msgid "Hello %(company_name)s,"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/rejected_plan_notification.html:7
+#, python-format
+msgid ""
+"Your plan with id \"%(plan_id)s\" for product \"%(product_name)s\" was "
+"rejected by public accounting."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/request_cooperation.html:4
+#: src/workers_control/flask/templates/company/request_cooperation.html:10
+#: src/workers_control/flask/templates/company/request_cooperation.html:71
+msgid "Request cooperation"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/request_cooperation.html:16
+msgid "Here you can request a cooperation."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/request_cooperation.html:17
+msgid ""
+"The coordinator of the cooperation decides if they add your plan to the "
+"cooperation."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/request_cooperation.html:18
+msgid "All plans in a cooperation should offer the same or a similar product."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/request_cooperation.html:51
+msgid "My plan..."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/request_cooperation.html:65
+msgid "Cooperation ID"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/request_cooperation.html:77
+msgid "No plans yet."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/request_coordination_transfer.html:14
+msgid "Request coordination transfer"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/request_coordination_transfer.html:32
+msgid "Candidate ID"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/request_coordination_transfer.html:39
+msgid "Request transfer"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/review_registered_consumptions.html:4
+msgid "My product transfers"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/review_registered_consumptions.html:10
+msgid "My product transfers (sales)"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/show_coordination_transfer_request.html:5
+msgid "Coordination Transfer Request"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/show_coordination_transfer_request.html:11
+msgid "Request date"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/show_coordination_transfer_request.html:15
+#: src/workers_control/flask/templates/macros/company_summary.html:143
+#: src/workers_control/web/formatters/plan_details_formatter.py:44
+msgid "Status"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/show_coordination_transfer_request.html:25
+msgid "Candidate"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/show_coordination_transfer_request.html:36
+msgid "You are the candidate. Do you accept?"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/show_coordination_transfer_request.html:37
+msgid "Accept coordination transfer"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/accountant_navigation.html:27
+#: src/workers_control/flask/templates/macros/company_navigation.html:27
+#: src/workers_control/flask/templates/macros/member_navigation.html:29
+msgid "Dashboard"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/accountant_navigation.html:36
+#: src/workers_control/flask/templates/macros/company_navigation.html:35
+#: src/workers_control/flask/templates/macros/member_navigation.html:38
+msgid "Sign out"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/anonymous_navigation.html:31
+msgid "Help"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/anonymous_navigation.html:36
+msgid "Back"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/company_navigation.html:40
+msgid "?"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/company_summary.html:7
+#: src/workers_control/flask/templates/user/company_summary.html:4
+msgid "Company overview"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/company_summary.html:16
+#: src/workers_control/flask/templates/user/coop_summary.html:18
+msgid "ID"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/company_summary.html:28
+msgid "Registered since"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/company_summary.html:39
+msgid "Metrics"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/company_summary.html:54
+#: src/workers_control/flask/templates/user/company_account_p.html:16
+#: src/workers_control/flask/templates/user/company_accounts.html:32
+#: src/workers_control/web/www/presenters/show_p_account_details_presenter.py:50
+msgid "Account p"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/company_summary.html:63
+#: src/workers_control/flask/templates/user/company_account_r.html:16
+#: src/workers_control/flask/templates/user/company_accounts.html:43
+#: src/workers_control/web/www/presenters/show_r_account_details_presenter.py:44
+msgid "Account r"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/company_summary.html:72
+#: src/workers_control/flask/templates/user/company_account_a.html:16
+#: src/workers_control/flask/templates/user/company_accounts.html:54
+#: src/workers_control/web/www/presenters/show_a_account_details_presenter.py:45
+msgid "Account a"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/company_summary.html:81
+#: src/workers_control/flask/templates/user/company_account_prd.html:16
+#: src/workers_control/flask/templates/user/company_accounts.html:65
+#: src/workers_control/web/www/presenters/show_prd_account_details_presenter.py:47
+msgid "Account prd"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/company_summary.html:88
+msgid "Expectations"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/company_summary.html:94
+msgid "Balances"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/company_summary.html:100
+msgid "Deviation (&percnt;)"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/company_summary.html:114
+msgid "Suppliers"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/company_summary.html:126
+msgid "This company has no suppliers."
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/company_summary.html:144
+msgid "Planned sales"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/company_summary.html:145
+msgid "Sales deviation"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/company_summary.html:146
+msgid "Sales deviation (&percnt;)"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/draft_form.html:19
+msgid "Specify product name and description."
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/draft_form.html:31
+msgid "Product description"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/draft_form.html:42
+msgid ""
+"Choose a planning timeframe in which you are planning to produce and "
+"deliver your product."
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/draft_form.html:45
+msgid "Planning timeframe"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/draft_form.html:47
+msgid "Days"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/draft_form.html:57
+msgid ""
+"This value is used for informational purposes only, i.e. you do not have "
+"to adhere to any rules here. For example, if you plan to produce "
+"beverages, you are free to choose if your smallest delivery unit is one "
+"can or one six-pack of cans."
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/draft_form.html:59
+#: src/workers_control/web/formatters/plan_details_formatter.py:73
+msgid "Smallest delivery unit"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/draft_form.html:62
+msgid "E.g. 1 package, 1 kilogram, 20 bottles, 1 language lesson, etc."
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/draft_form.html:70
+msgid ""
+"How many of your \"smallest delivery unit\" will you produce in total? By"
+" dividing the sum of your production costs by this amount, the app "
+"calculates how much labour time is required to produce one piece of your "
+"product."
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/draft_form.html:84
+#: src/workers_control/flask/templates/macros/plan_details.html:89
+msgid ""
+"This field is mainly to account for wear and tear of machines. E.g. if "
+"you plan to use a machine that cost 10000 hours to produce, for 10 years,"
+" and you have ten one-year-plans, then for this fixed mean of production,"
+" the value would be 1000."
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/draft_form.html:86
+#: src/workers_control/web/formatters/plan_details_formatter.py:78
+msgid "Costs for fixed means of production"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/draft_form.html:96
+#: src/workers_control/flask/templates/macros/plan_details.html:96
+msgid ""
+"Here, recurring costs from raw materials and consumables are summarized, "
+"e.g. electricity, rent for production halls, maintenance of machines etc."
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/draft_form.html:98
+#: src/workers_control/web/formatters/plan_details_formatter.py:82
+msgid "Costs for liquid means of production"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/draft_form.html:108
+#: src/workers_control/flask/templates/macros/plan_details.html:103
+msgid "Planned hours of human work."
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/draft_form.html:110
+msgid "Costs for labour"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/draft_form.html:121
+msgid ""
+"Products and services within a supply chain should not be marked public. "
+"Only checkmark this box if your product will be generally and freely "
+"available."
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/draft_form.html:125
+msgid "This plan is a public service"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/language_selection.html:5
+msgid "Language"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/plan_details.html:13
+msgid ""
+"This plan ID identifies your plan. It is used to account for labour time "
+"by workers and companies that work on, or respectively consume, the "
+"planned product or service."
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/plan_details.html:46
+msgid ""
+"Status can be \"Active\", i.e. plan was approved and current date is "
+"within planning timeframe, or \"Inactive\", i.e. plan is not yet approved"
+" or it is expired."
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/plan_details.html:61
+msgid "Plan creation"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/plan_details.html:64
+msgid "Plan approval"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/plan_details.html:67
+msgid "Plan expiration"
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/plan_details.html:78
+msgid "This is the amount you plan to deliver."
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/plan_details.html:115
+msgid ""
+"\"Type\" can be either \"Productive\" or \"Public\". Products from the "
+"latter can be consumed for free, and are funded via the Factor of "
+"Individual Consumption (FIC)."
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/plan_details.html:122
+msgid ""
+"This is the amount of time that is debited when the product is consumed. "
+"0 for public plans."
+msgstr ""
+
+#: src/workers_control/flask/templates/macros/plan_details.html:136
+msgid "This field shows working hours spent per produced unit."
+msgstr ""
+
+#: src/workers_control/flask/templates/member/consumptions.html:17
+msgid "Your past consumptions are shown here."
+msgstr ""
+
+#: src/workers_control/flask/templates/member/consumptions.html:29
+msgid "Price per unit"
+msgstr ""
+
+#: src/workers_control/flask/templates/member/consumptions.html:47
+msgid "You have not consumed anything yet."
+msgstr ""
+
+#: src/workers_control/flask/templates/member/dashboard.html:15
+msgid "Your credit"
+msgstr ""
+
+#: src/workers_control/flask/templates/member/dashboard.html:17
+msgid "Your workplaces"
+msgstr ""
+
+#: src/workers_control/flask/templates/member/dashboard.html:30
+msgid ""
+"You are not registered with any company. Tell your company your member ID"
+" so that they register you."
+msgstr ""
+
+#: src/workers_control/flask/templates/member/dashboard.html:53
+msgid "My area"
+msgstr ""
+
+#: src/workers_control/flask/templates/member/dashboard.html:60
+#: src/workers_control/web/www/presenters/transfers.py:96
+msgid "Private consumption"
+msgstr ""
+
+#: src/workers_control/flask/templates/member/dashboard.html:67
+#: src/workers_control/flask/templates/member/my_account.html:4
+msgid "My account"
+msgstr ""
+
+#: src/workers_control/flask/templates/member/my_account.html:11
+msgid "My Account"
+msgstr ""
+
+#: src/workers_control/flask/templates/member/my_account.html:14
+msgid "Current balance"
+msgstr ""
+
+#: src/workers_control/flask/templates/member/notification-about-work-invitation.html:1
+msgid ""
+"You have been invited by a company to join them as a member on "
+"Arbeitszeitapp. Accept or reject via this link:"
+msgstr ""
+
+#: src/workers_control/flask/templates/member/show_company_work_invite_details.html:13
+msgid "Reject"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/account_details.html:5
+msgid "User Account Data"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/account_details.html:8
+msgid "Account ID:"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/account_details.html:11
+msgid "Email address:"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/account_details.html:15
+#: src/workers_control/flask/templates/user/request_email_address_change.html:5
+msgid "Change email address"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/account_details.html:19
+msgid "Current time:"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/company_account_a.html:21
+msgid "The account for work certificates"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/company_account_a.html:23
+#: src/workers_control/flask/templates/user/company_account_p.html:23
+#: src/workers_control/flask/templates/user/company_account_prd.html:22
+#: src/workers_control/flask/templates/user/company_account_r.html:23
+msgid "Balance:"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/company_account_p.html:21
+msgid "The account for fixed means of production."
+msgstr ""
+
+#: src/workers_control/flask/templates/user/company_account_prd.html:20
+msgid "The account for product transfers (sales)."
+msgstr ""
+
+#: src/workers_control/flask/templates/user/company_account_r.html:21
+msgid "The account for liquid means of production"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/company_accounts.html:4
+#: src/workers_control/flask/templates/user/company_accounts.html:13
+#: src/workers_control/web/www/presenters/get_company_dashboard_presenter.py:78
+#: src/workers_control/web/www/presenters/show_a_account_details_presenter.py:40
+#: src/workers_control/web/www/presenters/show_p_account_details_presenter.py:45
+#: src/workers_control/web/www/presenters/show_prd_account_details_presenter.py:41
+#: src/workers_control/web/www/presenters/show_r_account_details_presenter.py:39
+msgid "Accounts"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/company_accounts.html:17
+msgid "Each company has four accounts."
+msgstr ""
+
+#: src/workers_control/flask/templates/user/company_accounts.html:35
+msgid "Account for fixed means of production"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/company_accounts.html:46
+msgid "Account for liquid means of production"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/company_accounts.html:57
+msgid "Account for work certificates (wages)"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/company_accounts.html:67
+msgid "Account for product transfers (sales)"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/confirm_email_address_change.html:6
+#, python-format
+msgid ""
+"Do you really want to change your email address from \"%(old_email)s\" to"
+" \"%(new_email)s\"?"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/confirm_email_address_change.html:13
+msgid ""
+"If you have more than one account with this email address, the address of"
+" all accounts will change."
+msgstr ""
+
+#: src/workers_control/flask/templates/user/confirm_email_address_change.html:19
+msgid "Yes"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/confirm_email_address_change.html:20
+msgid "No"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/coop_summary.html:32
+msgid "Current coordinator"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/coop_summary.html:41
+msgid "Transfer coordination"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/coop_summary.html:48
+#: src/workers_control/flask/templates/user/list_coordinations_of_cooperation.html:12
+msgid "History of coordinators"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/coop_summary.html:53
+msgid "Cooperation price"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/coop_summary.html:63
+msgid "Participating plans"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/coop_summary.html:89
+msgid "End cooperation"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/coop_summary.html:101
+msgid "Individual price"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/list_all_cooperations.html:34
+msgid "No cooperations found"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/list_coordinations_of_cooperation.html:37
+msgid "Start of coordination"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/list_coordinations_of_cooperation.html:39
+msgid "End of coordination"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/list_coordinations_of_cooperation.html:48
+msgid "No coordinators found."
+msgstr ""
+
+#: src/workers_control/flask/templates/user/list_transfers.html:13
+msgid "Transfers"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/list_transfers.html:18
+#: src/workers_control/flask/templates/user/query_companies.html:36
+#: src/workers_control/flask/templates/user/query_plans.html:48
+msgid "Results"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/list_transfers.html:43
+#: src/workers_control/flask/templates/user/list_transfers.html:53
+msgid "Account"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/query_companies.html:11
+msgid "Search companies"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/query_companies.html:22
+msgid "Search by name or email"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/query_companies.html:30
+#: src/workers_control/flask/templates/user/query_plans.html:42
+msgid "Search"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/query_plans.html:22
+msgid "Search by plan ID or product name"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/query_plans.html:30
+msgid "Sort by"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/request_email_address_change.html:32
+msgid "Submit"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/request_email_change_notification.html:1
+msgid ""
+"Dear Arbeitszeitapp user,\n"
+"\n"
+"someone tried to change the email address for your user account. If this "
+"was you please visit the following link to confirm this change."
+msgstr ""
+
+#: src/workers_control/flask/templates/user/request_email_change_warning.html:1
+msgid ""
+"Dear Arbeitszeitapp user,\n"
+"\n"
+"someone tried to change the email address for your user account. If this "
+"was not you, please contact the administrators of the app."
+msgstr ""
+
+#: src/workers_control/flask/templates/user/request_email_change_warning.html:5
+msgid "Admin email address:"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/statistics.html:38
+msgid "FIC (Payout factor)"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/statistics.html:44
+msgid "Balance for Public Sector Fund (PSF)"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/statistics.html:57
+msgid "Planned ressources"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/statistics.html:63
+msgid "Certificates and products"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/statistics.html:73
+msgid "Active plans"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/statistics.html:74
+msgid "Public active plans"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/statistics.html:75
+#: src/workers_control/flask/templates/user/statistics.html:84
+msgid "Average plan duration"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/statistics.html:76
+msgid "Currently planned fixed means"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/statistics.html:77
+msgid "Currently planned liquid means"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/statistics.html:78
+msgid "Currently planned work"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/statistics.html:79
+msgid "Available work certificates"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/statistics.html:80
+msgid "Available product (no public products)"
+msgstr ""
+
+#: src/workers_control/flask/views/create_draft_view.py:52
+msgid "Draft successfully saved."
+msgstr ""
+
+#: src/workers_control/web/email/accountant_invitation_presenter.py:33
+msgid "Invitation to Arbeitszeitapp"
+msgstr ""
+
+#: src/workers_control/web/email/cooperation_request_email_presenter.py:17
+msgid "A company requests cooperation"
+msgstr ""
+
+#: src/workers_control/web/email/cooperation_request_email_presenter.py:20
+#, python-format
+msgid ""
+"Hello %(coordinator)s,<br>A company wants to be part of a cooperation "
+"that you are coordinating. Please check the request in the "
+"Arbeitszeitapp."
+msgstr ""
+
+#: src/workers_control/web/email/email_change_confirmation_presenter.py:24
+#: src/workers_control/web/email/email_change_warning_view.py:20
+msgid "Email address change requested"
+msgstr ""
+
+#: src/workers_control/web/email/invite_worker_presenter.py:24
+msgid "Invitation from a company on Arbeitszeitapp"
+msgstr ""
+
+#: src/workers_control/web/email/notify_about_worker_removal_from_company_presenter.py:18
+msgid "Worker removed from company"
+msgstr ""
+
+#: src/workers_control/web/email/notify_accountant_about_new_plan_presenter.py:20
+msgid "Plan was filed"
+msgstr ""
+
+#: src/workers_control/web/email/registration_email_presenter.py:41
+msgid "Account confirmation"
+msgstr ""
+
+#: src/workers_control/web/email/request_coordination_transfer_presenter.py:20
+msgid "You are asked to be the coordinator of a cooperation"
+msgstr ""
+
+#: src/workers_control/web/email/request_coordination_transfer_presenter.py:24
+#, python-format
+msgid ""
+"Hello %(candidate)s,<br>Your are asked to be the coordinator of the "
+"cooperation '%(cooperation)s'. Please follow this link to check the "
+"request in the Arbeitszeitapp: <a href='%(url)s'>LINK</a>."
+msgstr ""
+
+#: src/workers_control/web/formatters/plan_details_formatter.py:48
+#: src/workers_control/web/www/presenters/get_company_summary_presenter.py:130
+msgid "Inactive"
+msgstr ""
+
+#: src/workers_control/web/formatters/plan_details_formatter.py:52
+msgid "Planning company"
+msgstr ""
+
+#: src/workers_control/web/formatters/plan_details_formatter.py:60
+msgid "Name of product"
+msgstr ""
+
+#: src/workers_control/web/formatters/plan_details_formatter.py:64
+msgid "Description of product"
+msgstr ""
+
+#: src/workers_control/web/formatters/plan_details_formatter.py:68
+msgid "Planning timeframe (days)"
+msgstr ""
+
+#: src/workers_control/web/formatters/plan_details_formatter.py:86
+msgid "Costs for work"
+msgstr ""
+
+#: src/workers_control/web/formatters/plan_details_formatter.py:94
+#: src/workers_control/web/www/presenters/show_my_plans_presenter.py:234
+msgid "Productive"
+msgstr ""
+
+#: src/workers_control/web/formatters/plan_details_formatter.py:98
+msgid "Price (hours/unit)"
+msgstr ""
+
+#: src/workers_control/web/formatters/plan_details_formatter.py:110
+msgid "Labour time (hours/unit)"
+msgstr ""
+
+#: src/workers_control/web/forms/formfield_parsers.py:19
+msgid "Invalid UUID."
+msgstr ""
+
+#: src/workers_control/web/forms/formfield_parsers.py:43
+#: src/workers_control/web/www/controllers/register_private_consumption_form_validator.py:29
+msgid "This is not an integer."
+msgstr ""
+
+#: src/workers_control/web/forms/formfield_parsers.py:50
+#: src/workers_control/web/www/controllers/register_private_consumption_form_validator.py:33
+msgid "Must be a number larger than zero."
+msgstr ""
+
+#: src/workers_control/web/www/authentication.py:37
+#: src/workers_control/web/www/authentication.py:107
+#: src/workers_control/web/www/authentication.py:126
+#: src/workers_control/web/www/authentication.py:155
+msgid "Please log in to view this page."
+msgstr ""
+
+#: src/workers_control/web/www/authentication.py:59
+#: src/workers_control/web/www/authentication.py:99
+#: src/workers_control/web/www/authentication.py:134
+msgid "You are not logged in with the correct account."
+msgstr ""
+
+#: src/workers_control/web/www/controllers/change_user_email_address_controller.py:27
+msgid "Email address remains unchanged."
+msgstr ""
+
+#: src/workers_control/web/www/controllers/create_draft_controller.py:28
+#: src/workers_control/web/www/controllers/edit_draft_controller.py:26
+msgid "Please correct the errors in the form."
+msgstr ""
+
+#: src/workers_control/web/www/controllers/draft_form_validator.py:49
+msgid "At least one of the costs fields must be a positive number of hours."
+msgstr ""
+
+#: src/workers_control/web/www/controllers/draft_form_validator.py:126
+#: src/workers_control/web/www/controllers/draft_form_validator.py:145
+#: src/workers_control/web/www/controllers/draft_form_validator.py:179
+#: src/workers_control/web/www/controllers/register_productive_consumption_controller.py:64
+msgid "This field is required."
+msgstr ""
+
+#: src/workers_control/web/www/controllers/draft_form_validator.py:150
+msgid "This field must be an integer."
+msgstr ""
+
+#: src/workers_control/web/www/controllers/draft_form_validator.py:185
+#: src/workers_control/web/www/controllers/draft_form_validator.py:189
+msgid "This field must be zero or a positive number."
+msgstr ""
+
+#: src/workers_control/web/www/controllers/invite_worker_to_company_controller.py:46
+msgid "Invalid UUID"
+msgstr ""
+
+#: src/workers_control/web/www/controllers/register_private_consumption_form_validator.py:20
+#: src/workers_control/web/www/controllers/register_private_consumption_form_validator.py:22
+msgid "Plan ID is invalid."
+msgstr ""
+
+#: src/workers_control/web/www/controllers/register_private_consumption_form_validator.py:31
+msgid "You must specify an amount."
+msgstr ""
+
+#: src/workers_control/web/www/controllers/remove_worker_from_company_controller.py:25
+msgid "Worker ID in request is invalid or missing."
+msgstr ""
+
+#: src/workers_control/web/www/controllers/request_cooperation_controller.py:34
+msgid "Invalid plan ID."
+msgstr ""
+
+#: src/workers_control/web/www/controllers/request_cooperation_controller.py:41
+msgid "Invalid cooperation ID."
+msgstr ""
+
+#: src/workers_control/web/www/controllers/select_productive_consumption_controller.py:45
+msgid "The provided plan ID is not a valid UUID."
+msgstr ""
+
+#: src/workers_control/web/www/controllers/select_productive_consumption_controller.py:65
+msgid "The provided amount is not a valid integer."
+msgstr ""
+
+#: src/workers_control/web/www/controllers/select_productive_consumption_controller.py:92
+msgid "The provided type of consumption is not valid."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/accept_cooperation_request_presenter.py:25
+msgid "Cooperation request has been accepted."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/accept_cooperation_request_presenter.py:33
+#: src/workers_control/web/www/presenters/deny_cooperation_presenter.py:34
+msgid "Plan or cooperation not found."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/accept_cooperation_request_presenter.py:41
+msgid "Something's wrong with that plan."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/accept_cooperation_request_presenter.py:48
+#: src/workers_control/web/www/presenters/deny_cooperation_presenter.py:41
+msgid "This cooperation request does not exist."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/accept_cooperation_request_presenter.py:56
+#: src/workers_control/web/www/presenters/deny_cooperation_presenter.py:49
+msgid "You are not coordinator of this cooperation."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/accept_coordination_transfer_presenter.py:41
+msgid ""
+"Successfully accepted the request. You are now coordinator of the "
+"cooperation."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/accept_coordination_transfer_presenter.py:59
+msgid "Transfer request not found."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/accept_coordination_transfer_presenter.py:66
+msgid "This request is not valid anymore."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/accept_coordination_transfer_presenter.py:74
+msgid "You are not the candidate of this request."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/answer_company_work_invite_presenter.py:25
+#, python-format
+msgid "You successfully joined \"%(company)s\"."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/answer_company_work_invite_presenter.py:31
+#, python-format
+msgid "You rejected the invitation from \"%(company)s\"."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/answer_company_work_invite_presenter.py:37
+msgid "Accepting or rejecting is not possible."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/approve_plan_presenter.py:26
+msgid "Plan was approved successfully"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/approve_plan_presenter.py:30
+msgid "Plan approval failed"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/cancel_cooperation_request_presenter.py:22
+msgid "Cooperation request has been canceled."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/cancel_cooperation_request_presenter.py:26
+msgid "Error: Not possible to cancel request."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/change_user_email_address_presenter.py:26
+msgid ""
+"Something went wrong. Perhaps the email address is not valid or already "
+"in use."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/change_user_email_address_presenter.py:32
+msgid "Email address changed successfully."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/create_cooperation_presenter.py:26
+msgid "Successfully created cooperation."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/create_cooperation_presenter.py:34
+msgid "There is already a cooperation with the same name."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/create_cooperation_presenter.py:42
+msgid "Internal error: Coordinator not found."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/create_draft_from_plan_presenter.py:27
+msgid "A new draft was created from an expired plan."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/create_draft_presenter.py:26
+msgid "Plan draft successfully created"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/delete_draft_presenter.py:26
+#, python-format
+msgid "Plan draft %(product_name)s was deleted"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/deny_cooperation_presenter.py:25
+msgid "Cooperation request has been denied."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/deny_cooperation_presenter.py:56
+msgid "Could not deny cooperation"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/edit_draft_presenter.py:25
+msgid "The draft you are trying to edit does not exist."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/edit_draft_presenter.py:32
+msgid "You are not authorized to edit this draft."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/end_cooperation_presenter.py:30
+msgid "Cooperation could not be terminated."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/end_cooperation_presenter.py:34
+msgid "Cooperation has been terminated."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/file_plan_with_accounting_presenter.py:28
+msgid "Successfully filed plan with social accounting"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/file_plan_with_accounting_presenter.py:34
+msgid "Could not file plan with social accounting"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/get_company_dashboard_presenter.py:79
+msgid "You have four accounts"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/get_coordination_transfer_request_details_presenter.py:49
+msgid "Pending"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/get_coordination_transfer_request_details_presenter.py:51
+msgid "Closed"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/get_member_dashboard_presenter.py:64
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:47
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:50
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:53
+#, python-format
+msgid "%(num).2f hours"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/get_member_dashboard_presenter.py:78
+#, python-format
+msgid "Welcome, %s!"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/get_member_dashboard_presenter.py:104
+#, python-format
+msgid "Company %(company)s has invited you!"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:44
+#, python-format
+msgid "%(num).2f days"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/hide_plan_presenter.py:18
+#, python-format
+msgid "Expired plan %(plan_id)s is no longer shown to you."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/invite_worker_to_company_presenter.py:29
+msgid "Worker could not be found."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/invite_worker_to_company_presenter.py:38
+msgid "Company could not be found."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/invite_worker_to_company_presenter.py:47
+msgid "Worker already works for the company."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/invite_worker_to_company_presenter.py:56
+msgid "Invitation has already been issued."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/invite_worker_to_company_presenter.py:63
+msgid "Worker has been invited successfully."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/list_coordinations_of_cooperation_presenter.py:73
+msgid "Coordinators"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/list_transfers_presenter.py:121
+msgid "Social Accounting"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/log_in_accountant_presenter.py:29
+#: src/workers_control/web/www/presenters/log_in_member_presenter.py:46
+msgid "Incorrect password"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/log_in_accountant_presenter.py:37
+msgid "This email address does not belong to a registered accountant"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/log_in_company_presenter.py:41
+msgid "Password is incorrect"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/log_in_company_presenter.py:46
+msgid "Email address is not correct. Are you already signed up?"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/log_in_member_presenter.py:41
+msgid "Email address incorrect. Are you already registered as a member?"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/query_companies_presenter.py:41
+msgid "No results"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/query_plans_presenter.py:47
+msgid "No results."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/register_accountant_presenter.py:36
+#, python-format
+msgid "Could not register %(email_address)s as an accountant"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/register_company_presenter.py:28
+#: src/workers_control/web/www/presenters/register_member_presenter.py:31
+msgid "This email address is already registered."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/register_company_presenter.py:32
+msgid "Wrong password."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/register_hours_worked_presenter.py:27
+msgid "This worker does not work in your company."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/register_hours_worked_presenter.py:33
+msgid "Labour hours successfully registered"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/register_hours_worked_presenter.py:44
+msgid "Invalid input"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/register_hours_worked_presenter.py:50
+msgid "A negative amount is not allowed."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/register_member_presenter.py:39
+msgid ""
+"A company with the same email address already exists but the provided "
+"password does not match."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/register_private_consumption_presenter.py:37
+msgid "Consumption successfully registered."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/register_private_consumption_presenter.py:45
+msgid ""
+"The specified plan has been expired. Please contact the selling company "
+"to provide you with an up-to-date plan ID."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/register_private_consumption_presenter.py:53
+msgid "You do not have enough work certificates."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/register_private_consumption_presenter.py:62
+msgid "Failed to register private consumption. Are you logged in as a member?"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/register_private_consumption_presenter.py:69
+msgid "There is no plan with the specified ID in the database."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:33
+msgid "Successfully registered."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:38
+msgid "Plan does not exist."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:43
+msgid ""
+"The specified plan has expired. Please contact the provider to obtain a "
+"current plan ID."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:52
+msgid "Registration failed. Companies cannot acquire public products."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:58
+msgid "Registration failed. Companies cannot acquire their own products."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:63
+msgid "The specified type of consumption is invalid."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/reject_plan_presenter.py:27
+msgid "Plan was rejected successfully. An email was sent to the planning company."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/reject_plan_presenter.py:32
+msgid "Plan rejection failed. No email sent."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/remove_worker_from_company_presenter.py:29
+msgid "Worker successfully removed from company."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/request_cooperation_presenter.py:32
+#: src/workers_control/web/www/presenters/request_coordination_transfer_presenter.py:89
+msgid "Request has been sent."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/request_cooperation_presenter.py:39
+msgid "Plan not found."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/request_cooperation_presenter.py:44
+#: src/workers_control/web/www/presenters/request_coordination_transfer_presenter.py:83
+msgid "Cooperation not found."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/request_cooperation_presenter.py:49
+msgid "Plan not active."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/request_cooperation_presenter.py:56
+msgid "Plan is already cooperating or requested a cooperation."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/request_cooperation_presenter.py:64
+msgid "Public plans cannot cooperate."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/request_cooperation_presenter.py:72
+msgid "Only the creator of a plan can request a cooperation."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/request_coordination_transfer_presenter.py:34
+msgid "Request Coordination Transfer"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/request_coordination_transfer_presenter.py:49
+msgid "The candidate is not a company."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/request_coordination_transfer_presenter.py:57
+msgid "You are not the coordinator."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/request_coordination_transfer_presenter.py:65
+msgid "The candidate is already the coordinator."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/request_coordination_transfer_presenter.py:74
+msgid "Request has not been sent. You have a pending transfer request."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/request_email_address_change_presenter.py:34
+msgid "The email address seems to be invalid."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/request_email_address_change_presenter.py:46
+msgid "The email address seems to be already taken."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/request_email_address_change_presenter.py:53
+msgid "The password is incorrect."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/request_email_address_change_presenter.py:61
+msgid "A confirmation mail has been sent to your new email address."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/request_email_address_change_presenter.py:68
+msgid "Your request for an email address change was rejected."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/resend_work_invite_presenter.py:22
+msgid "Invite does not exist."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/resend_work_invite_presenter.py:27
+msgid "Invite has been resent successfully."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/revoke_plan_filing_presenter.py:20
+msgid "Unexpected error: Not possible to revoke plan filing."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/revoke_plan_filing_presenter.py:25
+msgid "Filing of plan has been successfully revoked."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/select_productive_consumption_presenter.py:45
+msgid "The selected plan does not exist or is not active anymore."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/show_company_work_invite_details_presenter.py:30
+#, python-format
+msgid ""
+"The company \"%(company_name)s\" invites you to join them. Do you want to"
+" accept this invitation?"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/show_my_plans_presenter.py:118
+msgid "You don't have any plans."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/transfers.py:68
+msgid "Anonymous worker"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/transfers.py:80
+msgid "Planned fixed means of production"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/transfers.py:82
+msgid "Planned liquid means of production"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/transfers.py:84
+msgid "Planned labour"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/transfers.py:87
+msgid "Planned fixed means of production (public service)"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/transfers.py:91
+msgid "Planned liquid means of production (public service)"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/transfers.py:94
+msgid "Planned labour (public service)"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/transfers.py:99
+msgid "Productive consumption of fixed means of production"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/transfers.py:103
+msgid "Productive consumption of liquid means of production"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/transfers.py:106
+msgid "Compensation for overproductive planning"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/transfers.py:108
+msgid "Compensation for underproductive planning"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/transfers.py:112
+msgid "Contribution to public sector"
+msgstr ""
+

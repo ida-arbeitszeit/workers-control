@@ -1,11 +1,11 @@
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors.end_cooperation import EndCooperationRequest
-from arbeitszeit_web.www.controllers.end_cooperation_controller import (
-    EndCooperationController,
-)
 from tests.request import FakeRequest
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.end_cooperation import EndCooperationRequest
+from workers_control.web.www.controllers.end_cooperation_controller import (
+    EndCooperationController,
+)
 
 
 class EndCooperationControllerTests(BaseTestCase):

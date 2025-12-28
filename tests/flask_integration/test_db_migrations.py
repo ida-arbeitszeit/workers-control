@@ -3,9 +3,9 @@ from alembic.config import Config
 from alembic.script import ScriptDirectory
 from sqlalchemy import inspect, text
 
-from arbeitszeit_db.db import Base
-from arbeitszeit_flask import create_app
 from tests.db.base_test_case import TestCaseWithResettedDatabase
+from workers_control.db.db import Base
+from workers_control.flask import create_app
 
 from .dependency_injection import FlaskTestConfiguration
 

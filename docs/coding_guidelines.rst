@@ -13,7 +13,7 @@ action that would be necessary regardless of whether our application
 existed.
 
 To keep our code organized, we place each interactor in its own class
-within a file under the ``arbeitszeit/interactors/`` directory. Each 
+within a file under the ``src/workers_control/core/interactors/`` directory. Each
 interactor class should expose a single "public" method that adequately
 describes the interactor in its name. For instance, in our example, we
 might name this method ``file_plan``. This method should take exactly
@@ -73,7 +73,7 @@ testing setup offers::
 
   from decimal import Decimal
   from parameterized import parameterized
-  from arbeitszeit.interactors import file_plan
+  from workers_control.core.interactors import file_plan
   from tests.interactors.base_test_case import BaseTestCase
 
   class FilePlanTests(BaseTestCase):
@@ -137,7 +137,7 @@ protocol. It has two types of methods: ``create_*`` methods to persist
 new data records in the DB and ``get_*`` methods that allow us to
 query existing data records. The kinds of data records that DB
 implementations should understand are defined in
-:py:mod:`arbeitszeit.records`. These simple dataclasses defined will be
+:py:mod:`workers_control.core.records`. These simple dataclasses defined will be
 called *records*.
 
 .. rubric:: Object creation
@@ -190,7 +190,7 @@ DB the appropriate name for the *get method* would be
 ``get_council_records``. Note the plural in the method name.
 
 The return value of those *get methods* must be a subclass of
-:py:class:`arbeitszeit.repositories.QueryResult` with the proper type
+:py:class:`workers_control.core.repositories.QueryResult` with the proper type
 parameter. Those result types are also protocols. Here would be an
 example for the ``CouncilReport`` record type::
 
@@ -212,7 +212,7 @@ the "original" instance.  Let's look at an example::
   recent_council_reports = all_council_reports.release_after(datetime(2020, 1, 1))
   # recent_council_reports represents a query that will yield all CouncilReport records
   # with a release_date after the 1. Jan 2020.  all_council_reports remains unchanged
-  # and still yields all records from DB without any filtering.
+  # and still yields all records from workers_control.db without any filtering.
 
 *Get methods* must not accept any explicit
 arguments. Here is an example for such a *get method*::
@@ -308,8 +308,9 @@ A ``Transfer`` object follows roughly this structure::
         credit_account: UUID
         value: Decimal
 
-You will find the ``Transfer`` object in the business logic, in :py:mod:`arbeitszeit.records`,
-as well as a database implementation in :py:mod:`arbeitszeit_flask.database.models`.  
+You will find the ``Transfer`` object in the business logic,
+in :py:mod:`workers_control.core.records`, as well as a database
+implementation in :py:mod:`workers_control.flask.database.models`.  
 
 Apart from these Transfer objects, we have other objects that may reference 
 one or more transfers. For example, there might be a ``Consumption`` object, 
@@ -511,8 +512,8 @@ authorization requirements. For instance, request handlers that only
 allow companies to access are grouped together, while those requiring
 the user to be authenticated as an accountant are placed in a
 different group. To organize this, we use `Flask blueprints`_, which
-are structured in subdirectories of the :py:mod:`arbeitszeit_flask.routes`
-directory in our codebase.
+are structured in subdirectories of the
+:py:mod:`workers_control.flask.routes` directory in our codebase.
 
 
 Request handling
@@ -533,7 +534,7 @@ For a class-based request handler, you need one method for each HTTP
 method to be handled. Here's an example for a handler managing
 ``GET``, ``POST``, and ``DELETE`` requests::
 
-    from arbeitszeit_flask.types import Response
+    from workers_control.flask.flask.types import Response
 
     class MyRequestHandler:
         def GET(self) -> Response:
@@ -556,7 +557,7 @@ consider the `URI path pattern`_ ``/member/<uuid:member_id>``. A
 handler for this path must accept a ``member_id`` argument of type
 ``UUID`` for any of the allowed methods::
 
-    from arbeitszeit_flask.types import Response
+    from workers_control.flask.types import Response
 
     class MyRequestHandler:
         def GET(self, member_id: UUID) -> Response:
@@ -583,7 +584,7 @@ Per-user timezones are not implemented yet.
 Icons
 -----
 
-The icon template directory ``arbeitszeit_flask/templates/icons``
+The icon template module ``workers_control.flask.templates.icons``
 contains Flask-based (Jinja2) HTML template icon files of form
 ``<icon-name>.html``. These icon files containing one HTML SVG element
 must follow a simple but specific code style to ensure proper integration
@@ -727,7 +728,7 @@ If you want to extend or override SVG attributes, do the following:
 
 
 More info, concerning the ``icon`` filter implementation, can be found in
-:py:func:`arbeitszeit_flask.filters.icon_filter`.
+:py:func:`workers_control.flask.filters.icon_filter`.
 
 
 App Configuration
@@ -744,7 +745,7 @@ Let's assume we want to activate a hypothetical feature that allows "automatic" 
 
   AUTOMATIC_APPROVAL="1"
 
-We can read this value from Flask's config object after starting the app::
+We can read this value from workers_control.flask's config object after starting the app::
 
   from flask import current_app
   automatic_approval_config = current_app.config["AUTOMATIC_APPROVAL"]
@@ -792,7 +793,7 @@ through our Dependency Injection framework (see :ref:`dependency_injection`).
 Moreover, in order to use different Flask app instances with different
 configuration values (e.g., for testing, development, production), we pass specific
 test and dev configs into the :py:func:`create_app()` function in
-:py:mod:`arbeitszeit_flask.__init__`. Just like the
+:py:mod:`workers_control.flask.__init__`. Just like the
 production configs, they are loaded into Flask's ``app.config`` dictionary on startup.
 In an app instances intended for manual testing, for example, we might want to set
 ``AUTOMATIC_APPROVAL="0"``.
@@ -805,7 +806,7 @@ Dependency Injection
 
 
 We use a custom dependency injection (DI) framework located in
-:py:mod:`arbeitszeit.injector`. It is inspired by the
+:py:mod:`workers_control.core.injector`. It is inspired by the
 `Injector <https://injector.readthedocs.io/>`_ framework and shares
 core concepts with it.
 
@@ -822,7 +823,7 @@ domain logic tests, and other testing scenarios.
 Let's say we have a ``BusinessObject``, that has two
 dependencies: a ``Translator`` and a ``DatetimeService``::
 
-  from arbeitszeit import DatetimeService, Translator
+  from workers_control.core import DatetimeService, Translator
 
   class BusinessObject:
       def __init__(
@@ -838,8 +839,8 @@ Now we can configure an Injector instance with test bindings and
 instantiate the ``BusinessObject`` with subtypes of its dependencies
 for testing purposes::
 
-  from arbeitszeit import BusinessObject, DatetimeService, Translator
-  from arbeitszeit.injector import AliasProvider, Binder, Injector, Module
+  from workers_control.core import BusinessObject, DatetimeService, Translator
+  from workers_control.core.injector import AliasProvider, Binder, Injector, Module
   from tests import FakeDatetimeService, FakeTranslator
 
   class TestModule(Module):
@@ -853,22 +854,22 @@ for testing purposes::
 
 We use this kind of injection in most of our unit tests.
 
-Note that singleton instances can be created by using the ``arbeitszeit.injector.singleton``
-decorator.
+Note that singleton instances can be created by using the
+``singleton`` decorator.
 
 Dependency injection in the Flask app is less straightforward, due to the
 Flask's request context. Flask uses thread-local globals such as ``request``, ``session``, and
 ``current_user``, which are only available within a request context.
 Therefore, a new ``Injector`` is created for each request
 (see ``create_dependency_injector()`` in
-:py:mod:`arbeitszeit_flask.dependency_injection`).
+:py:mod:`workers_control.flask.dependency_injection`).
 
 
 Translations
 ------------
 
 We use `Flask-Babel <https://python-babel.github.io/flask-babel/>`_
-for translation. The translation files reside in :py:mod:`arbeitszeit_flask.translations`.
+for translation. The translation files reside in :py:mod:`workers_control.flask.translations`.
 You find there a ``.pot`` file as well as language-specific ``.po`` files.
 
 The workflow for updating the translations is as follows:
@@ -882,7 +883,7 @@ The workflow for updating the translations is as follows:
     python -m build_support.translations initialize fr
 
 
-  Add the language to the LANGUAGES variable in :py:mod:`arbeitszeit_flask.config.configuration_base`.
+  Add the language to the LANGUAGES variable in :py:mod:`workers_control.flask.config.production_defaults`.
 
 **2. Mark strings**
 

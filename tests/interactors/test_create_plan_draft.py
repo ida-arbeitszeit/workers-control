@@ -2,13 +2,13 @@ from dataclasses import replace
 from decimal import Decimal
 from uuid import uuid4
 
-from arbeitszeit.interactors import get_draft_details
-from arbeitszeit.interactors.create_plan_draft import (
+from workers_control.core.interactors import get_draft_details
+from workers_control.core.interactors.create_plan_draft import (
     CreatePlanDraft,
     RejectionReason,
     Request,
 )
-from arbeitszeit.records import ProductionCosts
+from workers_control.core.records import ProductionCosts
 
 from .base_test_case import BaseTestCase
 

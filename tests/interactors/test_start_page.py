@@ -1,8 +1,8 @@
 from unittest import TestCase
 
-from arbeitszeit.interactors.start_page import StartPageInteractor
 from tests.data_generators import PlanGenerator
 from tests.datetime_service import FakeDatetimeService, datetime_utc
+from workers_control.core.interactors.start_page import StartPageInteractor
 
 from .dependency_injection import get_dependency_injector
 

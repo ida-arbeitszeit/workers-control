@@ -3,21 +3,21 @@ from decimal import Decimal
 from typing import List, Optional
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors.query_companies import (
+from tests.datetime_service import datetime_utc
+from workers_control.core.interactors.query_companies import (
     CompanyFilter,
     CompanyQueryResponse,
     QueriedCompany,
     QueryCompaniesRequest,
 )
-from arbeitszeit.interactors.query_plans import (
+from workers_control.core.interactors.query_plans import (
     PlanFilter,
     PlanQueryResponse,
     PlanSorting,
     QueriedPlan,
     QueryPlansRequest,
 )
-from arbeitszeit.services.plan_details import PlanDetails
-from tests.datetime_service import datetime_utc
+from workers_control.core.services.plan_details import PlanDetails
 
 
 class QueriedPlanGenerator:

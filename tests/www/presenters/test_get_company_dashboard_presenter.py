@@ -1,15 +1,15 @@
 from typing import List, Optional
 from uuid import uuid4
 
-from arbeitszeit.interactors.get_company_dashboard import (
-    GetCompanyDashboardInteractor as Interactor,
-)
-from arbeitszeit_web.session import UserRole
-from arbeitszeit_web.www.presenters.get_company_dashboard_presenter import (
-    GetCompanyDashboardPresenter,
-)
 from tests.datetime_service import datetime_utc
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.get_company_dashboard import (
+    GetCompanyDashboardInteractor as Interactor,
+)
+from workers_control.web.session import UserRole
+from workers_control.web.www.presenters.get_company_dashboard_presenter import (
+    GetCompanyDashboardPresenter,
+)
 
 
 class CompanyDashboardBaseTestCase(BaseTestCase):

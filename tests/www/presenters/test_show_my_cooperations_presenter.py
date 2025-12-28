@@ -1,24 +1,24 @@
 from typing import Optional
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors.list_coordinations_of_company import (
+from tests.datetime_service import datetime_min_utc
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.list_coordinations_of_company import (
     CooperationInfo,
     ListCoordinationsOfCompanyResponse,
 )
-from arbeitszeit.interactors.list_my_cooperating_plans import (
+from workers_control.core.interactors.list_my_cooperating_plans import (
     ListMyCooperatingPlansInteractor,
 )
-from arbeitszeit.interactors.show_company_cooperations import (
+from workers_control.core.interactors.show_company_cooperations import (
     InboundCoopRequest,
     OutboundCoopRequest,
     Response,
 )
-from arbeitszeit_web.session import UserRole
-from arbeitszeit_web.www.presenters.show_my_cooperations_presenter import (
+from workers_control.web.session import UserRole
+from workers_control.web.www.presenters.show_my_cooperations_presenter import (
     ShowMyCooperationsPresenter,
 )
-from tests.datetime_service import datetime_min_utc
-from tests.www.base_test_case import BaseTestCase
 
 LIST_COORDINATIONS_RESPONSE_LEN_1 = ListCoordinationsOfCompanyResponse(
     coordinations=[

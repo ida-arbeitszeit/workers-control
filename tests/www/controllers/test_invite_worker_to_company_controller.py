@@ -2,11 +2,11 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit_web.www.controllers.invite_worker_to_company_controller import (
-    InviteWorkerToCompanyController,
-)
 from tests.request import FakeRequest
 from tests.www.base_test_case import BaseTestCase
+from workers_control.web.www.controllers.invite_worker_to_company_controller import (
+    InviteWorkerToCompanyController,
+)
 
 
 class InviteWorkerToCompanyControllerTests(BaseTestCase):

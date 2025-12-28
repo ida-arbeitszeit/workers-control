@@ -1,8 +1,8 @@
 from uuid import uuid4
 
-from arbeitszeit.interactors.hide_plan import HidePlanResponse
-from arbeitszeit_web.www.presenters.hide_plan_presenter import HidePlanPresenter
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.hide_plan import HidePlanResponse
+from workers_control.web.www.presenters.hide_plan_presenter import HidePlanPresenter
 
 SUCCESSFUL_DELETE_RESPONSE = HidePlanResponse(
     plan_id=uuid4(),

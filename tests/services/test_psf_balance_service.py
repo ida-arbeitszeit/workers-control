@@ -3,8 +3,8 @@ from uuid import UUID
 
 from parameterized import parameterized
 
-from arbeitszeit.services.psf_balance import PublicSectorFundService
 from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.services.psf_balance import PublicSectorFundService
 
 
 class PublicSectorFundServiceCalculationTests(BaseTestCase):

@@ -1,10 +1,12 @@
 from parameterized import parameterized
 
-from arbeitszeit.interactors.accept_cooperation import AcceptCooperationResponse
-from arbeitszeit_web.www.presenters.accept_cooperation_request_presenter import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.accept_cooperation import (
+    AcceptCooperationResponse,
+)
+from workers_control.web.www.presenters.accept_cooperation_request_presenter import (
     AcceptCooperationRequestPresenter,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 class ShowMyCooperationsPresenterTests(BaseTestCase):

@@ -1,16 +1,16 @@
 import os
 
-from arbeitszeit.injector import (
+from workers_control.core.injector import (
     AliasProvider,
     Binder,
     CallableProvider,
     Module,
 )
-from arbeitszeit.records import SocialAccounting
-from arbeitszeit.repositories import DatabaseGateway
-from arbeitszeit_db import get_social_accounting
-from arbeitszeit_db.db import Database
-from arbeitszeit_db.repositories import DatabaseGatewayImpl
+from workers_control.core.records import SocialAccounting
+from workers_control.core.repositories import DatabaseGateway
+from workers_control.db import get_social_accounting
+from workers_control.db.db import Database
+from workers_control.db.repositories import DatabaseGatewayImpl
 
 
 def provide_test_database_uri() -> str:

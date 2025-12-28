@@ -5,13 +5,13 @@ from uuid import UUID
 
 from parameterized import parameterized
 
-from arbeitszeit.decimal import decimal_sum
-from arbeitszeit.interactors.get_statistics import GetStatisticsInteractor
-from arbeitszeit.records import ProductionCosts
-from arbeitszeit.repositories import DatabaseGateway
-from arbeitszeit.services.payout_factor import PayoutFactorService
 from tests.datetime_service import datetime_utc
 from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.decimal import decimal_sum
+from workers_control.core.interactors.get_statistics import GetStatisticsInteractor
+from workers_control.core.records import ProductionCosts
+from workers_control.core.repositories import DatabaseGateway
+from workers_control.core.services.payout_factor import PayoutFactorService
 
 Number = Union[int, Decimal]
 

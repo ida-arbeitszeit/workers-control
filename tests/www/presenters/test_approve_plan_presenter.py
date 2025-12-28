@@ -1,6 +1,10 @@
-from arbeitszeit.interactors.approve_plan import ApprovePlanInteractor as Interactor
-from arbeitszeit_web.www.presenters.approve_plan_presenter import ApprovePlanPresenter
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.approve_plan import (
+    ApprovePlanInteractor as Interactor,
+)
+from workers_control.web.www.presenters.approve_plan_presenter import (
+    ApprovePlanPresenter,
+)
 
 
 class PresenterTests(BaseTestCase):

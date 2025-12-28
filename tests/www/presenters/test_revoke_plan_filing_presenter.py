@@ -1,10 +1,12 @@
 from uuid import uuid4
 
-from arbeitszeit.interactors.revoke_plan_filing import RevokePlanFilingInteractor
-from arbeitszeit_web.www.presenters.revoke_plan_filing_presenter import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.revoke_plan_filing import (
+    RevokePlanFilingInteractor,
+)
+from workers_control.web.www.presenters.revoke_plan_filing_presenter import (
     RevokePlanFilingPresenter,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 class RevokePlanFilingPresenterTest(BaseTestCase):

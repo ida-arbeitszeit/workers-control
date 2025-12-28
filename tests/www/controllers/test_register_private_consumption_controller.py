@@ -3,17 +3,17 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors.register_private_consumption import (
+from tests.request import FakeRequest
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.register_private_consumption import (
     RegisterPrivateConsumptionRequest,
 )
-from arbeitszeit_web.www.controllers.register_private_consumption_controller import (
+from workers_control.web.www.controllers.register_private_consumption_controller import (
     FormError,
     RegisterPrivateConsumptionController,
     ViewModel,
 )
-from arbeitszeit_web.www.response import Redirect
-from tests.request import FakeRequest
-from tests.www.base_test_case import BaseTestCase
+from workers_control.web.www.response import Redirect
 
 
 class RegisterPrivateConsumptionControllerTests(BaseTestCase):

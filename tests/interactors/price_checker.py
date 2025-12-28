@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from decimal import Decimal
 from uuid import UUID
 
-from arbeitszeit.interactors.get_plan_details import GetPlanDetailsInteractor
+from workers_control.core.interactors.get_plan_details import GetPlanDetailsInteractor
 
 
 @dataclass

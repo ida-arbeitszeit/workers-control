@@ -1,7 +1,7 @@
 from uuid import uuid4
 
-from arbeitszeit import email_notifications
-from arbeitszeit.interactors.resend_confirmation_mail import (
+from workers_control.core import email_notifications
+from workers_control.core.interactors.resend_confirmation_mail import (
     ResendConfirmationMailInteractor as Interactor,
 )
 

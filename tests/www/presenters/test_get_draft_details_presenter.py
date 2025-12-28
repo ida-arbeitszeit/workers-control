@@ -4,13 +4,13 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors.get_draft_details import DraftDetailsSuccess
-from arbeitszeit_web.www.presenters.get_draft_details_presenter import (
-    GetDraftDetailsPresenter,
-)
 from tests.datetime_service import datetime_utc
 from tests.www.base_test_case import BaseTestCase
 from tests.www.presenters.data_generators import PlanDetailsGenerator
+from workers_control.core.interactors.get_draft_details import DraftDetailsSuccess
+from workers_control.web.www.presenters.get_draft_details_presenter import (
+    GetDraftDetailsPresenter,
+)
 
 
 class DraftDetailsPresenterTests(BaseTestCase):

@@ -1,9 +1,9 @@
 from uuid import uuid4
 
-from arbeitszeit_web.www.controllers.revoke_plan_filing_controller import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.web.www.controllers.revoke_plan_filing_controller import (
     RevokePlanFilingController,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 class RevokePlanFilingControllerTest(BaseTestCase):

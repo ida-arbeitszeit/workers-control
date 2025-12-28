@@ -3,9 +3,9 @@ from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors import select_productive_consumption
-from arbeitszeit.records import ConsumptionType
 from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.interactors import select_productive_consumption
+from workers_control.core.records import ConsumptionType
 
 
 class InteractorTests(BaseTestCase):

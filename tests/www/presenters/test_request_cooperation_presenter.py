@@ -1,11 +1,13 @@
 from typing import Optional
 
-from arbeitszeit.interactors.request_cooperation import RequestCooperationResponse
-from arbeitszeit_web.www.presenters.request_cooperation_presenter import (
-    RequestCooperationPresenter,
-)
 from tests.email import FakeEmailService
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.request_cooperation import (
+    RequestCooperationResponse,
+)
+from workers_control.web.www.presenters.request_cooperation_presenter import (
+    RequestCooperationPresenter,
+)
 
 RejectionReason = RequestCooperationResponse.RejectionReason
 

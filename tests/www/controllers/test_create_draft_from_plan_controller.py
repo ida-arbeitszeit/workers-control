@@ -1,9 +1,9 @@
 from uuid import uuid4
 
-from arbeitszeit_web.www.controllers.create_draft_from_plan_controller import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.web.www.controllers.create_draft_from_plan_controller import (
     CreateDraftFromPlanController,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 # It is okay (for now) to run the tests only for authenticated

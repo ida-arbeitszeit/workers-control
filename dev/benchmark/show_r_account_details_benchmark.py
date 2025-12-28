@@ -1,10 +1,10 @@
-from arbeitszeit.injector import Injector
-from arbeitszeit.interactors import show_r_account_details
-from arbeitszeit_db.db import Database
 from tests.data_generators import CompanyGenerator, ConsumptionGenerator, PlanGenerator
 from tests.db.base_test_case import reset_test_db
 from tests.db.dependency_injection import DatabaseTestModule
 from tests.dependency_injection import TestingModule
+from workers_control.core.injector import Injector
+from workers_control.core.interactors import show_r_account_details
+from workers_control.db.db import Database
 
 
 class ShowRAccountDetailsBenchmark:

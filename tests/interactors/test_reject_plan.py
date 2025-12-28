@@ -1,23 +1,23 @@
 from decimal import Decimal
 from uuid import UUID
 
-from arbeitszeit.interactors.get_company_summary import (
+from tests.datetime_service import datetime_utc
+from workers_control.core.interactors.get_company_summary import (
     AccountBalances,
     GetCompanySummaryInteractor,
 )
-from arbeitszeit.interactors.register_productive_consumption import (
+from workers_control.core.interactors.register_productive_consumption import (
     RegisterProductiveConsumptionInteractor,
     RegisterProductiveConsumptionRequest,
     RegisterProductiveConsumptionResponse,
 )
-from arbeitszeit.interactors.reject_plan import RejectPlanInteractor
-from arbeitszeit.interactors.show_my_plans import (
+from workers_control.core.interactors.reject_plan import RejectPlanInteractor
+from workers_control.core.interactors.show_my_plans import (
     PlanInfo,
     ShowMyPlansInteractor,
     ShowMyPlansRequest,
 )
-from arbeitszeit.records import ConsumptionType, ProductionCosts
-from tests.datetime_service import datetime_utc
+from workers_control.core.records import ConsumptionType, ProductionCosts
 
 from .base_test_case import BaseTestCase
 

@@ -36,7 +36,7 @@ class FlaskTestConfiguration(dict):
                 "MAIL_USERNAME": "",
                 "MAIL_PASSWORD": "",
                 "LANGUAGES": {"en": "English", "de": "Deutsch", "es": "Español"},
-                "ARBEITSZEIT_PASSWORD_HASHER": "tests.password_hasher:PasswordHasherImpl",
+                "WOCO_PASSWORD_HASHER": "tests.password_hasher:PasswordHasherImpl",
                 "AUTO_MIGRATE": False,
                 "DEFAULT_USER_TIMEZONE": "UTC",
                 "ALEMBIC_CONFIG": "tests/flask_integration/alembic.ini",

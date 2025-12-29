@@ -42,7 +42,7 @@ Environment variables
 .....................
 
 
-.. py:data:: ARBEITSZEITAPP_CONFIGURATION_PATH
+.. py:data:: WOCO_CONFIGURATION_PATH
    :no-index:
     
     (optional)
@@ -68,8 +68,8 @@ Configuration file
 
 The application loads the first config file found from these locations:
 
-* Path set in ``ARBEITSZEITAPP_CONFIGURATION_PATH`` environment variable (see above)
-* ``/etc/arbeitszeitapp/arbeitszeitapp.py``
+* Path set in ``WOCO_CONFIGURATION_PATH`` environment variable (see above)
+* ``/etc/workers-control/workers-control.py``
 
 The configuration file must be a valid python script.
 Configuration options are set as top-level variables. The following

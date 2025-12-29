@@ -27,7 +27,7 @@ class FlaskDevConfiguration:
     FLASK_DEBUG = 1
     TESTING = True
 
-    SERVER_NAME = os.environ.get("ARBEITSZEITAPP_SERVER_NAME", "127.0.0.1:5000")
+    SERVER_NAME = os.environ.get("WOCO_SERVER_NAME", "127.0.0.1:5000")
     FORCE_HTTPS = True
     PREFERRED_URL_SCHEME = "http"
     SESSION_COOKIE_HTTPONLY = True
@@ -61,16 +61,16 @@ class FlaskDevConfiguration:
     SECURITY_PASSWORD_SALT = "dev password salt"
     SECRET_KEY = os.environ.get("DEV_SECRET_KEY", "dev secret key")
     WTF_CSRF_ENABLED = False
-    ARBEITSZEIT_PASSWORD_HASHER = "tests.password_hasher:PasswordHasherImpl"
+    WOCO_PASSWORD_HASHER = "tests.password_hasher:PasswordHasherImpl"
 
-    SQLALCHEMY_DATABASE_URI = os.environ["ARBEITSZEITAPP_DEV_DB"]
+    SQLALCHEMY_DATABASE_URI = os.environ["WOCO_DEV_DB"]
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     ALEMBIC_CONFIG = os.getenv("ALEMBIC_CONFIG")
     AUTO_MIGRATE = os.getenv("AUTO_MIGRATE", False)
 
 
 def provide_dev_database() -> Database:
-    Database().configure(uri=os.environ["ARBEITSZEITAPP_DEV_DB"])
+    Database().configure(uri=os.environ["WOCO_DEV_DB"])
     return Database()
 
 

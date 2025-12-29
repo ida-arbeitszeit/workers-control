@@ -32,7 +32,7 @@ class FlaskTestCase(DatabaseTestCase):
         super().tearDown()
 
     def email_service(self) -> MockEmailService:
-        return current_app.extensions["arbeitszeit_email_plugin"]
+        return current_app.extensions["woco_email_plugin"]
 
     def get_injection_modules(self) -> list[Module]:
         # tests inheriting from this class can override this method in

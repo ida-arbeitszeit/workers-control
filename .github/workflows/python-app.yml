@@ -86,7 +86,7 @@ jobs:
         pytest
         deactivate
       env:
-        ARBEITSZEITAPP_TEST_DB: postgresql://postgres:postgres@localhost:5432/postgres
+        WOCO_TEST_DB: postgresql://postgres:postgres@localhost:5432/postgres
     - name: Try build developer documentation
       run: |
         . ./venv/bin/activate

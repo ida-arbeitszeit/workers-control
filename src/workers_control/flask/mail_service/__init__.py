@@ -12,8 +12,8 @@ def load_email_plugin(app: Flask) -> None:
     module = importlib.import_module(module_name)
     plugin_class = getattr(module, class_name)
     assert issubclass(plugin_class, EmailPlugin)
-    app.extensions["arbeitszeit_email_plugin"] = plugin_class.initialize_plugin(app)
+    app.extensions["woco_email_plugin"] = plugin_class.initialize_plugin(app)
 
 
 def get_mail_service() -> EmailPlugin:
-    return current_app.extensions["arbeitszeit_email_plugin"]
+    return current_app.extensions["woco_email_plugin"]

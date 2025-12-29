@@ -22,7 +22,7 @@
   sphinx-rtd-theme,
 }:
 buildPythonPackage {
-  pname = "arbeitszeitapp";
+  pname = "workers-control";
   version = "0.1.1";
   src = ../../..;
   outputs = [
@@ -55,8 +55,8 @@ buildPythonPackage {
     matplotlib
   ];
   buildDocsPhase = ''
-    mkdir -p $doc/share/doc/arbeitszeitapp
-    python -m sphinx -a $src/docs $doc/share/doc/arbeitszeitapp
+    mkdir -p $doc/share/doc/workers-control
+    python -m sphinx -a $src/docs $doc/share/doc/workers-control
   '';
   passthru.optional-dependencies = {
     profiling = [ flask-profiler ];

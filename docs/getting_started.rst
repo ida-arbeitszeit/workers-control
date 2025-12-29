@@ -16,12 +16,12 @@ document.
 .. code-block:: bash
 
   export FLASK_APP=dev.development_server
-  export ARBEITSZEITAPP_SERVER_NAME=127.0.0.1:5000
+  export WOCO_SERVER_NAME=127.0.0.1:5000
   export DEV_SECRET_KEY="my_secret_key"
   export ALEMBIC_CONFIG=${PWD}/dev/alembic.ini
-  export ARBEITSZEITAPP_TEST_DB=sqlite:///${PWD}/arbeitszeitapp_test.db
-  export ARBEITSZEITAPP_DEV_DB=sqlite:///${PWD}/arbeitszeitapp_dev.db
-  export ALEMBIC_SQLALCHEMY_DATABASE_URI=${ARBEITSZEITAPP_DEV_DB}
+  export WOCO_TEST_DB=sqlite:///${PWD}/workers_control_test.db
+  export WOCO_DEV_DB=sqlite:///${PWD}/workers_control_dev.db
+  export ALEMBIC_SQLALCHEMY_DATABASE_URI=${WOCO_DEV_DB}
 
 - Run ``pytest`` to run the testsuite.
 - Run ``python -m build_support.translations compile`` (only if you need translations in the development app)
@@ -37,7 +37,7 @@ created automatically in the project's root directory when starting tests or
 the development server. No manual setup is necessary.
 
 You may use your own databases by setting the environment variables 
-``ARBEITSZEITAPP_DEV_DB`` and/or ``ARBEITSZEITAPP_TEST_DB`` to point to 
+``WOCO_DEV_DB`` and/or ``WOCO_TEST_DB`` to point to 
 databases of your choice. See :ref:`environment-variables` for details.
 
 
@@ -118,12 +118,12 @@ Commented out variables are optional.
 .. code-block:: bash
 
   export FLASK_APP=dev.development_server
-  export ARBEITSZEITAPP_SERVER_NAME=127.0.0.1:5000
+  export WOCO_SERVER_NAME=127.0.0.1:5000
   export DEV_SECRET_KEY="my_secret_key"
   export ALEMBIC_CONFIG=${PWD}/dev/alembic.ini
-  export ARBEITSZEITAPP_TEST_DB=sqlite:///${PWD}/arbeitszeitapp_test.db
-  export ARBEITSZEITAPP_DEV_DB=sqlite:///${PWD}/arbeitszeitapp_dev.db
-  export ALEMBIC_SQLALCHEMY_DATABASE_URI=${ARBEITSZEITAPP_DEV_DB}
+  export WOCO_TEST_DB=sqlite:///${PWD}/workers_control_test.db
+  export WOCO_DEV_DB=sqlite:///${PWD}/workers_control_dev.db
+  export ALEMBIC_SQLALCHEMY_DATABASE_URI=${WOCO_DEV_DB}
   # export ALLOWED_OVERDRAW_MEMBER=1000
   # export DEFAULT_USER_TIMEZONE="Europe/Berlin"
   # export AUTO_MIGRATE=true

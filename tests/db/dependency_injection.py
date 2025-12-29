@@ -14,7 +14,7 @@ from workers_control.db.repositories import DatabaseGatewayImpl
 
 
 def provide_test_database_uri() -> str:
-    return os.environ["ARBEITSZEITAPP_TEST_DB"]
+    return os.environ["WOCO_TEST_DB"]
 
 
 def provide_database() -> Database:

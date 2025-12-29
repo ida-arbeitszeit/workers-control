@@ -66,7 +66,7 @@ buildPythonPackage {
 
     # Run tests with SQLite.
 
-    ARBEITSZEITAPP_TEST_DB=sqlite:////tmp/arbeitszeitapp_test.db pytest -x
+    WOCO_TEST_DB=sqlite:////tmp/workers_control_test.db pytest -x
 
     # Run tests with PostgreSQL.
 
@@ -76,7 +76,7 @@ buildPythonPackage {
     POSTGRES_PID=$!
     until createdb -h $POSTGRES_DIR; do echo "Retry createdb"; done
 
-    ARBEITSZEITAPP_TEST_DB="postgresql:///?host=$POSTGRES_DIR" pytest -x
+    WOCO_TEST_DB="postgresql:///?host=$POSTGRES_DIR" pytest -x
 
     kill $POSTGRES_PID
 

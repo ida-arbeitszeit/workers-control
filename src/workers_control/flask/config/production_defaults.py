@@ -1,6 +1,6 @@
 import os
 
-ARBEITSZEIT_PASSWORD_HASHER = "workers_control.flask.password_hasher:PasswordHasherImpl"
+WOCO_PASSWORD_HASHER = "workers_control.flask.password_hasher:PasswordHasherImpl"
 
 FLASK_DEBUG = 0
 TESTING = False
@@ -27,4 +27,4 @@ ALLOWED_OVERDRAW_MEMBER = "0"
 ACCEPTABLE_RELATIVE_ACCOUNT_DEVIATION = "33"
 PAYOUT_FACTOR_CALCULATION_WINDOW = 180
 
-SQLALCHEMY_DATABASE_URI = "sqlite:////tmp/arbeitszeitapp.db"
+SQLALCHEMY_DATABASE_URI = "sqlite:////tmp/workers_control.db"

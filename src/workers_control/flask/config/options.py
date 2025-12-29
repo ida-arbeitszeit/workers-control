@@ -150,7 +150,7 @@ CONFIG_OPTIONS = [
         description_paragraphs=[
             "The address of the database used for persistence. The application has been tested with PostgreSQL and SQLite databases."
         ],
-        default='"sqlite:////tmp/arbeitszeitapp.db"',
+        default='"sqlite:////tmp/workers_control.db"',
         example='SQLALCHEMY_DATABASE_URI = "postgresql:///my_data"',
     ),
     ConfigOption(

@@ -23,7 +23,7 @@ class PasswordHasherImpl:
 
 
 def provide_password_hasher(injector: Injector) -> PasswordHasher:
-    config = current_app.config["ARBEITSZEIT_PASSWORD_HASHER"]
+    config = current_app.config["WOCO_PASSWORD_HASHER"]
     module_name, klass_name = config.split(":", maxsplit=1)
     module = importlib.import_module(module_name)
     klass = getattr(module, klass_name)

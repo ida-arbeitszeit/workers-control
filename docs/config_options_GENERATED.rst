@@ -111,7 +111,7 @@
 
    Example: ``SQLALCHEMY_DATABASE_URI = "postgresql:///my_data"``
 
-   Default: ``"sqlite:////tmp/arbeitszeitapp.db"``
+   Default: ``"sqlite:////tmp/workers_control.db"``
 
 .. py:data:: ALLOWED_OVERDRAW_MEMBER
    :no-index:

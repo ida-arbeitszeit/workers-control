@@ -1,4 +1,4 @@
-from arbeitszeit import email_notifications as interface
+from workers_control.core import email_notifications as interface
 
 
 class EmailSenderTestImpl:

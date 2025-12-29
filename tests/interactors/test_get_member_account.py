@@ -3,10 +3,12 @@ from uuid import UUID
 
 from parameterized import parameterized
 
-from arbeitszeit import records
-from arbeitszeit.interactors.get_member_account import GetMemberAccountInteractor
-from arbeitszeit.transfers import TransferType
 from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core import records
+from workers_control.core.interactors.get_member_account import (
+    GetMemberAccountInteractor,
+)
+from workers_control.core.transfers import TransferType
 
 
 class GetMemberAccountTests(BaseTestCase):

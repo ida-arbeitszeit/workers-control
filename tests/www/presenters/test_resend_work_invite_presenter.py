@@ -1,8 +1,8 @@
-from arbeitszeit.interactors import resend_work_invite
-from arbeitszeit_web.www.presenters.resend_work_invite_presenter import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors import resend_work_invite
+from workers_control.web.www.presenters.resend_work_invite_presenter import (
     ResendWorkInvitePresenter,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 class TestResendWorkInvitePresenter(BaseTestCase):

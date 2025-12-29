@@ -3,25 +3,29 @@ from uuid import UUID
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors.approve_plan import ApprovePlanInteractor
-from arbeitszeit.interactors.get_company_summary import (
+from tests.datetime_service import datetime_utc
+from workers_control.core.interactors.approve_plan import ApprovePlanInteractor
+from workers_control.core.interactors.get_company_summary import (
     AccountBalances,
     GetCompanySummaryInteractor,
 )
-from arbeitszeit.interactors.query_plans import (
+from workers_control.core.interactors.query_plans import (
     PlanFilter,
     PlanSorting,
     QueriedPlan,
     QueryPlansInteractor,
     QueryPlansRequest,
 )
-from arbeitszeit.interactors.register_productive_consumption import (
+from workers_control.core.interactors.register_productive_consumption import (
     RegisterProductiveConsumptionInteractor,
     RegisterProductiveConsumptionRequest,
 )
-from arbeitszeit.records import ConsumptionType, ProductionCosts, SocialAccounting
-from arbeitszeit.transfers import TransferType
-from tests.datetime_service import datetime_utc
+from workers_control.core.records import (
+    ConsumptionType,
+    ProductionCosts,
+    SocialAccounting,
+)
+from workers_control.core.transfers import TransferType
 
 from .base_test_case import BaseTestCase
 

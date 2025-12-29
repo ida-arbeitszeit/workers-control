@@ -5,13 +5,13 @@ from uuid import uuid4
 
 from pytest import approx
 
-from arbeitszeit.interactors.get_coop_summary import (
+from tests.datetime_service import datetime_utc
+from workers_control.core.interactors.get_coop_summary import (
     GetCoopSummaryInteractor,
     GetCoopSummaryRequest,
     GetCoopSummaryResponse,
 )
-from arbeitszeit.records import ProductionCosts
-from tests.datetime_service import datetime_utc
+from workers_control.core.records import ProductionCosts
 
 from .base_test_case import BaseTestCase
 

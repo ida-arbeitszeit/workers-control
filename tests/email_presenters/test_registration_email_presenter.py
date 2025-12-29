@@ -1,10 +1,10 @@
-from arbeitszeit_web.email.registration_email_presenter import (
-    RegistrationEmailPresenter,
-)
 from tests.datetime_service import datetime_utc
 from tests.email import Email, FakeEmailConfiguration
 from tests.text_renderer import TextRendererImpl
 from tests.www.base_test_case import BaseTestCase
+from workers_control.web.email.registration_email_presenter import (
+    RegistrationEmailPresenter,
+)
 
 
 class MemberPresenterTests(BaseTestCase):

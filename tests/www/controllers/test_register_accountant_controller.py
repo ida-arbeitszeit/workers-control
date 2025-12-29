@@ -1,9 +1,9 @@
 from typing import Optional
 
-from arbeitszeit_web.www.controllers.register_accountant_controller import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.web.www.controllers.register_accountant_controller import (
     RegisterAccountantController,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 class ControllerTests(BaseTestCase):

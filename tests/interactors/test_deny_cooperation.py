@@ -1,16 +1,16 @@
 from datetime import timedelta
 from uuid import uuid4
 
-from arbeitszeit.interactors.deny_cooperation import (
+from tests.datetime_service import datetime_utc
+from workers_control.core.interactors.deny_cooperation import (
     DenyCooperationInteractor,
     DenyCooperationRequest,
     DenyCooperationResponse,
 )
-from arbeitszeit.interactors.request_cooperation import (
+from workers_control.core.interactors.request_cooperation import (
     RequestCooperationInteractor,
     RequestCooperationRequest,
 )
-from tests.datetime_service import datetime_utc
 
 from .base_test_case import BaseTestCase
 

@@ -2,8 +2,8 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit import records
 from tests.db.base_test_case import DatabaseTestCase
+from workers_control.core import records
 
 
 class AccountCredentialsResultTests(DatabaseTestCase):

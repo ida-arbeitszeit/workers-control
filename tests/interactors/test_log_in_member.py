@@ -1,7 +1,7 @@
 from typing import Optional
 
-from arbeitszeit.interactors.log_in_member import LogInMemberInteractor
-from arbeitszeit.interactors.register_member import RegisterMemberInteractor
+from workers_control.core.interactors.log_in_member import LogInMemberInteractor
+from workers_control.core.interactors.register_member import RegisterMemberInteractor
 
 from .base_test_case import BaseTestCase
 

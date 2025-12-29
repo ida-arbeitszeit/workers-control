@@ -37,11 +37,11 @@
         {
           devShells = rec {
             default = nixos-unstable;
-            nixos-25-11 = pkgs-25-11.callPackage nix/devShell.nix { includeGlibcLocales = !isMacOs; };
-            nixos-unstable = pkgs.callPackage nix/devShell.nix {
+            nixos-25-11 = pkgs-25-11.callPackage dev/nix/devShell.nix { includeGlibcLocales = !isMacOs; };
+            nixos-unstable = pkgs.callPackage dev/nix/devShell.nix {
               includeGlibcLocales = !isMacOs;
             };
-            python312 = pkgs.callPackage nix/devShell.nix {
+            python312 = pkgs.callPackage dev/nix/devShell.nix {
               python3 = pkgs.python312;
               includeGlibcLocales = !isMacOs;
             };
@@ -68,7 +68,7 @@
           default =
             let
               ourOverlay = final: prev: {
-                pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [ (import nix/pythonPackages.nix) ];
+                pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [ (import dev/nix/pythonPackages.nix) ];
               };
             in
             nixpkgs.lib.composeExtensions ourOverlay flask-profiler.overlays.default;

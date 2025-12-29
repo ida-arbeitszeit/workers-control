@@ -1,14 +1,14 @@
 from typing import Optional
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors.list_plans_with_pending_review import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.list_plans_with_pending_review import (
     ListPlansWithPendingReviewInteractor as Interactor,
 )
-from arbeitszeit_web.session import UserRole
-from arbeitszeit_web.www.presenters.list_plans_with_pending_review_presenter import (
+from workers_control.web.session import UserRole
+from workers_control.web.www.presenters.list_plans_with_pending_review_presenter import (
     ListPlansWithPendingReviewPresenter,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 class PresenterTests(BaseTestCase):

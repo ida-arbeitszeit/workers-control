@@ -1,12 +1,12 @@
 from datetime import timedelta
 from uuid import uuid4
 
-from arbeitszeit.interactors.show_company_cooperations import (
+from tests.datetime_service import datetime_utc
+from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.interactors.show_company_cooperations import (
     Request,
     ShowCompanyCooperationsInteractor,
 )
-from tests.datetime_service import datetime_utc
-from tests.interactors.base_test_case import BaseTestCase
 
 
 class InboundCooperationRequestsTests(BaseTestCase):

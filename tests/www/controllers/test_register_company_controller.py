@@ -1,8 +1,8 @@
-from arbeitszeit_web.www.controllers.register_company_controller import (
-    RegisterCompanyController,
-)
 from tests.forms import RegisterFormImpl
 from tests.www.base_test_case import BaseTestCase
+from workers_control.web.www.controllers.register_company_controller import (
+    RegisterCompanyController,
+)
 
 
 class RegisterCompanyControllerTests(BaseTestCase):

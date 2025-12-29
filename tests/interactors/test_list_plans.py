@@ -1,11 +1,11 @@
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors.list_active_plans_of_company import (
+from tests.data_generators import CompanyGenerator, PlanGenerator
+from workers_control.core.interactors.list_active_plans_of_company import (
     ListActivePlansOfCompanyInteractor,
     ListPlansResponse,
 )
-from arbeitszeit.records import Company
-from tests.data_generators import CompanyGenerator, PlanGenerator
+from workers_control.core.records import Company
 
 from .dependency_injection import injection_test
 

@@ -1,14 +1,14 @@
 from typing import Optional
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors.list_all_cooperations import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.list_all_cooperations import (
     ListAllCooperationsResponse,
     ListedCooperation,
 )
-from arbeitszeit_web.www.presenters.list_all_cooperations_presenter import (
+from workers_control.web.www.presenters.list_all_cooperations_presenter import (
     ListAllCooperationsPresenter,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 class ListMessagesPresenterTests(BaseTestCase):

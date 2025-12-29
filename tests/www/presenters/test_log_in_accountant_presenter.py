@@ -1,15 +1,15 @@
 from typing import Optional
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors.log_in_accountant import (
-    LogInAccountantInteractor as Interactor,
-)
-from arbeitszeit_web.session import UserRole
-from arbeitszeit_web.www.presenters.log_in_accountant_presenter import (
-    LogInAccountantPresenter,
-)
 from tests.forms import LoginForm
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.log_in_accountant import (
+    LogInAccountantInteractor as Interactor,
+)
+from workers_control.web.session import UserRole
+from workers_control.web.www.presenters.log_in_accountant_presenter import (
+    LogInAccountantPresenter,
+)
 
 
 class PresenterTester(BaseTestCase):

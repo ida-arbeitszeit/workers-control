@@ -5,14 +5,14 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors.get_coop_summary import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.get_coop_summary import (
     AssociatedPlan,
     GetCoopSummaryResponse,
 )
-from arbeitszeit_web.www.presenters.get_coop_summary_presenter import (
+from workers_control.web.www.presenters.get_coop_summary_presenter import (
     GetCoopSummarySuccessPresenter,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 class GetCoopSummarySuccessPresenterTests(BaseTestCase):

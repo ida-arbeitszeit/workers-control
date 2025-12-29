@@ -1,4 +1,4 @@
-from arbeitszeit_flask.commands import invite_accountant
+from workers_control.flask.commands import invite_accountant
 
 from .base_test_case import FlaskTestCase
 

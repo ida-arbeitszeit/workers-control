@@ -1,13 +1,15 @@
 from typing import Callable, Optional
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors.register_accountant import RegisterAccountantInteractor
-from arbeitszeit_web.session import UserRole
-from arbeitszeit_web.www.presenters.register_accountant_presenter import (
-    RegisterAccountantPresenter,
-)
 from tests.session import FakeSession
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.register_accountant import (
+    RegisterAccountantInteractor,
+)
+from workers_control.web.session import UserRole
+from workers_control.web.www.presenters.register_accountant_presenter import (
+    RegisterAccountantPresenter,
+)
 
 
 class PresenterTests(BaseTestCase):

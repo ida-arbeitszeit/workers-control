@@ -2,21 +2,21 @@ from dataclasses import replace
 from decimal import Decimal
 from uuid import uuid4
 
-from arbeitszeit.interactors.get_company_summary import (
+from tests.control_thresholds import ControlThresholdsTestImpl
+from tests.datetime_service import datetime_utc
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.get_company_summary import (
     AccountBalances,
     Expectations,
     GetCompanySummarySuccess,
     PlanDetails,
     Supplier,
 )
-from arbeitszeit_web.session import UserRole
-from arbeitszeit_web.www.presenters.get_company_summary_presenter import (
+from workers_control.web.session import UserRole
+from workers_control.web.www.presenters.get_company_summary_presenter import (
     Deviation,
     GetCompanySummarySuccessPresenter,
 )
-from tests.control_thresholds import ControlThresholdsTestImpl
-from tests.datetime_service import datetime_utc
-from tests.www.base_test_case import BaseTestCase
 
 RESPONSE_WITH_2_PLANS = GetCompanySummarySuccess(
     id=uuid4(),

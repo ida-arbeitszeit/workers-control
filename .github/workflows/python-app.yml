@@ -45,12 +45,12 @@ jobs:
       env:
         ALEMBIC_SQLALCHEMY_DATABASE_URI: postgresql://postgres:postgres@localhost:5432/postgres
         ALEMBIC_CONFIG: tests/flask_integration/alembic.ini
-        FLASK_APP: arbeitszeit_flask
+        FLASK_APP: workers_control.flask
     - run: nix develop --command alembic check
       env:
         ALEMBIC_SQLALCHEMY_DATABASE_URI: postgresql://postgres:postgres@localhost:5432/postgres
         ALEMBIC_CONFIG: tests/flask_integration/alembic.ini
-        FLASK_APP: arbeitszeit_flask
+        FLASK_APP: workers_control.flask
     services:
       postgres:
         image: postgres

@@ -1,8 +1,8 @@
-from arbeitszeit_web.session import Session
-from arbeitszeit_web.www.controllers.list_pending_work_invites_controller import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.web.session import Session
+from workers_control.web.www.controllers.list_pending_work_invites_controller import (
     ListPendingWorkInvitesController,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 class ListPendingInvitesControllerTests(BaseTestCase):

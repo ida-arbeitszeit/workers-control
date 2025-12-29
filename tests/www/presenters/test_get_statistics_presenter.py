@@ -1,11 +1,11 @@
 from dataclasses import replace
 from decimal import Decimal
 
-from arbeitszeit.interactors.get_statistics import StatisticsResponse
-from arbeitszeit_web.www.presenters.get_statistics_presenter import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.get_statistics import StatisticsResponse
+from workers_control.web.www.presenters.get_statistics_presenter import (
     GetStatisticsPresenter,
 )
-from tests.www.base_test_case import BaseTestCase
 
 TESTING_RESPONSE_MODEL = StatisticsResponse(
     registered_companies_count=5,

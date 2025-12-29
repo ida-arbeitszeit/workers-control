@@ -1,12 +1,12 @@
 from typing import Optional
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors.register_company import RegisterCompany
-from arbeitszeit_web.www.presenters.register_company_presenter import (
-    RegisterCompanyPresenter,
-)
 from tests.forms import RegisterFormImpl
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.register_company import RegisterCompany
+from workers_control.web.www.presenters.register_company_presenter import (
+    RegisterCompanyPresenter,
+)
 
 RejectionReason = RegisterCompany.Response.RejectionReason
 

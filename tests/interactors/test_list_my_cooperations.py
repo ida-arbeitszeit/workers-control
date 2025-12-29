@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from arbeitszeit.interactors.list_my_cooperating_plans import (
+from workers_control.core.interactors.list_my_cooperating_plans import (
     ListMyCooperatingPlansInteractor,
 )
 

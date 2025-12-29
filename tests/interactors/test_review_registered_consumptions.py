@@ -1,12 +1,12 @@
 from decimal import Decimal
 from math import isclose
 
-from arbeitszeit.interactors.review_registered_consumptions import (
-    ReviewRegisteredConsumptionsInteractor as Interactor,
-)
-from arbeitszeit.records import ProductionCosts
 from tests.datetime_service import datetime_utc
 from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.interactors.review_registered_consumptions import (
+    ReviewRegisteredConsumptionsInteractor as Interactor,
+)
+from workers_control.core.records import ProductionCosts
 
 
 class ReviewRegisteredConsumptionsTests(BaseTestCase):

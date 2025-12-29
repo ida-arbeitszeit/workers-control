@@ -5,10 +5,10 @@ import pytest
 from parameterized import parameterized
 from sqlalchemy.exc import IntegrityError
 
-from arbeitszeit import records
 from tests.datetime_service import datetime_utc
 from tests.db.base_test_case import DatabaseTestCase
 from tests.db.utility import Utility
+from workers_control.core import records
 
 
 class MemberResultTests(DatabaseTestCase):

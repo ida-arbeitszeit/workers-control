@@ -1,10 +1,10 @@
 from datetime import timedelta
 
-from arbeitszeit_web.www.controllers.confirm_member_controller import (
-    ConfirmMemberController,
-)
 from tests.datetime_service import datetime_utc
 from tests.www.base_test_case import BaseTestCase
+from workers_control.web.www.controllers.confirm_member_controller import (
+    ConfirmMemberController,
+)
 
 
 class ConfirmMemberControllerTests(BaseTestCase):

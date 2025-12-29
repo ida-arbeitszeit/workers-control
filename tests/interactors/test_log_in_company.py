@@ -1,7 +1,7 @@
 from uuid import UUID
 
-from arbeitszeit.interactors.log_in_company import LogInCompanyInteractor
-from arbeitszeit.interactors.register_company import RegisterCompany
+from workers_control.core.interactors.log_in_company import LogInCompanyInteractor
+from workers_control.core.interactors.register_company import RegisterCompany
 
 from .base_test_case import BaseTestCase
 

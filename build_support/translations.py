@@ -7,7 +7,7 @@ from typing import Protocol
 
 from build_support import project
 
-TRANSLATIONS_DIRECTORY = Path("arbeitszeit_flask") / "translations"
+TRANSLATIONS_DIRECTORY = Path("src") / "workers_control" / "flask" / "translations"
 TEMPLATE_FILE = TRANSLATIONS_DIRECTORY / "messages.pot"
 WIDTH = 78
 
@@ -52,9 +52,9 @@ def extract_messages(arguments: object = None) -> None:
     mapping_file = "build_support/babel.cfg"
     keywords = ["lazy_gettext"]
     input_paths = [
-        "arbeitszeit",
-        "arbeitszeit_flask",
-        "arbeitszeit_web",
+        "src/workers_control/core",
+        "src/workers_control/flask",
+        "src/workers_control/web",
     ]
     command = ["python", "-m", "babel.messages.frontend", "extract"]
     for keyword in keywords:

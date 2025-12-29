@@ -1,10 +1,10 @@
 from parameterized import parameterized
 
-from arbeitszeit import email_notifications
-from arbeitszeit_web.email.email_change_warning_view import EmailChangeWarningView
 from tests.email import FakeEmailConfiguration
 from tests.text_renderer import TextRendererImpl
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core import email_notifications
+from workers_control.web.email.email_change_warning_view import EmailChangeWarningView
 
 
 class EmailChangeWarningViewTests(BaseTestCase):

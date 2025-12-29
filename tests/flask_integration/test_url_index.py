@@ -3,14 +3,14 @@ from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors.invite_worker_to_company import (
+from workers_control.core.interactors.invite_worker_to_company import (
     InviteWorkerToCompanyInteractor,
 )
-from arbeitszeit.interactors.send_accountant_registration_token import (
+from workers_control.core.interactors.send_accountant_registration_token import (
     SendAccountantRegistrationTokenInteractor,
 )
-from arbeitszeit.records import ConsumptionType
-from arbeitszeit_web.session import UserRole
+from workers_control.core.records import ConsumptionType
+from workers_control.web.session import UserRole
 
 from .base_test_case import ViewTestCase
 

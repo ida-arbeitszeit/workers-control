@@ -2,14 +2,14 @@ from datetime import datetime
 from typing import Optional
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors.get_coordination_transfer_request_details import (
-    GetCoordinationTransferRequestDetailsInteractor as Interactor,
-)
-from arbeitszeit_web.www.presenters.get_coordination_transfer_request_details_presenter import (
-    GetCoordinationTransferRequestDetailsPresenter as Presenter,
-)
 from tests.datetime_service import datetime_utc
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.get_coordination_transfer_request_details import (
+    GetCoordinationTransferRequestDetailsInteractor as Interactor,
+)
+from workers_control.web.www.presenters.get_coordination_transfer_request_details_presenter import (
+    GetCoordinationTransferRequestDetailsPresenter as Presenter,
+)
 
 
 class GetDetailsPresenterTests(BaseTestCase):

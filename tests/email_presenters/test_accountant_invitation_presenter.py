@@ -1,12 +1,12 @@
 from typing import Callable
 
-from arbeitszeit_web.email.accountant_invitation_presenter import (
-    AccountantInvitationEmailPresenter,
-    ViewModel,
-)
 from tests.datetime_service import datetime_utc
 from tests.email import FakeEmailConfiguration
 from tests.www.base_test_case import BaseTestCase
+from workers_control.web.email.accountant_invitation_presenter import (
+    AccountantInvitationEmailPresenter,
+    ViewModel,
+)
 
 from .accountant_invitation_email_view import AccountantInvitationEmailViewImpl
 

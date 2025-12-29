@@ -1,4 +1,4 @@
-from arbeitszeit.interactors.log_in_accountant import LogInAccountantInteractor
+from workers_control.core.interactors.log_in_accountant import LogInAccountantInteractor
 
 from .base_test_case import BaseTestCase
 

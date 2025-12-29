@@ -4,13 +4,13 @@ from dataclasses import dataclass
 from typing import Any, Callable, cast
 from uuid import uuid4
 
-from arbeitszeit.interactors.answer_company_work_invite import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.answer_company_work_invite import (
     AnswerCompanyWorkInviteRequest,
 )
-from arbeitszeit_web.www.controllers.answer_company_work_invite_controller import (
+from workers_control.web.www.controllers.answer_company_work_invite_controller import (
     AnswerCompanyWorkInviteController,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 class SubBaseTestCase(BaseTestCase):

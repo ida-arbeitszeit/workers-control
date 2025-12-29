@@ -1,7 +1,7 @@
 from parameterized import parameterized
 
-from arbeitszeit import email_notifications
-from arbeitszeit.interactors import request_email_address_change as interactor
+from workers_control.core import email_notifications
+from workers_control.core.interactors import request_email_address_change as interactor
 
 from .base_test_case import BaseTestCase
 

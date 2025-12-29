@@ -3,14 +3,16 @@ from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit import email_notifications
-from arbeitszeit.interactors.file_plan_with_accounting import FilePlanWithAccounting
-from arbeitszeit.interactors.get_plan_details import GetPlanDetailsInteractor
-from arbeitszeit.interactors.list_plans_with_pending_review import (
+from workers_control.core import email_notifications
+from workers_control.core.interactors.file_plan_with_accounting import (
+    FilePlanWithAccounting,
+)
+from workers_control.core.interactors.get_plan_details import GetPlanDetailsInteractor
+from workers_control.core.interactors.list_plans_with_pending_review import (
     ListPlansWithPendingReviewInteractor,
 )
-from arbeitszeit.records import ProductionCosts
-from arbeitszeit.services.plan_details import PlanDetails
+from workers_control.core.records import ProductionCosts
+from workers_control.core.services.plan_details import PlanDetails
 
 from .base_test_case import BaseTestCase
 

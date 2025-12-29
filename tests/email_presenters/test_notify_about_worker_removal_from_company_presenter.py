@@ -1,11 +1,11 @@
 from uuid import uuid4
 
-from arbeitszeit.email_notifications import WorkerRemovalNotification
-from arbeitszeit_web.email.notify_about_worker_removal_from_company_presenter import (
-    NotifyAboutWorkerRemovalPresenter,
-)
 from tests.email import FakeEmailConfiguration
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.email_notifications import WorkerRemovalNotification
+from workers_control.web.email.notify_about_worker_removal_from_company_presenter import (
+    NotifyAboutWorkerRemovalPresenter,
+)
 
 
 class PresenterTests(BaseTestCase):

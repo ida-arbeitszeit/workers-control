@@ -18,7 +18,7 @@ resolution and are satisfied with the older versions from nixpkgs in both enviro
 If, exceptionally, nixpkgs has a newer version, we use the older version from pip in both environments,
 i.e. we have to maintain custom nix expressions for the affected packages.
 
-This process is largely automated by the command ``python -m arbeitszeit_development.update_dependencies``.
+This process is largely automated by the command ``python -m dev.update_dependencies``.
 It updates the Python packages in the nix environment and then writes the discovered version numbers
 into the pip-consumable :py:mod:`constraints.txt`. To run the command, nix must be installed.
 
@@ -36,7 +36,7 @@ in the following files:
 - requirements.txt
 - requirements-dev.txt
 
-Run ``python -m arbeitszeit_development.update_dependencies`` afterwards.
+Run ``python -m dev.update_dependencies`` afterwards.
 
 
 Releases

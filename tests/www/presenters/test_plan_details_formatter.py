@@ -1,9 +1,9 @@
 from decimal import Decimal
 from uuid import uuid4
 
-from arbeitszeit_web.formatters.plan_details_formatter import PlanDetailsFormatter
 from tests.www.base_test_case import BaseTestCase
 from tests.www.presenters.data_generators import PlanDetailsGenerator
+from workers_control.web.formatters.plan_details_formatter import PlanDetailsFormatter
 
 
 class PlanDetailsFormatterTests(BaseTestCase):

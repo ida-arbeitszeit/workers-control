@@ -2,10 +2,12 @@ from datetime import timedelta
 from unittest import TestCase
 from uuid import uuid4
 
-from arbeitszeit.interactors.get_company_dashboard import GetCompanyDashboardInteractor
 from tests.data_generators import CompanyGenerator, MemberGenerator, PlanGenerator
 from tests.datetime_service import FakeDatetimeService, datetime_utc
 from tests.interactors.dependency_injection import get_dependency_injector
+from workers_control.core.interactors.get_company_dashboard import (
+    GetCompanyDashboardInteractor,
+)
 
 
 class GeneralInteractorTests(TestCase):

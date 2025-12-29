@@ -1,10 +1,10 @@
 from uuid import uuid4
 
-from arbeitszeit_web.www.controllers.remove_worker_from_company_controller import (
-    RemoveWorkerFromCompanyController,
-)
 from tests.request import FakeRequest
 from tests.www.base_test_case import BaseTestCase
+from workers_control.web.www.controllers.remove_worker_from_company_controller import (
+    RemoveWorkerFromCompanyController,
+)
 
 
 class RemoveWorkerFromCompanyControllerTests(BaseTestCase):

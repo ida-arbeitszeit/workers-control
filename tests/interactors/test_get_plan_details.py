@@ -5,8 +5,8 @@ from uuid import uuid4
 from parameterized import parameterized
 from pytest import approx
 
-from arbeitszeit.interactors.get_plan_details import GetPlanDetailsInteractor
-from arbeitszeit.records import ProductionCosts
+from workers_control.core.interactors.get_plan_details import GetPlanDetailsInteractor
+from workers_control.core.records import ProductionCosts
 
 from .base_test_case import BaseTestCase
 

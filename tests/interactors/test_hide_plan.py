@@ -1,11 +1,11 @@
 from uuid import UUID
 
-from arbeitszeit.interactors.hide_plan import HidePlanInteractor
-from arbeitszeit.interactors.show_my_plans import (
+from tests.datetime_service import datetime_utc
+from workers_control.core.interactors.hide_plan import HidePlanInteractor
+from workers_control.core.interactors.show_my_plans import (
     ShowMyPlansInteractor,
     ShowMyPlansRequest,
 )
-from tests.datetime_service import datetime_utc
 
 from .base_test_case import BaseTestCase
 

@@ -2,13 +2,13 @@ from datetime import timedelta
 from decimal import Decimal
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors.accept_cooperation import (
+from tests.datetime_service import datetime_utc
+from workers_control.core.interactors.accept_cooperation import (
     AcceptCooperationInteractor,
     AcceptCooperationRequest,
 )
-from arbeitszeit.interactors.get_plan_details import GetPlanDetailsInteractor
-from arbeitszeit.records import ProductionCosts
-from tests.datetime_service import datetime_utc
+from workers_control.core.interactors.get_plan_details import GetPlanDetailsInteractor
+from workers_control.core.records import ProductionCosts
 
 from .base_test_case import BaseTestCase
 

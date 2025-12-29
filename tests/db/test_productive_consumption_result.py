@@ -2,9 +2,9 @@ from datetime import timedelta
 from decimal import Decimal
 from uuid import UUID, uuid4
 
-from arbeitszeit.records import ProductionCosts
 from tests.datetime_service import datetime_utc
 from tests.db.base_test_case import DatabaseTestCase
+from workers_control.core.records import ProductionCosts
 
 
 class ProductiveConsumptionResultTests(DatabaseTestCase):

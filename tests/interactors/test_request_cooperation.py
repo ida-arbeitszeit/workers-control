@@ -2,12 +2,12 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit import email_notifications
-from arbeitszeit.interactors.accept_cooperation import (
+from workers_control.core import email_notifications
+from workers_control.core.interactors.accept_cooperation import (
     AcceptCooperationInteractor,
     AcceptCooperationRequest,
 )
-from arbeitszeit.interactors.request_cooperation import (
+from workers_control.core.interactors.request_cooperation import (
     RequestCooperationInteractor,
     RequestCooperationRequest,
     RequestCooperationResponse,

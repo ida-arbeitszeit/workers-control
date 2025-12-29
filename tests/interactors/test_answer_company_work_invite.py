@@ -1,12 +1,12 @@
 from typing import Optional
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors.answer_company_work_invite import (
+from workers_control.core.interactors.answer_company_work_invite import (
     AnswerCompanyWorkInviteInteractor,
     AnswerCompanyWorkInviteRequest,
     AnswerCompanyWorkInviteResponse,
 )
-from arbeitszeit.interactors.invite_worker_to_company import (
+from workers_control.core.interactors.invite_worker_to_company import (
     InviteWorkerToCompanyInteractor,
 )
 

@@ -9,7 +9,7 @@ import os
 from os import path
 from typing import List
 
-from arbeitszeit_development.command import Shell, Subprocess, SubprocessRunner
+from dev.command import Shell, Subprocess, SubprocessRunner
 
 
 def main(subprocess_runner: SubprocessRunner):

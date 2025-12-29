@@ -1,11 +1,11 @@
 from uuid import uuid4
 
-from arbeitszeit.records import ConsumptionType
-from arbeitszeit_web.www.controllers.select_productive_consumption_controller import (
-    SelectProductiveConsumptionController,
-)
 from tests.request import FakeRequest
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.records import ConsumptionType
+from workers_control.web.www.controllers.select_productive_consumption_controller import (
+    SelectProductiveConsumptionController,
+)
 
 
 class SelectProductiveConsumptionControllerTests(BaseTestCase):

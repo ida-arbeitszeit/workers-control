@@ -1,7 +1,7 @@
 from uuid import UUID
 
-from arbeitszeit.interactors import show_company_cooperations
-from arbeitszeit.interactors.cancel_cooperation_solicitation import (
+from workers_control.core.interactors import show_company_cooperations
+from workers_control.core.interactors.cancel_cooperation_solicitation import (
     CancelCooperationSolicitationInteractor,
     CancelCooperationSolicitationRequest,
 )

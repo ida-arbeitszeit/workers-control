@@ -1,9 +1,9 @@
 from uuid import uuid4
 
-from arbeitszeit_web.www.controllers.accept_coordination_transfer_controller import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.web.www.controllers.accept_coordination_transfer_controller import (
     AcceptCoordinationTransferController,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 class AcceptCoordinationTransferControllerTests(BaseTestCase):

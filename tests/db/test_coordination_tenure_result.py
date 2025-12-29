@@ -2,9 +2,9 @@ from datetime import timedelta
 from typing import Optional
 from uuid import UUID
 
-from arbeitszeit.records import CoordinationTenure
 from tests.datetime_service import datetime_utc
 from tests.db.base_test_case import DatabaseTestCase
+from workers_control.core.records import CoordinationTenure
 
 
 class CoordinationTenureResultTests(DatabaseTestCase):

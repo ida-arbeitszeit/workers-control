@@ -1,4 +1,6 @@
-from arbeitszeit.interactors.confirm_member import ConfirmMemberInteractor as Interactor
+from workers_control.core.interactors.confirm_member import (
+    ConfirmMemberInteractor as Interactor,
+)
 
 from .base_test_case import BaseTestCase
 

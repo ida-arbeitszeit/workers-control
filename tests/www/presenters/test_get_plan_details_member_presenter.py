@@ -1,11 +1,11 @@
 from uuid import uuid4
 
-from arbeitszeit.interactors.get_plan_details import GetPlanDetailsInteractor
-from arbeitszeit_web.www.presenters.get_plan_details_member_presenter import (
-    GetPlanDetailsMemberMemberPresenter,
-)
 from tests.www.base_test_case import BaseTestCase
 from tests.www.presenters.data_generators import PlanDetailsGenerator
+from workers_control.core.interactors.get_plan_details import GetPlanDetailsInteractor
+from workers_control.web.www.presenters.get_plan_details_member_presenter import (
+    GetPlanDetailsMemberMemberPresenter,
+)
 
 
 class PresenterTests(BaseTestCase):

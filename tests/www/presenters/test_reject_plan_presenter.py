@@ -1,6 +1,8 @@
-from arbeitszeit.interactors.reject_plan import RejectPlanInteractor as Interactor
-from arbeitszeit_web.www.presenters.reject_plan_presenter import RejectPlanPresenter
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.reject_plan import (
+    RejectPlanInteractor as Interactor,
+)
+from workers_control.web.www.presenters.reject_plan_presenter import RejectPlanPresenter
 
 
 class PresenterTests(BaseTestCase):

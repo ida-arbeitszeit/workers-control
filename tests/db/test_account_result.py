@@ -4,10 +4,10 @@ from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit import records
-from arbeitszeit.records import SocialAccounting
 from tests.datetime_service import datetime_utc
 from tests.db.base_test_case import DatabaseTestCase
+from workers_control.core import records
+from workers_control.core.records import SocialAccounting
 
 
 class AccountResultTests(DatabaseTestCase):

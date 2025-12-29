@@ -1,9 +1,11 @@
 from uuid import UUID
 
-from arbeitszeit import email_notifications
-from arbeitszeit.interactors.confirm_member import ConfirmMemberInteractor
-from arbeitszeit.interactors.get_company_dashboard import GetCompanyDashboardInteractor
-from arbeitszeit.interactors.register_company import RegisterCompany
+from workers_control.core import email_notifications
+from workers_control.core.interactors.confirm_member import ConfirmMemberInteractor
+from workers_control.core.interactors.get_company_dashboard import (
+    GetCompanyDashboardInteractor,
+)
+from workers_control.core.interactors.register_company import RegisterCompany
 
 from .base_test_case import BaseTestCase
 

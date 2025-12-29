@@ -3,7 +3,7 @@ from typing import Dict
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors.show_my_plans import (
+from workers_control.core.interactors.show_my_plans import (
     ShowMyPlansInteractor,
     ShowMyPlansRequest,
 )

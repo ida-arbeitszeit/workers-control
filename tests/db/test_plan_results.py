@@ -5,13 +5,13 @@ from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors.approve_plan import ApprovePlanInteractor
-from arbeitszeit.interactors.reject_plan import RejectPlanInteractor
-from arbeitszeit.records import Plan, ProductionCosts
-from arbeitszeit_db import models
 from tests.control_thresholds import ControlThresholdsTestImpl
 from tests.datetime_service import datetime_utc
 from tests.db.base_test_case import DatabaseTestCase
+from workers_control.core.interactors.approve_plan import ApprovePlanInteractor
+from workers_control.core.interactors.reject_plan import RejectPlanInteractor
+from workers_control.core.records import Plan, ProductionCosts
+from workers_control.db import models
 
 
 class PlanResultTests(DatabaseTestCase):

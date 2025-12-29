@@ -1,11 +1,11 @@
 from uuid import uuid4
 
-from arbeitszeit.interactors.list_active_plans_of_company import ListedPlan
-from arbeitszeit_web.www.presenters.list_plans_presenter import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.list_active_plans_of_company import ListedPlan
+from workers_control.web.www.presenters.list_plans_presenter import (
     ListPlansPresenter,
     ListPlansResponse,
 )
-from tests.www.base_test_case import BaseTestCase
 
 fake_response_with_one_plan = ListPlansResponse(
     plans=[ListedPlan(id=uuid4(), prd_name="fake prd name")]

@@ -4,18 +4,18 @@ from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors.register_productive_consumption import (
+from tests.datetime_service import datetime_utc
+from workers_control.core.interactors.register_productive_consumption import (
     RegisterProductiveConsumptionInteractor,
     RegisterProductiveConsumptionRequest,
 )
-from arbeitszeit.records import (
+from workers_control.core.records import (
     ConsumptionType,
     ProductionCosts,
     ProductiveConsumption,
     Transfer,
 )
-from arbeitszeit.transfers import TransferType
-from tests.datetime_service import datetime_utc
+from workers_control.core.transfers import TransferType
 
 from .base_test_case import BaseTestCase
 

@@ -2,15 +2,15 @@ from typing import Callable, cast
 from unittest import TestCase
 from uuid import uuid4
 
-from arbeitszeit.interactors.invite_worker_to_company import (
+from tests.data_generators import CompanyGenerator, MemberGenerator
+from workers_control.core.interactors.invite_worker_to_company import (
     InviteWorkerToCompanyInteractor,
 )
-from arbeitszeit.interactors.show_company_work_invite_details import (
+from workers_control.core.interactors.show_company_work_invite_details import (
     ShowCompanyWorkInviteDetailsInteractor,
     ShowCompanyWorkInviteDetailsRequest,
     ShowCompanyWorkInviteDetailsResponse,
 )
-from tests.data_generators import CompanyGenerator, MemberGenerator
 
 from .dependency_injection import get_dependency_injector
 

@@ -1,7 +1,7 @@
 from uuid import uuid4
 
-from arbeitszeit import email_notifications
-from arbeitszeit.interactors.invite_worker_to_company import (
+from workers_control.core import email_notifications
+from workers_control.core.interactors.invite_worker_to_company import (
     InviteWorkerToCompanyInteractor,
 )
 

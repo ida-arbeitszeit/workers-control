@@ -3,7 +3,7 @@ import sys
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from arbeitszeit_flask.config.options import CONFIG_OPTIONS  # noqa: E402
+from workers_control.flask.config.options import CONFIG_OPTIONS  # noqa: E402
 
 DOCS_PATH = "docs/"
 

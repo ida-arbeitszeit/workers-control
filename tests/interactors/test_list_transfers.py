@@ -5,16 +5,16 @@ from uuid import UUID
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors.list_transfers import (
+from tests.datetime_service import datetime_utc
+from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.interactors.list_transfers import (
     AccountOwnerType,
     ListTransfersInteractor,
     Request,
     Response,
 )
-from arbeitszeit.records import ProductionCosts, SocialAccounting
-from arbeitszeit.transfers import TransferType
-from tests.datetime_service import datetime_utc
-from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.records import ProductionCosts, SocialAccounting
+from workers_control.core.transfers import TransferType
 
 
 class _AccountOwnerType(Enum):

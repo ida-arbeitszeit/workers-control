@@ -2,12 +2,12 @@ from datetime import timedelta
 from decimal import Decimal
 from uuid import UUID
 
-from arbeitszeit.interactors import show_prd_account_details
-from arbeitszeit.records import ProductionCosts
-from arbeitszeit.repositories import DatabaseGateway
-from arbeitszeit.services.account_details import TransferPartyType
-from arbeitszeit.transfers import TransferType
 from tests.datetime_service import datetime_utc
+from workers_control.core.interactors import show_prd_account_details
+from workers_control.core.records import ProductionCosts
+from workers_control.core.repositories import DatabaseGateway
+from workers_control.core.services.account_details import TransferPartyType
+from workers_control.core.transfers import TransferType
 
 from .base_test_case import BaseTestCase
 

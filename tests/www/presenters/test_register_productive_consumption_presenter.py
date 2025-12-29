@@ -1,12 +1,12 @@
 from typing import Optional
 
-from arbeitszeit.interactors.register_productive_consumption import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.register_productive_consumption import (
     RegisterProductiveConsumptionResponse,
 )
-from arbeitszeit_web.www.presenters.register_productive_consumption_presenter import (
+from workers_control.web.www.presenters.register_productive_consumption_presenter import (
     RegisterProductiveConsumptionPresenter,
 )
-from tests.www.base_test_case import BaseTestCase
 
 reasons = RegisterProductiveConsumptionResponse.RejectionReason
 

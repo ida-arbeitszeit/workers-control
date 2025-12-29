@@ -2,7 +2,7 @@ from uuid import uuid4
 
 from click.testing import CliRunner
 
-from arbeitszeit_development.dev_cli import (
+from dev.dev_cli import (
     create_fic_cli_group,
     create_generate_cli_group,
 )

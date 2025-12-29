@@ -1,8 +1,8 @@
-from arbeitszeit.interactors import request_email_address_change as interactor
-from arbeitszeit_web.www.presenters import (
+from tests.forms import RequestEmailAddressChangeFormImpl
+from workers_control.core.interactors import request_email_address_change as interactor
+from workers_control.web.www.presenters import (
     request_email_address_change_presenter as presenter,
 )
-from tests.forms import RequestEmailAddressChangeFormImpl
 
 from ..base_test_case import BaseTestCase
 

@@ -1,15 +1,15 @@
 from datetime import datetime
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors.list_coordinations_of_cooperation import (
+from tests.datetime_service import datetime_utc
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.list_coordinations_of_cooperation import (
     CoordinationInfo,
     ListCoordinationsOfCooperationInteractor,
 )
-from arbeitszeit_web.www.presenters.list_coordinations_of_cooperation_presenter import (
+from workers_control.web.www.presenters.list_coordinations_of_cooperation_presenter import (
     ListCoordinationsOfCooperationPresenter,
 )
-from tests.datetime_service import datetime_utc
-from tests.www.base_test_case import BaseTestCase
 
 
 class ListCoordinationsPresenterTests(BaseTestCase):

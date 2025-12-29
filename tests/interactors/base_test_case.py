@@ -1,7 +1,6 @@
 from typing import Any, Dict
 from unittest import TestCase
 
-from arbeitszeit.repositories import DatabaseGateway
 from tests.control_thresholds import ControlThresholdsTestImpl
 from tests.data_generators import (
     AccountantGenerator,
@@ -20,6 +19,7 @@ from tests.datetime_service import FakeDatetimeService
 from tests.economic_scenarios import EconomicScenarios
 from tests.email_notifications import EmailSenderTestImpl
 from tests.lazy_property import _lazy_property
+from workers_control.core.repositories import DatabaseGateway
 
 from .balance_checker import BalanceChecker
 from .dependency_injection import get_dependency_injector

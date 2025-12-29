@@ -1,8 +1,8 @@
-from arbeitszeit import email_notifications
-from arbeitszeit.interactors import change_user_password
-from arbeitszeit.interactors.log_in_accountant import LogInAccountantInteractor
-from arbeitszeit.interactors.log_in_company import LogInCompanyInteractor
-from arbeitszeit.interactors.log_in_member import LogInMemberInteractor
+from workers_control.core import email_notifications
+from workers_control.core.interactors import change_user_password
+from workers_control.core.interactors.log_in_accountant import LogInAccountantInteractor
+from workers_control.core.interactors.log_in_company import LogInCompanyInteractor
+from workers_control.core.interactors.log_in_member import LogInMemberInteractor
 
 from .base_test_case import BaseTestCase
 

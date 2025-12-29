@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from arbeitszeit.interactors.create_cooperation import (
+from workers_control.core.interactors.create_cooperation import (
     CreateCooperationInteractor,
     CreateCooperationRequest,
     CreateCooperationResponse,

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import List
 
-from arbeitszeit.injector import singleton
+from workers_control.core.injector import singleton
 
 
 @dataclass

@@ -2,10 +2,12 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors import get_user_account_details as interactor
-from arbeitszeit_web.www.presenters import user_account_details_presenter as presenter
 from tests.datetime_service import datetime_min_utc, datetime_utc
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors import get_user_account_details as interactor
+from workers_control.web.www.presenters import (
+    user_account_details_presenter as presenter,
+)
 
 
 class UserAccountDetailsPresenterTests(BaseTestCase):

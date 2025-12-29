@@ -1,8 +1,8 @@
-from arbeitszeit_web.www.controllers.log_in_accountant_controller import (
-    LogInAccountantController,
-)
 from tests.forms import LoginForm
 from tests.www.base_test_case import BaseTestCase
+from workers_control.web.www.controllers.log_in_accountant_controller import (
+    LogInAccountantController,
+)
 
 
 class ControllerTester(BaseTestCase):

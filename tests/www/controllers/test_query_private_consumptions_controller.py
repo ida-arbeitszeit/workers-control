@@ -1,11 +1,11 @@
 from uuid import uuid4
 
-from arbeitszeit.interactors import query_private_consumptions as interactor
-from arbeitszeit_web.www.controllers.query_private_consumptions_controller import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors import query_private_consumptions as interactor
+from workers_control.web.www.controllers.query_private_consumptions_controller import (
     InvalidRequest,
     QueryPrivateConsumptionsController,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 class QueryPrivateConsumptionsControllerTests(BaseTestCase):

@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 from decimal import Decimal
 
-from arbeitszeit import records
-from arbeitszeit.repositories import DatabaseGateway
-from arbeitszeit.services.payout_factor import PayoutFactorService
 from tests.data_generators import PlanGenerator
 from tests.datetime_service import FakeDatetimeService
+from workers_control.core import records
+from workers_control.core.repositories import DatabaseGateway
+from workers_control.core.services.payout_factor import PayoutFactorService
 
 
 @dataclass

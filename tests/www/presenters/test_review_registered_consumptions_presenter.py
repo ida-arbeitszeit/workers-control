@@ -3,18 +3,18 @@ from decimal import Decimal
 from typing import Optional
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors.review_registered_consumptions import (
-    RegisteredConsumption,
-)
-from arbeitszeit.interactors.review_registered_consumptions import (
-    ReviewRegisteredConsumptionsInteractor as Interactor,
-)
-from arbeitszeit_web.session import UserRole
-from arbeitszeit_web.www.presenters.review_registered_consumptions_presenter import (
-    ReviewRegisteredConsumptionsPresenter,
-)
 from tests.datetime_service import datetime_utc
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.review_registered_consumptions import (
+    RegisteredConsumption,
+)
+from workers_control.core.interactors.review_registered_consumptions import (
+    ReviewRegisteredConsumptionsInteractor as Interactor,
+)
+from workers_control.web.session import UserRole
+from workers_control.web.www.presenters.review_registered_consumptions_presenter import (
+    ReviewRegisteredConsumptionsPresenter,
+)
 
 
 class ReviewRegisteredConsumptionsPresenterTests(BaseTestCase):

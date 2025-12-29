@@ -5,20 +5,20 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors.get_member_account import (
+from tests.datetime_service import datetime_utc
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.get_member_account import (
     GetMemberAccountResponse,
 )
-from arbeitszeit.services.account_details import (
+from workers_control.core.services.account_details import (
     AccountTransfer,
     TransferParty,
     TransferPartyType,
 )
-from arbeitszeit.transfers import TransferType
-from arbeitszeit_web.www.presenters.get_member_account_presenter import (
+from workers_control.core.transfers import TransferType
+from workers_control.web.www.presenters.get_member_account_presenter import (
     GetMemberAccountPresenter,
 )
-from tests.datetime_service import datetime_utc
-from tests.www.base_test_case import BaseTestCase
 
 
 class TestPresenter(BaseTestCase):

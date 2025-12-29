@@ -1,7 +1,9 @@
 from decimal import Decimal
 
-from arbeitszeit.interactors.get_company_summary import GetCompanySummaryInteractor
-from arbeitszeit.records import ProductionCosts
+from workers_control.core.interactors.get_company_summary import (
+    GetCompanySummaryInteractor,
+)
+from workers_control.core.records import ProductionCosts
 
 from ..base_test_case import BaseTestCase
 

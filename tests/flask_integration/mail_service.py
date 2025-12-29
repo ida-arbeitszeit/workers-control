@@ -4,7 +4,7 @@ from typing import Generator, Self
 
 from flask import Flask
 
-from arbeitszeit_flask.mail_service.interface import EmailPlugin
+from workers_control.flask.mail_service.interface import EmailPlugin
 
 
 @dataclass

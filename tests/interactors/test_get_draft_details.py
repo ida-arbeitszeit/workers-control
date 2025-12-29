@@ -5,14 +5,14 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors.get_draft_details import (
+from tests.data_generators import CompanyGenerator, PlanGenerator
+from tests.datetime_service import datetime_utc
+from workers_control.core.interactors.get_draft_details import (
     DraftDetailsResponse,
     DraftDetailsSuccess,
     GetDraftDetailsInteractor,
 )
-from arbeitszeit.records import ProductionCosts
-from tests.data_generators import CompanyGenerator, PlanGenerator
-from tests.datetime_service import datetime_utc
+from workers_control.core.records import ProductionCosts
 
 from .base_test_case import BaseTestCase
 from .dependency_injection import injection_test

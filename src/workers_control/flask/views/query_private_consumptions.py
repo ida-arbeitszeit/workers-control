@@ -1,0 +1,36 @@
+from dataclasses import dataclass
+
+import flask
+
+from workers_control.core.interactors.query_private_consumptions import (
+    QueryPrivateConsumptions,
+)
+from workers_control.flask.types import Response
+from workers_control.web.www.controllers.query_private_consumptions_controller import (
+    InvalidRequest,
+    QueryPrivateConsumptionsController,
+)
+from workers_control.web.www.presenters.private_consumptions_presenter import (
+    PrivateConsumptionsPresenter,
+)
+
+
+@dataclass
+class QueryPrivateConsumptionsView:
+    controller: QueryPrivateConsumptionsController
+    interactor: QueryPrivateConsumptions
+    presenter: PrivateConsumptionsPresenter
+
+    def GET(self) -> Response:
+        uc_request = self.controller.process_request()
+        match uc_request:
+            case InvalidRequest(status_code=status_code):
+                return flask.Response(status=status_code)
+        response = self.interactor.query_private_consumptions(uc_request)
+        view_model = self.presenter.present_private_consumptions(response)
+        return flask.Response(
+            flask.render_template(
+                "member/consumptions.html",
+                view_model=view_model,
+            )
+        )

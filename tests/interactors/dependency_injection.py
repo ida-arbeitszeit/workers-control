@@ -1,21 +1,21 @@
 from typing import Any, Callable, TypeVar, cast
 
-import arbeitszeit.email_notifications
-import arbeitszeit.repositories as interfaces
 import tests.email_notifications
-from arbeitszeit import records
-from arbeitszeit.injector import (
+import workers_control.core.repositories as interfaces
+from tests.dependency_injection import TestingModule
+from tests.password_hasher import PasswordHasherImpl
+from tests.token import FakeTokenService
+from workers_control.core import records
+from workers_control.core.email_notifications import EmailSender
+from workers_control.core.injector import (
     AliasProvider,
     Binder,
     CallableProvider,
     Injector,
     Module,
 )
-from arbeitszeit.password_hasher import PasswordHasher
-from arbeitszeit_web.token import TokenService
-from tests.dependency_injection import TestingModule
-from tests.password_hasher import PasswordHasherImpl
-from tests.token import FakeTokenService
+from workers_control.core.password_hasher import PasswordHasher
+from workers_control.web.token import TokenService
 
 from . import repositories
 
@@ -51,7 +51,7 @@ class InMemoryModule(Module):
             TokenService,
             to=AliasProvider(FakeTokenService),
         )
-        binder[arbeitszeit.email_notifications.EmailSender] = AliasProvider(
+        binder[EmailSender] = AliasProvider(
             tests.email_notifications.EmailSenderTestImpl
         )
         binder[tests.email_notifications.EmailSenderTestImpl] = CallableProvider(

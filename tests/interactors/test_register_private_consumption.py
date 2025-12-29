@@ -6,15 +6,15 @@ from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors import query_private_consumptions
-from arbeitszeit.interactors.register_private_consumption import (
+from tests.datetime_service import datetime_utc
+from workers_control.core.interactors import query_private_consumptions
+from workers_control.core.interactors.register_private_consumption import (
     RegisterPrivateConsumption,
     RegisterPrivateConsumptionRequest,
     RejectionReason,
 )
-from arbeitszeit.records import PrivateConsumption, ProductionCosts, Transfer
-from arbeitszeit.transfers import TransferType
-from tests.datetime_service import datetime_utc
+from workers_control.core.records import PrivateConsumption, ProductionCosts, Transfer
+from workers_control.core.transfers import TransferType
 
 from .base_test_case import BaseTestCase
 

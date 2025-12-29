@@ -1,12 +1,12 @@
 from datetime import timedelta
 from uuid import uuid4
 
-from arbeitszeit.interactors.list_coordinations_of_company import (
+from tests.data_generators import CompanyGenerator, CooperationGenerator, PlanGenerator
+from tests.datetime_service import FakeDatetimeService, datetime_utc
+from workers_control.core.interactors.list_coordinations_of_company import (
     ListCoordinationsOfCompanyInteractor,
     ListCoordinationsOfCompanyRequest,
 )
-from tests.data_generators import CompanyGenerator, CooperationGenerator, PlanGenerator
-from tests.datetime_service import FakeDatetimeService, datetime_utc
 
 from .dependency_injection import injection_test
 

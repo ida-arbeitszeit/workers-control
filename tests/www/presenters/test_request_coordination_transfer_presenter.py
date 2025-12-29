@@ -1,12 +1,12 @@
 from uuid import uuid4
 
-from arbeitszeit.interactors.request_coordination_transfer import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.request_coordination_transfer import (
     RequestCoordinationTransferInteractor as Interactor,
 )
-from arbeitszeit_web.www.presenters.request_coordination_transfer_presenter import (
+from workers_control.web.www.presenters.request_coordination_transfer_presenter import (
     RequestCoordinationTransferPresenter,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 class RequestCoordinationTransferPresenterTests(BaseTestCase):

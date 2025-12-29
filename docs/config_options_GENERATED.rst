@@ -30,9 +30,9 @@
 .. py:data:: MAIL_PLUGIN_MODULE
    :no-index:
 
-   This option must be a python module path to the email plugin to be used. By default flask-mail is used. Other plugins can be found in the ``arbeitszeit_flask/mail_service`` directory.
+   This option must be a python module path to the email plugin to be used. By default flask-mail is used. Other plugins can be found in the ``workers_control.flask.mail_service`` module.
 
-   Default: ``arbeitszeit_flask.mail_service.flask_mail_service``
+   Default: ``workers_control.flask.mail_service.flask_mail_service``
 
 .. py:data:: MAIL_PLUGIN_CLASS
    :no-index:

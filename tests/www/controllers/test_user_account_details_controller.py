@@ -2,10 +2,10 @@ from uuid import uuid4
 
 import pytest
 
-from arbeitszeit_web.www.controllers import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.web.www.controllers import (
     user_account_details_controller as controller,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 class UserAccountDetailsControllerTests(BaseTestCase):

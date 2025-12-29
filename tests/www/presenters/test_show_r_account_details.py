@@ -5,20 +5,20 @@ from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors import show_r_account_details
-from arbeitszeit.services.account_details import (
+from tests.datetime_service import datetime_min_utc
+from tests.translator import FakeTranslator
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors import show_r_account_details
+from workers_control.core.services.account_details import (
     AccountTransfer,
     PlotDetails,
     TransferParty,
     TransferPartyType,
 )
-from arbeitszeit.transfers import TransferType
-from arbeitszeit_web.www.presenters.show_r_account_details_presenter import (
+from workers_control.core.transfers import TransferType
+from workers_control.web.www.presenters.show_r_account_details_presenter import (
     ShowRAccountDetailsPresenter,
 )
-from tests.datetime_service import datetime_min_utc
-from tests.translator import FakeTranslator
-from tests.www.base_test_case import BaseTestCase
 
 
 class ShowRAccountDetailsPresenterTests(BaseTestCase):

@@ -1,11 +1,11 @@
-from arbeitszeit.interactors.list_available_languages import (
-    ListAvailableLanguagesInteractor,
-)
-from arbeitszeit_web.www.presenters.list_available_languages_presenter import (
-    ListAvailableLanguagesPresenter,
-)
 from tests.language_service import FakeLanguageService
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.list_available_languages import (
+    ListAvailableLanguagesInteractor,
+)
+from workers_control.web.www.presenters.list_available_languages_presenter import (
+    ListAvailableLanguagesPresenter,
+)
 
 
 class PresenterTests(BaseTestCase):

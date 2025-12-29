@@ -1,12 +1,14 @@
 from dataclasses import dataclass, replace
 from uuid import UUID, uuid4
 
-from arbeitszeit.interactors.request_cooperation import RequestCooperationRequest
-from arbeitszeit_web.malformed_input_data import MalformedInputData
-from arbeitszeit_web.www.controllers.request_cooperation_controller import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.request_cooperation import (
+    RequestCooperationRequest,
+)
+from workers_control.web.malformed_input_data import MalformedInputData
+from workers_control.web.www.controllers.request_cooperation_controller import (
     RequestCooperationController,
 )
-from tests.www.base_test_case import BaseTestCase
 
 
 @dataclass

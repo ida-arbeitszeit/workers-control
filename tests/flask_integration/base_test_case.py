@@ -4,16 +4,16 @@ from uuid import UUID
 
 from flask import Flask, current_app
 
-from arbeitszeit.injector import Injector, Module
-from arbeitszeit_db.repositories import DatabaseGatewayImpl
-from arbeitszeit_flask.dependency_injection import FlaskModule
-from arbeitszeit_flask.token import FlaskTokenService
-from arbeitszeit_flask.url_index import GeneralUrlIndex
 from tests import data_generators
 from tests.db.base_test_case import DatabaseTestCase
 from tests.flask_integration.dependency_injection import FlaskTestingModule
 from tests.flask_integration.mail_service import MockEmailService
 from tests.lazy_property import _lazy_property
+from workers_control.core.injector import Injector, Module
+from workers_control.db.repositories import DatabaseGatewayImpl
+from workers_control.flask.dependency_injection import FlaskModule
+from workers_control.flask.token import FlaskTokenService
+from workers_control.flask.url_index import GeneralUrlIndex
 
 
 class FlaskTestCase(DatabaseTestCase):

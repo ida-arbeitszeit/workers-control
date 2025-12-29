@@ -3,11 +3,11 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit_web.www.controllers.request_coordination_transfer_controller import (
-    RequestCoordinationTransferController,
-)
 from tests.forms import RequestCoordinationTransferFormImpl
 from tests.www.base_test_case import BaseTestCase
+from workers_control.web.www.controllers.request_coordination_transfer_controller import (
+    RequestCoordinationTransferController,
+)
 
 
 class AuthenticatedCompanyTests(BaseTestCase):

@@ -1,11 +1,11 @@
 from datetime import timedelta
 
-from arbeitszeit.interactors.query_private_consumptions import (
+from tests.datetime_service import datetime_utc
+from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.interactors.query_private_consumptions import (
     QueryPrivateConsumptions,
     Request,
 )
-from tests.datetime_service import datetime_utc
-from tests.interactors.base_test_case import BaseTestCase
 
 
 class TestQueryPrivateConsumptions(BaseTestCase):

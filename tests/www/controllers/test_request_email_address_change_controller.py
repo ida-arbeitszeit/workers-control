@@ -1,9 +1,9 @@
 from parameterized import parameterized
 
-from arbeitszeit_web.www.controllers.request_email_address_change_controller import (
+from tests.forms import RequestEmailAddressChangeFormImpl as Form
+from workers_control.web.www.controllers.request_email_address_change_controller import (
     RequestEmailAddressChangeController,
 )
-from tests.forms import RequestEmailAddressChangeFormImpl as Form
 
 from ..base_test_case import BaseTestCase
 

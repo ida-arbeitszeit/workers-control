@@ -1,5 +1,5 @@
-recursive-include arbeitszeit_flask/templates *.html
-recursive-include arbeitszeit_flask/static *.js *.css favicon.ico
-recursive-include arbeitszeit_flask/translations *.po *.mo *.pot
-recursive-include arbeitszeit_db/migrations *.mako *.py
+recursive-include src/workers_control/flask/templates *.html
+recursive-include src/workers_control/flask/static *.js *.css favicon.ico
+recursive-include src/workers_control/flask/translations *.po *.mo *.pot
+recursive-include src/workers_control/db/migrations *.mako *.py
 recursive-include build_support *.py *.cfg

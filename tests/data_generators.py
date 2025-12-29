@@ -11,60 +11,64 @@ from decimal import Decimal
 from typing import Iterable, List, Optional, Union
 from uuid import UUID, uuid4
 
-from arbeitszeit import records
-from arbeitszeit.interactors import confirm_member, get_coop_summary
-from arbeitszeit.interactors.accept_cooperation import (
+from tests.datetime_service import FakeDatetimeService
+from workers_control.core import records
+from workers_control.core.interactors import confirm_member, get_coop_summary
+from workers_control.core.interactors.accept_cooperation import (
     AcceptCooperationInteractor,
     AcceptCooperationRequest,
 )
-from arbeitszeit.interactors.answer_company_work_invite import (
+from workers_control.core.interactors.answer_company_work_invite import (
     AnswerCompanyWorkInviteInteractor,
     AnswerCompanyWorkInviteRequest,
 )
-from arbeitszeit.interactors.approve_plan import ApprovePlanInteractor
-from arbeitszeit.interactors.confirm_company import ConfirmCompanyInteractor
-from arbeitszeit.interactors.create_cooperation import (
+from workers_control.core.interactors.approve_plan import ApprovePlanInteractor
+from workers_control.core.interactors.confirm_company import ConfirmCompanyInteractor
+from workers_control.core.interactors.create_cooperation import (
     CreateCooperationInteractor,
     CreateCooperationRequest,
 )
-from arbeitszeit.interactors.create_plan_draft import CreatePlanDraft, Request
-from arbeitszeit.interactors.file_plan_with_accounting import FilePlanWithAccounting
-from arbeitszeit.interactors.hide_plan import HidePlanInteractor
-from arbeitszeit.interactors.invite_worker_to_company import (
+from workers_control.core.interactors.create_plan_draft import CreatePlanDraft, Request
+from workers_control.core.interactors.file_plan_with_accounting import (
+    FilePlanWithAccounting,
+)
+from workers_control.core.interactors.hide_plan import HidePlanInteractor
+from workers_control.core.interactors.invite_worker_to_company import (
     InviteWorkerToCompanyInteractor,
 )
-from arbeitszeit.interactors.register_accountant import RegisterAccountantInteractor
-from arbeitszeit.interactors.register_company import RegisterCompany
-from arbeitszeit.interactors.register_hours_worked import (
+from workers_control.core.interactors.register_accountant import (
+    RegisterAccountantInteractor,
+)
+from workers_control.core.interactors.register_company import RegisterCompany
+from workers_control.core.interactors.register_hours_worked import (
     RegisterHoursWorkedInteractor,
     RegisterHoursWorkedRequest,
 )
-from arbeitszeit.interactors.register_member import RegisterMemberInteractor
-from arbeitszeit.interactors.register_private_consumption import (
+from workers_control.core.interactors.register_member import RegisterMemberInteractor
+from workers_control.core.interactors.register_private_consumption import (
     RegisterPrivateConsumption,
     RegisterPrivateConsumptionRequest,
     RegisterPrivateConsumptionResponse,
 )
-from arbeitszeit.interactors.register_productive_consumption import (
+from workers_control.core.interactors.register_productive_consumption import (
     RegisterProductiveConsumptionInteractor,
     RegisterProductiveConsumptionRequest,
     RegisterProductiveConsumptionResponse,
 )
-from arbeitszeit.interactors.reject_plan import RejectPlanInteractor
-from arbeitszeit.interactors.request_cooperation import (
+from workers_control.core.interactors.reject_plan import RejectPlanInteractor
+from workers_control.core.interactors.request_cooperation import (
     RequestCooperationInteractor,
     RequestCooperationRequest,
 )
-from arbeitszeit.interactors.request_coordination_transfer import (
+from workers_control.core.interactors.request_coordination_transfer import (
     RequestCoordinationTransferInteractor,
 )
-from arbeitszeit.interactors.send_accountant_registration_token import (
+from workers_control.core.interactors.send_accountant_registration_token import (
     SendAccountantRegistrationTokenInteractor,
 )
-from arbeitszeit.password_hasher import PasswordHasher
-from arbeitszeit.repositories import DatabaseGateway
-from arbeitszeit.transfers import TransferType
-from tests.datetime_service import FakeDatetimeService
+from workers_control.core.password_hasher import PasswordHasher
+from workers_control.core.repositories import DatabaseGateway
+from workers_control.core.transfers import TransferType
 
 
 @dataclass

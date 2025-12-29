@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from decimal import Decimal
 from uuid import UUID
 
-from arbeitszeit.interactors import get_company_summary, get_member_dashboard
+from workers_control.core.interactors import get_company_summary, get_member_dashboard
 
 
 @dataclass
@@ -15,11 +15,11 @@ class AccountBalances:
 
 @dataclass
 class BalanceChecker:
-    get_company_summary: get_company_summary.GetCompanySummaryInteractor
+    get_company_summary_interactor: get_company_summary.GetCompanySummaryInteractor
     get_member_dashboard_interactor: get_member_dashboard.GetMemberDashboardInteractor
 
     def get_company_account_balances(self, company: UUID) -> AccountBalances:
-        response = self.get_company_summary.execute(company_id=company)
+        response = self.get_company_summary_interactor.execute(company_id=company)
         assert response
         return AccountBalances(
             p_account=response.account_balances.means,

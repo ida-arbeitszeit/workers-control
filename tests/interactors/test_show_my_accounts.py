@@ -3,12 +3,12 @@ from uuid import UUID
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors.show_company_accounts import (
+from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.interactors.show_company_accounts import (
     ShowCompanyAccountsInteractor,
     ShowCompanyAccountsRequest,
 )
-from arbeitszeit.records import ProductionCosts
-from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.records import ProductionCosts
 
 
 class ShowCompanyAccountsTest(BaseTestCase):

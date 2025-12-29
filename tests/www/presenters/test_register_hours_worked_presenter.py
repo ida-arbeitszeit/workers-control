@@ -1,13 +1,15 @@
 from uuid import uuid4
 
-from arbeitszeit.interactors.register_hours_worked import RegisterHoursWorkedResponse
-from arbeitszeit_web.www.controllers.register_hours_worked_controller import (
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.register_hours_worked import (
+    RegisterHoursWorkedResponse,
+)
+from workers_control.web.www.controllers.register_hours_worked_controller import (
     ControllerRejection,
 )
-from arbeitszeit_web.www.presenters.register_hours_worked_presenter import (
+from workers_control.web.www.presenters.register_hours_worked_presenter import (
     RegisterHoursWorkedPresenter,
 )
-from tests.www.base_test_case import BaseTestCase
 
 SUCCESS_INTERACTOR_RESPONSE = RegisterHoursWorkedResponse(
     rejection_reason=None, registered_hours_worked_id=uuid4()

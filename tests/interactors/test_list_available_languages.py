@@ -1,9 +1,9 @@
 from unittest import TestCase
 
-from arbeitszeit.interactors.list_available_languages import (
+from tests.interactors.repositories import FakeLanguageRepository
+from workers_control.core.interactors.list_available_languages import (
     ListAvailableLanguagesInteractor,
 )
-from tests.interactors.repositories import FakeLanguageRepository
 
 from .dependency_injection import get_dependency_injector
 

@@ -1,6 +1,8 @@
-from arbeitszeit.interactors.confirm_company import ConfirmCompanyInteractor
-from arbeitszeit.interactors.register_accountant import RegisterAccountantInteractor
-from arbeitszeit.interactors.send_accountant_registration_token import (
+from workers_control.core.interactors.confirm_company import ConfirmCompanyInteractor
+from workers_control.core.interactors.register_accountant import (
+    RegisterAccountantInteractor,
+)
+from workers_control.core.interactors.send_accountant_registration_token import (
     SendAccountantRegistrationTokenInteractor,
 )
 

@@ -1,7 +1,7 @@
 from typing import Optional
 
-from arbeitszeit.injector import singleton
-from arbeitszeit_web.email.accountant_invitation_presenter import ViewModel
+from workers_control.core.injector import singleton
+from workers_control.web.email.accountant_invitation_presenter import ViewModel
 
 
 @singleton

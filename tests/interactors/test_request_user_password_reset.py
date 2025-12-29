@@ -1,8 +1,8 @@
 from datetime import timedelta
 
-from arbeitszeit import email_notifications
-from arbeitszeit.interactors import request_user_password_reset
 from tests.datetime_service import datetime_utc
+from workers_control.core import email_notifications
+from workers_control.core.interactors import request_user_password_reset
 
 from .base_test_case import BaseTestCase
 

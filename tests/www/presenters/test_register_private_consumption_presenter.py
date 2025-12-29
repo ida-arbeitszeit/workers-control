@@ -1,16 +1,16 @@
 from parameterized import parameterized
 
-from arbeitszeit.interactors.register_private_consumption import (
+from tests.request import FakeRequest
+from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors.register_private_consumption import (
     RegisterPrivateConsumptionResponse,
     RejectionReason,
 )
-from arbeitszeit_web.www.presenters.register_private_consumption_presenter import (
+from workers_control.web.www.presenters.register_private_consumption_presenter import (
     Redirect,
     RegisterPrivateConsumptionPresenter,
     RenderForm,
 )
-from tests.request import FakeRequest
-from tests.www.base_test_case import BaseTestCase
 
 
 class RegisterPrivateConsumptionPresenterTests(BaseTestCase):

@@ -2,12 +2,12 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from arbeitszeit.interactors import create_draft_from_plan as interactor
-from arbeitszeit_web.www.presenters.create_draft_from_plan_presenter import (
-    CreateDraftFromPlanPresenter,
-)
 from tests.request import FakeRequest
 from tests.www.base_test_case import BaseTestCase
+from workers_control.core.interactors import create_draft_from_plan as interactor
+from workers_control.web.www.presenters.create_draft_from_plan_presenter import (
+    CreateDraftFromPlanPresenter,
+)
 
 
 class CreateDraftFromPlanPresenterTests(BaseTestCase):

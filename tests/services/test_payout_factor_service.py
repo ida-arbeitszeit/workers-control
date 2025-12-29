@@ -5,10 +5,10 @@ from decimal import Decimal
 
 from parameterized import parameterized
 
-from arbeitszeit.records import ProductionCosts
-from arbeitszeit.services.payout_factor import PayoutFactorService
 from tests.interactors.base_test_case import BaseTestCase
 from tests.payout_factor import PayoutFactorConfigTestImpl
+from workers_control.core.records import ProductionCosts
+from workers_control.core.services.payout_factor import PayoutFactorService
 
 DEFAULT_COSTS = ProductionCosts(
     means_cost=Decimal(1), resource_cost=Decimal(1), labour_cost=Decimal(1)

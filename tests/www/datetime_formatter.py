@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from datetime import UTC, datetime, tzinfo
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
-from arbeitszeit.injector import singleton
-from arbeitszeit_web.formatters.datetime_formatter import TimezoneConfiguration
+from workers_control.core.injector import singleton
+from workers_control.web.formatters.datetime_formatter import TimezoneConfiguration
 
 
 @dataclass

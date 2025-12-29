@@ -29,8 +29,8 @@ mkShell (
         sqlite
         git
       ]
-      ++ python3.pkgs.arbeitszeitapp.optional-dependencies.profiling;
-    inputsFrom = [ python3.pkgs.arbeitszeitapp ];
+      ++ python3.pkgs.workers-control.optional-dependencies.profiling;
+    inputsFrom = [ python3.pkgs.workers-control ];
     shellHook = ''
       export PYTHONPATH="$PWD/src:$PYTHONPATH"
     '';

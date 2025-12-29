@@ -47,7 +47,7 @@
             };
           };
           packages = {
-            default = pkgs.python3.pkgs.arbeitszeitapp;
+            default = pkgs.python3.pkgs.workers-control;
             inherit (pkgs) python3;
           };
           checks = {
@@ -56,10 +56,10 @@
             # artifacts. This is why we can test for the system
             # python3 interpreter and also explicitly list all
             # versions we want to support.
-            arbeitszeit-python3-nixpkgs-unstable = pkgs.python3.pkgs.arbeitszeitapp;
-            arbeitszeit-python312-nixpkgs-unstable = pkgs.python312.pkgs.arbeitszeitapp;
-            arbeitszeit-python3-nixpkgs-stable = pkgs-25-11.python3.pkgs.arbeitszeitapp;
-            arbeitszeit-python312-nixpkgs-stable = pkgs-25-11.python312.pkgs.arbeitszeitapp;
+            woco-python3-nixpkgs-unstable = pkgs.python3.pkgs.workers-control;
+            woco-python312-nixpkgs-unstable = pkgs.python312.pkgs.workers-control;
+            woco-python3-nixpkgs-stable = pkgs-25-11.python3.pkgs.workers-control;
+            woco-python312-nixpkgs-stable = pkgs-25-11.python312.pkgs.workers-control;
           };
         }
       );

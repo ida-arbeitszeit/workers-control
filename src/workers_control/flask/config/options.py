@@ -141,7 +141,7 @@ CONFIG_OPTIONS = [
         description_paragraphs=[
             "This variable tells the application how it is addressed. This is important to generate links in emails it sends out."
         ],
-        example='SERVER_NAME = "arbeitszeitapp.cp.org"',
+        example='SERVER_NAME = "workers-control.cp.org"',
         default=None,
     ),
     ConfigOption(

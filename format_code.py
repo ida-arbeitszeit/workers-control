@@ -1,13 +1,11 @@
 #!/usr/bin/env python
-"""This script applies the standard code formatting to files. For now
-we only target some selected files. If you want to add a path to the
-list of auto formatted files, append the path to the list with the
-apropriate comment below.
+"""This script applies the standard code formatting to files. We target
+selected python files specified in ".autoformattingrc". If "nixfmt" is
+installed, we also format all ".nix" files in the repository.
 """
 
 import os
 from os import path
-from typing import List
 
 from dev.command import Shell, Subprocess, SubprocessRunner
 
@@ -18,7 +16,7 @@ def main(subprocess_runner: SubprocessRunner):
         format_nix_files(subprocess_runner)
 
 
-def read_autoformat_target_paths() -> List[str]:
+def read_autoformat_target_paths() -> list[str]:
     with open(".autoformattingrc") as handle:
         return [line.strip() for line in handle.read().splitlines() if line.strip()]
 
@@ -38,7 +36,7 @@ def format_nix_files(subprocess_runner: SubprocessRunner):
 def format_nix_file(subprocess_runner: SubprocessRunner, path: str):
     if (
         subprocess_runner.run_command(
-            Subprocess(["nixfmt", "--check", path], capture_output=True)
+            Subprocess(["nixfmt", "--check", path], capture_output=True, check=False)
         ).return_code
         != 0
     ):

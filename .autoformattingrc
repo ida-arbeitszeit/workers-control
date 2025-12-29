@@ -1,7 +1,7 @@
 src/
 dev/
 docs/
-build_support
+tests/
+build_support/
 format_code.py
 run-checks
-tests/

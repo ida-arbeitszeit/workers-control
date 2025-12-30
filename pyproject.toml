@@ -5,7 +5,7 @@ backend-path = ["."]
 
 [project]
 name = "workers-control"
-version = "0.1.1"
+version = "0.1.2"
 description = "A flask app for labour time accounting."
 license = "AGPL-3.0-or-later"
 requires-python = ">=3.12"

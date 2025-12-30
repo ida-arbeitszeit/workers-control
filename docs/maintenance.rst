@@ -31,7 +31,7 @@ Change Dependencies
 To add or remove a direct dependency, we do so (without specifying the version number)
 in the following files:
 
-- nix/pythonPackages/arbeitzeitapp.nix
+- nix/pythonPackages/workers-control.nix
 - nix/devShell.nix
 - requirements.txt
 - requirements-dev.txt
@@ -47,7 +47,7 @@ NixOS module.
 
 Procedure for a new release:
 
-#. Increment the version number of our app in :py:mod:`pyproject.toml` and :py:mod:`nix/pythonPackages/arbeitzeitapp.nix` (follow https://semver.org/spec/v2.0.0.html)
+#. Increment the version number of our app in :py:mod:`pyproject.toml` and :py:mod:`nix/pythonPackages/workers-control.nix` (follow https://semver.org/spec/v2.0.0.html)
 #. Add a new entry to :py:mod:`CHANGELOG.md` (follow https://keepachangelog.com/en/1.1.0/)
 #. Manually copy the exact constraints from :py:mod:`constraints.txt` into the dependencies in :py:mod:`pyproject.toml`.
 #. After merging the above changes: tag the ``master`` branch (scheme: ``git tag v1.2.3 -m "Release version 1.2.3"``)

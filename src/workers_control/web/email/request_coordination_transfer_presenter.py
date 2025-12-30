@@ -21,7 +21,7 @@ class RequestCoordinationTransferEmailPresenter:
             ),
             recipients=[email.candidate_email],
             html=self.translator.gettext(
-                "Hello %(candidate)s,<br>Your are asked to be the coordinator of the cooperation '%(cooperation)s'. Please follow this link to check the request in the Arbeitszeitapp: <a href='%(url)s'>LINK</a>."
+                "Hello %(candidate)s,<br>Your are asked to be the coordinator of the cooperation '%(cooperation)s'. Please follow this link to check the request in the Workers Control app: <a href='%(url)s'>LINK</a>."
             )
             % dict(
                 candidate=escape(email.candidate_name),

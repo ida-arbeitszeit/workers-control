@@ -30,7 +30,7 @@ class AccountantInvitationEmailPresenter:
     def send_accountant_invitation(self, email: str) -> None:
         token = self.token_service.generate_token(email)
         view_model = ViewModel(
-            subject=self.translator.gettext("Invitation to Arbeitszeitapp"),
+            subject=self.translator.gettext("Invitation to Workers Control app"),
             recipients=[email],
             sender=self.email_configuration.get_sender_address(),
             registration_link_url=self.url_index.get_accountant_invitation_url(token),

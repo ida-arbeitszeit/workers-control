@@ -17,7 +17,7 @@ class CooperationRequestEmailPresenter:
             subject=self.translator.gettext("A company requests cooperation"),
             recipients=[email.coordinator_email_address],
             html=self.translator.gettext(
-                "Hello %(coordinator)s,<br>A company wants to be part of a cooperation that you are coordinating. Please check the request in the Arbeitszeitapp."
+                "Hello %(coordinator)s,<br>A company wants to be part of a cooperation that you are coordinating. Please check the request in the Workers Control app."
             )
             % dict(coordinator=escape(email.coordinator_name)),
             sender=self.email_configuration.get_sender_address(),

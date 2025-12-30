@@ -35,7 +35,7 @@ class SendMailTests(BaseTestCase):
 
     def test_mail_has_correct_subject_line(self) -> None:
         expected_subject = self.translator.gettext(
-            "Invitation from a company on Arbeitszeitapp"
+            "Invitation from a company on Workers Control app"
         )
         self.presenter.show_invite_worker_message(
             worker_email="member@cp.org", invite=uuid4()

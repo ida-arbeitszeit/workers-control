@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-12-28 20:58+0100\n"
+"POT-Creation-Date: 2025-12-30 14:36+0100\n"
 "PO-Revision-Date: 2022-01-16 19:09+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -293,8 +293,8 @@ msgstr ""
 #: src/workers_control/flask/templates/auth/accountant_invitation.html:3
 #, python-format
 msgid ""
-"Hello. You were invited to be a public accountant at Arbeitszeitapp. Go to "
-"%(link)s to register."
+"Hello. You were invited to be a public accountant at the Workers Control "
+"app. Go to %(link)s to register."
 msgstr ""
 
 #: src/workers_control/flask/templates/auth/activate.html:1
@@ -434,7 +434,7 @@ msgstr ""
 #: src/workers_control/flask/templates/auth/start.html:10
 #: src/workers_control/flask/templates/auth/unconfirmed_company.html:9
 #: src/workers_control/flask/templates/auth/unconfirmed_member.html:9
-msgid "A platform for working time calculation."
+msgid "A platform for labour time calculation."
 msgstr ""
 
 #: src/workers_control/flask/templates/auth/start.html:13
@@ -1435,8 +1435,8 @@ msgstr ""
 
 #: src/workers_control/flask/templates/member/notification-about-work-invitation.html:1
 msgid ""
-"You have been invited by a company to join them as a member on "
-"Arbeitszeitapp. Accept or reject via this link:"
+"You have been invited by a company to join them as a member on the Workers "
+"Control app. Accept or reject via this link:"
 msgstr ""
 
 #: src/workers_control/flask/templates/member/show_company_work_invite_details.html:13
@@ -1625,7 +1625,7 @@ msgstr ""
 
 #: src/workers_control/flask/templates/user/request_email_change_notification.html:1
 msgid ""
-"Dear Arbeitszeitapp user,\n"
+"Dear user of the Workers Control app,\n"
 "\n"
 "someone tried to change the email address for your user account. If this "
 "was you please visit the following link to confirm this change."
@@ -1633,7 +1633,7 @@ msgstr ""
 
 #: src/workers_control/flask/templates/user/request_email_change_warning.html:1
 msgid ""
-"Dear Arbeitszeitapp user,\n"
+"Dear user of the Workers Control app,\n"
 "\n"
 "someone tried to change the email address for your user account. If this "
 "was not you, please contact the administrators of the app."
@@ -1697,7 +1697,7 @@ msgid "Draft successfully saved."
 msgstr ""
 
 #: src/workers_control/web/email/accountant_invitation_presenter.py:33
-msgid "Invitation to Arbeitszeitapp"
+msgid "Invitation to Workers Control app"
 msgstr ""
 
 #: src/workers_control/web/email/cooperation_request_email_presenter.py:17
@@ -1708,7 +1708,7 @@ msgstr ""
 #, python-format
 msgid ""
 "Hello %(coordinator)s,<br>A company wants to be part of a cooperation that "
-"you are coordinating. Please check the request in the Arbeitszeitapp."
+"you are coordinating. Please check the request in the Workers Control app."
 msgstr ""
 
 #: src/workers_control/web/email/email_change_confirmation_presenter.py:24
@@ -1717,7 +1717,7 @@ msgid "Email address change requested"
 msgstr ""
 
 #: src/workers_control/web/email/invite_worker_presenter.py:24
-msgid "Invitation from a company on Arbeitszeitapp"
+msgid "Invitation from a company on Workers Control app"
 msgstr ""
 
 #: src/workers_control/web/email/notify_about_worker_removal_from_company_presenter.py:18
@@ -1741,7 +1741,7 @@ msgstr ""
 msgid ""
 "Hello %(candidate)s,<br>Your are asked to be the coordinator of the "
 "cooperation '%(cooperation)s'. Please follow this link to check the request"
-" in the Arbeitszeitapp: <a href='%(url)s'>LINK</a>."
+" in the Workers Control app: <a href='%(url)s'>LINK</a>."
 msgstr ""
 
 #: src/workers_control/web/formatters/plan_details_formatter.py:48
@@ -2659,5 +2659,60 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Cooperation compensation"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Hello. You were invited to be a "
+#~ "public accountant at Arbeitszeitapp. Go to"
+#~ " %(link)s to register."
+#~ msgstr ""
+
+#~ msgid "A platform for working time calculation."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "You have been invited by a company"
+#~ " to join them as a member on "
+#~ "Arbeitszeitapp. Accept or reject via this"
+#~ " link:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Dear Arbeitszeitapp user,\n"
+#~ "\n"
+#~ "someone tried to change the email "
+#~ "address for your user account. If "
+#~ "this was you please visit the "
+#~ "following link to confirm this change."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Dear Arbeitszeitapp user,\n"
+#~ "\n"
+#~ "someone tried to change the email "
+#~ "address for your user account. If "
+#~ "this was not you, please contact the"
+#~ " administrators of the app."
+#~ msgstr ""
+
+#~ msgid "Invitation to Arbeitszeitapp"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Hello %(coordinator)s,<br>A company wants to "
+#~ "be part of a cooperation that you"
+#~ " are coordinating. Please check the "
+#~ "request in the Arbeitszeitapp."
+#~ msgstr ""
+
+#~ msgid "Invitation from a company on Arbeitszeitapp"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Hello %(candidate)s,<br>Your are asked to "
+#~ "be the coordinator of the cooperation "
+#~ "'%(cooperation)s'. Please follow this link "
+#~ "to check the request in the "
+#~ "Arbeitszeitapp: <a href='%(url)s'>LINK</a>."
 #~ msgstr ""
 

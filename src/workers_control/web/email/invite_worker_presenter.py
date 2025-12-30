@@ -21,7 +21,7 @@ class InviteWorkerPresenterImpl:
         )
         self.email_service.send_message(
             subject=self.translator.gettext(
-                "Invitation from a company on Arbeitszeitapp"
+                "Invitation from a company on Workers Control app"
             ),
             recipients=[worker_email],
             html=self.text_renderer.render_member_notfication_about_work_invitation(

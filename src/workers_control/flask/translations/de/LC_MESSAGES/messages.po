@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Arbeitszeitapp\n"
 "Report-Msgid-Bugs-To: community-arbeitszeitapp@systemli.org\n"
-"POT-Creation-Date: 2025-12-28 20:58+0100\n"
+"POT-Creation-Date: 2025-12-30 14:36+0100\n"
 "PO-Revision-Date: 2024-03-11 22:27+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -297,11 +297,11 @@ msgstr "Es gibt momentan keine Pläne, die auf ihre Überprüfung warten"
 #: src/workers_control/flask/templates/auth/accountant_invitation.html:3
 #, python-format
 msgid ""
-"Hello. You were invited to be a public accountant at Arbeitszeitapp. Go to "
-"%(link)s to register."
+"Hello. You were invited to be a public accountant at the Workers Control "
+"app. Go to %(link)s to register."
 msgstr ""
 "Hallo. Du wurdest eingeladen, öffentliche*r Buchhalter*in der "
-"Arbeitszeitapp zu sein. Gehe zu %(link)s um dich zu registrieren."
+"Workers Control App zu sein. Gehe zu %(link)s um dich zu registrieren."
 
 #: src/workers_control/flask/templates/auth/activate.html:1
 msgid ""
@@ -456,7 +456,7 @@ msgstr "Mitglied registrieren"
 #: src/workers_control/flask/templates/auth/start.html:10
 #: src/workers_control/flask/templates/auth/unconfirmed_company.html:9
 #: src/workers_control/flask/templates/auth/unconfirmed_member.html:9
-msgid "A platform for working time calculation."
+msgid "A platform for labour time calculation."
 msgstr "Eine Plattform für Arbeitszeitrechnung."
 
 #: src/workers_control/flask/templates/auth/start.html:13
@@ -1508,11 +1508,11 @@ msgstr "Aktueller Kontostand"
 
 #: src/workers_control/flask/templates/member/notification-about-work-invitation.html:1
 msgid ""
-"You have been invited by a company to join them as a member on "
-"Arbeitszeitapp. Accept or reject via this link:"
+"You have been invited by a company to join them as a member on the Workers "
+"Control app. Accept or reject via this link:"
 msgstr ""
-"Du wurdest von einem Betrieb eingeladen, Mitglied bei ihnen auf "
-"Arbeitszeitapp zu werden. Akzeptiere oder lehne ab über diesen Link:"
+"Du wurdest von einem Betrieb eingeladen, Mitglied bei ihnen in der "
+"Workers Control App zu werden. Akzeptiere oder lehne ab über diesen Link:"
 
 #: src/workers_control/flask/templates/member/show_company_work_invite_details.html:13
 msgid "Reject"
@@ -1704,12 +1704,12 @@ msgstr "Senden"
 
 #: src/workers_control/flask/templates/user/request_email_change_notification.html:1
 msgid ""
-"Dear Arbeitszeitapp user,\n"
+"Dear user of the Workers Control app,\n"
 "\n"
 "someone tried to change the email address for your user account. If this "
 "was you please visit the following link to confirm this change."
 msgstr ""
-"Liebe*r Nutzer*in der Arbeitszeitapp,\n"
+"Liebe*r Nutzer*in der Workers Control App,\n"
 "\n"
 "jemand hat versucht, die E-Mail-Adresse für dein Nutzerkonto zu ändern. "
 "Falls das du warst, besuche bitte den folgenden Link, um diese Änderung zu "
@@ -1717,12 +1717,12 @@ msgstr ""
 
 #: src/workers_control/flask/templates/user/request_email_change_warning.html:1
 msgid ""
-"Dear Arbeitszeitapp user,\n"
+"Dear user of the Workers Control app,\n"
 "\n"
 "someone tried to change the email address for your user account. If this "
 "was not you, please contact the administrators of the app."
 msgstr ""
-"Liebe*r Nutzer*in der Arbeitszeitapp,\n"
+"Liebe*r Nutzer*in der Workers Control App,\n"
 "\n"
 "jemand hat versucht, die E-Mail-Adresse für dein Nutzerkonto zu ändern. "
 "Falls das nicht du warst, kontaktiere bitte die Administrator*innen der "
@@ -1786,8 +1786,8 @@ msgid "Draft successfully saved."
 msgstr "Entwurf erfolgreich gespeichert."
 
 #: src/workers_control/web/email/accountant_invitation_presenter.py:33
-msgid "Invitation to Arbeitszeitapp"
-msgstr "Einladung zur Arbeitszeitapp"
+msgid "Invitation to Workers Control app"
+msgstr "Einladung zur Workers Control App"
 
 #: src/workers_control/web/email/cooperation_request_email_presenter.py:17
 msgid "A company requests cooperation"
@@ -1797,10 +1797,10 @@ msgstr "Ein Betrieb fragt Kooperation an"
 #, python-format
 msgid ""
 "Hello %(coordinator)s,<br>A company wants to be part of a cooperation that "
-"you are coordinating. Please check the request in the Arbeitszeitapp."
+"you are coordinating. Please check the request in the Workers Control app."
 msgstr ""
 "Hallo %(coordinator)s,<br>ein Betrieb möchte Teil einer Kooperation sein, "
-"die du koordinierst. Bitte überprüfe die Anfrage in der Arbeitszeitapp."
+"die du koordinierst. Bitte prüfe die Anfrage in der Workers Control App."
 
 #: src/workers_control/web/email/email_change_confirmation_presenter.py:24
 #: src/workers_control/web/email/email_change_warning_view.py:20
@@ -1808,8 +1808,8 @@ msgid "Email address change requested"
 msgstr "Änderung der E-Mail-Adresse angefordert"
 
 #: src/workers_control/web/email/invite_worker_presenter.py:24
-msgid "Invitation from a company on Arbeitszeitapp"
-msgstr "Einladung von einem Betrieb in der Arbeitszeitapp"
+msgid "Invitation from a company on Workers Control app"
+msgstr "Einladung von einem Betrieb in der Workers Control App"
 
 #: src/workers_control/web/email/notify_about_worker_removal_from_company_presenter.py:18
 msgid "Worker removed from company"
@@ -1832,11 +1832,11 @@ msgstr "Du wirst angefragt, Koordinator*in einer Kooperation zu sein"
 msgid ""
 "Hello %(candidate)s,<br>Your are asked to be the coordinator of the "
 "cooperation '%(cooperation)s'. Please follow this link to check the request"
-" in the Arbeitszeitapp: <a href='%(url)s'>LINK</a>."
+" in the Workers Control app: <a href='%(url)s'>LINK</a>."
 msgstr ""
 "Hallo %(candidate)s,<br>Du wirst angefragt, Koordinator*in der Kooperation "
 "'%(cooperation)s' zu sein. Bitte folge diesem Link, um die Anfrage in der "
-"Arbeitszeitapp zu prüfen: <a href='%(url)s'>LINK</a>."
+"Workers Control App zu prüfen: <a href='%(url)s'>LINK</a>."
 
 #: src/workers_control/web/formatters/plan_details_formatter.py:48
 #: src/workers_control/web/www/presenters/get_company_summary_presenter.py:130

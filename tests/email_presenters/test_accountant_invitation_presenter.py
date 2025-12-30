@@ -31,7 +31,7 @@ class PresenterTests(BaseTestCase):
         self.presenter.send_accountant_invitation(email="test@test.test")
         self.assertViewModel(
             lambda m: m.subject
-            == self.translator.gettext("Invitation to Arbeitszeitapp")
+            == self.translator.gettext("Invitation to Workers Control app")
         )
 
     def test_that_sender_is_set_to_default_sender(self) -> None:

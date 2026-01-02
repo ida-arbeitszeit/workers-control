@@ -67,14 +67,16 @@ class FlaskTestConfiguration(dict):
     template_folder = property(_get_template_folder, _set_template_folder)
 
 
-def provide_app(config: FlaskTestConfiguration) -> Flask:
-    return create_app(dev_or_test_config=config, template_folder=config.template_folder)
-
-
 class FlaskTestingModule(Module):
     def configure(self, binder: Binder) -> None:
         super().configure(binder)
-        binder[Flask] = CallableProvider(provide_app, is_singleton=True)
+        binder[Flask] = CallableProvider(self.provide_app, is_singleton=True)
         binder[FlaskTestConfiguration] = CallableProvider(
             FlaskTestConfiguration.default
+        )
+
+    @staticmethod
+    def provide_app(config: FlaskTestConfiguration) -> Flask:
+        return create_app(
+            dev_or_test_config=config, template_folder=config.template_folder
         )

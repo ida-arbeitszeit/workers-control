@@ -17,14 +17,14 @@ def provide_test_database_uri() -> str:
     return os.environ["WOCO_TEST_DB"]
 
 
-def provide_database() -> Database:
-    Database().configure(uri=provide_test_database_uri())
-    return Database()
-
-
 class DatabaseTestModule(Module):
     def configure(self, binder: Binder) -> None:
         super().configure(binder)
-        binder[Database] = CallableProvider(provide_database, is_singleton=True)
+        binder[Database] = CallableProvider(self.provide_database, is_singleton=True)
         binder[DatabaseGateway] = AliasProvider(DatabaseGatewayImpl)
         binder[SocialAccounting] = CallableProvider(get_social_accounting)
+
+    @staticmethod
+    def provide_database() -> Database:
+        Database().configure(uri=provide_test_database_uri())
+        return Database()

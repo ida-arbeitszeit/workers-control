@@ -20,16 +20,6 @@ from workers_control.web.token import TokenService
 from . import repositories
 
 
-def provide_social_accounting_instance(
-    mock_database: repositories.MockDatabase,
-) -> records.SocialAccounting:
-    return mock_database.social_accounting
-
-
-def provide_email_sender() -> tests.email_notifications.EmailSenderTestImpl:
-    return tests.email_notifications.EmailSenderTestImpl()
-
-
 class InMemoryModule(Module):
     def configure(self, binder: Binder) -> None:
         super().configure(binder)
@@ -37,7 +27,7 @@ class InMemoryModule(Module):
             repositories.FakeLanguageRepository
         )
         binder[records.SocialAccounting] = CallableProvider(
-            provide_social_accounting_instance
+            self.provide_social_accounting_instance
         )
         binder.bind(
             interfaces.DatabaseGateway,
@@ -55,8 +45,18 @@ class InMemoryModule(Module):
             tests.email_notifications.EmailSenderTestImpl
         )
         binder[tests.email_notifications.EmailSenderTestImpl] = CallableProvider(
-            provide_email_sender, is_singleton=True
+            self.provide_email_sender, is_singleton=True
         )
+
+    @staticmethod
+    def provide_social_accounting_instance(
+        mock_database: repositories.MockDatabase,
+    ) -> records.SocialAccounting:
+        return mock_database.social_accounting
+
+    @staticmethod
+    def provide_email_sender() -> tests.email_notifications.EmailSenderTestImpl:
+        return tests.email_notifications.EmailSenderTestImpl()
 
 
 def get_dependency_injector() -> Injector:

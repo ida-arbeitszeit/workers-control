@@ -1,0 +1,47 @@
+{
+    "version": 1,
+    "formatters": {
+        "default": {
+            "format": "%(levelname)-5.5s [%(name)s] [%(asctime)s]: %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S"
+        }
+    },
+    "handlers": {
+        "wsgi": {
+            "class": "logging.StreamHandler",
+            "stream": "ext://flask.logging.wsgi_errors_stream",
+            "formatter": "default"
+        }
+    },
+    "loggers": {
+        "workers_control": {
+            "level": "DEBUG",
+            "handlers": ["wsgi"],
+            "propagate": false
+        },
+        "flask_profiler": {
+            "level": "INFO",
+            "handlers": ["wsgi"],
+            "propagate": false
+        },
+        "sqlalchemy.engine": {
+            "level": "WARNING",
+            "handlers": ["wsgi"],
+            "propagate": false
+        },
+        "alembic": {
+            "level": "INFO",
+            "handlers": ["wsgi"],
+            "propagate": false
+        },
+        "werkzeug": {
+            "level": "INFO",
+            "handlers": ["wsgi"],
+            "propagate": false
+        }
+    },
+    "root": {
+        "level": "INFO",
+        "handlers": ["wsgi"]
+    }
+}

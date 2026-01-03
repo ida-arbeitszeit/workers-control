@@ -1,6 +1,9 @@
+import logging
 from typing import Any
 
 from workers_control.flask.config.options import ConfigOption
+
+logger = logging.getLogger(__name__)
 
 
 class ConfigOptionMissing(Exception):
@@ -19,7 +22,9 @@ class ConfigValidator:
     def validate_options(self) -> None:
         for entry in self._expected_options:
             if entry.name not in self._config:
-                raise ConfigOptionMissing(f"Missing configuration option: {entry.name}")
+                err_mgs = f"Missing configuration option: {entry.name}"
+                logger.error(err_mgs)
+                raise ConfigOptionMissing(err_mgs)
 
     def validate_option_types(self) -> None:
         for entry in self._expected_options:
@@ -48,9 +53,9 @@ class ConfigValidator:
                 expected_types_str = ", ".join(
                     [t.__name__ for t in entry.converts_to_types]
                 )
-                raise ConfigOptionTypeInvalid(
-                    f"Configuration option {entry.name} has value {value!r} that cannot be converted to any of the expected types: {expected_types_str}"
-                )
+                err_msg = f"Configuration option {entry.name} has value {value!r} that cannot be converted to any of the expected types: {expected_types_str}"
+                logger.error(err_msg)
+                raise ConfigOptionTypeInvalid(err_msg)
 
     def _is_boolean(self, value: Any) -> bool:
         if isinstance(value, bool):

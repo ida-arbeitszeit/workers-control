@@ -1,4 +1,7 @@
+import json
 import os
+from logging.config import dictConfig
+from pathlib import Path
 
 from flask import Flask
 
@@ -10,7 +13,15 @@ from dev.dev_cli import (
     create_fic_cli_group,
     create_generate_cli_group,
 )
-from workers_control.flask.mail_service.debug_mail_service import DebugMailService
+from workers_control.flask.mail_service.debug_mail_service import (
+    DebugMailService,
+)
+
+config_path = Path(__file__).parent / "logging_config.json"
+
+with open(config_path, "r") as f:
+    config = json.load(f)
+    dictConfig(config)
 
 
 class FlaskDevConfiguration:

@@ -29,7 +29,9 @@ class PublicSectorFundService:
 
     def _calculate_public_plans_costs(self, public_plans: Iterable[Plan]) -> Decimal:
         return decimal_sum(
-            plan.production_costs.resource_cost + plan.production_costs.means_cost
+            plan.production_costs.resource_cost
+            + plan.production_costs.means_cost
+            + plan.production_costs.labour_cost
             for plan in public_plans
         )
 

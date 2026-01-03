@@ -932,6 +932,17 @@ The workflow for updating the translations is as follows:
     python -m build_support.translations compile
 
 
+Logging
+-------
+
+In general, we use the logging mechanisms provided by the python stdlib:
+
+```
+import logging
+logger = logging.getLogger(__name__)
+```
+
+
 .. _Liskov Substitution Principle: https://en.wikipedia.org/wiki/Liskov_substitution_principle
 .. _flask blueprints: https://flask.palletsprojects.com/en/latest/blueprints/
 .. _URI path pattern: https://flask.palletsprojects.com/en/latest/api/#url-route-registrations

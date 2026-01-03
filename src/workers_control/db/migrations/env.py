@@ -13,12 +13,6 @@ from workers_control.db.models import Base
 # access to the values within the .ini file in use.
 config = context.config
 
-# This line sets up loggers basically.
-if config.config_file_name is not None:
-    fileConfig(config.config_file_name)
-logger = logging.getLogger("alembic")
-
-
 target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
@@ -46,6 +40,7 @@ def init_db(migration_context: MigrationContext) -> None:
 def upgrade_to_head_if_database_is_fresh(connection: Connection) -> None:
     migration_context = context.get_context()
     if is_fresh_db(connection):
+        logger = logging.getLogger("alembic")
         logger.info(
             "Fresh database detected, creating all tables and stamping to head."
         )
@@ -76,8 +71,13 @@ def run_migrations(connection: Connection) -> None:
 def run_migrations_online() -> None:
     connectable = config.attributes.get("connection", None)
     if connectable:
+        # call from app
         run_migrations(connectable)
     else:
+        # call from alembic cli
+        if config.config_file_name is not None:
+            # Set up loggers
+            fileConfig(config.config_file_name)
         engine = create_engine(get_db_uri())
         with engine.begin() as connection:
             run_migrations(connection)

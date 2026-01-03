@@ -4,6 +4,8 @@ from uuid import UUID
 from parameterized import parameterized
 
 from tests.interactors.base_test_case import BaseTestCase
+from workers_control.core.records import ProductionCosts
+from workers_control.core.services.payout_factor import PayoutFactorService
 from workers_control.core.services.psf_balance import PublicSectorFundService
 
 
@@ -44,6 +46,50 @@ class PublicSectorFundServiceCalculationTests(BaseTestCase):
         self._register_hours_worked(company, worker, Decimal(10))
         psf_balance = self.service.calculate_psf_balance()
         assert psf_balance == Decimal(0)
+
+    @parameterized.expand(
+        [
+            (
+                Decimal(100),
+                Decimal(10),
+            ),
+            (
+                Decimal(100),
+                Decimal(0),
+            ),
+        ]
+    )
+    def test_that_account_is_balanced_when_fic_is_larger_than_zero_and_all_labour_has_been_registered(
+        self,
+        labour_in_productive_sector: Decimal,
+        labour_in_public_sector: Decimal,
+    ) -> None:
+        self.plan_generator.create_plan(
+            is_public_service=False,
+            costs=ProductionCosts(
+                labour_cost=Decimal(labour_in_productive_sector),
+                resource_cost=Decimal(1),
+                means_cost=Decimal(1),
+            ),
+        )
+        self.plan_generator.create_plan(
+            is_public_service=True,
+            costs=ProductionCosts(
+                labour_cost=Decimal(labour_in_public_sector),
+                resource_cost=Decimal(1),
+                means_cost=Decimal(1),
+            ),
+        )
+        assert self._calculate_payout_factor() > 0
+
+        worker = self.member_generator.create_member()
+        self.registered_hours_worked_generator.register_hours_worked(
+            company=self.company_generator.create_company(workers=[worker]),
+            worker=worker,
+            hours=labour_in_productive_sector + labour_in_public_sector,
+        )
+        psf_balance = self.service.calculate_psf_balance()
+        self.assertAlmostEqual(psf_balance, 0)
 
     @parameterized.expand(
         [
@@ -92,3 +138,7 @@ class PublicSectorFundServiceCalculationTests(BaseTestCase):
         self.registered_hours_worked_generator.register_hours_worked(
             company=company_id, worker=worker_id, hours=hours_worked
         )
+
+    def _calculate_payout_factor(self) -> Decimal:
+        service = self.injector.get(PayoutFactorService)
+        return service.calculate_current_payout_factor()

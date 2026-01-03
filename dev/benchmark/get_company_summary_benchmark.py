@@ -1,8 +1,6 @@
+from dev.benchmark.dependency_injection import benchmark_injector
 from tests.data_generators import CompanyGenerator, ConsumptionGenerator, PlanGenerator
 from tests.db.base_test_case import reset_test_db
-from tests.db.dependency_injection import DatabaseTestModule
-from tests.dependency_injection import TestingModule
-from workers_control.core.injector import Injector
 from workers_control.core.interactors import get_company_summary
 from workers_control.db.db import Database
 
@@ -14,7 +12,7 @@ class GetCompanySummaryBenchmark:
     """
 
     def __init__(self) -> None:
-        self.injector = Injector([TestingModule(), DatabaseTestModule()])
+        self.injector = benchmark_injector
         reset_test_db()
         self.db = self.injector.get(Database)
         self.db.engine.dispose()

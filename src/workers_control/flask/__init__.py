@@ -38,7 +38,6 @@ def create_app(
     db.configure(uri=app.config["SQLALCHEMY_DATABASE_URI"])
     run_db_migrations(app.config, db)
 
-    # Where to redirect the user when he attempts to access a login_required
     load_email_plugin(app)
 
     # Where to redirect the user when he attempts to access a login_required

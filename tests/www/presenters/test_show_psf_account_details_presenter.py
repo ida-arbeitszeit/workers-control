@@ -61,15 +61,15 @@ class ShowPSFAccountDetailsPresenterTests(BaseTestCase):
             ),
             (
                 TransferType.credit_public_a,
-                "Planned labour (public service)",
+                "Planned labour (public plan)",
             ),
             (
                 TransferType.credit_public_p,
-                "Planned fixed means of production (public service)",
+                "Planned fixed means of production (public plan)",
             ),
             (
                 TransferType.credit_public_r,
-                "Planned liquid means of production (public service)",
+                "Planned liquid means of production (public plan)",
             ),
         ]
     )

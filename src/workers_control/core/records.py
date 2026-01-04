@@ -154,8 +154,8 @@ class PlanDraft:
     def expected_sales_value(self) -> Decimal:
         """
         For productive plans, sales value should equal total cost.
-        Public services are not expected to sell,
-        they give away their product for free.
+        Public plan products are not expected to be sold,
+        they are given away for free.
         """
         return (
             self.production_costs.total_cost()
@@ -185,8 +185,8 @@ class Plan:
     def expected_sales_value(self) -> Decimal:
         """
         For productive plans, sales value should equal total cost.
-        Public services are not expected to sell,
-        they give away their product for free.
+        Public plan products are not expected to be sold,
+        they are given away for free.
         """
         return (
             self.production_costs.total_cost()

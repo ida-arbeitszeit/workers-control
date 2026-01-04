@@ -178,7 +178,7 @@ def create_generate_cli_group(injector: Injector) -> click.Group:
     @click.option(
         "--public",
         "-pub",
-        help="Whether the plan is a public service plan.",
+        help="Whether the plan is a public plan.",
         is_flag=True,
         default=False,
         show_default=True,

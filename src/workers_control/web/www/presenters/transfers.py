@@ -83,15 +83,13 @@ def description_from_transfer_type(
         case "credit_a":
             return translator.gettext("Planned labour")
         case "credit_public_p":
-            return translator.gettext(
-                "Planned fixed means of production (public service)"
-            )
+            return translator.gettext("Planned fixed means of production (public plan)")
         case "credit_public_r":
             return translator.gettext(
-                "Planned liquid means of production (public service)"
+                "Planned liquid means of production (public plan)"
             )
         case "credit_public_a":
-            return translator.gettext("Planned labour (public service)")
+            return translator.gettext("Planned labour (public plan)")
         case "private_consumption":
             return translator.gettext("Private consumption")
         case "productive_consumption_p":

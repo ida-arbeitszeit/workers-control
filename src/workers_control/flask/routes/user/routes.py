@@ -38,6 +38,9 @@ from workers_control.flask.views.show_p_account_details_view import (
 from workers_control.flask.views.show_prd_account_details_view import (
     ShowPRDAccountDetailsView,
 )
+from workers_control.flask.views.show_psf_account_details_view import (
+    ShowPSFAccountDetailsView,
+)
 from workers_control.flask.views.show_r_account_details_view import (
     ShowRAccountDetailsView,
 )
@@ -181,3 +184,8 @@ class company_account_prd(ShowPRDAccountDetailsView): ...
 @AuthenticatedUserRoute("/transfers")
 @as_flask_view()
 class list_transfers(ListTransfersView): ...
+
+
+@AuthenticatedUserRoute("/account_psf")
+@as_flask_view()
+class account_psf(ShowPSFAccountDetailsView): ...

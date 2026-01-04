@@ -24,6 +24,7 @@ class GetStatisticsViewModel:
     planned_means_hours: str
     payout_factor: str
     psf_balance: str
+    psf_account_url: str
 
     barplot_for_certificates_url: str
     barplot_means_of_production_url: str
@@ -73,6 +74,7 @@ class GetStatisticsPresenter:
             average_timeframe_days=average_timeframe,
             payout_factor=self._format_payout_factor(interactor_response.payout_factor),
             psf_balance=self._format_psf_balance(interactor_response.psf_balance),
+            psf_account_url=self.url_index.get_account_psf_url(),
             barplot_for_certificates_url=self.url_index.get_global_barplot_for_certificates_url(
                 interactor_response.certificates_count,
                 interactor_response.available_product_in_productive_sector,

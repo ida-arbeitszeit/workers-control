@@ -5,16 +5,16 @@ from parameterized import parameterized
 
 from tests.interactors.base_test_case import BaseTestCase
 from workers_control.core import records
-from workers_control.core.interactors.get_member_account import (
-    GetMemberAccountInteractor,
+from workers_control.core.interactors.show_member_account_details import (
+    ShowMemberAccountDetailsInteractor,
 )
 from workers_control.core.transfers import TransferType
 
 
-class GetMemberAccountTests(BaseTestCase):
+class ShowMemberAccountDetailsTests(BaseTestCase):
     def setUp(self):
         super().setUp()
-        self.interactor = self.injector.get(GetMemberAccountInteractor)
+        self.interactor = self.injector.get(ShowMemberAccountDetailsInteractor)
         self.social_accounting_name = self.injector.get(
             records.SocialAccounting
         ).get_name()

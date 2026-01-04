@@ -1,13 +1,15 @@
 from dataclasses import dataclass
 
-from workers_control.core.interactors.get_member_account import GetMemberAccountResponse
+from workers_control.core.interactors.show_member_account_details import (
+    ShowMemberAccountDetailsResponse,
+)
 from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
 from workers_control.web.translator import Translator
 from workers_control.web.www.presenters.transfers import TransferInfo, TransferPresenter
 
 
 @dataclass
-class GetMemberAccountPresenter:
+class ShowMemberAccountDetailsPresenter:
     @dataclass
     class ViewModel:
         balance: str
@@ -19,7 +21,7 @@ class GetMemberAccountPresenter:
     transfer_presenter: TransferPresenter
 
     def present_member_account(
-        self, interactor_response: GetMemberAccountResponse
+        self, interactor_response: ShowMemberAccountDetailsResponse
     ) -> ViewModel:
         transfers = self.transfer_presenter.present_transfers(
             interactor_response.transfers

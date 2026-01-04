@@ -10,23 +10,23 @@ from workers_control.core.services.account_details import (
 
 
 @dataclass
-class GetMemberAccountResponse:
+class ShowMemberAccountDetailsResponse:
     transfers: list[AccountTransfer]
     balance: Decimal
 
 
 @dataclass
-class GetMemberAccountInteractor:
+class ShowMemberAccountDetailsInteractor:
     database_gateway: DatabaseGateway
     account_details_service: AccountDetailsService
 
-    def execute(self, member_id: UUID) -> GetMemberAccountResponse:
+    def execute(self, member_id: UUID) -> ShowMemberAccountDetailsResponse:
         member = self.database_gateway.get_members().with_id(member_id).first()
         assert member
         account = member.account
         transfers = self.account_details_service.get_account_transfers(account)
         account_balance = self.account_details_service.get_account_balance(account)
-        return GetMemberAccountResponse(
+        return ShowMemberAccountDetailsResponse(
             transfers=sorted(transfers, key=lambda t: t.date, reverse=True),
             balance=account_balance,
         )

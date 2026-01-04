@@ -5,10 +5,10 @@ from flask import Response as FlaskResponse
 from flask import render_template
 
 from workers_control.core.interactors import get_member_dashboard
-from workers_control.core.interactors.get_member_account import (
-    GetMemberAccountInteractor,
-)
 from workers_control.core.interactors.get_plan_details import GetPlanDetailsInteractor
+from workers_control.core.interactors.show_member_account_details import (
+    ShowMemberAccountDetailsInteractor,
+)
 from workers_control.flask.class_based_view import as_flask_view
 from workers_control.flask.flask_session import FlaskSession
 from workers_control.flask.types import Response
@@ -20,14 +20,14 @@ from workers_control.flask.views.http_error_view import http_404
 from workers_control.flask.views.query_private_consumptions import (
     QueryPrivateConsumptionsView,
 )
-from workers_control.web.www.presenters.get_member_account_presenter import (
-    GetMemberAccountPresenter,
-)
 from workers_control.web.www.presenters.get_member_dashboard_presenter import (
     GetMemberDashboardPresenter,
 )
 from workers_control.web.www.presenters.get_plan_details_member_presenter import (
     GetPlanDetailsMemberMemberPresenter,
+)
+from workers_control.web.www.presenters.show_member_account_details_presenter import (
+    ShowMemberAccountDetailsPresenter,
 )
 
 from .blueprint import MemberRoute
@@ -69,14 +69,14 @@ class dashboard:
 @as_flask_view()
 @dataclass
 class my_account:
-    get_member_account: GetMemberAccountInteractor
-    presenter: GetMemberAccountPresenter
+    show_member_account_details: ShowMemberAccountDetailsInteractor
+    presenter: ShowMemberAccountDetailsPresenter
     flask_session: FlaskSession
 
     def GET(self) -> Response:
         current_user = self.flask_session.get_current_user()
         assert current_user
-        response = self.get_member_account.execute(current_user)
+        response = self.show_member_account_details.execute(current_user)
         view_model = self.presenter.present_member_account(response)
         return FlaskResponse(
             render_template(

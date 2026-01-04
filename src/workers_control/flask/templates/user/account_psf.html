@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% from 'macros/transfers.html' import transfer_with_party %}
+<section class="section columns has-text-centered">
+    <div class="column"></div>
+    <div class="column is-two-thirds">
+        <div class="pb-5">
+            <h1 class="title">
+                {{ gettext("Account of Public Sector Fund (PSF)") }}
+            </h1>
+            <div class="box has-background-info-light has-text-info-dark">
+                <div class="icon">{{ "info-circle"|icon }}</div>
+                <p>{{ gettext("Transfers of the account of the Public Sector Fund (PSF)") }}</p>
+            </div>
+            <p>{{ gettext("Balance:") }}</p>
+            <p
+                class="has-text-weight-bold">
+                {{ view_model.account_balance }}</p>
+        
+        </div>
+        <div class="section has-text-left">
+            {% if view_model.transfers is defined and view_model.transfers|length %}
+            {% for transfer in view_model.transfers %}
+                {{ transfer_with_party(transfer.date, transfer.transfer_type, transfer.transfer_volume, transfer.is_debit_transfer, transfer.party_icon, transfer.party_name) }}
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="column"></div>
+</section>
+{% endblock %}

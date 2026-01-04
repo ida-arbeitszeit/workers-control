@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 
 from workers_control.core.interactors import show_r_account_details
-from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
 from workers_control.web.www.navbar import NavbarItem
@@ -19,7 +18,6 @@ class ShowRAccountDetailsPresenter:
 
     translator: Translator
     url_index: UrlIndex
-    datetime_formatter: DatetimeFormatter
     transfer_presenter: TransferPresenter
 
     def present(

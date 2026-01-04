@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-12-30 14:36+0100\n"
+"POT-Creation-Date: 2026-01-04 17:21+0100\n"
 "PO-Revision-Date: 2022-01-16 19:09+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -189,7 +189,7 @@ msgid "Current password"
 msgstr ""
 
 #: src/workers_control/flask/plots/routes.py:41
-#: src/workers_control/web/www/presenters/transfers.py:110
+#: src/workers_control/web/www/presenters/transfers.py:108
 msgid "Work certificates"
 msgstr ""
 
@@ -565,7 +565,7 @@ msgstr ""
 #: src/workers_control/flask/templates/macros/company_summary.html:134
 #: src/workers_control/flask/templates/user/query_plans.html:13
 #: src/workers_control/flask/templates/user/statistics.html:26
-#: src/workers_control/flask/templates/user/statistics.html:51
+#: src/workers_control/flask/templates/user/statistics.html:52
 msgid "Plans"
 msgstr ""
 
@@ -1184,28 +1184,28 @@ msgstr ""
 #: src/workers_control/flask/templates/macros/company_summary.html:54
 #: src/workers_control/flask/templates/user/company_account_p.html:16
 #: src/workers_control/flask/templates/user/company_accounts.html:32
-#: src/workers_control/web/www/presenters/show_p_account_details_presenter.py:50
+#: src/workers_control/web/www/presenters/show_p_account_details_presenter.py:48
 msgid "Account p"
 msgstr ""
 
 #: src/workers_control/flask/templates/macros/company_summary.html:63
 #: src/workers_control/flask/templates/user/company_account_r.html:16
 #: src/workers_control/flask/templates/user/company_accounts.html:43
-#: src/workers_control/web/www/presenters/show_r_account_details_presenter.py:44
+#: src/workers_control/web/www/presenters/show_r_account_details_presenter.py:42
 msgid "Account r"
 msgstr ""
 
 #: src/workers_control/flask/templates/macros/company_summary.html:72
 #: src/workers_control/flask/templates/user/company_account_a.html:16
 #: src/workers_control/flask/templates/user/company_accounts.html:54
-#: src/workers_control/web/www/presenters/show_a_account_details_presenter.py:45
+#: src/workers_control/web/www/presenters/show_a_account_details_presenter.py:43
 msgid "Account a"
 msgstr ""
 
 #: src/workers_control/flask/templates/macros/company_summary.html:81
 #: src/workers_control/flask/templates/user/company_account_prd.html:16
 #: src/workers_control/flask/templates/user/company_accounts.html:65
-#: src/workers_control/web/www/presenters/show_prd_account_details_presenter.py:47
+#: src/workers_control/web/www/presenters/show_prd_account_details_presenter.py:45
 msgid "Account prd"
 msgstr ""
 
@@ -1416,7 +1416,7 @@ msgid "My area"
 msgstr ""
 
 #: src/workers_control/flask/templates/member/dashboard.html:60
-#: src/workers_control/web/www/presenters/transfers.py:96
+#: src/workers_control/web/www/presenters/transfers.py:94
 msgid "Private consumption"
 msgstr ""
 
@@ -1464,15 +1464,24 @@ msgstr ""
 msgid "Current time:"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/company_account_a.html:21
-msgid "The account for work certificates"
+#: src/workers_control/flask/templates/user/account_psf.html:10
+msgid "Account of Public Sector Fund (PSF)"
 msgstr ""
 
+#: src/workers_control/flask/templates/user/account_psf.html:14
+msgid "Transfers of the account of the Public Sector Fund (PSF)"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/account_psf.html:16
 #: src/workers_control/flask/templates/user/company_account_a.html:23
 #: src/workers_control/flask/templates/user/company_account_p.html:23
 #: src/workers_control/flask/templates/user/company_account_prd.html:22
 #: src/workers_control/flask/templates/user/company_account_r.html:23
 msgid "Balance:"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/company_account_a.html:21
+msgid "The account for work certificates"
 msgstr ""
 
 #: src/workers_control/flask/templates/user/company_account_p.html:21
@@ -1490,10 +1499,10 @@ msgstr ""
 #: src/workers_control/flask/templates/user/company_accounts.html:4
 #: src/workers_control/flask/templates/user/company_accounts.html:13
 #: src/workers_control/web/www/presenters/get_company_dashboard_presenter.py:78
-#: src/workers_control/web/www/presenters/show_a_account_details_presenter.py:40
-#: src/workers_control/web/www/presenters/show_p_account_details_presenter.py:45
-#: src/workers_control/web/www/presenters/show_prd_account_details_presenter.py:41
-#: src/workers_control/web/www/presenters/show_r_account_details_presenter.py:39
+#: src/workers_control/web/www/presenters/show_a_account_details_presenter.py:38
+#: src/workers_control/web/www/presenters/show_p_account_details_presenter.py:43
+#: src/workers_control/web/www/presenters/show_prd_account_details_presenter.py:39
+#: src/workers_control/web/www/presenters/show_r_account_details_presenter.py:37
 msgid "Accounts"
 msgstr ""
 
@@ -1651,44 +1660,48 @@ msgstr ""
 msgid "Balance for Public Sector Fund (PSF)"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:57
+#: src/workers_control/flask/templates/user/statistics.html:45
+msgid "Go to account details"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/statistics.html:58
 msgid "Planned ressources"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:63
+#: src/workers_control/flask/templates/user/statistics.html:64
 msgid "Certificates and products"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:73
+#: src/workers_control/flask/templates/user/statistics.html:74
 msgid "Active plans"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:74
+#: src/workers_control/flask/templates/user/statistics.html:75
 msgid "Public active plans"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:75
-#: src/workers_control/flask/templates/user/statistics.html:84
+#: src/workers_control/flask/templates/user/statistics.html:76
+#: src/workers_control/flask/templates/user/statistics.html:85
 msgid "Average plan duration"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:76
+#: src/workers_control/flask/templates/user/statistics.html:77
 msgid "Currently planned fixed means"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:77
+#: src/workers_control/flask/templates/user/statistics.html:78
 msgid "Currently planned liquid means"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:78
+#: src/workers_control/flask/templates/user/statistics.html:79
 msgid "Currently planned work"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:79
+#: src/workers_control/flask/templates/user/statistics.html:80
 msgid "Available work certificates"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:80
+#: src/workers_control/flask/templates/user/statistics.html:81
 msgid "Available product (no public products)"
 msgstr ""
 
@@ -2026,9 +2039,9 @@ msgid "Closed"
 msgstr ""
 
 #: src/workers_control/web/www/presenters/get_member_dashboard_presenter.py:64
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:47
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:50
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:53
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:48
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:51
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:54
 #, python-format
 msgid "%(num).2f hours"
 msgstr ""
@@ -2043,7 +2056,7 @@ msgstr ""
 msgid "Company %(company)s has invited you!"
 msgstr ""
 
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:44
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:45
 #, python-format
 msgid "%(num).2f days"
 msgstr ""
@@ -2323,35 +2336,35 @@ msgstr ""
 msgid "Planned labour"
 msgstr ""
 
-#: src/workers_control/web/www/presenters/transfers.py:87
-msgid "Planned fixed means of production (public service)"
+#: src/workers_control/web/www/presenters/transfers.py:86
+msgid "Planned fixed means of production (public plan)"
 msgstr ""
 
-#: src/workers_control/web/www/presenters/transfers.py:91
-msgid "Planned liquid means of production (public service)"
+#: src/workers_control/web/www/presenters/transfers.py:89
+msgid "Planned liquid means of production (public plan)"
 msgstr ""
 
-#: src/workers_control/web/www/presenters/transfers.py:94
-msgid "Planned labour (public service)"
+#: src/workers_control/web/www/presenters/transfers.py:92
+msgid "Planned labour (public plan)"
 msgstr ""
 
-#: src/workers_control/web/www/presenters/transfers.py:99
+#: src/workers_control/web/www/presenters/transfers.py:97
 msgid "Productive consumption of fixed means of production"
 msgstr ""
 
-#: src/workers_control/web/www/presenters/transfers.py:103
+#: src/workers_control/web/www/presenters/transfers.py:101
 msgid "Productive consumption of liquid means of production"
 msgstr ""
 
-#: src/workers_control/web/www/presenters/transfers.py:106
+#: src/workers_control/web/www/presenters/transfers.py:104
 msgid "Compensation for overproductive planning"
 msgstr ""
 
-#: src/workers_control/web/www/presenters/transfers.py:108
+#: src/workers_control/web/www/presenters/transfers.py:106
 msgid "Compensation for underproductive planning"
 msgstr ""
 
-#: src/workers_control/web/www/presenters/transfers.py:112
+#: src/workers_control/web/www/presenters/transfers.py:110
 msgid "Contribution to public sector"
 msgstr ""
 
@@ -2714,5 +2727,14 @@ msgstr ""
 #~ "'%(cooperation)s'. Please follow this link "
 #~ "to check the request in the "
 #~ "Arbeitszeitapp: <a href='%(url)s'>LINK</a>."
+#~ msgstr ""
+
+#~ msgid "Planned fixed means of production (public service)"
+#~ msgstr ""
+
+#~ msgid "Planned liquid means of production (public service)"
+#~ msgstr ""
+
+#~ msgid "Planned labour (public service)"
 #~ msgstr ""
 

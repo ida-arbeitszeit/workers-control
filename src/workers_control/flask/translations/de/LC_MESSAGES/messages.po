@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Arbeitszeitapp\n"
 "Report-Msgid-Bugs-To: community-arbeitszeitapp@systemli.org\n"
-"POT-Creation-Date: 2025-12-30 14:36+0100\n"
+"POT-Creation-Date: 2026-01-04 17:21+0100\n"
 "PO-Revision-Date: 2024-03-11 22:27+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -191,7 +191,7 @@ msgid "Current password"
 msgstr "Aktuelles Passwort"
 
 #: src/workers_control/flask/plots/routes.py:41
-#: src/workers_control/web/www/presenters/transfers.py:110
+#: src/workers_control/web/www/presenters/transfers.py:108
 msgid "Work certificates"
 msgstr "Arbeitszertifikate"
 
@@ -300,8 +300,8 @@ msgid ""
 "Hello. You were invited to be a public accountant at the Workers Control "
 "app. Go to %(link)s to register."
 msgstr ""
-"Hallo. Du wurdest eingeladen, öffentliche*r Buchhalter*in der "
-"Workers Control App zu sein. Gehe zu %(link)s um dich zu registrieren."
+"Hallo. Du wurdest eingeladen, öffentliche*r Buchhalter*in der Workers "
+"Control App zu sein. Gehe zu %(link)s um dich zu registrieren."
 
 #: src/workers_control/flask/templates/auth/activate.html:1
 msgid ""
@@ -595,7 +595,7 @@ msgstr "Dein Betrieb"
 #: src/workers_control/flask/templates/macros/company_summary.html:134
 #: src/workers_control/flask/templates/user/query_plans.html:13
 #: src/workers_control/flask/templates/user/statistics.html:26
-#: src/workers_control/flask/templates/user/statistics.html:51
+#: src/workers_control/flask/templates/user/statistics.html:52
 msgid "Plans"
 msgstr "Pläne"
 
@@ -1222,28 +1222,28 @@ msgstr "Kennzahlen"
 #: src/workers_control/flask/templates/macros/company_summary.html:54
 #: src/workers_control/flask/templates/user/company_account_p.html:16
 #: src/workers_control/flask/templates/user/company_accounts.html:32
-#: src/workers_control/web/www/presenters/show_p_account_details_presenter.py:50
+#: src/workers_control/web/www/presenters/show_p_account_details_presenter.py:48
 msgid "Account p"
 msgstr "P-Konto"
 
 #: src/workers_control/flask/templates/macros/company_summary.html:63
 #: src/workers_control/flask/templates/user/company_account_r.html:16
 #: src/workers_control/flask/templates/user/company_accounts.html:43
-#: src/workers_control/web/www/presenters/show_r_account_details_presenter.py:44
+#: src/workers_control/web/www/presenters/show_r_account_details_presenter.py:42
 msgid "Account r"
 msgstr "R-Konto"
 
 #: src/workers_control/flask/templates/macros/company_summary.html:72
 #: src/workers_control/flask/templates/user/company_account_a.html:16
 #: src/workers_control/flask/templates/user/company_accounts.html:54
-#: src/workers_control/web/www/presenters/show_a_account_details_presenter.py:45
+#: src/workers_control/web/www/presenters/show_a_account_details_presenter.py:43
 msgid "Account a"
 msgstr "A-Konto"
 
 #: src/workers_control/flask/templates/macros/company_summary.html:81
 #: src/workers_control/flask/templates/user/company_account_prd.html:16
 #: src/workers_control/flask/templates/user/company_accounts.html:65
-#: src/workers_control/web/www/presenters/show_prd_account_details_presenter.py:47
+#: src/workers_control/web/www/presenters/show_prd_account_details_presenter.py:45
 msgid "Account prd"
 msgstr "Prd-Konto"
 
@@ -1489,7 +1489,7 @@ msgid "My area"
 msgstr "Mein Bereich"
 
 #: src/workers_control/flask/templates/member/dashboard.html:60
-#: src/workers_control/web/www/presenters/transfers.py:96
+#: src/workers_control/web/www/presenters/transfers.py:94
 msgid "Private consumption"
 msgstr "Privater Konsum"
 
@@ -1511,8 +1511,8 @@ msgid ""
 "You have been invited by a company to join them as a member on the Workers "
 "Control app. Accept or reject via this link:"
 msgstr ""
-"Du wurdest von einem Betrieb eingeladen, Mitglied bei ihnen in der "
-"Workers Control App zu werden. Akzeptiere oder lehne ab über diesen Link:"
+"Du wurdest von einem Betrieb eingeladen, Mitglied bei ihnen in der Workers "
+"Control App zu werden. Akzeptiere oder lehne ab über diesen Link:"
 
 #: src/workers_control/flask/templates/member/show_company_work_invite_details.html:13
 msgid "Reject"
@@ -1539,16 +1539,25 @@ msgstr "E-Mail-Adresse ändern"
 msgid "Current time:"
 msgstr "Aktuelle Zeit:"
 
-#: src/workers_control/flask/templates/user/company_account_a.html:21
-msgid "The account for work certificates"
-msgstr "Das Konto für Arbeitszertifikate"
+#: src/workers_control/flask/templates/user/account_psf.html:10
+msgid "Account of Public Sector Fund (PSF)"
+msgstr "Konto des Fonds Öffentlicher Sektor (FÖS)"
 
+#: src/workers_control/flask/templates/user/account_psf.html:14
+msgid "Transfers of the account of the Public Sector Fund (PSF)"
+msgstr "Transaktionen des Kontos des Fonds Öffentlicher Sektor (FÖS)"
+
+#: src/workers_control/flask/templates/user/account_psf.html:16
 #: src/workers_control/flask/templates/user/company_account_a.html:23
 #: src/workers_control/flask/templates/user/company_account_p.html:23
 #: src/workers_control/flask/templates/user/company_account_prd.html:22
 #: src/workers_control/flask/templates/user/company_account_r.html:23
 msgid "Balance:"
 msgstr "Kontostand:"
+
+#: src/workers_control/flask/templates/user/company_account_a.html:21
+msgid "The account for work certificates"
+msgstr "Das Konto für Arbeitszertifikate"
 
 #: src/workers_control/flask/templates/user/company_account_p.html:21
 msgid "The account for fixed means of production."
@@ -1565,10 +1574,10 @@ msgstr "Das Konto für flüssige Produktionsmittel"
 #: src/workers_control/flask/templates/user/company_accounts.html:4
 #: src/workers_control/flask/templates/user/company_accounts.html:13
 #: src/workers_control/web/www/presenters/get_company_dashboard_presenter.py:78
-#: src/workers_control/web/www/presenters/show_a_account_details_presenter.py:40
-#: src/workers_control/web/www/presenters/show_p_account_details_presenter.py:45
-#: src/workers_control/web/www/presenters/show_prd_account_details_presenter.py:41
-#: src/workers_control/web/www/presenters/show_r_account_details_presenter.py:39
+#: src/workers_control/web/www/presenters/show_a_account_details_presenter.py:38
+#: src/workers_control/web/www/presenters/show_p_account_details_presenter.py:43
+#: src/workers_control/web/www/presenters/show_prd_account_details_presenter.py:39
+#: src/workers_control/web/www/presenters/show_r_account_details_presenter.py:37
 msgid "Accounts"
 msgstr "Konten"
 
@@ -1740,44 +1749,48 @@ msgstr "FIK (Auszahlungsfaktor)"
 msgid "Balance for Public Sector Fund (PSF)"
 msgstr "Kontostand für den Fonds Öffentlicher Sektor (FÖS)"
 
-#: src/workers_control/flask/templates/user/statistics.html:57
+#: src/workers_control/flask/templates/user/statistics.html:45
+msgid "Go to account details"
+msgstr "Zu Kontodetails gehen"
+
+#: src/workers_control/flask/templates/user/statistics.html:58
 msgid "Planned ressources"
 msgstr "Geplante Ressourcen"
 
-#: src/workers_control/flask/templates/user/statistics.html:63
+#: src/workers_control/flask/templates/user/statistics.html:64
 msgid "Certificates and products"
 msgstr "Zertifikate und Produkte"
 
-#: src/workers_control/flask/templates/user/statistics.html:73
+#: src/workers_control/flask/templates/user/statistics.html:74
 msgid "Active plans"
 msgstr "Aktive Pläne"
 
-#: src/workers_control/flask/templates/user/statistics.html:74
+#: src/workers_control/flask/templates/user/statistics.html:75
 msgid "Public active plans"
 msgstr "Öffentliche aktive Pläne"
 
-#: src/workers_control/flask/templates/user/statistics.html:75
-#: src/workers_control/flask/templates/user/statistics.html:84
+#: src/workers_control/flask/templates/user/statistics.html:76
+#: src/workers_control/flask/templates/user/statistics.html:85
 msgid "Average plan duration"
 msgstr "Durchschnittliche Plandauer"
 
-#: src/workers_control/flask/templates/user/statistics.html:76
+#: src/workers_control/flask/templates/user/statistics.html:77
 msgid "Currently planned fixed means"
 msgstr "Aktuell geplante feste Produktionsmittel"
 
-#: src/workers_control/flask/templates/user/statistics.html:77
+#: src/workers_control/flask/templates/user/statistics.html:78
 msgid "Currently planned liquid means"
 msgstr "Aktuell geplante flüssige Produktionmittel"
 
-#: src/workers_control/flask/templates/user/statistics.html:78
+#: src/workers_control/flask/templates/user/statistics.html:79
 msgid "Currently planned work"
 msgstr "Aktuell geplante Arbeit"
 
-#: src/workers_control/flask/templates/user/statistics.html:79
+#: src/workers_control/flask/templates/user/statistics.html:80
 msgid "Available work certificates"
 msgstr "Verfügbare Arbeitszertifikate"
 
-#: src/workers_control/flask/templates/user/statistics.html:80
+#: src/workers_control/flask/templates/user/statistics.html:81
 msgid "Available product (no public products)"
 msgstr "Verfügbares Produkt (keine öffentlichen Produkte)"
 
@@ -2124,9 +2137,9 @@ msgid "Closed"
 msgstr "Abgeschlossen"
 
 #: src/workers_control/web/www/presenters/get_member_dashboard_presenter.py:64
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:47
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:50
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:53
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:48
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:51
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:54
 #, python-format
 msgid "%(num).2f hours"
 msgstr "%(num).2f Stunden"
@@ -2141,7 +2154,7 @@ msgstr "Willkommen, %s!"
 msgid "Company %(company)s has invited you!"
 msgstr "Betrieb %(company)s hat dich eingeladen!"
 
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:44
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:45
 #, python-format
 msgid "%(num).2f days"
 msgstr "%(num).2f Tage"
@@ -2437,35 +2450,35 @@ msgstr "Geplante flüssige Produktionsmittel"
 msgid "Planned labour"
 msgstr "Geplante Arbeit"
 
-#: src/workers_control/web/www/presenters/transfers.py:87
-msgid "Planned fixed means of production (public service)"
-msgstr "Geplante feste Produktionsmittel (öffentliche Dienstleistung)"
+#: src/workers_control/web/www/presenters/transfers.py:86
+msgid "Planned fixed means of production (public plan)"
+msgstr "Geplante feste Produktionsmittel (öffentlicher Plan)"
 
-#: src/workers_control/web/www/presenters/transfers.py:91
-msgid "Planned liquid means of production (public service)"
-msgstr "Geplante flüssige Produktionsmittel (öffentliche Dienstleistung)"
+#: src/workers_control/web/www/presenters/transfers.py:89
+msgid "Planned liquid means of production (public plan)"
+msgstr "Geplante flüssige Produktionsmittel (öffentlicher Plan)"
 
-#: src/workers_control/web/www/presenters/transfers.py:94
-msgid "Planned labour (public service)"
-msgstr "Geplante Arbeit (öffentliche Dienstleistung)"
+#: src/workers_control/web/www/presenters/transfers.py:92
+msgid "Planned labour (public plan)"
+msgstr "Geplante Arbeit (öffentlicher Plan)"
 
-#: src/workers_control/web/www/presenters/transfers.py:99
+#: src/workers_control/web/www/presenters/transfers.py:97
 msgid "Productive consumption of fixed means of production"
 msgstr "Produktiver Konsum von festen Produktionsmitteln"
 
-#: src/workers_control/web/www/presenters/transfers.py:103
+#: src/workers_control/web/www/presenters/transfers.py:101
 msgid "Productive consumption of liquid means of production"
 msgstr "Produktiver Konsum von flüssigen Produktionsmitteln"
 
-#: src/workers_control/web/www/presenters/transfers.py:106
+#: src/workers_control/web/www/presenters/transfers.py:104
 msgid "Compensation for overproductive planning"
 msgstr "Ausgleich für überproduktive Planung"
 
-#: src/workers_control/web/www/presenters/transfers.py:108
+#: src/workers_control/web/www/presenters/transfers.py:106
 msgid "Compensation for underproductive planning"
 msgstr "Ausgleich für unterproduktive Planung"
 
-#: src/workers_control/web/www/presenters/transfers.py:112
+#: src/workers_control/web/www/presenters/transfers.py:110
 msgid "Contribution to public sector"
 msgstr "Beitrag für öffentlichen Sektor"
 
@@ -3131,4 +3144,13 @@ msgstr "Beitrag für öffentlichen Sektor"
 
 #~ msgid "Cooperation compensation"
 #~ msgstr "Kooperationsausgleich"
+
+#~ msgid "Planned fixed means of production (public service)"
+#~ msgstr "Geplante feste Produktionsmittel (öffentliche Dienstleistung)"
+
+#~ msgid "Planned liquid means of production (public service)"
+#~ msgstr "Geplante flüssige Produktionsmittel (öffentliche Dienstleistung)"
+
+#~ msgid "Planned labour (public service)"
+#~ msgstr "Geplante Arbeit (öffentliche Dienstleistung)"
 

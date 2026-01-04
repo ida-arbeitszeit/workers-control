@@ -202,10 +202,13 @@ class GetStatisticsPresenterTests(BaseTestCase):
             str(round(TESTING_RESPONSE_MODEL.payout_factor, 2)),
         )
 
-    def test_that_psf_balance_is_correctly_shown_when_it_exists(self) -> None:
-        assert TESTING_RESPONSE_MODEL.psf_balance is not None
+    def test_that_psf_balance_is_correctly_shown(self) -> None:
         view_model = self.presenter.present(TESTING_RESPONSE_MODEL)
         self.assertEqual(
             view_model.psf_balance,
             str(round(TESTING_RESPONSE_MODEL.psf_balance, 2)),
         )
+
+    def test_that_url_to_psf_account_details_is_shown(self) -> None:
+        view_model = self.presenter.present(TESTING_RESPONSE_MODEL)
+        assert view_model.psf_account_url == self.url_index.get_account_psf_url()

@@ -58,8 +58,10 @@
             # versions we want to support.
             woco-python3-nixpkgs-unstable = pkgs.python3.pkgs.workers-control;
             woco-python312-nixpkgs-unstable = pkgs.python312.pkgs.workers-control;
+            woco-python313-nixpkgs-unstable = pkgs.python313.pkgs.workers-control;
             woco-python3-nixpkgs-stable = pkgs-25-11.python3.pkgs.workers-control;
             woco-python312-nixpkgs-stable = pkgs-25-11.python312.pkgs.workers-control;
+            woco-python313-nixpkgs-stable = pkgs-25-11.python313.pkgs.workers-control;
           };
         }
       );

@@ -38,7 +38,7 @@ class RawMaterialAccountBalanceTests(InteractorTestBase):
         )
         assert response.account_balance == 0
 
-    def test_balance_is_zero_when_transfer_took_place_to_other_account_of_company(
+    def test_balance_is_zero_when_transfer_took_place_from_other_account_of_company(
         self,
     ) -> None:
         self.transfer_generator.create_transfer(
@@ -53,7 +53,7 @@ class RawMaterialAccountBalanceTests(InteractorTestBase):
         )
         assert response.account_balance == 0
 
-    def test_balance_is_non_zero_when_transfer_to_raw_material_account_took_place(
+    def test_balance_is_non_zero_when_transfer_from_raw_material_account_took_place(
         self,
     ) -> None:
         self.transfer_generator.create_transfer(debit_account=self.raw_material_account)

@@ -7,8 +7,8 @@ from parameterized import parameterized
 
 from tests.datetime_service import datetime_utc
 from tests.www.base_test_case import BaseTestCase
-from workers_control.core.interactors.get_member_account import (
-    GetMemberAccountResponse,
+from workers_control.core.interactors.show_member_account_details import (
+    ShowMemberAccountDetailsResponse,
 )
 from workers_control.core.services.account_details import (
     AccountTransfer,
@@ -16,15 +16,15 @@ from workers_control.core.services.account_details import (
     TransferPartyType,
 )
 from workers_control.core.transfers import TransferType
-from workers_control.web.www.presenters.get_member_account_presenter import (
-    GetMemberAccountPresenter,
+from workers_control.web.www.presenters.show_member_account_details_presenter import (
+    ShowMemberAccountDetailsPresenter,
 )
 
 
 class TestPresenter(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
-        self.presenter = self.injector.get(GetMemberAccountPresenter)
+        self.presenter = self.injector.get(ShowMemberAccountDetailsPresenter)
 
     def test_that_empty_transfer_list_is_shown_if_no_transfers_took_place(
         self,
@@ -158,10 +158,10 @@ class TestPresenter(BaseTestCase):
 
     def get_interactor_response(
         self, transfers: list[AccountTransfer], balance: Optional[Decimal] = None
-    ) -> GetMemberAccountResponse:
+    ) -> ShowMemberAccountDetailsResponse:
         if balance is None:
             balance = Decimal("10")
-        return GetMemberAccountResponse(transfers=transfers, balance=balance)
+        return ShowMemberAccountDetailsResponse(transfers=transfers, balance=balance)
 
     def get_transfer(
         self,

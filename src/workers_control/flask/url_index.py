@@ -238,6 +238,9 @@ class GeneralUrlIndex:
     def get_company_account_prd_url(self, *, company_id: UUID) -> str:
         return url_for("main_user.company_account_prd", company_id=company_id)
 
+    def get_account_psf_url(self) -> str:
+        return url_for("main_user.account_psf")
+
     def get_member_login_url(self) -> str:
         return url_for("auth.login_member")
 

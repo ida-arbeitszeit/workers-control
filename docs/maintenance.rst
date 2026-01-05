@@ -47,9 +47,13 @@ NixOS module.
 
 Procedure for a new release:
 
-#. Increment the version number of our app in :py:mod:`pyproject.toml` and :py:mod:`nix/pythonPackages/workers-control.nix` (follow https://semver.org/spec/v2.0.0.html)
-#. Add a new entry to :py:mod:`CHANGELOG.md` (follow https://keepachangelog.com/en/1.1.0/)
-#. Manually copy the exact constraints from :py:mod:`constraints.txt` into the dependencies in :py:mod:`pyproject.toml`.
-#. After merging the above changes: tag the ``master`` branch (scheme: ``git tag v1.2.3 -m "Release version 1.2.3"``)
+#. Increment the version number of our app in :py:mod:`pyproject.toml`
+   and :py:mod:`nix/pythonPackages/workers-control.nix` (follow https://semver.org/spec/v2.0.0.html).
+#. Add a new entry to :py:mod:`CHANGELOG.md` (follow https://keepachangelog.com/en/1.1.0/).
+#. Copy the constraints from :py:mod:`constraints.txt` into the dependencies in :py:mod:`pyproject.toml`.
+#. Create a Pull Request with label "release". This will trigger integration tests against
+   the `deployment repo <https://github.com/ida-arbeitszeit/workers-control-deployment>`_.
+   On failure, fix current branch or deployment repo.
+#. After merging: tag the ``master`` branch (scheme: ``git tag v1.2.3 -m "Release version 1.2.3"``) and push the tag.
 #. Create sdist and wheel via ``python -m build`` and upload to PyPi with twine: ``twine upload dist/*``
-#. Update of the nixos module in the `deployment repo <https://github.com/ida-arbeitszeit/workers-control-deployment>`_
+#. Increment the ref of the flake input in the deployment repo.

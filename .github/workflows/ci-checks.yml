@@ -1,4 +1,4 @@
-name: Workers control app CI Tests
+name: CI checks
 
 on:
   push:

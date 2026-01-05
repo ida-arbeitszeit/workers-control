@@ -27,7 +27,7 @@ PyPi
 The app is available on `PyPi <https://pypi.org/>`_. Try it out::
     
     pip install workers-control
-    flask —app workers_control.flask.wsgi:app run
+    flask --app workers_control.flask.wsgi:app run
 
 
 Configuration of the web server

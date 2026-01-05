@@ -874,60 +874,55 @@ You find there a ``.pot`` file as well as language-specific ``.po`` files.
 
 The workflow for updating the translations is as follows:
 
-**1. Add a language (optional)**
+#. Add a language (optional)
 
-  Initialize a new language::
+   Initialize a new language::
 
     python -m build_support.translations initialize LOCALE
     # For example French
     python -m build_support.translations initialize fr
 
+   Add the language to the LANGUAGES variable in :py:mod:`workers_control.flask.config.production_defaults`.
 
-  Add the language to the LANGUAGES variable in :py:mod:`workers_control.flask.config.production_defaults`.
+#. Mark strings
 
-**2. Mark strings**
-
-  Mark translatable, user-facing strings in source code files.
-  In Python files, use one of those functions::
+   Mark translatable, user-facing strings in source code files.
+   In Python files, use one of those functions::
 
     translator.gettext(message: str)
     translator.pgettext(comment: str, message: str)
     translator.ngettext(self, singular: str, plural: str, n: Number)
 
-  In Jinja templates use:
-
-  .. code-block:: bash
+   In Jinja templates use::
 
     gettext(message: str)
     ngettext(singular: str, plural: str, n)
 
-**3. Update language files**
+#. Update language files
 
-  Update the ``.pot`` file with new translatable strings found
-  in the source code::
+   Update the ``.pot`` file with new translatable strings found
+   in the source code::
 
     python -m build_support.translations extract
 
-  Update language-specific ``.po`` files based on the updated
-  ``.pot`` file::
+   Update language-specific ``.po`` files based on the updated
+   ``.pot`` file::
 
     python -m build_support.translations update
   
-**4. Translate**
+#. Translate
 
-  Translate language-specific ``.po`` files. This is the actual translation step.
-  
-  For programs that help with editing, see `this page
-  <https://www.gnu.org/software/trans-coord/manual/web-trans/html_node/PO-Editors.html>`_. 
-  There is also an extension for the VS Code editor called "gettext".
+   Translate language-specific ``.po`` files. This is the actual translation step.
 
-**5. Compile (optional)**
+   For programs that help with editing, see `this page
+   <https://www.gnu.org/software/trans-coord/manual/web-trans/html_node/PO-Editors.html>`_. 
+   There is also an extension for the VS Code editor called "gettext".
 
-  Compile ``.po`` files to ``.mo`` files. This is only necessary if you
-  want to update the translations in your local development
-  environment. For deployment this step is automatically done by the build system.
+#. Compile (optional)
 
-  .. code-block::  bash
+   Compile ``.po`` files to ``.mo`` files. This is only necessary if you
+   want to update the translations in your development
+   environment. For deployment this step is automatically done by the build system::
 
     python -m build_support.translations compile
 

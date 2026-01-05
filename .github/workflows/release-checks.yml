@@ -1,0 +1,37 @@
+name: Release checks
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+permissions:
+  contents: read
+
+jobs:
+  flake-check-deployment-repo:
+    # Only run when the PR has the "release" label
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'release') }}
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout this repo (the PR head), so we can override the deployment flake input to it
+      - name: Checkout workers-control (PR head)
+        uses: actions/checkout@v5
+
+      - uses: cachix/install-nix-action@v31
+      - uses: cachix/cachix-action@v16
+        with:
+          name: arbeitszeit-2
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN_2 }}'
+
+      - name: Checkout workers-control-deployment (development)
+        uses: actions/checkout@v5
+        with:
+          repository: ida-arbeitszeit/workers-control-deployment
+          ref: development
+          path: workers-control-deployment
+
+      - name: nix flake check (deployment, override workers-control to PR checkout)
+        working-directory: workers-control-deployment
+        run: |
+          nix flake check --print-build-logs \
+            --override-input workers-control "path:${{ github.workspace }}"

@@ -3,6 +3,7 @@ from datetime import datetime
 from decimal import Decimal
 from typing import List, Optional, Tuple, Union
 
+import matplotlib.dates as mdates
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 
@@ -15,7 +16,9 @@ class FlaskPlotter:
         ax = fig.subplots()
         ax.axhline(linestyle="--", color="black")
         ax.plot(x, y)  # type: ignore[arg-type]
+        ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d"))
         fig.set_size_inches(fig_size[0], fig_size[1])
+        fig.autofmt_xdate()
         return self._figure_to_bytes(fig)
 
     def create_bar_plot(

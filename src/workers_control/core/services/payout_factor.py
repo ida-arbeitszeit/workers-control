@@ -53,7 +53,7 @@ class PayoutFactorService:
             expiration = plan.expiration_date
             assert expiration is not None
 
-            coverage = self._calculate_coverage(
+            coverage = self.calculate_coverage(
                 window_start, window_end, approval, expiration
             )
             costs = plan.production_costs
@@ -67,8 +67,8 @@ class PayoutFactorService:
                 coverage=coverage,
             )
 
-    def _calculate_coverage(
-        self,
+    @staticmethod
+    def calculate_coverage(
         window_start: datetime,
         window_end: datetime,
         approval: datetime,
@@ -87,8 +87,8 @@ class PayoutFactorService:
         )
         return coverage
 
-    @classmethod
-    def _calculate_payout_factor(cls, plan_info: Iterable[PlanInfo]) -> Decimal:
+    @staticmethod
+    def _calculate_payout_factor(plan_info: Iterable[PlanInfo]) -> Decimal:
         # payout factor or factor of individual consumption (FIC)
         # = (l − ( p_o + r_o )) / (l + l_o)
         # where:

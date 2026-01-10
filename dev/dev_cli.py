@@ -3,7 +3,7 @@ from uuid import UUID
 
 import click
 
-from dev.timeline_printer import TimelinePrinter
+from dev.timeline_printer import PayoutFactorWindowCLIPrinter
 from tests.data_generators import (
     CompanyGenerator,
     ConsumptionGenerator,
@@ -12,10 +12,8 @@ from tests.data_generators import (
     PlanGenerator,
     WorkerAffiliationGenerator,
 )
-from workers_control.core.datetime_service import DatetimeService
 from workers_control.core.injector import Injector
 from workers_control.core.records import ProductionCosts
-from workers_control.core.repositories import DatabaseGateway
 from workers_control.core.services.payout_factor import (
     PayoutFactorConfig,
     PayoutFactorService,
@@ -44,18 +42,8 @@ def create_fic_cli_group(injector: Injector) -> click.Group:
     @fic.command("print-timeline")
     def print_timeline() -> None:
         """Print timeline of plans and calculation window."""
-        datatime_service = injector.get(DatetimeService)
-        database_gateway = injector.get(DatabaseGateway)
-        config = injector.get(PayoutFactorConfig)
-        window_length = config.get_window_length_in_days()
-        now = datatime_service.now()
-        plans = list(database_gateway.get_plans().that_are_approved())
-        tp = TimelinePrinter(
-            now,
-            plans,
-            window_length,
-        )
-        click.echo(tp.render())
+        tp = injector.get(PayoutFactorWindowCLIPrinter)
+        click.echo(tp.render_timeline())
 
     return fic
 

@@ -400,3 +400,91 @@ class PayoutFactorTests(BaseTestCase):
                 plan_duration = window_size * 2
                 plan_start = now - timedelta(days=window_size)
         return int(plan_duration), plan_start
+
+
+class CoverageTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.service = self.injector.get(PayoutFactorService)
+
+    @parameterized.expand(
+        [
+            (
+                datetime(1900, 1, 1),
+                datetime(2000, 1, 1),
+                datetime(1700, 1, 1),
+                datetime(1800, 1, 1),
+                Decimal(0),
+            ),
+            (
+                datetime(1900, 1, 1),
+                datetime(2000, 1, 1),
+                datetime(1825, 1, 1),
+                datetime(1925, 1, 1),
+                Decimal(0.25),
+            ),
+            (
+                datetime(1900, 1, 1),
+                datetime(2000, 1, 1),
+                datetime(1850, 1, 1),
+                datetime(1950, 1, 1),
+                Decimal(0.5),
+            ),
+            (
+                datetime(1900, 1, 1),
+                datetime(2000, 1, 1),
+                datetime(1875, 1, 1),
+                datetime(1975, 1, 1),
+                Decimal(0.75),
+            ),
+            (
+                datetime(1900, 1, 1),
+                datetime(2000, 1, 1),
+                datetime(1925, 1, 1),
+                datetime(1975, 1, 1),
+                Decimal(1),
+            ),
+            (
+                datetime(1900, 1, 1),
+                datetime(2000, 1, 1),
+                datetime(1950, 1, 1),
+                datetime(2050, 1, 1),
+                Decimal(0.5),
+            ),
+            (
+                datetime(1900, 1, 1),
+                datetime(2000, 1, 1),
+                datetime(2100, 1, 1),
+                datetime(2200, 1, 1),
+                Decimal(0),
+            ),
+        ]
+    )
+    def test_that_correct_coverage_for_plan_is_calculated(
+        self,
+        window_start: datetime,
+        window_end: datetime,
+        plan_approval: datetime,
+        plan_expiration: datetime,
+        expected_coverage: Decimal,
+    ) -> None:
+        coverage = self.service.calculate_coverage(
+            window_start,
+            window_end,
+            plan_approval,
+            plan_expiration,
+        )
+        self.assertAlmostEqual(coverage, expected_coverage, places=4)
+
+    def test_that_coverage_is_zero_for_plan_of_length_zero(self) -> None:
+        window_start = datetime(1900, 1, 1)
+        window_end = datetime(2000, 1, 1)
+        plan_approval = datetime(1950, 1, 1)
+        plan_expiration = plan_approval
+        coverage = self.service.calculate_coverage(
+            window_start,
+            window_end,
+            plan_approval,
+            plan_expiration,
+        )
+        assert coverage == Decimal(0)

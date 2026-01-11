@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from decimal import Decimal
 
-from workers_control.core.interactors import show_payout_factor_window_details
+from workers_control.core.interactors import show_payout_factor_details
 from workers_control.core.services.payout_factor import PayoutFactorService
 
 SCREEN_WIDTH = 70
@@ -15,10 +15,10 @@ class PayoutFactorWindowCLIPrinter:
 
     def __init__(
         self,
-        interactor: show_payout_factor_window_details.ShowPayoutFactorWindowDetailsInteractor,
+        interactor: show_payout_factor_details.ShowPayoutFactorDetailsInteractor,
     ) -> None:
         self.interactor = interactor
-        self.response = self.interactor.show_payout_factor_window_details()
+        self.response = self.interactor.show_payout_factor_details()
         self._timeline_start, self._timeline_end = self._calculate_timeline_bounds()
 
     def _calculate_timeline_bounds(self) -> tuple[datetime, datetime]:
@@ -93,7 +93,7 @@ class PayoutFactorWindowCLIPrinter:
 
     def _render_graphical_plan_line(
         self,
-        plan: show_payout_factor_window_details.PlanData,
+        plan: show_payout_factor_details.PlanData,
         index: int,
     ) -> str:
         """Render the plan line: -----****----- or -----oooo-----"""
@@ -119,9 +119,7 @@ class PayoutFactorWindowCLIPrinter:
         days_from_start = (date - self._timeline_start).days
         return int((days_from_start / timeline_range) * (SCREEN_WIDTH - 1))
 
-    def _calculate_coverage(
-        self, plan: show_payout_factor_window_details.PlanData
-    ) -> Decimal:
+    def _calculate_coverage(self, plan: show_payout_factor_details.PlanData) -> Decimal:
         return PayoutFactorService.calculate_coverage(
             self.response.window_start,
             self.response.window_end,
@@ -130,7 +128,7 @@ class PayoutFactorWindowCLIPrinter:
         )
 
     def _render_textual_plan_line(
-        self, plan: show_payout_factor_window_details.PlanData, index: int
+        self, plan: show_payout_factor_details.PlanData, index: int
     ) -> str:
         coverage = self._calculate_coverage(plan)
         cov_str = f"{coverage * 100:.0f}%"

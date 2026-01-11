@@ -93,10 +93,34 @@ class PlanDataTests(BaseTestCase):
         assert len(response.plans) == 1
         assert response.plans[0].id_ == plan
 
+    @parameterized.expand(
+        [
+            (datetime(2000, 1, 14), datetime(2000, 1, 15), 1, True),
+            (datetime(2000, 1, 14, 1), datetime(2000, 1, 15), 1, False),
+            (datetime(2000, 1, 13), datetime(2000, 1, 15), 2, True),
+            (datetime(2000, 1, 13, 1), datetime(2000, 1, 15), 2, False),
+        ]
+    )
+    def test_that_plans_that_have_expired_at_least_one_window_size_before_now_are_ignored(
+        self,
+        plan_expiration: datetime,
+        now: datetime,
+        window_size: int,
+        plan_should_be_ignored: bool,
+    ) -> None:
+        self.payout_factor_config.set_window_length(window_size)
+        self.datetime_service.freeze_time(plan_expiration - timedelta(days=1))
+        self.plan_generator.create_plan(timeframe=1)
+        self.datetime_service.freeze_time(now)
+        if plan_should_be_ignored:
+            assert len(self.interactor.show_payout_factor_details().plans) == 0
+        else:
+            assert len(self.interactor.show_payout_factor_details().plans) == 1
+
     def test_that_plans_are_ordered_by_approval(self) -> None:
-        approval_1 = datetime(1901, 1, 1)
-        approval_2 = datetime(1902, 1, 1)
-        approval_3 = datetime(1903, 1, 1)
+        approval_1 = datetime(1900, 1, 1)
+        approval_2 = datetime(1900, 1, 2)
+        approval_3 = datetime(1900, 1, 3)
         self.datetime_service.freeze_time(approval_1)
         plan_1 = self.plan_generator.create_plan()
         self.datetime_service.freeze_time(approval_2)
@@ -115,6 +139,14 @@ class PlanDataTests(BaseTestCase):
         plan_2 = self.plan_generator.create_plan(timeframe=2)
         response = self.interactor.show_payout_factor_details()
         assert [p.id_ for p in response.plans] == [plan_1, plan_2]
+
+    def test_that_plan_name_is_set_correctly(
+        self,
+    ) -> None:
+        expected_plan_name = "My Test Plan"
+        self.plan_generator.create_plan(product_name=expected_plan_name)
+        response = self.interactor.show_payout_factor_details()
+        assert response.plans[0].name == expected_plan_name
 
     @parameterized.expand((datetime(2020, 5, 1), datetime(2025, 1, 9)))
     def test_that_approval_date_is_set_correctly(

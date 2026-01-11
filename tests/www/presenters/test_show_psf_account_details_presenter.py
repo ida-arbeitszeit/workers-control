@@ -133,3 +133,36 @@ class ShowPSFAccountDetailsPresenterTests(BaseTestCase):
             transfers=transfers,
             account_balance=account_balance,
         )
+
+
+class NavbarTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(ShowPSFAccountDetailsPresenter)
+
+    def test_view_model_contains_two_navbar_items(self) -> None:
+        response = self.get_interactor_response()
+        view_model = self.presenter.present(response)
+        assert len(view_model.navbar_items) == 2
+
+    def test_first_navbar_item_leads_to_statistics(self) -> None:
+        response = self.get_interactor_response()
+        view_model = self.presenter.present(response)
+        navbar_item = view_model.navbar_items[0]
+        assert navbar_item.text == self.translator.gettext("Global statistics")
+        assert navbar_item.url == self.url_index.get_global_statistics_url()
+
+    def test_second_navbar_item_has_text_account_psf_and_no_url(self) -> None:
+        response = self.get_interactor_response()
+        view_model = self.presenter.present(response)
+        navbar_item = view_model.navbar_items[1]
+        assert navbar_item.text == self.translator.gettext("Account PSF")
+        assert navbar_item.url is None
+
+    def get_interactor_response(
+        self,
+    ) -> ShowPSFAccountDetailsInteractor.Response:
+        return ShowPSFAccountDetailsInteractor.Response(
+            transfers=[],
+            account_balance=Decimal(0),
+        )

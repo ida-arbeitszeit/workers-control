@@ -72,6 +72,12 @@ class PlotUrlIndexTests(ViewTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.mimetype, "image/png")
 
+    def test_url_for_payout_factor_details_bar_plot_returns_png(self) -> None:
+        url = self.url_index.get_payout_factor_details_bar_plot_url()
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.mimetype, "image/png")
+
 
 class GeneralUrlIndexTests(ViewTestCase):
     def setUp(self) -> None:
@@ -473,5 +479,17 @@ class GeneralUrlIndexTests(ViewTestCase):
     def test_that_get_pending_work_invites_url_returns_a_valid_url(self) -> None:
         self.login_company()
         url = self.url_index.get_pending_work_invites_url()
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_that_payout_factor_details_url_leads_to_functional_url(self) -> None:
+        self.login_member()
+        url = self.url_index.get_payout_factor_details_url()
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_that_global_statistics_url_leads_to_functional_url(self) -> None:
+        self.login_member()
+        url = self.url_index.get_global_statistics_url()
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)

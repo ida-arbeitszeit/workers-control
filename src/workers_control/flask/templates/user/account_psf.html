@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 
+{% block navbar_start %}
+{% from 'macros/navbar.html' import navbar %}
+{{ navbar(view_model.navbar_items) }}
+{% endblock %}
+
+
 {% block content %}
 {% from 'macros/transfers.html' import transfer_with_party %}
 <section class="section columns has-text-centered">

@@ -127,6 +127,9 @@ class GeneralUrlIndex:
             company_id=str(company_id),
         )
 
+    def get_payout_factor_details_bar_plot_url(self) -> str:
+        return url_for(endpoint="plots.payout_factor_details_bar_plot")
+
     def get_register_productive_consumption_url(
         self,
         plan_id: Optional[UUID] = None,
@@ -252,3 +255,9 @@ class GeneralUrlIndex:
 
     def get_pending_work_invites_url(self) -> str:
         return url_for("main_company.list_pending_work_invites")
+
+    def get_payout_factor_details_url(self) -> str:
+        return url_for("main_user.show_payout_factor_details")
+
+    def get_global_statistics_url(self) -> str:
+        return url_for("main_user.statistics")

@@ -35,6 +35,9 @@ from workers_control.flask.views.show_company_accounts_view import CompanyAccoun
 from workers_control.flask.views.show_p_account_details_view import (
     ShowPAccountDetailsView,
 )
+from workers_control.flask.views.show_payout_factor_details_view import (
+    ShowPayoutFactorDetailsView,
+)
 from workers_control.flask.views.show_prd_account_details_view import (
     ShowPRDAccountDetailsView,
 )
@@ -189,3 +192,8 @@ class list_transfers(ListTransfersView): ...
 @AuthenticatedUserRoute("/account_psf")
 @as_flask_view()
 class account_psf(ShowPSFAccountDetailsView): ...
+
+
+@AuthenticatedUserRoute("/show_payout_factor_details")
+@as_flask_view()
+class show_payout_factor_details(ShowPayoutFactorDetailsView): ...

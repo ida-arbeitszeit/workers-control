@@ -27,6 +27,7 @@ class Response:
 @dataclass
 class PlanData:
     id_: UUID
+    name: str
     approval_date: datetime
     expiration_date: datetime
     is_public_service: bool
@@ -46,7 +47,8 @@ class ShowPayoutFactorDetailsInteractor:
         window_size_in_days = self.payout_factor_config.get_window_length_in_days()
         window_start = now - timedelta(days=window_size_in_days / 2)
         window_end = now + timedelta(days=window_size_in_days / 2)
-        plan_records = self._get_approved_plans_sorted()
+        plan_records = self._get_plans_sorted(now, window_size_in_days)
+
         plans = [
             self._create_plan_data(
                 plan=p, window_start=window_start, window_end=window_end
@@ -62,10 +64,16 @@ class ShowPayoutFactorDetailsInteractor:
             plans=plans,
         )
 
-    def _get_approved_plans_sorted(self) -> list[records.Plan]:
-        plans_unsorted = list(self.database_gateway.get_plans().that_are_approved())
+    def _get_plans_sorted(
+        self, now: datetime, window_size_in_days: int
+    ) -> list[records.Plan]:
+        relevant_plans = list(
+            self.database_gateway.get_plans()
+            .that_are_approved()
+            .that_will_expire_after(now - timedelta(days=window_size_in_days))
+        )
         plans_sorted = sorted(
-            plans_unsorted,
+            relevant_plans,
             key=lambda p: (p.approval_date, p.expiration_date),
         )
         return plans_sorted
@@ -77,6 +85,7 @@ class ShowPayoutFactorDetailsInteractor:
         assert plan.expiration_date is not None
         return PlanData(
             id_=plan.id,
+            name=plan.prd_name,
             approval_date=plan.approval_date,
             expiration_date=plan.expiration_date,
             is_public_service=plan.is_public_service,

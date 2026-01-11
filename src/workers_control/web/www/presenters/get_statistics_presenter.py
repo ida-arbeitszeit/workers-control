@@ -23,6 +23,7 @@ class GetStatisticsViewModel:
     planned_resources_hours: str
     planned_means_hours: str
     payout_factor: str
+    payout_factor_details_url: str
     psf_balance: str
     psf_account_url: str
 
@@ -73,6 +74,7 @@ class GetStatisticsPresenter:
             ),
             average_timeframe_days=average_timeframe,
             payout_factor=self._format_payout_factor(interactor_response.payout_factor),
+            payout_factor_details_url=self.url_index.get_payout_factor_details_url(),
             psf_balance=self._format_psf_balance(interactor_response.psf_balance),
             psf_account_url=self.url_index.get_account_psf_url(),
             barplot_for_certificates_url=self.url_index.get_global_barplot_for_certificates_url(

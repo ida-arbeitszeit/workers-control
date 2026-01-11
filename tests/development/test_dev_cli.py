@@ -15,12 +15,8 @@ class FicCliTester(DatabaseTestCase):
         self.runner = CliRunner()
         self.fic = create_fic_cli_group(self.injector)
 
-    def test_calculate_fic(self) -> None:
-        result = self.runner.invoke(self.fic, ["calculate"])
-        assert result.exit_code == 0
-
-    def test_print_timeline(self) -> None:
-        result = self.runner.invoke(self.fic, ["print-timeline"])
+    def test_info_command(self) -> None:
+        result = self.runner.invoke(self.fic, ["info"])
         assert result.exit_code == 0
 
 

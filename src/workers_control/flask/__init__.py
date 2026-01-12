@@ -94,13 +94,13 @@ def create_app(
 
         # register blueprints
         from .context_processors import add_template_variables
-        from .plots import routes as plots_routes
         from .routes import accountant as accountant_routes
         from .routes import company as company_routes
         from .routes import healthcheck as healthcheck_routes
         from .routes import member as member_routes
         from .routes import user as user_routes
         from .routes.auth import routes as auth_routes
+        from .routes.plots import routes as plots_routes
 
         app.register_blueprint(auth_routes.auth)
         app.register_blueprint(plots_routes.plots)

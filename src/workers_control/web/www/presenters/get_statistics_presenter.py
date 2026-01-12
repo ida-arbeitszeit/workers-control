@@ -1,10 +1,7 @@
 from dataclasses import dataclass
 from decimal import Decimal
 
-from workers_control.core.datetime_service import DatetimeService
 from workers_control.core.interactors.get_statistics import StatisticsResponse
-from workers_control.web.colors import HexColors
-from workers_control.web.plotter import Plotter
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
 
@@ -35,10 +32,7 @@ class GetStatisticsViewModel:
 @dataclass
 class GetStatisticsPresenter:
     translator: Translator
-    plotter: Plotter
-    colors: HexColors
     url_index: UrlIndex
-    datetime_service: DatetimeService
 
     def present(
         self, interactor_response: StatisticsResponse

@@ -27,7 +27,6 @@ from workers_control.flask.datetime import (
 )
 from workers_control.flask.email_configuration import FlaskEmailConfiguration
 from workers_control.flask.flask_colors import FlaskColors
-from workers_control.flask.flask_plotter import FlaskPlotter
 from workers_control.flask.flask_request import FlaskRequest
 from workers_control.flask.flask_session import FlaskSession
 from workers_control.flask.language_repository import LanguageRepositoryImpl
@@ -54,7 +53,6 @@ from workers_control.web.formatters.datetime_formatter import (
 )
 from workers_control.web.language_service import LanguageService
 from workers_control.web.notification import Notifier
-from workers_control.web.plotter import Plotter
 from workers_control.web.request import Request
 from workers_control.web.session import Session
 from workers_control.web.text_renderer import TextRenderer
@@ -92,7 +90,6 @@ class FlaskModule(Module):
         binder[Notifier] = AliasProvider(FlaskFlashNotifier)
         binder[MailService] = CallableProvider(get_mail_service)
         binder[Translator] = AliasProvider(FlaskTranslator)
-        binder[Plotter] = AliasProvider(FlaskPlotter)
         binder[HexColors] = AliasProvider(FlaskColors)
         binder[ControlThresholds] = AliasProvider(ControlThresholdsFlask)
         binder[DatetimeFormatter] = AliasProvider(FlaskDatetimeFormatter)

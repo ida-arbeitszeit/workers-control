@@ -1,10 +1,7 @@
 from dataclasses import dataclass
 from decimal import Decimal
 
-from workers_control.core.datetime_service import DatetimeService
 from workers_control.core.interactors.get_statistics import StatisticsResponse
-from workers_control.web.colors import HexColors
-from workers_control.web.plotter import Plotter
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
 
@@ -23,6 +20,7 @@ class GetStatisticsViewModel:
     planned_resources_hours: str
     planned_means_hours: str
     payout_factor: str
+    payout_factor_details_url: str
     psf_balance: str
     psf_account_url: str
 
@@ -34,10 +32,7 @@ class GetStatisticsViewModel:
 @dataclass
 class GetStatisticsPresenter:
     translator: Translator
-    plotter: Plotter
-    colors: HexColors
     url_index: UrlIndex
-    datetime_service: DatetimeService
 
     def present(
         self, interactor_response: StatisticsResponse
@@ -73,6 +68,7 @@ class GetStatisticsPresenter:
             ),
             average_timeframe_days=average_timeframe,
             payout_factor=self._format_payout_factor(interactor_response.payout_factor),
+            payout_factor_details_url=self.url_index.get_payout_factor_details_url(),
             psf_balance=self._format_psf_balance(interactor_response.psf_balance),
             psf_account_url=self.url_index.get_account_psf_url(),
             barplot_for_certificates_url=self.url_index.get_global_barplot_for_certificates_url(

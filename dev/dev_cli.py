@@ -14,10 +14,6 @@ from tests.data_generators import (
 )
 from workers_control.core.injector import Injector
 from workers_control.core.records import ProductionCosts
-from workers_control.core.services.payout_factor import (
-    PayoutFactorConfig,
-    PayoutFactorService,
-)
 from workers_control.db import commit_changes
 
 
@@ -29,19 +25,9 @@ def create_fic_cli_group(injector: Injector) -> click.Group:
         """,
     )
 
-    @fic.command("calculate")
-    def calculate_fic() -> None:
-        """Calculate the current FIC."""
-        config = injector.get(PayoutFactorConfig)
-        window_length = config.get_window_length_in_days()
-        click.echo(f"Using fic window length: {window_length} days")
-        payout_factor_service = injector.get(PayoutFactorService)
-        fic = payout_factor_service.calculate_current_payout_factor()
-        click.echo(f"Current FIC: {fic}")
-
-    @fic.command("print-timeline")
-    def print_timeline() -> None:
-        """Print timeline of plans and calculation window."""
+    @fic.command("info")
+    def info() -> None:
+        """Print current payout factor and timeline of plans."""
         tp = injector.get(PayoutFactorWindowCLIPrinter)
         click.echo(tp.render_timeline())
 

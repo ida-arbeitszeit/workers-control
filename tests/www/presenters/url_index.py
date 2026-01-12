@@ -65,6 +65,7 @@ class UrlIndexTestImpl:
     get_line_plot_of_company_p_account = UrlIndexMethod()
     get_line_plot_of_company_prd_account = UrlIndexMethod()
     get_line_plot_of_company_r_account = UrlIndexMethod()
+    get_payout_factor_details_bar_plot_url = UrlIndexMethod()
     get_list_of_coordinators_url = UrlIndexMethod()
     get_member_confirmation_url = UrlIndexMethod()
     get_member_dashboard_url = UrlIndexMethod()
@@ -90,3 +91,5 @@ class UrlIndexTestImpl:
     get_unreviewed_plans_list_view_url = UrlIndexMethod()
     get_user_account_details_url = UrlIndexMethod()
     get_work_invite_url = UrlIndexMethod()
+    get_payout_factor_details_url = UrlIndexMethod()
+    get_global_statistics_url = UrlIndexMethod()

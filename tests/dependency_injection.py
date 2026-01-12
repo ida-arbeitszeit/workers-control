@@ -3,7 +3,6 @@ from tests.datetime_service import FakeDatetimeService
 from tests.email_notifications import EmailSenderTestImpl
 from tests.password_hasher import PasswordHasherImpl
 from tests.payout_factor import PayoutFactorConfigTestImpl
-from tests.plotter import FakePlotter
 from tests.request import FakeRequest
 from tests.text_renderer import TextRendererImpl
 from tests.translator import FakeTranslator
@@ -20,7 +19,6 @@ from workers_control.core.injector import (
 from workers_control.core.password_hasher import PasswordHasher
 from workers_control.core.services.payout_factor import PayoutFactorConfig
 from workers_control.web.colors import HexColors
-from workers_control.web.plotter import Plotter
 from workers_control.web.request import Request
 from workers_control.web.text_renderer import TextRenderer
 from workers_control.web.translator import Translator
@@ -32,7 +30,6 @@ class TestingModule(Module):
         binder[EmailSender] = AliasProvider(EmailSenderTestImpl)
         binder[TextRenderer] = AliasProvider(TextRendererImpl)
         binder[HexColors] = AliasProvider(ColorsTestImpl)
-        binder[Plotter] = AliasProvider(FakePlotter)
         binder[ControlThresholds] = AliasProvider(ControlThresholdsTestImpl)
         binder[Translator] = AliasProvider(FakeTranslator)
         binder[DatetimeService] = AliasProvider(FakeDatetimeService)

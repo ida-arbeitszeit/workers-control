@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block navbar_start %}
+{% from 'macros/navbar.html' import navbar %}
+{{ navbar(view_model.navbar_items) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="section">
+  <h1 class="title has-text-centered">
+      {{ gettext("Payout factor (FIC) details") }}
+  </h1>
+
+  <div class="columns is-centered">
+    <div class="column is-half">
+      <div class="box has-background-info-light has-text-info-dark has-text-left">
+        <div class="has-text-centered">
+          <div class="icon">{{ "info-circle"|icon }}</div>
+        </div>
+        <p>{{ gettext("The payout factor, also called the Factor of Individual Consumption (FIC), is a key figure in labour-time accounting.") }}</p>
+        <p>{{ gettext("It expresses what proportion of total work time is paid out as work certificates. It is calculated by relating the costs of productive versus public plans and can take values between 0 and 1." ) }} {{ gettext("The larger it is, the more product exists in the productive sector. The smaller it is, the more is freely available in the public sector.") }}</p>
+        <p>{{ gettext("Only plans that fall within the calculation window are considered. Plans that expired a long time ago play no role. Plans that partially overlap the window are included proportionally.") }} {{ gettext("For each plan, a coverage is calculated, which indicates how much of the plan falls within the calculation window.") }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns is-centered has-text-left">
+    <div class="column is-narrow">
+      <div><strong>{{ gettext("Current payout factor:") }} {{ view_model.payout_factor }}</strong></div>
+      <br>
+      <div>{{ gettext("Window size in days:") }} {{ view_model.window_size_in_days }}</div>
+      <div>{{ gettext("Window start:") }} {{ view_model.window_start }}</div>
+      <div>{{ gettext("Window end:") }} {{ view_model.window_end }}</div>
+    </div>
+  </div>
+
+  <div>
+      <img src="{{ view_model.plot_url }}" alt="plot of payout factor calculation window and plans">
+  </div>
+
+  <div class="table-container">
+    <table class="table mx-auto">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>{{ gettext("Plan") }}</th>
+          <th>{{ gettext("Type") }}</th>
+          <th>{{ gettext("Coverage") }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if view_model.plans is defined and view_model.plans|length %}
+        {% for plan in view_model.plans %}
+        <tr>
+          <td>{{ plan.row_index }}</td>
+          <td><a href="{{ plan.plan_url }}">{{ plan.shortened_plan_name }}</a></td>
+          <th>{{ gettext("Public") if plan.is_public else gettext("Productive") }}</th>
+          <th>{{ plan.coverage }}</th>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <div>{{ gettext("No plans.") }}</div>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

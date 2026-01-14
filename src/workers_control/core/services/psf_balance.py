@@ -12,16 +12,12 @@ class PublicSectorFundService:
     social_accounting: SocialAccounting
 
     def calculate_psf_balance(self) -> Decimal:
-        taxes_transfers = (
-            self.database_gateway.get_transfers().where_account_is_creditor(
-                self.social_accounting.account_psf
-            )
+        inbound = self.database_gateway.get_transfers().where_account_is_creditor(
+            self.social_accounting.account_psf
         )
-        public_credit_transfers = (
-            self.database_gateway.get_transfers().where_account_is_debtor(
-                self.social_accounting.account_psf
-            )
+        outbound = self.database_gateway.get_transfers().where_account_is_debtor(
+            self.social_accounting.account_psf
         )
-        taxes = decimal_sum(t.value for t in taxes_transfers)
-        public_plans_costs = decimal_sum(t.value for t in public_credit_transfers)
-        return taxes - public_plans_costs
+        inbound_sum = decimal_sum(t.value for t in inbound)
+        outbound_sum = decimal_sum(t.value for t in outbound)
+        return inbound_sum - outbound_sum

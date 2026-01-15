@@ -4,46 +4,75 @@ from uuid import UUID
 from parameterized import parameterized
 
 from tests.interactors.base_test_case import BaseTestCase
-from workers_control.core.records import ProductionCosts
+from workers_control.core.decimal import decimal_sum
+from workers_control.core.records import ProductionCosts, SocialAccounting
 from workers_control.core.services.payout_factor import PayoutFactorService
 from workers_control.core.services.psf_balance import PublicSectorFundService
 
 
-class PublicSectorFundServiceCalculationTests(BaseTestCase):
+class PsfBaseTest(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.service = self.injector.get(PublicSectorFundService)
+        self.psf_account = self.injector.get(SocialAccounting).account_psf
 
-    def test_balance_is_zero_if_no_plans_are_approved(self) -> None:
+
+class TransferBasedTests(PsfBaseTest):
+    @parameterized.expand(
+        [
+            ([Decimal(0)], [Decimal(0)]),
+            ([Decimal(10), Decimal(15)], [Decimal(10)]),
+            ([Decimal(5)], [Decimal(10), Decimal(10), Decimal(10)]),
+            ([Decimal(5.11)], [Decimal(10.22), Decimal(10.3333), Decimal(10.4444)]),
+        ]
+    )
+    def test_that_psf_balance_equals_difference_of_summed_up_transfers(
+        self,
+        inbound_transfer_values: list[Decimal],
+        outbound_transfer_values: list[Decimal],
+    ) -> None:
+        for t in inbound_transfer_values:
+            self.transfer_generator.create_transfer(
+                credit_account=self.psf_account, value=t
+            )
+        for t in outbound_transfer_values:
+            self.transfer_generator.create_transfer(
+                debit_account=self.psf_account, value=t
+            )
+        expected_balance = decimal_sum(inbound_transfer_values) - decimal_sum(
+            outbound_transfer_values
+        )
+        psf_balance = self.service.calculate_psf_balance()
+        assert psf_balance == expected_balance
+
+
+class PsfBalanceScenarioTests(PsfBaseTest):
+    def test_that_without_plans_the_account_is_balanced(self) -> None:
         psf_balance = self.service.calculate_psf_balance()
         self.assertEqual(psf_balance, 0)
 
-    def test_that_balance_is_zero_if_there_is_a_productive_plan_approval(self) -> None:
+    def test_that_with_productive_plan_the_account_is_balanced(self) -> None:
         self.plan_generator.create_plan()
         psf_balance = self.service.calculate_psf_balance()
         assert psf_balance == Decimal(0)
 
-    def test_that_balance_is_negative_if_there_is_a_public_plan_approval(self) -> None:
+    def test_that_public_plan_leads_to_negative_balance(self) -> None:
         self.plan_generator.create_plan(is_public_service=True)
         psf_balance = self.service.calculate_psf_balance()
         assert psf_balance < Decimal(0)
 
-    def test_that_after_registration_of_hours_worked_balance_is_zero_if_no_plan_approvals(
+    def test_that_no_plans_and_registered_work_lead_to_balanced_account(
         self,
     ) -> None:
-        worker = self.member_generator.create_member()
-        company = self.company_generator.create_company(workers=[worker])
-        self._register_hours_worked(company, worker, Decimal(10))
+        self._register_hours_worked(Decimal(10))
         psf_balance = self.service.calculate_psf_balance()
         assert psf_balance == Decimal(0)
 
-    def test_that_after_registration_of_hours_worked_balance_is_zero_if_only_one_productive_plan_approval(
+    def test_that_productive_plan_and_registered_work_lead_to_balanced_account(
         self,
     ) -> None:
         self.plan_generator.create_plan()
-        worker = self.member_generator.create_member()
-        company = self.company_generator.create_company(workers=[worker])
-        self._register_hours_worked(company, worker, Decimal(10))
+        self._register_hours_worked(Decimal(10))
         psf_balance = self.service.calculate_psf_balance()
         assert psf_balance == Decimal(0)
 
@@ -82,14 +111,53 @@ class PublicSectorFundServiceCalculationTests(BaseTestCase):
         )
         assert self._calculate_payout_factor() > 0
 
-        worker = self.member_generator.create_member()
-        self.registered_hours_worked_generator.register_hours_worked(
-            company=self.company_generator.create_company(workers=[worker]),
-            worker=worker,
-            hours=labour_in_productive_sector + labour_in_public_sector,
+        self._register_hours_worked(
+            labour_in_productive_sector + labour_in_public_sector
         )
+
         psf_balance = self.service.calculate_psf_balance()
         self.assertAlmostEqual(psf_balance, 0)
+
+    @parameterized.expand(
+        [
+            (
+                Decimal(100),
+                Decimal(10),
+            ),
+            (
+                Decimal(100),
+                Decimal(0),
+            ),
+        ]
+    )
+    def test_that_balance_is_negative_when_fic_is_larger_than_zero_and_not_all_labour_has_been_registered(
+        self,
+        labour_in_productive_sector: Decimal,
+        labour_in_public_sector: Decimal,
+    ) -> None:
+        self.plan_generator.create_plan(
+            is_public_service=False,
+            costs=ProductionCosts(
+                labour_cost=Decimal(labour_in_productive_sector),
+                resource_cost=Decimal(1),
+                means_cost=Decimal(1),
+            ),
+        )
+        self.plan_generator.create_plan(
+            is_public_service=True,
+            costs=ProductionCosts(
+                labour_cost=Decimal(labour_in_public_sector),
+                resource_cost=Decimal(1),
+                means_cost=Decimal(1),
+            ),
+        )
+        assert self._calculate_payout_factor() > 0
+
+        self._register_hours_worked(
+            (labour_in_productive_sector + labour_in_public_sector) / 2,
+        )
+        psf_balance = self.service.calculate_psf_balance()
+        assert psf_balance < 0
 
     @parameterized.expand(
         [
@@ -104,9 +172,7 @@ class PublicSectorFundServiceCalculationTests(BaseTestCase):
     ) -> None:
         self.economic_scenarios.setup_environment_with_fic(payout_factor)
         psf_balance_before = self.service.calculate_psf_balance()
-        worker = self.member_generator.create_member()
-        company = self.company_generator.create_company(workers=[worker])
-        self._register_hours_worked(company, worker, hours_worked)
+        self._register_hours_worked(hours_worked)
         psf_balance_after = self.service.calculate_psf_balance()
         assert psf_balance_after > psf_balance_before
         self.assertAlmostEqual(
@@ -126,17 +192,20 @@ class PublicSectorFundServiceCalculationTests(BaseTestCase):
         fic = Decimal(1)
         self.economic_scenarios.setup_environment_with_fic(fic)
         psf_balance_before = self.service.calculate_psf_balance()
-        worker = self.member_generator.create_member()
-        company = self.company_generator.create_company(workers=[worker])
-        self._register_hours_worked(company, worker, hours_worked)
+        self._register_hours_worked(hours_worked)
         psf_balance_after = self.service.calculate_psf_balance()
         assert psf_balance_after == psf_balance_before
 
     def _register_hours_worked(
-        self, company_id: UUID, worker_id: UUID, hours_worked: Decimal
+        self,
+        hours_worked: Decimal,
+        company: UUID | None = None,
+        worker: UUID | None = None,
     ) -> None:
+        worker = worker or self.member_generator.create_member()
+        company = company or self.company_generator.create_company(workers=[worker])
         self.registered_hours_worked_generator.register_hours_worked(
-            company=company_id, worker=worker_id, hours=hours_worked
+            company=company, worker=worker, hours=hours_worked
         )
 
     def _calculate_payout_factor(self) -> Decimal:

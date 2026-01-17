@@ -42,10 +42,7 @@ Run ``python -m dev.update_dependencies`` afterwards.
 Releases
 --------
 
-Maintainers publish new versions of our app on PyPi and provide an updated
-NixOS module.
-
-Procedure for a new release:
+Maintainers regularly release new versions of the app. Procedure:
 
 #. Increment the version number of our app in :py:mod:`pyproject.toml`
    and :py:mod:`nix/pythonPackages/workers-control.nix` (follow https://semver.org/spec/v2.0.0.html).
@@ -55,5 +52,4 @@ Procedure for a new release:
    the `deployment repo <https://github.com/ida-arbeitszeit/workers-control-deployment>`_.
    On failure, fix current branch or deployment repo.
 #. After merging: tag the ``master`` branch (scheme: ``git tag v1.2.3 -m "Release version 1.2.3"``) and push the tag.
-#. Create sdist and wheel via ``python -m build`` and upload to PyPi with twine: ``twine upload dist/*``
-#. Increment the ref of the flake input in the deployment repo.
+#. Create sdist and wheel via ``python -m build`` and upload to PyPi with twine: ``twine upload dist/*``.

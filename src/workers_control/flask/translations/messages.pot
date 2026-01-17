@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-01-04 17:21+0100\n"
+"POT-Creation-Date: 2026-01-17 12:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -154,7 +154,7 @@ msgid "Definition"
 msgstr ""
 
 #: src/workers_control/flask/forms.py:265
-#: src/workers_control/flask/plots/routes.py:102
+#: src/workers_control/flask/routes/plots/routes.py:103
 #: src/workers_control/flask/templates/company/my_consumptions.html:28
 #: src/workers_control/flask/templates/company/register_hours_worked.html:20
 #: src/workers_control/flask/templates/company/register_productive_consumption.html:54
@@ -192,42 +192,63 @@ msgstr ""
 msgid "Current password"
 msgstr ""
 
-#: src/workers_control/flask/plots/routes.py:41
+#: src/workers_control/flask/plotter.py:87
+msgid "Payout Factor Calculation Window"
+msgstr ""
+
+#: src/workers_control/flask/plotter.py:89
+#: src/workers_control/flask/templates/company/dashboard.html:78
+#: src/workers_control/flask/templates/macros/company_summary.html:134
+#: src/workers_control/flask/templates/user/query_plans.html:13
+#: src/workers_control/flask/templates/user/statistics.html:26
+#: src/workers_control/flask/templates/user/statistics.html:53
+msgid "Plans"
+msgstr ""
+
+#: src/workers_control/flask/plotter.py:104
+msgid "Calculation window"
+msgstr ""
+
+#: src/workers_control/flask/plotter.py:110
+msgid "Now"
+msgstr ""
+
+#: src/workers_control/flask/routes/plots/routes.py:42
 #: src/workers_control/web/www/presenters/transfers.py:108
 msgid "Work certificates"
 msgstr ""
 
-#: src/workers_control/flask/plots/routes.py:42
+#: src/workers_control/flask/routes/plots/routes.py:43
 msgid "Available product"
 msgstr ""
 
-#: src/workers_control/flask/plots/routes.py:50
-#: src/workers_control/flask/plots/routes.py:81
+#: src/workers_control/flask/routes/plots/routes.py:51
+#: src/workers_control/flask/routes/plots/routes.py:82
 #: src/workers_control/flask/templates/macros/draft_form.html:88
 #: src/workers_control/flask/templates/macros/draft_form.html:100
 #: src/workers_control/flask/templates/macros/draft_form.html:112
 msgid "Hours"
 msgstr ""
 
-#: src/workers_control/flask/plots/routes.py:66
+#: src/workers_control/flask/routes/plots/routes.py:67
 msgctxt "Text should be short"
 msgid "Fixed means"
 msgstr ""
 
-#: src/workers_control/flask/plots/routes.py:67
+#: src/workers_control/flask/routes/plots/routes.py:68
 msgctxt "Text should be short"
 msgid "Liquid means"
 msgstr ""
 
-#: src/workers_control/flask/plots/routes.py:68
+#: src/workers_control/flask/routes/plots/routes.py:69
 msgid "Work"
 msgstr ""
 
-#: src/workers_control/flask/plots/routes.py:96
+#: src/workers_control/flask/routes/plots/routes.py:97
 msgid "Productive plans"
 msgstr ""
 
-#: src/workers_control/flask/plots/routes.py:97
+#: src/workers_control/flask/routes/plots/routes.py:98
 msgid "Public plans"
 msgstr ""
 
@@ -566,14 +587,6 @@ msgstr ""
 msgid "Your company"
 msgstr ""
 
-#: src/workers_control/flask/templates/company/dashboard.html:78
-#: src/workers_control/flask/templates/macros/company_summary.html:134
-#: src/workers_control/flask/templates/user/query_plans.html:13
-#: src/workers_control/flask/templates/user/statistics.html:26
-#: src/workers_control/flask/templates/user/statistics.html:52
-msgid "Plans"
-msgstr ""
-
 #: src/workers_control/flask/templates/company/dashboard.html:81
 msgid "Your plans"
 msgstr ""
@@ -631,6 +644,8 @@ msgstr ""
 #: src/workers_control/flask/templates/member/dashboard.html:108
 #: src/workers_control/flask/templates/user/statistics.html:4
 #: src/workers_control/flask/templates/user/statistics.html:11
+#: src/workers_control/web/www/presenters/show_payout_factor_details_presenter.py:44
+#: src/workers_control/web/www/presenters/show_psf_account_details_presenter.py:38
 msgid "Global statistics"
 msgstr ""
 
@@ -805,6 +820,7 @@ msgstr ""
 
 #: src/workers_control/flask/templates/company/my_cooperations.html:73
 #: src/workers_control/flask/templates/company/my_cooperations.html:128
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:47
 msgid "Plan"
 msgstr ""
 
@@ -884,6 +900,7 @@ msgstr ""
 #: src/workers_control/flask/templates/company/my_plans.html:36
 #: src/workers_control/flask/templates/company/my_plans.html:75
 #: src/workers_control/flask/templates/user/query_plans.html:78
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:58
 #: src/workers_control/web/formatters/plan_details_formatter.py:92
 #: src/workers_control/web/www/presenters/show_my_plans_presenter.py:232
 msgid "Public"
@@ -928,6 +945,7 @@ msgid "Costs"
 msgstr ""
 
 #: src/workers_control/flask/templates/company/my_plans.html:103
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:48
 #: src/workers_control/web/formatters/plan_details_formatter.py:90
 msgid "Type"
 msgstr ""
@@ -1469,15 +1487,15 @@ msgstr ""
 msgid "Current time:"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/account_psf.html:10
+#: src/workers_control/flask/templates/user/account_psf.html:16
 msgid "Account of Public Sector Fund (PSF)"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/account_psf.html:14
+#: src/workers_control/flask/templates/user/account_psf.html:20
 msgid "Transfers of the account of the Public Sector Fund (PSF)"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/account_psf.html:16
+#: src/workers_control/flask/templates/user/account_psf.html:22
 #: src/workers_control/flask/templates/user/company_account_a.html:23
 #: src/workers_control/flask/templates/user/company_account_p.html:23
 #: src/workers_control/flask/templates/user/company_account_prd.html:22
@@ -1657,56 +1675,126 @@ msgstr ""
 msgid "Admin email address:"
 msgstr ""
 
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:12
+msgid "Payout factor (FIC) details"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:21
+msgid ""
+"The payout factor, also called the Factor of Individual Consumption "
+"(FIC), is a key figure in labour-time accounting."
+msgstr ""
+
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:22
+msgid ""
+"It expresses what proportion of total work time is paid out as work "
+"certificates. It is calculated by relating the costs of productive versus"
+" public plans and can take values between 0 and 1."
+msgstr ""
+
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:22
+msgid ""
+"The larger it is, the more product exists in the productive sector. The "
+"smaller it is, the more is freely available in the public sector."
+msgstr ""
+
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:23
+msgid ""
+"Only plans that fall within the calculation window are considered. Plans "
+"that expired a long time ago play no role. Plans that partially overlap "
+"the window are included proportionally."
+msgstr ""
+
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:23
+msgid ""
+"For each plan, a coverage is calculated, which indicates how much of the "
+"plan falls within the calculation window."
+msgstr ""
+
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:30
+msgid "Current payout factor:"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:32
+msgid "Window size in days:"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:33
+msgid "Window start:"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:34
+msgid "Window end:"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:49
+msgid "Coverage"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:58
+#: src/workers_control/web/formatters/plan_details_formatter.py:94
+#: src/workers_control/web/www/presenters/show_my_plans_presenter.py:234
+msgid "Productive"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:63
+msgid "No plans."
+msgstr ""
+
 #: src/workers_control/flask/templates/user/statistics.html:38
 msgid "FIC (Payout factor)"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:44
-msgid "Balance for Public Sector Fund (PSF)"
+#: src/workers_control/flask/templates/user/statistics.html:39
+msgid "Go to details"
 msgstr ""
 
 #: src/workers_control/flask/templates/user/statistics.html:45
+msgid "Balance for Public Sector Fund (PSF)"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/statistics.html:46
 msgid "Go to account details"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:58
+#: src/workers_control/flask/templates/user/statistics.html:59
 msgid "Planned ressources"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:64
+#: src/workers_control/flask/templates/user/statistics.html:65
 msgid "Certificates and products"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:74
+#: src/workers_control/flask/templates/user/statistics.html:75
 msgid "Active plans"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:75
+#: src/workers_control/flask/templates/user/statistics.html:76
 msgid "Public active plans"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:76
-#: src/workers_control/flask/templates/user/statistics.html:85
+#: src/workers_control/flask/templates/user/statistics.html:77
+#: src/workers_control/flask/templates/user/statistics.html:86
 msgid "Average plan duration"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:77
+#: src/workers_control/flask/templates/user/statistics.html:78
 msgid "Currently planned fixed means"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:78
+#: src/workers_control/flask/templates/user/statistics.html:79
 msgid "Currently planned liquid means"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:79
+#: src/workers_control/flask/templates/user/statistics.html:80
 msgid "Currently planned work"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:80
+#: src/workers_control/flask/templates/user/statistics.html:81
 msgid "Available work certificates"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:81
+#: src/workers_control/flask/templates/user/statistics.html:82
 msgid "Available product (no public products)"
 msgstr ""
 
@@ -1786,11 +1874,6 @@ msgstr ""
 
 #: src/workers_control/web/formatters/plan_details_formatter.py:86
 msgid "Costs for work"
-msgstr ""
-
-#: src/workers_control/web/formatters/plan_details_formatter.py:94
-#: src/workers_control/web/www/presenters/show_my_plans_presenter.py:234
-msgid "Productive"
 msgstr ""
 
 #: src/workers_control/web/formatters/plan_details_formatter.py:98
@@ -2045,9 +2128,9 @@ msgid "Closed"
 msgstr ""
 
 #: src/workers_control/web/www/presenters/get_member_dashboard_presenter.py:64
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:48
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:51
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:54
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:43
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:46
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:49
 #, python-format
 msgid "%(num).2f hours"
 msgstr ""
@@ -2062,7 +2145,7 @@ msgstr ""
 msgid "Company %(company)s has invited you!"
 msgstr ""
 
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:45
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:40
 #, python-format
 msgid "%(num).2f days"
 msgstr ""
@@ -2324,6 +2407,14 @@ msgstr ""
 
 #: src/workers_control/web/www/presenters/show_my_plans_presenter.py:118
 msgid "You don't have any plans."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/show_payout_factor_details_presenter.py:48
+msgid "Payout Factor Details"
+msgstr ""
+
+#: src/workers_control/web/www/presenters/show_psf_account_details_presenter.py:42
+msgid "Account PSF"
 msgstr ""
 
 #: src/workers_control/web/www/presenters/transfers.py:68

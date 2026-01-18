@@ -29,6 +29,8 @@ class SmtpMailService(EmailPlugin):
 
         with self.create_smtp_connection() as connection:
             for recipient in recipients:
+                del message["Message-ID"]
+                del message["To"]
                 message["Message-ID"] = email.utils.make_msgid(domain="workers-control")
                 message["To"] = recipient
                 connection.send_message(message)

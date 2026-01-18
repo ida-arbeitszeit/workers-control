@@ -1,7 +1,6 @@
 from flask import Flask
 
 from tests.db.dependency_injection import provide_test_database_uri
-from tests.flask_integration.mail_service import MockEmailService
 from workers_control.core.injector import Binder, CallableProvider, Module
 from workers_control.flask import create_app
 
@@ -27,10 +26,8 @@ class FlaskTestConfiguration(dict):
                 "TESTING": True,
                 "MAIL_DEFAULT_SENDER": "test_sender@cp.org",
                 "MAIL_ADMIN": "test_admin@cp.org",
-                "MAIL_PLUGIN_MODULE": MockEmailService.__module__,
-                "MAIL_PLUGIN_CLASS": MockEmailService.__name__,
-                "MAIL_USE_TLS": False,
-                "MAIL_USE_SSL": False,
+                "MAIL_PLUGIN": "tests.flask_integration.mail_service:MockEmailService",
+                "MAIL_ENCRYPTION_TYPE": "tls",
                 "MAIL_SERVER": "localhost",
                 "MAIL_PORT": 0,
                 "MAIL_USERNAME": "",

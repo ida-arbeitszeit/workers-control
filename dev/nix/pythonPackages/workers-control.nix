@@ -9,7 +9,6 @@
   email-validator,
   flask,
   flask-babel,
-  flask-mail,
   flask-profiler,
   flask-talisman,
   flask-login,
@@ -48,7 +47,6 @@ buildPythonPackage {
     email-validator
     flask
     flask-babel
-    flask-mail
     flask-talisman
     flask-login
     flask-wtf

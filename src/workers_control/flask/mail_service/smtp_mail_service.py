@@ -2,18 +2,14 @@ import email.utils
 from contextlib import contextmanager
 from email.message import EmailMessage
 from smtplib import SMTP, SMTP_SSL
-from typing import Generator, Self
+from typing import Generator
 
-from flask import Flask, current_app
+from flask import current_app
 
 from .interface import EmailPlugin
 
 
 class SmtpMailService(EmailPlugin):
-    @classmethod
-    def initialize_plugin(cls, app: Flask) -> Self:
-        return cls()
-
     def send_message(
         self,
         subject: str,
@@ -40,16 +36,14 @@ class SmtpMailService(EmailPlugin):
     def create_smtp_connection(cls) -> Generator[SMTP | SMTP_SSL, None, None]:
         server = current_app.config.get("MAIL_SERVER", "localhost")
         port = current_app.config.get("MAIL_PORT", 587)
-        use_ssl = current_app.config.get("MAIL_USE_SSL", False)
-        use_tls = current_app.config.get("MAIL_USE_TLS", True)
+        encryption_type = current_app.config.get("MAIL_ENCRYPTION_TYPE", "tls")
         connection: SMTP | SMTP_SSL
 
-        if use_ssl:
+        if encryption_type == "ssl":
             connection = SMTP_SSL(server, port=port or 465)
         else:
             connection = SMTP(server, port=port or 587)
-            if use_tls:
-                connection.starttls()
+            connection.starttls()
 
         connection.ehlo()
         username = current_app.config.get("MAIL_USERNAME", "")

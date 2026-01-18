@@ -1,8 +1,8 @@
+import email.utils
 from contextlib import contextmanager
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+from email.message import EmailMessage
 from smtplib import SMTP, SMTP_SSL
-from typing import Generator, List, Self
+from typing import Generator, Self
 
 from flask import Flask, current_app
 
@@ -17,18 +17,21 @@ class SmtpMailService(EmailPlugin):
     def send_message(
         self,
         subject: str,
-        recipients: List[str],
+        recipients: list[str],
         html: str,
         sender: str,
     ) -> None:
-        with self.create_smtp_connection() as smtp:
-            message = MIMEMultipart()
-            message["Subject"] = subject
-            message["From"] = sender
-            message.attach(MIMEText(html, "html"))
+        message = EmailMessage()
+        message["Subject"] = subject
+        message["From"] = sender
+        message["Date"] = email.utils.formatdate(localtime=True)
+        message.set_content(html, subtype="html")
+
+        with self.create_smtp_connection() as connection:
             for recipient in recipients:
+                message["Message-ID"] = email.utils.make_msgid(domain="workers-control")
                 message["To"] = recipient
-                smtp.send_message(message)
+                connection.send_message(message)
 
     @classmethod
     @contextmanager
@@ -37,19 +40,19 @@ class SmtpMailService(EmailPlugin):
         port = current_app.config.get("MAIL_PORT", 587)
         use_ssl = current_app.config.get("MAIL_USE_SSL", False)
         use_tls = current_app.config.get("MAIL_USE_TLS", True)
-        smtp: SMTP | SMTP_SSL
+        connection: SMTP | SMTP_SSL
 
         if use_ssl:
-            smtp = SMTP_SSL(server, port=port or 465)
+            connection = SMTP_SSL(server, port=port or 465)
         else:
-            smtp = SMTP(server, port=port or 587)
+            connection = SMTP(server, port=port or 587)
             if use_tls:
-                smtp.starttls()
+                connection.starttls()
 
-        smtp.ehlo()
+        connection.ehlo()
         username = current_app.config.get("MAIL_USERNAME", "")
         password = current_app.config.get("MAIL_PASSWORD", "")
         if username and password:
-            smtp.login(username, password)
-        yield smtp
-        smtp.quit()
+            connection.login(username, password)
+        yield connection
+        connection.quit()

@@ -66,7 +66,8 @@ buildPythonPackage {
 
     # Run tests with SQLite.
 
-    WOCO_TEST_DB=sqlite:////tmp/workers_control_test.db pytest -x
+    SQLITE_DIR=$(mktemp -d)
+    WOCO_TEST_DB=sqlite:///$SQLITE_DIR/workers_control_test.db pytest -x
 
     # Run tests with PostgreSQL.
 

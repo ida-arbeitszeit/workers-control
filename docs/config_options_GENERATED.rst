@@ -27,20 +27,6 @@
 
    Default: ``True``
 
-.. py:data:: MAIL_PLUGIN_MODULE
-   :no-index:
-
-   This option must be a python module path to the email plugin to be used. By default flask-mail is used. Other plugins can be found in the ``workers_control.flask.mail_service`` module.
-
-   Default: ``workers_control.flask.mail_service.flask_mail_service``
-
-.. py:data:: MAIL_PLUGIN_CLASS
-   :no-index:
-
-   This option must be the class name of the email service found under ``MAIL_PLUGIN_MODULE``. By default ``FlaskMailService`` is used.
-
-   Default: ``FlaskMailService``
-
 .. py:data:: MAIL_SERVER
    :no-index:
 
@@ -73,19 +59,12 @@
 
    The email address of the administrator for the application. Users may use this email address to contact the administrator.
 
-.. py:data:: MAIL_USE_TLS
+.. py:data:: MAIL_ENCRYPTION_TYPE
    :no-index:
 
-   Whether to use TLS when connecting to the SMTP server.
+   Which encryption should be used when connecting to the SMTP server. Must be either 'tls' or 'ssl'.
 
-   Default: ``True``
-
-.. py:data:: MAIL_USE_SSL
-   :no-index:
-
-   Whether to use SSL when connecting to the SMTP server.
-
-   Default: ``False``
+   Default: ``tls``
 
 .. py:data:: SECRET_KEY
    :no-index:

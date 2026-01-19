@@ -42,22 +42,6 @@ CONFIG_OPTIONS = [
         default="True",
     ),
     ConfigOption(
-        name="MAIL_PLUGIN_MODULE",
-        converts_to_types=(str,),
-        description_paragraphs=[
-            "This option must be a python module path to the email plugin to be used. By default flask-mail is used. Other plugins can be found in the ``workers_control.flask.mail_service`` module.",
-        ],
-        default="workers_control.flask.mail_service.flask_mail_service",
-    ),
-    ConfigOption(
-        name="MAIL_PLUGIN_CLASS",
-        converts_to_types=(str,),
-        description_paragraphs=[
-            "This option must be the class name of the email service found under ``MAIL_PLUGIN_MODULE``. By default ``FlaskMailService`` is used."
-        ],
-        default="FlaskMailService",
-    ),
-    ConfigOption(
         name="MAIL_SERVER",
         converts_to_types=(str,),
         description_paragraphs=[
@@ -104,20 +88,12 @@ CONFIG_OPTIONS = [
         default=None,
     ),
     ConfigOption(
-        name="MAIL_USE_TLS",
-        converts_to_types=(bool,),
+        name="MAIL_ENCRYPTION_TYPE",
+        converts_to_types=(str,),
         description_paragraphs=[
-            "Whether to use TLS when connecting to the SMTP server."
+            "Which encryption should be used when connecting to the SMTP server. Must be either 'tls' or 'ssl'."
         ],
-        default="True",
-    ),
-    ConfigOption(
-        name="MAIL_USE_SSL",
-        converts_to_types=(bool,),
-        description_paragraphs=[
-            "Whether to use SSL when connecting to the SMTP server."
-        ],
-        default="False",
+        default="tls",
     ),
     ConfigOption(
         name="SECRET_KEY",

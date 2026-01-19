@@ -2,17 +2,17 @@ import importlib
 
 from flask import Flask, current_app
 
-from .debug_mail_service import DebugMailService
 from .interface import EmailPlugin
 
 
 def load_email_plugin(app: Flask) -> None:
-    module_name = app.config.get("MAIL_PLUGIN_MODULE", DebugMailService.__module__)
-    class_name = app.config.get("MAIL_PLUGIN_CLASS", DebugMailService.__name__)
+    config = app.config["MAIL_PLUGIN"]
+    module_name, class_name = config.split(":", maxsplit=1)
     module = importlib.import_module(module_name)
     plugin_class = getattr(module, class_name)
     assert issubclass(plugin_class, EmailPlugin)
-    app.extensions["woco_email_plugin"] = plugin_class.initialize_plugin(app)
+    plugin = plugin_class()
+    app.extensions["woco_email_plugin"] = plugin
 
 
 def get_mail_service() -> EmailPlugin:

@@ -1,8 +1,6 @@
 from contextlib import contextmanager
 from dataclasses import dataclass
-from typing import Generator, Self
-
-from flask import Flask
+from typing import Generator
 
 from workers_control.flask.mail_service.interface import EmailPlugin
 
@@ -18,10 +16,6 @@ class DeliveredEmail:
 class MockEmailService(EmailPlugin):
     def __init__(self) -> None:
         self._outbox: list[DeliveredEmail] | None = None
-
-    @classmethod
-    def initialize_plugin(cls, app: Flask) -> Self:
-        return cls()
 
     def send_message(
         self,

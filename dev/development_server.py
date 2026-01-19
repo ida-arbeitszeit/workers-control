@@ -13,9 +13,6 @@ from dev.dev_cli import (
     create_fic_cli_group,
     create_generate_cli_group,
 )
-from workers_control.flask.mail_service.debug_mail_service import (
-    DebugMailService,
-)
 
 config_path = Path(__file__).parent / "logging_config.json"
 
@@ -43,10 +40,10 @@ class FlaskDevConfiguration:
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD", "")
     MAIL_DEFAULT_SENDER = os.environ.get("MAIL_DEFAULT_SENDER", "admin@dev.org")
     MAIL_ADMIN = os.environ.get("MAIL_ADMIN", "admin@dev.org")
-    MAIL_PLUGIN_MODULE = DebugMailService.__module__
-    MAIL_PLUGIN_CLASS = DebugMailService.__name__
-    MAIL_USE_TLS = False
-    MAIL_USE_SSL = False
+    MAIL_PLUGIN = (
+        "workers_control.flask.mail_service.debug_mail_service:DebugMailService"
+    )
+    MAIL_ENCRYPTION_TYPE = "tls"
 
     FLASK_PROFILER = {
         "enabled": True,

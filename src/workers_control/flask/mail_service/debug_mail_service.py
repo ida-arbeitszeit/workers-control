@@ -1,15 +1,7 @@
-from typing import Self
-
-from flask import Flask
-
 from .interface import EmailPlugin
 
 
 class DebugMailService(EmailPlugin):
-    @classmethod
-    def initialize_plugin(cls, app: Flask) -> Self:
-        return cls()
-
     def send_message(
         self,
         subject: str,

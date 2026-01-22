@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Arbeitszeitapp\n"
 "Report-Msgid-Bugs-To: community-arbeitszeitapp@systemli.org\n"
-"POT-Creation-Date: 2026-01-17 12:29+0100\n"
+"POT-Creation-Date: 2026-01-22 21:39+0100\n"
 "PO-Revision-Date: 2024-03-11 22:27+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -1768,8 +1768,8 @@ msgid ""
 "The payout factor, also called the Factor of Individual Consumption (FIC), "
 "is a key figure in labour-time accounting."
 msgstr ""
-"Der Auszahlungsfaktor, auch Faktor Individueller Konsum (FIK) genannt, "
-"ist eine wichtige Kennzahl in der Arbeitszeitrechnung."
+"Der Auszahlungsfaktor, auch Faktor Individueller Konsum (FIK) genannt, ist "
+"eine wichtige Kennzahl in der Arbeitszeitrechnung."
 
 #: src/workers_control/flask/templates/user/show_payout_factor_details.html:22
 msgid ""
@@ -1777,10 +1777,10 @@ msgid ""
 "certificates. It is calculated by relating the costs of productive versus "
 "public plans and can take values between 0 and 1."
 msgstr ""
-"Er drückt aus, welcher Anteil der gesamten Arbeitszeit als Arbeitszertifikate"
-" ausgezahlt wird. Er wird berechnet, indem die Kosten produktiver Pläne zu"
-" den Kosten öffentlicher Pläne in Beziehung gesetzt werden und kann Werte "
-"zwischen 0 und 1 annehmen."
+"Er drückt aus, welcher Anteil der gesamten Arbeitszeit als "
+"Arbeitszertifikate ausgezahlt wird. Er wird berechnet, indem die Kosten "
+"produktiver Pläne zu den Kosten öffentlicher Pläne in Beziehung gesetzt "
+"werden und kann Werte zwischen 0 und 1 annehmen."
 
 #: src/workers_control/flask/templates/user/show_payout_factor_details.html:22
 msgid ""
@@ -1796,17 +1796,18 @@ msgid ""
 "that expired a long time ago play no role. Plans that partially overlap the"
 " window are included proportionally."
 msgstr ""
-"Nur Pläne, die innerhalb des Berechnungsfensters liegen, werden berücksichtigt."
-" Pläne, die schon lange abgelaufen sind, spielen keine Rolle. Pläne, die "
-"teilweise mit dem Fenster überlappen, werden teilweise einbezogen."
+"Nur Pläne, die innerhalb des Berechnungsfensters liegen, werden "
+"berücksichtigt. Pläne, die schon lange abgelaufen sind, spielen keine "
+"Rolle. Pläne, die teilweise mit dem Fenster überlappen, werden teilweise "
+"einbezogen."
 
 #: src/workers_control/flask/templates/user/show_payout_factor_details.html:23
 msgid ""
 "For each plan, a coverage is calculated, which indicates how much of the "
 "plan falls within the calculation window."
 msgstr ""
-"Für jeden Plan wird eine Abdeckung berechnet, die angibt, wie viel des Plans "
-"innerhalb des Berechnungsfensters liegt."
+"Für jeden Plan wird eine Abdeckung berechnet, die angibt, wie viel des "
+"Plans innerhalb des Berechnungsfensters liegt."
 
 #: src/workers_control/flask/templates/user/show_payout_factor_details.html:30
 msgid "Current payout factor:"
@@ -1925,9 +1926,18 @@ msgstr "Änderung der E-Mail-Adresse angefordert"
 msgid "Invitation from a company on Workers Control app"
 msgstr "Einladung von einem Betrieb in der Workers Control App"
 
-#: src/workers_control/web/email/notify_about_worker_removal_from_company_presenter.py:18
+#: src/workers_control/web/email/notify_about_worker_removal_from_company_presenter.py:19
 msgid "Worker removed from company"
 msgstr "Arbeiter*in aus Betrieb entfernt"
+
+#: src/workers_control/web/email/notify_about_worker_removal_from_company_presenter.py:22
+#, python-format
+msgid ""
+"Hello,<br><br>The worker %(worker_name)s (id: %(worker_id)s) has been "
+"removed from company %(company_name)s."
+msgstr ""
+"Hallo,<br><br>Die Arbeiter*in %(worker_name)s (ID: %(worker_id)s) wurde aus "
+"dem Betrieb %(company_name)s entfernt."
 
 #: src/workers_control/web/email/notify_accountant_about_new_plan_presenter.py:20
 msgid "Plan was filed"
@@ -2026,18 +2036,38 @@ msgid "At least one of the costs fields must be a positive number of hours."
 msgstr "Mindestens eines der Kostenfelder muss eine positive Anzahl an Stunden sein."
 
 #: src/workers_control/web/www/controllers/draft_form_validator.py:126
-#: src/workers_control/web/www/controllers/draft_form_validator.py:145
-#: src/workers_control/web/www/controllers/draft_form_validator.py:179
+#: src/workers_control/web/www/controllers/draft_form_validator.py:146
+#: src/workers_control/web/www/controllers/draft_form_validator.py:183
 #: src/workers_control/web/www/controllers/register_productive_consumption_controller.py:64
 msgid "This field is required."
 msgstr "Dies ist ein Pflichtfeld."
 
-#: src/workers_control/web/www/controllers/draft_form_validator.py:150
+#: src/workers_control/web/www/controllers/draft_form_validator.py:131
+#, python-format
+msgid "This field must be at most %(max_length)s characters long."
+msgstr "Dieses Feld darf höchstens %(max_length)s Zeichen lang sein."
+
+#: src/workers_control/web/www/controllers/draft_form_validator.py:151
 msgid "This field must be an integer."
 msgstr "Dieses Feld muss eine ganze Zahl sein."
 
-#: src/workers_control/web/www/controllers/draft_form_validator.py:185
+#: src/workers_control/web/www/controllers/draft_form_validator.py:158
+#, python-format
+msgid "This field must be an integer between %(min_value)s and %(max_value)s."
+msgstr "Dieses Feld muss eine ganze Zahl zwischen %(min_value)s und %(max_value)s sein."
+
+#: src/workers_control/web/www/controllers/draft_form_validator.py:165
+#, python-format
+msgid "This field must be an integer greater than or equal to %(min_value)s."
+msgstr "Dieses Feld muss eine ganze Zahl größer oder gleich %(min_value)s sein."
+
+#: src/workers_control/web/www/controllers/draft_form_validator.py:172
+#, python-format
+msgid "This field must be an integer less than or equal to %(max_value)s."
+msgstr "Dieses Feld muss eine ganze Zahl kleiner oder gleich %(max_value)s sein."
+
 #: src/workers_control/web/www/controllers/draft_form_validator.py:189
+#: src/workers_control/web/www/controllers/draft_form_validator.py:193
 msgid "This field must be zero or a positive number."
 msgstr "Dieses Feld muss Null oder eine positive Zahl sein."
 
@@ -3016,8 +3046,8 @@ msgstr "Beitrag für öffentlichen Sektor"
 #~ " Produkt von allen Menschen der "
 #~ "Gesellschaft umsonst konsumiert werden soll "
 #~ "-  im Rahmen des Faktors Individueller "
-#~ "Konsum (FIK) -  solltest du hier "
-#~ "ein Häkchen setzen."
+#~ "Konsum (FIK) -  solltest du hier ein"
+#~ " Häkchen setzen."
 
 #~ msgid ""
 #~ "This field is mainly to account for"

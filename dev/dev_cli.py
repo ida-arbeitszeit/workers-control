@@ -3,7 +3,6 @@ from uuid import UUID
 
 import click
 
-from dev.timeline_printer import PayoutFactorWindowCLIPrinter
 from tests.data_generators import (
     CompanyGenerator,
     ConsumptionGenerator,
@@ -15,23 +14,6 @@ from tests.data_generators import (
 from workers_control.core.injector import Injector
 from workers_control.core.records import ProductionCosts
 from workers_control.db import commit_changes
-
-
-def create_fic_cli_group(injector: Injector) -> click.Group:
-    fic = click.Group(
-        name="fic",
-        help="""
-        Commands related to the Factor of Individual Consumption (FIC).
-        """,
-    )
-
-    @fic.command("info")
-    def info() -> None:
-        """Print current payout factor and timeline of plans."""
-        tp = injector.get(PayoutFactorWindowCLIPrinter)
-        click.echo(tp.render_timeline())
-
-    return fic
 
 
 def create_generate_cli_group(injector: Injector) -> click.Group:

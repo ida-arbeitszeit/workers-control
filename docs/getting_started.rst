@@ -138,8 +138,7 @@ latest changes with the command ``flask run --debug``.
 Note the following features of the development app:
 
 - There are several CLI commands to perform automated actions against
-  the development database (create companies, file plans, register consumption, etc.)
-  and to investigate its current state. Run
+  the development database (create companies, file plans, register consumption, etc.). Run
   ``flask --help`` to see the available options.
 
 - When manually filing plans, you need

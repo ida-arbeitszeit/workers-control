@@ -3,21 +3,9 @@ from uuid import uuid4
 from click.testing import CliRunner
 
 from dev.dev_cli import (
-    create_fic_cli_group,
     create_generate_cli_group,
 )
 from tests.db.base_test_case import DatabaseTestCase
-
-
-class FicCliTester(DatabaseTestCase):
-    def setUp(self):
-        super().setUp()
-        self.runner = CliRunner()
-        self.fic = create_fic_cli_group(self.injector)
-
-    def test_info_command(self) -> None:
-        result = self.runner.invoke(self.fic, ["info"])
-        assert result.exit_code == 0
 
 
 class DataGenerationCliTester(DatabaseTestCase):

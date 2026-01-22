@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Arbeitszeitapp\n"
 "Report-Msgid-Bugs-To: community-arbeitszeitapp@systemli.org\n"
-"POT-Creation-Date: 2026-01-17 12:29+0100\n"
+"POT-Creation-Date: 2026-01-22 21:39+0100\n"
 "PO-Revision-Date: 2024-05-11 13:29+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -1761,8 +1761,8 @@ msgid ""
 "The payout factor, also called the Factor of Individual Consumption (FIC), "
 "is a key figure in labour-time accounting."
 msgstr ""
-"El factor de pago, también llamado Factor de Consumo Individual (FCI), es una "
-"cifra clave en el cálculo del tiempo de trabajo."
+"El factor de pago, también llamado Factor de Consumo Individual (FCI), es "
+"una cifra clave en el cálculo del tiempo de trabajo."
 
 #: src/workers_control/flask/templates/user/show_payout_factor_details.html:22
 msgid ""
@@ -1770,17 +1770,17 @@ msgid ""
 "certificates. It is calculated by relating the costs of productive versus "
 "public plans and can take values between 0 and 1."
 msgstr ""
-"Expresa qué proporción del tiempo total de trabajo se paga como certificados "
-"de trabajo. Se calcula relacionando los costes de los planes productivos "
-"frente a los públicos y puede tomar valores entre 0 y 1."
+"Expresa qué proporción del tiempo total de trabajo se paga como "
+"certificados de trabajo. Se calcula relacionando los costes de los planes "
+"productivos frente a los públicos y puede tomar valores entre 0 y 1."
 
 #: src/workers_control/flask/templates/user/show_payout_factor_details.html:22
 msgid ""
 "The larger it is, the more product exists in the productive sector. The "
 "smaller it is, the more is freely available in the public sector."
 msgstr ""
-"Cuanto mayor sea, más producto existe en el sector productivo. Cuanto menor "
-"sea, más estará disponible de forma gratuita en el sector público."
+"Cuanto mayor sea, más producto existe en el sector productivo. Cuanto menor"
+" sea, más estará disponible de forma gratuita en el sector público."
 
 #: src/workers_control/flask/templates/user/show_payout_factor_details.html:23
 msgid ""
@@ -1788,9 +1788,10 @@ msgid ""
 "that expired a long time ago play no role. Plans that partially overlap the"
 " window are included proportionally."
 msgstr ""
-"Solo se consideran los planes que se encuentran dentro de la ventana de cálculo. "
-"Los planes que expiraron hace mucho tiempo no juegan ningún papel. Los planes "
-"que se superponen parcialmente a la ventana se incluyen proporcionalmente."
+"Solo se consideran los planes que se encuentran dentro de la ventana de "
+"cálculo. Los planes que expiraron hace mucho tiempo no juegan ningún papel."
+" Los planes que se superponen parcialmente a la ventana se incluyen "
+"proporcionalmente."
 
 #: src/workers_control/flask/templates/user/show_payout_factor_details.html:23
 msgid ""
@@ -1918,9 +1919,18 @@ msgstr "Solicitud de cambio de dirección de correo electrónico"
 msgid "Invitation from a company on Workers Control app"
 msgstr "Invitación de una empresa en la aplicación Workers Control"
 
-#: src/workers_control/web/email/notify_about_worker_removal_from_company_presenter.py:18
+#: src/workers_control/web/email/notify_about_worker_removal_from_company_presenter.py:19
 msgid "Worker removed from company"
 msgstr "Trabajador eliminado de la empresa"
+
+#: src/workers_control/web/email/notify_about_worker_removal_from_company_presenter.py:22
+#, python-format
+msgid ""
+"Hello,<br><br>The worker %(worker_name)s (id: %(worker_id)s) has been "
+"removed from company %(company_name)s."
+msgstr ""
+"Hola,<br><br>El/la trabajador/a %(worker_name)s (id: %(worker_id)s) ha sido "
+"eliminado/a de la empresa %(company_name)s."
 
 #: src/workers_control/web/email/notify_accountant_about_new_plan_presenter.py:20
 msgid "Plan was filed"
@@ -2019,18 +2029,38 @@ msgid "At least one of the costs fields must be a positive number of hours."
 msgstr "Al menos uno de los campos de costes debe ser un número positivo de horas."
 
 #: src/workers_control/web/www/controllers/draft_form_validator.py:126
-#: src/workers_control/web/www/controllers/draft_form_validator.py:145
-#: src/workers_control/web/www/controllers/draft_form_validator.py:179
+#: src/workers_control/web/www/controllers/draft_form_validator.py:146
+#: src/workers_control/web/www/controllers/draft_form_validator.py:183
 #: src/workers_control/web/www/controllers/register_productive_consumption_controller.py:64
 msgid "This field is required."
 msgstr "Este campo es obligatorio."
 
-#: src/workers_control/web/www/controllers/draft_form_validator.py:150
+#: src/workers_control/web/www/controllers/draft_form_validator.py:131
+#, python-format
+msgid "This field must be at most %(max_length)s characters long."
+msgstr "Este campo debe tener como máximo %(max_length)s caracteres de longitud."
+
+#: src/workers_control/web/www/controllers/draft_form_validator.py:151
 msgid "This field must be an integer."
 msgstr "Este campo debe ser un número entero."
 
-#: src/workers_control/web/www/controllers/draft_form_validator.py:185
+#: src/workers_control/web/www/controllers/draft_form_validator.py:158
+#, python-format
+msgid "This field must be an integer between %(min_value)s and %(max_value)s."
+msgstr "Este campo debe ser un número entero entre %(min_value)s y %(max_value)s."
+
+#: src/workers_control/web/www/controllers/draft_form_validator.py:165
+#, python-format
+msgid "This field must be an integer greater than or equal to %(min_value)s."
+msgstr "Este campo debe ser un número entero mayor o igual que %(min_value)s."
+
+#: src/workers_control/web/www/controllers/draft_form_validator.py:172
+#, python-format
+msgid "This field must be an integer less than or equal to %(max_value)s."
+msgstr "Este campo debe ser un número entero menor o igual que %(max_value)s."
+
 #: src/workers_control/web/www/controllers/draft_form_validator.py:189
+#: src/workers_control/web/www/controllers/draft_form_validator.py:193
 msgid "This field must be zero or a positive number."
 msgstr "Este campo debe ser cero o un número positivo."
 

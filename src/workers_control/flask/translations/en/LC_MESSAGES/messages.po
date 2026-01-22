@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-01-17 12:29+0100\n"
+"POT-Creation-Date: 2026-01-22 21:39+0100\n"
 "PO-Revision-Date: 2022-01-16 19:09+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -1821,8 +1821,15 @@ msgstr ""
 msgid "Invitation from a company on Workers Control app"
 msgstr ""
 
-#: src/workers_control/web/email/notify_about_worker_removal_from_company_presenter.py:18
+#: src/workers_control/web/email/notify_about_worker_removal_from_company_presenter.py:19
 msgid "Worker removed from company"
+msgstr ""
+
+#: src/workers_control/web/email/notify_about_worker_removal_from_company_presenter.py:22
+#, python-format
+msgid ""
+"Hello,<br><br>The worker %(worker_name)s (id: %(worker_id)s) has been "
+"removed from company %(company_name)s."
 msgstr ""
 
 #: src/workers_control/web/email/notify_accountant_about_new_plan_presenter.py:20
@@ -1919,18 +1926,38 @@ msgid "At least one of the costs fields must be a positive number of hours."
 msgstr ""
 
 #: src/workers_control/web/www/controllers/draft_form_validator.py:126
-#: src/workers_control/web/www/controllers/draft_form_validator.py:145
-#: src/workers_control/web/www/controllers/draft_form_validator.py:179
+#: src/workers_control/web/www/controllers/draft_form_validator.py:146
+#: src/workers_control/web/www/controllers/draft_form_validator.py:183
 #: src/workers_control/web/www/controllers/register_productive_consumption_controller.py:64
 msgid "This field is required."
 msgstr ""
 
-#: src/workers_control/web/www/controllers/draft_form_validator.py:150
+#: src/workers_control/web/www/controllers/draft_form_validator.py:131
+#, python-format
+msgid "This field must be at most %(max_length)s characters long."
+msgstr ""
+
+#: src/workers_control/web/www/controllers/draft_form_validator.py:151
 msgid "This field must be an integer."
 msgstr ""
 
-#: src/workers_control/web/www/controllers/draft_form_validator.py:185
+#: src/workers_control/web/www/controllers/draft_form_validator.py:158
+#, python-format
+msgid "This field must be an integer between %(min_value)s and %(max_value)s."
+msgstr ""
+
+#: src/workers_control/web/www/controllers/draft_form_validator.py:165
+#, python-format
+msgid "This field must be an integer greater than or equal to %(min_value)s."
+msgstr ""
+
+#: src/workers_control/web/www/controllers/draft_form_validator.py:172
+#, python-format
+msgid "This field must be an integer less than or equal to %(max_value)s."
+msgstr ""
+
 #: src/workers_control/web/www/controllers/draft_form_validator.py:189
+#: src/workers_control/web/www/controllers/draft_form_validator.py:193
 msgid "This field must be zero or a positive number."
 msgstr ""
 

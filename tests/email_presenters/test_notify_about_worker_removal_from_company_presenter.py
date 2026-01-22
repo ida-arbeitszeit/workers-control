@@ -1,3 +1,4 @@
+from html import escape
 from uuid import uuid4
 
 from tests.email import FakeEmailConfiguration
@@ -60,6 +61,23 @@ class PresenterTests(BaseTestCase):
             and expected_company_name
             and str(expected_worker_id) in self.email_service.sent_mails[0].html
         )
+
+    def test_that_both_company_and_worker_name_are_safely_escaped_in_html_body(
+        self,
+    ) -> None:
+        dangerous_company_name = '<a href="dangerous site">coop</a>'
+        dangerous_worker_name = '<a href="dangerous site">candidate</a>'
+        notification_data = WorkerRemovalNotification(
+            worker_email="123",
+            worker_name=dangerous_worker_name,
+            worker_id=uuid4(),
+            company_email="456",
+            company_name=dangerous_company_name,
+        )
+        self.presenter.notify(message_data=notification_data)
+        html_body = self.email_service.sent_mails[0].html
+        assert escape(dangerous_company_name) in html_body
+        assert escape(dangerous_worker_name) in html_body
 
     def test_that_email_has_correct_subject(self) -> None:
         expected_subject = self.translator.gettext("Worker removed from company")

@@ -893,6 +893,8 @@ The workflow for updating the translations is as follows:
     translator.pgettext(comment: str, message: str)
     translator.ngettext(self, singular: str, plural: str, n: Number)
 
+   The `message` argument must not be an F-string.
+
    In Jinja templates use::
 
     gettext(message: str)

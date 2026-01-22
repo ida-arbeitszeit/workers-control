@@ -10,7 +10,6 @@ from dev.dependency_injection import (
     create_dependency_injector,
 )
 from dev.dev_cli import (
-    create_fic_cli_group,
     create_generate_cli_group,
 )
 
@@ -71,9 +70,7 @@ class FlaskDevConfiguration:
 
 def register_cli_commands(app: Flask) -> Flask:
     injector = create_dependency_injector()
-    fic = create_fic_cli_group(injector)
     generate = create_generate_cli_group(injector)
-    app.cli.add_command(fic)
     app.cli.add_command(generate)
     return app
 

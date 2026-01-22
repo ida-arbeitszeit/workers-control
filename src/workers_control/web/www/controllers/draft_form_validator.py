@@ -156,22 +156,22 @@ class DraftFormValidator:
                 return [
                     self.translator.gettext(
                         "This field must be an integer between %(min_value)s and %(max_value)s."
-                        % dict(min_value=min_value, max_value=max_value)
                     )
+                    % dict(min_value=min_value, max_value=max_value)
                 ]
             elif min_value is not None:
                 return [
                     self.translator.gettext(
                         "This field must be an integer greater than or equal to %(min_value)s."
-                        % dict(min_value=min_value)
                     )
+                    % dict(min_value=min_value)
                 ]
             elif max_value is not None:
                 return [
                     self.translator.gettext(
                         "This field must be an integer less than or equal to %(max_value)s."
-                        % dict(max_value=max_value)
                     )
+                    % dict(max_value=max_value)
                 ]
         return integer
 

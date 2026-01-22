@@ -128,7 +128,8 @@ class DraftFormValidator:
         if max_length and len(text) > max_length:
             return [
                 self.translator.gettext(
-                    f"This field must be at most {max_length} characters long."
+                    "This field must be at most %(max_length)s characters long."
+                    % dict(max_length=max_length)
                 )
             ]
         return text.strip()
@@ -154,19 +155,22 @@ class DraftFormValidator:
             if min_value is not None and max_value is not None:
                 return [
                     self.translator.gettext(
-                        f"This field must be an integer between {min_value} and {max_value}."
+                        "This field must be an integer between %(min_value)s and %(max_value)s."
+                        % dict(min_value=min_value, max_value=max_value)
                     )
                 ]
             elif min_value is not None:
                 return [
                     self.translator.gettext(
-                        f"This field must be an integer greater than or equal to {min_value}."
+                        "This field must be an integer greater than or equal to %(min_value)s."
+                        % dict(min_value=min_value)
                     )
                 ]
             elif max_value is not None:
                 return [
                     self.translator.gettext(
-                        f"This field must be an integer less than or equal to {max_value}."
+                        "This field must be an integer less than or equal to %(max_value)s."
+                        % dict(max_value=max_value)
                     )
                 ]
         return integer

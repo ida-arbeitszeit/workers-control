@@ -5,9 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Web route showing details around the payout factor (FIC). Users can access the page via a link on the "Statistics" page. (#1380)
+- Date and message ID headers for emails. (#1384)
+
+### Fixed
+
+- SQLite test database path to use temporary directory, which allows parallel test runs in the nix development environment. (#1385)
+- F-strings did not get translated. They have been replaced by % substitution strings. (#1387)
+- Timestamps on the x-axes of several line plots have been shown in a confusing format. Formatting has been improved. (#1378)
+
+### Changed
+
+- Instead of using the 3rd party package Flask-Mail, we now use our own SMTP module for submitting mails. Remove production config options MAIL_PLUGIN_MODULE, MAIL_PLUGIN_CLASS, MAIL_USE_TLS and MAIL_USE_SSL. Add new option MAIL_ENCRYPTION_TYPE which can take the values "ssl or "tls". Hosting docs have been adapted. (#1386)
+
 ## [0.1.4] - 2026-01-05
 
-## Fixed
+### Fixed
 
 - Added missing logging configuration file to source distribution.
 

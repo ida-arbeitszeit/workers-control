@@ -39,9 +39,7 @@ class FlaskDevConfiguration:
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD", "")
     MAIL_DEFAULT_SENDER = os.environ.get("MAIL_DEFAULT_SENDER", "admin@dev.org")
     MAIL_ADMIN = os.environ.get("MAIL_ADMIN", "admin@dev.org")
-    MAIL_PLUGIN = (
-        "workers_control.flask.mail_service.debug_mail_service:DebugMailService"
-    )
+    MAIL_PLUGIN = "dev.email:DebugMailService"
     MAIL_ENCRYPTION_TYPE = "tls"
 
     FLASK_PROFILER = {

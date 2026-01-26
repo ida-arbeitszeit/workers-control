@@ -2,9 +2,7 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from tests.email import FakeEmailConfiguration
 from tests.web.base_test_case import BaseTestCase
-from tests.web.email_presenters.text_renderer import TextRendererImpl
 from workers_control.core.email_notifications import AccountantNotificationAboutNewPlan
 from workers_control.web.email.notify_accountant_about_new_plan_presenter import (
     NotifyAccountantsAboutNewPlanPresenterImpl,
@@ -17,8 +15,6 @@ class PresenterTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.presenter = self.injector.get(NotifyAccountantsAboutNewPlanPresenterImpl)
-        self.email_configuration = self.injector.get(FakeEmailConfiguration)
-        self.text_renderer = self.injector.get(TextRendererImpl)
 
     def test_that_an_email_gets_sent(self) -> None:
         notification = self.create_notification()

@@ -1,7 +1,6 @@
 from tests.datetime_service import datetime_utc
-from tests.email import Email, FakeEmailConfiguration
 from tests.web.base_test_case import BaseTestCase
-from tests.web.email_presenters.text_renderer import TextRendererImpl
+from tests.web.email import Email
 from workers_control.web.email.registration_email_presenter import (
     RegistrationEmailPresenter,
 )
@@ -10,9 +9,7 @@ from workers_control.web.email.registration_email_presenter import (
 class MemberPresenterTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
-        self.email_configuration = self.injector.get(FakeEmailConfiguration)
         self.presenter = self.injector.get(RegistrationEmailPresenter)
-        self.text_renderer = self.injector.get(TextRendererImpl)
         self.email_address = "test@test.test"
 
     def test_that_some_email_is_sent_out(self) -> None:
@@ -60,9 +57,7 @@ class MemberPresenterTests(BaseTestCase):
 class CompanyPresenterTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
-        self.email_configuration = self.injector.get(FakeEmailConfiguration)
         self.presenter = self.injector.get(RegistrationEmailPresenter)
-        self.text_renderer = self.injector.get(TextRendererImpl)
         self.email_address = "test@test.test"
 
     def test_that_some_email_is_sent_out(self) -> None:

@@ -1,4 +1,4 @@
-from .interface import EmailPlugin
+from workers_control.flask.mail_service.interface import EmailPlugin
 
 
 class DebugMailService(EmailPlugin):

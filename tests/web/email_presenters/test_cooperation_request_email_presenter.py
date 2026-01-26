@@ -1,6 +1,5 @@
 from typing import Optional
 
-from tests.email import FakeEmailService
 from tests.web.base_test_case import BaseTestCase
 from workers_control.core import email_notifications
 from workers_control.web.email.cooperation_request_email_presenter import (
@@ -12,28 +11,27 @@ class CooperationRequestEmailPresenterTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.presenter = self.injector.get(CooperationRequestEmailPresenter)
-        self.mail_service = self.injector.get(FakeEmailService)
 
     def test_mail_gets_sent_if_request_was_successful(self) -> None:
         self.presenter.present(self.create_email())
-        self.assertTrue(self.mail_service.sent_mails)
+        self.assertTrue(self.email_service.sent_mails)
 
     def test_mail_gets_sent_to_coordinator_if_request_was_successful(self) -> None:
         recipient = "company@comp.any"
         self.presenter.present(self.create_email(coordinator_mail=recipient))
-        self.assertEqual(self.mail_service.sent_mails[0].recipients, [recipient])
+        self.assertEqual(self.email_service.sent_mails[0].recipients, [recipient])
 
     def test_mail_gets_sent_and_subject_and_html_body_are_not_empty(self) -> None:
         self.presenter.present(self.create_email())
-        self.assertTrue(self.mail_service.sent_mails[0].subject)
-        self.assertTrue(self.mail_service.sent_mails[0].html)
+        self.assertTrue(self.email_service.sent_mails[0].subject)
+        self.assertTrue(self.email_service.sent_mails[0].html)
 
     def test_mail_html_body_has_name_of_coordinator_safely_escaped(self) -> None:
         coordinator_name = '<a href="dangerous site">coordinator</a>'
         self.presenter.present(self.create_email(coordinator_name=coordinator_name))
         self.assertIn(
             "&lt;a href=&quot;dangerous site&quot;&gt;coordinator&lt;/a&gt;",
-            self.mail_service.sent_mails[0].html,
+            self.email_service.sent_mails[0].html,
         )
 
     def create_email(

@@ -1,7 +1,6 @@
 from html import escape
 from uuid import uuid4
 
-from tests.email import FakeEmailConfiguration
 from tests.web.base_test_case import BaseTestCase
 from workers_control.core.email_notifications import WorkerRemovalNotification
 from workers_control.web.email.notify_about_worker_removal_from_company_presenter import (
@@ -13,7 +12,6 @@ class PresenterTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.presenter = self.injector.get(NotifyAboutWorkerRemovalPresenter)
-        self.email_configuration = self.injector.get(FakeEmailConfiguration)
 
     def test_that_one_email_get_sent(self) -> None:
         notification_data = WorkerRemovalNotification(

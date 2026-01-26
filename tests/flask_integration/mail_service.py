@@ -14,6 +14,8 @@ class DeliveredEmail:
 
 
 class MockEmailService(EmailPlugin):
+    """For use in integration tests of the "flask" layer."""
+
     def __init__(self) -> None:
         self._outbox: list[DeliveredEmail] | None = None
 

@@ -14,7 +14,7 @@ from tests.db.dependency_injection import (
 from tests.dependency_injection import TestingModule
 from tests.lazy_property import _lazy_property
 from tests.markers import database_required
-from tests.www.datetime_formatter import FakeTimezoneConfiguration
+from tests.web.www.datetime_formatter import FakeTimezoneConfiguration
 from workers_control.core.injector import Injector
 from workers_control.db.db import Base, Database
 from workers_control.db.repositories import DatabaseGatewayImpl

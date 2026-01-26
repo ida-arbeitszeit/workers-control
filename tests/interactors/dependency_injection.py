@@ -3,10 +3,9 @@ from typing import Any, Callable, TypeVar, cast
 import tests.email_notifications
 import workers_control.core.repositories as interfaces
 from tests.dependency_injection import TestingModule
-from tests.password_hasher import PasswordHasherImpl
+from tests.interactors import repositories
 from tests.token import FakeTokenService
 from workers_control.core import records
-from workers_control.core.email_notifications import EmailSender
 from workers_control.core.injector import (
     AliasProvider,
     Binder,
@@ -14,10 +13,7 @@ from workers_control.core.injector import (
     Injector,
     Module,
 )
-from workers_control.core.password_hasher import PasswordHasher
 from workers_control.web.token import TokenService
-
-from . import repositories
 
 
 class InMemoryModule(Module):
@@ -34,15 +30,8 @@ class InMemoryModule(Module):
             to=AliasProvider(repositories.MockDatabase),
         )
         binder.bind(
-            PasswordHasher,
-            to=AliasProvider(PasswordHasherImpl),
-        )
-        binder.bind(
             TokenService,
             to=AliasProvider(FakeTokenService),
-        )
-        binder[EmailSender] = AliasProvider(
-            tests.email_notifications.EmailSenderTestImpl
         )
         binder[tests.email_notifications.EmailSenderTestImpl] = CallableProvider(
             self.provide_email_sender, is_singleton=True

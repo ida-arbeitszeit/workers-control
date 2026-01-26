@@ -1,0 +1,94 @@
+from typing import Optional
+from uuid import UUID, uuid4
+
+from tests.web.base_test_case import BaseTestCase
+from workers_control.core.interactors.file_plan_with_accounting import (
+    FilePlanWithAccounting,
+)
+from workers_control.web.session import UserRole
+from workers_control.web.www.presenters.file_plan_with_accounting_presenter import (
+    FilePlanWithAccountingPresenter,
+)
+
+
+class Tests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(FilePlanWithAccountingPresenter)
+        self.session.login_company(company=uuid4())
+
+    def test_view_model_has_redirect_url_with_successful_responses(self) -> None:
+        view_model = self.presenter.present_response(self.create_success_response())
+        self.assertIsNotNone(view_model.redirect_url)
+
+    def test_view_model_has_no_redirect_with_failure_responses(self) -> None:
+        view_model = self.presenter.present_response(self.create_failure_response())
+        self.assertIsNotNone(view_model.redirect_url)
+
+    def test_user_gets_redirected_to_plan_details_page_on_successful_response(
+        self,
+    ) -> None:
+        plan_id = uuid4()
+        view_model = self.presenter.present_response(
+            self.create_success_response(plan_id=plan_id)
+        )
+        self.assertEqual(
+            view_model.redirect_url,
+            self.url_index.get_plan_details_url(
+                user_role=UserRole.company, plan_id=plan_id
+            ),
+        )
+
+    def test_user_gets_redirected_to_my_plans_page_on_failure_response(
+        self,
+    ) -> None:
+        view_model = self.presenter.present_response(self.create_failure_response())
+        self.assertEqual(
+            view_model.redirect_url,
+            self.url_index.get_my_plans_url(),
+        )
+
+    def test_that_user_receives_warning_on_failure_response(self) -> None:
+        self.presenter.present_response(self.create_failure_response())
+        self.assertTrue(self.notifier.warnings)
+
+    def test_that_user_receives_no_warning_on_success_response(self) -> None:
+        self.presenter.present_response(self.create_success_response())
+        self.assertFalse(self.notifier.warnings)
+
+    def test_that_user_receives_info_notification_on_success_response(self) -> None:
+        self.presenter.present_response(self.create_success_response())
+        self.assertTrue(self.notifier.infos)
+
+    def test_that_user_receives_no_info_notification_on_failure_response(self) -> None:
+        self.presenter.present_response(self.create_failure_response())
+        self.assertFalse(self.notifier.infos)
+
+    def test_proper_failure_message_on_failure_response(self) -> None:
+        self.presenter.present_response(self.create_failure_response())
+        self.assertEqual(
+            self.translator.gettext("Could not file plan with social accounting"),
+            self.notifier.warnings[0],
+        )
+
+    def test_proper_info_message_on_success_response(self) -> None:
+        self.presenter.present_response(self.create_success_response())
+        self.assertEqual(
+            self.translator.gettext("Successfully filed plan with social accounting"),
+            self.notifier.infos[0],
+        )
+
+    def create_success_response(
+        self, plan_id: Optional[UUID] = None
+    ) -> FilePlanWithAccounting.Response:
+        if plan_id is None:
+            plan_id = uuid4()
+        return FilePlanWithAccounting.Response(
+            is_plan_successfully_filed=True,
+            plan_id=plan_id,
+        )
+
+    def create_failure_response(self) -> FilePlanWithAccounting.Response:
+        return FilePlanWithAccounting.Response(
+            is_plan_successfully_filed=False, plan_id=None
+        )

@@ -13,7 +13,6 @@ from workers_control.flask.database import run_db_migrations
 from workers_control.flask.extensions import csrf_protect, login_manager
 from workers_control.flask.filters import icon_filter
 from workers_control.flask.flask_session import FlaskLoginUser
-from workers_control.flask.mail_service import load_email_plugin
 from workers_control.flask.profiling import initialize_flask_profiler  # type: ignore
 
 
@@ -37,8 +36,6 @@ def create_app(
     db = Database()
     db.configure(uri=app.config["SQLALCHEMY_DATABASE_URI"])
     run_db_migrations(app.config, db)
-
-    load_email_plugin(app)
 
     # Where to redirect the user when he attempts to access a login_required
     # view without being logged in.

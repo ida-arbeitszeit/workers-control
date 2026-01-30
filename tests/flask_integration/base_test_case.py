@@ -2,7 +2,7 @@ from enum import Enum, auto
 from typing import Any, Optional
 from uuid import UUID
 
-from flask import Flask, current_app
+from flask import Flask
 
 from tests import data_generators
 from tests.db.base_test_case import DatabaseTestCase
@@ -14,6 +14,7 @@ from workers_control.db.repositories import DatabaseGatewayImpl
 from workers_control.flask.dependency_injection import FlaskModule
 from workers_control.flask.token import FlaskTokenService
 from workers_control.flask.url_index import GeneralUrlIndex
+from workers_control.web.email import MailService
 
 
 class FlaskTestCase(DatabaseTestCase):
@@ -31,9 +32,6 @@ class FlaskTestCase(DatabaseTestCase):
             self.app_context.pop()
         super().tearDown()
 
-    def email_service(self) -> MockEmailService:
-        return current_app.extensions["woco_email_plugin"]
-
     def get_injection_modules(self) -> list[Module]:
         # tests inheriting from this class can override this method in
         # order to change dependency injection behaviour (useful for the
@@ -50,6 +48,7 @@ class FlaskTestCase(DatabaseTestCase):
     )
     database_gateway = _lazy_property(DatabaseGatewayImpl)
     email_generator = _lazy_property(data_generators.EmailGenerator)
+    email_service: MockEmailService = _lazy_property(MailService)  # type: ignore
     member_generator = _lazy_property(data_generators.MemberGenerator)
     plan_generator = _lazy_property(data_generators.PlanGenerator)
     registered_hours_worked_generator = _lazy_property(

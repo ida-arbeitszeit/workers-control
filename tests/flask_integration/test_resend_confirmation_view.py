@@ -39,7 +39,7 @@ class AuthenticatedButUnconfirmedMemberTests(ViewTestCase):
         self,
     ) -> None:
         response = self.client.get(self.url)
-        with self.email_service().record_messages() as outbox:  # type: ignore
+        with self.email_service.record_messages() as outbox:
             response = self.client.get(
                 self.url,
             )
@@ -57,7 +57,7 @@ class ConfirmedMemberTests(ViewTestCase):
         self,
     ) -> None:
         response = self.client.get(self.url)
-        with self.email_service().record_messages() as outbox:  # type: ignore
+        with self.email_service.record_messages() as outbox:
             response = self.client.get(
                 self.url,
             )

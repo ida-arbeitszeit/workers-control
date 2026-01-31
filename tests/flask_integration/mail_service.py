@@ -1,23 +1,18 @@
 from contextlib import contextmanager
-from dataclasses import dataclass
-from typing import Generator
+from dataclasses import dataclass, field
+from typing import Iterator
 
+from workers_control.core import records
+from workers_control.core.datetime_service import DatetimeService
+from workers_control.core.repositories import DatabaseGateway
 from workers_control.flask.mail_service.interface import EmailPlugin
 
 
 @dataclass
-class DeliveredEmail:
-    subject: str
-    recipients: list[str]
-    sender: str
-    html: str
-
-
 class MockEmailService(EmailPlugin):
-    """For use in integration tests of the "flask" layer."""
-
-    def __init__(self) -> None:
-        self._outbox: list[DeliveredEmail] | None = None
+    database_gateway: DatabaseGateway
+    datetime_service: DatetimeService
+    _recording_outboxes: list[list[records.Email]] = field(default_factory=list)
 
     def send_message(
         self,
@@ -26,19 +21,23 @@ class MockEmailService(EmailPlugin):
         html: str,
         sender: str,
     ) -> None:
-        if self._outbox is not None:
-            self._outbox.append(
-                DeliveredEmail(
-                    subject=subject,
-                    recipients=recipients,
-                    sender=sender,
-                    html=html,
-                )
+        for recipient in recipients:
+            now = self.datetime_service.now()
+            email = self.database_gateway.create_email(
+                created_at=now,
+                recipient=recipient,
+                sender=sender,
+                subject=subject,
+                html=html,
             )
+            for outbox in self._recording_outboxes:
+                outbox.append(email)
 
     @contextmanager
-    def record_messages(self) -> Generator[list[DeliveredEmail], None, None]:
-        old_outbox = self._outbox
-        self._outbox = []
-        yield self._outbox
-        self._outbox = old_outbox
+    def record_messages(self) -> Iterator[list[records.Email]]:
+        outbox: list[records.Email] = []
+        self._recording_outboxes.append(outbox)
+        try:
+            yield outbox
+        finally:
+            self._recording_outboxes.remove(outbox)

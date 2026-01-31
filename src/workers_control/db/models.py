@@ -16,6 +16,7 @@ from sqlalchemy import (
     ForeignKey,
     String,
     Table,
+    Text,
     TypeDecorator,
     Uuid,
     event,
@@ -357,3 +358,14 @@ class PasswordResetRequest(Base):
     )
     reset_token: Mapped[str] = mapped_column(String(300))
     created_at: Mapped[datetime] = mapped_column(TZDateTime)
+
+
+class EmailOutbox(Base):
+    __tablename__ = "email_outbox"
+
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
+    created_at: Mapped[datetime] = mapped_column(TZDateTime)
+    recipient: Mapped[str] = mapped_column(String(1000))
+    sender: Mapped[str] = mapped_column(String(1000))
+    subject: Mapped[str] = mapped_column(String(1000))
+    html: Mapped[str] = mapped_column(Text)

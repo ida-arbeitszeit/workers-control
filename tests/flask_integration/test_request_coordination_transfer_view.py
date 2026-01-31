@@ -83,7 +83,7 @@ class RequestCoordinationTransferTests(ViewTestCase):
             )
             assert response.status_code == 200
             assert len(outbox) == 1
-            assert outbox[0].recipients[0] == candidate_mail
+            assert outbox[0].recipient == candidate_mail
 
     def test_second_request_with_identical_data_will_fail_with_code_409(
         self,

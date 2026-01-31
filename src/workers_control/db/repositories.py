@@ -2821,3 +2821,29 @@ class DatabaseGatewayImpl:
             query=self.db.session.query(models.PlanApproval),
             mapper=self.plan_approval_from_orm,
         )
+
+    def create_email(
+        self, created_at: datetime, recipient: str, sender: str, subject: str, html: str
+    ) -> records.Email:
+        orm = models.EmailOutbox(
+            id=uuid4(),
+            created_at=created_at,
+            recipient=recipient,
+            sender=sender,
+            subject=subject,
+            html=html,
+        )
+        self.db.session.add(orm)
+        self.db.session.flush()
+        return self.email_from_orm(orm)
+
+    @classmethod
+    def email_from_orm(cls, orm: models.EmailOutbox) -> records.Email:
+        return records.Email(
+            id=orm.id,
+            created_at=orm.created_at,
+            recipient=orm.recipient,
+            sender=orm.sender,
+            subject=orm.subject,
+            html=orm.html,
+        )

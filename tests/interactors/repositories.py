@@ -1713,6 +1713,7 @@ class MockDatabase:
         self.private_consumptions: Dict[UUID, records.PrivateConsumption] = dict()
         self.productive_consumptions: Dict[UUID, records.ProductiveConsumption] = dict()
         self.company_work_invites: List[CompanyWorkInvite] = list()
+        self.emails: list[records.Email] = list()
         self.email_addresses: Dict[str, records.EmailAddress] = dict()
         self.drafts: Dict[UUID, PlanDraft] = dict()
         self.reset_password_requests: List[records.PasswordResetRequest] = list()
@@ -2169,6 +2170,20 @@ class MockDatabase:
             database=self,
             items=lambda: self.plan_approvals,
         )
+
+    def create_email(
+        self, created_at: datetime, recipient: str, sender: str, subject: str, html: str
+    ) -> records.Email:
+        record = records.Email(
+            id=uuid4(),
+            created_at=created_at,
+            recipient=recipient,
+            sender=sender,
+            subject=subject,
+            html=html,
+        )
+        self.emails.append(record)
+        return record
 
 
 class Index(Generic[Key, Value]):

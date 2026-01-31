@@ -33,7 +33,7 @@ class EmailChangeConfirmationPresenterTests(BaseTestCase):
                 new_email_address=expected_email_address
             )
         )
-        assert self.email_service.sent_mails[-1].recipients == [expected_email_address]
+        assert self.email_service.sent_mails[-1].recipient == expected_email_address
 
     def test_that_the_content_of_the_mail_is_rendered_correctly(self) -> None:
         old_email = "test@test.test"

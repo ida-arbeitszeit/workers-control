@@ -7,8 +7,8 @@ from flask import Flask
 from tests import data_generators
 from tests.db.base_test_case import DatabaseTestCase
 from tests.flask_integration.dependency_injection import FlaskTestingModule
-from tests.flask_integration.mail_service import MockEmailService
 from tests.lazy_property import _lazy_property
+from tests.mail_service import MockEmailService
 from workers_control.core.injector import Injector, Module
 from workers_control.db.repositories import DatabaseGatewayImpl
 from workers_control.flask.dependency_injection import FlaskModule

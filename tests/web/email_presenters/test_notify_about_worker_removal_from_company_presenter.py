@@ -13,7 +13,7 @@ class PresenterTests(BaseTestCase):
         super().setUp()
         self.presenter = self.injector.get(NotifyAboutWorkerRemovalPresenter)
 
-    def test_that_one_email_get_sent(self) -> None:
+    def test_that_two_emails_are_sent(self) -> None:
         notification_data = WorkerRemovalNotification(
             worker_email="123",
             worker_name="Hans",
@@ -22,7 +22,7 @@ class PresenterTests(BaseTestCase):
             company_name="Wurst",
         )
         self.presenter.notify(message_data=notification_data)
-        assert len(self.email_service.sent_mails) == 1
+        assert len(self.email_service.sent_mails) == 2
 
     def test_that_recipients_are_worker_and_company_email(self) -> None:
         expected_recipient_worker = "123"
@@ -35,10 +35,10 @@ class PresenterTests(BaseTestCase):
             company_name="Wurst",
         )
         self.presenter.notify(message_data=notification_data)
-        assert self.email_service.sent_mails[0].recipients == [
-            expected_recipient_worker,
-            expected_recipient_company,
-        ]
+        recipients = [mail.recipient for mail in self.email_service.sent_mails]
+        assert len(recipients) == 2
+        assert expected_recipient_worker in recipients
+        assert expected_recipient_company in recipients
 
     def test_that_company_and_worker_names_and_worker_id_appear_in_email_body(
         self,

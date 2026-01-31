@@ -12,14 +12,14 @@ class CooperationRequestEmailPresenterTests(BaseTestCase):
         super().setUp()
         self.presenter = self.injector.get(CooperationRequestEmailPresenter)
 
-    def test_mail_gets_sent_if_request_was_successful(self) -> None:
+    def test_one_mail_gets_sent_if_request_was_successful(self) -> None:
         self.presenter.present(self.create_email())
-        self.assertTrue(self.email_service.sent_mails)
+        assert len(self.email_service.sent_mails) == 1
 
     def test_mail_gets_sent_to_coordinator_if_request_was_successful(self) -> None:
         recipient = "company@comp.any"
         self.presenter.present(self.create_email(coordinator_mail=recipient))
-        self.assertEqual(self.email_service.sent_mails[0].recipients, [recipient])
+        self.assertEqual(self.email_service.sent_mails[0].recipient, recipient)
 
     def test_mail_gets_sent_and_subject_and_html_body_are_not_empty(self) -> None:
         self.presenter.present(self.create_email())

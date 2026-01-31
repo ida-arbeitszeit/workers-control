@@ -1,7 +1,6 @@
 from typing import Optional
 
 from tests.web.base_test_case import BaseTestCase
-from tests.web.email import FakeEmailService
 from workers_control.core.interactors.request_cooperation import (
     RequestCooperationResponse,
 )
@@ -16,7 +15,6 @@ class RequestCooperationPresenterTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.presenter = self.injector.get(RequestCooperationPresenter)
-        self.mail_service = self.injector.get(FakeEmailService)
 
     def test_do_not_show_as_error_if_request_was_successful(self):
         presentation = self.presenter.present(self.get_successful_request())
@@ -29,7 +27,7 @@ class RequestCooperationPresenterTests(BaseTestCase):
 
     def test_that_no_mail_was_sent_after_successful_request(self) -> None:
         self.presenter.present(self.get_successful_request())
-        assert not self.mail_service.sent_mails
+        assert not self.email_service.sent_mails
 
     def test_show_as_error_if_request_was_rejected(self):
         presentation = self.presenter.present(

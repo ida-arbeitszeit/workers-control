@@ -32,14 +32,10 @@ class RequestCoordinationTransferEmailPresenterTests(BaseTestCase):
             ),
         )
 
-    def test_that_mail_is_sent_to_one_recipient(self) -> None:
-        self.presenter.present(self.create_email())
-        self.assertEqual(len(self.email_service.sent_mails[0].recipients), 1)
-
     def test_that_mail_is_sent_to_the_candidate_specified(self) -> None:
         candidate_mail = "some@mail.com.ar"
         self.presenter.present(self.create_email(candidate_mail=candidate_mail))
-        self.assertEqual(self.email_service.sent_mails[0].recipients[0], candidate_mail)
+        self.assertEqual(self.email_service.sent_mails[0].recipient, candidate_mail)
 
     def test_that_email_sender_is_set_correctly(self) -> None:
         self.presenter.present(self.create_email())

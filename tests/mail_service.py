@@ -4,15 +4,18 @@ from typing import Iterator
 
 from workers_control.core import records
 from workers_control.core.datetime_service import DatetimeService
+from workers_control.core.injector import singleton
 from workers_control.core.repositories import DatabaseGateway
 from workers_control.flask.mail_service.interface import EmailPlugin
 
 
+@singleton
 @dataclass
 class MockEmailService(EmailPlugin):
     database_gateway: DatabaseGateway
     datetime_service: DatetimeService
     _recording_outboxes: list[list[records.Email]] = field(default_factory=list)
+    _sent_emails: list[records.Email] = field(default_factory=list)
 
     def send_message(
         self,
@@ -30,6 +33,7 @@ class MockEmailService(EmailPlugin):
                 subject=subject,
                 html=html,
             )
+            self._sent_emails.append(email)
             for outbox in self._recording_outboxes:
                 outbox.append(email)
 
@@ -41,3 +45,7 @@ class MockEmailService(EmailPlugin):
             yield outbox
         finally:
             self._recording_outboxes.remove(outbox)
+
+    @property
+    def sent_mails(self) -> list[records.Email]:
+        return self._sent_emails

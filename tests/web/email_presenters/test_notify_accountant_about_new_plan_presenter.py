@@ -16,10 +16,10 @@ class PresenterTests(BaseTestCase):
         super().setUp()
         self.presenter = self.injector.get(NotifyAccountantsAboutNewPlanPresenterImpl)
 
-    def test_that_an_email_gets_sent(self) -> None:
+    def test_that_one_email_gets_sent(self) -> None:
         notification = self.create_notification()
         self.presenter.notify_accountant_about_new_plan(notification)
-        assert self.email_service.sent_mails
+        assert len(self.email_service.sent_mails) == 1
 
     @parameterized.expand(
         [
@@ -32,12 +32,7 @@ class PresenterTests(BaseTestCase):
     ) -> None:
         notification = self.create_notification(email_address=expected_email_address)
         self.presenter.notify_accountant_about_new_plan(notification)
-        assert expected_email_address in self.email_service.sent_mails[0].recipients
-
-    def test_that_email_gets_sent_to_only_one_recipient(self) -> None:
-        notification = self.create_notification()
-        self.presenter.notify_accountant_about_new_plan(notification)
-        assert len(self.email_service.sent_mails[0].recipients) == 1
+        assert expected_email_address == self.email_service.sent_mails[0].recipient
 
     def test_that_subject_line_is_correct(self) -> None:
         notification = self.create_notification()

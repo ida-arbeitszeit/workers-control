@@ -28,7 +28,7 @@ class EmailChangeWarningViewTests(BaseTestCase):
         self.view.render_email_change_warning(
             self.create_email_change_warning(old_email_address=expected_email_address)
         )
-        assert self.email_service.sent_mails[-1].recipients == [expected_email_address]
+        assert self.email_service.sent_mails[-1].recipient == expected_email_address
 
     def test_that_the_content_of_the_mail_is_rendered_correctly_when_admin_mail_is_set(
         self,

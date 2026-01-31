@@ -14,15 +14,15 @@ class CompanyNotifierTests(BaseTestCase):
         super().setUp()
         self.company_notifier = self.injector.get(CompanyNotifier)
 
-    def test_that_an_email_gets_sent(self) -> None:
+    def test_that_one_email_gets_sent(self) -> None:
         notification = self.create_notification()
         self.company_notifier.notify_planning_company_about_rejected_plan(notification)
-        assert self.email_service.sent_mails
+        assert len(self.email_service.sent_mails) == 1
 
     def test_that_email_gets_sent_to_correct_address(self) -> None:
         notification = self.create_notification(email_address="email@address.com")
         self.company_notifier.notify_planning_company_about_rejected_plan(notification)
-        assert "email@address.com" in self.email_service.sent_mails[0].recipients
+        assert "email@address.com" == self.email_service.sent_mails[0].recipient
 
     def test_that_subject_line_is_correct(self) -> None:
         notification = self.create_notification()

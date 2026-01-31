@@ -1,6 +1,7 @@
 from tests.dependency_injection import TestingModule
 from tests.interactors.dependency_injection import InMemoryModule
-from tests.web.email import FakeEmailConfiguration, FakeEmailService
+from tests.mail_service import MockEmailService
+from tests.web.email_configuration import FakeEmailConfiguration
 from tests.web.email_presenters.accountant_invitation_email_view import (
     AccountantInvitationEmailViewImpl,
 )
@@ -56,7 +57,7 @@ class WebTestsModule(Module):
             self.provide_fake_request, is_singleton=True
         )
         binder[LanguageService] = AliasProvider(FakeLanguageService)
-        binder[MailService] = AliasProvider(FakeEmailService)
+        binder[MailService] = AliasProvider(MockEmailService)
         binder[TextRenderer] = AliasProvider(TextRendererImpl)
         binder[DatetimeFormatter] = AliasProvider(FakeDatetimeFormatter)
         binder[TimezoneConfiguration] = AliasProvider(FakeTimezoneConfiguration)

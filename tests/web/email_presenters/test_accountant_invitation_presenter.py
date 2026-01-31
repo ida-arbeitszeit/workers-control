@@ -1,7 +1,6 @@
 from typing import Callable
 
 from tests.datetime_service import datetime_utc
-from tests.email import FakeEmailConfiguration
 from tests.web.base_test_case import BaseTestCase
 from workers_control.web.email.accountant_invitation_presenter import (
     AccountantInvitationEmailPresenter,
@@ -16,7 +15,6 @@ class PresenterTests(BaseTestCase):
         super().setUp()
         self.view = self.injector.get(AccountantInvitationEmailViewImpl)
         self.presenter = self.injector.get(AccountantInvitationEmailPresenter)
-        self.email_configuration = self.injector.get(FakeEmailConfiguration)
 
     def test_that_token_recipient_is_also_mail_recipient(self) -> None:
         expected_recipient = "test@test.test"

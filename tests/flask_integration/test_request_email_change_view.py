@@ -136,7 +136,7 @@ class SentEmailTestsWithoutAdminMailInConfig(SentEmailTestCase):
     def test_that_two_emails_get_sent_when_posting_with_new_email_address(self) -> None:
         password = "123_pw"
         self.login_member(password=password)
-        with self.email_service().record_messages() as outbox:
+        with self.email_service.record_messages() as outbox:
             response = self.client.post(
                 URL,
                 data={
@@ -152,7 +152,7 @@ class SentEmailTestsWithoutAdminMailInConfig(SentEmailTestCase):
         old_email = "old_email@test.test"
         new_email = "new_email@test.test"
         self.login_member(email=old_email, password=password)
-        with self.email_service().record_messages() as outbox:
+        with self.email_service.record_messages() as outbox:
             response = self.client.post(
                 URL,
                 data={
@@ -177,7 +177,7 @@ class SentEmailTestsWithAdminMailInConfig(SentEmailTestCase):
     ) -> None:
         password = "123_pw"
         self.login_member(password=password)
-        with self.email_service().record_messages() as outbox:
+        with self.email_service.record_messages() as outbox:
             response = self.client.post(
                 URL,
                 data={

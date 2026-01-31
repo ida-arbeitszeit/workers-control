@@ -14,6 +14,8 @@ class Email:
 
 @singleton
 class FakeEmailService:
+    """Use this for tests of the "web" layer."""
+
     def __init__(self) -> None:
         self.sent_mails: List[Email] = []
 

@@ -9,6 +9,7 @@ from workers_control.core.email_notifications import EmailSender
 from workers_control.core.injector import (
     AliasProvider,
     Binder,
+    CallableProvider,
     Module,
 )
 from workers_control.core.password_hasher import PasswordHasher
@@ -19,7 +20,14 @@ class TestingModule(Module):
     def configure(self, binder: Binder) -> None:
         super().configure(binder)
         binder[EmailSender] = AliasProvider(EmailSenderTestImpl)
+        binder[EmailSenderTestImpl] = CallableProvider(
+            self.provide_email_sender, is_singleton=True
+        )
         binder[ControlThresholds] = AliasProvider(ControlThresholdsTestImpl)
         binder[DatetimeService] = AliasProvider(FakeDatetimeService)
         binder[PasswordHasher] = AliasProvider(PasswordHasherImpl)
         binder[PayoutFactorConfig] = AliasProvider(PayoutFactorConfigTestImpl)
+
+    @staticmethod
+    def provide_email_sender() -> EmailSenderTestImpl:
+        return EmailSenderTestImpl()

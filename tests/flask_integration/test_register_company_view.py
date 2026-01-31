@@ -46,7 +46,7 @@ class UnauthenticatedAndUnconfirmedCompanyTests(ViewTestCase):
 
     def test_correct_posting_makes_that_confirmations_mail_is_sent_to_company(self):
         company_email = "test2@cp.org"
-        with self.email_service().record_messages() as outbox:
+        with self.email_service.record_messages() as outbox:
             response = self.client.post(
                 self.url,
                 data=dict(

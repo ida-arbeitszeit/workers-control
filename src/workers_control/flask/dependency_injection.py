@@ -30,7 +30,7 @@ from workers_control.flask.flask_colors import FlaskColors
 from workers_control.flask.flask_request import FlaskRequest
 from workers_control.flask.flask_session import FlaskSession
 from workers_control.flask.language_repository import LanguageRepositoryImpl
-from workers_control.flask.mail_service import get_mail_service
+from workers_control.flask.mail_service import provide_email_service
 from workers_control.flask.notifications import FlaskFlashNotifier
 from workers_control.flask.password_hasher import provide_password_hasher
 from workers_control.flask.payout_factor import PayoutFactorConfigImpl
@@ -88,7 +88,7 @@ class FlaskModule(Module):
         )
         binder[Session] = AliasProvider(FlaskSession)
         binder[Notifier] = AliasProvider(FlaskFlashNotifier)
-        binder[MailService] = CallableProvider(get_mail_service)
+        binder[MailService] = CallableProvider(provide_email_service)
         binder[Translator] = AliasProvider(FlaskTranslator)
         binder[HexColors] = AliasProvider(FlaskColors)
         binder[ControlThresholds] = AliasProvider(ControlThresholdsFlask)

@@ -3,10 +3,11 @@ from unittest import TestCase
 
 from tests.data_generators import AccountantGenerator, CompanyGenerator, MemberGenerator
 from tests.datetime_service import FakeDatetimeService
-from tests.email import FakeEmailService
 from tests.lazy_property import _lazy_property
 from tests.token import FakeTokenService
 from tests.web.dependency_injection import get_dependency_injector
+from tests.web.email import FakeEmailConfiguration, FakeEmailService
+from tests.web.email_presenters.text_renderer import TextRendererImpl
 from tests.web.www.datetime_formatter import (
     FakeDatetimeFormatter,
     FakeTimezoneConfiguration,
@@ -37,11 +38,13 @@ class BaseTestCase(TestCase):
     datetime_service = _lazy_property(FakeDatetimeService)
     datetime_formatter = _lazy_property(FakeDatetimeFormatter)
     timezone_configuration = _lazy_property(FakeTimezoneConfiguration)
+    email_configuration = _lazy_property(FakeEmailConfiguration)
     email_service = _lazy_property(FakeEmailService)
     member_generator = _lazy_property(MemberGenerator)
     notifier = _lazy_property(NotifierTestImpl)
     request = _lazy_property(FakeRequest)
     session = _lazy_property(FakeSession)
+    text_renderer = _lazy_property(TextRendererImpl)
     token_service = _lazy_property(FakeTokenService)
     translator = _lazy_property(FakeTranslator)
     url_index = _lazy_property(UrlIndexTestImpl)

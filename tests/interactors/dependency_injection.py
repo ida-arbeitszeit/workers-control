@@ -1,6 +1,5 @@
 from typing import Any, Callable, TypeVar, cast
 
-import tests.email_notifications
 import workers_control.core.repositories as interfaces
 from tests.dependency_injection import TestingModule
 from tests.interactors import repositories
@@ -33,19 +32,12 @@ class InMemoryModule(Module):
             TokenService,
             to=AliasProvider(FakeTokenService),
         )
-        binder[tests.email_notifications.EmailSenderTestImpl] = CallableProvider(
-            self.provide_email_sender, is_singleton=True
-        )
 
     @staticmethod
     def provide_social_accounting_instance(
         mock_database: repositories.MockDatabase,
     ) -> records.SocialAccounting:
         return mock_database.social_accounting
-
-    @staticmethod
-    def provide_email_sender() -> tests.email_notifications.EmailSenderTestImpl:
-        return tests.email_notifications.EmailSenderTestImpl()
 
 
 def get_dependency_injector() -> Injector:

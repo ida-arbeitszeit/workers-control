@@ -58,7 +58,7 @@ class RequestCoordinationTransferTests(ViewTestCase):
         cooperation = self.cooperation_generator.create_cooperation()
         candidate = self.company_generator.create_company()
         data = {"candidate": str(candidate), "cooperation": str(cooperation)}
-        with self.email_service().record_messages() as outbox:
+        with self.email_service.record_messages() as outbox:
             response = self.client.post(
                 f"company/cooperation_summary/{cooperation}/request_coordination_transfer",
                 data=data,
@@ -76,7 +76,7 @@ class RequestCoordinationTransferTests(ViewTestCase):
         candidate_mail = "candidate@mail.org"
         candidate = self.company_generator.create_company(email=candidate_mail)
         data = {"candidate": str(candidate), "cooperation": str(cooperation)}
-        with self.email_service().record_messages() as outbox:
+        with self.email_service.record_messages() as outbox:
             response = self.client.post(
                 f"company/cooperation_summary/{cooperation}/request_coordination_transfer",
                 data=data,

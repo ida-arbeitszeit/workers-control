@@ -1,6 +1,6 @@
 from tests.dependency_injection import TestingModule
-from tests.email import FakeEmailConfiguration, FakeEmailService
 from tests.interactors.dependency_injection import InMemoryModule
+from tests.web.email import FakeEmailConfiguration, FakeEmailService
 from tests.web.email_presenters.accountant_invitation_email_view import (
     AccountantInvitationEmailViewImpl,
 )

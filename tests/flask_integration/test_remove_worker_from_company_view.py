@@ -44,7 +44,7 @@ class TestPost(ViewTestCase):
             workers=[worker], password=password, email=email
         )
         self.login_company(password=password, email=email)
-        with self.email_service().record_messages() as outbox:
+        with self.email_service.record_messages() as outbox:
             response = self.client.post(self.url, data=dict(worker=f"{worker}"))
             assert response.status_code == 302
             assert len(outbox) == 1
@@ -57,7 +57,7 @@ class TestPost(ViewTestCase):
             workers=[worker], password=password, email=email
         )
         self.login_company(password=password, email=email)
-        with self.email_service().record_messages() as outbox:
+        with self.email_service.record_messages() as outbox:
             assert len(outbox) == 0
             response = self.client.post(self.url, data=dict(worker="no-uuid"))
             assert response.status_code >= 400

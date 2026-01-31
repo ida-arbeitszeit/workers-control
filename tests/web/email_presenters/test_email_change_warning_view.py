@@ -1,8 +1,6 @@
 from parameterized import parameterized
 
-from tests.email import FakeEmailConfiguration
 from tests.web.base_test_case import BaseTestCase
-from tests.web.email_presenters.text_renderer import TextRendererImpl
 from workers_control.core import email_notifications
 from workers_control.web.email.email_change_warning_view import EmailChangeWarningView
 
@@ -11,8 +9,6 @@ class EmailChangeWarningViewTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.view = self.injector.get(EmailChangeWarningView)
-        self.text_renderer = self.injector.get(TextRendererImpl)
-        self.email_configuration = self.injector.get(FakeEmailConfiguration)
 
     def test_that_one_email_is_sent_when_rendering(self) -> None:
         self.view.render_email_change_warning(

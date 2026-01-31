@@ -1,7 +1,7 @@
 from typing import Optional
 
-from tests.email import FakeEmailService
 from tests.web.base_test_case import BaseTestCase
+from tests.web.email import FakeEmailService
 from workers_control.core.interactors.request_cooperation import (
     RequestCooperationResponse,
 )

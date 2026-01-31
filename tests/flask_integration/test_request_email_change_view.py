@@ -161,7 +161,8 @@ class SentEmailTestsWithoutAdminMailInConfig(SentEmailTestCase):
                 },
             )
             assert response.status_code == 302
-            recipients = [recipient for mail in outbox for recipient in mail.recipients]
+            assert len(outbox) == 2
+            recipients = [mail.recipient for mail in outbox]
             assert len(recipients) == 2
             assert old_email in recipients
             assert new_email in recipients

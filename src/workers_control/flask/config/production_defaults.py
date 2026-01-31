@@ -7,7 +7,9 @@ TESTING = False
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 LANGUAGES = {"en": "English", "de": "Deutsch", "es": "Español"}
-MAIL_PLUGIN = "workers_control.flask.mail_service.smtp_mail_service:SmtpMailService"
+MAIL_PLUGIN = (
+    "workers_control.flask.mail_service.mail_storage_service:MailStorageService"
+)
 MAIL_ENCRYPTION_TYPE = "tls"
 MAIL_PORT = 587
 AUTO_MIGRATE = os.getenv("AUTO_MIGRATE", False)

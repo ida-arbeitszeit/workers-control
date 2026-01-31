@@ -59,7 +59,7 @@ class UnauthenticatedAndUnconfirmedCompanyTests(ViewTestCase):
             self.assertEqual(response.status_code, 302)
             assert len(outbox) == 1
             assert outbox[0].sender == "test_sender@cp.org"
-            assert outbox[0].recipients[0] == company_email
+            assert outbox[0].recipient == company_email
 
     @parameterized.expand(
         [

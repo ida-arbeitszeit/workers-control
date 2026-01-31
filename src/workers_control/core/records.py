@@ -331,3 +331,13 @@ class RegisteredHoursWorked:
     transfer_of_work_certificates: UUID
     transfer_of_taxes: UUID
     registered_on: datetime
+
+
+@dataclass
+class Email:
+    id: UUID
+    created_at: datetime
+    recipient: str
+    sender: str
+    subject: str
+    html: str

@@ -20,7 +20,7 @@ class SendMailTests(BaseTestCase):
         self.presenter.show_invite_worker_message(
             worker_email=expected_mail, invite=uuid4()
         )
-        self.assertEqual(self.email_service.sent_mails[0].recipients, [expected_mail])
+        self.assertEqual(self.email_service.sent_mails[0].recipient, expected_mail)
 
     def test_mail_gets_send_from_configured_mail_sender(self) -> None:
         expected_sender = self.email_configuration.get_sender_address()

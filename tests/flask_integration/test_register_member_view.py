@@ -97,7 +97,7 @@ class UnauthenticatedAndUnconfirmedMemberTests(ViewTestCase):
             self.assertEqual(response.status_code, 302)
             assert len(outbox) == 1
             assert outbox[0].sender == "test_sender@cp.org"
-            assert outbox[0].recipients[0] == member_email
+            assert outbox[0].recipient == member_email
 
     @parameterized.expand(
         [

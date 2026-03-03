@@ -18,15 +18,15 @@ classifiers = [
 readme = "README.rst"
 
 dependencies = [
-    # Pin to exact versions, if possible. Update manually.
-    "alembic>=1.16.4, <=1.17.2",  # different versions in stable/unstable nixpkgs 
-    "email-validator==2.2.0",
+    # Pin to exact versions, if possible.
+    "alembic>=1.16.4, <=1.18.1",  # different versions in stable/unstable nixpkgs
+    "email-validator>=2.2.0, <=2.3.0", # different versions in stable/unstable nixpkgs
     "flask==3.1.2",
     "flask-babel==4.0.0",
     "flask-talisman==1.1.0",
     "flask-login==0.6.3",
     "flask-wtf==1.2.2",
-    "matplotlib==3.10.5"
+    "matplotlib>=3.10.5, <=3.10.8" # different versions in stable/unstable nixpkgs
 ]
 
 [project.optional-dependencies]

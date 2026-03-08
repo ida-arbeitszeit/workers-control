@@ -8,9 +8,6 @@ Getting support
 This application is designed to be self-hosted. If you are a community or organization that wants to host this application, 
 feel free to contact IDA (`gruppe_arbeitszeit@riseup.net <mailto:gruppe_arbeitszeit@riseup.net>`_) for help.
 
-For general information on deploying a Flask application see the
-`Flask deployment documentation <https://flask.palletsprojects.com/en/stable/deploying/>`_.
-
 
 NixOS Deployment
 ----------------
@@ -18,7 +15,6 @@ NixOS Deployment
 The IDA github organization maintains a repository with a NixOS
 module for deployment on NixOS servers:
 `<https://github.com/ida-arbeitszeit/workers-control-deployment>`_.
-
 
 
 PyPi
@@ -33,46 +29,89 @@ The app is available on `PyPi <https://pypi.org/>`_. Try it out::
 Configuration of the web server
 -------------------------------
 
+For the app to work properly, the web server needs to be configured. Three separate
+applications must be able to run on the server and need configuration:
 
-For the app to work properly, the web server needs to be configured
-with environment variables and a Python configuration file.
+* Workers Control flask app
+* Alembic (tool for database migrations)
+* Email worker (a program that polls the database for pending emails and sends them out)
 
 
-Environment variables
-.....................
+1. Workers Control flask app
+............................
 
+For general information on deploying a Flask application see the
+`Flask deployment documentation <https://flask.palletsprojects.com/en/stable/deploying/>`_.
 
-.. py:data:: WOCO_CONFIGURATION_PATH
+The flask app needs a configuration file with several options set. The path to the file
+can be set by an environment variable. If the environment variable is not set, the application
+expects the file in ``/etc/workers-control/workers-control.py``.
+
+.. envvar:: WOCO_CONFIGURATION_PATH
    :no-index:
     
     (optional)
 
-    If set, this value is used as the path to the configuration file (see below)
-    instead of the default locations.
+    If set, this environment variable points to the path to the configuration file.
+
+The configuration file itself must be a valid python script. Configuration options are set as
+top-level variables. The following options are available
+(options without defaults are required):
+
+.. include:: config_options_GENERATED.rst
 
 
-.. py:data:: ALEMBIC_CONFIG
+2. Alembic
+..........
+
+Alembic is a program to manage database migrations. It needs a configuration file in a specific
+format. See the `alembic documentation <https://alembic.sqlalchemy.org/>`_ for details. 
+
+The path to the alembic configuration file is set via an environment variable:
+
+.. ALEMBIC_SQLALCHEMY_DATABASE_URI or sqlalchemy.url in alembic.ini
+
+.. envvar:: ALEMBIC_CONFIG
    :no-index:
 
     (required)
    
-    Path to the alembic configuration. Alembic is used to manage database migrations.
-    This file contains settings like the location of the migration scripts or the
-    database connection string. See the `alembic documentation <https://alembic.sqlalchemy.org/>`_
-    for details.
+    Path to the alembic configuration file.
 
 
-Configuration file
-...................
+3. Email worker
+...............
+
+The email worker needs XXXXXX 
+.. TODO 
+
+.. envvar:: EMAIL_OUTBOX_DATABASE_URI
+    :no-index:
+
+    (required)
+
+    Should be identical to flask app config option SQLALCHEMY_DATABASE_URI.
+
+.. envvar:: MAIL_SERVER
+    :no-index:
+
+    (required)
+    .. TODO
 
 
-The application loads the first config file found from these locations:
+.. emailConfigurationFile = lib.mkOption {
+..       type = lib.types.path;
+..       description = ''
+..         Path to a json file containing the mail configuration in the
+..         following format:
 
-* Path set in ``WOCO_CONFIGURATION_PATH`` environment variable (see above)
-* ``/etc/workers-control/workers-control.py``
-
-The configuration file must be a valid python script.
-Configuration options are set as top-level variables. The following
-options are available (options without defaults are required):
-
-.. include:: config_options_GENERATED.rst
+..         {
+..           "MAIL_SERVER": "mail.server.example",
+..           "MAIL_PORT": "465",
+..           "MAIL_USERNAME": "username@mail.server.example",
+..           "MAIL_PASSWORD": "my secret mail password",
+..           "MAIL_DEFAULT_SENDER": "sender.address@mail.server.example",
+..           "MAIL_ADMIN": "admin.address@mail.server.example"
+..         }
+..       '';
+..     };

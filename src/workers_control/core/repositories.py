@@ -502,6 +502,11 @@ class RegisteredHoursWorkedResult(QueryResult[records.RegisteredHoursWorked], Pr
         ]
     ]: ...
 
+class EmailResult(QueryResult[records.Email], Protocol):
+    def that_have_not_been_sent(self) -> Self: ...
+
+    def ordered_by_creation_date(self, ascending: bool = ...) -> Self: ...
+
 
 class DatabaseGateway(Protocol):
     def create_private_consumption(
@@ -675,3 +680,5 @@ class DatabaseGateway(Protocol):
     def create_email(
         self, created_at: datetime, recipient: str, sender: str, subject: str, html: str
     ) -> records.Email: ...
+
+    def get_emails(self) -> EmailResult: ...

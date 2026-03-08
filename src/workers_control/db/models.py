@@ -364,3 +364,7 @@ class EmailOutbox(Base):
     sender: Mapped[str] = mapped_column(String(1000))
     subject: Mapped[str] = mapped_column(String(1000))
     html: Mapped[str] = mapped_column(Text)
+
+    sent_at: Mapped[datetime | None] = mapped_column(TZDateTime)
+    retry_count: Mapped[int] = mapped_column(default=0)
+    last_error: Mapped[str | None] = mapped_column(Text)

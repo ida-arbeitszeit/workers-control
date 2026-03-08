@@ -1,4 +1,7 @@
+import subprocess
+
 import click
+from flask import current_app
 from flask_babel import force_locale
 
 from workers_control.core.interactors.send_accountant_registration_token import (
@@ -19,3 +22,11 @@ def invite_accountant(
         interactor.send_accountant_registration_token(
             SendAccountantRegistrationTokenInteractor.Request(email=email_address)
         )
+
+
+@click.argument("args", nargs=-1)
+def run_alembic(args: tuple[str, ...]) -> None:
+    """Run the database migration tool alembic."""
+    db_url = current_app.config["SQLALCHEMY_DATABASE_URI"]
+    config = current_app.config["ALEMBIC_CONFIG"]
+    subprocess.run(["alembic", "-x", f"db_url={db_url}", "-c", config, *args])

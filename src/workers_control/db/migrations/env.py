@@ -1,5 +1,4 @@
 import logging
-import os
 from logging.config import fileConfig
 
 from alembic import context
@@ -8,6 +7,12 @@ from alembic.script import ScriptDirectory
 from sqlalchemy import URL, Connection, create_engine, inspect, make_url
 
 from workers_control.db.models import Base
+
+x_args = context.get_x_argument(as_dictionary=True)
+db_url = x_args.get("db_url")
+
+if db_url:
+    context.config.set_main_option("sqlalchemy.url", db_url)
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -48,14 +53,9 @@ def upgrade_to_head_if_database_is_fresh(connection: Connection) -> None:
 
 
 def get_db_uri() -> URL:
-    if db_uri := os.getenv("ALEMBIC_SQLALCHEMY_DATABASE_URI"):
-        return make_url(db_uri)
     if db_uri := config.get_main_option("sqlalchemy.url"):
         return make_url(db_uri)
-    raise ValueError(
-        "No database URI configured. Set ALEMBIC_SQLALCHEMY_DATABASE_URI "
-        "or sqlalchemy.url in alembic.ini"
-    )
+    raise ValueError("No database URI configured. Set sqlalchemy.url in alembic.ini.")
 
 
 def run_migrations(connection: Connection) -> None:

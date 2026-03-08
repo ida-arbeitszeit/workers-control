@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 WOCO_PASSWORD_HASHER = "workers_control.flask.password_hasher:PasswordHasherImpl"
 
@@ -18,7 +19,9 @@ FLASK_PROFILER = {
     "enabled": False,
 }
 
-ALEMBIC_CONFIG = os.environ["ALEMBIC_CONFIG"]
+ALEMBIC_CONFIG = str(
+    Path(__file__).resolve().parent.parent.parent / "db" / "migrations" / "alembic.ini"
+)
 
 DEFAULT_USER_TIMEZONE = "UTC"
 ALLOWED_OVERDRAW_MEMBER = "0"

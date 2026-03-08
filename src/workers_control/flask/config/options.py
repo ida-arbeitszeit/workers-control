@@ -27,7 +27,7 @@ CONFIG_OPTIONS = [
         name="AUTO_MIGRATE",
         converts_to_types=(bool,),
         description_paragraphs=[
-            "Upgrade the database schema if changes are detected on startup. If auto migration is not activated, you need to run database migrations manually via the ``alembic`` command line tool."
+            "Upgrade the database schema if changes are detected on startup. If auto migration is not activated, you need to run database migrations manually."
         ],
         example="AUTO_MIGRATE = True",
         default="False",
@@ -155,5 +155,15 @@ CONFIG_OPTIONS = [
             "Must be an integer larger than zero.",
         ],
         default="180",
+    ),
+    ConfigOption(
+        name="ALEMBIC_CONFIG",
+        converts_to_types=(str,),
+        description_paragraphs=[
+            "Path to a custom alembic configuration file. Alembic is used to manage database migrations. See the Alembic documentation for details.",
+            "If not set, the bundled ``alembic.ini`` from the installed package is used.",
+        ],
+        example='ALEMBIC_CONFIG = "/some/path/to/alembic.ini"',
+        default="<path to bundled alembic.ini>",
     ),
 ]

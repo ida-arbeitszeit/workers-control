@@ -18,10 +18,8 @@ document.
   export FLASK_APP=dev.development_server
   export WOCO_SERVER_NAME=127.0.0.1:5000
   export DEV_SECRET_KEY="my_secret_key"
-  export ALEMBIC_CONFIG=${PWD}/dev/alembic.ini
   export WOCO_TEST_DB=sqlite:///${PWD}/workers_control_test.db
   export WOCO_DEV_DB=sqlite:///${PWD}/workers_control_dev.db
-  export ALEMBIC_SQLALCHEMY_DATABASE_URI=${WOCO_DEV_DB}
 
 - Run ``pytest`` to run the testsuite.
 - Run ``python -m build_support.translations compile`` (only if you need translations in the development app)
@@ -120,10 +118,8 @@ Commented out variables are optional.
   export FLASK_APP=dev.development_server
   export WOCO_SERVER_NAME=127.0.0.1:5000
   export DEV_SECRET_KEY="my_secret_key"
-  export ALEMBIC_CONFIG=${PWD}/dev/alembic.ini
   export WOCO_TEST_DB=sqlite:///${PWD}/workers_control_test.db
   export WOCO_DEV_DB=sqlite:///${PWD}/workers_control_dev.db
-  export ALEMBIC_SQLALCHEMY_DATABASE_URI=${WOCO_DEV_DB}
   # export ALLOWED_OVERDRAW_MEMBER=1000
   # export DEFAULT_USER_TIMEZONE="Europe/Berlin"
   # export AUTO_MIGRATE=true
@@ -150,11 +146,9 @@ Note the following features of the development app:
   printed to ``stdout`` (your terminal). Click the confirmation
   links shown there.
 
-- The app uses the configured development database. You can
-  manually upgrade or downgrade the development database using the
-  ``alembic`` command-line tool. Run ``alembic --help`` to see the
-  options. If the environment variable ``AUTO_MIGRATE`` is set
-  to ``true``, the database will automatically
+- The app uses the configured development database. You can manually upgrade or
+  downgrade the development database. Run ``flask db --help`` to see the options. If the 
+  environment variable ``AUTO_MIGRATE`` is set to ``true``, the database will automatically
   be upgraded when the development server starts.
 
 

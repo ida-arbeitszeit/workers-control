@@ -31,6 +31,7 @@ buildPythonPackage {
   postPhases = [ "buildDocsPhase" ];
   pyproject = true;
   nativeCheckInputs = [
+    alembic
     pytest
     postgresql
     psycopg2

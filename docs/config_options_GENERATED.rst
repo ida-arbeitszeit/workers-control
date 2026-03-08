@@ -12,7 +12,7 @@
 .. py:data:: AUTO_MIGRATE
    :no-index:
 
-   Upgrade the database schema if changes are detected on startup. If auto migration is not activated, you need to run database migrations manually via the ``alembic`` command line tool.
+   Upgrade the database schema if changes are detected on startup. If auto migration is not activated, you need to run database migrations manually.
 
    Example: ``AUTO_MIGRATE = True``
 
@@ -103,7 +103,9 @@
    :no-index:
 
    This integer defines the "relative deviation" from the ideal account balance of zero that is still deemed acceptable, expressed in percent and calculated relative to the expected transfer value of this account.
+
    Example: Company XY has an absolute deviation of minus 1000 hours on its account for means of production (PRD account). Because it has filed plans with total costs for means of production of 10000 hours (=the sum of expected transfer value), its relative deviation is 10%.
+
    Unacceptable high deviations might get labeled as such or highlighted by the application.
 
    Default: ``33``
@@ -112,6 +114,18 @@
    :no-index:
 
    A time window in days, over which the payout factor is calculated.
+
    Must be an integer larger than zero.
 
    Default: ``180``
+
+.. py:data:: ALEMBIC_CONFIG
+   :no-index:
+
+   Path to a custom alembic configuration file. Alembic is used to manage database migrations. See the Alembic documentation for details.
+
+   If not set, the bundled ``alembic.ini`` from the installed package is used.
+
+   Example: ``ALEMBIC_CONFIG = "/some/path/to/alembic.ini"``
+
+   Default: ``<path to bundled alembic.ini>``

@@ -41,16 +41,12 @@ jobs:
       with:
         name: arbeitszeit-2
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN_2 }}'
-    - run: nix develop --command alembic upgrade head
+    - run: nix develop --command alembic -x db_url=postgresql://postgres:postgres@localhost:5432/postgres upgrade head
       env:
-        ALEMBIC_SQLALCHEMY_DATABASE_URI: postgresql://postgres:postgres@localhost:5432/postgres
         ALEMBIC_CONFIG: tests/flask_integration/alembic.ini
-        FLASK_APP: workers_control.flask
-    - run: nix develop --command alembic check
+    - run: nix develop --command alembic -x db_url=postgresql://postgres:postgres@localhost:5432/postgres check
       env:
-        ALEMBIC_SQLALCHEMY_DATABASE_URI: postgresql://postgres:postgres@localhost:5432/postgres
         ALEMBIC_CONFIG: tests/flask_integration/alembic.ini
-        FLASK_APP: workers_control.flask
     services:
       postgres:
         image: postgres

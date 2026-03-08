@@ -24,7 +24,7 @@ def create_options_section() -> str:
         for paragraph in option.description_paragraphs:
             description_lines.append(f"   {paragraph}")
 
-        description = "\n".join(description_lines)
+        description = "\n\n".join(description_lines)
 
         example = f"\n\n   Example: ``{option.example}``" if option.example else ""
         default = f"\n\n   Default: ``{option.default}``" if option.default else ""

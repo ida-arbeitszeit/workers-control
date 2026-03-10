@@ -8,13 +8,10 @@ from workers_control.db.db import Database
 
 
 def _get_alembic_config(flask_config: FlaskConfig) -> AlembicConfig:
-    path_str = flask_config.get("ALEMBIC_CONFIG")
-    if path_str is None:
-        raise ValueError("ALEMBIC_CONFIG not set in Flask config")
-    path = Path(path_str)
-    if not path.is_file():
-        raise FileNotFoundError(f"Alembic config file not found: {path}")
-    return AlembicConfig(path)
+    alembic_config = Path(flask_config["ALEMBIC_CONFIG"])
+    if not alembic_config.is_file():
+        raise FileNotFoundError(f"Alembic config file not found: {alembic_config}")
+    return AlembicConfig(alembic_config)
 
 
 def _upgrade_to_head(alembic_config: AlembicConfig) -> None:

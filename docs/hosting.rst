@@ -51,17 +51,6 @@ Environment variables
     instead of the default locations.
 
 
-.. py:data:: ALEMBIC_CONFIG
-   :no-index:
-
-    (required)
-   
-    Path to the alembic configuration. Alembic is used to manage database migrations.
-    This file contains settings like the location of the migration scripts or the
-    database connection string. See the `alembic documentation <https://alembic.sqlalchemy.org/>`_
-    for details.
-
-
 Configuration file
 ...................
 

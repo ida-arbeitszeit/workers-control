@@ -62,7 +62,7 @@ class FlaskDevConfiguration:
 
     SQLALCHEMY_DATABASE_URI = os.environ["WOCO_DEV_DB"]
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    ALEMBIC_CONFIG = os.getenv("ALEMBIC_CONFIG")
+    ALEMBIC_CONFIG = "dev/alembic.ini"
     AUTO_MIGRATE = os.getenv("AUTO_MIGRATE", False)
 
 

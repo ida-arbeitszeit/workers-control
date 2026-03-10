@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.5] - 2026-03-10
+
 ### Added
 
 - Web route showing details around the payout factor (FIC). Users can access the page via a link on the "Statistics" page. (#1380)
@@ -21,6 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Instead of using the 3rd party package Flask-Mail, we now use our own SMTP module for submitting mails. Remove production config options MAIL_PLUGIN_MODULE, MAIL_PLUGIN_CLASS, MAIL_USE_TLS and MAIL_USE_SSL. Add new option MAIL_ENCRYPTION_TYPE which can take the values "ssl or "tls". Hosting docs have been adapted. (#1386)
+- Developers run database migration via "flask db" instead of the "alembic"
+command directly. In development, environment variables ALEMBIC_CONFIG and ALEMBIC_SQLALCHEMY_DATABASE_URI are not needed anymore. In production,
+the formerly obligatory environment variable ALEMBIC_CONFIG is now an optional configuration option, and a default alembic configuration file for production has been added. (#1396)
 
 ## [0.1.4] - 2026-01-05
 

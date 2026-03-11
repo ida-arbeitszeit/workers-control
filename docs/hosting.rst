@@ -65,3 +65,14 @@ Configuration options are set as top-level variables. The following
 options are available (options without defaults are required):
 
 .. include:: config_options_GENERATED.rst
+
+
+Inviting accountants
+--------------------
+
+To invite an accountant, use the ``invite-accountant`` CLI command
+with the accountant's email address::
+
+    flask --app workers_control.flask.wsgi:app invite-accountant example@mail.de
+
+This sends an email with a registration link to the given address.

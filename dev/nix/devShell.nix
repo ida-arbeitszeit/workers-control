@@ -7,6 +7,7 @@
   includeGlibcLocales,
   lib,
   git,
+  bash,
 }:
 mkShell (
   {
@@ -25,6 +26,7 @@ mkShell (
         types-setuptools
       ])
       ++ [
+        bash
         nixfmt
         sqlite
         git

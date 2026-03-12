@@ -22,8 +22,17 @@ class RegisterAccountantPresenter:
     dashboard_url_index: UrlIndex
 
     def present_registration_result(
-        self, response: RegisterAccountantInteractor.Response
+        self, response: Optional[RegisterAccountantInteractor.Response]
     ) -> ViewModel:
+        if response is None:
+            self.notifier.display_warning(
+                self.translator.gettext(
+                    "This registration link is invalid or has expired."
+                )
+            )
+            return self.ViewModel(
+                redirect_url=self.dashboard_url_index.get_start_page_url()
+            )
         if response.is_accepted:
             assert response.user_id
             self.session.login_accountant(accountant=response.user_id)

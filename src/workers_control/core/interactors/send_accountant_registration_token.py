@@ -6,8 +6,9 @@ from workers_control.core.repositories import DatabaseGateway
 
 @dataclass
 class SendAccountantRegistrationTokenInteractor:
+    @dataclass
     class Response:
-        pass
+        has_been_sent: bool
 
     @dataclass
     class Request:
@@ -21,7 +22,8 @@ class SendAccountantRegistrationTokenInteractor:
             self.email_sender.send_email(
                 AccountantInvitation(email_address=request.email)
             )
-        return self.Response()
+            return self.Response(has_been_sent=True)
+        return self.Response(has_been_sent=False)
 
     def _is_user_existing(self, email: str) -> bool:
         return bool(self.database.get_accountants().with_email_address(email))

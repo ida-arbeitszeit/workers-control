@@ -27,3 +27,9 @@ class HelpViewTests(ViewTestCase):
             login=login,
             expected_code=expected_code,
         )
+
+
+class NavigationTests(ViewTestCase):
+    def test_that_help_page_shows_back_button(self) -> None:
+        response = self.client.get("/help")
+        assert '<a class="button" href="/">' in response.text

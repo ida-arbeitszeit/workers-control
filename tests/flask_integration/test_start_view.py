@@ -27,3 +27,9 @@ class UserAccessTests(ViewTestCase):
             login=login,
             expected_code=expected_code,
         )
+
+
+class NavigationTests(ViewTestCase):
+    def test_that_start_page_does_not_show_back_button(self) -> None:
+        response = self.client.get("/")
+        assert '<a class="button" href="/">' not in response.text

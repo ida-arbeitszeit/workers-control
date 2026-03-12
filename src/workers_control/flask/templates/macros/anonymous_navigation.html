@@ -31,11 +31,13 @@
 	  {{ gettext('Help') }}
 	</a>
       </div>
+      {% if request.endpoint != 'auth.start' %}
       <div class="navbar-item">
         <a class="button" href="{{ url_for('auth.start') }}">
           {{ gettext("Back")}}
         </a>
       </div>
+      {% endif %}
     </div>
   </div>
 </nav>

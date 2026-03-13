@@ -28,7 +28,7 @@ class FlaskLoginUser:
         self.orm_user = orm_user
 
     def get_id(self) -> str:
-        return self.orm_user.id
+        return str(self.orm_user.id)
 
     @property
     def is_authenticated(self) -> bool:
@@ -70,7 +70,7 @@ class FlaskSession:
 
     def get_current_user(self) -> Optional[UUID]:
         try:
-            return UUID(current_user.id)
+            return current_user.id
         except AttributeError:
             return None
 
@@ -83,7 +83,7 @@ class FlaskSession:
     def login_member(self, member: UUID, remember: bool = False) -> None:
         member_orm = (
             self.db.session.query(models.Member)
-            .filter(models.Member.id == (str(member)))
+            .filter(models.Member.id == member)
             .first()
         )
         assert member_orm
@@ -93,7 +93,7 @@ class FlaskSession:
     def login_company(self, company: UUID, remember: bool = False) -> None:
         company_orm = (
             self.db.session.query(models.Company)
-            .filter(models.Company.id == str(company))
+            .filter(models.Company.id == company)
             .first()
         )
         assert company_orm
@@ -103,7 +103,7 @@ class FlaskSession:
     def login_accountant(self, accountant: UUID, remember: bool = False) -> None:
         accountant_orm = (
             self.db.session.query(models.Accountant)
-            .filter(models.Accountant.id == str(accountant))
+            .filter(models.Accountant.id == accountant)
             .first()
         )
         assert accountant_orm

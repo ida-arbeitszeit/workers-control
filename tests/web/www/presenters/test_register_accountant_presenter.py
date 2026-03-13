@@ -80,6 +80,21 @@ class PresenterTests(BaseTestCase):
         view_model = self.presenter.present_registration_result(response)
         self.assertIsNone(view_model.redirect_url)
 
+    def test_that_invalid_token_results_in_warning_shown(self) -> None:
+        self.presenter.present_registration_result(None)
+        self.assertTrue(self.notifier.warnings)
+
+    def test_that_invalid_token_redirects_to_start_page(self) -> None:
+        view_model = self.presenter.present_registration_result(None)
+        self.assertEqual(
+            view_model.redirect_url,
+            self.url_index.get_start_page_url(),
+        )
+
+    def test_that_user_is_not_logged_in_when_token_is_invalid(self) -> None:
+        self.presenter.present_registration_result(None)
+        self.assertFalse(self.session.is_logged_in())
+
     def assertLoggedIn(
         self, condition: Optional[Callable[[FakeSession.LoginAttempt], bool]] = None
     ) -> None:

@@ -626,11 +626,14 @@ class AccountantGenerator:
             name = "user name test"
         if password is None:
             password = "password123"
-        self.invite_accountant_interactor.send_accountant_registration_token(
-            request=SendAccountantRegistrationTokenInteractor.Request(
-                email=email_address
+        send_response = (
+            self.invite_accountant_interactor.send_accountant_registration_token(
+                request=SendAccountantRegistrationTokenInteractor.Request(
+                    email=email_address
+                )
             )
         )
+        assert send_response.has_been_sent, "Invitation token could not be sent."
         response = self.register_accountant_interactor.register_accountant(
             request=RegisterAccountantInteractor.Request(
                 name=name,

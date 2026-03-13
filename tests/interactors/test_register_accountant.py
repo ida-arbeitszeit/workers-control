@@ -47,7 +47,7 @@ class InteractorTests(BaseTestCase):
         response = self.interactor.register_accountant(request)
         self.assertTrue(response.is_accepted)
 
-    def test_that_user_registering_an_accountant_confirms_the_email_address_also_for_companies_with_the_same_address(
+    def test_that_registering_accountant_does_not_confirm_email_for_company_with_same_address(
         self,
     ) -> None:
         email_address = "test@test.test"

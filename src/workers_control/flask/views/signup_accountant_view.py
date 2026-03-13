@@ -34,21 +34,17 @@ class SignupAccountantView:
     @commit_changes
     def POST(self, token: str) -> types.Response:
         form = RegisterAccountantForm(request.form)
-        extracted_token = self.controller.extract_token(token=token)
-        if extracted_token:
-            form.extracted_token = extracted_token
-            if form.validate():
-                interactor_request = self.controller.create_interactor_request(
-                    form=form
-                )
-                interactor_response = self.interactor.register_accountant(
-                    interactor_request
-                )
-                view_model = self.presenter.present_registration_result(
-                    interactor_response
-                )
-                if view_model.redirect_url:
-                    return redirect(view_model.redirect_url)
+        result = self.controller.create_interactor_request(form=form, token=token)
+        if result is None:
+            view_model = self.presenter.present_registration_result(None)
+            assert view_model.redirect_url
+            return redirect(view_model.redirect_url)
+        form.extracted_token = result.token_email
+        if form.validate():
+            interactor_response = self.interactor.register_accountant(result.request)
+            view_model = self.presenter.present_registration_result(interactor_response)
+            if view_model.redirect_url:
+                return redirect(view_model.redirect_url)
         return Response(
             response=render_template(
                 "auth/signup_accountant.html",

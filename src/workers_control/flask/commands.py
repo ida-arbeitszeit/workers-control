@@ -19,8 +19,16 @@ def invite_accountant(
 ) -> None:
     """Invite an accountant by sending a registration token to the given email address."""
     with force_locale("de"):  # type: ignore
-        interactor.send_accountant_registration_token(
+        response = interactor.send_accountant_registration_token(
             SendAccountantRegistrationTokenInteractor.Request(email=email_address)
+        )
+    if response.has_been_sent:
+        click.echo(
+            f"An invitation has been sent to {email_address} to register as an accountant."
+        )
+    else:
+        click.echo(
+            f"An accountant with the email address {email_address} already exists. No invitation has been sent."
         )
 
 

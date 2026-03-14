@@ -2,11 +2,11 @@
 Definition of database tables.
 """
 
-import uuid
 from datetime import UTC, datetime
 from decimal import Decimal
 from sqlite3 import Connection as SQLiteConnection
 from typing import Any
+from uuid import UUID, uuid4
 
 from sqlalchemy import (
     Column,
@@ -17,6 +17,7 @@ from sqlalchemy import (
     String,
     Table,
     TypeDecorator,
+    Uuid,
     event,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -24,10 +25,6 @@ from sqlalchemy.pool import ConnectionPoolEntry
 
 from workers_control.core.transfers import TransferType
 from workers_control.db.db import Base
-
-
-def generate_uuid() -> str:
-    return str(uuid.uuid4())
 
 
 @event.listens_for(Engine, "connect")
@@ -79,7 +76,7 @@ class TZDateTime(TypeDecorator):
 class User(Base):
     __tablename__ = "user"
 
-    id: Mapped[str] = mapped_column(primary_key=True, default=generate_uuid)
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
     password: Mapped[str] = mapped_column(String(300))
     email_address: Mapped[str] = mapped_column(ForeignKey("email.address"), unique=True)
 
@@ -97,27 +94,27 @@ class Email(Base):
 class SocialAccounting(Base):
     __tablename__ = "social_accounting"
 
-    id: Mapped[str] = mapped_column(primary_key=True, default=generate_uuid)
-    account_psf: Mapped[str] = mapped_column(ForeignKey("account.id"))
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
+    account_psf: Mapped[UUID] = mapped_column(Uuid, ForeignKey("account.id"))
 
 
 # Association table Company - Member
 jobs_table = Table(
     "jobs",
     Base.metadata,
-    Column("member_id", String, ForeignKey("member.id"), primary_key=True),
-    Column("company_id", String, ForeignKey("company.id"), primary_key=True),
+    Column("member_id", Uuid, ForeignKey("member.id"), primary_key=True),
+    Column("company_id", Uuid, ForeignKey("company.id"), primary_key=True),
 )
 
 
 class Member(Base):
     __tablename__ = "member"
 
-    id: Mapped[str] = mapped_column(primary_key=True, default=generate_uuid)
-    user_id: Mapped[str] = mapped_column(ForeignKey("user.id"), unique=True)
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
+    user_id: Mapped[UUID] = mapped_column(Uuid, ForeignKey("user.id"), unique=True)
     name: Mapped[str] = mapped_column(String(1000))
     registered_on: Mapped[datetime] = mapped_column(TZDateTime)
-    account: Mapped[str] = mapped_column(ForeignKey("account.id"))
+    account: Mapped[UUID] = mapped_column(Uuid, ForeignKey("account.id"))
 
     workplaces = relationship(
         "Company",
@@ -129,14 +126,14 @@ class Member(Base):
 class Company(Base):
     __tablename__ = "company"
 
-    id: Mapped[str] = mapped_column(primary_key=True, default=generate_uuid)
-    user_id: Mapped[str] = mapped_column(ForeignKey("user.id"), unique=True)
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
+    user_id: Mapped[UUID] = mapped_column(Uuid, ForeignKey("user.id"), unique=True)
     name: Mapped[str] = mapped_column(String(1000))
     registered_on: Mapped[datetime] = mapped_column(TZDateTime)
-    p_account: Mapped[str] = mapped_column(ForeignKey("account.id"))
-    r_account: Mapped[str] = mapped_column(ForeignKey("account.id"))
-    a_account: Mapped[str] = mapped_column(ForeignKey("account.id"))
-    prd_account: Mapped[str] = mapped_column(ForeignKey("account.id"))
+    p_account: Mapped[UUID] = mapped_column(Uuid, ForeignKey("account.id"))
+    r_account: Mapped[UUID] = mapped_column(Uuid, ForeignKey("account.id"))
+    a_account: Mapped[UUID] = mapped_column(Uuid, ForeignKey("account.id"))
+    prd_account: Mapped[UUID] = mapped_column(Uuid, ForeignKey("account.id"))
 
     def __repr__(self):
         return "<Company(name='%s')>" % (self.name,)
@@ -151,17 +148,17 @@ class Company(Base):
 class Accountant(Base):
     __tablename__ = "accountant"
 
-    id: Mapped[str] = mapped_column(primary_key=True, default=generate_uuid)
-    user_id: Mapped[str] = mapped_column(ForeignKey("user.id"), unique=True)
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
+    user_id: Mapped[UUID] = mapped_column(Uuid, ForeignKey("user.id"), unique=True)
     name: Mapped[str] = mapped_column(String(1000))
 
 
 class PlanDraft(Base):
     __tablename__ = "plan_draft"
 
-    id: Mapped[str] = mapped_column(primary_key=True, default=generate_uuid)
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
     plan_creation_date: Mapped[datetime] = mapped_column(TZDateTime)
-    planner: Mapped[str] = mapped_column(ForeignKey("company.id"))
+    planner: Mapped[UUID] = mapped_column(Uuid, ForeignKey("company.id"))
     costs_p: Mapped[Decimal]
     costs_r: Mapped[Decimal]
     costs_a: Mapped[Decimal]
@@ -176,9 +173,9 @@ class PlanDraft(Base):
 class Plan(Base):
     __tablename__ = "plan"
 
-    id: Mapped[str] = mapped_column(primary_key=True, default=generate_uuid)
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
     plan_creation_date: Mapped[datetime] = mapped_column(TZDateTime)
-    planner: Mapped[str] = mapped_column(ForeignKey("company.id"))
+    planner: Mapped[UUID] = mapped_column(Uuid, ForeignKey("company.id"))
     costs_p: Mapped[Decimal]
     costs_r: Mapped[Decimal]
     costs_a: Mapped[Decimal]
@@ -188,8 +185,8 @@ class Plan(Base):
     description: Mapped[str] = mapped_column(String(5000))
     timeframe: Mapped[Decimal]
     is_public_service: Mapped[bool] = mapped_column(default=False)
-    requested_cooperation: Mapped[str | None] = mapped_column(
-        ForeignKey("cooperation.id")
+    requested_cooperation: Mapped[UUID | None] = mapped_column(
+        Uuid, ForeignKey("cooperation.id")
     )
     hidden_by_user: Mapped[bool] = mapped_column(default=False)
 
@@ -204,16 +201,18 @@ class Plan(Base):
 class PlanCooperation(Base):
     __tablename__ = "plan_cooperation"
 
-    plan: Mapped[str] = mapped_column(ForeignKey("plan.id"), primary_key=True)
-    cooperation: Mapped[str] = mapped_column(ForeignKey("cooperation.id"))
+    plan: Mapped[UUID] = mapped_column(Uuid, ForeignKey("plan.id"), primary_key=True)
+    cooperation: Mapped[UUID] = mapped_column(Uuid, ForeignKey("cooperation.id"))
 
 
 class PlanReview(Base):
     __tablename__ = "plan_review"
 
-    id: Mapped[str] = mapped_column(primary_key=True, default=generate_uuid)
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
     rejection_date: Mapped[datetime | None] = mapped_column(TZDateTime)
-    plan_id: Mapped[str] = mapped_column(ForeignKey("plan.id", ondelete="CASCADE"))
+    plan_id: Mapped[UUID] = mapped_column(
+        Uuid, ForeignKey("plan.id", ondelete="CASCADE")
+    )
 
     plan: Mapped["Plan"] = relationship("Plan", back_populates="review")
 
@@ -224,12 +223,14 @@ class PlanReview(Base):
 class PlanApproval(Base):
     __tablename__ = "plan_approval"
 
-    id: Mapped[str] = mapped_column(primary_key=True, default=generate_uuid)
-    plan_id: Mapped[str] = mapped_column(ForeignKey("plan.id", ondelete="CASCADE"))
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
+    plan_id: Mapped[UUID] = mapped_column(
+        Uuid, ForeignKey("plan.id", ondelete="CASCADE")
+    )
     date: Mapped[datetime] = mapped_column(TZDateTime)
-    transfer_of_credit_p: Mapped[str] = mapped_column(ForeignKey("transfer.id"))
-    transfer_of_credit_r: Mapped[str] = mapped_column(ForeignKey("transfer.id"))
-    transfer_of_credit_a: Mapped[str] = mapped_column(ForeignKey("transfer.id"))
+    transfer_of_credit_p: Mapped[UUID] = mapped_column(Uuid, ForeignKey("transfer.id"))
+    transfer_of_credit_r: Mapped[UUID] = mapped_column(Uuid, ForeignKey("transfer.id"))
+    transfer_of_credit_a: Mapped[UUID] = mapped_column(Uuid, ForeignKey("transfer.id"))
 
     plan: Mapped["Plan"] = relationship("Plan", back_populates="approval")
 
@@ -237,16 +238,20 @@ class PlanApproval(Base):
 class Account(Base):
     __tablename__ = "account"
 
-    id: Mapped[str] = mapped_column(primary_key=True, default=generate_uuid)
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
 
 
 class Transfer(Base):
     __tablename__ = "transfer"
 
-    id: Mapped[str] = mapped_column(primary_key=True, default=generate_uuid)
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
     date: Mapped[datetime] = mapped_column(TZDateTime, index=True)
-    debit_account: Mapped[str] = mapped_column(ForeignKey("account.id"), index=True)
-    credit_account: Mapped[str] = mapped_column(ForeignKey("account.id"), index=True)
+    debit_account: Mapped[UUID] = mapped_column(
+        Uuid, ForeignKey("account.id"), index=True
+    )
+    credit_account: Mapped[UUID] = mapped_column(
+        Uuid, ForeignKey("account.id"), index=True
+    )
     value: Mapped[Decimal]
     type: Mapped[TransferType]
 
@@ -267,13 +272,13 @@ class Transfer(Base):
 class PrivateConsumption(Base):
     __tablename__ = "private_consumption"
 
-    id: Mapped[str] = mapped_column(primary_key=True, default=generate_uuid)
-    plan_id: Mapped[str] = mapped_column(ForeignKey("plan.id"))
-    transfer_of_private_consumption: Mapped[str] = mapped_column(
-        ForeignKey("transfer.id")
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
+    plan_id: Mapped[UUID] = mapped_column(Uuid, ForeignKey("plan.id"))
+    transfer_of_private_consumption: Mapped[UUID] = mapped_column(
+        Uuid, ForeignKey("transfer.id")
     )
-    transfer_of_compensation: Mapped[str | None] = mapped_column(
-        ForeignKey("transfer.id")
+    transfer_of_compensation: Mapped[UUID | None] = mapped_column(
+        Uuid, ForeignKey("transfer.id")
     )
     amount: Mapped[int]
 
@@ -281,13 +286,13 @@ class PrivateConsumption(Base):
 class ProductiveConsumption(Base):
     __tablename__ = "productive_consumption"
 
-    id: Mapped[str] = mapped_column(primary_key=True, default=generate_uuid)
-    plan_id: Mapped[str] = mapped_column(ForeignKey("plan.id"))
-    transfer_of_productive_consumption: Mapped[str] = mapped_column(
-        ForeignKey("transfer.id")
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
+    plan_id: Mapped[UUID] = mapped_column(Uuid, ForeignKey("plan.id"))
+    transfer_of_productive_consumption: Mapped[UUID] = mapped_column(
+        Uuid, ForeignKey("transfer.id")
     )
-    transfer_of_compensation: Mapped[str | None] = mapped_column(
-        ForeignKey("transfer.id")
+    transfer_of_compensation: Mapped[UUID | None] = mapped_column(
+        Uuid, ForeignKey("transfer.id")
     )
     amount: Mapped[int]
 
@@ -295,58 +300,58 @@ class ProductiveConsumption(Base):
 class RegisteredHoursWorked(Base):
     __tablename__ = "registered_hours_worked"
 
-    id: Mapped[str] = mapped_column(primary_key=True, default=generate_uuid)
-    company: Mapped[str] = mapped_column(ForeignKey("company.id"))
-    worker: Mapped[str] = mapped_column(ForeignKey("member.id"))
-    transfer_of_work_certificates: Mapped[str] = mapped_column(
-        ForeignKey("transfer.id")
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
+    company: Mapped[UUID] = mapped_column(Uuid, ForeignKey("company.id"))
+    worker: Mapped[UUID] = mapped_column(Uuid, ForeignKey("member.id"))
+    transfer_of_work_certificates: Mapped[UUID] = mapped_column(
+        Uuid, ForeignKey("transfer.id")
     )
-    transfer_of_taxes: Mapped[str] = mapped_column(ForeignKey("transfer.id"))
+    transfer_of_taxes: Mapped[UUID] = mapped_column(Uuid, ForeignKey("transfer.id"))
     registered_on: Mapped[datetime] = mapped_column(TZDateTime)
 
 
 class CompanyWorkInvite(Base):
     __tablename__ = "company_work_invite"
 
-    id: Mapped[str] = mapped_column(primary_key=True, default=generate_uuid)
-    company: Mapped[str] = mapped_column(ForeignKey("company.id"))
-    member: Mapped[str] = mapped_column(ForeignKey("member.id"))
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
+    company: Mapped[UUID] = mapped_column(Uuid, ForeignKey("company.id"))
+    member: Mapped[UUID] = mapped_column(Uuid, ForeignKey("member.id"))
 
 
 class Cooperation(Base):
     __tablename__ = "cooperation"
 
-    id: Mapped[str] = mapped_column(primary_key=True, default=generate_uuid)
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
     creation_date: Mapped[datetime] = mapped_column(TZDateTime)
     name: Mapped[str] = mapped_column(String(100))
     definition: Mapped[str] = mapped_column(String(5000))
-    account: Mapped[str] = mapped_column(ForeignKey("account.id"))
+    account: Mapped[UUID] = mapped_column(Uuid, ForeignKey("account.id"))
 
 
 class CoordinationTenure(Base):
     __tablename__ = "coordination_tenure"
 
-    id: Mapped[str] = mapped_column(primary_key=True, default=generate_uuid)
-    company: Mapped[str] = mapped_column(ForeignKey("company.id"))
-    cooperation: Mapped[str] = mapped_column(ForeignKey("cooperation.id"))
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
+    company: Mapped[UUID] = mapped_column(Uuid, ForeignKey("company.id"))
+    cooperation: Mapped[UUID] = mapped_column(Uuid, ForeignKey("cooperation.id"))
     start_date: Mapped[datetime] = mapped_column(TZDateTime)
 
 
 class CoordinationTransferRequest(Base):
     __tablename__ = "coordination_transfer_request"
 
-    id: Mapped[str] = mapped_column(primary_key=True, default=generate_uuid)
-    requesting_coordination_tenure: Mapped[str] = mapped_column(
-        ForeignKey("coordination_tenure.id")
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
+    requesting_coordination_tenure: Mapped[UUID] = mapped_column(
+        Uuid, ForeignKey("coordination_tenure.id")
     )
-    candidate: Mapped[str] = mapped_column(ForeignKey("company.id"))
+    candidate: Mapped[UUID] = mapped_column(Uuid, ForeignKey("company.id"))
     request_date: Mapped[datetime] = mapped_column(TZDateTime)
 
 
 class PasswordResetRequest(Base):
     __tablename__ = "password_reset_request"
 
-    id: Mapped[str] = mapped_column(primary_key=True, default=generate_uuid)
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
     email_address: Mapped[str] = mapped_column(
         ForeignKey("email.address"), unique=False
     )

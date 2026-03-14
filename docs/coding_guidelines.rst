@@ -577,8 +577,9 @@ We work internally with the UTC timezone. To this end we use timezone-aware pyth
 datetime objects wherever possible. We convert datetime to the required timezone 
 only in the presenter layer.
 
-Currently the user timezone can only set application-wide by the server admin.
-Per-user timezones are not implemented yet.  
+The user's timezone is detected from the browser via JavaScript and stored in a
+cookie. If the cookie is not available (e.g. JavaScript is disabled), the
+``DEFAULT_USER_TIMEZONE`` configuration option is used as a fallback.
 
 
 Icons

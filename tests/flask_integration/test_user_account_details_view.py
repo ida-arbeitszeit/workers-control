@@ -52,6 +52,10 @@ class UserAccountDetailsViewTests(ViewTestCase):
 
 
 class DateAndTimezoneTestsBase(ViewTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.url = "/user/account"
+
     @property
     def configured_timezone(self) -> str | None:
         raise NotImplementedError()
@@ -76,6 +80,11 @@ class DateAndTimezoneTestsBase(ViewTestCase):
         modules.append(_Module())
         return modules
 
+    def set_cookie_for_timezone(self, timezone: str) -> None:
+        self.client.set_cookie(
+            "user_timezone", timezone, domain=self.app.config["SERVER_NAME"]
+        )
+
 
 class DateAndTimezoneTestsForTokyo(DateAndTimezoneTestsBase):
     @property
@@ -84,8 +93,8 @@ class DateAndTimezoneTestsForTokyo(DateAndTimezoneTestsBase):
 
     def test_that_current_time_is_shown_with_configured_timezone_info(self) -> None:
         self.login_user(LogInUser.member)
-        response = self.client.get("/user/account")
-        "(JST)" in response.text
+        response = self.client.get(self.url)
+        assert "(JST)" in response.text
 
 
 class DateAndTimezoneTestsForNonexistentTimezone(DateAndTimezoneTestsBase):
@@ -97,5 +106,40 @@ class DateAndTimezoneTestsForNonexistentTimezone(DateAndTimezoneTestsBase):
         self,
     ) -> None:
         self.login_user(LogInUser.member)
-        response = self.client.get("/user/account")
-        "(UTC)" in response.text
+        response = self.client.get(self.url)
+        assert "(UTC)" in response.text
+
+
+class TimezoneFromBrowserCookieTests(DateAndTimezoneTestsBase):
+    @property
+    def configured_timezone(self) -> str:
+        return "UTC"
+
+    def test_that_timezone_from_cookie_is_used_when_set(self) -> None:
+        self.login_user(LogInUser.member)
+        self.set_cookie_for_timezone("Asia/Tokyo")
+        response = self.client.get(self.url)
+        assert "(JST)" in response.text
+
+    def test_that_server_default_is_used_when_cookie_has_invalid_timezone(self) -> None:
+        self.login_user(LogInUser.member)
+        self.set_cookie_for_timezone("Invalid/Timezone")
+        response = self.client.get(self.url)
+        assert "(UTC)" in response.text
+
+    def test_that_server_default_is_used_when_no_cookie_is_set(self) -> None:
+        self.login_user(LogInUser.member)
+        response = self.client.get(self.url)
+        assert "(UTC)" in response.text
+
+
+class TimezoneFromBrowserCookieOverridesServerDefaultTests(DateAndTimezoneTestsBase):
+    @property
+    def configured_timezone(self) -> str:
+        return "Europe/Berlin"
+
+    def test_that_cookie_timezone_overrides_server_default(self) -> None:
+        self.login_user(LogInUser.member)
+        self.set_cookie_for_timezone("America/New_York")
+        response = self.client.get(self.url)
+        assert "(EST)" in response.text or "(EDT)" in response.text

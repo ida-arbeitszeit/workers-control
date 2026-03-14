@@ -3,6 +3,14 @@ function expandMenu() {
   element.classList.toggle("is-active");
 }
 
+// Detect browser timezone and store in cookie for server-side use
+(function() {
+  var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  if (tz && document.cookie.indexOf("user_timezone=" + tz) === -1) {
+    document.cookie = "user_timezone=" + tz + ";path=/;max-age=31536000;SameSite=Lax";
+  }
+})();
+
 function togglePasswordVisibility(clickedElement) {
   let input = clickedElement.parentElement.firstElementChild
   let eye = input.nextElementSibling.nextElementSibling

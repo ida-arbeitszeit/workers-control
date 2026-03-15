@@ -1,4 +1,5 @@
 from typing import Any
+from uuid import UUID
 
 from flask import Flask, session
 from flask_talisman import Talisman
@@ -86,15 +87,16 @@ def create_app(
             stored in the session.
             """
             if "user_type" in session:
+                uuid = UUID(user_id)
                 user_type = session["user_type"]
                 if user_type == "member":
-                    member_orm = db.session.query(Member).get(user_id)
+                    member_orm = db.session.query(Member).get(uuid)
                     return FlaskLoginUser(member_orm) if member_orm else None
                 elif user_type == "company":
-                    company_orm = db.session.query(Company).get(user_id)
+                    company_orm = db.session.query(Company).get(uuid)
                     return FlaskLoginUser(company_orm) if company_orm else None
                 elif user_type == "accountant":
-                    accountant_orm = db.session.query(Accountant).get(user_id)
+                    accountant_orm = db.session.query(Accountant).get(uuid)
                     return FlaskLoginUser(accountant_orm) if accountant_orm else None
             return None
 

@@ -127,7 +127,9 @@ class PlanQueryResult(SqlQueryResult[records.Plan]):
 
     def with_id_containing(self, query: str) -> Self:
         return self._with_modified_query(
-            lambda db_query: db_query.filter(models.Plan.id.contains(query))
+            lambda db_query: db_query.filter(
+                func.cast(models.Plan.id, String).contains(query)
+            )
         )
 
     def with_product_name_containing(self, query: str) -> Self:
@@ -193,13 +195,13 @@ class PlanQueryResult(SqlQueryResult[records.Plan]):
         )
 
     def planned_by(self, *company: UUID) -> Self:
-        companies = list(map(str, company))
+        companies = list(company)
         return self._with_modified_query(
             lambda query: query.filter(models.Plan.planner.in_(companies))
         )
 
     def with_id(self, *id_: UUID) -> Self:
-        ids = list(map(str, id_))
+        ids = list(id_)
         return self._with_modified_query(
             lambda query: query.filter(models.Plan.id.in_(ids))
         )
@@ -222,7 +224,7 @@ class PlanQueryResult(SqlQueryResult[records.Plan]):
     ) -> Self:
         return self._with_modified_query(
             lambda query: query.filter(
-                models.Plan.requested_cooperation == str(cooperation)
+                models.Plan.requested_cooperation == cooperation
                 if cooperation
                 else models.Plan.requested_cooperation != None
             )
@@ -233,7 +235,7 @@ class PlanQueryResult(SqlQueryResult[records.Plan]):
 
         cooperation_subquery = (
             self.db.session.query(models.PlanCooperation.cooperation)
-            .filter(models.PlanCooperation.plan == str(plan))
+            .filter(models.PlanCooperation.plan == plan)
             .scalar_subquery()
         )
 
@@ -244,7 +246,7 @@ class PlanQueryResult(SqlQueryResult[records.Plan]):
         )
 
     def that_are_part_of_cooperation(self, *cooperation: UUID) -> Self:
-        cooperations = list(map(str, cooperation))
+        cooperations = list(cooperation)
         plan_cooperation = aliased(models.PlanCooperation)
         if not cooperation:
             return self._with_modified_query(
@@ -260,7 +262,7 @@ class PlanQueryResult(SqlQueryResult[records.Plan]):
             )
 
     def that_request_cooperation_with_coordinator(self, *company: UUID) -> Self:
-        companies = list(map(str, company))
+        companies = list(company)
 
         cooperation = aliased(models.Cooperation)
         most_recent_tenure_holder = (
@@ -480,8 +482,7 @@ class PlanUpdate:
                     )
                 case self.SetCooperation(cooperation=coop_id):
                     values = [
-                        dict(plan=plan.id, cooperation=str(coop_id))
-                        for plan in self.query
+                        dict(plan=plan.id, cooperation=coop_id) for plan in self.query
                     ]
                     dialect = self.db.engine.dialect.name
                     if dialect == "postgresql":
@@ -490,7 +491,7 @@ class PlanUpdate:
                             .values(values)
                             .on_conflict_do_update(
                                 constraint="plan_cooperation_pkey",
-                                set_=dict(cooperation=str(coop_id)),
+                                set_=dict(cooperation=coop_id),
                             )
                         )
                     elif dialect == "sqlite":
@@ -499,7 +500,7 @@ class PlanUpdate:
                             .values(values)
                             .on_conflict_do_update(
                                 index_elements=[models.PlanCooperation.plan],
-                                set_=dict(cooperation=str(coop_id)),
+                                set_=dict(cooperation=coop_id),
                             )
                         )
                     else:
@@ -522,7 +523,7 @@ class PlanUpdate:
             self,
             plan_update_values=dict(
                 self.plan_update_values,
-                requested_cooperation=str(cooperation) if cooperation else None,
+                requested_cooperation=cooperation,
             ),
         )
 
@@ -547,14 +548,12 @@ class PlanUpdate:
 class PlanDraftResult(SqlQueryResult[records.PlanDraft]):
     def with_id(self, id_: UUID) -> Self:
         return self._with_modified_query(
-            lambda query: query.filter(models.PlanDraft.id == str(id_))
+            lambda query: query.filter(models.PlanDraft.id == id_)
         )
 
     def planned_by(self, *company: UUID) -> Self:
         return self._with_modified_query(
-            lambda query: query.filter(
-                models.PlanDraft.planner.in_([str(i) for i in company])
-            )
+            lambda query: query.filter(models.PlanDraft.planner.in_(list(company)))
         )
 
     def delete(self) -> int:
@@ -656,12 +655,12 @@ class PlanApprovalResult(SqlQueryResult[records.PlanApproval]): ...
 class MemberQueryResult(SqlQueryResult[records.Member]):
     def working_at_company(self, company: UUID) -> Self:
         return self._with_modified_query(
-            lambda query: query.filter(models.Member.workplaces.any(id=str(company)))
+            lambda query: query.filter(models.Member.workplaces.any(id=company))
         )
 
     def with_id(self, member: UUID) -> Self:
         return self._with_modified_query(
-            lambda query: query.filter(models.Member.id == str(member))
+            lambda query: query.filter(models.Member.id == member)
         )
 
     def with_email_address(self, email: str) -> Self:
@@ -696,7 +695,7 @@ class MemberQueryResult(SqlQueryResult[records.Member]):
 class CompanyQueryResult(SqlQueryResult[records.Company]):
     def with_id(self, id_: UUID) -> Self:
         return self._with_modified_query(
-            lambda query: query.filter(models.Company.id == str(id_))
+            lambda query: query.filter(models.Company.id == id_)
         )
 
     def with_email_address(self, email: str) -> Self:
@@ -709,7 +708,7 @@ class CompanyQueryResult(SqlQueryResult[records.Company]):
     def that_are_workplace_of_member(self, member: UUID) -> Self:
         return self._with_modified_query(
             lambda query: query.filter(
-                models.Company.workers.any(models.Member.id == str(member))
+                models.Company.workers.any(models.Member.id == member)
             )
         )
 
@@ -726,14 +725,14 @@ class CompanyQueryResult(SqlQueryResult[records.Company]):
         return self._with_modified_query(
             lambda query: query.join(
                 coop, most_recent_tenure_holder == models.Company.id
-            ).filter(coop.id == str(cooperation))
+            ).filter(coop.id == cooperation)
         )
 
     def add_worker(self, member: UUID) -> int:
         companies_changed = 0
         member_orm = (
             self.db.session.query(models.Member)
-            .filter(models.Member.id == str(member))
+            .filter(models.Member.id == member)
             .first()
         )
         assert member_orm
@@ -747,7 +746,7 @@ class CompanyQueryResult(SqlQueryResult[records.Company]):
         companies_changed = 0
         member_orm = (
             self.db.session.query(models.Member)
-            .filter(models.Member.id == str(member))
+            .filter(models.Member.id == member)
             .first()
         )
         assert member_orm
@@ -801,7 +800,7 @@ class AccountantResult(SqlQueryResult[records.Accountant]):
 
     def with_id(self, id_: UUID) -> Self:
         return self._with_modified_query(
-            lambda query: query.filter(models.Accountant.id == str(id_))
+            lambda query: query.filter(models.Accountant.id == id_)
         )
 
     def joined_with_email_address(
@@ -830,19 +829,19 @@ class AccountantResult(SqlQueryResult[records.Accountant]):
 
 class TransferQueryResult(SqlQueryResult[records.Transfer]):
     def where_account_is_debtor(self, *account: UUID) -> Self:
-        accounts = list(map(str, account))
+        accounts = list(account)
         return self._with_modified_query(
             lambda query: query.filter(models.Transfer.debit_account.in_(accounts))
         )
 
     def where_account_is_creditor(self, *account: UUID) -> Self:
-        accounts = list(map(str, account))
+        accounts = list(account)
         return self._with_modified_query(
             lambda query: query.filter(models.Transfer.credit_account.in_(accounts))
         )
 
     def where_account_is_debtor_or_creditor(self, *account: UUID) -> Self:
-        accounts = list(map(str, account))
+        accounts = list(account)
         return self._with_modified_query(
             lambda query: query.filter(
                 models.Transfer.debit_account.in_(accounts)
@@ -1103,7 +1102,7 @@ class TransferQueryResult(SqlQueryResult[records.Transfer]):
 
 class AccountQueryResult(SqlQueryResult[records.Account]):
     def with_id(self, *id_: UUID) -> Self:
-        ids = list(map(str, id_))
+        ids = list(id_)
         return self._with_modified_query(
             lambda query: query.filter(models.Account.id.in_(ids))
         )
@@ -1113,7 +1112,7 @@ class AccountQueryResult(SqlQueryResult[records.Account]):
         return self._with_modified_query(
             lambda query: query.join(
                 member, member.account == models.Account.id
-            ).filter(member.id.in_([str(m) for m in members]))
+            ).filter(member.id.in_(list(members)))
         )
 
     def owned_by_company(self, *companies: UUID) -> Self:
@@ -1127,7 +1126,7 @@ class AccountQueryResult(SqlQueryResult[records.Account]):
                     company.a_account == models.Account.id,
                     company.prd_account == models.Account.id,
                 ),
-            ).filter(company.id.in_([str(c) for c in companies]))
+            ).filter(company.id.in_(list(companies)))
         )
 
     def that_are_member_accounts(self) -> Self:
@@ -1213,7 +1212,7 @@ class ProductiveConsumptionResult(SqlQueryResult[records.ProductiveConsumption])
                     account.id == consuming_company.r_account,
                 ),
             )
-            .filter(consuming_company.id == str(company))
+            .filter(consuming_company.id == company)
         )
 
     def where_provider_is_company(self, company: UUID) -> Self:
@@ -1231,7 +1230,7 @@ class ProductiveConsumptionResult(SqlQueryResult[records.ProductiveConsumption])
                 providing_company,
                 account.id == providing_company.prd_account,
             )
-            .filter(providing_company.id == str(company))
+            .filter(providing_company.id == company)
         )
 
     def ordered_by_creation_date(self, *, ascending: bool = True) -> Self:
@@ -1395,7 +1394,7 @@ class PrivateConsumptionResult(SqlQueryResult[records.PrivateConsumption]):
                 consuming_member,
                 account.id == consuming_member.account,
             )
-            .filter(consuming_member.id == str(member))
+            .filter(consuming_member.id == member)
         )
 
     def ordered_by_creation_date(self, *, ascending: bool = True) -> Self:
@@ -1424,7 +1423,7 @@ class PrivateConsumptionResult(SqlQueryResult[records.PrivateConsumption]):
                 providing_company,
                 account.id == providing_company.prd_account,
             )
-            .filter(providing_company.id == str(company))
+            .filter(providing_company.id == company)
         )
 
     def joined_with_transfer_and_plan(
@@ -1507,7 +1506,7 @@ class PrivateConsumptionResult(SqlQueryResult[records.PrivateConsumption]):
 class CooperationResult(SqlQueryResult[records.Cooperation]):
     def with_id(self, id_: UUID) -> Self:
         return self._with_modified_query(
-            lambda query: query.filter(models.Cooperation.id == str(id_))
+            lambda query: query.filter(models.Cooperation.id == id_)
         )
 
     def with_name_ignoring_case(self, name: str) -> Self:
@@ -1526,7 +1525,7 @@ class CooperationResult(SqlQueryResult[records.Cooperation]):
             .limit(1)
             .scalar_subquery()
         )
-        query = self.query.filter(most_recent_tenure_holder == str(company_id))
+        query = self.query.filter(most_recent_tenure_holder == company_id)
         return self._with_modified_query(lambda _: query)
 
     def of_plan(self, plan_id: UUID) -> Self:
@@ -1535,7 +1534,7 @@ class CooperationResult(SqlQueryResult[records.Cooperation]):
             lambda query: query.join(
                 plan_cooperation,
                 plan_cooperation.cooperation == models.Cooperation.id,
-            ).filter(plan_cooperation.plan == str(plan_id))
+            ).filter(plan_cooperation.plan == plan_id)
         )
 
     def joined_with_current_coordinator(
@@ -1574,13 +1573,13 @@ class CooperationResult(SqlQueryResult[records.Cooperation]):
 class CoordinationTenureResult(SqlQueryResult[records.CoordinationTenure]):
     def with_id(self, id_: UUID) -> Self:
         return self._with_modified_query(
-            lambda query: query.filter(models.CoordinationTenure.id == str(id_))
+            lambda query: query.filter(models.CoordinationTenure.id == id_)
         )
 
     def of_cooperation(self, cooperation_id: UUID) -> Self:
         return self._with_modified_query(
             lambda query: query.filter(
-                models.CoordinationTenure.cooperation == str(cooperation_id)
+                models.CoordinationTenure.cooperation == cooperation_id
             )
         )
 
@@ -1621,16 +1620,14 @@ class CoordinationTransferRequestResult(
 ):
     def with_id(self, id_: UUID) -> Self:
         return self._with_modified_query(
-            lambda query: query.filter(
-                models.CoordinationTransferRequest.id == str(id_)
-            )
+            lambda query: query.filter(models.CoordinationTransferRequest.id == id_)
         )
 
     def requested_by(self, coordination_tenure: UUID) -> Self:
         return self._with_modified_query(
             lambda query: query.filter(
                 models.CoordinationTransferRequest.requesting_coordination_tenure
-                == str(coordination_tenure)
+                == coordination_tenure
             )
         )
 
@@ -1670,17 +1667,17 @@ class CoordinationTransferRequestResult(
 class CompanyWorkInviteResult(SqlQueryResult[records.CompanyWorkInvite]):
     def with_id(self, id: UUID) -> Self:
         return self._with_modified_query(
-            lambda query: query.filter(models.CompanyWorkInvite.id == str(id))
+            lambda query: query.filter(models.CompanyWorkInvite.id == id)
         )
 
     def issued_by(self, company: UUID) -> Self:
         return self._with_modified_query(
-            lambda query: query.filter(models.CompanyWorkInvite.company == str(company))
+            lambda query: query.filter(models.CompanyWorkInvite.company == company)
         )
 
     def addressing(self, member: UUID) -> Self:
         return self._with_modified_query(
-            lambda query: query.filter(models.CompanyWorkInvite.member == str(member))
+            lambda query: query.filter(models.CompanyWorkInvite.member == member)
         )
 
     def delete(self) -> None:
@@ -1721,7 +1718,7 @@ class EmailAddressResult(SqlQueryResult[records.EmailAddress]):
         return self._with_modified_query(
             lambda query: query.join(user, user.email_address == models.Email.address)
             .join(members, members.user_id == user.id)
-            .filter(members.id == str(member))
+            .filter(members.id == member)
         )
 
     def that_belong_to_company(self, company: UUID) -> Self:
@@ -1730,7 +1727,7 @@ class EmailAddressResult(SqlQueryResult[records.EmailAddress]):
         return self._with_modified_query(
             lambda query: query.join(user, user.email_address == models.Email.address)
             .join(companies, companies.user_id == user.id)
-            .filter(companies.id == str(company))
+            .filter(companies.id == company)
         )
 
     def delete(self) -> None:
@@ -1771,9 +1768,7 @@ class EmailAddressUpdate:
 class RegisteredHoursWorkedResult(SqlQueryResult[records.RegisteredHoursWorked]):
     def at_company(self, company: UUID) -> Self:
         return self._with_modified_query(
-            lambda query: query.filter(
-                models.RegisteredHoursWorked.company == str(company)
-            )
+            lambda query: query.filter(models.RegisteredHoursWorked.company == company)
         )
 
     def ordered_by_registration_time(self, *, is_ascending: bool = True) -> Self:
@@ -1875,7 +1870,7 @@ class RegisteredHoursWorkedResult(SqlQueryResult[records.RegisteredHoursWorked])
 
 class AccountCredentialsResult(SqlQueryResult[records.AccountCredentials]):
     def for_user_account_with_id(self, user_id: UUID) -> Self:
-        id_ = str(user_id)
+        id_ = user_id
         member = aliased(models.Member)
         company = aliased(models.Company)
         accountant = aliased(models.Accountant)
@@ -2111,8 +2106,8 @@ class AccountingRepository:
         cls, accounting_orm: SocialAccounting
     ) -> records.SocialAccounting:
         return records.SocialAccounting(
-            id=UUID(accounting_orm.id),
-            account_psf=UUID(accounting_orm.account_psf),
+            id=accounting_orm.id,
+            account_psf=accounting_orm.account_psf,
         )
 
     def get_or_create_social_accounting(self) -> records.SocialAccounting:
@@ -2124,17 +2119,17 @@ class AccountingRepository:
         social_accounting = self.db.session.query(models.SocialAccounting).first()
         if not social_accounting:
             social_accounting = SocialAccounting(
-                id=str(uuid4()),
+                id=uuid4(),
             )
             account_psf = self.database_gateway.create_account()
-            social_accounting.account_psf = str(account_psf.id)
+            social_accounting.account_psf = account_psf.id
             self.db.session.add(social_accounting)
             self.db.session.flush()
         return social_accounting
 
     def get_by_id(self, id: UUID) -> Optional[records.SocialAccounting]:
         accounting_orm = (
-            self.db.session.query(SocialAccounting).filter_by(id=str(id)).first()
+            self.db.session.query(SocialAccounting).filter_by(id=id).first()
         )
         if accounting_orm is None:
             return None
@@ -2169,11 +2164,9 @@ class DatabaseGatewayImpl:
         plan: UUID,
     ) -> records.ProductiveConsumption:
         orm = models.ProductiveConsumption(
-            plan_id=str(plan),
-            transfer_of_productive_consumption=str(transfer_of_productive_consumption),
-            transfer_of_compensation=(
-                str(transfer_of_compensation) if transfer_of_compensation else None
-            ),
+            plan_id=plan,
+            transfer_of_productive_consumption=transfer_of_productive_consumption,
+            transfer_of_compensation=transfer_of_compensation,
             amount=amount,
         )
         self.db.session.add(orm)
@@ -2192,15 +2185,11 @@ class DatabaseGatewayImpl:
         cls, orm: models.ProductiveConsumption
     ) -> records.ProductiveConsumption:
         return records.ProductiveConsumption(
-            id=UUID(orm.id),
-            plan_id=UUID(orm.plan_id),
-            transfer_of_productive_consumption=UUID(
-                orm.transfer_of_productive_consumption
-            ),
+            id=orm.id,
+            plan_id=orm.plan_id,
+            transfer_of_productive_consumption=orm.transfer_of_productive_consumption,
             transfer_of_compensation=(
-                UUID(orm.transfer_of_compensation)
-                if orm.transfer_of_compensation
-                else None
+                orm.transfer_of_compensation if orm.transfer_of_compensation else None
             ),
             amount=orm.amount,
         )
@@ -2213,12 +2202,10 @@ class DatabaseGatewayImpl:
         plan: UUID,
     ) -> records.PrivateConsumption:
         orm = models.PrivateConsumption(
-            id=str(uuid4()),
-            plan_id=str(plan),
-            transfer_of_private_consumption=str(transfer_of_private_consumption),
-            transfer_of_compensation=(
-                str(transfer_of_compensation) if transfer_of_compensation else None
-            ),
+            id=uuid4(),
+            plan_id=plan,
+            transfer_of_private_consumption=transfer_of_private_consumption,
+            transfer_of_compensation=transfer_of_compensation,
             amount=amount,
         )
         self.db.session.add(orm)
@@ -2237,13 +2224,11 @@ class DatabaseGatewayImpl:
         cls, orm: models.PrivateConsumption
     ) -> records.PrivateConsumption:
         return records.PrivateConsumption(
-            id=UUID(orm.id),
-            plan_id=UUID(orm.plan_id),
-            transfer_of_private_consumption=UUID(orm.transfer_of_private_consumption),
+            id=orm.id,
+            plan_id=orm.plan_id,
+            transfer_of_private_consumption=orm.transfer_of_private_consumption,
             transfer_of_compensation=(
-                UUID(orm.transfer_of_compensation)
-                if orm.transfer_of_compensation
-                else None
+                orm.transfer_of_compensation if orm.transfer_of_compensation else None
             ),
             amount=orm.amount,
         )
@@ -2268,9 +2253,9 @@ class DatabaseGatewayImpl:
         is_public_service: bool,
     ) -> records.Plan:
         plan = models.Plan(
-            id=str(uuid4()),
+            id=uuid4(),
             plan_creation_date=creation_timestamp,
-            planner=str(planner),
+            planner=planner,
             costs_p=production_costs.means_cost,
             costs_r=production_costs.resource_cost,
             costs_a=production_costs.labour_cost,
@@ -2295,9 +2280,9 @@ class DatabaseGatewayImpl:
             means_cost=plan.costs_p,
         )
         return records.Plan(
-            id=UUID(plan.id),
+            id=plan.id,
             plan_creation_date=plan.plan_creation_date,
-            planner=UUID(plan.planner),
+            planner=plan.planner,
             production_costs=production_costs,
             prd_name=plan.prd_name,
             prd_unit=plan.prd_unit,
@@ -2308,7 +2293,7 @@ class DatabaseGatewayImpl:
             approval_date=plan.approval.date if plan.approval else None,
             rejection_date=plan.review.rejection_date if plan.review else None,
             requested_cooperation=(
-                UUID(plan.requested_cooperation) if plan.requested_cooperation else None
+                plan.requested_cooperation if plan.requested_cooperation else None
             ),
             hidden_by_user=plan.hidden_by_user,
         )
@@ -2324,7 +2309,7 @@ class DatabaseGatewayImpl:
             creation_date=creation_timestamp,
             name=name,
             definition=definition,
-            account=str(account),
+            account=account,
         )
         self.db.session.add(cooperation)
         self.db.session.flush()
@@ -2340,18 +2325,18 @@ class DatabaseGatewayImpl:
     @classmethod
     def cooperation_from_orm(cls, orm: models.Cooperation) -> records.Cooperation:
         return records.Cooperation(
-            id=UUID(orm.id),
+            id=orm.id,
             creation_date=orm.creation_date,
             name=orm.name,
             definition=orm.definition,
-            account=UUID(orm.account),
+            account=orm.account,
         )
 
     def create_coordination_tenure(
         self, company: UUID, cooperation: UUID, start_date: datetime
     ) -> records.CoordinationTenure:
         coordination = models.CoordinationTenure(
-            company=str(company), cooperation=str(cooperation), start_date=start_date
+            company=company, cooperation=cooperation, start_date=start_date
         )
         self.db.session.add(coordination)
         self.db.session.flush()
@@ -2369,9 +2354,9 @@ class DatabaseGatewayImpl:
         cls, orm: models.CoordinationTenure
     ) -> records.CoordinationTenure:
         return records.CoordinationTenure(
-            id=UUID(orm.id),
-            company=UUID(orm.company),
-            cooperation=UUID(orm.cooperation),
+            id=orm.id,
+            company=orm.company,
+            cooperation=orm.cooperation,
             start_date=orm.start_date,
         )
 
@@ -2382,9 +2367,9 @@ class DatabaseGatewayImpl:
         request_date: datetime,
     ) -> records.CoordinationTransferRequest:
         orm = models.CoordinationTransferRequest(
-            id=str(uuid4()),
-            requesting_coordination_tenure=str(requesting_coordination_tenure),
-            candidate=str(candidate),
+            id=uuid4(),
+            requesting_coordination_tenure=requesting_coordination_tenure,
+            candidate=candidate,
             request_date=request_date,
         )
         self.db.session.add(orm)
@@ -2403,21 +2388,19 @@ class DatabaseGatewayImpl:
         cls, coordination_transfer_request: models.CoordinationTransferRequest
     ) -> records.CoordinationTransferRequest:
         return records.CoordinationTransferRequest(
-            id=UUID(coordination_transfer_request.id),
-            requesting_coordination_tenure=UUID(
-                coordination_transfer_request.requesting_coordination_tenure
-            ),
-            candidate=UUID(coordination_transfer_request.candidate),
+            id=coordination_transfer_request.id,
+            requesting_coordination_tenure=coordination_transfer_request.requesting_coordination_tenure,
+            candidate=coordination_transfer_request.candidate,
             request_date=coordination_transfer_request.request_date,
         )
 
     @classmethod
     def transfer_from_orm(cls, transfer: models.Transfer) -> records.Transfer:
         return records.Transfer(
-            id=UUID(transfer.id),
+            id=transfer.id,
             date=transfer.date,
-            debit_account=UUID(transfer.debit_account),
-            credit_account=UUID(transfer.credit_account),
+            debit_account=transfer.debit_account,
+            credit_account=transfer.credit_account,
             value=Decimal(transfer.value),
             type=transfer.type,
         )
@@ -2450,10 +2433,10 @@ class DatabaseGatewayImpl:
                 f"Invalid transfer type: {type}. Check if you need to create a db migration for {type.value}. Then add it to the whitelist."
             )
         transfer = models.Transfer(
-            id=str(uuid4()),
+            id=uuid4(),
             date=date,
-            debit_account=str(debit_account),
-            credit_account=str(credit_account),
+            debit_account=debit_account,
+            credit_account=credit_account,
             value=value,
             type=type,
         )
@@ -2479,9 +2462,9 @@ class DatabaseGatewayImpl:
         self, company: UUID, member: UUID
     ) -> records.CompanyWorkInvite:
         orm = models.CompanyWorkInvite(
-            id=str(uuid4()),
-            company=str(company),
-            member=str(member),
+            id=uuid4(),
+            company=company,
+            member=member,
         )
         self.db.session.add(orm)
         self.db.session.flush()
@@ -2492,17 +2475,17 @@ class DatabaseGatewayImpl:
         cls, orm: models.CompanyWorkInvite
     ) -> records.CompanyWorkInvite:
         return records.CompanyWorkInvite(
-            id=UUID(orm.id),
-            member=UUID(orm.member),
-            company=UUID(orm.company),
+            id=orm.id,
+            member=orm.member,
+            company=orm.company,
         )
 
     @classmethod
     def member_from_orm(cls, orm_object: Member) -> records.Member:
         return records.Member(
-            id=UUID(orm_object.id),
+            id=orm_object.id,
             name=orm_object.name,
-            account=UUID(orm_object.account),
+            account=orm_object.account,
             registered_on=orm_object.registered_on,
         )
 
@@ -2515,10 +2498,10 @@ class DatabaseGatewayImpl:
         registered_on: datetime,
     ) -> records.Member:
         orm_member = Member(
-            id=str(uuid4()),
-            user_id=str(account_credentials),
+            id=uuid4(),
+            user_id=account_credentials,
             name=name,
-            account=str(account.id),
+            account=account.id,
             registered_on=registered_on,
         )
         self.db.session.add(orm_member)
@@ -2535,12 +2518,12 @@ class DatabaseGatewayImpl:
     @classmethod
     def company_from_orm(cls, company_orm: Company) -> records.Company:
         return records.Company(
-            id=UUID(company_orm.id),
+            id=company_orm.id,
             name=company_orm.name,
-            means_account=UUID(company_orm.p_account),
-            raw_material_account=UUID(company_orm.r_account),
-            work_account=UUID(company_orm.a_account),
-            product_account=UUID(company_orm.prd_account),
+            means_account=company_orm.p_account,
+            raw_material_account=company_orm.r_account,
+            work_account=company_orm.a_account,
+            product_account=company_orm.prd_account,
             registered_on=company_orm.registered_on,
         )
 
@@ -2555,14 +2538,14 @@ class DatabaseGatewayImpl:
         registered_on: datetime,
     ) -> records.Company:
         company = models.Company(
-            id=str(uuid4()),
+            id=uuid4(),
             name=name,
             registered_on=registered_on,
-            user_id=str(account_credentials),
-            p_account=str(means_account.id),
-            r_account=str(resource_account.id),
-            a_account=str(labour_account.id),
-            prd_account=str(products_account.id),
+            user_id=account_credentials,
+            p_account=means_account.id,
+            r_account=resource_account.id,
+            a_account=labour_account.id,
+            prd_account=products_account.id,
         )
         self.db.session.add(company)
         self.db.session.flush()
@@ -2579,9 +2562,9 @@ class DatabaseGatewayImpl:
         self, account_credentials: UUID, name: str
     ) -> records.Accountant:
         accountant = models.Accountant(
-            id=str(uuid4()),
+            id=uuid4(),
             name=name,
-            user_id=str(account_credentials),
+            user_id=account_credentials,
         )
         self.db.session.add(accountant)
         self.db.session.flush()
@@ -2598,7 +2581,7 @@ class DatabaseGatewayImpl:
     def accountant_from_orm(cls, orm: models.Accountant) -> records.Accountant:
         return records.Accountant(
             name=orm.name,
-            id=UUID(orm.id),
+            id=orm.id,
         )
 
     @classmethod
@@ -2642,9 +2625,9 @@ class DatabaseGatewayImpl:
         creation_timestamp: datetime,
     ) -> records.PlanDraft:
         orm = PlanDraft(
-            id=str(uuid4()),
+            id=uuid4(),
             plan_creation_date=creation_timestamp,
-            planner=str(planner),
+            planner=planner,
             costs_p=costs.means_cost,
             costs_r=costs.resource_cost,
             costs_a=costs.labour_cost,
@@ -2669,9 +2652,9 @@ class DatabaseGatewayImpl:
     @classmethod
     def plan_draft_from_orm(cls, orm: models.PlanDraft) -> records.PlanDraft:
         return records.PlanDraft(
-            id=UUID(orm.id),
+            id=orm.id,
             creation_date=orm.plan_creation_date,
-            planner=UUID(orm.planner),
+            planner=orm.planner,
             production_costs=records.ProductionCosts(
                 labour_cost=orm.costs_a,
                 resource_cost=orm.costs_r,
@@ -2688,11 +2671,11 @@ class DatabaseGatewayImpl:
     @classmethod
     def account_from_orm(cls, account_orm: Account) -> records.Account:
         return records.Account(
-            id=UUID(account_orm.id),
+            id=account_orm.id,
         )
 
     def create_account(self) -> records.Account:
-        account = Account(id=str(uuid4()))
+        account = Account(id=uuid4())
         self.db.session.add(account)
         self.db.session.flush()
         return self.account_from_orm(account)
@@ -2708,7 +2691,7 @@ class DatabaseGatewayImpl:
         self, email_address: str, password_hash: str
     ) -> records.AccountCredentials:
         orm = models.User(
-            id=str(uuid4()),
+            id=uuid4(),
             password=password_hash,
             email_address=email_address,
         )
@@ -2726,7 +2709,7 @@ class DatabaseGatewayImpl:
     @classmethod
     def account_credentials_from_orm(cls, orm: Any) -> records.AccountCredentials:
         return records.AccountCredentials(
-            id=UUID(orm.id),
+            id=orm.id,
             email_address=orm.email_address,
             password_hash=orm.password,
         )
@@ -2736,7 +2719,7 @@ class DatabaseGatewayImpl:
         cls, password_reset_request_orm: models.PasswordResetRequest
     ) -> records.PasswordResetRequest:
         return records.PasswordResetRequest(
-            id=UUID(password_reset_request_orm.id),
+            id=password_reset_request_orm.id,
             email_address=password_reset_request_orm.email_address,
             reset_token=password_reset_request_orm.reset_token,
             created_at=password_reset_request_orm.created_at,
@@ -2768,10 +2751,10 @@ class DatabaseGatewayImpl:
         registered_on: datetime,
     ) -> records.RegisteredHoursWorked:
         db_record = models.RegisteredHoursWorked(
-            company=str(company),
-            worker=str(member),
-            transfer_of_work_certificates=str(transfer_of_work_certificates),
-            transfer_of_taxes=str(transfer_of_taxes),
+            company=company,
+            worker=member,
+            transfer_of_work_certificates=transfer_of_work_certificates,
+            transfer_of_taxes=transfer_of_taxes,
             registered_on=registered_on,
         )
         self.db.session.add(db_record)
@@ -2790,11 +2773,11 @@ class DatabaseGatewayImpl:
         cls, db_record: models.RegisteredHoursWorked
     ) -> records.RegisteredHoursWorked:
         return records.RegisteredHoursWorked(
-            id=UUID(db_record.id),
-            company=UUID(db_record.company),
-            member=UUID(db_record.worker),
-            transfer_of_work_certificates=UUID(db_record.transfer_of_work_certificates),
-            transfer_of_taxes=UUID(db_record.transfer_of_taxes),
+            id=db_record.id,
+            company=db_record.company,
+            member=db_record.worker,
+            transfer_of_work_certificates=db_record.transfer_of_work_certificates,
+            transfer_of_taxes=db_record.transfer_of_taxes,
             registered_on=db_record.registered_on,
         )
 
@@ -2807,14 +2790,14 @@ class DatabaseGatewayImpl:
         transfer_of_credit_a: UUID,
     ) -> records.PlanApproval:
         approval_orm = models.PlanApproval(
-            id=str(uuid4()),
-            plan_id=str(plan_id),
+            id=uuid4(),
+            plan_id=plan_id,
             date=date,
-            transfer_of_credit_p=str(transfer_of_credit_p),
-            transfer_of_credit_r=str(transfer_of_credit_r),
-            transfer_of_credit_a=str(transfer_of_credit_a),
+            transfer_of_credit_p=transfer_of_credit_p,
+            transfer_of_credit_r=transfer_of_credit_r,
+            transfer_of_credit_a=transfer_of_credit_a,
         )
-        plan_orm = self.db.session.query(models.Plan).filter_by(id=str(plan_id)).first()
+        plan_orm = self.db.session.query(models.Plan).filter_by(id=plan_id).first()
         assert plan_orm
         plan_orm.approval = approval_orm
         self.db.session.add(approval_orm)
@@ -2824,12 +2807,12 @@ class DatabaseGatewayImpl:
     @classmethod
     def plan_approval_from_orm(cls, orm: models.PlanApproval) -> records.PlanApproval:
         return records.PlanApproval(
-            id=UUID(orm.id),
-            plan_id=UUID(orm.plan_id),
+            id=orm.id,
+            plan_id=orm.plan_id,
             date=orm.date,
-            transfer_of_credit_p=UUID(orm.transfer_of_credit_p),
-            transfer_of_credit_r=UUID(orm.transfer_of_credit_r),
-            transfer_of_credit_a=UUID(orm.transfer_of_credit_a),
+            transfer_of_credit_p=orm.transfer_of_credit_p,
+            transfer_of_credit_r=orm.transfer_of_credit_r,
+            transfer_of_credit_a=orm.transfer_of_credit_a,
         )
 
     def get_plan_approvals(self) -> PlanApprovalResult:

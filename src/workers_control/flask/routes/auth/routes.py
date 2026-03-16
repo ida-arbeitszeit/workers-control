@@ -27,6 +27,10 @@ from workers_control.flask.dependency_injection import with_injection
 from workers_control.flask.flask_session import FlaskSession
 from workers_control.flask.forms import LoginForm
 from workers_control.flask.types import Response
+from workers_control.flask.views.request_password_reset_view import (
+    RequestPasswordResetView,
+)
+from workers_control.flask.views.reset_password_view import ResetPasswordView
 from workers_control.flask.views.signup_accountant_view import SignupAccountantView
 from workers_control.flask.views.signup_company_view import SignupCompanyView
 from workers_control.flask.views.signup_member_view import SignupMemberView
@@ -288,3 +292,13 @@ def login_accountant(
 def logout(flask_session: FlaskSession):
     flask_session.logout()
     return redirect(url_for("auth.start"))
+
+
+@auth.route("/request-password-reset", methods=["GET", "POST"])
+@as_flask_view()
+class request_password_reset(RequestPasswordResetView): ...
+
+
+@auth.route("/reset-password/<token>", methods=["GET", "POST"])
+@as_flask_view()
+class reset_password(ResetPasswordView): ...

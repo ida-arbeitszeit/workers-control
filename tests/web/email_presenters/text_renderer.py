@@ -24,3 +24,5 @@ class TextRendererImpl:
     render_email_change_warning = RenderMethod()
     render_email_change_notification = RenderMethod()
     render_company_notification_about_rejected_plan = RenderMethod()
+    render_password_reset_request_email = RenderMethod()
+    render_password_reset_confirmation_email = RenderMethod()

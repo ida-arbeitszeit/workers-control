@@ -52,3 +52,14 @@ class TextRendererImpl:
             plan_id=plan_id,
             company_name=company_name,
         )
+
+    def render_password_reset_request_email(self, *, reset_url: str) -> str:
+        return render_template(
+            "auth/reset_password_email.html",
+            reset_url=reset_url,
+        )
+
+    def render_password_reset_confirmation_email(self) -> str:
+        return render_template(
+            "auth/password_reset_confirmation_email.html",
+        )

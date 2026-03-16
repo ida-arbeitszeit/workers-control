@@ -18,6 +18,7 @@ from .notify_accountant_about_new_plan_presenter import (
     NotifyAccountantsAboutNewPlanPresenterImpl,
 )
 from .registration_email_presenter import RegistrationEmailPresenter
+from .reset_password_email_presenter import ResetPasswordEmailPresenter
 
 
 @dataclass
@@ -34,6 +35,7 @@ class EmailSender:
         RequestCoordinationTransferEmailPresenter
     )
     company_notifier: CompanyNotifier
+    reset_password_email_presenter: ResetPasswordEmailPresenter
 
     def send_email(self, message: interface.Message) -> None:
         if isinstance(message, interface.MemberRegistration):
@@ -71,6 +73,12 @@ class EmailSender:
             self.request_coordination_transfer_email_presenter.present(message)
         elif isinstance(message, interface.RejectedPlanNotification):
             self.company_notifier.notify_planning_company_about_rejected_plan(message)
+        elif isinstance(message, interface.ResetPasswordRequest):
+            self.reset_password_email_presenter.present_reset_password_request(message)
+        elif isinstance(message, interface.ResetPasswordConfirmation):
+            self.reset_password_email_presenter.present_reset_password_confirmation(
+                message
+            )
 
         else:
             raise NotImplementedError()

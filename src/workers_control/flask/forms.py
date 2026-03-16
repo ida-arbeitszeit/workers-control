@@ -340,3 +340,32 @@ class ConfirmEmailAddressChangeForm(Form):
 
     def is_accepted_field(self) -> WtFormField[bool]:
         return WtFormField(self.is_accepted)
+
+
+class RequestPasswordResetForm(Form):
+    email = StringField(
+        trans.lazy_gettext("Email"),
+        validators=[
+            validators.InputRequired(
+                message=trans.lazy_gettext("Email address required")
+            )
+        ],
+    )
+
+
+class ResetPasswordForm(Form):
+    password = PasswordField(
+        trans.lazy_gettext("Password"),
+        validators=[
+            validators.Length(
+                min=8,
+                message=trans.lazy_gettext(
+                    "The password must be at least 8 characters in length"
+                ),
+            ),
+            validators.EqualTo(
+                "repeat_password", message=trans.lazy_gettext("Passwords must match")
+            ),
+        ],
+    )
+    repeat_password = PasswordField(trans.lazy_gettext("Repeat Password"))

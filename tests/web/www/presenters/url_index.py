@@ -94,3 +94,5 @@ class UrlIndexTestImpl:
     get_work_invite_url = UrlIndexMethod()
     get_payout_factor_details_url = UrlIndexMethod()
     get_global_statistics_url = UrlIndexMethod()
+    get_request_password_reset_url = UrlIndexMethod()
+    get_password_reset_url = UrlIndexMethod()

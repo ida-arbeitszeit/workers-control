@@ -47,6 +47,11 @@
                 {{ gettext("Click here to create a new account.") }}
               </a>
             </div>
+            <div class="box has-text-centered">
+              <a href="{{ url_for('auth.request_password_reset') }}">
+                {{ gettext("Forgot password?") }}
+              </a>
+            </div>
         </div>
     </div>
 </div>

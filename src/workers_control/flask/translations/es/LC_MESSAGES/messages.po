@@ -155,7 +155,7 @@ msgid "Definition"
 msgstr "Definición"
 
 #: src/workers_control/flask/forms.py:265
-#: src/workers_control/flask/routes/plots/routes.py:103
+#: src/workers_control/flask/routes/plots/routes.py:79
 #: src/workers_control/flask/templates/company/my_consumptions.html:28
 #: src/workers_control/flask/templates/company/register_hours_worked.html:20
 #: src/workers_control/flask/templates/company/register_productive_consumption.html:54
@@ -214,42 +214,32 @@ msgstr "Ventana de cálculo"
 msgid "Now"
 msgstr "Ahora"
 
-#: src/workers_control/flask/routes/plots/routes.py:42
-#: src/workers_control/web/www/presenters/transfers.py:108
-msgid "Work certificates"
-msgstr "Certificados de trabajo"
-
 #: src/workers_control/flask/routes/plots/routes.py:43
-msgid "Available product"
-msgstr "Producto disponible"
+msgctxt "Text should be short"
+msgid "Fixed means"
+msgstr "Medios fijos"
 
-#: src/workers_control/flask/routes/plots/routes.py:51
-#: src/workers_control/flask/routes/plots/routes.py:82
+#: src/workers_control/flask/routes/plots/routes.py:44
+msgctxt "Text should be short"
+msgid "Liquid means"
+msgstr "Medios líquidos"
+
+#: src/workers_control/flask/routes/plots/routes.py:45
+msgid "Work"
+msgstr "Trabajo"
+
+#: src/workers_control/flask/routes/plots/routes.py:58
 #: src/workers_control/flask/templates/macros/draft_form.html:88
 #: src/workers_control/flask/templates/macros/draft_form.html:100
 #: src/workers_control/flask/templates/macros/draft_form.html:112
 msgid "Hours"
 msgstr "Horas"
 
-#: src/workers_control/flask/routes/plots/routes.py:67
-msgctxt "Text should be short"
-msgid "Fixed means"
-msgstr "Medios fijos"
-
-#: src/workers_control/flask/routes/plots/routes.py:68
-msgctxt "Text should be short"
-msgid "Liquid means"
-msgstr "Medios líquidos"
-
-#: src/workers_control/flask/routes/plots/routes.py:69
-msgid "Work"
-msgstr "Trabajo"
-
-#: src/workers_control/flask/routes/plots/routes.py:97
+#: src/workers_control/flask/routes/plots/routes.py:73
 msgid "Productive plans"
 msgstr "Planes productivos"
 
-#: src/workers_control/flask/routes/plots/routes.py:98
+#: src/workers_control/flask/routes/plots/routes.py:74
 msgid "Public plans"
 msgstr "Planes públicos"
 
@@ -1908,42 +1898,30 @@ msgstr "Ir a los detalles de la cuenta"
 msgid "Planned ressources"
 msgstr "Recursos planificados"
 
-#: src/workers_control/flask/templates/user/statistics.html:65
-msgid "Certificates and products"
-msgstr "Certificados y productos"
-
-#: src/workers_control/flask/templates/user/statistics.html:75
+#: src/workers_control/flask/templates/user/statistics.html:69
 msgid "Active plans"
 msgstr "Planes activos"
 
-#: src/workers_control/flask/templates/user/statistics.html:76
+#: src/workers_control/flask/templates/user/statistics.html:70
 msgid "Public active plans"
 msgstr "Planes activos públicos"
 
-#: src/workers_control/flask/templates/user/statistics.html:77
-#: src/workers_control/flask/templates/user/statistics.html:86
+#: src/workers_control/flask/templates/user/statistics.html:71
+#: src/workers_control/flask/templates/user/statistics.html:78
 msgid "Average plan duration"
 msgstr "Duración media del plan"
 
-#: src/workers_control/flask/templates/user/statistics.html:78
+#: src/workers_control/flask/templates/user/statistics.html:72
 msgid "Currently planned fixed means"
 msgstr "Medios fijos planificados actualmente"
 
-#: src/workers_control/flask/templates/user/statistics.html:79
+#: src/workers_control/flask/templates/user/statistics.html:73
 msgid "Currently planned liquid means"
 msgstr "Medios líquidos planificados actualmente"
 
-#: src/workers_control/flask/templates/user/statistics.html:80
+#: src/workers_control/flask/templates/user/statistics.html:74
 msgid "Currently planned work"
 msgstr "Trabajo planificado actualmente"
-
-#: src/workers_control/flask/templates/user/statistics.html:81
-msgid "Available work certificates"
-msgstr "Certificados de trabajo disponibles"
-
-#: src/workers_control/flask/templates/user/statistics.html:82
-msgid "Available product (no public products)"
-msgstr "Producto disponible (sin productos públicos)"
 
 #: src/workers_control/flask/views/create_draft_view.py:52
 msgid "Draft successfully saved."
@@ -2319,9 +2297,9 @@ msgid "Closed"
 msgstr "Cerrado"
 
 #: src/workers_control/web/www/presenters/get_member_dashboard_presenter.py:64
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:40
 #: src/workers_control/web/www/presenters/get_statistics_presenter.py:43
 #: src/workers_control/web/www/presenters/get_statistics_presenter.py:46
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:49
 #, python-format
 msgid "%(num).2f hours"
 msgstr "%(num).2f horas"
@@ -2336,7 +2314,7 @@ msgstr "¡Bienvenido/a, %s!"
 msgid "Company %(company)s has invited you!"
 msgstr "¡La empresa %(company)s te ha invitado!"
 
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:40
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:37
 #, python-format
 msgid "%(num).2f days"
 msgstr "%(num).2f días"
@@ -2686,6 +2664,10 @@ msgstr "Compensación por planificación sobreproductiva"
 msgid "Compensation for underproductive planning"
 msgstr "Compensación por planificación subproductiva"
 
+#: src/workers_control/web/www/presenters/transfers.py:108
+msgid "Work certificates"
+msgstr "Certificados de trabajo"
+
 #: src/workers_control/web/www/presenters/transfers.py:110
 msgid "Contribution to public sector"
 msgstr "Contribución al sector público"
@@ -2830,4 +2812,16 @@ msgstr "Contribución al sector público"
 
 #~ msgid "Planned labour (public service)"
 #~ msgstr "Trabajo planificado (servicio público)"
+
+#~ msgid "Available product"
+#~ msgstr "Producto disponible"
+
+#~ msgid "Certificates and products"
+#~ msgstr "Certificados y productos"
+
+#~ msgid "Available work certificates"
+#~ msgstr "Certificados de trabajo disponibles"
+
+#~ msgid "Available product (no public products)"
+#~ msgstr "Producto disponible (sin productos públicos)"
 

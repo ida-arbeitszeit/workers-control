@@ -75,15 +75,6 @@ class GeneralUrlIndex:
             plan_id=plan_id,
         )
 
-    def get_global_barplot_for_certificates_url(
-        self, certificates_count: Decimal, available_product: Decimal
-    ) -> str:
-        return url_for(
-            endpoint="plots.global_barplot_for_certificates",
-            certificates_count=str(certificates_count),
-            available_product=str(available_product),
-        )
-
     def get_global_barplot_for_means_of_production_url(
         self, planned_means: Decimal, planned_resources: Decimal, planned_work: Decimal
     ) -> str:

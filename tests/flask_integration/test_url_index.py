@@ -20,14 +20,6 @@ class PlotUrlIndexTests(ViewTestCase):
         super().setUp()
         self.company = self.login_company()
 
-    def test_url_for_barplot_for_certificates_returns_png(self) -> None:
-        url = self.url_index.get_global_barplot_for_certificates_url(
-            certificates_count=Decimal("10"), available_product=Decimal("5")
-        )
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.mimetype, "image/png")
-
     def test_url_for_barplot_for_means_of_productions_returns_png(self) -> None:
         url = self.url_index.get_global_barplot_for_means_of_production_url(
             planned_means=Decimal("10"),

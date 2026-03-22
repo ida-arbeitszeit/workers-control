@@ -26,6 +26,7 @@ class RequestUserPasswordResetTest(BaseTestCase):
 
     def test_reset_password_request_message_is_sent(self):
         sent_to_email = "test@email.com"
+        self.member_generator.create_member(email=sent_to_email)
         self.interactor.reset_user_password(
             request_user_password_reset.Request(
                 email_address=sent_to_email, reset_token="some_reset_token"
@@ -40,6 +41,7 @@ class RequestUserPasswordResetTest(BaseTestCase):
         self,
     ):
         sent_to_email = "test@email.com"
+        self.member_generator.create_member(email=sent_to_email)
         self.datetime_service.freeze_time(datetime_utc(2024, 2, 21, hour=10))
         for _ in range(request_user_password_reset.Config.max_reset_requests + 1):
             self.interactor.reset_user_password(
@@ -56,6 +58,7 @@ class RequestUserPasswordResetTest(BaseTestCase):
 
     def test_all_reset_password_request_messages_are_sent_over_a_long_time_period(self):
         sent_to_email = "test@email.com"
+        self.member_generator.create_member(email=sent_to_email)
         self.datetime_service.freeze_time(datetime_utc(2024, 2, 21, hour=10))
         total_number_sent_over_threshold = (
             request_user_password_reset.Config.max_reset_requests + 5
@@ -78,6 +81,8 @@ class RequestUserPasswordResetTest(BaseTestCase):
     def test_reset_password_request_messages_for_different_emails_are_sent(self):
         sent_to_email1 = "test1@email.com"
         sent_to_email2 = "test2@email.com"
+        self.member_generator.create_member(email=sent_to_email1)
+        self.member_generator.create_member(email=sent_to_email2)
         number_of_requests = 3
         self.datetime_service.freeze_time(datetime_utc(2024, 2, 21, hour=10))
         for _ in range(number_of_requests):

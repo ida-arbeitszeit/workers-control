@@ -42,6 +42,11 @@
                     <button class="button is-block is-primary is-large is-fullwidth">{{ gettext("Login") }}</button>
                 </form>
             </div>
+            <div class="box has-text-centered">
+              <a href="{{ url_for('auth.request_password_reset') }}">
+                {{ gettext("Forgot password?") }}
+              </a>
+            </div>
         </div>
     </div>
 </div>

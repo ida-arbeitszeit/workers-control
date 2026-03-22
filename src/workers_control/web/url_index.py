@@ -154,6 +154,10 @@ class UrlIndex(Protocol):
 
     def get_global_statistics_url(self) -> str: ...
 
+    def get_request_password_reset_url(self) -> str: ...
+
+    def get_password_reset_url(self, *, token: str) -> str: ...
+
 
 @dataclass
 class UserUrlIndex:

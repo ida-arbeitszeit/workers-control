@@ -261,3 +261,9 @@ class GeneralUrlIndex:
 
     def get_global_statistics_url(self) -> str:
         return url_for("main_user.statistics")
+
+    def get_request_password_reset_url(self) -> str:
+        return url_for("auth.request_password_reset")
+
+    def get_password_reset_url(self, *, token: str) -> str:
+        return url_for("auth.reset_password", token=token, _external=True)

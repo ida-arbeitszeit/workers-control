@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.6] - 2026-03-22
+
+### Added
+
+- Password reset functionality for members, companies and accountants. Users can request a password reset via a "Forgot password?" button on the login pages. (#1404)
+- User timezone detection from the browser. Timestamps are now displayed in the user's local timezone instead of the server's timezone. (#1402)
+- Documentation for inviting accountants via CLI in production. (#1398)
+
+### Changed
+
+- Rework accountant registration use case. Improve user feedback on invite-accountant CLI command. Display warning to users when a registration token is invalid. (#1401)
+- Use SQLAlchemy's native Uuid type for UUID columns, eliminating manual UUID/string conversions in the repository layer. Includes a database migration. (#1403)
+- Add bash to nix devShell as a workaround for a GitHub Copilot CLI bug. (#1400)
+- Update German and Spanish translations. (#1407)
+
+### Removed
+
+- Back button from the start page. (#1399)
+
 ## [0.1.5] - 2026-03-10
 
 ### Added

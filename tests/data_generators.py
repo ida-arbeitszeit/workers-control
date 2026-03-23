@@ -24,6 +24,10 @@ from workers_control.core.interactors.answer_company_work_invite import (
 )
 from workers_control.core.interactors.approve_plan import ApprovePlanInteractor
 from workers_control.core.interactors.confirm_company import ConfirmCompanyInteractor
+from workers_control.core.interactors.create_basic_service import (
+    CreateBasicServiceInteractor,
+    CreateBasicServiceRequest,
+)
 from workers_control.core.interactors.create_cooperation import (
     CreateCooperationInteractor,
     CreateCooperationRequest,
@@ -691,3 +695,28 @@ class RegisteredHoursWorkedGenerator:
         )
         response = self.interactor.execute(request)
         assert not response.is_rejected
+
+
+@dataclass
+class BasicServiceGenerator:
+    interactor: CreateBasicServiceInteractor
+    member_generator: MemberGenerator
+
+    def create_basic_service(
+        self,
+        *,
+        member: UUID | None = None,
+        name: str = "Default Basic Service",
+        description: str = "Default description",
+    ) -> UUID:
+        if member is None:
+            member = self.member_generator.create_member()
+        request = CreateBasicServiceRequest(
+            member_id=member,
+            name=name,
+            description=description,
+        )
+        response = self.interactor.execute(request)
+        assert not response.is_rejected
+        assert response.basic_service_id is not None
+        return response.basic_service_id

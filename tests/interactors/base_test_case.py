@@ -4,6 +4,7 @@ from unittest import TestCase
 from tests.control_thresholds import ControlThresholdsTestImpl
 from tests.data_generators import (
     AccountantGenerator,
+    BasicServiceGenerator,
     CompanyGenerator,
     ConsumptionGenerator,
     CooperationGenerator,
@@ -42,6 +43,7 @@ class BaseTestCase(TestCase):
     # alphabetically
     accountant_generator = _lazy_property(AccountantGenerator)
     balance_checker = _lazy_property(BalanceChecker)
+    basic_service_generator = _lazy_property(BasicServiceGenerator)
     company_generator = _lazy_property(CompanyGenerator)
     consumption_generator = _lazy_property(ConsumptionGenerator)
     control_thresholds = _lazy_property(ControlThresholdsTestImpl)

@@ -1,7 +1,12 @@
 from typing import Any, Dict
 from unittest import TestCase
 
-from tests.data_generators import AccountantGenerator, CompanyGenerator, MemberGenerator
+from tests.data_generators import (
+    AccountantGenerator,
+    BasicServiceGenerator,
+    CompanyGenerator,
+    MemberGenerator,
+)
 from tests.datetime_service import FakeDatetimeService
 from tests.lazy_property import _lazy_property
 from tests.token import FakeTokenService
@@ -34,6 +39,7 @@ class BaseTestCase(TestCase):
     # It would be nice to have the following list sorted
     # alphabetically
     accountant_generator = _lazy_property(AccountantGenerator)
+    basic_service_generator = _lazy_property(BasicServiceGenerator)
     company_generator = _lazy_property(CompanyGenerator)
     datetime_service = _lazy_property(FakeDatetimeService)
     datetime_formatter = _lazy_property(FakeDatetimeFormatter)

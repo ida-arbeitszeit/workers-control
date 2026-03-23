@@ -324,6 +324,15 @@ class PasswordResetRequest:
 
 
 @dataclass
+class BasicService:
+    id: UUID
+    name: str
+    description: str
+    provider: UUID
+    created_on: datetime
+
+
+@dataclass
 class RegisteredHoursWorked:
     id: UUID
     company: UUID

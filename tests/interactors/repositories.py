@@ -28,6 +28,7 @@ from workers_control.core.injector import singleton
 from workers_control.core.records import (
     Account,
     Accountant,
+    BasicService,
     Company,
     CompanyWorkInvite,
     Cooperation,
@@ -1674,6 +1675,14 @@ class AccountCredentialsUpdate:
         return replace(self, actions=self.actions + [_change_action])
 
 
+class BasicServiceResult(QueryResultImpl[BasicService]):
+    def with_id(self, id_: UUID) -> Self:
+        return self._filter_elements(lambda s: s.id == id_)
+
+    def of_provider(self, member: UUID) -> Self:
+        return self._filter_elements(lambda s: s.provider == member)
+
+
 @singleton
 class FakeLanguageRepository:
     def __init__(self) -> None:
@@ -1718,6 +1727,7 @@ class MockDatabase:
         self.reset_password_requests: List[records.PasswordResetRequest] = list()
         self.registered_hours_worked: list[records.RegisteredHoursWorked] = list()
         self.plan_approvals: List[records.PlanApproval] = list()
+        self.basic_services: Dict[UUID, BasicService] = dict()
         self.indices = Indices()
         self.relationships = Relationships()
 
@@ -2168,6 +2178,29 @@ class MockDatabase:
         return PlanApprovalResult(
             database=self,
             items=lambda: self.plan_approvals,
+        )
+
+    def create_basic_service(
+        self,
+        name: str,
+        description: str,
+        provider: UUID,
+        created_on: datetime,
+    ) -> records.BasicService:
+        record = records.BasicService(
+            id=uuid4(),
+            name=name,
+            description=description,
+            provider=provider,
+            created_on=created_on,
+        )
+        self.basic_services[record.id] = record
+        return record
+
+    def get_basic_services(self) -> BasicServiceResult:
+        return BasicServiceResult(
+            database=self,
+            items=self.basic_services.values,
         )
 
 

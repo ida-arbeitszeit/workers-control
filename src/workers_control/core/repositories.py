@@ -503,6 +503,12 @@ class RegisteredHoursWorkedResult(QueryResult[records.RegisteredHoursWorked], Pr
     ]: ...
 
 
+class BasicServiceResult(QueryResult[records.BasicService], Protocol):
+    def with_id(self, id_: UUID) -> Self: ...
+
+    def of_provider(self, member: UUID) -> Self: ...
+
+
 class DatabaseGateway(Protocol):
     def create_private_consumption(
         self,
@@ -671,3 +677,13 @@ class DatabaseGateway(Protocol):
     ) -> records.PlanApproval: ...
 
     def get_plan_approvals(self) -> PlanApprovalResult: ...
+
+    def create_basic_service(
+        self,
+        name: str,
+        description: str,
+        provider: UUID,
+        created_on: datetime,
+    ) -> records.BasicService: ...
+
+    def get_basic_services(self) -> BasicServiceResult: ...

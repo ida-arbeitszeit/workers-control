@@ -2152,6 +2152,18 @@ class PasswordResetRequestResult(SqlQueryResult[records.PasswordResetRequest]):
         )
 
 
+class BasicServiceResult(SqlQueryResult[records.BasicService]):
+    def with_id(self, id_: UUID) -> Self:
+        return self._with_modified_query(
+            lambda query: query.filter(models.BasicService.id == id_)
+        )
+
+    def of_provider(self, member: UUID) -> Self:
+        return self._with_modified_query(
+            lambda query: query.filter(models.BasicService.provider == member)
+        )
+
+
 @dataclass
 class DatabaseGatewayImpl:
     db: Database
@@ -2820,4 +2832,39 @@ class DatabaseGatewayImpl:
             db=self.db,
             query=self.db.session.query(models.PlanApproval),
             mapper=self.plan_approval_from_orm,
+        )
+
+    @classmethod
+    def basic_service_from_orm(cls, orm: models.BasicService) -> records.BasicService:
+        return records.BasicService(
+            id=orm.id,
+            name=orm.name,
+            description=orm.description,
+            provider=orm.provider,
+            created_on=orm.created_on,
+        )
+
+    def create_basic_service(
+        self,
+        name: str,
+        description: str,
+        provider: UUID,
+        created_on: datetime,
+    ) -> records.BasicService:
+        service = models.BasicService(
+            id=uuid4(),
+            name=name,
+            description=description,
+            provider=provider,
+            created_on=created_on,
+        )
+        self.db.session.add(service)
+        self.db.session.flush()
+        return self.basic_service_from_orm(service)
+
+    def get_basic_services(self) -> BasicServiceResult:
+        return BasicServiceResult(
+            db=self.db,
+            query=self.db.session.query(models.BasicService),
+            mapper=self.basic_service_from_orm,
         )

@@ -357,3 +357,13 @@ class PasswordResetRequest(Base):
     )
     reset_token: Mapped[str] = mapped_column(String(300))
     created_at: Mapped[datetime] = mapped_column(TZDateTime)
+
+
+class BasicService(Base):
+    __tablename__ = "basic_service"
+
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
+    name: Mapped[str] = mapped_column(String(1000))
+    description: Mapped[str] = mapped_column(String(5000))
+    provider: Mapped[UUID] = mapped_column(Uuid, ForeignKey("member.id"))
+    created_on: Mapped[datetime] = mapped_column(TZDateTime)

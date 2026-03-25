@@ -33,5 +33,5 @@ jobs:
       - name: nix flake check (deployment, override workers-control to PR checkout)
         working-directory: workers-control-deployment
         run: |
-          nix flake check --print-build-logs \
+          nix flake check -j auto --print-build-logs \
             --override-input workers-control "path:${{ github.workspace }}"

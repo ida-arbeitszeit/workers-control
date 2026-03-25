@@ -493,3 +493,10 @@ class GeneralUrlIndexTests(ViewTestCase):
         url = self.url_index.get_global_statistics_url()
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
+
+    def test_that_basic_service_url_leads_to_functional_url(self) -> None:
+        self.login_member()
+        basic_service_id = self.basic_service_generator.create_basic_service()
+        url = self.url_index.get_basic_service_url(basic_service_id=basic_service_id)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)

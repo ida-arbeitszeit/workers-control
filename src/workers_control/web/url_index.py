@@ -158,6 +158,8 @@ class UrlIndex(Protocol):
 
     def get_password_reset_url(self, *, token: str) -> str: ...
 
+    def get_basic_service_url(self, basic_service_id: UUID) -> str: ...
+
 
 @dataclass
 class UserUrlIndex:

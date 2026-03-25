@@ -30,7 +30,7 @@ jobs:
       with:
         name: arbeitszeit-2
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN_2 }}'
-    - run: nix flake check --print-build-logs
+    - run: nix flake check -j auto --print-build-logs
 
   check-migrations:
     runs-on: ubuntu-latest

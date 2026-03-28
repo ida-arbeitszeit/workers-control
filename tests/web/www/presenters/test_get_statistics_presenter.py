@@ -11,8 +11,6 @@ TESTING_RESPONSE_MODEL = StatisticsResponse(
     registered_companies_count=5,
     registered_members_count=30,
     cooperations_count=10,
-    certificates_count=Decimal("50"),
-    available_product_in_productive_sector=Decimal("20.5"),
     active_plans_count=6,
     active_plans_public_count=2,
     avg_timeframe=Decimal("30.5"),
@@ -97,28 +95,6 @@ class GetStatisticsPresenterTests(BaseTestCase):
             "11",
         )
 
-    def test_certificates_count_is_displayed_correctly_as_number(self) -> None:
-        response = replace(
-            TESTING_RESPONSE_MODEL,
-            certificates_count=Decimal(50.5),
-        )
-        view_model = self.presenter.present(response)
-        self.assertEqual(
-            view_model.certificates_count,
-            "50.50",
-        )
-
-    def test_available_prdocut_is_displayed_correctly_as_number(self) -> None:
-        response = replace(
-            TESTING_RESPONSE_MODEL,
-            available_product_in_productive_sector=Decimal(2.504),
-        )
-        view_model = self.presenter.present(response)
-        self.assertEqual(
-            view_model.available_product_in_productive_sector,
-            "2.50",
-        )
-
     def test_active_plans_count_is_displayed_correctly_as_number(self) -> None:
         response = replace(
             TESTING_RESPONSE_MODEL,
@@ -150,17 +126,6 @@ class GetStatisticsPresenterTests(BaseTestCase):
         self.assertEqual(
             view_model.average_timeframe_days,
             self.translator.gettext("%.2f days") % 31.21,
-        )
-
-    def test_that_plot_url_for_certificates_with_correct_args_is_returned(self) -> None:
-        view_model = self.presenter.present(TESTING_RESPONSE_MODEL)
-        self.assertIn(
-            str(TESTING_RESPONSE_MODEL.certificates_count),
-            view_model.barplot_for_certificates_url,
-        )
-        self.assertIn(
-            str(TESTING_RESPONSE_MODEL.available_product_in_productive_sector),
-            view_model.barplot_for_certificates_url,
         )
 
     def test_that_plot_url_for_means_of_productions_with_correct_args_is_returned(

@@ -11,8 +11,6 @@ class GetStatisticsViewModel:
     registered_companies_count: str
     registered_members_count: str
     cooperations_count: str
-    certificates_count: str
-    available_product_in_productive_sector: str
     active_plans_count: str
     active_plans_public_count: str
     average_timeframe_days: str
@@ -24,7 +22,6 @@ class GetStatisticsViewModel:
     psf_balance: str
     psf_account_url: str
 
-    barplot_for_certificates_url: str
     barplot_means_of_production_url: str
     barplot_plans_url: str
 
@@ -58,10 +55,6 @@ class GetStatisticsPresenter:
             ),
             registered_members_count=str(interactor_response.registered_members_count),
             cooperations_count=str(interactor_response.cooperations_count),
-            certificates_count="%(num).2f"
-            % dict(num=interactor_response.certificates_count),
-            available_product_in_productive_sector="%(num).2f"
-            % dict(num=interactor_response.available_product_in_productive_sector),
             active_plans_count=str(interactor_response.active_plans_count),
             active_plans_public_count=str(
                 interactor_response.active_plans_public_count
@@ -71,10 +64,6 @@ class GetStatisticsPresenter:
             payout_factor_details_url=self.url_index.get_payout_factor_details_url(),
             psf_balance=self._format_psf_balance(interactor_response.psf_balance),
             psf_account_url=self.url_index.get_account_psf_url(),
-            barplot_for_certificates_url=self.url_index.get_global_barplot_for_certificates_url(
-                interactor_response.certificates_count,
-                interactor_response.available_product_in_productive_sector,
-            ),
             barplot_means_of_production_url=self.url_index.get_global_barplot_for_means_of_production_url(
                 interactor_response.planned_means,
                 interactor_response.planned_resources,

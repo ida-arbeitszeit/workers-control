@@ -55,7 +55,6 @@ class UrlIndexTestImpl:
     get_draft_details_url = UrlIndexMethod()
     get_draft_list_url = UrlIndexMethod()
     get_file_plan_url = UrlIndexMethod()
-    get_global_barplot_for_certificates_url = UrlIndexMethod()
     get_global_barplot_for_means_of_production_url = UrlIndexMethod()
     get_global_barplot_for_plans_url = UrlIndexMethod()
     get_hide_plan_url = UrlIndexMethod()

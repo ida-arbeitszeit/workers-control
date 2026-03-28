@@ -29,30 +29,6 @@ from workers_control.web.www.controllers.show_prd_account_details_controller imp
 plots = Blueprint("plots", __name__)
 
 
-@plots.route("/plots/global_barplot_for_certificates")
-@with_injection()
-@login_required
-def global_barplot_for_certificates(
-    plotter: plotter.GeneralPlotter, translator: Translator, colors: HexColors
-) -> Response:
-    certificates_count = Decimal(request.args["certificates_count"])
-    available_product = Decimal(request.args["available_product"])
-    png = plotter.create_bar_plot(
-        x_coordinates=[
-            translator.gettext("Work certificates"),
-            translator.gettext("Available product"),
-        ],
-        height_of_bars=[
-            certificates_count,
-            available_product,
-        ],
-        colors_of_bars=[colors.primary, colors.info],
-        fig_size=(5, 4),
-        y_label=translator.gettext("Hours"),
-    )
-    return Response(png, mimetype="image/png", direct_passthrough=True)
-
-
 @plots.route("/plots/global_barplot_for_means_of_production")
 @with_injection()
 @login_required

@@ -27,7 +27,7 @@ class FlaskDevConfiguration:
     TESTING = True
 
     SERVER_NAME = os.environ.get("WOCO_SERVER_NAME", "127.0.0.1:5000")
-    FORCE_HTTPS = True
+    FORCE_HTTPS = False
     PREFERRED_URL_SCHEME = "http"
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = "Lax"

@@ -17,6 +17,9 @@ from workers_control.flask.views import (
     RegisterPrivateConsumptionView,
 )
 from workers_control.flask.views.http_error_view import http_404
+from workers_control.flask.views.list_basic_services_of_worker_view import (
+    ListBasicServicesOfWorkerView,
+)
 from workers_control.flask.views.query_private_consumptions import (
     QueryPrivateConsumptionsView,
 )
@@ -36,6 +39,11 @@ from .blueprint import MemberRoute
 @MemberRoute("/consumptions")
 @as_flask_view()
 class consumptions(QueryPrivateConsumptionsView): ...
+
+
+@MemberRoute("/basic_services")
+@as_flask_view()
+class basic_services(ListBasicServicesOfWorkerView): ...
 
 
 @MemberRoute("/register_private_consumption", methods=["GET", "POST"])

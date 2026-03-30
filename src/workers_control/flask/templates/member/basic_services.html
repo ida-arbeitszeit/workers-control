@@ -17,6 +17,9 @@
         {{ gettext("Your offered basic services are shown here.") }}<br>
       </p>
     </div>
+    <a class="button is-primary" href="{{ url_for('main_member.create_basic_service') }}">
+      {{ gettext("Create basic service") }}
+    </a>
   </div>
 
   <div class="table-container">

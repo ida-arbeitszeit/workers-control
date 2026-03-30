@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block navbar_start %}
+<a class="navbar-item" href="{{ url_for('main_member.basic_services') }}">{{ gettext("My basic services") }}</a>
+<div class="navbar-item">{{ gettext("Create basic service") }}</div>
+{% endblock %}
+
+{% block content %}
+<div class="section has-text-centered">
+  <h1 class="title">
+    {{ gettext("Create basic service") }}
+  </h1>
+  <div class="columns is-centered">
+    <div class="column is-three-fifths">
+      <div class="box has-background-warning-light has-text-warning-dark">
+        <div class="icon">{{ "exclamation-triangle"|icon }}</div>
+        <p>
+          {{ gettext("A note on data protection: If you create a basic service, your name and email address will be visible to other registered users of this app so they can contact you.") }}
+        </p>
+      </div>
+      <div class="content">
+        <form method="post">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <div class="field">
+            <label class="label">{{ gettext("Name") }}</label>
+            <div class="control">
+              {{ form.name(class_="input is-large") }}
+            </div>
+          </div>
+          <div class="block"></div>
+
+          <div class="field">
+            <label class="label">{{ gettext("Description") }}</label>
+            <div class="control">
+              {{ form.description(class_="textarea is-large") }}
+            </div>
+          </div>
+          <div class="block"></div>
+          <div class="field">
+            <div class="control">
+              <button class="button is-primary" type="submit">
+                {{ gettext("Create basic service") }}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

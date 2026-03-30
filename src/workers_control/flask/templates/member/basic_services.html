@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block navbar_start %}
+<div class="navbar-item">{{ gettext("My basic services") }}</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="section has-text-centered">
+  <div class="content">
+    <h1 class="title">
+      {{ gettext("My basic services") }}
+    </h1>
+    <div class="box has-background-info-light has-text-info-dark has-text-centered">
+      <div class="icon">{{ "info-circle"|icon }}</div>
+      <p>
+        {{ gettext("Your offered basic services are shown here.") }}<br>
+      </p>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table class="table has-text-left mx-auto">
+      <thead>
+        <tr>
+          <th>{{ gettext("Name") }}</th>
+          <th>{{ gettext("Description") }}</th>
+          <th>{{ gettext("Created on") }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if view_model.is_services_visible %}
+        {% for service in view_model.services %}
+        <tr>
+          <td><a href="{{ url_for('main_user.show_basic_service', basic_service_id=service.id) }}">{{ service.name }}</a></td>
+          <td>{{ service.description }}</td>
+          <td>{{ service.created_on }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+          <td colspan="3">{{ gettext("You have not created any basic services yet.") }}</td>
+        </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

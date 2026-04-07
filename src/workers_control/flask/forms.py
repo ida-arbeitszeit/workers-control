@@ -243,6 +243,23 @@ class CreateCooperationForm(Form):
         return self.data["definition"]
 
 
+class CreateBasicServiceForm(Form):
+    name = StringField(
+        render_kw={"placeholder": trans.lazy_gettext("Name")},
+        validators=[validators.InputRequired()],
+    )
+    description = TextAreaField(
+        render_kw={"placeholder": trans.lazy_gettext("Description")},
+        validators=[validators.InputRequired()],
+    )
+
+    def get_name_string(self) -> str:
+        return self.data["name"]
+
+    def get_description_string(self) -> str:
+        return self.data["description"]
+
+
 class RequestCooperationForm(Form):
     plan_id = StringField()
     cooperation_id = StringField()

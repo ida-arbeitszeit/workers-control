@@ -16,6 +16,9 @@ from workers_control.flask.views import (
     CompanyWorkInviteView,
     RegisterPrivateConsumptionView,
 )
+from workers_control.flask.views.create_basic_service_view import (
+    CreateBasicServiceView,
+)
 from workers_control.flask.views.http_error_view import http_404
 from workers_control.flask.views.list_basic_services_of_worker_view import (
     ListBasicServicesOfWorkerView,
@@ -44,6 +47,11 @@ class consumptions(QueryPrivateConsumptionsView): ...
 @MemberRoute("/basic_services")
 @as_flask_view()
 class basic_services(ListBasicServicesOfWorkerView): ...
+
+
+@MemberRoute("/create_basic_service", methods=["GET", "POST"])
+@as_flask_view()
+class create_basic_service(CreateBasicServiceView): ...
 
 
 @MemberRoute("/register_private_consumption", methods=["GET", "POST"])

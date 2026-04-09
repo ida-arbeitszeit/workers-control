@@ -263,3 +263,6 @@ class GeneralUrlIndex:
         return url_for(
             "main_user.show_basic_service", basic_service_id=basic_service_id
         )
+
+    def get_query_basic_services_url(self) -> str:
+        raise NotImplementedError

@@ -1682,6 +1682,25 @@ class BasicServiceResult(QueryResultImpl[BasicService]):
     def of_provider(self, member: UUID) -> Self:
         return self._filter_elements(lambda s: s.provider == member)
 
+    def with_name_containing(self, query: str) -> Self:
+        return self._filter_elements(lambda s: query.casefold() in s.name.casefold())
+
+    def ordered_by_creation_date(self, *, ascending: bool = True) -> Self:
+        return self.sorted_by(key=lambda s: s.created_on, reverse=not ascending)
+
+    def joined_with_provider(
+        self,
+    ) -> QueryResultImpl[Tuple[records.BasicService, records.Member]]:
+        def items() -> Iterable[Tuple[records.BasicService, records.Member]]:
+            for service in self.items():
+                member = self.database.members[service.provider]
+                yield service, member
+
+        return QueryResultImpl(
+            database=self.database,
+            items=items,
+        )
+
 
 @singleton
 class FakeLanguageRepository:

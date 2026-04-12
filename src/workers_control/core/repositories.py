@@ -508,6 +508,14 @@ class BasicServiceResult(QueryResult[records.BasicService], Protocol):
 
     def of_provider(self, member: UUID) -> Self: ...
 
+    def with_name_containing(self, query: str) -> Self: ...
+
+    def ordered_by_creation_date(self, *, ascending: bool = ...) -> Self: ...
+
+    def joined_with_provider(
+        self,
+    ) -> QueryResult[Tuple[records.BasicService, records.Member]]: ...
+
 
 class DatabaseGateway(Protocol):
     def create_private_consumption(

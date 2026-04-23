@@ -260,6 +260,16 @@ class CreateBasicServiceForm(Form):
         return self.data["description"]
 
 
+class BasicServiceSearchForm(Form):
+    search = StringField(
+        trans.lazy_gettext("Search term"),
+        default="",
+    )
+
+    def get_query_string(self) -> str:
+        return self.data["search"]
+
+
 class RequestCooperationForm(Form):
     plan_id = StringField()
     cooperation_id = StringField()

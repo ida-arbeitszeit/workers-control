@@ -2163,6 +2163,43 @@ class BasicServiceResult(SqlQueryResult[records.BasicService]):
             lambda query: query.filter(models.BasicService.provider == member)
         )
 
+    def with_name_containing(self, query: str) -> Self:
+        return self._with_modified_query(
+            lambda db_query: db_query.filter(
+                models.BasicService.name.ilike(f"%{query}%")
+            )
+        )
+
+    def ordered_by_creation_date(self, *, ascending: bool = True) -> Self:
+        ordering = (
+            models.BasicService.created_on.asc()
+            if ascending
+            else models.BasicService.created_on.desc()
+        )
+        return self._with_modified_query(lambda query: query.order_by(ordering))
+
+    def joined_with_provider(
+        self,
+    ) -> SqlQueryResult[Tuple[records.BasicService, records.Member]]:
+        def mapper(
+            orm: Any,
+        ) -> Tuple[records.BasicService, records.Member]:
+            return (
+                DatabaseGatewayImpl.basic_service_from_orm(orm[0]),
+                DatabaseGatewayImpl.member_from_orm(orm[1]),
+            )
+
+        member = aliased(models.Member)
+        query = self.query.join(
+            member, member.id == models.BasicService.provider
+        ).with_entities(models.BasicService, member)
+
+        return SqlQueryResult(
+            db=self.db,
+            mapper=mapper,
+            query=query,
+        )
+
 
 @dataclass
 class DatabaseGatewayImpl:

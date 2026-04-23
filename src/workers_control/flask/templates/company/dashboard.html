@@ -175,6 +175,13 @@
           </a>
         </li>
         <li class="cell box has-background-warning-light mb-0">
+          <a href="{{ url_for('main_user.query_basic_services') }}">
+            <h1 class="title is-5"><span class="icon">{{ "list"|icon }}</span>
+              {{ gettext("All basic services") }}</h1>
+            <div class="subtitle"></div>
+          </a>
+        </li>
+        <li class="cell box has-background-warning-light mb-0">
           <a href="{{ url_for('main_user.list_transfers') }}">
             <h1 class="title is-5"><span class="icon">{{ "list"|icon }}</span>
               {{ gettext("All transfers") }}</h1>

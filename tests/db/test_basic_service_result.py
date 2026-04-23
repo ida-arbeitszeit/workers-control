@@ -118,3 +118,122 @@ class BasicServiceResultTests(DatabaseTestCase):
         )
         results = self.database_gateway.get_basic_services().of_provider(other_member)
         assert not results
+
+    def test_with_name_containing_returns_matching_service(self) -> None:
+        member = self.member_generator.create_member()
+        self.database_gateway.create_basic_service(
+            name="Haircut",
+            description="description",
+            provider=member,
+            created_on=datetime_utc(2000, 1, 1),
+        )
+        results = self.database_gateway.get_basic_services().with_name_containing(
+            "Hair"
+        )
+        assert len(results) == 1
+
+    def test_with_name_containing_excludes_non_matching_service(self) -> None:
+        member = self.member_generator.create_member()
+        self.database_gateway.create_basic_service(
+            name="Plumbing",
+            description="description",
+            provider=member,
+            created_on=datetime_utc(2000, 1, 1),
+        )
+        results = self.database_gateway.get_basic_services().with_name_containing(
+            "Hair"
+        )
+        assert not results
+
+    def test_with_name_containing_is_case_insensitive(self) -> None:
+        member = self.member_generator.create_member()
+        self.database_gateway.create_basic_service(
+            name="Haircut",
+            description="description",
+            provider=member,
+            created_on=datetime_utc(2000, 1, 1),
+        )
+        results = self.database_gateway.get_basic_services().with_name_containing(
+            "haircut"
+        )
+        assert len(results) == 1
+
+    def test_ordered_by_creation_date_ascending(self) -> None:
+        member = self.member_generator.create_member()
+        older = self.database_gateway.create_basic_service(
+            name="older",
+            description="description",
+            provider=member,
+            created_on=datetime_utc(2000, 1, 1),
+        )
+        newer = self.database_gateway.create_basic_service(
+            name="newer",
+            description="description",
+            provider=member,
+            created_on=datetime_utc(2000, 1, 2),
+        )
+        results = list(
+            self.database_gateway.get_basic_services().ordered_by_creation_date(
+                ascending=True
+            )
+        )
+        assert results[0].id == older.id
+        assert results[1].id == newer.id
+
+    def test_ordered_by_creation_date_descending(self) -> None:
+        member = self.member_generator.create_member()
+        older = self.database_gateway.create_basic_service(
+            name="older",
+            description="description",
+            provider=member,
+            created_on=datetime_utc(2000, 1, 1),
+        )
+        newer = self.database_gateway.create_basic_service(
+            name="newer",
+            description="description",
+            provider=member,
+            created_on=datetime_utc(2000, 1, 2),
+        )
+        results = list(
+            self.database_gateway.get_basic_services().ordered_by_creation_date(
+                ascending=False
+            )
+        )
+        assert results[0].id == newer.id
+        assert results[1].id == older.id
+
+    def test_joined_with_provider_returns_correct_member(self) -> None:
+        member = self.member_generator.create_member(name="Alice")
+        self.database_gateway.create_basic_service(
+            name="service",
+            description="description",
+            provider=member,
+            created_on=datetime_utc(2000, 1, 1),
+        )
+        results = list(
+            self.database_gateway.get_basic_services().joined_with_provider()
+        )
+        assert len(results) == 1
+        basic_service, provider = results[0]
+        assert provider.name == "Alice"
+        assert basic_service.name == "service"
+
+    def test_joined_with_provider_returns_multiple_results(self) -> None:
+        member1 = self.member_generator.create_member(name="Alice")
+        member2 = self.member_generator.create_member(name="Bob")
+        self.database_gateway.create_basic_service(
+            name="service1",
+            description="description",
+            provider=member1,
+            created_on=datetime_utc(2000, 1, 1),
+        )
+        self.database_gateway.create_basic_service(
+            name="service2",
+            description="description",
+            provider=member2,
+            created_on=datetime_utc(2000, 1, 2),
+        )
+        results = list(
+            self.database_gateway.get_basic_services().joined_with_provider()
+        )
+        assert len(results) == 2

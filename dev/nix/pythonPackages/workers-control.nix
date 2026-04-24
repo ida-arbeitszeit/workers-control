@@ -74,11 +74,10 @@ buildPythonPackage {
     initdb -D $POSTGRES_DIR
     postgres -h "" -k $POSTGRES_DIR -D $POSTGRES_DIR &
     POSTGRES_PID=$!
+    trap "kill $POSTGRES_PID" EXIT
     until createdb -h $POSTGRES_DIR; do echo "Retry createdb"; done
 
     WOCO_TEST_DB="postgresql:///?host=$POSTGRES_DIR" pytest -x
-
-    kill $POSTGRES_PID
 
     runHook postCheck
   '';

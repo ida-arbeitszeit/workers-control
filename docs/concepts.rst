@@ -10,7 +10,7 @@ There are three user roles:
 
 * **Companies** can file plans for each product (or service) they offer. A plan describes a product and defines how much working time it will cost.
 
-* **Members** are workers in companies. They receive work certificates for their worked hours. They can use them to consume products and services.
+* **Members** are workers in companies. They receive work certificates for their worked hours. They can use them to consume products and services. Members can also create and offer so-called :ref:`basic-services`.
 
 * **Accountants** are delegates of the cooperating network of companies. They can approve company plans based on collectively agreed criteria.
 
@@ -50,6 +50,8 @@ There are seven account types in our app. See :ref:`transfers-of-labor-time` for
      - Each cooperation has an account that tracks the differences between the cooperative (averaged) prices and the actual costs of the products (see :ref:`cooperations` for details).
 
 
+.. _plans:
+
 Plans
 -----
 
@@ -73,6 +75,25 @@ See the "PlanDraft" and "Plan" records in :py:mod:`workers_control.core.records`
 * FilePlanWithAccounting
 * ApprovePlanInteractor
 * RejectPlanInteractor
+
+.. _basic-services:
+
+Basic Services
+--------------
+
+Basic Services (BS) are offerings made by individual workers (members). Unlike :ref:`plans <plans>`, which are filed by companies and may involve objectified labour (means of production, raw materials), a Basic Service represents purely living labour: a worker directly offers their personal time and skills to others.
+
+Key differences from plans:
+
+* Only **members** can create Basic Services; companies cannot (companies continue to represent their services via plans).
+* A Basic Service has no fixed duration and no planned quantity (there is no "X units per hour" calculation).
+* No approval by Social Accounting is required. A Basic Service is visible and searchable immediately upon creation.
+* There is no cooperative price mechanism for Basic Services.
+
+**Creating a Basic Service**
+
+A member creates a Basic Service by providing a name and a description. The service is immediately discoverable by other users.
+
 
 Consumption
 -----------
@@ -187,6 +208,10 @@ Transfers occur between two accounts, where the debit account is charged, and th
      - member
      - prd
      - On private consumption, the cost of the product (the cooperative price, if applicable) is subtracted from the consuming member's account and added to the PRD account of the producing company.
+   * - private_consumption_of_basic_service
+     - member
+     - member
+     - On private consumption of a :ref:`basic service <basic-services>`, the consumed hours are subtracted from the consuming member's account and added to the account of the member providing the service.
    * - productive_consumption_p
      - p
      - prd
@@ -195,6 +220,10 @@ Transfers occur between two accounts, where the debit account is charged, and th
      - r
      - prd
      - On productive consumption of liquid means of production, the cost of the product (the cooperative price, if applicable) is subtracted from the R account of the consuming company and added to the PRD account of the producing company.
+   * - productive_consumption_of_basic_service
+     - r
+     - member
+     - On productive consumption of a :ref:`basic service <basic-services>`, the consumed hours are subtracted from the R account of the consuming company (basic services are consumed as liquid means of production) and added to the account of the member providing the service.
    * - compensation_for_coop
      - prd
      - cooperation

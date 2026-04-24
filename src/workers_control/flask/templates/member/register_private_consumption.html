@@ -33,6 +33,7 @@
                             placeholder="{{ gettext('Plan ID') }}"
                             type="text"
                             value="{{ form.plan_id_value }}"
+                            {% if view_model and view_model.valid_plan_selected %}readonly{% endif %}
                             required
                             >
                         </div>
@@ -44,6 +45,19 @@
                         </ul>
                         {% endif %}
                     </div>
+                    {% if view_model and view_model.valid_plan_selected %}
+                    <div class="notification is-info">
+                        <p>
+                            {{ gettext("Plan ID") }}: {{ view_model.plan_id }}
+                        </p>
+                        <p>
+                            {{ gettext("Plan name") }}: {{ view_model.plan_name }}
+                        </p>
+                        <p>
+                            {{ gettext("Plan description") }}: {{ view_model.plan_description }}
+                        </p>
+                    </div>
+                    {% endif %}
                     <div class="field">
                         <label class="label">{{ gettext("Amount") }}</label>
                         <div class="control">
@@ -68,6 +82,9 @@
                     <div class="field">
                         <div class="control">
                             <button class="button is-primary" type="submit">{{ gettext("Register") }}</button>
+                            {% if view_model and view_model.valid_plan_selected %}
+                            <a class="button is-light" href="{{ url_for('main_member.register_private_consumption') }}">{{ gettext("Cancel") }}</a>
+                            {% endif %}
                         </div>
                     </div>
                 </form>

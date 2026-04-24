@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.7] - 2026-04-24
+
+### Added
+
+- "Create basic service" functionality (#1423)
+- "Show basic service" functionality (#1414)
+- "List worker's basic services" functionality (#1421)
+- "Query basic services" functionality (#1427)
+
+### Removed
+
+- Unclear graph and metrics from statistics page (#1418)
+
+### Fixed
+
+- Don't force HTTPS on http dev server (#1420)
+
 ## [0.1.6] - 2026-03-22
 
 ### Added

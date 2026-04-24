@@ -241,8 +241,9 @@ class GeneralUrlIndexTests(ViewTestCase):
         self,
     ) -> None:
         self.login_member()
+        plan = self.plan_generator.create_plan()
         url = self.url_index.get_register_private_consumption_url(
-            amount=1, plan_id=uuid4()
+            amount=1, plan_id=plan
         )
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Arbeitszeitapp\n"
 "Report-Msgid-Bugs-To: community-arbeitszeitapp@systemli.org\n"
-"POT-Creation-Date: 2026-03-22 22:43+0100\n"
+"POT-Creation-Date: 2026-04-24 08:50+0200\n"
 "PO-Revision-Date: 2024-03-11 22:27+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -27,7 +27,7 @@ msgstr "Ungültige ID."
 msgid "Number must be at least 0."
 msgstr "Zahl muss 0 oder größer sein."
 
-#: src/workers_control/flask/forms.py:45 src/workers_control/flask/forms.py:259
+#: src/workers_control/flask/forms.py:45 src/workers_control/flask/forms.py:286
 #: src/workers_control/flask/templates/company/register_productive_consumption.html:31
 #: src/workers_control/flask/templates/company/register_productive_consumption.html:43
 #: src/workers_control/flask/templates/member/register_private_consumption.html:27
@@ -46,6 +46,7 @@ msgid "Search Plans"
 msgstr "Pläne suchen"
 
 #: src/workers_control/flask/forms.py:55 src/workers_control/flask/forms.py:218
+#: src/workers_control/flask/forms.py:265
 msgid "Search term"
 msgstr "Suchbegriff"
 
@@ -64,7 +65,7 @@ msgstr "Auch nach abgelaufenen Plänen suchen"
 
 #: src/workers_control/flask/forms.py:87 src/workers_control/flask/forms.py:132
 #: src/workers_control/flask/forms.py:181 src/workers_control/flask/forms.py:210
-#: src/workers_control/flask/forms.py:347
+#: src/workers_control/flask/forms.py:374
 #: src/workers_control/flask/templates/auth/login_accountant.html:18
 #: src/workers_control/flask/templates/auth/login_company.html:18
 #: src/workers_control/flask/templates/auth/login_member.html:18
@@ -82,12 +83,15 @@ msgstr "Richtige E-Mail-Adresse erforderlich"
 
 #: src/workers_control/flask/forms.py:95 src/workers_control/flask/forms.py:140
 #: src/workers_control/flask/forms.py:209 src/workers_control/flask/forms.py:231
+#: src/workers_control/flask/forms.py:248
 #: src/workers_control/flask/templates/auth/signup_accountant.html:27
 #: src/workers_control/flask/templates/auth/signup_member.html:27
 #: src/workers_control/flask/templates/company/invite_worker_to_company.html:23
 #: src/workers_control/flask/templates/company/my_consumptions.html:24
 #: src/workers_control/flask/templates/macros/company_summary.html:20
+#: src/workers_control/flask/templates/member/basic_services.html:29
 #: src/workers_control/flask/templates/member/consumptions.html:27
+#: src/workers_control/flask/templates/member/create_basic_service.html:25
 #: src/workers_control/flask/templates/user/coop_summary.html:22
 #: src/workers_control/flask/templates/user/list_all_cooperations.html:18
 msgid "Name"
@@ -98,7 +102,7 @@ msgid "Name is required"
 msgstr "Name ist erforderlich"
 
 #: src/workers_control/flask/forms.py:101 src/workers_control/flask/forms.py:146
-#: src/workers_control/flask/forms.py:190 src/workers_control/flask/forms.py:358
+#: src/workers_control/flask/forms.py:190 src/workers_control/flask/forms.py:385
 #: src/workers_control/flask/templates/auth/login_accountant.html:27
 #: src/workers_control/flask/templates/auth/login_company.html:27
 #: src/workers_control/flask/templates/auth/login_member.html:27
@@ -110,15 +114,15 @@ msgid "Password"
 msgstr "Passwort"
 
 #: src/workers_control/flask/forms.py:106 src/workers_control/flask/forms.py:151
-#: src/workers_control/flask/forms.py:363
+#: src/workers_control/flask/forms.py:390
 msgid "The password must be at least 8 characters in length"
 msgstr "Das Passwort muss mindestens 8 Zeichen lang sein"
 
-#: src/workers_control/flask/forms.py:110 src/workers_control/flask/forms.py:367
+#: src/workers_control/flask/forms.py:110 src/workers_control/flask/forms.py:394
 msgid "Passwords must match"
 msgstr "Passwörter müssen übereinstimmen"
 
-#: src/workers_control/flask/forms.py:114 src/workers_control/flask/forms.py:371
+#: src/workers_control/flask/forms.py:114 src/workers_control/flask/forms.py:398
 #: src/workers_control/flask/templates/auth/reset_password.html:32
 #: src/workers_control/flask/templates/auth/signup_company.html:48
 #: src/workers_control/flask/templates/auth/signup_member.html:51
@@ -135,11 +139,11 @@ msgstr ""
 "Die eingegebene E-Mail-Adresse ist nicht die, an die die Einladung gesendet"
 " wurde"
 
-#: src/workers_control/flask/forms.py:184 src/workers_control/flask/forms.py:350
+#: src/workers_control/flask/forms.py:184 src/workers_control/flask/forms.py:377
 msgid "Email address required"
 msgstr "E-Mail-Adresse erforderlich"
 
-#: src/workers_control/flask/forms.py:192 src/workers_control/flask/forms.py:325
+#: src/workers_control/flask/forms.py:192 src/workers_control/flask/forms.py:352
 msgid "Password is required"
 msgstr "Passwort ist erforderlich"
 
@@ -156,7 +160,15 @@ msgstr "Betrieb suchen"
 msgid "Definition"
 msgstr "Definition"
 
-#: src/workers_control/flask/forms.py:265
+#: src/workers_control/flask/forms.py:252
+#: src/workers_control/flask/templates/company/my_consumptions.html:25
+#: src/workers_control/flask/templates/member/basic_services.html:30
+#: src/workers_control/flask/templates/member/consumptions.html:28
+#: src/workers_control/flask/templates/member/create_basic_service.html:33
+msgid "Description"
+msgstr "Beschreibung"
+
+#: src/workers_control/flask/forms.py:292
 #: src/workers_control/flask/routes/plots/routes.py:79
 #: src/workers_control/flask/templates/company/my_consumptions.html:28
 #: src/workers_control/flask/templates/company/register_hours_worked.html:20
@@ -169,29 +181,29 @@ msgstr "Definition"
 msgid "Amount"
 msgstr "Menge"
 
-#: src/workers_control/flask/forms.py:272
+#: src/workers_control/flask/forms.py:299
 #: src/workers_control/web/www/presenters/company_consumptions_presenter.py:66
 msgid "Fixed means of production"
 msgstr "Feste Produktionsmittel"
 
-#: src/workers_control/flask/forms.py:275
+#: src/workers_control/flask/forms.py:302
 #: src/workers_control/web/www/presenters/company_consumptions_presenter.py:64
 msgid "Liquid means of production"
 msgstr "Flüssige Produktionsmittel"
 
-#: src/workers_control/flask/forms.py:279
+#: src/workers_control/flask/forms.py:306
 msgid "Type of consumption"
 msgstr "Art des Konsums"
 
-#: src/workers_control/flask/forms.py:314
+#: src/workers_control/flask/forms.py:341
 msgid "New email address"
 msgstr "Neue E-Mail-Adresse"
 
-#: src/workers_control/flask/forms.py:317
+#: src/workers_control/flask/forms.py:344
 msgid "Email address is required."
 msgstr "E-Mail-Adresse ist erforderlich."
 
-#: src/workers_control/flask/forms.py:323
+#: src/workers_control/flask/forms.py:350
 msgid "Current password"
 msgstr "Aktuelles Passwort"
 
@@ -458,7 +470,9 @@ msgstr "Dein Passwort wurde erfolgreich zurückgesetzt."
 
 #: src/workers_control/flask/templates/auth/password_reset_confirmation_email.html:2
 msgid "If you did not perform this action, please contact support immediately."
-msgstr "Wenn du diese Aktion nicht durchgeführt hast, kontaktiere bitte sofort den Support."
+msgstr ""
+"Wenn du diese Aktion nicht durchgeführt hast, kontaktiere bitte sofort den "
+"Support."
 
 #: src/workers_control/flask/templates/auth/request_password_reset.html:8
 #: src/workers_control/flask/templates/auth/reset_password.html:38
@@ -479,7 +493,8 @@ msgid ""
 "You have requested a password reset. Please follow this link to set a new "
 "password:"
 msgstr ""
-"Du hast eine Passwortzurücksetzung angefordert. Bitte folge diesem Link, um ein neues Passwort festzulegen:"
+"Du hast eine Passwortzurücksetzung angefordert. Bitte folge diesem Link, um"
+" ein neues Passwort festzulegen:"
 
 #: src/workers_control/flask/templates/auth/reset_password_email.html:3
 msgid "This link will expire in 15 minutes."
@@ -543,7 +558,7 @@ msgstr "Buchhalter*in"
 
 #: src/workers_control/flask/templates/auth/start.html:18
 #: src/workers_control/flask/templates/company/dashboard.html:140
-#: src/workers_control/flask/templates/member/dashboard.html:87
+#: src/workers_control/flask/templates/member/dashboard.html:94
 msgid "Latest plans"
 msgstr "Neueste Pläne"
 
@@ -707,12 +722,12 @@ msgid "Your registered working hours"
 msgstr "Deine registrierten Arbeitsstunden"
 
 #: src/workers_control/flask/templates/company/dashboard.html:134
-#: src/workers_control/flask/templates/member/dashboard.html:81
+#: src/workers_control/flask/templates/member/dashboard.html:88
 msgid "Public accounting"
 msgstr "Öffentliche Buchhaltung"
 
 #: src/workers_control/flask/templates/company/dashboard.html:158
-#: src/workers_control/flask/templates/member/dashboard.html:108
+#: src/workers_control/flask/templates/member/dashboard.html:115
 #: src/workers_control/flask/templates/user/statistics.html:4
 #: src/workers_control/flask/templates/user/statistics.html:11
 #: src/workers_control/web/www/presenters/show_payout_factor_details_presenter.py:44
@@ -721,24 +736,30 @@ msgid "Global statistics"
 msgstr "Globale Statistiken"
 
 #: src/workers_control/flask/templates/company/dashboard.html:166
-#: src/workers_control/flask/templates/member/dashboard.html:130
+#: src/workers_control/flask/templates/member/dashboard.html:144
 #: src/workers_control/flask/templates/user/query_companies.html:4
 msgid "All companies"
 msgstr "Alle Betriebe"
 
 #: src/workers_control/flask/templates/company/dashboard.html:173
-#: src/workers_control/flask/templates/member/dashboard.html:116
+#: src/workers_control/flask/templates/member/dashboard.html:123
 #: src/workers_control/flask/templates/user/query_plans.html:5
 msgid "All plans"
 msgstr "Alle Pläne"
 
 #: src/workers_control/flask/templates/company/dashboard.html:180
-#: src/workers_control/flask/templates/member/dashboard.html:123
+#: src/workers_control/flask/templates/member/dashboard.html:130
+#: src/workers_control/flask/templates/user/query_basic_services.html:5
+msgid "All basic services"
+msgstr "Alle Basis-Dienstleistungen"
+
+#: src/workers_control/flask/templates/company/dashboard.html:187
+#: src/workers_control/flask/templates/member/dashboard.html:137
 #: src/workers_control/flask/templates/user/list_transfers.html:5
 msgid "All transfers"
 msgstr "Alle Transaktionen"
 
-#: src/workers_control/flask/templates/company/dashboard.html:187
+#: src/workers_control/flask/templates/company/dashboard.html:194
 #: src/workers_control/flask/templates/user/list_all_cooperations.html:4
 #: src/workers_control/flask/templates/user/list_all_cooperations.html:11
 msgid "All cooperations"
@@ -845,11 +866,6 @@ msgstr "Hier kannst du deine vergangenen Verbräuche sehen."
 #: src/workers_control/flask/templates/member/consumptions.html:26
 msgid "Date"
 msgstr "Datum"
-
-#: src/workers_control/flask/templates/company/my_consumptions.html:25
-#: src/workers_control/flask/templates/member/consumptions.html:28
-msgid "Description"
-msgstr "Beschreibung"
 
 #: src/workers_control/flask/templates/company/my_consumptions.html:26
 msgid "Purpose"
@@ -1520,6 +1536,32 @@ msgstr ""
 "Dieses Feld zeigt die Anzahl der benötigten Arbeitsstunden pro "
 "hergestellter Einheit."
 
+#: src/workers_control/flask/templates/member/basic_services.html:4
+#: src/workers_control/flask/templates/member/basic_services.html:12
+#: src/workers_control/flask/templates/member/create_basic_service.html:4
+#: src/workers_control/flask/templates/member/dashboard.html:81
+msgid "My basic services"
+msgstr "Meine Basis-Dienstleistungen"
+
+#: src/workers_control/flask/templates/member/basic_services.html:17
+msgid "Your offered basic services are shown here."
+msgstr "Deine angebotenen Basis-Dienstleistungen werden hier angezeigt."
+
+#: src/workers_control/flask/templates/member/basic_services.html:21
+#: src/workers_control/flask/templates/member/create_basic_service.html:5
+#: src/workers_control/flask/templates/member/create_basic_service.html:11
+#: src/workers_control/flask/templates/member/create_basic_service.html:42
+msgid "Create basic service"
+msgstr "Basis-Dienstleistung erstellen"
+
+#: src/workers_control/flask/templates/member/basic_services.html:31
+msgid "Created on"
+msgstr "Erstellt am"
+
+#: src/workers_control/flask/templates/member/basic_services.html:45
+msgid "You have not created any basic services yet."
+msgstr "Du hast noch keine Basis-Dienstleistungen erstellt."
+
 #: src/workers_control/flask/templates/member/consumptions.html:17
 msgid "Your past consumptions are shown here."
 msgstr "Deine vergangenen Verbräuche werden hier gezeigt."
@@ -1531,6 +1573,16 @@ msgstr "Einzelpreis"
 #: src/workers_control/flask/templates/member/consumptions.html:47
 msgid "You have not consumed anything yet."
 msgstr "Du hast noch nichts konsumiert."
+
+#: src/workers_control/flask/templates/member/create_basic_service.html:18
+msgid ""
+"A note on data protection: If you create a basic service, your name and "
+"email address will be visible to other registered users of this app so they"
+" can contact you."
+msgstr ""
+"Ein Hinweis zum Datenschutz: Wenn du eine Basis-Dienstleistung erstellst, "
+"werden dein Name und deine E-Mail-Adresse für andere registrierte Nutzer*innen "
+"dieser App sichtbar, damit sie dich kontaktieren können."
 
 #: src/workers_control/flask/templates/member/dashboard.html:15
 msgid "Your credit"
@@ -1740,6 +1792,7 @@ msgid "Transfers"
 msgstr "Transaktionen"
 
 #: src/workers_control/flask/templates/user/list_transfers.html:18
+#: src/workers_control/flask/templates/user/query_basic_services.html:30
 #: src/workers_control/flask/templates/user/query_companies.html:36
 #: src/workers_control/flask/templates/user/query_plans.html:48
 msgid "Results"
@@ -1750,6 +1803,20 @@ msgstr "Ergebnisse"
 msgid "Account"
 msgstr "Konto"
 
+#: src/workers_control/flask/templates/user/query_basic_services.html:13
+msgid "Basic services"
+msgstr "Basis-Dienstleistungen"
+
+#: src/workers_control/flask/templates/user/query_basic_services.html:20
+msgid "Search by name"
+msgstr "Nach Name suchen"
+
+#: src/workers_control/flask/templates/user/query_basic_services.html:24
+#: src/workers_control/flask/templates/user/query_companies.html:30
+#: src/workers_control/flask/templates/user/query_plans.html:42
+msgid "Search"
+msgstr "Suche"
+
 #: src/workers_control/flask/templates/user/query_companies.html:11
 msgid "Search companies"
 msgstr "Betriebe suchen"
@@ -1757,11 +1824,6 @@ msgstr "Betriebe suchen"
 #: src/workers_control/flask/templates/user/query_companies.html:22
 msgid "Search by name or email"
 msgstr "Nach Name oder E-Mail suchen"
-
-#: src/workers_control/flask/templates/user/query_companies.html:30
-#: src/workers_control/flask/templates/user/query_plans.html:42
-msgid "Search"
-msgstr "Suche"
 
 #: src/workers_control/flask/templates/user/query_plans.html:22
 msgid "Search by plan ID or product name"
@@ -1804,6 +1866,18 @@ msgstr ""
 #: src/workers_control/flask/templates/user/request_email_change_warning.html:5
 msgid "Admin email address:"
 msgstr "Admin-E-Mail-Adresse:"
+
+#: src/workers_control/flask/templates/user/show_basic_service.html:13
+msgid "Provider:"
+msgstr "Anbieter:"
+
+#: src/workers_control/flask/templates/user/show_basic_service.html:14
+msgid "Description:"
+msgstr "Beschreibung:"
+
+#: src/workers_control/flask/templates/user/show_basic_service.html:15
+msgid "Created on:"
+msgstr "Erstellt am:"
 
 #: src/workers_control/flask/templates/user/show_payout_factor_details.html:12
 msgid "Payout factor (FIC) details"
@@ -2237,6 +2311,14 @@ msgstr ""
 msgid "Email address changed successfully."
 msgstr "E-Mail-Adresse erfolgreich geändert."
 
+#: src/workers_control/web/www/presenters/create_basic_service_presenter.py:26
+msgid "Successfully created basic service."
+msgstr "Basis-Dienstleistung erfolgreich erstellt."
+
+#: src/workers_control/web/www/presenters/create_basic_service_presenter.py:34
+msgid "Basic service creation failed: Member not found."
+msgstr "Erstellung der Basis-Dienstleistung fehlgeschlagen: Mitglied nicht gefunden."
+
 #: src/workers_control/web/www/presenters/create_cooperation_presenter.py:26
 msgid "Successfully created cooperation."
 msgstr "Kooperation erfolgreich erstellt."
@@ -2383,13 +2465,14 @@ msgstr "Email-Adresse ist inkorrekt. Bist du schon registriert?"
 msgid "Email address incorrect. Are you already registered as a member?"
 msgstr "Emailadresse inkorrekt. Bist du bereits als Mitglied registriert?"
 
-#: src/workers_control/web/www/presenters/query_companies_presenter.py:41
-msgid "No results"
-msgstr "Keine Ergebnisse"
-
+#: src/workers_control/web/www/presenters/query_basic_services_presenter.py:48
 #: src/workers_control/web/www/presenters/query_plans_presenter.py:47
 msgid "No results."
 msgstr "Keine Ergebnisse."
+
+#: src/workers_control/web/www/presenters/query_companies_presenter.py:41
+msgid "No results"
+msgstr "Keine Ergebnisse"
 
 #: src/workers_control/web/www/presenters/register_accountant_presenter.py:30
 msgid "This registration link is invalid or has expired."
@@ -2577,7 +2660,9 @@ msgstr "Deine Anfrage, die E-Mail-Adresse zu ändern wurde abgelehnt."
 
 #: src/workers_control/web/www/presenters/request_password_reset_presenter.py:21
 msgid "If an account with that email exists, we have sent a password reset link."
-msgstr "Wenn ein Konto mit dieser E-Mail existiert, haben wir einen Link zum Zurücksetzen des Passworts gesendet."
+msgstr ""
+"Wenn ein Konto mit dieser E-Mail existiert, haben wir einen Link zum "
+"Zurücksetzen des Passworts gesendet."
 
 #: src/workers_control/web/www/presenters/resend_work_invite_presenter.py:22
 msgid "Invite does not exist."
@@ -2589,7 +2674,9 @@ msgstr "Einladung wurde erfolgreich erneut versendet."
 
 #: src/workers_control/web/www/presenters/reset_password_presenter.py:26
 msgid "Your password has been reset. You can now log in with your new password."
-msgstr "Dein Passwort wurde zurückgesetzt. Du kannst dich jetzt mit deinem neuen Passwort anmelden."
+msgstr ""
+"Dein Passwort wurde zurückgesetzt. Du kannst dich jetzt mit deinem neuen "
+"Passwort anmelden."
 
 #: src/workers_control/web/www/presenters/reset_password_presenter.py:31
 msgid "Password reset failed. Please try again."

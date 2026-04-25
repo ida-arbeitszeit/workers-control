@@ -84,7 +84,7 @@
                         <div class="control">
                             <button class="button is-primary" type="submit">{{ gettext("Register") }}</button>
                             {% if view_model and view_model.valid_plan_selected %}
-                            <a class="button is-light" href="{{ url_for('main_user.query_plans') }}">{{ gettext("Cancel") }}</a>
+                            <a class="button is-light" href="{{ url_for('main_user.query_offers') }}">{{ gettext("Cancel") }}</a>
                             {% endif %}
                         </div>
                     </div>

@@ -40,7 +40,7 @@ error_msgs = {
 }
 
 
-class PlanSearchForm(Form):
+class OfferSearchForm(Form):
     choices = [
         ("Plan-ID", trans.lazy_gettext("Plan ID")),
         ("Produktname", trans.lazy_gettext("Product name")),

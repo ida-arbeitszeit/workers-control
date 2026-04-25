@@ -7,7 +7,7 @@ from tests.flask_integration.base_test_case import LogInUser
 
 from .base_test_case import ViewTestCase
 
-URL = "/user/query_plans"
+URL = "/user/query_offers"
 
 
 class UserAccessTests(ViewTestCase):
@@ -59,7 +59,7 @@ class UserAccessTests(ViewTestCase):
         )
 
 
-class QueryPlansTests(ViewTestCase):
+class QueryOffersTests(ViewTestCase):
     def test_that_one_plan_name_appears_in_html_when_there_are_two_plans_but_only_one_is_searched_for(
         self,
     ) -> None:

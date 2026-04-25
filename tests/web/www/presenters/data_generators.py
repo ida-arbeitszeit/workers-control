@@ -10,17 +10,17 @@ from workers_control.core.interactors.query_companies import (
     QueriedCompany,
     QueryCompaniesRequest,
 )
-from workers_control.core.interactors.query_plans import (
-    PlanFilter,
-    PlanQueryResponse,
-    PlanSorting,
-    QueriedPlan,
-    QueryPlansRequest,
+from workers_control.core.interactors.query_offers import (
+    OfferFilter,
+    OfferQueryResponse,
+    OfferSorting,
+    QueriedOffer,
+    QueryOffersRequest,
 )
 from workers_control.core.services.plan_details import PlanDetails
 
 
-class QueriedPlanGenerator:
+class QueriedOfferGenerator:
     def get_plan(
         self,
         plan_id: Optional[UUID] = None,
@@ -32,7 +32,7 @@ class QueriedPlanGenerator:
         price_per_unit: Decimal = Decimal(5),
         labour_cost_per_unit: Decimal = Decimal(1),
         is_expired: bool = False,
-    ) -> QueriedPlan:
+    ) -> QueriedOffer:
         if plan_id is None:
             plan_id = uuid4()
         if company_id is None:
@@ -41,7 +41,7 @@ class QueriedPlanGenerator:
             approval_date = datetime.min
         if rejection_date is None:
             rejection_date = datetime.min
-        return QueriedPlan(
+        return QueriedOffer(
             plan_id=plan_id,
             company_name="Planner name",
             company_id=company_id,
@@ -57,22 +57,22 @@ class QueriedPlanGenerator:
 
     def get_response(
         self,
-        queried_plans: Optional[List[QueriedPlan]] = None,
+        queried_plans: Optional[List[QueriedOffer]] = None,
         total_results: Optional[int] = None,
         query_string: Optional[str] = None,
         requested_offset: int = 0,
         requested_limit: Optional[int] = None,
-        requested_filter_category: PlanFilter = PlanFilter.by_product_name,
-        requested_sorting_category: PlanSorting = PlanSorting.by_activation,
-    ) -> PlanQueryResponse:
+        requested_filter_category: OfferFilter = OfferFilter.by_product_name,
+        requested_sorting_category: OfferSorting = OfferSorting.by_activation,
+    ) -> OfferQueryResponse:
         if queried_plans is None:
             queried_plans = [self.get_plan() for _ in range(5)]
         if total_results is None:
             total_results = max(len(queried_plans), 100)
-        return PlanQueryResponse(
+        return OfferQueryResponse(
             results=[plan for plan in queried_plans],
             total_results=total_results,
-            request=QueryPlansRequest(
+            request=QueryOffersRequest(
                 offset=requested_offset,
                 limit=requested_limit,
                 query_string=query_string,

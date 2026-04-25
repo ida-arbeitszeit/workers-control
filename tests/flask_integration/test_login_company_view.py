@@ -43,7 +43,7 @@ class StartViewTests(ViewTestCase):
     ) -> None:
         expected_email = "test@test.test"
         expected_password = "my password"
-        expected_target_url = "/user/query_plans"
+        expected_target_url = "/user/query_offers"
         self.company_generator.create_company(
             email=expected_email, password=expected_password, confirmed=True
         )

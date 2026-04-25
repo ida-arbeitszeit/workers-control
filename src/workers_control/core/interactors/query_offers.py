@@ -13,25 +13,25 @@ from workers_control.core.repositories import DatabaseGateway, PlanResult
 from workers_control.core.services.price_calculator import PriceCalculator
 
 
-class PlanFilter(enum.Enum):
+class OfferFilter(enum.Enum):
     by_plan_id = enum.auto()
     by_product_name = enum.auto()
 
 
-class PlanSorting(enum.Enum):
+class OfferSorting(enum.Enum):
     by_activation = enum.auto()
     by_company_name = enum.auto()
 
 
 @dataclass
-class PlanQueryResponse:
-    results: List[QueriedPlan]
+class OfferQueryResponse:
+    results: List[QueriedOffer]
     total_results: int
-    request: QueryPlansRequest
+    request: QueryOffersRequest
 
 
 @dataclass
-class QueriedPlan:
+class QueriedOffer:
     plan_id: UUID
     company_name: str
     company_id: UUID
@@ -46,22 +46,22 @@ class QueriedPlan:
 
 
 @dataclass
-class QueryPlansRequest:
+class QueryOffersRequest:
     query_string: Optional[str]
-    filter_category: PlanFilter
-    sorting_category: PlanSorting
+    filter_category: OfferFilter
+    sorting_category: OfferSorting
     include_expired_plans: bool
     offset: Optional[int] = None
     limit: Optional[int] = None
 
 
 @dataclass
-class QueryPlansInteractor:
+class QueryOffersInteractor:
     datetime_service: DatetimeService
     database_gateway: DatabaseGateway
     price_calculator: PriceCalculator
 
-    def execute(self, request: QueryPlansRequest) -> PlanQueryResponse:
+    def execute(self, request: QueryOffersRequest) -> OfferQueryResponse:
         now = self.datetime_service.now()
         plans = self.database_gateway.get_plans().that_were_approved_before(now)
         if not request.include_expired_plans:
@@ -78,23 +78,23 @@ class QueryPlansInteractor:
             self._plan_to_response_model(plan, planner, cooperation)
             for plan, planner, cooperation in planning_info
         ]
-        return PlanQueryResponse(
+        return OfferQueryResponse(
             results=results, total_results=total_results, request=request
         )
 
     def _apply_filter(
-        self, plans: PlanResult, query: Optional[str], filter_by: PlanFilter
+        self, plans: PlanResult, query: Optional[str], filter_by: OfferFilter
     ) -> PlanResult:
         if query is None:
             pass
-        elif filter_by == PlanFilter.by_plan_id:
+        elif filter_by == OfferFilter.by_plan_id:
             plans = plans.with_id_containing(query)
         else:
             plans = plans.with_product_name_containing(query)
         return plans
 
-    def _apply_sorting(self, plans: PlanResult, sort_by: PlanSorting) -> PlanResult:
-        if sort_by == PlanSorting.by_company_name:
+    def _apply_sorting(self, plans: PlanResult, sort_by: OfferSorting) -> PlanResult:
+        if sort_by == OfferSorting.by_company_name:
             plans = plans.ordered_by_planner_name()
         else:
             plans = plans.ordered_by_approval_date(ascending=False)
@@ -105,10 +105,10 @@ class QueryPlansInteractor:
         plan: records.Plan,
         planner: records.Company,
         cooperation: Optional[records.Cooperation],
-    ) -> QueriedPlan:
+    ) -> QueriedOffer:
         price_per_unit = self.price_calculator.calculate_price(plan.id)
         assert plan.approval_date
-        return QueriedPlan(
+        return QueriedOffer(
             plan_id=plan.id,
             company_name=planner.name,
             company_id=plan.planner,

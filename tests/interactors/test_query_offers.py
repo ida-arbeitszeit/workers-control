@@ -7,12 +7,12 @@ from parameterized import parameterized
 
 from tests.datetime_service import datetime_utc
 from tests.interactors.base_test_case import BaseTestCase
-from workers_control.core.interactors.query_plans import (
-    PlanFilter,
-    PlanQueryResponse,
-    PlanSorting,
-    QueryPlansInteractor,
-    QueryPlansRequest,
+from workers_control.core.interactors.query_offers import (
+    OfferFilter,
+    OfferQueryResponse,
+    OfferSorting,
+    QueryOffersInteractor,
+    QueryOffersRequest,
 )
 from workers_control.core.records import ProductionCosts
 
@@ -31,7 +31,7 @@ class SearchStrategy(Enum):
 class InteractorTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
-        self.interactor = self.injector.get(QueryPlansInteractor)
+        self.interactor = self.injector.get(QueryOffersInteractor)
 
     @parameterized.expand([(strategy,) for strategy in SearchStrategy])
     def test_that_no_plan_is_returned_when_searching_an_empty_repository(
@@ -395,43 +395,43 @@ class InteractorTests(BaseTestCase):
         query: str | None = None,
         offset: int | None = None,
         limit: int | None = None,
-    ) -> QueryPlansRequest:
+    ) -> QueryOffersRequest:
         if search_strategy is None:
             search_strategy = SearchStrategy.by_name_sort_by_date_exclude_expired
         match search_strategy:
             case SearchStrategy.by_id_sort_by_date_exclude_expired:
-                category = PlanFilter.by_plan_id
-                sorting = PlanSorting.by_activation
+                category = OfferFilter.by_plan_id
+                sorting = OfferSorting.by_activation
                 include_expired_plans = False
             case SearchStrategy.by_id_sort_by_date_include_expired:
-                category = PlanFilter.by_plan_id
-                sorting = PlanSorting.by_activation
+                category = OfferFilter.by_plan_id
+                sorting = OfferSorting.by_activation
                 include_expired_plans = True
             case SearchStrategy.by_id_sort_by_name_exclude_expired:
-                category = PlanFilter.by_plan_id
-                sorting = PlanSorting.by_company_name
+                category = OfferFilter.by_plan_id
+                sorting = OfferSorting.by_company_name
                 include_expired_plans = False
             case SearchStrategy.by_id_sort_by_name_include_expired:
-                category = PlanFilter.by_plan_id
-                sorting = PlanSorting.by_company_name
+                category = OfferFilter.by_plan_id
+                sorting = OfferSorting.by_company_name
                 include_expired_plans = True
             case SearchStrategy.by_name_sort_by_date_exclude_expired:
-                category = PlanFilter.by_product_name
-                sorting = PlanSorting.by_activation
+                category = OfferFilter.by_product_name
+                sorting = OfferSorting.by_activation
                 include_expired_plans = False
             case SearchStrategy.by_name_sort_by_date_include_expired:
-                category = PlanFilter.by_product_name
-                sorting = PlanSorting.by_activation
+                category = OfferFilter.by_product_name
+                sorting = OfferSorting.by_activation
                 include_expired_plans = True
             case SearchStrategy.by_name_sort_by_name_exclude_expired:
-                category = PlanFilter.by_product_name
-                sorting = PlanSorting.by_company_name
+                category = OfferFilter.by_product_name
+                sorting = OfferSorting.by_company_name
                 include_expired_plans = False
             case SearchStrategy.by_name_sort_by_name_include_expired:
-                category = PlanFilter.by_product_name
-                sorting = PlanSorting.by_company_name
+                category = OfferFilter.by_product_name
+                sorting = OfferSorting.by_company_name
                 include_expired_plans = True
-        return QueryPlansRequest(
+        return QueryOffersRequest(
             query_string=query,
             filter_category=category,
             sorting_category=sorting,
@@ -440,5 +440,5 @@ class InteractorTests(BaseTestCase):
             include_expired_plans=include_expired_plans,
         )
 
-    def assertPlanInResults(self, plan: UUID, response: PlanQueryResponse) -> bool:
+    def assertPlanInResults(self, plan: UUID, response: OfferQueryResponse) -> bool:
         return any((plan == result.plan_id for result in response.results))

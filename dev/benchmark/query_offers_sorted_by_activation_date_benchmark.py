@@ -4,12 +4,12 @@ from decimal import Decimal
 from dev.benchmark.dependency_injection import benchmark_injector
 from tests.data_generators import CooperationGenerator, PlanGenerator
 from tests.db.base_test_case import reset_test_db
-from workers_control.core.interactors import query_plans
+from workers_control.core.interactors import query_offers
 from workers_control.core.records import ProductionCosts
 from workers_control.db.db import Database
 
 
-class QueryPlansSortedByActivationDateBenchmark:
+class QueryOffersSortedByActivationDateBenchmark:
     def __init__(self) -> None:
         self.injector = benchmark_injector
         reset_test_db()
@@ -18,7 +18,7 @@ class QueryPlansSortedByActivationDateBenchmark:
 
         plan_generator = self.injector.get(PlanGenerator)
         cooperation_generator = self.injector.get(CooperationGenerator)
-        self.query_plans = self.injector.get(query_plans.QueryPlansInteractor)
+        self.query_offers = self.injector.get(query_offers.QueryOffersInteractor)
         random.seed()
         for _ in range(500):
             plan_generator.create_plan(
@@ -34,10 +34,10 @@ class QueryPlansSortedByActivationDateBenchmark:
                 plan_generator.create_plan(
                     cooperation=cooperation, costs=self.random_production_costs()
                 )
-        self.request = query_plans.QueryPlansRequest(
+        self.request = query_offers.QueryOffersRequest(
             query_string=None,
-            filter_category=query_plans.PlanFilter.by_product_name,
-            sorting_category=query_plans.PlanSorting.by_activation,
+            filter_category=query_offers.OfferFilter.by_product_name,
+            sorting_category=query_offers.OfferSorting.by_activation,
             include_expired_plans=False,
             limit=None,
             offset=None,
@@ -48,7 +48,7 @@ class QueryPlansSortedByActivationDateBenchmark:
         self.db.session.remove()
 
     def run(self) -> None:
-        self.query_plans.execute(self.request)
+        self.query_offers.execute(self.request)
 
     def random_production_costs(self) -> ProductionCosts:
         return ProductionCosts(

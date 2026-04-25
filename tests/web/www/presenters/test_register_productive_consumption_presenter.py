@@ -129,9 +129,9 @@ class NavbarItemsTests(BaseTestCase):
         navbar_items = self.presenter.create_navbar_items()
         self.assertEqual(navbar_items[0].text, self.translator.gettext("All plans"))
 
-    def test_first_navbar_item_links_to_query_plans(self) -> None:
+    def test_first_navbar_item_links_to_query_offers(self) -> None:
         navbar_items = self.presenter.create_navbar_items()
-        self.assertEqual(navbar_items[0].url, self.url_index.get_query_plans_url())
+        self.assertEqual(navbar_items[0].url, self.url_index.get_query_offers_url())
 
     def test_second_navbar_item_has_text_register_productive_consumption(self) -> None:
         navbar_items = self.presenter.create_navbar_items()

@@ -16,7 +16,7 @@ from workers_control.core.interactors.request_email_address_change import (
 from workers_control.flask.class_based_view import as_flask_view
 from workers_control.flask.forms import RequestEmailAddressChangeForm
 from workers_control.flask.types import Response
-from workers_control.flask.views import QueryCompaniesView, QueryPlansView
+from workers_control.flask.views import QueryCompaniesView, QueryOffersView
 from workers_control.flask.views.change_email_address_view import ChangeEmailAddressView
 from workers_control.flask.views.coop_summary_view import CoopSummaryView
 from workers_control.flask.views.get_statistics_view import GetStatisticsView
@@ -133,9 +133,9 @@ def request_email_change(
 class change_email_address(ChangeEmailAddressView): ...
 
 
-@AuthenticatedUserRoute("/query_plans", methods=["GET"])
+@AuthenticatedUserRoute("/query_offers", methods=["GET"])
 @as_flask_view()
-class query_plans(QueryPlansView): ...
+class query_offers(QueryOffersView): ...
 
 
 @AuthenticatedUserRoute("/query_companies", methods=["GET"])

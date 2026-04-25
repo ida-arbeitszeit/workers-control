@@ -9,12 +9,12 @@ from workers_control.core.interactors.get_company_summary import (
     AccountBalances,
     GetCompanySummaryInteractor,
 )
-from workers_control.core.interactors.query_plans import (
-    PlanFilter,
-    PlanSorting,
-    QueriedPlan,
-    QueryPlansInteractor,
-    QueryPlansRequest,
+from workers_control.core.interactors.query_offers import (
+    OfferFilter,
+    OfferSorting,
+    QueriedOffer,
+    QueryOffersInteractor,
+    QueryOffersRequest,
 )
 from workers_control.core.interactors.register_productive_consumption import (
     RegisterProductiveConsumptionInteractor,
@@ -35,7 +35,7 @@ class InteractorTests(BaseTestCase):
         super().setUp()
         self.interactor = self.injector.get(ApprovePlanInteractor)
         self.get_company_summary = self.injector.get(GetCompanySummaryInteractor)
-        self.query_plans_interactor = self.injector.get(QueryPlansInteractor)
+        self.query_offers_interactor = self.injector.get(QueryOffersInteractor)
         self.register_productive_consumption = self.injector.get(
             RegisterProductiveConsumptionInteractor
         )
@@ -343,12 +343,12 @@ class InteractorTests(BaseTestCase):
         assert response
         return response.account_balances
 
-    def get_latest_activated_plan(self) -> QueriedPlan:
-        response = self.query_plans_interactor.execute(
-            QueryPlansRequest(
+    def get_latest_activated_plan(self) -> QueriedOffer:
+        response = self.query_offers_interactor.execute(
+            QueryOffersRequest(
                 query_string=None,
-                filter_category=PlanFilter.by_plan_id,
-                sorting_category=PlanSorting.by_activation,
+                filter_category=OfferFilter.by_plan_id,
+                sorting_category=OfferSorting.by_activation,
                 include_expired_plans=False,
             )
         )

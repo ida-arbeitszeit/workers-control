@@ -99,6 +99,7 @@ class ShowMyPlansViewModel:
     drafts: DraftsTable
     show_rejected_plans: bool
     rejected_plans: RejectedPlansTable
+    create_draft_url: str
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -128,6 +129,7 @@ class ShowMyPlansPresenter:
             drafts=self._create_drafts_table(response),
             show_rejected_plans=bool(response.rejected_plans),
             rejected_plans=self._create_rejected_plans_table(response),
+            create_draft_url=self.url_index.get_create_draft_url(),
         )
 
     def _create_active_plans_table(

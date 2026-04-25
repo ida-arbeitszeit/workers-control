@@ -7,6 +7,10 @@
 {% block content %}
 <section class="section has-text-centered">
     <h1 class="title">{{ gettext("My plans") }}</h1>
+    <a class="button is-primary" href="{{ create_draft_url }}">
+        <span class="icon">{{ "file-circle-plus"|icon }}</span>
+        <span>{{ gettext("Create new plan") }}</span>
+    </a>
 </section>
 
 <div class="section">

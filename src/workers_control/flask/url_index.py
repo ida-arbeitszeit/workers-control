@@ -146,6 +146,12 @@ class GeneralUrlIndex:
     def get_company_consumptions_url(self) -> str:
         return url_for(endpoint="main_company.my_consumptions")
 
+    def get_register_hours_worked_url(self) -> str:
+        return url_for(endpoint="main_company.register_hours_worked")
+
+    def get_registered_hours_worked_url(self) -> str:
+        return url_for(endpoint="main_company.registered_hours_worked")
+
     def get_request_coop_url(self) -> str:
         return url_for("main_company.request_cooperation")
 

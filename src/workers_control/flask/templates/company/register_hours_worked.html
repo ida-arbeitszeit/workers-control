@@ -1,7 +1,8 @@
 {% extends "base.html" %}
+{% from 'macros/navbar.html' import navbar %}
 
 {% block navbar_start %}
-<div class="navbar-item">{{ gettext("Register hours worked") }}</div>
+{{ navbar(navbar_items) }}
 {% endblock %}
 
 {% block content %}

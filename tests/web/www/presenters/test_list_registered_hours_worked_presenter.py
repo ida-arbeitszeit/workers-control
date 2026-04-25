@@ -85,6 +85,16 @@ class ListRegisteredHoursWorkedPresenterTests(BaseTestCase):
         view_model = self.presenter.present(response)
         assert view_model.registered_hours_worked[0].worker_name == worker_name
 
+    def test_register_hours_worked_url_points_to_register_hours_worked_view(
+        self,
+    ) -> None:
+        response = self.create_interactor_response(registered_hours_worked=[])
+        view_model = self.presenter.present(response)
+        assert (
+            view_model.register_hours_worked_url
+            == self.url_index.get_register_hours_worked_url()
+        )
+
     def test_registered_on_from_response_is_formatted_correctly(self) -> None:
         registered_on = datetime_utc(2021, 1, 1, 12, 0)
         expected_registered_on = self.datetime_formatter.format_datetime(

@@ -260,6 +260,18 @@ class GeneralUrlIndexTests(ViewTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
+    def test_url_for_register_hours_worked_leads_to_functional_url(self) -> None:
+        self.login_company()
+        url = self.url_index.get_register_hours_worked_url()
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_url_for_registered_hours_worked_leads_to_functional_url(self) -> None:
+        self.login_company()
+        url = self.url_index.get_registered_hours_worked_url()
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
     def test_url_for_registration_of_productive_consumption_leads_to_functional_url_without_params_provided(
         self,
     ) -> None:

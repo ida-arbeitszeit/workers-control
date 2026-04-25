@@ -34,19 +34,6 @@ class InteractorTests(BaseTestCase):
         member_info = self.interactor.get_member_dashboard(request)
         assert member_info.workplaces[0].workplace_name == "SomeCompanyNameXY"
 
-    def test_that_three_latest_plans_is_empty_if_there_are_no_plans(self):
-        request = get_member_dashboard.Request(member=self.member)
-        response = self.interactor.get_member_dashboard(request)
-        assert not response.three_latest_plans
-
-    def test_three_latest_plans_has_at_least_one_entry_if_there_is_one_active_plan(
-        self,
-    ):
-        self.plan_generator.create_plan()
-        request = get_member_dashboard.Request(member=self.member)
-        response = self.interactor.get_member_dashboard(request)
-        assert response.three_latest_plans
-
     def test_no_invites_are_shown_when_none_was_sent(self):
         request = get_member_dashboard.Request(member=self.member)
         response = self.interactor.get_member_dashboard(request)

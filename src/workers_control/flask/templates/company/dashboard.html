@@ -134,23 +134,6 @@
       <h1 class="title is-3">{{ gettext("Public accounting") }}</h1>
     </div>
     <div class="fixed-grid has-3-cols has-1-cols-mobile">
-      <div class="grid">
-        <div class="cell is-col-start-2 is-col-start-1-mobile">
-          <ul class="panel">
-            <p class="panel-heading is-italic has-background-warning-light">{{ gettext("Latest plans") }}
-            </p>
-            {% if view_model.has_latest_plans %}
-            {% for plan in view_model.latest_plans %}
-            <a class="panel-block" href="{{ plan.plan_details_url }}">
-              <span class="has-text-weight-semibold">{{ plan.approval_date }}
-              </span>&nbsp;{{ plan.prd_name }}
-            </a>
-            {% endfor %}
-            {% endif %}
-        </div>
-      </div>
-    </div>
-    <div class="fixed-grid has-3-cols has-1-cols-mobile">
       <ul class="grid">
         <li class="cell box has-background-warning-light mb-0">
           <a href="{{ url_for('main_user.statistics') }}">

@@ -248,6 +248,12 @@ class GeneralUrlIndexTests(ViewTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
+    def test_url_for_my_private_consumptions_leads_to_functional_url(self) -> None:
+        self.login_member()
+        url = self.url_index.get_my_private_consumptions_url()
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
     def test_url_for_registration_of_productive_consumption_leads_to_functional_url_without_params_provided(
         self,
     ) -> None:

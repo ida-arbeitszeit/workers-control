@@ -5,7 +5,7 @@ from workers_control.core.interactors.file_plan_with_accounting import (
 )
 from workers_control.web.notification import Notifier
 from workers_control.web.translator import Translator
-from workers_control.web.url_index import UrlIndex, UserUrlIndex
+from workers_control.web.url_index import UrlIndex
 
 
 @dataclass
@@ -14,22 +14,19 @@ class FilePlanWithAccountingPresenter:
     class ViewModel:
         redirect_url: str
 
-    user_url_index: UserUrlIndex
     url_index: UrlIndex
     notifier: Notifier
     translator: Translator
 
     def present_response(self, response: FilePlanWithAccounting.Response) -> ViewModel:
-        plan_id = response.plan_id
-        if plan_id is not None and response.is_plan_successfully_filed:
-            redirect_url = self.user_url_index.get_plan_details_url(plan_id)
+        redirect_url = self.url_index.get_my_plans_url()
+        if response.plan_id is not None and response.is_plan_successfully_filed:
             self.notifier.display_info(
                 self.translator.gettext(
                     "Successfully filed plan with social accounting"
                 )
             )
         else:
-            redirect_url = self.url_index.get_my_plans_url()
             self.notifier.display_warning(
                 self.translator.gettext("Could not file plan with social accounting")
             )

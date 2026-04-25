@@ -8,6 +8,7 @@ from workers_control.core.interactors.register_productive_consumption import (
 )
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
+from workers_control.web.www.navbar import NavbarItem
 
 from ...notification import Notifier
 
@@ -22,6 +23,18 @@ class RegisterProductiveConsumptionPresenter:
     trans: Translator
     url_index: UrlIndex
 
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [
+            NavbarItem(
+                text=self.trans.gettext("All plans"),
+                url=self.url_index.get_query_plans_url(),
+            ),
+            NavbarItem(
+                text=self.trans.gettext("Registration of productive consumption"),
+                url=None,
+            ),
+        ]
+
     def present(
         self, interactor_response: RegisterProductiveConsumptionResponse
     ) -> ViewModel:
@@ -32,7 +45,7 @@ class RegisterProductiveConsumptionPresenter:
             self.user_notifier.display_info(
                 self.trans.gettext("Successfully registered.")
             )
-            redirect_url = self.url_index.get_register_productive_consumption_url()
+            redirect_url = self.url_index.get_company_consumptions_url()
         elif interactor_response.rejection_reason == reasons.plan_not_found:
             self.user_notifier.display_warning(
                 self.trans.gettext("Plan does not exist.")

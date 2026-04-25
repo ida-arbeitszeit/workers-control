@@ -1,7 +1,8 @@
 {% extends "base.html" %}
+{% from 'macros/navbar.html' import navbar %}
 
 {% block navbar_start %}
-<div class="navbar-item">{{ gettext("Registration of productive consumption") }}</div>
+{{ navbar(navbar_items) }}
 {% endblock %}
 
 {% block content %}
@@ -72,7 +73,7 @@
                     <div class="control">
                         {% if view_model.valid_plan_selected is defined and view_model.valid_plan_selected %}
                         <button class="button is-primary" type="submit">{{ gettext("Register") }}</button>
-                        <a class="button is-light" href="{{ url_for('main_company.register_productive_consumption') }}">{{ gettext("Cancel") }}</a>
+                        <a class="button is-light" href="{{ url_for('main_user.query_plans') }}">{{ gettext("Cancel") }}</a>
                         {% else %}
                         <button class="button is-primary" type="submit">{{ gettext("Select") }}</button>
                         {% endif %}

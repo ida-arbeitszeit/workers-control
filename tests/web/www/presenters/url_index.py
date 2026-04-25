@@ -47,6 +47,7 @@ class UrlIndexTestImpl:
     get_account_psf_url = UrlIndexMethod()
     get_company_accounts_url = UrlIndexMethod()
     get_company_confirmation_url = UrlIndexMethod()
+    get_company_consumptions_url = UrlIndexMethod()
     get_company_dashboard_url = UrlIndexMethod()
     get_company_summary_url = UrlIndexMethod()
     get_coop_summary_url = UrlIndexMethod()

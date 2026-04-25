@@ -76,6 +76,7 @@ class UrlIndexTestImpl:
     get_plan_details_url = UrlIndexMethod()
     get_query_companies_url = UrlIndexMethod()
     get_query_plans_url = UrlIndexMethod()
+    get_my_private_consumptions_url = UrlIndexMethod()
     get_register_private_consumption_url = UrlIndexMethod()
     get_register_productive_consumption_url = UrlIndexMethod()
     get_reject_plan_url = UrlIndexMethod()

@@ -9,6 +9,7 @@ from workers_control.web.notification import Notifier
 from workers_control.web.request import Request
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
+from workers_control.web.www.navbar import NavbarItem
 from workers_control.web.www.response import Redirect
 
 
@@ -36,7 +37,7 @@ class RegisterPrivateConsumptionPresenter:
             self.user_notifier.display_info(
                 self.translator.gettext("Consumption successfully registered.")
             )
-            return Redirect(url=self.url_index.get_register_private_consumption_url())
+            return Redirect(url=self.url_index.get_my_private_consumptions_url())
         form = self._create_form(request)
         status_code = 400
         if interactor_response.rejection_reason == RejectionReason.plan_inactive:
@@ -71,6 +72,18 @@ class RegisterPrivateConsumptionPresenter:
             )
             status_code = 404
         return RenderForm(status_code=status_code, form=form)
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [
+            NavbarItem(
+                text=self.translator.gettext("All plans"),
+                url=self.url_index.get_query_plans_url(),
+            ),
+            NavbarItem(
+                text=self.translator.gettext("Register consumption"),
+                url=None,
+            ),
+        ]
 
     def _create_form(self, request: Request) -> RegisterPrivateConsumptionForm:
         return RegisterPrivateConsumptionForm(

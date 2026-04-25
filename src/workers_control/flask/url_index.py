@@ -75,6 +75,9 @@ class GeneralUrlIndex:
             plan_id=plan_id,
         )
 
+    def get_my_private_consumptions_url(self) -> str:
+        return url_for(endpoint="main_member.consumptions")
+
     def get_global_barplot_for_means_of_production_url(
         self, planned_means: Decimal, planned_resources: Decimal, planned_work: Decimal
     ) -> str:

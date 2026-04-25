@@ -94,7 +94,7 @@ class RegisterPrivateConsumptionPresenterTests(BaseTestCase):
         )
         assert isinstance(view_model, Redirect)
 
-    def test_that_user_is_redirected_to_register_private_consumption_view_on_successful_registration(
+    def test_that_user_is_redirected_to_my_private_consumptions_view_on_successful_registration(
         self,
     ) -> None:
         view_model = self.presenter.present(
@@ -102,7 +102,7 @@ class RegisterPrivateConsumptionPresenterTests(BaseTestCase):
             request=FakeRequest(),
         )
         assert isinstance(view_model, Redirect)
-        assert view_model.url == self.url_index.get_register_private_consumption_url()
+        assert view_model.url == self.url_index.get_my_private_consumptions_url()
 
     @parameterized.expand([(reason,) for reason in RejectionReason])
     def test_that_error_response_results_in_form_being_rerendered(
@@ -164,3 +164,31 @@ class RegisterPrivateConsumptionPresenterTests(BaseTestCase):
         )
         assert isinstance(view_model, RenderForm)
         self.assertEqual(view_model.status_code, 404)
+
+
+class NavbarItemsTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(RegisterPrivateConsumptionPresenter)
+
+    def test_two_navbar_items_are_shown(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertEqual(len(navbar_items), 2)
+
+    def test_first_navbar_item_has_text_all_plans(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertEqual(navbar_items[0].text, self.translator.gettext("All plans"))
+
+    def test_first_navbar_item_links_to_query_plans(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertEqual(navbar_items[0].url, self.url_index.get_query_plans_url())
+
+    def test_second_navbar_item_has_text_register_consumption(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertEqual(
+            navbar_items[1].text, self.translator.gettext("Register consumption")
+        )
+
+    def test_second_navbar_item_has_no_link(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertIsNone(navbar_items[1].url)

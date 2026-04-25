@@ -6,7 +6,6 @@ from parameterized import parameterized
 
 from tests.web.base_test_case import BaseTestCase
 from workers_control.core.interactors import get_member_dashboard
-from workers_control.web.session import UserRole
 from workers_control.web.www.presenters.get_member_dashboard_presenter import (
     GetMemberDashboardPresenter,
 )
@@ -95,65 +94,6 @@ class GetMemberDashboardPresenterTests(BaseTestCase):
             self.translator.gettext("%.2f hours") % response.account_balance,
         )
 
-    def test_that_latest_plans_is_empty_when_there_are_no_latest_plans(self):
-        response = self.get_response(three_latest_plans=[])
-        presentation = self.presenter.present(response)
-        self.assertFalse(presentation.three_latest_plans)
-
-    def test_that_has_latest_plans_is_false_when_there_are_no_latest_plans(self):
-        response = self.get_response(three_latest_plans=[])
-        presentation = self.presenter.present(response)
-        self.assertFalse(presentation.has_latest_plans)
-
-    def test_that_name_of_latest_plans_is_shown(self):
-        expected_name = "test name"
-        response = self.get_response(
-            three_latest_plans=[
-                get_member_dashboard.PlanDetails(
-                    plan_id=uuid4(),
-                    prd_name=expected_name,
-                    approval_date=self.datetime_service.now(),
-                )
-            ]
-        )
-        presentation = self.presenter.present(response)
-        self.assertEqual(presentation.three_latest_plans[0].prd_name, expected_name)
-
-    def test_approval_date_of_latest_plans_is_correctly_formatted(self):
-        now = self.datetime_service.now()
-        response = self.get_response(
-            three_latest_plans=[
-                get_member_dashboard.PlanDetails(
-                    plan_id=uuid4(),
-                    prd_name="test name",
-                    approval_date=now,
-                )
-            ]
-        )
-        presentation = self.presenter.present(response)
-        self.assertEqual(
-            presentation.three_latest_plans[0].approval_date, now.strftime("%d.%m.")
-        )
-
-    def test_plan_details_url_is_correctly_shown(self):
-        plan_id = uuid4()
-        response = self.get_response(
-            three_latest_plans=[
-                get_member_dashboard.PlanDetails(
-                    plan_id=plan_id,
-                    prd_name="test name",
-                    approval_date=self.datetime_service.now(),
-                )
-            ]
-        )
-        presentation = self.presenter.present(response)
-        self.assertEqual(
-            presentation.three_latest_plans[0].plan_details_url,
-            self.url_index.get_plan_details_url(
-                user_role=UserRole.member, plan_id=plan_id
-            ),
-        )
-
     def test_invites_is_empty_when_no_invites_exist(self):
         response = self.get_response()
         presentation = self.presenter.present(response)
@@ -209,21 +149,17 @@ class GetMemberDashboardPresenterTests(BaseTestCase):
         self,
         workplaces: Optional[List[get_member_dashboard.Workplace]] = None,
         account_balance: Optional[Decimal] = None,
-        three_latest_plans: Optional[List[get_member_dashboard.PlanDetails]] = None,
         invites: Optional[List[get_member_dashboard.WorkInvitation]] = None,
     ) -> get_member_dashboard.Response:
         if workplaces is None:
             workplaces = []
         if account_balance is None:
             account_balance = Decimal(0)
-        if three_latest_plans is None:
-            three_latest_plans = []
         if invites is None:
             invites = []
         return get_member_dashboard.Response(
             workplaces=workplaces,
             invites=invites,
-            three_latest_plans=three_latest_plans,
             account_balance=account_balance,
             name="worker",
             email="worker@cp.org",

@@ -1,12 +1,10 @@
-from typing import List, Optional
+from typing import Optional
 from uuid import uuid4
 
-from tests.datetime_service import datetime_utc
 from tests.web.base_test_case import BaseTestCase
 from workers_control.core.interactors.get_company_dashboard import (
     GetCompanyDashboardInteractor as Interactor,
 )
-from workers_control.web.session import UserRole
 from workers_control.web.www.presenters.get_company_dashboard_presenter import (
     GetCompanyDashboardPresenter,
 )
@@ -21,24 +19,14 @@ class CompanyDashboardBaseTestCase(BaseTestCase):
         self,
         has_workers: bool = False,
         company_info: Optional[Interactor.Response.CompanyInfo] = None,
-        latest_plans: Optional[List[Interactor.Response.LatestPlansDetails]] = None,
     ) -> Interactor.Response:
         if company_info is None:
             company_info = Interactor.Response.CompanyInfo(
                 id=uuid4(), name="company name", email="mail@test.de"
             )
-        if latest_plans is None:
-            latest_plans = [
-                Interactor.Response.LatestPlansDetails(
-                    plan_id=uuid4(),
-                    prd_name="prd name test",
-                    approval_date=self.datetime_service.now(),
-                )
-            ]
         return Interactor.Response(
             company_info=company_info,
             has_workers=has_workers,
-            three_latest_plans=latest_plans,
         )
 
 
@@ -82,52 +70,6 @@ class CompanyDashboardPresenterTests(CompanyDashboardBaseTestCase):
             )
         )
         self.assertEqual(view_model.company_email, "mail@test.de")
-
-    def test_presenter_correctly_shows_that_there_are_no_latest_plans_to_show(self):
-        view_model = self.presenter.present(
-            self.get_interactor_response(latest_plans=[])
-        )
-        self.assertFalse(view_model.has_latest_plans)
-
-    def test_presenter_correctly_shows_that_there_are_latest_plans_to_show(self):
-        view_model = self.presenter.present(self.get_interactor_response())
-        self.assertTrue(view_model.has_latest_plans)
-
-    def test_presenter_correctly_formats_date_of_latest_plans(self):
-        self.datetime_service.freeze_time(datetime_utc(2022, 1, 1))
-        approval_time = self.datetime_service.now()
-        view_model = self.presenter.present(
-            self.get_interactor_response(
-                latest_plans=[
-                    Interactor.Response.LatestPlansDetails(
-                        plan_id=uuid4(),
-                        prd_name="prd name test",
-                        approval_date=approval_time,
-                    )
-                ]
-            )
-        )
-        self.assertEqual(view_model.latest_plans[0].approval_date, "01.01.")
-
-    def test_presenter_shows_correct_link_to_latest_plan(self):
-        plan_id = uuid4()
-        view_model = self.presenter.present(
-            self.get_interactor_response(
-                latest_plans=[
-                    Interactor.Response.LatestPlansDetails(
-                        plan_id=plan_id,
-                        prd_name="prd name test",
-                        approval_date=self.datetime_service.now(),
-                    )
-                ]
-            )
-        )
-        self.assertEqual(
-            view_model.latest_plans[0].plan_details_url,
-            self.url_index.get_plan_details_url(
-                user_role=UserRole.company, plan_id=plan_id
-            ),
-        )
 
 
 class CompanyDashboardTileTests(CompanyDashboardBaseTestCase):

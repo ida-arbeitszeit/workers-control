@@ -1,10 +1,8 @@
 from dataclasses import dataclass
-from datetime import datetime
 from decimal import Decimal
 from typing import List
 from uuid import UUID
 
-from workers_control.core.datetime_service import DatetimeService
 from workers_control.core.records import CompanyWorkInvite
 from workers_control.core.repositories import DatabaseGateway
 
@@ -28,17 +26,9 @@ class WorkInvitation:
 
 
 @dataclass
-class PlanDetails:
-    plan_id: UUID
-    prd_name: str
-    approval_date: datetime
-
-
-@dataclass
 class Response:
     workplaces: List[Workplace]
     invites: List[WorkInvitation]
-    three_latest_plans: List[PlanDetails]
     account_balance: Decimal
     name: str
     email: str
@@ -48,7 +38,6 @@ class Response:
 @dataclass
 class GetMemberDashboardInteractor:
     database_gateway: DatabaseGateway
-    datetime_service: DatetimeService
 
     def get_member_dashboard(self, request: Request) -> Response:
         record = (
@@ -62,7 +51,6 @@ class GetMemberDashboardInteractor:
         return Response(
             workplaces=self._get_workplaces(request.member),
             invites=self._get_invites(request.member),
-            three_latest_plans=self._get_three_latest_plans(),
             account_balance=self._get_account_balance(request.member),
             name=_member.name,
             email=email.address,
@@ -78,21 +66,6 @@ class GetMemberDashboardInteractor:
         )
         assert result
         return result[1]
-
-    def _get_three_latest_plans(self) -> List[PlanDetails]:
-        now = self.datetime_service.now()
-        latest_plans = (
-            self.database_gateway.get_plans()
-            .that_will_expire_after(now)
-            .that_were_approved_before(now)
-            .ordered_by_creation_date(ascending=False)
-            .limit(3)
-        )
-        plans = []
-        for plan in latest_plans:
-            assert plan.approval_date
-            plans.append(PlanDetails(plan.id, plan.prd_name, plan.approval_date))
-        return plans
 
     def _get_workplaces(self, member: UUID) -> List[Workplace]:
         return [

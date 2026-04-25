@@ -80,12 +80,24 @@
                         {% if column.is_expired %}
                         <span class="tag is-danger">{{ gettext("Expired") }}</span>
                         {% endif %}
+                        {% if column.is_own_plan %}
+                        <span class="tag is-info">{{ gettext("Our plan") }}</span>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="media-right">
                     <p class="is-size-5">
                         {{ column.price_per_unit }}
                     </p>
+                </div>
+                <div class="media-right">
+                    {% if column.show_consumption_icon %}
+                        {% if column.is_consumption_disabled %}
+                        <span class="has-text-grey-light">{{ "basket-shopping"|icon }}</span>
+                        {% else %}
+                        <a href="{{ column.consumption_url }}">{{ "basket-shopping"|icon }}</a>
+                        {% endif %}
+                    {% endif %}
                 </div>
             </article>
             {% endfor %}

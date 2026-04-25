@@ -287,3 +287,145 @@ class QueryPlansPresenterTests(BaseTestCase):
         first_domain = urlparse(first).netloc
         second_domain = urlparse(second).netloc
         assert first_domain == second_domain
+
+
+class MyPlanFlagTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(QueryPlansPresenter)
+        self.queried_plan_generator = QueriedPlanGenerator()
+
+    def test_is_own_plan_true_when_logged_in_company_matches_planner(self) -> None:
+        company_id = uuid4()
+        self.session.login_company(company_id)
+        response = self.queried_plan_generator.get_response(
+            [self.queried_plan_generator.get_plan(company_id=company_id)]
+        )
+        presentation = self.presenter.present(response)
+        self.assertTrue(presentation.results.rows[0].is_own_plan)
+
+    def test_is_own_plan_false_when_logged_in_company_is_not_the_planner(self) -> None:
+        self.session.login_company(uuid4())
+        response = self.queried_plan_generator.get_response(
+            [self.queried_plan_generator.get_plan(company_id=uuid4())]
+        )
+        presentation = self.presenter.present(response)
+        self.assertFalse(presentation.results.rows[0].is_own_plan)
+
+    def test_is_own_plan_false_when_user_is_a_member(self) -> None:
+        member_id = uuid4()
+        self.session.login_member(member_id)
+        response = self.queried_plan_generator.get_response(
+            [self.queried_plan_generator.get_plan(company_id=member_id)]
+        )
+        presentation = self.presenter.present(response)
+        self.assertFalse(presentation.results.rows[0].is_own_plan)
+
+    def test_is_own_plan_false_when_user_is_an_accountant(self) -> None:
+        accountant_id = uuid4()
+        self.session.login_accountant(accountant_id)
+        response = self.queried_plan_generator.get_response(
+            [self.queried_plan_generator.get_plan(company_id=accountant_id)]
+        )
+        presentation = self.presenter.present(response)
+        self.assertFalse(presentation.results.rows[0].is_own_plan)
+
+
+class ConsumptionIconTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(QueryPlansPresenter)
+        self.queried_plan_generator = QueriedPlanGenerator()
+
+    def test_icon_is_shown_to_members(self) -> None:
+        self.session.login_member(uuid4())
+        response = self.queried_plan_generator.get_response(
+            [self.queried_plan_generator.get_plan()]
+        )
+        presentation = self.presenter.present(response)
+        self.assertTrue(presentation.results.rows[0].show_consumption_icon)
+
+    def test_icon_is_shown_to_companies(self) -> None:
+        self.session.login_company(uuid4())
+        response = self.queried_plan_generator.get_response(
+            [self.queried_plan_generator.get_plan()]
+        )
+        presentation = self.presenter.present(response)
+        self.assertTrue(presentation.results.rows[0].show_consumption_icon)
+
+    def test_icon_is_hidden_from_accountants(self) -> None:
+        self.session.login_accountant(uuid4())
+        response = self.queried_plan_generator.get_response(
+            [self.queried_plan_generator.get_plan()]
+        )
+        presentation = self.presenter.present(response)
+        self.assertFalse(presentation.results.rows[0].show_consumption_icon)
+
+    def test_member_consumption_url_is_private_consumption_url(self) -> None:
+        self.session.login_member(uuid4())
+        plan_id = uuid4()
+        response = self.queried_plan_generator.get_response(
+            [self.queried_plan_generator.get_plan(plan_id=plan_id)]
+        )
+        presentation = self.presenter.present(response)
+        self.assertEqual(
+            presentation.results.rows[0].consumption_url,
+            self.url_index.get_register_private_consumption_url(plan_id=plan_id),
+        )
+
+    def test_company_consumption_url_is_productive_consumption_url(self) -> None:
+        self.session.login_company(uuid4())
+        plan_id = uuid4()
+        response = self.queried_plan_generator.get_response(
+            [self.queried_plan_generator.get_plan(plan_id=plan_id)]
+        )
+        presentation = self.presenter.present(response)
+        self.assertEqual(
+            presentation.results.rows[0].consumption_url,
+            self.url_index.get_register_productive_consumption_url(plan_id=plan_id),
+        )
+
+    def test_accountant_has_empty_consumption_url(self) -> None:
+        self.session.login_accountant(uuid4())
+        response = self.queried_plan_generator.get_response(
+            [self.queried_plan_generator.get_plan()]
+        )
+        presentation = self.presenter.present(response)
+        self.assertEqual(presentation.results.rows[0].consumption_url, "")
+
+    def test_consumption_is_disabled_for_members_on_expired_plans(self) -> None:
+        self.session.login_member(uuid4())
+        response = self.queried_plan_generator.get_response(
+            [self.queried_plan_generator.get_plan(is_expired=True)]
+        )
+        presentation = self.presenter.present(response)
+        self.assertTrue(presentation.results.rows[0].is_consumption_disabled)
+
+    def test_consumption_is_enabled_for_members_on_active_plans(self) -> None:
+        self.session.login_member(uuid4())
+        response = self.queried_plan_generator.get_response(
+            [self.queried_plan_generator.get_plan(is_expired=False)]
+        )
+        presentation = self.presenter.present(response)
+        self.assertFalse(presentation.results.rows[0].is_consumption_disabled)
+
+    def test_consumption_is_disabled_for_own_plan_even_when_active(self) -> None:
+        company_id = uuid4()
+        self.session.login_company(company_id)
+        response = self.queried_plan_generator.get_response(
+            [
+                self.queried_plan_generator.get_plan(
+                    company_id=company_id, is_expired=False
+                )
+            ]
+        )
+        presentation = self.presenter.present(response)
+        self.assertTrue(presentation.results.rows[0].is_consumption_disabled)
+
+    def test_consumption_is_enabled_for_company_on_foreign_active_plan(self) -> None:
+        self.session.login_company(uuid4())
+        response = self.queried_plan_generator.get_response(
+            [self.queried_plan_generator.get_plan(company_id=uuid4(), is_expired=False)]
+        )
+        presentation = self.presenter.present(response)
+        self.assertFalse(presentation.results.rows[0].is_consumption_disabled)

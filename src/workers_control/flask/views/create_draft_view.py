@@ -15,6 +15,9 @@ from workers_control.web.translator import Translator
 from workers_control.web.www.controllers.create_draft_controller import (
     CreateDraftController,
 )
+from workers_control.web.www.presenters.create_draft_presenter import (
+    CreateDraftPresenter,
+)
 
 
 @dataclass
@@ -24,6 +27,7 @@ class CreateDraftView:
     controller: CreateDraftController
     interactor: create_plan_draft.CreatePlanDraft
     url_index: GeneralUrlIndex
+    presenter: CreateDraftPresenter
 
     def GET(self) -> Response:
         form = DraftForm(
@@ -58,6 +62,7 @@ class CreateDraftView:
                 "company/create_draft.html",
                 form=form,
                 cancel_url=self.url_index.get_my_plan_drafts_url(),
+                navbar_items=self.presenter.create_navbar_items(),
             ),
             status=status_code,
         )

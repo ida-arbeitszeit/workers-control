@@ -4,7 +4,9 @@ from dataclasses import dataclass
 
 from workers_control.core.interactors.get_draft_details import DraftDetailsSuccess
 from workers_control.web.forms import DraftForm
+from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
+from workers_control.web.www.navbar import NavbarItem
 
 
 @dataclass
@@ -15,6 +17,7 @@ class GetDraftDetailsPresenter:
         form: DraftForm
 
     url_index: UrlIndex
+    translator: Translator
 
     def present_draft_details(self, draft_data: DraftDetailsSuccess) -> ViewModel:
         form = DraftForm(
@@ -32,3 +35,15 @@ class GetDraftDetailsPresenter:
             cancel_url=self.url_index.get_my_plans_url(),
             form=form,
         )
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [
+            NavbarItem(
+                text=self.translator.gettext("My plans"),
+                url=self.url_index.get_my_plans_url(),
+            ),
+            NavbarItem(
+                text=self.translator.gettext("Edit draft"),
+                url=None,
+            ),
+        ]

@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
 {% from 'macros/draft_form.html' import draft_form %}
+{% from 'macros/navbar.html' import navbar %}
 
 {% block navbar_start %}
-<div class="navbar-item">{{ gettext("Create plan") }}</div>
+{{ navbar(navbar_items) }}
 {% endblock %}
 
 {% block content %}

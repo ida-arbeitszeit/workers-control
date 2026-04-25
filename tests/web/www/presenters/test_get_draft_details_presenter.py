@@ -144,6 +144,26 @@ class DraftDetailsPresenterTests(BaseTestCase):
             "on" if is_public_service else ""
         )
 
+    def test_two_navbar_items_are_shown(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertEqual(len(navbar_items), 2)
+
+    def test_first_navbar_item_has_text_my_plans(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertEqual(navbar_items[0].text, self.translator.gettext("My plans"))
+
+    def test_first_navbar_item_links_to_my_plans(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertEqual(navbar_items[0].url, self.url_index.get_my_plans_url())
+
+    def test_second_navbar_item_has_text_edit_draft(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertEqual(navbar_items[1].text, self.translator.gettext("Edit draft"))
+
+    def test_second_navbar_item_has_no_link(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertIsNone(navbar_items[1].url)
+
     def create_draft_data(
         self,
         product_name: str = "test draft",

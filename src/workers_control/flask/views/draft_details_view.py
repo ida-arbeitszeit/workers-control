@@ -40,6 +40,7 @@ class DraftDetailsView:
                 "company/draft_details.html",
                 cancel_url=view_model.cancel_url,
                 form=view_model.form,
+                navbar_items=self.presenter.create_navbar_items(),
             )
         )
 
@@ -66,6 +67,7 @@ class DraftDetailsView:
                 "company/draft_details.html",
                 cancel_url=self.url_index.get_my_plans_url(),
                 form=form,
+                navbar_items=self.presenter.create_navbar_items(),
             ),
             status=status,
         )

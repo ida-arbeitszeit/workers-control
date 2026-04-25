@@ -42,3 +42,29 @@ class PresenterTests(BaseTestCase):
             self.notifier.infos[0],
             self.translator.gettext("Plan draft successfully created"),
         )
+
+
+class NavbarItemsTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(CreateDraftPresenter)
+
+    def test_two_navbar_items_are_shown(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertEqual(len(navbar_items), 2)
+
+    def test_first_navbar_item_has_text_my_plans(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertEqual(navbar_items[0].text, self.translator.gettext("My plans"))
+
+    def test_first_navbar_item_links_to_my_plans(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertEqual(navbar_items[0].url, self.url_index.get_my_plans_url())
+
+    def test_second_navbar_item_has_text_create_plan(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertEqual(navbar_items[1].text, self.translator.gettext("Create plan"))
+
+    def test_second_navbar_item_has_no_link(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertIsNone(navbar_items[1].url)

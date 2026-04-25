@@ -5,7 +5,6 @@ from tests.web.base_test_case import BaseTestCase
 from workers_control.core.interactors.file_plan_with_accounting import (
     FilePlanWithAccounting,
 )
-from workers_control.web.session import UserRole
 from workers_control.web.www.presenters.file_plan_with_accounting_presenter import (
     FilePlanWithAccountingPresenter,
 )
@@ -25,18 +24,13 @@ class Tests(BaseTestCase):
         view_model = self.presenter.present_response(self.create_failure_response())
         self.assertIsNotNone(view_model.redirect_url)
 
-    def test_user_gets_redirected_to_plan_details_page_on_successful_response(
+    def test_user_gets_redirected_to_my_plans_page_on_successful_response(
         self,
     ) -> None:
-        plan_id = uuid4()
-        view_model = self.presenter.present_response(
-            self.create_success_response(plan_id=plan_id)
-        )
+        view_model = self.presenter.present_response(self.create_success_response())
         self.assertEqual(
             view_model.redirect_url,
-            self.url_index.get_plan_details_url(
-                user_role=UserRole.company, plan_id=plan_id
-            ),
+            self.url_index.get_my_plans_url(),
         )
 
     def test_user_gets_redirected_to_my_plans_page_on_failure_response(

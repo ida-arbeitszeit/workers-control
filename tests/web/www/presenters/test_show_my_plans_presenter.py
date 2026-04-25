@@ -91,6 +91,13 @@ class ShowMyPlansPresenterTests(PresenterBase):
         self.assertFalse(self.notifier.infos)
         self.assertFalse(self.notifier.warnings)
 
+    def test_create_draft_url_points_to_create_draft_view(self) -> None:
+        response = self.create_interactor_response(num_of_plans=0)
+        view_model = self.presenter.present(response)
+        self.assertEqual(
+            view_model.create_draft_url, self.url_index.get_create_draft_url()
+        )
+
 
 class ActivePlansTests(PresenterBase):
     def test_do_only_show_active_plans_when_user_has_one_active_plan(self) -> None:

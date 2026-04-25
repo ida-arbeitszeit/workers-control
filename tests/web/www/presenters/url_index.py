@@ -76,7 +76,7 @@ class UrlIndexTestImpl:
     get_pending_work_invites_url = UrlIndexMethod()
     get_plan_details_url = UrlIndexMethod()
     get_query_companies_url = UrlIndexMethod()
-    get_query_plans_url = UrlIndexMethod()
+    get_query_offers_url = UrlIndexMethod()
     get_my_private_consumptions_url = UrlIndexMethod()
     get_register_hours_worked_url = UrlIndexMethod()
     get_registered_hours_worked_url = UrlIndexMethod()

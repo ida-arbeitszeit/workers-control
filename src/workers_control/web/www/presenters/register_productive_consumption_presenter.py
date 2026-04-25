@@ -27,7 +27,7 @@ class RegisterProductiveConsumptionPresenter:
         return [
             NavbarItem(
                 text=self.trans.gettext("All plans"),
-                url=self.url_index.get_query_plans_url(),
+                url=self.url_index.get_query_offers_url(),
             ),
             NavbarItem(
                 text=self.trans.gettext("Registration of productive consumption"),

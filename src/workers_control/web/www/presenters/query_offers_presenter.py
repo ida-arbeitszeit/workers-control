@@ -2,7 +2,10 @@ from dataclasses import dataclass
 from typing import Optional
 from uuid import UUID
 
-from workers_control.core.interactors.query_plans import PlanQueryResponse, QueriedPlan
+from workers_control.core.interactors.query_offers import (
+    OfferQueryResponse,
+    QueriedOffer,
+)
 from workers_control.web.notification import Notifier
 from workers_control.web.pagination import Pagination, Paginator
 from workers_control.web.request import Request
@@ -34,7 +37,7 @@ class ResultsTable:
 
 
 @dataclass
-class QueryPlansViewModel:
+class QueryOffersViewModel:
     total_results: int
     results: ResultsTable
     show_results: bool
@@ -42,7 +45,7 @@ class QueryPlansViewModel:
 
 
 @dataclass
-class QueryPlansPresenter:
+class QueryOffersPresenter:
     user_url_index: UserUrlIndex
     url_index: UrlIndex
     user_notifier: Notifier
@@ -50,12 +53,12 @@ class QueryPlansPresenter:
     request: Request
     session: Session
 
-    def present(self, response: PlanQueryResponse) -> QueryPlansViewModel:
+    def present(self, response: OfferQueryResponse) -> QueryOffersViewModel:
         if not response.results:
             self.user_notifier.display_warning(self.translator.gettext("No results."))
         user_role = self.session.get_user_role()
         current_user = self.session.get_current_user()
-        return QueryPlansViewModel(
+        return QueryOffersViewModel(
             total_results=response.total_results,
             show_results=bool(response.results),
             results=ResultsTable(
@@ -67,8 +70,8 @@ class QueryPlansPresenter:
             pagination=self._create_pagination(response),
         )
 
-    def get_empty_view_model(self) -> QueryPlansViewModel:
-        return QueryPlansViewModel(
+    def get_empty_view_model(self) -> QueryOffersViewModel:
+        return QueryOffersViewModel(
             total_results=0,
             results=ResultsTable(rows=[]),
             show_results=False,
@@ -77,7 +80,7 @@ class QueryPlansPresenter:
 
     def _build_row(
         self,
-        result: QueriedPlan,
+        result: QueriedOffer,
         user_role: Optional[UserRole],
         current_user: Optional[UUID],
     ) -> ResultTableRow:
@@ -113,7 +116,7 @@ class QueryPlansPresenter:
             consumption_url=consumption_url,
         )
 
-    def _create_pagination(self, response: PlanQueryResponse) -> Pagination:
+    def _create_pagination(self, response: OfferQueryResponse) -> Pagination:
         paginator = Paginator(
             request=self.request,
             total_results=response.total_results,

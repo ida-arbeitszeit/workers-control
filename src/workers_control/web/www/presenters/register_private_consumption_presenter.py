@@ -77,7 +77,7 @@ class RegisterPrivateConsumptionPresenter:
         return [
             NavbarItem(
                 text=self.translator.gettext("All plans"),
-                url=self.url_index.get_query_plans_url(),
+                url=self.url_index.get_query_offers_url(),
             ),
             NavbarItem(
                 text=self.translator.gettext("Register consumption"),

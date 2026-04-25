@@ -7,8 +7,8 @@ from typing import Dict, Optional, Self
 
 from .get_company_summary_benchmark import GetCompanySummaryBenchmark
 from .get_statistics import GetStatisticsBenchmark
-from .query_plans_sorted_by_activation_date_benchmark import (
-    QueryPlansSortedByActivationDateBenchmark,
+from .query_offers_sorted_by_activation_date_benchmark import (
+    QueryOffersSortedByActivationDateBenchmark,
 )
 from .runner import BenchmarkCatalog, BenchmarkResult, render_results_as_json
 from .show_prd_account_details_benchmark import ShowPrdAccountDetailsBenchmark
@@ -24,8 +24,8 @@ def build_benchmark_catalog() -> BenchmarkCatalog:
     catalog.register_benchmark("get_statistics", GetStatisticsBenchmark)
     catalog.register_benchmark("get_company_summary", GetCompanySummaryBenchmark)
     catalog.register_benchmark(
-        "query_plans_sorted_by_activation_date",
-        QueryPlansSortedByActivationDateBenchmark,
+        "query_offers_sorted_by_activation_date",
+        QueryOffersSortedByActivationDateBenchmark,
     )
     return catalog
 

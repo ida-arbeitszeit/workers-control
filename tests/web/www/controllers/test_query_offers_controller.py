@@ -5,16 +5,16 @@ from typing import Optional
 
 from tests.web.base_test_case import BaseTestCase
 from tests.web.www.request import FakeRequest
-from workers_control.core.interactors.query_plans import PlanFilter, PlanSorting
-from workers_control.web.www.controllers.query_plans_controller import (
-    QueryPlansController,
+from workers_control.core.interactors.query_offers import OfferFilter, OfferSorting
+from workers_control.web.www.controllers.query_offers_controller import (
+    QueryOffersController,
 )
 
 
-class QueryPlansControllerTests(BaseTestCase):
+class QueryOffersControllerTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
-        self.controller = self.injector.get(QueryPlansController)
+        self.controller = self.injector.get(QueryOffersController)
 
     def test_that_empty_query_string_translates_to_no_query_string_in_request(
         self,
@@ -38,7 +38,7 @@ class QueryPlansControllerTests(BaseTestCase):
         request = self.controller.import_form_data(
             make_fake_form(filter_category="Plan-ID")
         )
-        self.assertEqual(request.filter_category, PlanFilter.by_plan_id)
+        self.assertEqual(request.filter_category, OfferFilter.by_plan_id)
 
     def test_that_product_name_choice_produces_requests_filter_by_product_name(
         self,
@@ -46,7 +46,7 @@ class QueryPlansControllerTests(BaseTestCase):
         request = self.controller.import_form_data(
             make_fake_form(filter_category="Produktname")
         )
-        self.assertEqual(request.filter_category, PlanFilter.by_product_name)
+        self.assertEqual(request.filter_category, OfferFilter.by_product_name)
 
     def test_that_random_string_produces_requests_filter_by_plan_id(
         self,
@@ -54,7 +54,7 @@ class QueryPlansControllerTests(BaseTestCase):
         request = self.controller.import_form_data(
             make_fake_form(filter_category="awqwrndaj")
         )
-        self.assertEqual(request.filter_category, PlanFilter.by_product_name)
+        self.assertEqual(request.filter_category, OfferFilter.by_product_name)
 
     def test_that_default_request_model_includes_no_search_query(
         self,
@@ -66,7 +66,7 @@ class QueryPlansControllerTests(BaseTestCase):
         self,
     ) -> None:
         request = self.controller.import_form_data()
-        self.assertEqual(request.sorting_category, PlanSorting.by_activation)
+        self.assertEqual(request.sorting_category, OfferSorting.by_activation)
 
     def test_that_nonexisting_sorting_field_results_in_sorting_by_activation_date(
         self,
@@ -74,7 +74,7 @@ class QueryPlansControllerTests(BaseTestCase):
         request = self.controller.import_form_data(
             form=make_fake_form(sorting_category="somethingjsbjbsd")
         )
-        self.assertEqual(request.sorting_category, PlanSorting.by_activation)
+        self.assertEqual(request.sorting_category, OfferSorting.by_activation)
 
     def test_that_company_name_in_sorting_field_results_in_sorting_by_company_name(
         self,
@@ -82,7 +82,7 @@ class QueryPlansControllerTests(BaseTestCase):
         request = self.controller.import_form_data(
             form=make_fake_form(sorting_category="company_name")
         )
-        self.assertEqual(request.sorting_category, PlanSorting.by_company_name)
+        self.assertEqual(request.sorting_category, OfferSorting.by_company_name)
 
     def test_that_empty_include_expired_plans_field_results_in_false(
         self,
@@ -94,7 +94,7 @@ class QueryPlansControllerTests(BaseTestCase):
 class PaginationTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
-        self.controller = self.injector.get(QueryPlansController)
+        self.controller = self.injector.get(QueryOffersController)
 
     def test_if_no_page_is_specified_in_query_args_use_offset_of_0(
         self,
@@ -136,8 +136,8 @@ def make_fake_form(
     filter_category: Optional[str] = None,
     sorting_category: Optional[str] = None,
     include_expired_plans: Optional[bool] = None,
-) -> FakeQueryPlansForm:
-    return FakeQueryPlansForm(
+) -> FakeQueryOffersForm:
+    return FakeQueryOffersForm(
         query=query or "",
         products_filter=filter_category or "Produktname",
         sorting_category=sorting_category or "activation",
@@ -146,7 +146,7 @@ def make_fake_form(
 
 
 @dataclass
-class FakeQueryPlansForm:
+class FakeQueryOffersForm:
     query: str
     products_filter: str
     sorting_category: str

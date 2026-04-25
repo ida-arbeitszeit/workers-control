@@ -143,6 +143,9 @@ class GeneralUrlIndex:
             type_of_consumption=type_string,
         )
 
+    def get_company_consumptions_url(self) -> str:
+        return url_for(endpoint="main_company.my_consumptions")
+
     def get_request_coop_url(self) -> str:
         return url_for("main_company.request_cooperation")
 

@@ -96,12 +96,12 @@ class RegisterProductiveConsumptionTests(BaseTestCase):
         view_model = self.presenter.present(response)
         self.assertIsNotNone(view_model.redirect_url)
 
-    def test_that_user_gets_redirected_to_registration_form(self) -> None:
+    def test_that_user_gets_redirected_to_company_consumptions(self) -> None:
         response = self.create_success_response()
         view_model = self.presenter.present(response)
         self.assertEqual(
             view_model.redirect_url,
-            self.url_index.get_register_productive_consumption_url(),
+            self.url_index.get_company_consumptions_url(),
         )
 
     def create_success_response(self) -> RegisterProductiveConsumptionResponse:
@@ -114,3 +114,32 @@ class RegisterProductiveConsumptionTests(BaseTestCase):
         if reason is None:
             reason = reasons.consumer_is_planner
         return RegisterProductiveConsumptionResponse(rejection_reason=reason)
+
+
+class NavbarItemsTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(RegisterProductiveConsumptionPresenter)
+
+    def test_two_navbar_items_are_shown(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertEqual(len(navbar_items), 2)
+
+    def test_first_navbar_item_has_text_all_plans(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertEqual(navbar_items[0].text, self.translator.gettext("All plans"))
+
+    def test_first_navbar_item_links_to_query_plans(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertEqual(navbar_items[0].url, self.url_index.get_query_plans_url())
+
+    def test_second_navbar_item_has_text_register_productive_consumption(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertEqual(
+            navbar_items[1].text,
+            self.translator.gettext("Registration of productive consumption"),
+        )
+
+    def test_second_navbar_item_has_no_link(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertIsNone(navbar_items[1].url)

@@ -65,6 +65,7 @@ class RegisterProductiveConsumptionView:
                 "company/register_productive_consumption.html",
                 form=form,
                 view_model=view_model,
+                navbar_items=self.presenter.create_navbar_items(),
             ),
             status=view_model.status_code,
         )
@@ -86,7 +87,10 @@ class RegisterProductiveConsumptionView:
 
     def _render_template(self, form: RegisterProductiveConsumptionForm) -> str:
         return render_template(
-            "company/register_productive_consumption.html", form=form, view_model=None
+            "company/register_productive_consumption.html",
+            form=form,
+            view_model=None,
+            navbar_items=self.presenter.create_navbar_items(),
         )
 
     def _handle_invalid_form(self, form: RegisterProductiveConsumptionForm) -> Response:

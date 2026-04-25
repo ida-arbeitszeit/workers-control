@@ -10,6 +10,10 @@
     <h1 class="title">
         {{ gettext("Registered working hours") }}
     </h1>
+    <a class="button is-primary" href="{{ view_model.register_hours_worked_url }}">
+        <span class="icon">{{ "credit-card"|icon }}</span>
+        <span>{{ gettext("Register hours worked") }}</span>
+    </a>
 </div>
 
 {% for record in view_model.registered_hours_worked %}

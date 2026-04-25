@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from workers_control.core.interactors import list_registered_hours_worked
 from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
+from workers_control.web.url_index import UrlIndex
 
 
 @dataclass
@@ -15,11 +16,13 @@ class RegisteredHoursWorked:
 @dataclass
 class ViewModel:
     registered_hours_worked: list[RegisteredHoursWorked]
+    register_hours_worked_url: str
 
 
 @dataclass
 class ListRegisteredHoursWorkedPresenter:
     datetime_formatter: DatetimeFormatter
+    url_index: UrlIndex
 
     def present(self, response: list_registered_hours_worked.Response) -> ViewModel:
         registered_hours_worked = [
@@ -34,4 +37,7 @@ class ListRegisteredHoursWorkedPresenter:
             )
             for record in response.registered_hours_worked
         ]
-        return ViewModel(registered_hours_worked=registered_hours_worked)
+        return ViewModel(
+            registered_hours_worked=registered_hours_worked,
+            register_hours_worked_url=self.url_index.get_register_hours_worked_url(),
+        )

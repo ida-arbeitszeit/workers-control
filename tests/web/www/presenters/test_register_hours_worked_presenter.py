@@ -40,8 +40,16 @@ class PresentInteractorResponseTests(BaseTestCase):
         self.assertFalse(self.notifier.infos)
 
     def test_presenter_returns_status_404_if_interactor_response_is_rejected(self):
-        code = self.presenter.present_interactor_response(REJECTED_INTERACTOR_RESPONSE)
-        self.assertEqual(code, 404)
+        view_model = self.presenter.present_interactor_response(
+            REJECTED_INTERACTOR_RESPONSE
+        )
+        self.assertEqual(view_model.status_code, 404)
+
+    def test_presenter_does_not_redirect_when_interactor_response_is_rejected(self):
+        view_model = self.presenter.present_interactor_response(
+            REJECTED_INTERACTOR_RESPONSE
+        )
+        self.assertIsNone(view_model.redirect_url)
 
     def test_presenter_renders_info_if_interactor_response_is_successfull(self):
         self.presenter.present_interactor_response(SUCCESS_INTERACTOR_RESPONSE)
@@ -49,8 +57,18 @@ class PresentInteractorResponseTests(BaseTestCase):
         self.assertFalse(self.notifier.warnings)
 
     def test_presenter_returns_status_302_if_interactor_response_is_successfull(self):
-        code = self.presenter.present_interactor_response(SUCCESS_INTERACTOR_RESPONSE)
-        self.assertEqual(code, 302)
+        view_model = self.presenter.present_interactor_response(
+            SUCCESS_INTERACTOR_RESPONSE
+        )
+        self.assertEqual(view_model.status_code, 302)
+
+    def test_presenter_redirects_to_registered_hours_worked_view_on_success(self):
+        view_model = self.presenter.present_interactor_response(
+            SUCCESS_INTERACTOR_RESPONSE
+        )
+        self.assertEqual(
+            view_model.redirect_url, self.url_index.get_registered_hours_worked_url()
+        )
 
     def test_that_the_user_is_notified_about_success(self) -> None:
         self.presenter.present_interactor_response(SUCCESS_INTERACTOR_RESPONSE)
@@ -63,9 +81,7 @@ class PresentInteractorResponseTests(BaseTestCase):
 class PresentControllerResponseTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
-        self.presenter = RegisterHoursWorkedPresenter(
-            notifier=self.notifier, translator=self.translator
-        )
+        self.presenter = self.injector.get(RegisterHoursWorkedPresenter)
 
     def test_presenter_renders_correct_warning_if_controller_rejects_invalid_input(
         self,
@@ -89,3 +105,35 @@ class PresentControllerResponseTests(BaseTestCase):
             self.translator.gettext("A negative amount is not allowed."),
             self.notifier.warnings,
         )
+
+
+class NavbarItemsTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(RegisterHoursWorkedPresenter)
+
+    def test_two_navbar_items_are_shown(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertEqual(len(navbar_items), 2)
+
+    def test_first_navbar_item_has_text_registered_working_hours(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertEqual(
+            navbar_items[0].text, self.translator.gettext("Registered working hours")
+        )
+
+    def test_first_navbar_item_links_to_registered_hours_worked(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertEqual(
+            navbar_items[0].url, self.url_index.get_registered_hours_worked_url()
+        )
+
+    def test_second_navbar_item_has_text_register_hours_worked(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertEqual(
+            navbar_items[1].text, self.translator.gettext("Register hours worked")
+        )
+
+    def test_second_navbar_item_has_no_link(self) -> None:
+        navbar_items = self.presenter.create_navbar_items()
+        self.assertIsNone(navbar_items[1].url)

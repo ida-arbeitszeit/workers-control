@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from flask import Response as FlaskResponse
-from flask import redirect, render_template, url_for
+from flask import redirect, render_template
 
 from workers_control.core.interactors import list_workers
 from workers_control.core.interactors.register_hours_worked import (
@@ -41,12 +41,10 @@ class RegisterHoursWorkedView:
             interactor_response = self.register_hours_worked.execute(
                 controller_response
             )
-            status_code = self.presenter.present_interactor_response(
-                interactor_response
-            )
-            if status_code == 302:
-                return redirect(url_for("main_company.register_hours_worked"))
-            return self.create_response(status=status_code)
+            view_model = self.presenter.present_interactor_response(interactor_response)
+            if view_model.redirect_url is not None:
+                return redirect(view_model.redirect_url)
+            return self.create_response(status=view_model.status_code)
 
     def create_response(self, status: int) -> Response:
         current_user = self.flask_session.get_current_user()
@@ -58,6 +56,7 @@ class RegisterHoursWorkedView:
             render_template(
                 "company/register_hours_worked.html",
                 workers_list=workers_list.workers,
+                navbar_items=self.presenter.create_navbar_items(),
             ),
             status=status,
         )

@@ -28,9 +28,6 @@ from workers_control.flask.views.list_coordinators_of_cooperation_view import (
     ListCoordinationsOfCooperationView,
 )
 from workers_control.flask.views.list_transfers import ListTransfersView
-from workers_control.flask.views.query_basic_services_view import (
-    QueryBasicServicesView,
-)
 from workers_control.flask.views.show_a_account_details_view import (
     ShowAAccountDetailsView,
 )
@@ -141,11 +138,6 @@ class query_offers(QueryOffersView): ...
 @AuthenticatedUserRoute("/query_companies", methods=["GET"])
 @as_flask_view()
 class query_companies(QueryCompaniesView): ...
-
-
-@AuthenticatedUserRoute("/query_basic_services", methods=["GET"])
-@as_flask_view()
-class query_basic_services(QueryBasicServicesView): ...
 
 
 @AuthenticatedUserRoute("/statistics")

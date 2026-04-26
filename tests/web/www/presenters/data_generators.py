@@ -28,9 +28,7 @@ class QueriedOfferGenerator:
         is_cooperating: bool = False,
         description: str = "For eating\nNext paragraph\rThird one",
         approval_date: Optional[datetime] = None,
-        rejection_date: Optional[datetime] = None,
         price_per_unit: Decimal = Decimal(5),
-        labour_cost_per_unit: Decimal = Decimal(1),
         is_expired: bool = False,
     ) -> QueriedOffer:
         if plan_id is None:
@@ -39,20 +37,43 @@ class QueriedOfferGenerator:
             company_id = uuid4()
         if approval_date is None:
             approval_date = datetime.min
-        if rejection_date is None:
-            rejection_date = datetime.min
         return QueriedOffer(
-            plan_id=plan_id,
-            company_name="Planner name",
-            company_id=company_id,
-            product_name="Bread",
+            id=plan_id,
+            name="Bread",
             description=description,
+            provider_name="Planner name",
+            provider_id=company_id,
+            created_or_approved_on=approval_date,
+            is_basic_service=False,
             price_per_unit=price_per_unit,
-            labour_cost_per_unit=labour_cost_per_unit,
             is_public_service=False,
             is_cooperating=is_cooperating,
-            approval_date=approval_date,
             is_expired=is_expired,
+        )
+
+    def get_basic_service(
+        self,
+        basic_service_id: Optional[UUID] = None,
+        provider_id: Optional[UUID] = None,
+        provider_name: str = "Provider name",
+        name: str = "Tutoring",
+        description: str = "BS description",
+        created_on: Optional[datetime] = None,
+    ) -> QueriedOffer:
+        if basic_service_id is None:
+            basic_service_id = uuid4()
+        if provider_id is None:
+            provider_id = uuid4()
+        if created_on is None:
+            created_on = datetime.min
+        return QueriedOffer(
+            id=basic_service_id,
+            name=name,
+            description=description,
+            provider_name=provider_name,
+            provider_id=provider_id,
+            created_or_approved_on=created_on,
+            is_basic_service=True,
         )
 
     def get_response(
@@ -62,7 +83,7 @@ class QueriedOfferGenerator:
         query_string: Optional[str] = None,
         requested_offset: int = 0,
         requested_limit: Optional[int] = None,
-        requested_filter_category: OfferFilter = OfferFilter.by_product_name,
+        requested_filter_category: OfferFilter = OfferFilter.by_offer_name,
         requested_sorting_category: OfferSorting = OfferSorting.by_activation,
     ) -> OfferQueryResponse:
         if queried_plans is None:
@@ -79,6 +100,7 @@ class QueriedOfferGenerator:
                 filter_category=requested_filter_category,
                 sorting_category=requested_sorting_category,
                 include_expired_plans=False,
+                include_basic_services=True,
             ),
         )
 

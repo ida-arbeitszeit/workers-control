@@ -34,27 +34,27 @@ class QueryOffersControllerTests(BaseTestCase):
         request = self.controller.import_form_data(make_fake_form(query="   "))
         self.assertIsNone(request.query_string)
 
-    def test_that_plan_id_choice_produces_requests_filter_by_plan_id(self) -> None:
+    def test_that_offer_id_choice_produces_requests_filter_by_offer_id(self) -> None:
         request = self.controller.import_form_data(
-            make_fake_form(filter_category="Plan-ID")
+            make_fake_form(filter_category="offer_id")
         )
-        self.assertEqual(request.filter_category, OfferFilter.by_plan_id)
+        self.assertEqual(request.filter_category, OfferFilter.by_offer_id)
 
-    def test_that_product_name_choice_produces_requests_filter_by_product_name(
+    def test_that_offer_name_choice_produces_requests_filter_by_offer_name(
         self,
     ) -> None:
         request = self.controller.import_form_data(
-            make_fake_form(filter_category="Produktname")
+            make_fake_form(filter_category="offer_name")
         )
-        self.assertEqual(request.filter_category, OfferFilter.by_product_name)
+        self.assertEqual(request.filter_category, OfferFilter.by_offer_name)
 
-    def test_that_random_string_produces_requests_filter_by_plan_id(
+    def test_that_random_filter_string_falls_back_to_filter_by_offer_name(
         self,
     ) -> None:
         request = self.controller.import_form_data(
             make_fake_form(filter_category="awqwrndaj")
         )
-        self.assertEqual(request.filter_category, OfferFilter.by_product_name)
+        self.assertEqual(request.filter_category, OfferFilter.by_offer_name)
 
     def test_that_default_request_model_includes_no_search_query(
         self,
@@ -76,19 +76,41 @@ class QueryOffersControllerTests(BaseTestCase):
         )
         self.assertEqual(request.sorting_category, OfferSorting.by_activation)
 
-    def test_that_company_name_in_sorting_field_results_in_sorting_by_company_name(
+    def test_that_provider_name_in_sorting_field_results_in_sorting_by_provider_name(
         self,
     ) -> None:
         request = self.controller.import_form_data(
-            form=make_fake_form(sorting_category="company_name")
+            form=make_fake_form(sorting_category="provider_name")
         )
-        self.assertEqual(request.sorting_category, OfferSorting.by_company_name)
+        self.assertEqual(request.sorting_category, OfferSorting.by_provider_name)
 
-    def test_that_empty_include_expired_plans_field_results_in_false(
+    def test_that_default_request_excludes_expired_plans(
         self,
     ) -> None:
         request = self.controller.import_form_data()
         self.assertFalse(request.include_expired_plans)
+
+    def test_that_default_request_includes_basic_services(
+        self,
+    ) -> None:
+        request = self.controller.import_form_data()
+        self.assertTrue(request.include_basic_services)
+
+    def test_that_form_value_for_include_basic_services_is_passed_through(
+        self,
+    ) -> None:
+        request = self.controller.import_form_data(
+            make_fake_form(include_basic_services=False)
+        )
+        self.assertFalse(request.include_basic_services)
+
+    def test_that_form_value_for_include_expired_plans_is_passed_through(
+        self,
+    ) -> None:
+        request = self.controller.import_form_data(
+            make_fake_form(include_expired_plans=True)
+        )
+        self.assertTrue(request.include_expired_plans)
 
 
 class PaginationTests(BaseTestCase):
@@ -136,30 +158,40 @@ def make_fake_form(
     filter_category: Optional[str] = None,
     sorting_category: Optional[str] = None,
     include_expired_plans: Optional[bool] = None,
+    include_basic_services: Optional[bool] = None,
 ) -> FakeQueryOffersForm:
     return FakeQueryOffersForm(
         query=query or "",
-        products_filter=filter_category or "Produktname",
+        offer_filter=filter_category or "offer_name",
         sorting_category=sorting_category or "activation",
-        include_expired_plans=include_expired_plans or False,
+        include_expired_plans=(
+            include_expired_plans if include_expired_plans is not None else False
+        ),
+        include_basic_services=(
+            include_basic_services if include_basic_services is not None else True
+        ),
     )
 
 
 @dataclass
 class FakeQueryOffersForm:
     query: str
-    products_filter: str
+    offer_filter: str
     sorting_category: str
     include_expired_plans: bool
+    include_basic_services: bool
 
     def get_query_string(self) -> str:
         return self.query
 
     def get_category_string(self) -> str:
-        return self.products_filter
+        return self.offer_filter
 
     def get_radio_string(self) -> str:
         return self.sorting_category
 
-    def get_checkbox_value(self) -> bool:
+    def get_include_expired_plans(self) -> bool:
         return self.include_expired_plans
+
+    def get_include_basic_services(self) -> bool:
+        return self.include_basic_services

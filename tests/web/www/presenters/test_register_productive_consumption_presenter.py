@@ -125,9 +125,9 @@ class NavbarItemsTests(BaseTestCase):
         navbar_items = self.presenter.create_navbar_items()
         self.assertEqual(len(navbar_items), 2)
 
-    def test_first_navbar_item_has_text_all_plans(self) -> None:
+    def test_first_navbar_item_has_text_offers(self) -> None:
         navbar_items = self.presenter.create_navbar_items()
-        self.assertEqual(navbar_items[0].text, self.translator.gettext("All plans"))
+        self.assertEqual(navbar_items[0].text, self.translator.gettext("Offers"))
 
     def test_first_navbar_item_links_to_query_offers(self) -> None:
         navbar_items = self.presenter.create_navbar_items()

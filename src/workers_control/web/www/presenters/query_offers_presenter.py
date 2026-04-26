@@ -6,7 +6,6 @@ from workers_control.core.interactors.query_offers import (
     OfferQueryResponse,
     QueriedOffer,
 )
-from workers_control.web.notification import Notifier
 from workers_control.web.pagination import Pagination, Paginator
 from workers_control.web.request import Request
 from workers_control.web.session import Session, UserRole
@@ -16,12 +15,13 @@ from workers_control.web.url_index import UrlIndex, UserUrlIndex
 
 @dataclass
 class ResultTableRow:
-    plan_details_url: str
-    company_summary_url: str
-    company_name: str
-    product_name: str
+    offer_details_url: str
+    provider_url: str
+    provider_name: str
+    name: str
     description: str
     price_per_unit: str
+    is_basic_service: bool
     is_public_service: bool
     is_cooperating: bool
     is_expired: bool
@@ -48,14 +48,11 @@ class QueryOffersViewModel:
 class QueryOffersPresenter:
     user_url_index: UserUrlIndex
     url_index: UrlIndex
-    user_notifier: Notifier
     translator: Translator
     request: Request
     session: Session
 
     def present(self, response: OfferQueryResponse) -> QueryOffersViewModel:
-        if not response.results:
-            self.user_notifier.display_warning(self.translator.gettext("No results."))
         user_role = self.session.get_user_role()
         current_user = self.session.get_current_user()
         return QueryOffersViewModel(
@@ -84,29 +81,49 @@ class QueryOffersPresenter:
         user_role: Optional[UserRole],
         current_user: Optional[UUID],
     ) -> ResultTableRow:
-        is_own_plan = (
-            user_role == UserRole.company and current_user == result.company_id
-        )
+        description = "".join(result.description.splitlines())[:150]
         show_consumption_icon = user_role in (UserRole.member, UserRole.company)
+        if result.is_basic_service:
+            return ResultTableRow(
+                offer_details_url=self.url_index.get_basic_service_url(result.id),
+                provider_url="",
+                provider_name=result.provider_name,
+                name=result.name,
+                description=description,
+                price_per_unit="",
+                is_basic_service=True,
+                is_public_service=False,
+                is_cooperating=False,
+                is_expired=False,
+                is_own_plan=False,
+                show_consumption_icon=show_consumption_icon,
+                is_consumption_disabled=True,
+                consumption_url="",
+            )
+        is_own_plan = (
+            user_role == UserRole.company and current_user == result.provider_id
+        )
         if user_role == UserRole.member:
             consumption_url = self.url_index.get_register_private_consumption_url(
-                plan_id=result.plan_id
+                plan_id=result.id
             )
         elif user_role == UserRole.company:
             consumption_url = self.url_index.get_register_productive_consumption_url(
-                plan_id=result.plan_id
+                plan_id=result.id
             )
         else:
             consumption_url = ""
+        assert result.price_per_unit is not None
         return ResultTableRow(
-            plan_details_url=self.user_url_index.get_plan_details_url(result.plan_id),
-            company_summary_url=self.url_index.get_company_summary_url(
-                company_id=result.company_id,
+            offer_details_url=self.user_url_index.get_plan_details_url(result.id),
+            provider_url=self.url_index.get_company_summary_url(
+                company_id=result.provider_id,
             ),
-            company_name=result.company_name,
-            product_name=result.product_name,
-            description="".join(result.description.splitlines())[:150],
+            provider_name=result.provider_name,
+            name=result.name,
+            description=description,
             price_per_unit=str(round(result.price_per_unit, 2)),
+            is_basic_service=False,
             is_public_service=result.is_public_service,
             is_cooperating=result.is_cooperating,
             is_expired=result.is_expired,

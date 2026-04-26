@@ -100,4 +100,3 @@ class UrlIndexTestImpl:
     get_request_password_reset_url = UrlIndexMethod()
     get_password_reset_url = UrlIndexMethod()
     get_basic_service_url = UrlIndexMethod()
-    get_query_basic_services_url = UrlIndexMethod()

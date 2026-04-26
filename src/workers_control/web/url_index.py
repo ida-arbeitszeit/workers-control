@@ -164,8 +164,6 @@ class UrlIndex(Protocol):
 
     def get_basic_service_url(self, basic_service_id: UUID) -> str: ...
 
-    def get_query_basic_services_url(self) -> str: ...
-
 
 @dataclass
 class UserUrlIndex:

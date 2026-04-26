@@ -1685,8 +1685,17 @@ class BasicServiceResult(QueryResultImpl[BasicService]):
     def with_name_containing(self, query: str) -> Self:
         return self._filter_elements(lambda s: query.casefold() in s.name.casefold())
 
+    def with_id_containing(self, query: str) -> Self:
+        return self._filter_elements(lambda s: query in str(s.id))
+
     def ordered_by_creation_date(self, *, ascending: bool = True) -> Self:
         return self.sorted_by(key=lambda s: s.created_on, reverse=not ascending)
+
+    def ordered_by_provider_name(self, *, ascending: bool = True) -> Self:
+        return self.sorted_by(
+            key=lambda s: self.database.members[s.provider].name,
+            reverse=not ascending,
+        )
 
     def joined_with_provider(
         self,

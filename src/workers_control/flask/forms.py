@@ -42,14 +42,14 @@ error_msgs = {
 
 class OfferSearchForm(Form):
     choices = [
-        ("Plan-ID", trans.lazy_gettext("Plan ID")),
-        ("Produktname", trans.lazy_gettext("Product name")),
+        ("offer_id", trans.lazy_gettext("Offer ID")),
+        ("offer_name", trans.lazy_gettext("Offer name")),
     ]
     select = SelectField(
-        trans.lazy_gettext("Search Plans"),
+        trans.lazy_gettext("Search offers"),
         choices=choices,
         validators=[validators.DataRequired()],
-        default="Produktname",
+        default="offer_name",
     )
     search = StringField(
         trans.lazy_gettext("Search term"),
@@ -58,7 +58,7 @@ class OfferSearchForm(Form):
 
     choices_radio = [
         ("activation", trans.lazy_gettext("Newest")),
-        ("company_name", trans.lazy_gettext("Company name")),
+        ("provider_name", trans.lazy_gettext("Provider name")),
     ]
     radio = RadioField(
         choices=choices_radio,
@@ -66,7 +66,12 @@ class OfferSearchForm(Form):
     )
 
     include_expired_plans = BooleanField(
-        trans.lazy_gettext("Search also for expired plans"),
+        trans.lazy_gettext("Include expired plans"),
+    )
+
+    include_basic_services = BooleanField(
+        trans.lazy_gettext("Include basic services"),
+        default=True,
     )
 
     def get_query_string(self) -> str:
@@ -78,8 +83,11 @@ class OfferSearchForm(Form):
     def get_radio_string(self) -> str:
         return self.data["radio"]
 
-    def get_checkbox_value(self) -> bool:
+    def get_include_expired_plans(self) -> bool:
         return self.data["include_expired_plans"]
+
+    def get_include_basic_services(self) -> bool:
+        return self.data["include_basic_services"]
 
 
 class RegisterForm(Form):
@@ -258,16 +266,6 @@ class CreateBasicServiceForm(Form):
 
     def get_description_string(self) -> str:
         return self.data["description"]
-
-
-class BasicServiceSearchForm(Form):
-    search = StringField(
-        trans.lazy_gettext("Search term"),
-        default="",
-    )
-
-    def get_query_string(self) -> str:
-        return self.data["search"]
 
 
 class RequestCooperationForm(Form):

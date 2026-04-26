@@ -55,7 +55,7 @@ class InteractorTests(BaseTestCase):
     def test_that_plan_shows_up_in_activated_plans_after_approval(self) -> None:
         plan = self.plan_generator.create_plan(approved=False)
         self.interactor.approve_plan(self.create_request(plan=plan))
-        assert self.get_latest_activated_plan().plan_id == plan
+        assert self.get_latest_activated_plan().id == plan
 
     def test_that_approval_date_is_set_correctly(self) -> None:
         expected_approval_timestamp = datetime_utc(2000, 1, 1)
@@ -64,7 +64,7 @@ class InteractorTests(BaseTestCase):
         response = self.interactor.approve_plan(self.create_request(plan=plan))
         assert response.is_plan_approved
         assert (
-            self.get_latest_activated_plan().approval_date
+            self.get_latest_activated_plan().created_or_approved_on
             == expected_approval_timestamp
         )
 
@@ -73,7 +73,7 @@ class InteractorTests(BaseTestCase):
     ) -> None:
         plan = self.plan_generator.create_plan(approved=False)
         self.interactor.approve_plan(self.create_request(plan=plan))
-        plan_id = self.get_latest_activated_plan().plan_id
+        plan_id = self.get_latest_activated_plan().id
         other_company = self.company_generator.create_company_record()
         consumption_response = self.register_productive_consumption.execute(
             RegisterProductiveConsumptionRequest(
@@ -347,9 +347,10 @@ class InteractorTests(BaseTestCase):
         response = self.query_offers_interactor.execute(
             QueryOffersRequest(
                 query_string=None,
-                filter_category=OfferFilter.by_plan_id,
+                filter_category=OfferFilter.by_offer_id,
                 sorting_category=OfferSorting.by_activation,
                 include_expired_plans=False,
+                include_basic_services=False,
             )
         )
         assert response.results

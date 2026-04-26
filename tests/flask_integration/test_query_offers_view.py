@@ -69,7 +69,7 @@ class QueryOffersTests(ViewTestCase):
         self.plan_generator.create_plan(product_name=EXPECTED_PLAN_NAME)
         self.plan_generator.create_plan(product_name=UNEXPECTED_PLAN_NAME)
         response = self.client.get(
-            URL, query_string={"select": "Produktname", "search": EXPECTED_PLAN_NAME}
+            URL, query_string={"select": "offer_name", "search": EXPECTED_PLAN_NAME}
         )
         assert EXPECTED_PLAN_NAME in response.text
         assert UNEXPECTED_PLAN_NAME not in response.text
@@ -85,7 +85,7 @@ class QueryOffersTests(ViewTestCase):
         self.plan_generator.create_plan(planner=planner_1)
         self.plan_generator.create_plan(planner=planner_2)
         self.plan_generator.create_plan(planner=planner_3)
-        response = self.client.get(URL, query_string={"radio": "company_name"})
+        response = self.client.get(URL, query_string={"radio": "provider_name"})
         assert (
             response.text.index(COMPANY_NAME_1)
             < response.text.index(COMPANY_NAME_3)

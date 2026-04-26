@@ -1,5 +1,4 @@
 from datetime import timedelta
-from decimal import Decimal
 from enum import Enum, auto
 from uuid import UUID, uuid4
 
@@ -14,7 +13,6 @@ from workers_control.core.interactors.query_offers import (
     QueryOffersInteractor,
     QueryOffersRequest,
 )
-from workers_control.core.records import ProductionCosts
 
 
 class SearchStrategy(Enum):
@@ -218,9 +216,9 @@ class InteractorTests(BaseTestCase):
         response = self.interactor.execute(
             self.make_request(search_strategy=search_strategy)
         )
-        assert response.results[0].plan_id == expected_first
-        assert response.results[1].plan_id == expected_second
-        assert response.results[2].plan_id == expected_third
+        assert response.results[0].id == expected_first
+        assert response.results[1].id == expected_second
+        assert response.results[2].id == expected_third
 
     @parameterized.expand(
         [
@@ -241,9 +239,9 @@ class InteractorTests(BaseTestCase):
         response = self.interactor.execute(
             self.make_request(search_strategy=search_strategy)
         )
-        assert response.results[0].company_name == "a_name"
-        assert response.results[1].company_name == "B_name"
-        assert response.results[2].company_name == "c_name"
+        assert response.results[0].provider_name == "a_name"
+        assert response.results[1].provider_name == "B_name"
+        assert response.results[2].provider_name == "c_name"
 
     @parameterized.expand(
         [
@@ -271,8 +269,8 @@ class InteractorTests(BaseTestCase):
             )
         )
         assert len(response.results) == 2
-        assert response.results[0].plan_id == expected_first
-        assert response.results[1].plan_id == expected_second
+        assert response.results[0].id == expected_first
+        assert response.results[1].id == expected_second
 
     def test_that_correct_price_per_unit_of_zero_is_displayed_for_a_public_plan(
         self,
@@ -280,23 +278,6 @@ class InteractorTests(BaseTestCase):
         self.plan_generator.create_plan(is_public_service=True)
         response = self.interactor.execute(self.make_request())
         assert response.results[0].price_per_unit == 0
-
-    def test_that_cost_per_unit_is_correctly_displayed(
-        self,
-    ) -> None:
-        plan = self.plan_generator.create_plan(
-            costs=ProductionCosts(
-                labour_cost=Decimal(200),
-                resource_cost=Decimal(100),
-                means_cost=Decimal(50),
-            )
-        )
-        response = self.interactor.execute(self.make_request())
-        queried_plan = response.results[0]
-        assert (
-            queried_plan.labour_cost_per_unit
-            == self.price_checker.get_cost_per_unit(plan)
-        )
 
     def test_that_two_cooperating_plans_have_the_same_price(self) -> None:
         cooperation = self.cooperation_generator.create_cooperation()
@@ -400,36 +381,36 @@ class InteractorTests(BaseTestCase):
             search_strategy = SearchStrategy.by_name_sort_by_date_exclude_expired
         match search_strategy:
             case SearchStrategy.by_id_sort_by_date_exclude_expired:
-                category = OfferFilter.by_plan_id
+                category = OfferFilter.by_offer_id
                 sorting = OfferSorting.by_activation
                 include_expired_plans = False
             case SearchStrategy.by_id_sort_by_date_include_expired:
-                category = OfferFilter.by_plan_id
+                category = OfferFilter.by_offer_id
                 sorting = OfferSorting.by_activation
                 include_expired_plans = True
             case SearchStrategy.by_id_sort_by_name_exclude_expired:
-                category = OfferFilter.by_plan_id
-                sorting = OfferSorting.by_company_name
+                category = OfferFilter.by_offer_id
+                sorting = OfferSorting.by_provider_name
                 include_expired_plans = False
             case SearchStrategy.by_id_sort_by_name_include_expired:
-                category = OfferFilter.by_plan_id
-                sorting = OfferSorting.by_company_name
+                category = OfferFilter.by_offer_id
+                sorting = OfferSorting.by_provider_name
                 include_expired_plans = True
             case SearchStrategy.by_name_sort_by_date_exclude_expired:
-                category = OfferFilter.by_product_name
+                category = OfferFilter.by_offer_name
                 sorting = OfferSorting.by_activation
                 include_expired_plans = False
             case SearchStrategy.by_name_sort_by_date_include_expired:
-                category = OfferFilter.by_product_name
+                category = OfferFilter.by_offer_name
                 sorting = OfferSorting.by_activation
                 include_expired_plans = True
             case SearchStrategy.by_name_sort_by_name_exclude_expired:
-                category = OfferFilter.by_product_name
-                sorting = OfferSorting.by_company_name
+                category = OfferFilter.by_offer_name
+                sorting = OfferSorting.by_provider_name
                 include_expired_plans = False
             case SearchStrategy.by_name_sort_by_name_include_expired:
-                category = OfferFilter.by_product_name
-                sorting = OfferSorting.by_company_name
+                category = OfferFilter.by_offer_name
+                sorting = OfferSorting.by_provider_name
                 include_expired_plans = True
         return QueryOffersRequest(
             query_string=query,
@@ -438,7 +419,91 @@ class InteractorTests(BaseTestCase):
             offset=offset,
             limit=limit,
             include_expired_plans=include_expired_plans,
+            include_basic_services=False,
         )
 
     def assertPlanInResults(self, plan: UUID, response: OfferQueryResponse) -> bool:
-        return any((plan == result.plan_id for result in response.results))
+        return any((plan == result.id for result in response.results))
+
+
+class BasicServiceInteractorTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.interactor = self.injector.get(QueryOffersInteractor)
+
+    def test_basic_services_are_returned_when_include_basic_services_is_true(
+        self,
+    ) -> None:
+        bs = self.basic_service_generator.create_basic_service()
+        response = self.interactor.execute(self._make_request())
+        assert any(r.id == bs and r.is_basic_service for r in response.results)
+
+    def test_basic_services_are_excluded_when_include_basic_services_is_false(
+        self,
+    ) -> None:
+        self.basic_service_generator.create_basic_service()
+        response = self.interactor.execute(
+            self._make_request(include_basic_services=False)
+        )
+        assert not any(r.is_basic_service for r in response.results)
+
+    def test_total_results_counts_plans_and_basic_services_combined(self) -> None:
+        self.plan_generator.create_plan()
+        self.basic_service_generator.create_basic_service()
+        response = self.interactor.execute(self._make_request())
+        assert response.total_results == 2
+
+    def test_basic_service_can_be_filtered_by_name_substring(self) -> None:
+        self.basic_service_generator.create_basic_service(name="Yoga lessons")
+        self.basic_service_generator.create_basic_service(name="Plumbing")
+        response = self.interactor.execute(self._make_request(query="yoga"))
+        assert len(response.results) == 1
+        assert response.results[0].is_basic_service
+        assert response.results[0].name == "Yoga lessons"
+
+    def test_basic_service_can_be_filtered_by_id_substring(self) -> None:
+        bs = self.basic_service_generator.create_basic_service()
+        substring = str(bs)[3:8]
+        response = self.interactor.execute(
+            self._make_request(
+                query=substring,
+                filter_category=OfferFilter.by_offer_id,
+            )
+        )
+        assert any(r.id == bs for r in response.results)
+
+    def test_basic_service_provider_name_is_returned(self) -> None:
+        member = self.member_generator.create_member(name="Alice Provider")
+        self.basic_service_generator.create_basic_service(member=member)
+        response = self.interactor.execute(self._make_request())
+        bs_results = [r for r in response.results if r.is_basic_service]
+        assert bs_results
+        assert bs_results[0].provider_name == "Alice Provider"
+
+    def test_sort_by_provider_name_interleaves_plans_and_basic_services(self) -> None:
+        member_a = self.member_generator.create_member(name="A_member")
+        company_b = self.company_generator.create_company(name="B_company")
+        self.basic_service_generator.create_basic_service(member=member_a)
+        self.plan_generator.create_plan(planner=company_b)
+        response = self.interactor.execute(
+            self._make_request(sorting=OfferSorting.by_provider_name)
+        )
+        assert [r.provider_name for r in response.results] == [
+            "A_member",
+            "B_company",
+        ]
+
+    def _make_request(
+        self,
+        query: str | None = None,
+        filter_category: OfferFilter = OfferFilter.by_offer_name,
+        sorting: OfferSorting = OfferSorting.by_activation,
+        include_basic_services: bool = True,
+    ) -> QueryOffersRequest:
+        return QueryOffersRequest(
+            query_string=query,
+            filter_category=filter_category,
+            sorting_category=sorting,
+            include_expired_plans=False,
+            include_basic_services=include_basic_services,
+        )

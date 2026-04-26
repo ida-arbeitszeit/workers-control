@@ -36,9 +36,10 @@ class QueryOffersSortedByActivationDateBenchmark:
                 )
         self.request = query_offers.QueryOffersRequest(
             query_string=None,
-            filter_category=query_offers.OfferFilter.by_product_name,
+            filter_category=query_offers.OfferFilter.by_offer_name,
             sorting_category=query_offers.OfferSorting.by_activation,
             include_expired_plans=False,
+            include_basic_services=False,
             limit=None,
             offset=None,
         )

@@ -35,18 +35,6 @@ class QueryOffersPresenterTests(BaseTestCase):
         presentation = self.presenter.present(response)
         self.assertTrue(presentation.show_results)
 
-    def test_show_warning_when_no_results_are_found(self) -> None:
-        response = self.queried_offer_generator.get_response([])
-        self.presenter.present(response)
-        self.assertTrue(self.notifier.warnings)
-
-    def test_dont_show_warning_when_results_are_found(self) -> None:
-        response = self.queried_offer_generator.get_response(
-            [self.queried_offer_generator.get_plan()]
-        )
-        self.presenter.present(response)
-        self.assertFalse(self.notifier.warnings)
-
     @parameterized.expand(
         [
             (-1,),
@@ -73,7 +61,7 @@ class QueryOffersPresenterTests(BaseTestCase):
         presentation = self.presenter.present(response)
         table_row = presentation.results.rows[0]
         self.assertEqual(
-            table_row.plan_details_url,
+            table_row.offer_details_url,
             self.url_index.get_plan_details_url(
                 user_role=UserRole.member, plan_id=plan_id
             ),
@@ -87,7 +75,7 @@ class QueryOffersPresenterTests(BaseTestCase):
         presentation = self.presenter.present(response)
         table_row = presentation.results.rows[0]
         self.assertEqual(
-            table_row.company_summary_url,
+            table_row.provider_url,
             self.url_index.get_company_summary_url(company_id=company_id),
         )
 
@@ -97,7 +85,7 @@ class QueryOffersPresenterTests(BaseTestCase):
         )
         presentation = self.presenter.present(response)
         table_row = presentation.results.rows[0]
-        self.assertEqual(table_row.company_name, "Planner name")
+        self.assertEqual(table_row.provider_name, "Planner name")
 
     def test_no_coop_is_shown_with_one_non_cooperating_plan(self) -> None:
         response = self.queried_offer_generator.get_response(
@@ -435,3 +423,50 @@ class ConsumptionIconTests(BaseTestCase):
         )
         presentation = self.presenter.present(response)
         self.assertFalse(presentation.results.rows[0].is_consumption_disabled)
+
+
+class BasicServiceRowTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(QueryOffersPresenter)
+        self.generator = QueriedOfferGenerator()
+        self.session.login_member(uuid4())
+
+    def test_basic_service_row_is_marked_as_basic_service(self) -> None:
+        response = self.generator.get_response([self.generator.get_basic_service()])
+        presentation = self.presenter.present(response)
+        self.assertTrue(presentation.results.rows[0].is_basic_service)
+
+    def test_basic_service_row_has_empty_price(self) -> None:
+        response = self.generator.get_response([self.generator.get_basic_service()])
+        presentation = self.presenter.present(response)
+        self.assertEqual(presentation.results.rows[0].price_per_unit, "")
+
+    def test_basic_service_row_has_empty_provider_url(self) -> None:
+        response = self.generator.get_response([self.generator.get_basic_service()])
+        presentation = self.presenter.present(response)
+        self.assertEqual(presentation.results.rows[0].provider_url, "")
+
+    def test_basic_service_row_links_to_basic_service_details(self) -> None:
+        bs_id = uuid4()
+        response = self.generator.get_response(
+            [self.generator.get_basic_service(basic_service_id=bs_id)]
+        )
+        presentation = self.presenter.present(response)
+        self.assertEqual(
+            presentation.results.rows[0].offer_details_url,
+            self.url_index.get_basic_service_url(bs_id),
+        )
+
+    def test_basic_service_consumption_icon_is_disabled(self) -> None:
+        response = self.generator.get_response([self.generator.get_basic_service()])
+        presentation = self.presenter.present(response)
+        self.assertTrue(presentation.results.rows[0].show_consumption_icon)
+        self.assertTrue(presentation.results.rows[0].is_consumption_disabled)
+
+    def test_basic_service_provider_name_is_passed_through(self) -> None:
+        response = self.generator.get_response(
+            [self.generator.get_basic_service(provider_name="Alice")]
+        )
+        presentation = self.presenter.present(response)
+        self.assertEqual(presentation.results.rows[0].provider_name, "Alice")

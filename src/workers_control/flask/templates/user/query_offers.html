@@ -2,7 +2,7 @@
 {% extends "base.html" %}
 
 {% block navbar_start %}
-<div class="navbar-item">{{ gettext("All plans") }}</div>
+<div class="navbar-item">{{ gettext("Offers") }}</div>
 {% endblock %}
 
 {% block content %}
@@ -10,7 +10,7 @@
     <div class="columns is-centered">
         <div class="column is-one-third">
             <h1 class="title">
-                {{ gettext("Plans") }}
+                {{ gettext("Offers") }}
             </h1>
             <form method="get">
                 <div class="field">
@@ -19,7 +19,7 @@
                             {{ form.select }}
                         </div>
                     </div>
-                    <p class="help">{{ gettext("Search by plan ID or product name") }}</p>
+                    <p class="help">{{ gettext("Search by offer ID or offer name") }}</p>
                 </div>
                 <div class="field">
                     <div class="control">
@@ -36,6 +36,9 @@
                 </div>
                 <div class="field">
                     {{ form.include_expired_plans }} {{ form.include_expired_plans.label }}
+                </div>
+                <div class="field">
+                    {{ form.include_basic_services }} {{ form.include_basic_services.label }}
                 </div>
                 <input type="hidden" name="page" value="1">
                 <button class="button is-block is-primary is-large is-fullwidth">
@@ -60,10 +63,14 @@
                     <div class="content">
                         <p>
                             <strong class="is-size-5">
-                                <a href="{{ column.plan_details_url }}">{{ column.product_name }}</a>
+                                <a href="{{ column.offer_details_url }}">{{ column.name }}</a>
                             </strong>
                             <br>
-                            <small><a href="{{ column.company_summary_url }}">@{{ column.company_name }}</a></small>
+                            {% if column.is_basic_service %}
+                            <small>@{{ column.provider_name }}</small>
+                            {% else %}
+                            <small><a href="{{ column.provider_url }}">@{{ column.provider_name }}</a></small>
+                            {% endif %}
                             <br>
                             <span>
                                 {{ column.description }}
@@ -71,6 +78,9 @@
                         </p>
                     </div>
                     <div>
+                        {% if column.is_basic_service %}
+                        <span class="tag is-link">{{ gettext("Basic Service") }}</span>
+                        {% endif %}
                         {% if column.is_cooperating %}
                         <span class="tag is-primary">{{ gettext("Cooperating plan") }}</span>
                         {% endif %}
@@ -85,11 +95,13 @@
                         {% endif %}
                     </div>
                 </div>
+                {% if not column.is_basic_service %}
                 <div class="media-right">
                     <p class="is-size-5">
                         {{ column.price_per_unit }}
                     </p>
                 </div>
+                {% endif %}
                 <div class="media-right">
                     {% if column.show_consumption_icon %}
                         {% if column.is_consumption_disabled %}

@@ -24,7 +24,7 @@ class QueryOffersView:
     request: FlaskRequest
 
     def GET(self) -> Response:
-        form = OfferSearchForm(request.args)
+        form = OfferSearchForm(request.args if request.args else None)
         if not form.validate():
             return self._get_invalid_form_response(form=form)
         interactor_request = self.controller.import_form_data(form, self.request)

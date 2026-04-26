@@ -2170,6 +2170,13 @@ class BasicServiceResult(SqlQueryResult[records.BasicService]):
             )
         )
 
+    def with_id_containing(self, query: str) -> Self:
+        return self._with_modified_query(
+            lambda db_query: db_query.filter(
+                func.cast(models.BasicService.id, String).contains(query)
+            )
+        )
+
     def ordered_by_creation_date(self, *, ascending: bool = True) -> Self:
         ordering = (
             models.BasicService.created_on.asc()
@@ -2177,6 +2184,14 @@ class BasicServiceResult(SqlQueryResult[records.BasicService]):
             else models.BasicService.created_on.desc()
         )
         return self._with_modified_query(lambda query: query.order_by(ordering))
+
+    def ordered_by_provider_name(self, *, ascending: bool = True) -> Self:
+        member = aliased(models.Member)
+        join_condition = member.id == models.BasicService.provider
+        order_criteria = member.name.asc() if ascending else member.name.desc()
+        return self._with_modified_query(
+            lambda q: q.join(member, join_condition).order_by(order_criteria)
+        )
 
     def joined_with_provider(
         self,

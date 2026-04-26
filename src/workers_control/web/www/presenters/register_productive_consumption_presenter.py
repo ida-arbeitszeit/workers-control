@@ -26,7 +26,7 @@ class RegisterProductiveConsumptionPresenter:
     def create_navbar_items(self) -> list[NavbarItem]:
         return [
             NavbarItem(
-                text=self.trans.gettext("All plans"),
+                text=self.trans.gettext("Offers"),
                 url=self.url_index.get_query_offers_url(),
             ),
             NavbarItem(

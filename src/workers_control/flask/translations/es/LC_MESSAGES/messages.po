@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Arbeitszeitapp\n"
 "Report-Msgid-Bugs-To: community-arbeitszeitapp@systemli.org\n"
-"POT-Creation-Date: 2026-04-24 08:50+0200\n"
+"POT-Creation-Date: 2026-04-26 14:03+0200\n"
 "PO-Revision-Date: 2024-05-11 13:29+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -27,26 +27,21 @@ msgstr "ID inválido."
 msgid "Number must be at least 0."
 msgstr "El número debe ser como mínimo 0."
 
-#: src/workers_control/flask/forms.py:45 src/workers_control/flask/forms.py:286
-#: src/workers_control/flask/templates/company/register_productive_consumption.html:31
-#: src/workers_control/flask/templates/company/register_productive_consumption.html:43
-#: src/workers_control/flask/templates/member/register_private_consumption.html:27
-#: src/workers_control/flask/templates/member/register_private_consumption.html:33
-#: src/workers_control/web/formatters/plan_details_formatter.py:42
-msgid "Plan ID"
-msgstr "ID del plan"
+#: src/workers_control/flask/forms.py:45
+msgid "Offer ID"
+msgstr "ID de oferta"
 
 #: src/workers_control/flask/forms.py:46
-#: src/workers_control/flask/templates/macros/draft_form.html:22
-msgid "Product name"
-msgstr "Nombre del producto"
+msgid "Offer name"
+msgstr "Nombre de la oferta"
 
 #: src/workers_control/flask/forms.py:49
-msgid "Search Plans"
-msgstr "Buscar planes"
+#: src/workers_control/flask/templates/company/dashboard.html:110
+#: src/workers_control/flask/templates/member/dashboard.html:96
+msgid "Search offers"
+msgstr "Buscar ofertas"
 
-#: src/workers_control/flask/forms.py:55 src/workers_control/flask/forms.py:218
-#: src/workers_control/flask/forms.py:265
+#: src/workers_control/flask/forms.py:55 src/workers_control/flask/forms.py:226
 msgid "Search term"
 msgstr "Término de búsqueda"
 
@@ -55,17 +50,20 @@ msgid "Newest"
 msgstr "Más reciente"
 
 #: src/workers_control/flask/forms.py:61
-#: src/workers_control/flask/templates/auth/signup_company.html:26
-msgid "Company name"
-msgstr "Nombre de la empresa"
+msgid "Provider name"
+msgstr "Nombre del proveedor"
 
 #: src/workers_control/flask/forms.py:69
-msgid "Search also for expired plans"
-msgstr "Buscar también planes caducados"
+msgid "Include expired plans"
+msgstr "Incluir planes expirados"
 
-#: src/workers_control/flask/forms.py:87 src/workers_control/flask/forms.py:132
-#: src/workers_control/flask/forms.py:181 src/workers_control/flask/forms.py:210
-#: src/workers_control/flask/forms.py:374
+#: src/workers_control/flask/forms.py:73
+msgid "Include basic services"
+msgstr "Incluir servicios básicos"
+
+#: src/workers_control/flask/forms.py:95 src/workers_control/flask/forms.py:140
+#: src/workers_control/flask/forms.py:189 src/workers_control/flask/forms.py:218
+#: src/workers_control/flask/forms.py:372
 #: src/workers_control/flask/templates/auth/login_accountant.html:18
 #: src/workers_control/flask/templates/auth/login_company.html:18
 #: src/workers_control/flask/templates/auth/login_member.html:18
@@ -77,13 +75,13 @@ msgstr "Buscar también planes caducados"
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: src/workers_control/flask/forms.py:90
+#: src/workers_control/flask/forms.py:98
 msgid "Proper email address required"
 msgstr "Se requiere una dirección de correo electrónico válida"
 
-#: src/workers_control/flask/forms.py:95 src/workers_control/flask/forms.py:140
-#: src/workers_control/flask/forms.py:209 src/workers_control/flask/forms.py:231
-#: src/workers_control/flask/forms.py:248
+#: src/workers_control/flask/forms.py:103 src/workers_control/flask/forms.py:148
+#: src/workers_control/flask/forms.py:217 src/workers_control/flask/forms.py:239
+#: src/workers_control/flask/forms.py:256
 #: src/workers_control/flask/templates/auth/signup_accountant.html:27
 #: src/workers_control/flask/templates/auth/signup_member.html:27
 #: src/workers_control/flask/templates/company/invite_worker_to_company.html:23
@@ -97,12 +95,12 @@ msgstr "Se requiere una dirección de correo electrónico válida"
 msgid "Name"
 msgstr "Nombre"
 
-#: src/workers_control/flask/forms.py:97 src/workers_control/flask/forms.py:142
+#: src/workers_control/flask/forms.py:105 src/workers_control/flask/forms.py:150
 msgid "Name is required"
 msgstr "Se requiere el nombre"
 
-#: src/workers_control/flask/forms.py:101 src/workers_control/flask/forms.py:146
-#: src/workers_control/flask/forms.py:190 src/workers_control/flask/forms.py:385
+#: src/workers_control/flask/forms.py:109 src/workers_control/flask/forms.py:154
+#: src/workers_control/flask/forms.py:198 src/workers_control/flask/forms.py:383
 #: src/workers_control/flask/templates/auth/login_accountant.html:27
 #: src/workers_control/flask/templates/auth/login_company.html:27
 #: src/workers_control/flask/templates/auth/login_member.html:27
@@ -113,52 +111,52 @@ msgstr "Se requiere el nombre"
 msgid "Password"
 msgstr "Contraseña"
 
-#: src/workers_control/flask/forms.py:106 src/workers_control/flask/forms.py:151
-#: src/workers_control/flask/forms.py:390
+#: src/workers_control/flask/forms.py:114 src/workers_control/flask/forms.py:159
+#: src/workers_control/flask/forms.py:388
 msgid "The password must be at least 8 characters in length"
 msgstr "La contraseña debe tener al menos 8 caracteres de longitud"
 
-#: src/workers_control/flask/forms.py:110 src/workers_control/flask/forms.py:394
+#: src/workers_control/flask/forms.py:118 src/workers_control/flask/forms.py:392
 msgid "Passwords must match"
 msgstr "Las contraseñas deben coincidir"
 
-#: src/workers_control/flask/forms.py:114 src/workers_control/flask/forms.py:398
+#: src/workers_control/flask/forms.py:122 src/workers_control/flask/forms.py:396
 #: src/workers_control/flask/templates/auth/reset_password.html:32
 #: src/workers_control/flask/templates/auth/signup_company.html:48
 #: src/workers_control/flask/templates/auth/signup_member.html:51
 msgid "Repeat Password"
 msgstr "Repetir contraseña"
 
-#: src/workers_control/flask/forms.py:135
+#: src/workers_control/flask/forms.py:143
 msgid "Email address is required"
 msgstr "Se requiere una dirección de correo electrónico"
 
-#: src/workers_control/flask/forms.py:164
+#: src/workers_control/flask/forms.py:172
 msgid "The entered email is not the one the invitation was sent to"
 msgstr "El correo electrónico ingresado no es al que se envió la invitación"
 
-#: src/workers_control/flask/forms.py:184 src/workers_control/flask/forms.py:377
+#: src/workers_control/flask/forms.py:192 src/workers_control/flask/forms.py:375
 msgid "Email address required"
 msgstr "Se requiere una dirección de correo electrónico"
 
-#: src/workers_control/flask/forms.py:192 src/workers_control/flask/forms.py:352
+#: src/workers_control/flask/forms.py:200 src/workers_control/flask/forms.py:350
 msgid "Password is required"
 msgstr "Se requiere una contraseña"
 
-#: src/workers_control/flask/forms.py:195
+#: src/workers_control/flask/forms.py:203
 msgid "Remember login?"
 msgstr "¿Recordar inicio de sesión?"
 
-#: src/workers_control/flask/forms.py:213
+#: src/workers_control/flask/forms.py:221
 msgid "Search for company"
 msgstr "Buscar empresa"
 
-#: src/workers_control/flask/forms.py:235
+#: src/workers_control/flask/forms.py:243
 #: src/workers_control/flask/templates/user/coop_summary.html:26
 msgid "Definition"
 msgstr "Definición"
 
-#: src/workers_control/flask/forms.py:252
+#: src/workers_control/flask/forms.py:260
 #: src/workers_control/flask/templates/company/my_consumptions.html:25
 #: src/workers_control/flask/templates/member/basic_services.html:30
 #: src/workers_control/flask/templates/member/consumptions.html:28
@@ -166,42 +164,52 @@ msgstr "Definición"
 msgid "Description"
 msgstr "Descripción"
 
-#: src/workers_control/flask/forms.py:292
+#: src/workers_control/flask/forms.py:284
+#: src/workers_control/flask/templates/company/register_productive_consumption.html:32
+#: src/workers_control/flask/templates/company/register_productive_consumption.html:44
+#: src/workers_control/flask/templates/member/register_private_consumption.html:28
+#: src/workers_control/flask/templates/member/register_private_consumption.html:34
+#: src/workers_control/flask/templates/member/register_private_consumption.html:52
+#: src/workers_control/web/formatters/plan_details_formatter.py:42
+msgid "Plan ID"
+msgstr "ID del plan"
+
+#: src/workers_control/flask/forms.py:290
 #: src/workers_control/flask/routes/plots/routes.py:79
 #: src/workers_control/flask/templates/company/my_consumptions.html:28
-#: src/workers_control/flask/templates/company/register_hours_worked.html:20
-#: src/workers_control/flask/templates/company/register_productive_consumption.html:54
+#: src/workers_control/flask/templates/company/register_hours_worked.html:21
+#: src/workers_control/flask/templates/company/register_productive_consumption.html:55
 #: src/workers_control/flask/templates/macros/draft_form.html:72
 #: src/workers_control/flask/templates/member/consumptions.html:30
-#: src/workers_control/flask/templates/member/register_private_consumption.html:48
-#: src/workers_control/flask/templates/member/register_private_consumption.html:54
+#: src/workers_control/flask/templates/member/register_private_consumption.html:63
+#: src/workers_control/flask/templates/member/register_private_consumption.html:69
 #: src/workers_control/web/formatters/plan_details_formatter.py:76
 msgid "Amount"
 msgstr "Cantidad"
 
-#: src/workers_control/flask/forms.py:299
+#: src/workers_control/flask/forms.py:297
 #: src/workers_control/web/www/presenters/company_consumptions_presenter.py:66
 msgid "Fixed means of production"
 msgstr "Medios de producción fijos"
 
-#: src/workers_control/flask/forms.py:302
+#: src/workers_control/flask/forms.py:300
 #: src/workers_control/web/www/presenters/company_consumptions_presenter.py:64
 msgid "Liquid means of production"
 msgstr "Medios de producción líquidos"
 
-#: src/workers_control/flask/forms.py:306
+#: src/workers_control/flask/forms.py:304
 msgid "Type of consumption"
 msgstr "Tipo de consumo"
 
-#: src/workers_control/flask/forms.py:341
+#: src/workers_control/flask/forms.py:339
 msgid "New email address"
 msgstr "Nueva dirección de correo electrónico"
 
-#: src/workers_control/flask/forms.py:344
+#: src/workers_control/flask/forms.py:342
 msgid "Email address is required."
 msgstr "Se requiere una dirección de correo electrónico."
 
-#: src/workers_control/flask/forms.py:350
+#: src/workers_control/flask/forms.py:348
 msgid "Current password"
 msgstr "Contraseña actual"
 
@@ -210,9 +218,8 @@ msgid "Payout Factor Calculation Window"
 msgstr "Ventana de cálculo del factor de pago"
 
 #: src/workers_control/flask/plotter.py:89
-#: src/workers_control/flask/templates/company/dashboard.html:78
+#: src/workers_control/flask/templates/company/dashboard.html:39
 #: src/workers_control/flask/templates/macros/company_summary.html:134
-#: src/workers_control/flask/templates/user/query_plans.html:13
 #: src/workers_control/flask/templates/user/statistics.html:26
 #: src/workers_control/flask/templates/user/statistics.html:53
 msgid "Plans"
@@ -274,7 +281,6 @@ msgid "Your email"
 msgstr "Tu correo electrónico"
 
 #: src/workers_control/flask/templates/accountant/dashboard.html:23
-#: src/workers_control/flask/templates/company/dashboard.html:34
 msgid "Frequent actions"
 msgstr "Acciones frecuentes"
 
@@ -521,6 +527,10 @@ msgstr "Registrarse"
 msgid "Sign up company"
 msgstr "Registrarse como empresa"
 
+#: src/workers_control/flask/templates/auth/signup_company.html:26
+msgid "Company name"
+msgstr "Nombre de la empresa"
+
 #: src/workers_control/flask/templates/auth/signup_company.html:65
 #: src/workers_control/flask/templates/auth/signup_member.html:69
 msgid "Click here to log in with an existing account."
@@ -542,7 +552,7 @@ msgid "Member"
 msgstr "Miembro"
 
 #: src/workers_control/flask/templates/auth/start.html:14
-#: src/workers_control/flask/templates/company/dashboard.html:71
+#: src/workers_control/flask/templates/company/dashboard.html:95
 #: src/workers_control/flask/templates/company/my_cooperations.html:68
 msgid "Company"
 msgstr "Empresa"
@@ -552,8 +562,6 @@ msgid "Accountant"
 msgstr "Contador/a"
 
 #: src/workers_control/flask/templates/auth/start.html:18
-#: src/workers_control/flask/templates/company/dashboard.html:140
-#: src/workers_control/flask/templates/member/dashboard.html:94
 msgid "Latest plans"
 msgstr "Últimos planes"
 
@@ -624,19 +632,20 @@ msgstr "Definición de la cooperación"
 msgid "Create cooperation"
 msgstr "Crear cooperación"
 
-#: src/workers_control/flask/templates/company/create_draft.html:6
-#: src/workers_control/flask/templates/company/create_draft.html:12
+#: src/workers_control/flask/templates/company/create_draft.html:13
+#: src/workers_control/web/www/presenters/create_draft_presenter.py:38
 msgid "Create plan"
 msgstr "Crear plan"
 
-#: src/workers_control/flask/templates/company/create_draft.html:24
+#: src/workers_control/flask/templates/company/create_draft.html:25
 msgid "Save as draft"
 msgstr "Guardar como borrador"
 
-#: src/workers_control/flask/templates/company/create_draft.html:30
-#: src/workers_control/flask/templates/company/draft_details.html:29
+#: src/workers_control/flask/templates/company/create_draft.html:31
+#: src/workers_control/flask/templates/company/draft_details.html:30
 #: src/workers_control/flask/templates/company/my_cooperations.html:142
-#: src/workers_control/flask/templates/company/register_productive_consumption.html:75
+#: src/workers_control/flask/templates/company/register_productive_consumption.html:76
+#: src/workers_control/flask/templates/member/register_private_consumption.html:87
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -646,83 +655,87 @@ msgstr ""
 "No hay trabajadores registrados en tu empresa. Haz clic aquí para añadir "
 "algunos."
 
-#: src/workers_control/flask/templates/company/dashboard.html:42
-msgid "Create new plan"
-msgstr "Crear nuevo plan"
-
-#: src/workers_control/flask/templates/company/dashboard.html:50
-msgid "Register productive consumption"
-msgstr "Registrar consumo productivo"
-
-#: src/workers_control/flask/templates/company/dashboard.html:57
-#: src/workers_control/flask/templates/company/register_hours_worked.html:4
-#: src/workers_control/flask/templates/company/register_hours_worked.html:13
-msgid "Register hours worked"
-msgstr "Registrar horas trabajadas"
-
-#: src/workers_control/flask/templates/company/dashboard.html:64
+#: src/workers_control/flask/templates/company/dashboard.html:33
 msgid "Company accounting"
 msgstr "Contabilidad de la empresa"
 
-#: src/workers_control/flask/templates/company/dashboard.html:73
-msgid "Your company"
-msgstr "Tu empresa"
-
-#: src/workers_control/flask/templates/company/dashboard.html:81
+#: src/workers_control/flask/templates/company/dashboard.html:42
 msgid "Your plans"
 msgstr "Tus planes"
 
-#: src/workers_control/flask/templates/company/dashboard.html:96
-#: src/workers_control/flask/templates/user/statistics.html:30
-msgid "Cooperations"
-msgstr "Cooperaciones"
+#: src/workers_control/flask/templates/company/dashboard.html:48
+msgid "Hours worked"
+msgstr "Horas trabajadas"
 
-#: src/workers_control/flask/templates/company/dashboard.html:98
-msgid "Your cooperations"
-msgstr "Tus cooperaciones"
+#: src/workers_control/flask/templates/company/dashboard.html:49
+msgid "Your registered working hours"
+msgstr "Tus horas trabajadas registradas"
 
-#: src/workers_control/flask/templates/company/dashboard.html:104
-msgid "Consumptions"
-msgstr "Consumos"
-
-#: src/workers_control/flask/templates/company/dashboard.html:106
-msgid "Your consumptions"
-msgstr "Tus consumos"
-
-#: src/workers_control/flask/templates/company/dashboard.html:112
-msgid "Product transfers"
-msgstr "Transferencias de productos"
-
-#: src/workers_control/flask/templates/company/dashboard.html:114
-msgid "Your product transfers"
-msgstr "Tus transferencias de productos"
-
-#: src/workers_control/flask/templates/company/dashboard.html:120
+#: src/workers_control/flask/templates/company/dashboard.html:55
 #: src/workers_control/flask/templates/company/invite_worker_to_company.html:4
 #: src/workers_control/flask/templates/user/statistics.html:22
 #: src/workers_control/web/www/presenters/list_pending_work_invites_presenter.py:38
 msgid "Workers"
 msgstr "Trabajadores"
 
-#: src/workers_control/flask/templates/company/dashboard.html:121
+#: src/workers_control/flask/templates/company/dashboard.html:56
 msgid "Members of your collective"
 msgstr "Miembros de tu colectivo"
 
-#: src/workers_control/flask/templates/company/dashboard.html:127
-msgid "Hours worked"
-msgstr "Horas trabajadas"
+#: src/workers_control/flask/templates/company/dashboard.html:71
+#: src/workers_control/flask/templates/user/statistics.html:30
+msgid "Cooperations"
+msgstr "Cooperaciones"
 
-#: src/workers_control/flask/templates/company/dashboard.html:128
-msgid "Your registered working hours"
-msgstr "Tus horas trabajadas registradas"
+#: src/workers_control/flask/templates/company/dashboard.html:73
+msgid "Your cooperations"
+msgstr "Tus cooperaciones"
 
-#: src/workers_control/flask/templates/company/dashboard.html:134
-#: src/workers_control/flask/templates/member/dashboard.html:88
+#: src/workers_control/flask/templates/company/dashboard.html:79
+msgid "Consumptions"
+msgstr "Consumos"
+
+#: src/workers_control/flask/templates/company/dashboard.html:81
+msgid "Your consumptions"
+msgstr "Tus consumos"
+
+#: src/workers_control/flask/templates/company/dashboard.html:87
+msgid "Product transfers"
+msgstr "Transferencias de productos"
+
+#: src/workers_control/flask/templates/company/dashboard.html:89
+msgid "Your product transfers"
+msgstr "Tus transferencias de productos"
+
+#: src/workers_control/flask/templates/company/dashboard.html:97
+msgid "Your company"
+msgstr "Tu empresa"
+
+#: src/workers_control/flask/templates/company/dashboard.html:103
+#: src/workers_control/flask/templates/member/dashboard.html:81
 msgid "Public accounting"
 msgstr "Contabilidad pública"
 
-#: src/workers_control/flask/templates/company/dashboard.html:158
-#: src/workers_control/flask/templates/member/dashboard.html:115
+#: src/workers_control/flask/templates/company/dashboard.html:117
+#: src/workers_control/flask/templates/member/dashboard.html:110
+#: src/workers_control/flask/templates/user/query_companies.html:4
+msgid "All companies"
+msgstr "Todas las empresas"
+
+#: src/workers_control/flask/templates/company/dashboard.html:124
+#: src/workers_control/flask/templates/member/dashboard.html:103
+#: src/workers_control/flask/templates/user/list_transfers.html:5
+msgid "All transfers"
+msgstr "Todas las transferencias"
+
+#: src/workers_control/flask/templates/company/dashboard.html:131
+#: src/workers_control/flask/templates/user/list_all_cooperations.html:4
+#: src/workers_control/flask/templates/user/list_all_cooperations.html:11
+msgid "All cooperations"
+msgstr "Todas las cooperaciones"
+
+#: src/workers_control/flask/templates/company/dashboard.html:139
+#: src/workers_control/flask/templates/member/dashboard.html:88
 #: src/workers_control/flask/templates/user/statistics.html:4
 #: src/workers_control/flask/templates/user/statistics.html:11
 #: src/workers_control/web/www/presenters/show_payout_factor_details_presenter.py:44
@@ -730,42 +743,12 @@ msgstr "Contabilidad pública"
 msgid "Global statistics"
 msgstr "Estadísticas globales"
 
-#: src/workers_control/flask/templates/company/dashboard.html:166
-#: src/workers_control/flask/templates/member/dashboard.html:144
-#: src/workers_control/flask/templates/user/query_companies.html:4
-msgid "All companies"
-msgstr "Todas las empresas"
-
-#: src/workers_control/flask/templates/company/dashboard.html:173
-#: src/workers_control/flask/templates/member/dashboard.html:123
-#: src/workers_control/flask/templates/user/query_plans.html:5
-msgid "All plans"
-msgstr "Todos los planes"
-
-#: src/workers_control/flask/templates/company/dashboard.html:180
-#: src/workers_control/flask/templates/member/dashboard.html:130
-#: src/workers_control/flask/templates/user/query_basic_services.html:5
-msgid "All basic services"
-msgstr "Todos los servicios básicos"
-
-#: src/workers_control/flask/templates/company/dashboard.html:187
-#: src/workers_control/flask/templates/member/dashboard.html:137
-#: src/workers_control/flask/templates/user/list_transfers.html:5
-msgid "All transfers"
-msgstr "Todas las transferencias"
-
-#: src/workers_control/flask/templates/company/dashboard.html:194
-#: src/workers_control/flask/templates/user/list_all_cooperations.html:4
-#: src/workers_control/flask/templates/user/list_all_cooperations.html:11
-msgid "All cooperations"
-msgstr "Todas las cooperaciones"
-
-#: src/workers_control/flask/templates/company/draft_details.html:6
-#: src/workers_control/flask/templates/company/draft_details.html:12
+#: src/workers_control/flask/templates/company/draft_details.html:13
+#: src/workers_control/web/www/presenters/get_draft_details_presenter.py:46
 msgid "Edit draft"
 msgstr "Editar borrador"
 
-#: src/workers_control/flask/templates/company/draft_details.html:23
+#: src/workers_control/flask/templates/company/draft_details.html:24
 msgid "Save draft"
 msgstr "Guardar borrador"
 
@@ -839,12 +822,19 @@ msgstr "Reenviar invitación"
 
 #: src/workers_control/flask/templates/company/list_registered_hours_worked.html:4
 #: src/workers_control/flask/templates/company/list_registered_hours_worked.html:11
+#: src/workers_control/web/www/presenters/register_hours_worked_presenter.py:32
 msgid "Registered working hours"
 msgstr "Horas trabajadas registradas"
 
+#: src/workers_control/flask/templates/company/list_registered_hours_worked.html:15
+#: src/workers_control/flask/templates/company/register_hours_worked.html:14
+#: src/workers_control/web/www/presenters/register_hours_worked_presenter.py:36
+msgid "Register hours worked"
+msgstr "Registrar horas trabajadas"
+
 #: src/workers_control/flask/templates/company/my_consumptions.html:4
 #: src/workers_control/flask/templates/member/consumptions.html:4
-#: src/workers_control/flask/templates/member/dashboard.html:74
+#: src/workers_control/flask/templates/member/dashboard.html:67
 msgid "My consumptions"
 msgstr "Mis consumos"
 
@@ -953,106 +943,112 @@ msgstr "No tienes ningún plan cooperativo."
 
 #: src/workers_control/flask/templates/company/my_plans.html:4
 #: src/workers_control/flask/templates/company/my_plans.html:9
+#: src/workers_control/web/www/presenters/create_draft_presenter.py:34
+#: src/workers_control/web/www/presenters/get_draft_details_presenter.py:42
 msgid "My plans"
 msgstr "Mis planes"
 
-#: src/workers_control/flask/templates/company/my_plans.html:13
+#: src/workers_control/flask/templates/company/my_plans.html:12
+msgid "Create new plan"
+msgstr "Crear nuevo plan"
+
+#: src/workers_control/flask/templates/company/my_plans.html:17
 #: src/workers_control/web/formatters/plan_details_formatter.py:46
 #: src/workers_control/web/www/presenters/get_company_summary_presenter.py:128
 msgid "Active"
 msgstr "Activo"
 
-#: src/workers_control/flask/templates/company/my_plans.html:17
+#: src/workers_control/flask/templates/company/my_plans.html:21
 msgid "Your active plans."
 msgstr "Tus planes activos."
 
-#: src/workers_control/flask/templates/company/my_plans.html:27
+#: src/workers_control/flask/templates/company/my_plans.html:31
 msgid "Activation date"
 msgstr "Fecha de activación"
 
-#: src/workers_control/flask/templates/company/my_plans.html:28
+#: src/workers_control/flask/templates/company/my_plans.html:32
 msgid "Expiration date"
 msgstr "Fecha de caducidad"
 
-#: src/workers_control/flask/templates/company/my_plans.html:33
-#: src/workers_control/flask/templates/user/query_plans.html:75
+#: src/workers_control/flask/templates/company/my_plans.html:37
+#: src/workers_control/flask/templates/user/query_offers.html:85
 msgid "Cooperating plan"
 msgstr "Plan cooperativo"
 
-#: src/workers_control/flask/templates/company/my_plans.html:36
-#: src/workers_control/flask/templates/company/my_plans.html:75
-#: src/workers_control/flask/templates/user/query_plans.html:78
+#: src/workers_control/flask/templates/company/my_plans.html:40
+#: src/workers_control/flask/templates/company/my_plans.html:79
+#: src/workers_control/flask/templates/user/query_offers.html:88
 #: src/workers_control/flask/templates/user/show_payout_factor_details.html:58
 #: src/workers_control/web/formatters/plan_details_formatter.py:92
-#: src/workers_control/web/www/presenters/show_my_plans_presenter.py:232
+#: src/workers_control/web/www/presenters/show_my_plans_presenter.py:234
 msgid "Public"
 msgstr "Público"
 
-#: src/workers_control/flask/templates/company/my_plans.html:50
+#: src/workers_control/flask/templates/company/my_plans.html:54
 msgid "You don't have active plans."
 msgstr "No tienes planes activos."
 
-#: src/workers_control/flask/templates/company/my_plans.html:55
+#: src/workers_control/flask/templates/company/my_plans.html:59
 msgid "Rejected"
 msgstr "Rechazado"
 
-#: src/workers_control/flask/templates/company/my_plans.html:59
+#: src/workers_control/flask/templates/company/my_plans.html:63
 msgid "Plans rejected by social accounting."
 msgstr "Planes rechazados por la contabilidad social."
 
-#: src/workers_control/flask/templates/company/my_plans.html:69
-#: src/workers_control/flask/templates/company/my_plans.html:151
-#: src/workers_control/flask/templates/company/my_plans.html:202
+#: src/workers_control/flask/templates/company/my_plans.html:73
+#: src/workers_control/flask/templates/company/my_plans.html:155
+#: src/workers_control/flask/templates/company/my_plans.html:206
 msgid "Creation date"
 msgstr "Fecha de creación"
 
-#: src/workers_control/flask/templates/company/my_plans.html:70
+#: src/workers_control/flask/templates/company/my_plans.html:74
 msgid "Rejection date"
 msgstr "Fecha de rechazo"
 
-#: src/workers_control/flask/templates/company/my_plans.html:89
+#: src/workers_control/flask/templates/company/my_plans.html:93
 msgid "You don't have rejected plans."
 msgstr "No tienes planes rechazados."
 
-#: src/workers_control/flask/templates/company/my_plans.html:94
+#: src/workers_control/flask/templates/company/my_plans.html:98
 msgid "Waiting"
 msgstr "Esperando"
 
-#: src/workers_control/flask/templates/company/my_plans.html:97
+#: src/workers_control/flask/templates/company/my_plans.html:101
 msgid "Plans waiting for approval by social accounting."
 msgstr "Planes esperando aprobación por la contabilidad social."
 
-#: src/workers_control/flask/templates/company/my_plans.html:102
+#: src/workers_control/flask/templates/company/my_plans.html:106
 msgid "Costs"
 msgstr "Costes"
 
-#: src/workers_control/flask/templates/company/my_plans.html:103
+#: src/workers_control/flask/templates/company/my_plans.html:107
 #: src/workers_control/flask/templates/user/show_payout_factor_details.html:48
 #: src/workers_control/web/formatters/plan_details_formatter.py:90
 msgid "Type"
 msgstr "Tipo"
 
-#: src/workers_control/flask/templates/company/my_plans.html:104
+#: src/workers_control/flask/templates/company/my_plans.html:108
 msgid "Plan created"
 msgstr "Plan creado"
 
-#: src/workers_control/flask/templates/company/my_plans.html:105
+#: src/workers_control/flask/templates/company/my_plans.html:109
 msgid "Revoke"
 msgstr "Revocar"
 
-#: src/workers_control/flask/templates/company/my_plans.html:117
+#: src/workers_control/flask/templates/company/my_plans.html:121
 msgid "Revoke plan filing"
 msgstr "Revocar la presentación del plan"
 
-#: src/workers_control/flask/templates/company/my_plans.html:130
+#: src/workers_control/flask/templates/company/my_plans.html:134
 msgid "You don't have plans waiting for activation."
 msgstr "No tienes planes esperando activación."
 
-#: src/workers_control/flask/templates/company/my_plans.html:137
+#: src/workers_control/flask/templates/company/my_plans.html:141
 msgid "Drafts"
 msgstr "Borradores"
 
-#: src/workers_control/flask/templates/company/my_plans.html:141
+#: src/workers_control/flask/templates/company/my_plans.html:145
 msgid ""
 "Your drafts. Click the envelope button to submit a plan to social "
 "accounting."
@@ -1060,32 +1056,32 @@ msgstr ""
 "Tus borradores. Haz clic en el botón de sobre para enviar un plan a la "
 "contabilidad social."
 
-#: src/workers_control/flask/templates/company/my_plans.html:159
+#: src/workers_control/flask/templates/company/my_plans.html:163
 msgid "File plan"
 msgstr "Presentar plan"
 
-#: src/workers_control/flask/templates/company/my_plans.html:166
+#: src/workers_control/flask/templates/company/my_plans.html:170
 msgid "Delete plan"
 msgstr "Eliminar plan"
 
-#: src/workers_control/flask/templates/company/my_plans.html:173
+#: src/workers_control/flask/templates/company/my_plans.html:177
 msgid "Edit plan"
 msgstr "Editar plan"
 
-#: src/workers_control/flask/templates/company/my_plans.html:184
+#: src/workers_control/flask/templates/company/my_plans.html:188
 msgid "You don't have any drafts saved."
 msgstr "No tienes ningún borrador guardado."
 
-#: src/workers_control/flask/templates/company/my_plans.html:189
-#: src/workers_control/flask/templates/user/query_plans.html:81
+#: src/workers_control/flask/templates/company/my_plans.html:193
+#: src/workers_control/flask/templates/user/query_offers.html:91
 msgid "Expired"
 msgstr "Caducado"
 
-#: src/workers_control/flask/templates/company/my_plans.html:210
+#: src/workers_control/flask/templates/company/my_plans.html:214
 msgid "Renew plan"
 msgstr "Renovar plan"
 
-#: src/workers_control/flask/templates/company/my_plans.html:223
+#: src/workers_control/flask/templates/company/my_plans.html:227
 msgid "You don't have expired plans."
 msgstr "No tienes planes caducados."
 
@@ -1099,8 +1095,9 @@ msgstr "Acciones"
 #: src/workers_control/flask/templates/company/plan_details.html:22
 #: src/workers_control/flask/templates/member/plan_details.html:17
 #: src/workers_control/flask/templates/member/plan_details.html:19
-#: src/workers_control/flask/templates/member/register_private_consumption.html:4
-#: src/workers_control/flask/templates/member/register_private_consumption.html:13
+#: src/workers_control/flask/templates/member/register_private_consumption.html:14
+#: src/workers_control/web/www/presenters/register_private_consumption_of_basic_service_presenter.py:86
+#: src/workers_control/web/www/presenters/register_private_consumption_presenter.py:83
 msgid "Register consumption"
 msgstr "Registrar consumo"
 
@@ -1120,39 +1117,41 @@ msgstr "Unirse a una cooperación"
 msgid "Join"
 msgstr "Unirse"
 
-#: src/workers_control/flask/templates/company/register_hours_worked.html:31
+#: src/workers_control/flask/templates/company/register_hours_worked.html:32
 #: src/workers_control/flask/templates/company/remove_worker_from_company.html:20
 msgid "Worker"
 msgstr "Trabajador/a"
 
-#: src/workers_control/flask/templates/company/register_hours_worked.html:42
-#: src/workers_control/flask/templates/company/register_productive_consumption.html:74
-#: src/workers_control/flask/templates/member/register_private_consumption.html:70
+#: src/workers_control/flask/templates/company/register_hours_worked.html:43
+#: src/workers_control/flask/templates/company/register_productive_consumption.html:75
+#: src/workers_control/flask/templates/member/register_private_consumption.html:85
 msgid "Register"
 msgstr "Registrar"
 
-#: src/workers_control/flask/templates/company/register_hours_worked.html:47
+#: src/workers_control/flask/templates/company/register_hours_worked.html:48
 msgid "You can register workers here"
 msgstr "Puedes registrar trabajadores aquí"
 
-#: src/workers_control/flask/templates/company/register_hours_worked.html:50
+#: src/workers_control/flask/templates/company/register_hours_worked.html:51
 msgid "No workers registered yet"
 msgstr "Aún no hay trabajadores registrados"
 
-#: src/workers_control/flask/templates/company/register_productive_consumption.html:4
-#: src/workers_control/flask/templates/company/register_productive_consumption.html:14
+#: src/workers_control/flask/templates/company/register_productive_consumption.html:15
+#: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:33
 msgid "Registration of productive consumption"
 msgstr "Registro de consumo productivo"
 
-#: src/workers_control/flask/templates/company/register_productive_consumption.html:46
+#: src/workers_control/flask/templates/company/register_productive_consumption.html:47
+#: src/workers_control/flask/templates/member/register_private_consumption.html:55
 msgid "Plan name"
 msgstr "Nombre del plan"
 
-#: src/workers_control/flask/templates/company/register_productive_consumption.html:49
+#: src/workers_control/flask/templates/company/register_productive_consumption.html:50
+#: src/workers_control/flask/templates/member/register_private_consumption.html:58
 msgid "Plan description"
 msgstr "Descripción del plan"
 
-#: src/workers_control/flask/templates/company/register_productive_consumption.html:77
+#: src/workers_control/flask/templates/company/register_productive_consumption.html:78
 msgid "Select"
 msgstr "Seleccionar"
 
@@ -1356,6 +1355,10 @@ msgstr "Desviación de ventas (&percnt;)"
 msgid "Specify product name and description."
 msgstr "Especifica el nombre y la descripción del producto."
 
+#: src/workers_control/flask/templates/macros/draft_form.html:22
+msgid "Product name"
+msgstr "Nombre del producto"
+
 #: src/workers_control/flask/templates/macros/draft_form.html:31
 msgid "Product description"
 msgstr "Descripción del producto"
@@ -1530,7 +1533,7 @@ msgstr "Este campo muestra las horas de trabajo gastadas por unidad producida."
 #: src/workers_control/flask/templates/member/basic_services.html:4
 #: src/workers_control/flask/templates/member/basic_services.html:12
 #: src/workers_control/flask/templates/member/create_basic_service.html:4
-#: src/workers_control/flask/templates/member/dashboard.html:81
+#: src/workers_control/flask/templates/member/dashboard.html:74
 msgid "My basic services"
 msgstr "Mis servicios básicos"
 
@@ -1571,9 +1574,9 @@ msgid ""
 "email address will be visible to other registered users of this app so they"
 " can contact you."
 msgstr ""
-"Una nota sobre la protección de datos: Si creas un servicio básico, tu nombre y "
-"dirección de correo electrónico serán visibles para otros usuarios registrados de esta "
-"aplicación para que puedan contactarte."
+"Una nota sobre la protección de datos: Si creas un servicio básico, tu "
+"nombre y dirección de correo electrónico serán visibles para otros usuarios"
+" registrados de esta aplicación para que puedan contactarte."
 
 #: src/workers_control/flask/templates/member/dashboard.html:15
 msgid "Your credit"
@@ -1596,11 +1599,6 @@ msgid "My area"
 msgstr "Mi área"
 
 #: src/workers_control/flask/templates/member/dashboard.html:60
-#: src/workers_control/web/www/presenters/transfers.py:94
-msgid "Private consumption"
-msgstr "Consumo privado"
-
-#: src/workers_control/flask/templates/member/dashboard.html:67
 #: src/workers_control/flask/templates/member/my_account.html:4
 msgid "My account"
 msgstr "Mi cuenta"
@@ -1680,7 +1678,7 @@ msgstr "La cuenta para medios de producción líquidos"
 
 #: src/workers_control/flask/templates/user/company_accounts.html:4
 #: src/workers_control/flask/templates/user/company_accounts.html:13
-#: src/workers_control/web/www/presenters/get_company_dashboard_presenter.py:78
+#: src/workers_control/web/www/presenters/get_company_dashboard_presenter.py:47
 #: src/workers_control/web/www/presenters/show_a_account_details_presenter.py:38
 #: src/workers_control/web/www/presenters/show_p_account_details_presenter.py:43
 #: src/workers_control/web/www/presenters/show_prd_account_details_presenter.py:39
@@ -1783,9 +1781,8 @@ msgid "Transfers"
 msgstr "Transferencias"
 
 #: src/workers_control/flask/templates/user/list_transfers.html:18
-#: src/workers_control/flask/templates/user/query_basic_services.html:30
 #: src/workers_control/flask/templates/user/query_companies.html:36
-#: src/workers_control/flask/templates/user/query_plans.html:48
+#: src/workers_control/flask/templates/user/query_offers.html:51
 msgid "Results"
 msgstr "Resultados"
 
@@ -1793,20 +1790,6 @@ msgstr "Resultados"
 #: src/workers_control/flask/templates/user/list_transfers.html:53
 msgid "Account"
 msgstr "Cuenta"
-
-#: src/workers_control/flask/templates/user/query_basic_services.html:13
-msgid "Basic services"
-msgstr "Servicios básicos"
-
-#: src/workers_control/flask/templates/user/query_basic_services.html:20
-msgid "Search by name"
-msgstr "Buscar por nombre"
-
-#: src/workers_control/flask/templates/user/query_basic_services.html:24
-#: src/workers_control/flask/templates/user/query_companies.html:30
-#: src/workers_control/flask/templates/user/query_plans.html:42
-msgid "Search"
-msgstr "Buscar"
 
 #: src/workers_control/flask/templates/user/query_companies.html:11
 msgid "Search companies"
@@ -1816,13 +1799,34 @@ msgstr "Buscar empresas"
 msgid "Search by name or email"
 msgstr "Buscar por nombre o correo electrónico"
 
-#: src/workers_control/flask/templates/user/query_plans.html:22
-msgid "Search by plan ID or product name"
-msgstr "Buscar por ID de plan o nombre del producto"
+#: src/workers_control/flask/templates/user/query_companies.html:30
+#: src/workers_control/flask/templates/user/query_offers.html:45
+msgid "Search"
+msgstr "Buscar"
 
-#: src/workers_control/flask/templates/user/query_plans.html:30
+#: src/workers_control/flask/templates/user/query_offers.html:5
+#: src/workers_control/flask/templates/user/query_offers.html:13
+#: src/workers_control/web/www/presenters/register_private_consumption_of_basic_service_presenter.py:82
+#: src/workers_control/web/www/presenters/register_private_consumption_presenter.py:79
+#: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:29
+msgid "Offers"
+msgstr "Ofertas"
+
+#: src/workers_control/flask/templates/user/query_offers.html:22
+msgid "Search by offer ID or offer name"
+msgstr "Buscar por ID de oferta o nombre de oferta"
+
+#: src/workers_control/flask/templates/user/query_offers.html:30
 msgid "Sort by"
 msgstr "Ordenar por"
+
+#: src/workers_control/flask/templates/user/query_offers.html:82
+msgid "Basic Service"
+msgstr "Servicio básico"
+
+#: src/workers_control/flask/templates/user/query_offers.html:94
+msgid "Our plan"
+msgstr "Nuestro plan"
 
 #: src/workers_control/flask/templates/user/request_email_address_change.html:32
 msgid "Submit"
@@ -1941,7 +1945,7 @@ msgstr "Cobertura"
 
 #: src/workers_control/flask/templates/user/show_payout_factor_details.html:58
 #: src/workers_control/web/formatters/plan_details_formatter.py:94
-#: src/workers_control/web/www/presenters/show_my_plans_presenter.py:234
+#: src/workers_control/web/www/presenters/show_my_plans_presenter.py:236
 msgid "Productive"
 msgstr "Productivo"
 
@@ -1994,7 +1998,7 @@ msgstr "Medios líquidos planificados actualmente"
 msgid "Currently planned work"
 msgstr "Trabajo planificado actualmente"
 
-#: src/workers_control/flask/views/create_draft_view.py:52
+#: src/workers_control/flask/views/create_draft_view.py:56
 msgid "Draft successfully saved."
 msgstr "Borrador guardado con éxito."
 
@@ -2113,6 +2117,7 @@ msgstr "Esto no es un número entero."
 
 #: src/workers_control/web/forms/formfield_parsers.py:50
 #: src/workers_control/web/www/controllers/register_private_consumption_form_validator.py:33
+#: src/workers_control/web/www/controllers/register_private_consumption_of_basic_service_form_validator.py:33
 msgid "Must be a number larger than zero."
 msgstr "Debe ser un número mayor que cero."
 
@@ -2188,8 +2193,18 @@ msgid "Plan ID is invalid."
 msgstr "El ID del plan no es válido."
 
 #: src/workers_control/web/www/controllers/register_private_consumption_form_validator.py:31
+#: src/workers_control/web/www/controllers/register_private_consumption_of_basic_service_form_validator.py:27
 msgid "You must specify an amount."
 msgstr "Debes especificar una cantidad."
+
+#: src/workers_control/web/www/controllers/register_private_consumption_of_basic_service_form_validator.py:21
+#: src/workers_control/web/www/controllers/register_private_consumption_of_basic_service_form_validator.py:23
+msgid "Basic service ID is invalid."
+msgstr "El ID del servicio básico no es válido."
+
+#: src/workers_control/web/www/controllers/register_private_consumption_of_basic_service_form_validator.py:31
+msgid "This is not a valid number."
+msgstr "Este no es un número válido."
 
 #: src/workers_control/web/www/controllers/remove_worker_from_company_controller.py:25
 msgid "Worker ID in request is invalid or missing."
@@ -2203,13 +2218,23 @@ msgstr "ID de plan no válido."
 msgid "Invalid cooperation ID."
 msgstr "ID de cooperación no válido."
 
+#: src/workers_control/web/www/controllers/select_private_consumption_controller.py:41
 #: src/workers_control/web/www/controllers/select_productive_consumption_controller.py:45
 msgid "The provided plan ID is not a valid UUID."
 msgstr "El ID del plan proporcionado no es un UUID válido."
 
+#: src/workers_control/web/www/controllers/select_private_consumption_controller.py:61
 #: src/workers_control/web/www/controllers/select_productive_consumption_controller.py:65
 msgid "The provided amount is not a valid integer."
 msgstr "La cantidad proporcionada no es un número entero válido."
+
+#: src/workers_control/web/www/controllers/select_private_consumption_of_basic_service_controller.py:43
+msgid "The provided basic service ID is not a valid UUID."
+msgstr "El ID del servicio básico proporcionado no es un UUID válido."
+
+#: src/workers_control/web/www/controllers/select_private_consumption_of_basic_service_controller.py:64
+msgid "The provided amount is not a valid number."
+msgstr "La cantidad proporcionada no es un número válido."
 
 #: src/workers_control/web/www/controllers/select_productive_consumption_controller.py:92
 msgid "The provided type of consumption is not valid."
@@ -2322,7 +2347,7 @@ msgstr "Error interno: Coordinador no encontrado."
 msgid "A new draft was created from an expired plan."
 msgstr "Se creó un nuevo borrador a partir de un plan caducado."
 
-#: src/workers_control/web/www/presenters/create_draft_presenter.py:26
+#: src/workers_control/web/www/presenters/create_draft_presenter.py:27
 msgid "Plan draft successfully created"
 msgstr "Borrador de plan creado con éxito"
 
@@ -2355,15 +2380,15 @@ msgstr "La cooperación no pudo ser finalizada."
 msgid "Cooperation has been terminated."
 msgstr "La cooperación ha sido finalizada."
 
-#: src/workers_control/web/www/presenters/file_plan_with_accounting_presenter.py:28
+#: src/workers_control/web/www/presenters/file_plan_with_accounting_presenter.py:26
 msgid "Successfully filed plan with social accounting"
 msgstr "Plan presentado con éxito con contabilidad social"
 
-#: src/workers_control/web/www/presenters/file_plan_with_accounting_presenter.py:34
+#: src/workers_control/web/www/presenters/file_plan_with_accounting_presenter.py:31
 msgid "Could not file plan with social accounting"
 msgstr "No se pudo presentar el plan con contabilidad social"
 
-#: src/workers_control/web/www/presenters/get_company_dashboard_presenter.py:79
+#: src/workers_control/web/www/presenters/get_company_dashboard_presenter.py:48
 msgid "You have four accounts"
 msgstr "Tienes cuatro cuentas"
 
@@ -2375,7 +2400,7 @@ msgstr "Pendiente"
 msgid "Closed"
 msgstr "Cerrado"
 
-#: src/workers_control/web/www/presenters/get_member_dashboard_presenter.py:64
+#: src/workers_control/web/www/presenters/get_member_dashboard_presenter.py:48
 #: src/workers_control/web/www/presenters/get_statistics_presenter.py:40
 #: src/workers_control/web/www/presenters/get_statistics_presenter.py:43
 #: src/workers_control/web/www/presenters/get_statistics_presenter.py:46
@@ -2383,12 +2408,12 @@ msgstr "Cerrado"
 msgid "%(num).2f hours"
 msgstr "%(num).2f horas"
 
-#: src/workers_control/web/www/presenters/get_member_dashboard_presenter.py:78
+#: src/workers_control/web/www/presenters/get_member_dashboard_presenter.py:62
 #, python-format
 msgid "Welcome, %s!"
 msgstr "¡Bienvenido/a, %s!"
 
-#: src/workers_control/web/www/presenters/get_member_dashboard_presenter.py:104
+#: src/workers_control/web/www/presenters/get_member_dashboard_presenter.py:72
 #, python-format
 msgid "Company %(company)s has invited you!"
 msgstr "¡La empresa %(company)s te ha invitado!"
@@ -2456,11 +2481,6 @@ msgstr ""
 "La dirección de correo electrónico es incorrecta. ¿Ya estás registrado/a "
 "como miembro?"
 
-#: src/workers_control/web/www/presenters/query_basic_services_presenter.py:48
-#: src/workers_control/web/www/presenters/query_plans_presenter.py:47
-msgid "No results."
-msgstr "Sin resultados."
-
 #: src/workers_control/web/www/presenters/query_companies_presenter.py:41
 msgid "No results"
 msgstr "Sin resultados"
@@ -2483,19 +2503,19 @@ msgstr "Esta dirección de correo electrónico ya está registrada."
 msgid "Wrong password."
 msgstr "Contraseña incorrecta."
 
-#: src/workers_control/web/www/presenters/register_hours_worked_presenter.py:27
+#: src/workers_control/web/www/presenters/register_hours_worked_presenter.py:51
 msgid "This worker does not work in your company."
 msgstr "Este/a trabajador/a no trabaja en tu empresa."
 
-#: src/workers_control/web/www/presenters/register_hours_worked_presenter.py:33
+#: src/workers_control/web/www/presenters/register_hours_worked_presenter.py:57
 msgid "Labour hours successfully registered"
 msgstr "Horas de trabajo registradas con éxito"
 
-#: src/workers_control/web/www/presenters/register_hours_worked_presenter.py:44
+#: src/workers_control/web/www/presenters/register_hours_worked_presenter.py:71
 msgid "Invalid input"
 msgstr "Entrada no válida"
 
-#: src/workers_control/web/www/presenters/register_hours_worked_presenter.py:50
+#: src/workers_control/web/www/presenters/register_hours_worked_presenter.py:77
 msgid "A negative amount is not allowed."
 msgstr "No se permite una cantidad negativa."
 
@@ -2507,11 +2527,29 @@ msgstr ""
 "Ya existe una empresa con la misma dirección de correo electrónico pero la "
 "contraseña proporcionada no coincide."
 
-#: src/workers_control/web/www/presenters/register_private_consumption_presenter.py:37
+#: src/workers_control/web/www/presenters/register_private_consumption_of_basic_service_presenter.py:38
+#: src/workers_control/web/www/presenters/register_private_consumption_presenter.py:38
 msgid "Consumption successfully registered."
 msgstr "Consumo registrado con éxito."
 
-#: src/workers_control/web/www/presenters/register_private_consumption_presenter.py:45
+#: src/workers_control/web/www/presenters/register_private_consumption_of_basic_service_presenter.py:49
+msgid "There is no basic service with the specified ID in the database."
+msgstr "No hay un servicio básico con el ID especificado en la base de datos."
+
+#: src/workers_control/web/www/presenters/register_private_consumption_of_basic_service_presenter.py:59
+msgid "Failed to register consumption. Are you logged in as a member?"
+msgstr "No se pudo registrar el consumo. ¿Estás conectado/a como miembro?"
+
+#: src/workers_control/web/www/presenters/register_private_consumption_of_basic_service_presenter.py:67
+#: src/workers_control/web/www/presenters/register_private_consumption_presenter.py:54
+msgid "You do not have enough work certificates."
+msgstr "No tienes suficientes certificados de trabajo."
+
+#: src/workers_control/web/www/presenters/register_private_consumption_of_basic_service_presenter.py:74
+msgid "You cannot consume your own basic service."
+msgstr "No puedes consumir tu propio servicio básico."
+
+#: src/workers_control/web/www/presenters/register_private_consumption_presenter.py:46
 msgid ""
 "The specified plan has been expired. Please contact the selling company to "
 "provide you with an up-to-date plan ID."
@@ -2519,27 +2557,23 @@ msgstr ""
 "El plan especificado ha caducado. Por favor, contacta a la empresa "
 "vendedora para que te proporcione un ID de plan actualizado."
 
-#: src/workers_control/web/www/presenters/register_private_consumption_presenter.py:53
-msgid "You do not have enough work certificates."
-msgstr "No tienes suficientes certificados de trabajo."
-
-#: src/workers_control/web/www/presenters/register_private_consumption_presenter.py:62
+#: src/workers_control/web/www/presenters/register_private_consumption_presenter.py:63
 msgid "Failed to register private consumption. Are you logged in as a member?"
 msgstr "No se pudo registrar el consumo privado. ¿Estás conectado/a como miembro?"
 
-#: src/workers_control/web/www/presenters/register_private_consumption_presenter.py:69
+#: src/workers_control/web/www/presenters/register_private_consumption_presenter.py:70
 msgid "There is no plan with the specified ID in the database."
 msgstr "No hay un plan con el ID especificado en la base de datos."
 
-#: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:33
+#: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:46
 msgid "Successfully registered."
 msgstr "Registrado con éxito."
 
-#: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:38
+#: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:51
 msgid "Plan does not exist."
 msgstr "El plan no existe."
 
-#: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:43
+#: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:56
 msgid ""
 "The specified plan has expired. Please contact the provider to obtain a "
 "current plan ID."
@@ -2547,15 +2581,15 @@ msgstr ""
 "El plan especificado ha caducado. Por favor, contacta al proveedor para "
 "obtener un ID de plan actual."
 
-#: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:52
+#: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:65
 msgid "Registration failed. Companies cannot acquire public products."
 msgstr "Registro fallido. Las empresas no pueden adquirir productos públicos."
 
-#: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:58
+#: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:71
 msgid "Registration failed. Companies cannot acquire their own products."
 msgstr "Registro fallido. Las empresas no pueden adquirir sus propios productos."
 
-#: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:63
+#: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:76
 msgid "The specified type of consumption is invalid."
 msgstr "El tipo de consumo especificado no es válido."
 
@@ -2679,6 +2713,11 @@ msgstr "Error inesperado: No es posible revocar la presentación del plan."
 msgid "Filing of plan has been successfully revoked."
 msgstr "La presentación del plan ha sido revocada con éxito."
 
+#: src/workers_control/web/www/presenters/select_private_consumption_of_basic_service_presenter.py:48
+msgid "The selected basic service does not exist."
+msgstr "El servicio básico seleccionado no existe."
+
+#: src/workers_control/web/www/presenters/select_private_consumption_presenter.py:41
 #: src/workers_control/web/www/presenters/select_productive_consumption_presenter.py:45
 msgid "The selected plan does not exist or is not active anymore."
 msgstr "El plan seleccionado no existe o ya no está activo."
@@ -2692,7 +2731,7 @@ msgstr ""
 "La empresa \"%(company_name)s\" te invita a unirte a ellos. ¿Quieres "
 "aceptar esta invitación?"
 
-#: src/workers_control/web/www/presenters/show_my_plans_presenter.py:118
+#: src/workers_control/web/www/presenters/show_my_plans_presenter.py:119
 msgid "You don't have any plans."
 msgstr "No tienes ningún plan."
 
@@ -2731,6 +2770,10 @@ msgstr "Medios de producción líquidos planificados (plan público)"
 #: src/workers_control/web/www/presenters/transfers.py:92
 msgid "Planned labour (public plan)"
 msgstr "Trabajo planificado (plan público)"
+
+#: src/workers_control/web/www/presenters/transfers.py:94
+msgid "Private consumption"
+msgstr "Consumo privado"
 
 #: src/workers_control/web/www/presenters/transfers.py:97
 msgid "Productive consumption of fixed means of production"
@@ -2908,4 +2951,31 @@ msgstr "Contribución al sector público"
 
 #~ msgid "Available product (no public products)"
 #~ msgstr "Producto disponible (sin productos públicos)"
+
+#~ msgid "Search Plans"
+#~ msgstr "Buscar planes"
+
+#~ msgid "Search also for expired plans"
+#~ msgstr "Buscar también planes caducados"
+
+#~ msgid "Register productive consumption"
+#~ msgstr "Registrar consumo productivo"
+
+#~ msgid "All plans"
+#~ msgstr "Todos los planes"
+
+#~ msgid "All basic services"
+#~ msgstr "Todos los servicios básicos"
+
+#~ msgid "Basic services"
+#~ msgstr "Servicios básicos"
+
+#~ msgid "Search by name"
+#~ msgstr "Buscar por nombre"
+
+#~ msgid "Search by plan ID or product name"
+#~ msgstr "Buscar por ID de plan o nombre del producto"
+
+#~ msgid "No results."
+#~ msgstr "Sin resultados."
 

@@ -5,9 +5,11 @@ from parameterized import parameterized
 
 from tests.interactors.base_test_case import BaseTestCase
 from workers_control.core import records
+from workers_control.core.anonymization import ANONYMIZED_STR, ANONYMIZED_UUID
 from workers_control.core.interactors.show_member_account_details import (
     ShowMemberAccountDetailsInteractor,
 )
+from workers_control.core.services.account_details import TransferPartyType
 from workers_control.core.transfers import TransferType
 
 
@@ -61,6 +63,54 @@ class ShowMemberAccountDetailsTests(BaseTestCase):
         assert response.transfers[0].volume == Decimal(-10)
         assert response.transfers[0].type == TransferType.private_consumption
         assert response.balance == Decimal(-10)
+
+    def test_that_correct_info_is_generated_after_member_consumes_basic_service(
+        self,
+    ) -> None:
+        expected_amount = Decimal("13.7")
+        provider = self.member_generator.create_member()
+        basic_service = self.basic_service_generator.create_basic_service(
+            member=provider
+        )
+        consumer = self.member_generator.create_member()
+        self.consumption_generator.create_private_consumption_of_basic_service(
+            consumer=consumer, amount=expected_amount, basic_service=basic_service
+        )
+        response = self.interactor.execute(consumer)
+        assert len(response.transfers) == 1
+        assert response.transfers[0].transfer_party.name is ANONYMIZED_STR
+        assert response.transfers[0].transfer_party.id is ANONYMIZED_UUID
+        assert response.transfers[0].transfer_party.type == TransferPartyType.member
+        assert response.transfers[0].volume == -expected_amount
+        assert (
+            response.transfers[0].type
+            == TransferType.private_consumption_of_basic_service
+        )
+        assert response.balance == -expected_amount
+
+    def test_that_correct_info_is_generated_after_member_provides_basic_service(
+        self,
+    ) -> None:
+        expected_amount = Decimal("13.7")
+        provider = self.member_generator.create_member()
+        basic_service = self.basic_service_generator.create_basic_service(
+            member=provider
+        )
+        consumer = self.member_generator.create_member()
+        self.consumption_generator.create_private_consumption_of_basic_service(
+            consumer=consumer, amount=expected_amount, basic_service=basic_service
+        )
+        response = self.interactor.execute(provider)
+        assert len(response.transfers) == 1
+        assert response.transfers[0].transfer_party.name is ANONYMIZED_STR
+        assert response.transfers[0].transfer_party.id is ANONYMIZED_UUID
+        assert response.transfers[0].transfer_party.type == TransferPartyType.member
+        assert response.transfers[0].volume == expected_amount
+        assert (
+            response.transfers[0].type
+            == TransferType.private_consumption_of_basic_service
+        )
+        assert response.balance == expected_amount
 
     def test_that_a_transfer_with_volume_zero_is_shown_correctly(self) -> None:
         expected_company_name = "test company 123"

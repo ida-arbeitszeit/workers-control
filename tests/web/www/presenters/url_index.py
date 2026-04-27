@@ -81,6 +81,7 @@ class UrlIndexTestImpl:
     get_register_hours_worked_url = UrlIndexMethod()
     get_registered_hours_worked_url = UrlIndexMethod()
     get_register_private_consumption_url = UrlIndexMethod()
+    get_register_private_consumption_of_basic_service_url = UrlIndexMethod()
     get_register_productive_consumption_url = UrlIndexMethod()
     get_reject_plan_url = UrlIndexMethod()
     get_remove_worker_from_company_url = UrlIndexMethod()

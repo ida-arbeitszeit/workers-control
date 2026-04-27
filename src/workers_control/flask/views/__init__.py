@@ -4,6 +4,9 @@ from .invite_worker_to_company import InviteWorkerToCompanyView
 from .query_companies import QueryCompaniesView
 from .query_offers import QueryOffersView
 from .register_private_consumption import RegisterPrivateConsumptionView
+from .register_private_consumption_of_basic_service_view import (
+    RegisterPrivateConsumptionOfBasicServiceView,
+)
 from .request_cooperation_view import RequestCooperationView
 
 __all__ = [
@@ -11,6 +14,7 @@ __all__ = [
     "EndCooperationView",
     "InviteWorkerToCompanyView",
     "RegisterPrivateConsumptionView",
+    "RegisterPrivateConsumptionOfBasicServiceView",
     "QueryCompaniesView",
     "QueryOffersView",
     "RequestCooperationView",

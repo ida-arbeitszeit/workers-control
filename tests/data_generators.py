@@ -54,6 +54,11 @@ from workers_control.core.interactors.register_private_consumption import (
     RegisterPrivateConsumptionRequest,
     RegisterPrivateConsumptionResponse,
 )
+from workers_control.core.interactors.register_private_consumption_of_basic_service import (
+    RegisterPrivateConsumptionOfBasicServiceInteractor,
+    RegisterPrivateConsumptionOfBasicServiceRequest,
+    RegisterPrivateConsumptionOfBasicServiceResponse,
+)
 from workers_control.core.interactors.register_productive_consumption import (
     RegisterProductiveConsumptionInteractor,
     RegisterProductiveConsumptionRequest,
@@ -356,6 +361,10 @@ class ConsumptionGenerator:
     member_generator: MemberGenerator
     register_productive_consumption: RegisterProductiveConsumptionInteractor
     register_private_consumption_interactor: RegisterPrivateConsumption
+    basic_service_generator: BasicServiceGenerator
+    register_basic_service_interactor: (
+        RegisterPrivateConsumptionOfBasicServiceInteractor
+    )
 
     def create_resource_consumption_by_company(
         self,
@@ -429,6 +438,25 @@ class ConsumptionGenerator:
                 request
             )
         )
+        if not response.is_accepted:
+            assert response.rejection_reason
+            raise response.rejection_reason
+        return response
+
+    def create_private_consumption_of_basic_service(
+        self,
+        consumer: Optional[UUID] = None,
+        amount: Decimal = Decimal(1),
+        basic_service: Optional[UUID] = None,
+    ) -> RegisterPrivateConsumptionOfBasicServiceResponse:
+        if consumer is None:
+            consumer = self.member_generator.create_member()
+        if basic_service is None:
+            basic_service = self.basic_service_generator.create_basic_service()
+        request = RegisterPrivateConsumptionOfBasicServiceRequest(
+            amount=amount, basic_service=basic_service, consumer=consumer
+        )
+        response = self.register_basic_service_interactor.execute(request)
         if not response.is_accepted:
             assert response.rejection_reason
             raise response.rejection_reason

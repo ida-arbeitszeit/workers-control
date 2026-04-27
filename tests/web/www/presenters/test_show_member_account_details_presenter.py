@@ -136,6 +136,26 @@ class TestPresenter(BaseTestCase):
             self.translator.gettext("Contribution to public sector"),
         )
 
+    def test_that_transfer_type_is_shown_correctly_for_consumption_of_basic_service(
+        self,
+    ):
+        response = self.get_interactor_response(
+            [self.get_transfer(type=TransferType.private_consumption_of_basic_service)]
+        )
+        view_model = self.presenter.present_member_account(response)
+        self.assertEqual(
+            view_model.transfers[0].transfer_type,
+            self.translator.gettext("Private consumption of basic service"),
+        )
+
+    @parameterized.expand([(t,) for t in TransferType])
+    def test_that_no_transfer_type_raises_when_presented(
+        self, transfer_type: TransferType
+    ):
+        response = self.get_interactor_response([self.get_transfer(type=transfer_type)])
+        view_model = self.presenter.present_member_account(response)
+        self.assertTrue(view_model.transfers[0].transfer_type)
+
     def test_that_transfer_party_name_is_translated_if_it_is_the_name_of_social_accounting(
         self,
     ) -> None:

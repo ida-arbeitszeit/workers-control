@@ -93,6 +93,9 @@
                         {% if column.is_own_plan %}
                         <span class="tag is-info">{{ gettext("Our plan") }}</span>
                         {% endif %}
+                        {% if column.is_own_basic_service %}
+                        <span class="tag is-info">{{ gettext("My offer") }}</span>
+                        {% endif %}
                     </div>
                 </div>
                 {% if not column.is_basic_service %}

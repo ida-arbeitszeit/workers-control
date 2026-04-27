@@ -39,6 +39,7 @@ class FlaskTestCase(DatabaseTestCase):
         return []
 
     accountant_generator = _lazy_property(data_generators.AccountantGenerator)
+    basic_service_generator = _lazy_property(data_generators.BasicServiceGenerator)
     company_generator = _lazy_property(data_generators.CompanyGenerator)
     consumption_generator = _lazy_property(data_generators.ConsumptionGenerator)
 

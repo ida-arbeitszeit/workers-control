@@ -83,14 +83,6 @@
     <div class="fixed-grid has-3-cols has-1-cols-mobile">
       <ul class="grid">
         <li class="cell box has-background-warning-light mb-0">
-          <a href="{{ url_for('main_user.statistics') }}">
-            <h1 class="title is-5"><span class="icon">{{ "chart-pie"|icon }}</span> {{
-              gettext("Global statistics") }}
-            </h1>
-            <div class="subtitle"></div>
-          </a>  
-        </li>
-        <li class="cell box has-background-warning-light mb-0">
           <a href="{{ url_for('main_user.query_offers') }}">
             <h1 class="title is-5"><span class="icon">{{ "file"|icon }}</span>
               {{ gettext("Search offers") }}</h1>
@@ -108,6 +100,14 @@
           <a href="{{ url_for('main_user.query_companies') }}">
             <h1 class="title is-5"><span class="icon">{{ "industry"|icon }}</span>
               {{ gettext("All companies") }}</h1>
+            <div class="subtitle"></div>
+          </a>
+        </li>
+        <li class="cell box has-background-warning-light mb-0">
+          <a href="{{ url_for('main_user.statistics') }}">
+            <h1 class="title is-5"><span class="icon">{{ "chart-pie"|icon }}</span> {{
+              gettext("Global statistics") }}
+            </h1>
             <div class="subtitle"></div>
           </a>
         </li>

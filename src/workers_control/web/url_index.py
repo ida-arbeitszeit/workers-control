@@ -65,6 +65,12 @@ class UrlIndex(Protocol):
         self, amount: Optional[int] = None, plan_id: Optional[UUID] = None
     ) -> str: ...
 
+    def get_register_private_consumption_of_basic_service_url(
+        self,
+        basic_service_id: Optional[UUID] = None,
+        amount: Optional[Decimal] = None,
+    ) -> str: ...
+
     def get_my_private_consumptions_url(self) -> str: ...
 
     def get_register_productive_consumption_url(

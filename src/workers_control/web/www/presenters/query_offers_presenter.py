@@ -26,6 +26,7 @@ class ResultTableRow:
     is_cooperating: bool
     is_expired: bool
     is_own_plan: bool
+    is_own_basic_service: bool
     show_consumption_icon: bool
     is_consumption_disabled: bool
     consumption_url: str
@@ -84,6 +85,17 @@ class QueryOffersPresenter:
         description = "".join(result.description.splitlines())[:150]
         show_consumption_icon = user_role in (UserRole.member, UserRole.company)
         if result.is_basic_service:
+            is_own_basic_service = (
+                user_role == UserRole.member and current_user == result.provider_id
+            )
+            if user_role == UserRole.member and not is_own_basic_service:
+                bs_consumption_url = self.url_index.get_register_private_consumption_of_basic_service_url(
+                    basic_service_id=result.id
+                )
+                bs_consumption_disabled = False
+            else:
+                bs_consumption_url = ""
+                bs_consumption_disabled = True
             return ResultTableRow(
                 offer_details_url=self.url_index.get_basic_service_url(result.id),
                 provider_url="",
@@ -96,9 +108,10 @@ class QueryOffersPresenter:
                 is_cooperating=False,
                 is_expired=False,
                 is_own_plan=False,
+                is_own_basic_service=is_own_basic_service,
                 show_consumption_icon=show_consumption_icon,
-                is_consumption_disabled=True,
-                consumption_url="",
+                is_consumption_disabled=bs_consumption_disabled,
+                consumption_url=bs_consumption_url,
             )
         is_own_plan = (
             user_role == UserRole.company and current_user == result.provider_id
@@ -128,6 +141,7 @@ class QueryOffersPresenter:
             is_cooperating=result.is_cooperating,
             is_expired=result.is_expired,
             is_own_plan=is_own_plan,
+            is_own_basic_service=False,
             show_consumption_icon=show_consumption_icon,
             is_consumption_disabled=result.is_expired or is_own_plan,
             consumption_url=consumption_url,

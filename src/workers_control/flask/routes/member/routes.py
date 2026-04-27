@@ -14,6 +14,7 @@ from workers_control.flask.flask_session import FlaskSession
 from workers_control.flask.types import Response
 from workers_control.flask.views import (
     CompanyWorkInviteView,
+    RegisterPrivateConsumptionOfBasicServiceView,
     RegisterPrivateConsumptionView,
 )
 from workers_control.flask.views.create_basic_service_view import (
@@ -57,6 +58,13 @@ class create_basic_service(CreateBasicServiceView): ...
 @MemberRoute("/register_private_consumption", methods=["GET", "POST"])
 @as_flask_view()
 class register_private_consumption(RegisterPrivateConsumptionView): ...
+
+
+@MemberRoute("/register_private_consumption_of_basic_service", methods=["GET", "POST"])
+@as_flask_view()
+class register_private_consumption_of_basic_service(
+    RegisterPrivateConsumptionOfBasicServiceView
+): ...
 
 
 @MemberRoute("/dashboard")

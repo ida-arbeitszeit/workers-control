@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import assert_never
 
 from workers_control.core.anonymization import ANONYMIZED_STR
 from workers_control.core.services.account_details import AccountTransfer, TransferParty
@@ -75,38 +76,42 @@ class TransferPresenter:
 def description_from_transfer_type(
     translator: Translator, transfer_type: TransferType
 ) -> str:
-    match transfer_type.name:
-        case "credit_p":
+    match transfer_type:
+        case TransferType.credit_p:
             return translator.gettext("Planned fixed means of production")
-        case "credit_r":
+        case TransferType.credit_r:
             return translator.gettext("Planned liquid means of production")
-        case "credit_a":
+        case TransferType.credit_a:
             return translator.gettext("Planned labour")
-        case "credit_public_p":
+        case TransferType.credit_public_p:
             return translator.gettext("Planned fixed means of production (public plan)")
-        case "credit_public_r":
+        case TransferType.credit_public_r:
             return translator.gettext(
                 "Planned liquid means of production (public plan)"
             )
-        case "credit_public_a":
+        case TransferType.credit_public_a:
             return translator.gettext("Planned labour (public plan)")
-        case "private_consumption":
+        case TransferType.private_consumption:
             return translator.gettext("Private consumption")
-        case "productive_consumption_p":
+        case TransferType.private_consumption_of_basic_service:
+            return translator.gettext("Private consumption of basic service")
+        case TransferType.productive_consumption_p:
             return translator.gettext(
                 "Productive consumption of fixed means of production"
             )
-        case "productive_consumption_r":
+        case TransferType.productive_consumption_r:
             return translator.gettext(
                 "Productive consumption of liquid means of production"
             )
-        case "compensation_for_coop":
+        case TransferType.productive_consumption_of_basic_service:
+            return translator.gettext("Productive consumption of basic service")
+        case TransferType.compensation_for_coop:
             return translator.gettext("Compensation for overproductive planning")
-        case "compensation_for_company":
+        case TransferType.compensation_for_company:
             return translator.gettext("Compensation for underproductive planning")
-        case "work_certificates":
+        case TransferType.work_certificates:
             return translator.gettext("Work certificates")
-        case "taxes":
+        case TransferType.taxes:
             return translator.gettext("Contribution to public sector")
         case _:
-            raise ValueError(f"Unknown transfer type: {transfer_type}")
+            assert_never(transfer_type)

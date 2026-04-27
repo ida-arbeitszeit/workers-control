@@ -320,6 +320,70 @@ class MyPlanFlagTests(BaseTestCase):
         presentation = self.presenter.present(response)
         self.assertFalse(presentation.results.rows[0].is_own_plan)
 
+    def test_is_own_basic_service_false_for_plan_offer(self) -> None:
+        member_id = uuid4()
+        self.session.login_member(member_id)
+        response = self.queried_offer_generator.get_response(
+            [self.queried_offer_generator.get_plan(company_id=member_id)]
+        )
+        presentation = self.presenter.present(response)
+        self.assertFalse(presentation.results.rows[0].is_own_basic_service)
+
+
+class MyBasicServiceFlagTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(QueryOffersPresenter)
+        self.queried_offer_generator = QueriedOfferGenerator()
+
+    def test_is_own_basic_service_true_when_logged_in_member_matches_provider(
+        self,
+    ) -> None:
+        member_id = uuid4()
+        self.session.login_member(member_id)
+        response = self.queried_offer_generator.get_response(
+            [self.queried_offer_generator.get_basic_service(provider_id=member_id)]
+        )
+        presentation = self.presenter.present(response)
+        self.assertTrue(presentation.results.rows[0].is_own_basic_service)
+
+    def test_is_own_basic_service_false_when_logged_in_member_is_not_the_provider(
+        self,
+    ) -> None:
+        self.session.login_member(uuid4())
+        response = self.queried_offer_generator.get_response(
+            [self.queried_offer_generator.get_basic_service(provider_id=uuid4())]
+        )
+        presentation = self.presenter.present(response)
+        self.assertFalse(presentation.results.rows[0].is_own_basic_service)
+
+    def test_is_own_basic_service_false_when_user_is_a_company(self) -> None:
+        company_id = uuid4()
+        self.session.login_company(company_id)
+        response = self.queried_offer_generator.get_response(
+            [self.queried_offer_generator.get_basic_service(provider_id=company_id)]
+        )
+        presentation = self.presenter.present(response)
+        self.assertFalse(presentation.results.rows[0].is_own_basic_service)
+
+    def test_is_own_basic_service_false_when_user_is_an_accountant(self) -> None:
+        accountant_id = uuid4()
+        self.session.login_accountant(accountant_id)
+        response = self.queried_offer_generator.get_response(
+            [self.queried_offer_generator.get_basic_service(provider_id=accountant_id)]
+        )
+        presentation = self.presenter.present(response)
+        self.assertFalse(presentation.results.rows[0].is_own_basic_service)
+
+    def test_is_own_plan_false_for_basic_service_offer(self) -> None:
+        member_id = uuid4()
+        self.session.login_member(member_id)
+        response = self.queried_offer_generator.get_response(
+            [self.queried_offer_generator.get_basic_service(provider_id=member_id)]
+        )
+        presentation = self.presenter.present(response)
+        self.assertFalse(presentation.results.rows[0].is_own_plan)
+
 
 class ConsumptionIconTests(BaseTestCase):
     def setUp(self) -> None:
@@ -458,11 +522,47 @@ class BasicServiceRowTests(BaseTestCase):
             self.url_index.get_basic_service_url(bs_id),
         )
 
-    def test_basic_service_consumption_icon_is_disabled(self) -> None:
+    def test_basic_service_consumption_icon_is_shown_and_enabled_for_member(
+        self,
+    ) -> None:
         response = self.generator.get_response([self.generator.get_basic_service()])
         presentation = self.presenter.present(response)
         self.assertTrue(presentation.results.rows[0].show_consumption_icon)
+        self.assertFalse(presentation.results.rows[0].is_consumption_disabled)
+
+    def test_basic_service_consumption_url_links_to_register_view_for_member(
+        self,
+    ) -> None:
+        bs_id = uuid4()
+        response = self.generator.get_response(
+            [self.generator.get_basic_service(basic_service_id=bs_id)]
+        )
+        presentation = self.presenter.present(response)
+        self.assertEqual(
+            presentation.results.rows[0].consumption_url,
+            self.url_index.get_register_private_consumption_of_basic_service_url(
+                basic_service_id=bs_id
+            ),
+        )
+
+    def test_basic_service_consumption_icon_is_disabled_for_company(self) -> None:
+        self.session.login_company(uuid4())
+        response = self.generator.get_response([self.generator.get_basic_service()])
+        presentation = self.presenter.present(response)
         self.assertTrue(presentation.results.rows[0].is_consumption_disabled)
+        self.assertEqual(presentation.results.rows[0].consumption_url, "")
+
+    def test_basic_service_consumption_icon_is_disabled_for_providing_member(
+        self,
+    ) -> None:
+        provider_id = uuid4()
+        self.session.login_member(provider_id)
+        response = self.generator.get_response(
+            [self.generator.get_basic_service(provider_id=provider_id)]
+        )
+        presentation = self.presenter.present(response)
+        self.assertTrue(presentation.results.rows[0].is_consumption_disabled)
+        self.assertEqual(presentation.results.rows[0].consumption_url, "")
 
     def test_basic_service_provider_name_is_passed_through(self) -> None:
         response = self.generator.get_response(

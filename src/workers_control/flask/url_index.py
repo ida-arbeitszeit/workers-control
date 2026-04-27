@@ -75,6 +75,17 @@ class GeneralUrlIndex:
             plan_id=plan_id,
         )
 
+    def get_register_private_consumption_of_basic_service_url(
+        self,
+        basic_service_id: Optional[UUID] = None,
+        amount: Optional[Decimal] = None,
+    ) -> str:
+        return url_for(
+            endpoint="main_member.register_private_consumption_of_basic_service",
+            amount=amount,
+            basic_service_id=basic_service_id,
+        )
+
     def get_my_private_consumptions_url(self) -> str:
         return url_for(endpoint="main_member.consumptions")
 

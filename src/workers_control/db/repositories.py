@@ -1379,6 +1379,11 @@ class ProductiveConsumptionResult(SqlQueryResult[records.ProductiveConsumption])
 
 
 class PrivateConsumptionResult(SqlQueryResult[records.PrivateConsumption]):
+    def with_id(self, id_: UUID) -> Self:
+        return self._with_modified_query(
+            lambda query: query.filter(models.PrivateConsumption.id == id_)
+        )
+
     def where_consumer_is_member(self, member: UUID) -> Self:
         transfer = aliased(models.Transfer)
         account = aliased(models.Account)
@@ -1500,6 +1505,71 @@ class PrivateConsumptionResult(SqlQueryResult[records.PrivateConsumption]):
             )
             .join(plan, models.PrivateConsumption.plan_id == plan.id)
             .with_entities(models.PrivateConsumption, transfer, plan, member),
+        )
+
+
+class PrivateConsumptionOfBasicServiceResult(
+    SqlQueryResult[records.PrivateConsumptionOfBasicService]
+):
+    def where_consumer_is_member(self, member: UUID) -> Self:
+        transfer = aliased(models.Transfer)
+        account = aliased(models.Account)
+        consuming_member = aliased(models.Member)
+        return self._with_modified_query(
+            lambda query: query.join(
+                transfer,
+                models.PrivateConsumptionOfBasicService.transfer == transfer.id,
+            )
+            .join(account, transfer.debit_account == account.id)
+            .join(
+                consuming_member,
+                account.id == consuming_member.account,
+            )
+            .filter(consuming_member.id == member)
+        )
+
+    def joined_with_transfer_and_basic_service(
+        self,
+    ) -> SqlQueryResult[
+        Tuple[
+            records.PrivateConsumptionOfBasicService,
+            records.Transfer,
+            records.BasicService,
+        ]
+    ]:
+        def mapper(
+            orm,
+        ) -> Tuple[
+            records.PrivateConsumptionOfBasicService,
+            records.Transfer,
+            records.BasicService,
+        ]:
+            consumption_orm, transfer_orm, basic_service_orm = orm
+            return (
+                DatabaseGatewayImpl.private_consumption_of_basic_service_from_orm(
+                    consumption_orm
+                ),
+                DatabaseGatewayImpl.transfer_from_orm(transfer_orm),
+                DatabaseGatewayImpl.basic_service_from_orm(basic_service_orm),
+            )
+
+        transfer = aliased(models.Transfer)
+        basic_service = aliased(models.BasicService)
+        return SqlQueryResult(
+            db=self.db,
+            mapper=mapper,
+            query=self.query.join(
+                transfer,
+                models.PrivateConsumptionOfBasicService.transfer == transfer.id,
+            )
+            .join(
+                basic_service,
+                models.PrivateConsumptionOfBasicService.basic_service
+                == basic_service.id,
+            )
+            .with_entities(
+                models.PrivateConsumptionOfBasicService, transfer, basic_service
+            ),
         )
 
 
@@ -2281,6 +2351,39 @@ class DatabaseGatewayImpl:
             db=self.db,
             query=self.db.session.query(models.PrivateConsumption),
             mapper=self.private_consumption_from_orm,
+        )
+
+    def create_private_consumption_of_basic_service(
+        self,
+        basic_service: UUID,
+        transfer: UUID,
+    ) -> records.PrivateConsumptionOfBasicService:
+        orm = models.PrivateConsumptionOfBasicService(
+            id=uuid4(),
+            basic_service=basic_service,
+            transfer=transfer,
+        )
+        self.db.session.add(orm)
+        self.db.session.flush()
+        return self.private_consumption_of_basic_service_from_orm(orm)
+
+    def get_private_consumptions_of_basic_service(
+        self,
+    ) -> PrivateConsumptionOfBasicServiceResult:
+        return PrivateConsumptionOfBasicServiceResult(
+            db=self.db,
+            query=self.db.session.query(models.PrivateConsumptionOfBasicService),
+            mapper=self.private_consumption_of_basic_service_from_orm,
+        )
+
+    @classmethod
+    def private_consumption_of_basic_service_from_orm(
+        cls, orm: models.PrivateConsumptionOfBasicService
+    ) -> records.PrivateConsumptionOfBasicService:
+        return records.PrivateConsumptionOfBasicService(
+            id=orm.id,
+            basic_service=orm.basic_service,
+            transfer=orm.transfer,
         )
 
     @classmethod

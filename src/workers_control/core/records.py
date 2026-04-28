@@ -297,6 +297,13 @@ class PrivateConsumption:
 
 
 @dataclass(frozen=True)
+class PrivateConsumptionOfBasicService:
+    id: UUID
+    basic_service: UUID
+    transfer: UUID
+
+
+@dataclass(frozen=True)
 class ProductiveConsumption:
     id: UUID
     plan_id: UUID

@@ -283,6 +283,14 @@ class PrivateConsumption(Base):
     amount: Mapped[int]
 
 
+class PrivateConsumptionOfBasicService(Base):
+    __tablename__ = "private_consumption_of_basic_service"
+
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
+    basic_service: Mapped[UUID] = mapped_column(Uuid, ForeignKey("basic_service.id"))
+    transfer: Mapped[UUID] = mapped_column(Uuid, ForeignKey("transfer.id"))
+
+
 class ProductiveConsumption(Base):
     __tablename__ = "productive_consumption"
 

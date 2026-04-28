@@ -20,6 +20,9 @@ from workers_control.flask.views import (
 from workers_control.flask.views.create_basic_service_view import (
     CreateBasicServiceView,
 )
+from workers_control.flask.views.get_private_consumption_details import (
+    GetPrivateConsumptionDetailsView,
+)
 from workers_control.flask.views.http_error_view import http_404
 from workers_control.flask.views.list_basic_services_of_worker_view import (
     ListBasicServicesOfWorkerView,
@@ -43,6 +46,11 @@ from .blueprint import MemberRoute
 @MemberRoute("/consumptions")
 @as_flask_view()
 class consumptions(QueryPrivateConsumptionsView): ...
+
+
+@MemberRoute("/consumptions/<uuid:consumption_id>")
+@as_flask_view()
+class consumption_details(GetPrivateConsumptionDetailsView): ...
 
 
 @MemberRoute("/basic_services")

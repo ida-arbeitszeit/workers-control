@@ -1578,6 +1578,71 @@ class PrivateConsumptionOfBasicServiceResult(
         )
 
 
+class ProductiveConsumptionOfBasicServiceResult(
+    SqlQueryResult[records.ProductiveConsumptionOfBasicService]
+):
+    def where_consumer_is_company(self, company: UUID) -> Self:
+        transfer = aliased(models.Transfer)
+        account = aliased(models.Account)
+        consuming_company = aliased(models.Company)
+        return self._with_modified_query(
+            lambda query: query.join(
+                transfer,
+                models.ProductiveConsumptionOfBasicService.transfer == transfer.id,
+            )
+            .join(account, transfer.debit_account == account.id)
+            .join(
+                consuming_company,
+                account.id == consuming_company.r_account,
+            )
+            .filter(consuming_company.id == company)
+        )
+
+    def joined_with_transfer_and_basic_service(
+        self,
+    ) -> SqlQueryResult[
+        Tuple[
+            records.ProductiveConsumptionOfBasicService,
+            records.Transfer,
+            records.BasicService,
+        ]
+    ]:
+        def mapper(
+            orm,
+        ) -> Tuple[
+            records.ProductiveConsumptionOfBasicService,
+            records.Transfer,
+            records.BasicService,
+        ]:
+            consumption_orm, transfer_orm, basic_service_orm = orm
+            return (
+                DatabaseGatewayImpl.productive_consumption_of_basic_service_from_orm(
+                    consumption_orm
+                ),
+                DatabaseGatewayImpl.transfer_from_orm(transfer_orm),
+                DatabaseGatewayImpl.basic_service_from_orm(basic_service_orm),
+            )
+
+        transfer = aliased(models.Transfer)
+        basic_service = aliased(models.BasicService)
+        return SqlQueryResult(
+            db=self.db,
+            mapper=mapper,
+            query=self.query.join(
+                transfer,
+                models.ProductiveConsumptionOfBasicService.transfer == transfer.id,
+            )
+            .join(
+                basic_service,
+                models.ProductiveConsumptionOfBasicService.basic_service
+                == basic_service.id,
+            )
+            .with_entities(
+                models.ProductiveConsumptionOfBasicService, transfer, basic_service
+            ),
+        )
+
+
 class CooperationResult(SqlQueryResult[records.Cooperation]):
     def with_id(self, id_: UUID) -> Self:
         return self._with_modified_query(
@@ -2331,6 +2396,39 @@ class DatabaseGatewayImpl:
                 orm.transfer_of_compensation if orm.transfer_of_compensation else None
             ),
             amount=orm.amount,
+        )
+
+    def create_productive_consumption_of_basic_service(
+        self,
+        basic_service: UUID,
+        transfer: UUID,
+    ) -> records.ProductiveConsumptionOfBasicService:
+        orm = models.ProductiveConsumptionOfBasicService(
+            id=uuid4(),
+            basic_service=basic_service,
+            transfer=transfer,
+        )
+        self.db.session.add(orm)
+        self.db.session.flush()
+        return self.productive_consumption_of_basic_service_from_orm(orm)
+
+    def get_productive_consumptions_of_basic_service(
+        self,
+    ) -> ProductiveConsumptionOfBasicServiceResult:
+        return ProductiveConsumptionOfBasicServiceResult(
+            db=self.db,
+            query=self.db.session.query(models.ProductiveConsumptionOfBasicService),
+            mapper=self.productive_consumption_of_basic_service_from_orm,
+        )
+
+    @classmethod
+    def productive_consumption_of_basic_service_from_orm(
+        cls, orm: models.ProductiveConsumptionOfBasicService
+    ) -> records.ProductiveConsumptionOfBasicService:
+        return records.ProductiveConsumptionOfBasicService(
+            id=orm.id,
+            basic_service=orm.basic_service,
+            transfer=orm.transfer,
         )
 
     def create_private_consumption(

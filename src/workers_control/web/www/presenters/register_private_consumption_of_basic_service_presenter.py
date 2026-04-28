@@ -37,7 +37,7 @@ class RegisterPrivateConsumptionOfBasicServicePresenter:
             self.user_notifier.display_info(
                 self.translator.gettext("Consumption successfully registered.")
             )
-            return Redirect(url=self.url_index.get_query_offers_url())
+            return Redirect(url=self.url_index.get_my_private_consumptions_url())
         form = self._create_form(request)
         status_code = 400
         if (

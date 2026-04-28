@@ -72,12 +72,16 @@ class RegisterPrivateConsumptionOfBasicServiceInteractor:
         assert provider
         if not self._is_account_balance_sufficient(request.amount, consumer.account):
             raise RejectionReason.insufficient_balance
-        self.database_gateway.create_transfer(
+        transfer = self.database_gateway.create_transfer(
             date=self.datetime_service.now(),
             debit_account=consumer.account,
             credit_account=provider.account,
             value=request.amount,
             type=TransferType.private_consumption_of_basic_service,
+        )
+        self.database_gateway.create_private_consumption_of_basic_service(
+            basic_service=basic_service.id,
+            transfer=transfer.id,
         )
         return RegisterPrivateConsumptionOfBasicServiceResponse(rejection_reason=None)
 

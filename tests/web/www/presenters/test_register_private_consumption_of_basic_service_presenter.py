@@ -43,7 +43,7 @@ class RegisterPrivateConsumptionOfBasicServicePresenterTests(BaseTestCase):
             request=FakeRequest(),
         )
         assert isinstance(view_model, Redirect)
-        assert view_model.url == self.url_index.get_query_offers_url()
+        assert view_model.url == self.url_index.get_my_private_consumptions_url()
 
     @parameterized.expand([(reason,) for reason in RejectionReason])
     def test_rejection_results_in_render_form(self, reason: RejectionReason) -> None:

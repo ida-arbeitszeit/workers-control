@@ -248,17 +248,15 @@ class RegisterPrivateConsumptionTests(RegisterPrivateConsumptionBase):
         self.register_private_consumption.register_private_consumption(
             self.make_request(plan, pieces)
         )
-        response = self.query_private_consumptions.query_private_consumptions(
-            query_private_consumptions.Request(member=self.consumer)
+        consumption = self.database_gateway.get_private_consumptions().first()
+        assert consumption
+        assert consumption.plan_id == plan
+        assert consumption.amount == pieces
+        transfers = self.get_private_consumption_transfers()
+        assert len(transfers) == 1
+        assert transfers[0].value / pieces == self.price_checker.get_price_per_unit(
+            plan
         )
-        assert len(response.consumptions) == 1
-        latest_consumption = response.consumptions[0]
-        assert (
-            latest_consumption.paid_price_per_unit
-            == self.price_checker.get_price_per_unit(plan)
-        )
-        assert latest_consumption.amount == pieces
-        assert latest_consumption.plan_id == plan
 
     def test_correct_consumption_is_added_when_plan_is_public_service(self) -> None:
         plan = self.plan_generator.create_plan(is_public_service=True)
@@ -266,13 +264,12 @@ class RegisterPrivateConsumptionTests(RegisterPrivateConsumptionBase):
         self.register_private_consumption.register_private_consumption(
             self.make_request(plan, pieces)
         )
-        response = self.query_private_consumptions.query_private_consumptions(
-            query_private_consumptions.Request(member=self.consumer)
-        )
-        assert len(response.consumptions) == 1
-        latest_consumption = response.consumptions[0]
-        assert latest_consumption.paid_price_per_unit == Decimal(0)
-        assert latest_consumption.plan_id == plan
+        consumption = self.database_gateway.get_private_consumptions().first()
+        assert consumption
+        assert consumption.plan_id == plan
+        transfers = self.get_private_consumption_transfers()
+        assert len(transfers) == 1
+        assert transfers[0].value == Decimal(0)
 
     def make_request(
         self, plan: UUID, amount: int, consumer: Optional[UUID] = None

@@ -978,6 +978,9 @@ class TransferResult(QueryResultImpl[records.Transfer]):
 
 
 class PrivateConsumptionResult(QueryResultImpl[records.PrivateConsumption]):
+    def with_id(self, id_: UUID) -> Self:
+        return self._filter_elements(lambda consumption: consumption.id == id_)
+
     def ordered_by_creation_date(self, *, ascending: bool = True) -> Self:
         def consumption_sorting_key(
             consumption: records.PrivateConsumption,
@@ -1061,6 +1064,46 @@ class PrivateConsumptionResult(QueryResultImpl[records.PrivateConsumption]):
                 (member_id,) = members
                 member = self.database.members[member_id]
                 yield consumption, transfer, plan, member
+
+        return QueryResultImpl(
+            items=joined_items,
+            database=self.database,
+        )
+
+
+class PrivateConsumptionOfBasicServiceResult(
+    QueryResultImpl[records.PrivateConsumptionOfBasicService]
+):
+    def where_consumer_is_member(self, member: UUID) -> Self:
+        def filtered_items() -> Iterator[records.PrivateConsumptionOfBasicService]:
+            member_account = self.database.members[member].account
+            for consumption in self.items():
+                transfer = self.database.transfers[consumption.transfer]
+                if transfer.debit_account == member_account:
+                    yield consumption
+
+        return self.from_iterable(items=filtered_items)
+
+    def joined_with_transfer_and_basic_service(
+        self,
+    ) -> QueryResultImpl[
+        Tuple[
+            records.PrivateConsumptionOfBasicService,
+            records.Transfer,
+            records.BasicService,
+        ]
+    ]:
+        def joined_items() -> Iterator[
+            Tuple[
+                records.PrivateConsumptionOfBasicService,
+                records.Transfer,
+                records.BasicService,
+            ]
+        ]:
+            for consumption in self.items():
+                transfer = self.database.transfers[consumption.transfer]
+                basic_service = self.database.basic_services[consumption.basic_service]
+                yield consumption, transfer, basic_service
 
         return QueryResultImpl(
             items=joined_items,
@@ -1748,6 +1791,9 @@ class MockDatabase:
             UUID, records.CoordinationTransferRequest
         ] = dict()
         self.private_consumptions: Dict[UUID, records.PrivateConsumption] = dict()
+        self.private_consumptions_of_basic_service: Dict[
+            UUID, records.PrivateConsumptionOfBasicService
+        ] = dict()
         self.productive_consumptions: Dict[UUID, records.ProductiveConsumption] = dict()
         self.company_work_invites: List[CompanyWorkInvite] = list()
         self.email_addresses: Dict[str, records.EmailAddress] = dict()
@@ -1798,6 +1844,27 @@ class MockDatabase:
         return PrivateConsumptionResult(
             database=self,
             items=self.private_consumptions.values,
+        )
+
+    def create_private_consumption_of_basic_service(
+        self,
+        basic_service: UUID,
+        transfer: UUID,
+    ) -> records.PrivateConsumptionOfBasicService:
+        consumption = records.PrivateConsumptionOfBasicService(
+            id=uuid4(),
+            basic_service=basic_service,
+            transfer=transfer,
+        )
+        self.private_consumptions_of_basic_service[consumption.id] = consumption
+        return consumption
+
+    def get_private_consumptions_of_basic_service(
+        self,
+    ) -> PrivateConsumptionOfBasicServiceResult:
+        return PrivateConsumptionOfBasicServiceResult(
+            database=self,
+            items=self.private_consumptions_of_basic_service.values,
         )
 
     def create_productive_consumption(

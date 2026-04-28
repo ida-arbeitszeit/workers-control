@@ -73,6 +73,8 @@ class UrlIndex(Protocol):
 
     def get_my_private_consumptions_url(self) -> str: ...
 
+    def get_my_private_consumption_details_url(self, consumption_id: UUID) -> str: ...
+
     def get_register_productive_consumption_url(
         self,
         plan_id: Optional[UUID] = None,

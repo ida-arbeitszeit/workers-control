@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block navbar_start %}
+<div class="navbar-item">{{ gettext("Consumption details") }}</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="section">
+  <div class="container">
+    <h1 class="title has-text-centered">
+      {{ view_model.plan_name }}
+    </h1>
+
+    <div class="columns is-centered">
+      <div class="column is-three-fifths">
+        <div class="box">
+          <table class="table is-fullwidth">
+            <tbody>
+              <tr>
+                <th>{{ gettext("Date") }}</th>
+                <td>{{ view_model.consumption_date }}</td>
+              </tr>
+              <tr>
+                <th>{{ gettext("Description") }}</th>
+                <td>{{ view_model.plan_description }}</td>
+              </tr>
+              <tr>
+                <th>{{ gettext("Amount") }}</th>
+                <td>{{ view_model.amount }}</td>
+              </tr>
+              <tr>
+                <th>{{ gettext("Price per unit") }}</th>
+                <td>{{ view_model.price_per_unit }}</td>
+              </tr>
+              <tr>
+                <th>{{ gettext("Hours paid") }}</th>
+                <td>{{ view_model.price_total }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="has-text-centered">
+            <a class="button is-primary is-light" href="{{ view_model.plan_details_url }}">
+              {{ gettext("View plan") }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -248,6 +248,8 @@ class MemberResult(QueryResult[records.Member], Protocol):
 class PrivateConsumptionResult(QueryResult[records.PrivateConsumption], Protocol):
     def ordered_by_creation_date(self, *, ascending: bool = ...) -> Self: ...
 
+    def with_id(self, id_: UUID) -> Self: ...
+
     def where_consumer_is_member(self, member: UUID) -> Self: ...
 
     def where_provider_is_company(self, company: UUID) -> Self: ...
@@ -266,6 +268,22 @@ class PrivateConsumptionResult(QueryResult[records.PrivateConsumption], Protocol
             records.Transfer,
             records.Plan,
             records.Member,
+        ]
+    ]: ...
+
+
+class PrivateConsumptionOfBasicServiceResult(
+    QueryResult[records.PrivateConsumptionOfBasicService], Protocol
+):
+    def where_consumer_is_member(self, member: UUID) -> Self: ...
+
+    def joined_with_transfer_and_basic_service(
+        self,
+    ) -> QueryResult[
+        Tuple[
+            records.PrivateConsumptionOfBasicService,
+            records.Transfer,
+            records.BasicService,
         ]
     ]: ...
 
@@ -531,6 +549,16 @@ class DatabaseGateway(Protocol):
     ) -> records.PrivateConsumption: ...
 
     def get_private_consumptions(self) -> PrivateConsumptionResult: ...
+
+    def create_private_consumption_of_basic_service(
+        self,
+        basic_service: UUID,
+        transfer: UUID,
+    ) -> records.PrivateConsumptionOfBasicService: ...
+
+    def get_private_consumptions_of_basic_service(
+        self,
+    ) -> PrivateConsumptionOfBasicServiceResult: ...
 
     def create_productive_consumption(
         self,

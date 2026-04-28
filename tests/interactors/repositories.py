@@ -1111,6 +1111,48 @@ class PrivateConsumptionOfBasicServiceResult(
         )
 
 
+class ProductiveConsumptionOfBasicServiceResult(
+    QueryResultImpl[records.ProductiveConsumptionOfBasicService]
+):
+    def where_consumer_is_company(self, company: UUID) -> Self:
+        def filtered_items() -> Iterator[records.ProductiveConsumptionOfBasicService]:
+            company_record = self.database.get_company_by_id(company)
+            if company_record is None:
+                return None
+            for consumption in self.items():
+                transfer = self.database.transfers[consumption.transfer]
+                if transfer.debit_account == company_record.raw_material_account:
+                    yield consumption
+
+        return self.from_iterable(items=filtered_items)
+
+    def joined_with_transfer_and_basic_service(
+        self,
+    ) -> QueryResultImpl[
+        Tuple[
+            records.ProductiveConsumptionOfBasicService,
+            records.Transfer,
+            records.BasicService,
+        ]
+    ]:
+        def joined_items() -> Iterator[
+            Tuple[
+                records.ProductiveConsumptionOfBasicService,
+                records.Transfer,
+                records.BasicService,
+            ]
+        ]:
+            for consumption in self.items():
+                transfer = self.database.transfers[consumption.transfer]
+                basic_service = self.database.basic_services[consumption.basic_service]
+                yield consumption, transfer, basic_service
+
+        return QueryResultImpl(
+            items=joined_items,
+            database=self.database,
+        )
+
+
 class ProductiveConsumptionResult(QueryResultImpl[records.ProductiveConsumption]):
     def with_id(self, id_: UUID) -> Self:
         return self._filter_elements(lambda consumption: consumption.id == id_)
@@ -1798,6 +1840,9 @@ class MockDatabase:
             UUID, records.PrivateConsumptionOfBasicService
         ] = dict()
         self.productive_consumptions: Dict[UUID, records.ProductiveConsumption] = dict()
+        self.productive_consumptions_of_basic_service: Dict[
+            UUID, records.ProductiveConsumptionOfBasicService
+        ] = dict()
         self.company_work_invites: List[CompanyWorkInvite] = list()
         self.email_addresses: Dict[str, records.EmailAddress] = dict()
         self.drafts: Dict[UUID, PlanDraft] = dict()
@@ -1894,6 +1939,27 @@ class MockDatabase:
     def get_productive_consumptions(self) -> ProductiveConsumptionResult:
         return ProductiveConsumptionResult(
             database=self, items=self.productive_consumptions.values
+        )
+
+    def create_productive_consumption_of_basic_service(
+        self,
+        basic_service: UUID,
+        transfer: UUID,
+    ) -> records.ProductiveConsumptionOfBasicService:
+        consumption = records.ProductiveConsumptionOfBasicService(
+            id=uuid4(),
+            basic_service=basic_service,
+            transfer=transfer,
+        )
+        self.productive_consumptions_of_basic_service[consumption.id] = consumption
+        return consumption
+
+    def get_productive_consumptions_of_basic_service(
+        self,
+    ) -> ProductiveConsumptionOfBasicServiceResult:
+        return ProductiveConsumptionOfBasicServiceResult(
+            database=self,
+            items=self.productive_consumptions_of_basic_service.values,
         )
 
     def get_plans(self) -> PlanResult:

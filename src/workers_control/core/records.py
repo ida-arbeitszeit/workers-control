@@ -312,6 +312,13 @@ class ProductiveConsumption:
     transfer_of_compensation: UUID | None
 
 
+@dataclass(frozen=True)
+class ProductiveConsumptionOfBasicService:
+    id: UUID
+    basic_service: UUID
+    transfer: UUID
+
+
 AccountOwner = Union[Member, Company, SocialAccounting, Cooperation]
 
 

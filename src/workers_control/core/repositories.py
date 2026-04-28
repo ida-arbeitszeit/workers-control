@@ -288,6 +288,22 @@ class PrivateConsumptionOfBasicServiceResult(
     ]: ...
 
 
+class ProductiveConsumptionOfBasicServiceResult(
+    QueryResult[records.ProductiveConsumptionOfBasicService], Protocol
+):
+    def where_consumer_is_company(self, company: UUID) -> Self: ...
+
+    def joined_with_transfer_and_basic_service(
+        self,
+    ) -> QueryResult[
+        Tuple[
+            records.ProductiveConsumptionOfBasicService,
+            records.Transfer,
+            records.BasicService,
+        ]
+    ]: ...
+
+
 class ProductiveConsumptionResult(QueryResult[records.ProductiveConsumption], Protocol):
     def ordered_by_creation_date(self, *, ascending: bool = ...) -> Self: ...
 
@@ -571,6 +587,16 @@ class DatabaseGateway(Protocol):
     ) -> records.ProductiveConsumption: ...
 
     def get_productive_consumptions(self) -> ProductiveConsumptionResult: ...
+
+    def create_productive_consumption_of_basic_service(
+        self,
+        basic_service: UUID,
+        transfer: UUID,
+    ) -> records.ProductiveConsumptionOfBasicService: ...
+
+    def get_productive_consumptions_of_basic_service(
+        self,
+    ) -> ProductiveConsumptionOfBasicServiceResult: ...
 
     def create_plan(
         self,

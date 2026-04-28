@@ -21,12 +21,10 @@
       <thead>
         <tr>
           <th>{{ gettext("Date") }}</th>
-          <th>{{ gettext("Name") }}</th>
-          <th>{{ gettext("Description") }}</th>
+          <th>{{ gettext("Offer name") }}</th>
+          <th>{{ gettext("Offer description") }}</th>
           <th>{{ gettext("Purpose") }}</th>
-          <th>{{ gettext("Unit price") }}</th>
-          <th>{{ gettext("Amount") }}</th>
-          <th>{{ gettext("Total price") }}</th>
+          <th>{{ gettext("Hours paid") }}</th>
         </tr>
       </thead>
       <tbody>
@@ -34,12 +32,16 @@
         {% for consumption in view_model.consumptions %}
         <tr>
           <td>{{ consumption.consumption_date }}</td>
-          <td>{{ consumption.product_name }}</td>
+          <td>
+            {% if consumption.details_url %}
+            <a href="{{ consumption.details_url }}">{{ consumption.product_name }}</a>
+            {% else %}
+            {{ consumption.product_name }}
+            {% endif %}
+          </td>
           <td>{{ consumption.product_description }}</td>
           <td>{{ consumption.consumption_type }}</td>
-          <td>{{ consumption.price_per_unit }}</td>
-          <th>{{ consumption.amount }}</th>
-          <th>{{ consumption.price_total }}</th>
+          <th>{{ consumption.hours_paid }}</th>
         </tr>
         {% endfor %}
         {% else %}

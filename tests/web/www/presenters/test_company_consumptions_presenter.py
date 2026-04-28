@@ -1,6 +1,6 @@
 from decimal import Decimal
 from typing import Iterator
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 from tests.data_generators import ConsumptionGenerator
 from tests.web.base_test_case import BaseTestCase
@@ -27,6 +27,7 @@ class TestPresenter(BaseTestCase):
         response: Iterator[ConsumptionQueryResponse] = iter(
             [
                 ConsumptionQueryResponse(
+                    id=uuid4(),
                     consumption_date=now,
                     plan_id=uuid4(),
                     product_name="Produkt A",
@@ -36,6 +37,7 @@ class TestPresenter(BaseTestCase):
                     amount=321,
                 ),
                 ConsumptionQueryResponse(
+                    id=uuid4(),
                     consumption_date=now,
                     plan_id=uuid4(),
                     product_name="Produkt A",
@@ -52,7 +54,9 @@ class TestPresenter(BaseTestCase):
 
         assert presentation.consumptions[
             0
-        ].consumption_date == self.datetime_formatter.format_datetime(now)
+        ].consumption_date == self.datetime_formatter.format_datetime(
+            now, fmt="%d.%m.%Y"
+        )
         assert presentation.consumptions[0].product_name == "Produkt A"
         assert (
             presentation.consumptions[0].product_description
@@ -61,13 +65,13 @@ class TestPresenter(BaseTestCase):
         assert presentation.consumptions[0].consumption_type == self.translator.gettext(
             "Liquid means of production"
         )
-        assert presentation.consumptions[0].price_per_unit == "7.89"
-        assert presentation.consumptions[0].amount == "321"
-        assert presentation.consumptions[0].price_total == "2532.69"
+        assert presentation.consumptions[0].hours_paid == "2532.69"
 
         assert presentation.consumptions[
             1
-        ].consumption_date == self.datetime_formatter.format_datetime(now)
+        ].consumption_date == self.datetime_formatter.format_datetime(
+            now, fmt="%d.%m.%Y"
+        )
         assert presentation.consumptions[1].product_name == "Produkt A"
         assert (
             presentation.consumptions[1].product_description
@@ -76,9 +80,7 @@ class TestPresenter(BaseTestCase):
         assert presentation.consumptions[1].consumption_type == self.translator.gettext(
             "Fixed means of production"
         )
-        assert presentation.consumptions[1].price_per_unit == "100000.00"
-        assert presentation.consumptions[1].amount == "1"
-        assert presentation.consumptions[1].price_total == "100000.00"
+        assert presentation.consumptions[1].hours_paid == "100000.00"
 
     def test_show_consumptions_if_there_is_one_consumption(self) -> None:
         consuming_company = self.company_generator.create_company()
@@ -95,3 +97,31 @@ class TestPresenter(BaseTestCase):
         interactor_response: Iterator[ConsumptionQueryResponse] = iter([])
         view_model = self.presenter.present(interactor_response)
         assert not view_model.show_consumptions
+
+    def test_that_details_url_points_to_company_consumption_details(self) -> None:
+        consumption_id = uuid4()
+        response = self._response_with_one_consumption(consumption_id=consumption_id)
+        view_model = self.presenter.present(response)
+        assert view_model.consumptions[
+            0
+        ].details_url == self.url_index.get_company_consumption_details_url(
+            consumption_id=consumption_id
+        )
+
+    def _response_with_one_consumption(
+        self, consumption_id: UUID
+    ) -> Iterator[ConsumptionQueryResponse]:
+        return iter(
+            [
+                ConsumptionQueryResponse(
+                    id=consumption_id,
+                    consumption_date=self.datetime_service.now(),
+                    plan_id=uuid4(),
+                    product_name="Produkt A",
+                    product_description="Beschreibung für Produkt A.",
+                    consumption_type=ConsumptionType.raw_materials,
+                    paid_price_per_unit=Decimal("1"),
+                    amount=1,
+                )
+            ]
+        )

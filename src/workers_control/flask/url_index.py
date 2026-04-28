@@ -163,6 +163,12 @@ class GeneralUrlIndex:
     def get_company_consumptions_url(self) -> str:
         return url_for(endpoint="main_company.my_consumptions")
 
+    def get_company_consumption_details_url(self, consumption_id: UUID) -> str:
+        return url_for(
+            endpoint="main_company.consumption_details",
+            consumption_id=consumption_id,
+        )
+
     def get_register_hours_worked_url(self) -> str:
         return url_for(endpoint="main_company.register_hours_worked")
 

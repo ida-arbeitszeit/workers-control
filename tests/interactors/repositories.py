@@ -1112,6 +1112,9 @@ class PrivateConsumptionOfBasicServiceResult(
 
 
 class ProductiveConsumptionResult(QueryResultImpl[records.ProductiveConsumption]):
+    def with_id(self, id_: UUID) -> Self:
+        return self._filter_elements(lambda consumption: consumption.id == id_)
+
     def ordered_by_creation_date(self, *, ascending: bool = True) -> Self:
         def consumption_sorting_key(
             consumption: records.ProductiveConsumption,

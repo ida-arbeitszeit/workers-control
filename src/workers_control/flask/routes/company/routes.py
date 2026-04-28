@@ -54,6 +54,9 @@ from workers_control.flask.views.create_cooperation_view import CreateCooperatio
 from workers_control.flask.views.create_draft_view import CreateDraftView
 from workers_control.flask.views.deny_cooperation_view import DenyCooperationView
 from workers_control.flask.views.draft_details_view import DraftDetailsView
+from workers_control.flask.views.get_productive_consumption_details import (
+    GetProductiveConsumptionDetailsView,
+)
 from workers_control.flask.views.http_error_view import http_404
 from workers_control.flask.views.list_pending_work_invites_view import (
     ListPendingWorkInvitesView,
@@ -141,6 +144,11 @@ def my_consumptions(
             view_model=view_model,
         )
     )
+
+
+@CompanyRoute("/consumptions/<uuid:consumption_id>")
+@as_flask_view()
+class consumption_details(GetProductiveConsumptionDetailsView): ...
 
 
 @CompanyRoute("/draft/delete/<uuid:draft_id>", methods=["POST"])

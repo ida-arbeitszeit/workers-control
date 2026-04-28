@@ -1194,6 +1194,11 @@ class AccountQueryResult(SqlQueryResult[records.Account]):
 
 
 class ProductiveConsumptionResult(SqlQueryResult[records.ProductiveConsumption]):
+    def with_id(self, id_: UUID) -> Self:
+        return self._with_modified_query(
+            lambda query: query.filter(models.ProductiveConsumption.id == id_)
+        )
+
     def where_consumer_is_company(self, company: UUID) -> Self:
         transfer = aliased(models.Transfer)
         account = aliased(models.Account)

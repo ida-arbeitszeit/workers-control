@@ -16,6 +16,7 @@ from workers_control.core.repositories import DatabaseGateway
 
 @dataclass
 class ConsumptionQueryResponse:
+    id: UUID
     consumption_date: datetime
     plan_id: UUID
     product_name: str
@@ -58,6 +59,7 @@ class QueryCompanyConsumptionsInteractor:
         else:
             consumption_type = ConsumptionType.means_of_prod
         return ConsumptionQueryResponse(
+            id=consumption.id,
             consumption_date=transfer.date,
             plan_id=plan.id,
             product_name=plan.prd_name,

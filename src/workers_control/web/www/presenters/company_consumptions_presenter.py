@@ -7,6 +7,7 @@ from workers_control.core.interactors.query_company_consumptions import (
 from workers_control.core.records import ConsumptionType
 from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
 from workers_control.web.translator import Translator
+from workers_control.web.url_index import UrlIndex
 
 
 @dataclass
@@ -17,9 +18,8 @@ class ViewModel:
         product_name: str
         product_description: str
         consumption_type: str
-        price_per_unit: str
-        amount: str
-        price_total: str
+        hours_paid: str
+        details_url: str
 
     consumptions: List[Consumption]
     show_consumptions: bool
@@ -29,6 +29,7 @@ class ViewModel:
 class CompanyConsumptionsPresenter:
     datetime_formatter: DatetimeFormatter
     translator: Translator
+    url_index: UrlIndex
 
     def present(
         self, interactor_response: Iterator[ConsumptionQueryResponse]
@@ -45,17 +46,18 @@ class CompanyConsumptionsPresenter:
         return ViewModel.Consumption(
             consumption_date=self.datetime_formatter.format_datetime(
                 date=consumption.consumption_date,
-                fmt="%d.%m.%Y %H:%M",
+                fmt="%d.%m.%Y",
             ),
             product_name=consumption.product_name,
             product_description=consumption.product_description,
             consumption_type=self._format_consumption_type(
                 consumption.consumption_type
             ),
-            price_per_unit=str(round(consumption.paid_price_per_unit, 2)),
-            amount=str(consumption.amount),
-            price_total=str(
+            hours_paid=str(
                 round(consumption.paid_price_per_unit * consumption.amount, 2)
+            ),
+            details_url=self.url_index.get_company_consumption_details_url(
+                consumption_id=consumption.id
             ),
         )
 

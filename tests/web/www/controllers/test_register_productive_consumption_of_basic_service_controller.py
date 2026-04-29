@@ -6,24 +6,23 @@ from parameterized import parameterized
 
 from tests.web.base_test_case import BaseTestCase
 from tests.web.www.request import FakeRequest
-from workers_control.core.interactors.register_private_consumption_of_basic_service import (
-    RegisterPrivateConsumptionOfBasicServiceRequest,
+from workers_control.core.interactors import (
+    register_productive_consumption_of_basic_service,
 )
-from workers_control.web.www.controllers.register_private_consumption_of_basic_service_controller import (
+from workers_control.web.www.controllers.register_productive_consumption_of_basic_service_controller import (
     FormError,
     ImportFormDataResult,
-    RegisterPrivateConsumptionOfBasicServiceController,
+    RegisterProductiveConsumptionOfBasicServiceController,
 )
-from workers_control.web.www.response import Redirect
 
 
-class RegisterPrivateConsumptionOfBasicServiceControllerTests(BaseTestCase):
+class RegisterProductiveConsumptionOfBasicServiceControllerTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.controller = self.injector.get(
-            RegisterPrivateConsumptionOfBasicServiceController
+            RegisterProductiveConsumptionOfBasicServiceController
         )
-        self.session.login_member(uuid4())
+        self.session.login_company(uuid4())
 
     def test_form_error_when_basic_service_id_and_amount_are_empty(self) -> None:
         result = self._process_form(basic_service_id="", amount="")
@@ -89,27 +88,27 @@ class RegisterPrivateConsumptionOfBasicServiceControllerTests(BaseTestCase):
     @parameterized.expand([("1",), ("1.5",), ("0.25",)])
     def test_decimal_amount_is_accepted_and_returned(self, amount: str) -> None:
         result = self._process_form(amount=amount)
-        assert isinstance(result, RegisterPrivateConsumptionOfBasicServiceRequest)
+        assert isinstance(
+            result, register_productive_consumption_of_basic_service.Request
+        )
         assert result.amount == Decimal(amount)
 
     def test_correct_basic_service_uuid_is_returned(self) -> None:
         bs_uuid = uuid4()
         result = self._process_form(basic_service_id=str(bs_uuid))
-        assert isinstance(result, RegisterPrivateConsumptionOfBasicServiceRequest)
+        assert isinstance(
+            result, register_productive_consumption_of_basic_service.Request
+        )
         assert result.basic_service == bs_uuid
 
     def test_consumer_from_session_is_returned(self) -> None:
         consumer = uuid4()
-        self.session.login_member(consumer)
+        self.session.login_company(consumer)
         result = self._process_form()
-        assert isinstance(result, RegisterPrivateConsumptionOfBasicServiceRequest)
+        assert isinstance(
+            result, register_productive_consumption_of_basic_service.Request
+        )
         assert result.consumer == consumer
-
-    def test_logged_out_user_is_redirected_to_member_login(self) -> None:
-        self.session.logout()
-        result = self._process_form()
-        assert isinstance(result, Redirect)
-        assert result.url == self.url_index.get_member_login_url()
 
     def _process_form(
         self,

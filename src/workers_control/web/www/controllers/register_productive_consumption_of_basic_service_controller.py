@@ -4,35 +4,32 @@ from dataclasses import dataclass
 from decimal import Decimal
 from uuid import UUID
 
-from workers_control.core.interactors.register_private_consumption_of_basic_service import (
-    RegisterPrivateConsumptionOfBasicServiceRequest,
+from workers_control.core.interactors import (
+    register_productive_consumption_of_basic_service,
 )
-from workers_control.web.forms import RegisterPrivateConsumptionOfBasicServiceForm
+from workers_control.web.forms import RegisterProductiveConsumptionOfBasicServiceForm
 from workers_control.web.request import Request
 from workers_control.web.session import Session
 from workers_control.web.translator import Translator
-from workers_control.web.url_index import UrlIndex
-from workers_control.web.www.controllers.register_private_consumption_of_basic_service_form_validator import (
-    RegisterPrivateConsumptionOfBasicServiceFormValidator as Validator,
+from workers_control.web.www.controllers.register_productive_consumption_of_basic_service_form_validator import (
+    RegisterProductiveConsumptionOfBasicServiceFormValidator as Validator,
 )
-from workers_control.web.www.response import Redirect
 
 
 @dataclass
 class FormError:
-    form: RegisterPrivateConsumptionOfBasicServiceForm
+    form: RegisterProductiveConsumptionOfBasicServiceForm
 
 
 ImportFormDataResult = (
-    RegisterPrivateConsumptionOfBasicServiceRequest | Redirect | FormError
+    register_productive_consumption_of_basic_service.Request | FormError
 )
 
 
 @dataclass
-class RegisterPrivateConsumptionOfBasicServiceController:
+class RegisterProductiveConsumptionOfBasicServiceController:
     translator: Translator
     session: Session
-    url_index: UrlIndex
     validator: Validator
 
     def import_form_data(self, request: Request) -> ImportFormDataResult:
@@ -58,15 +55,13 @@ class RegisterPrivateConsumptionOfBasicServiceController:
                 basic_service_id_errors=basic_service_id_errors,
                 amount_errors=amount_errors,
             )
-        match self.session.get_current_user():
-            case None:
-                return Redirect(url=self.url_index.get_member_login_url())
-            case UUID() as user_id:
-                return RegisterPrivateConsumptionOfBasicServiceRequest(
-                    consumer=user_id,
-                    basic_service=basic_service_id,
-                    amount=amount,
-                )
+        consumer = self.session.get_current_user()
+        assert consumer
+        return register_productive_consumption_of_basic_service.Request(
+            consumer=consumer,
+            basic_service=basic_service_id,
+            amount=amount,
+        )
 
     def create_form_error(
         self,
@@ -80,7 +75,7 @@ class RegisterPrivateConsumptionOfBasicServiceController:
         if amount_errors is None:
             amount_errors = []
         return FormError(
-            form=RegisterPrivateConsumptionOfBasicServiceForm(
+            form=RegisterProductiveConsumptionOfBasicServiceForm(
                 basic_service_id_value=request.get_form("basic_service_id") or "",
                 basic_service_id_errors=basic_service_id_errors,
                 amount_value=request.get_form("amount") or "",

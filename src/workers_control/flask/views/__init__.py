@@ -7,6 +7,9 @@ from .register_private_consumption import RegisterPrivateConsumptionView
 from .register_private_consumption_of_basic_service_view import (
     RegisterPrivateConsumptionOfBasicServiceView,
 )
+from .register_productive_consumption_of_basic_service_view import (
+    RegisterProductiveConsumptionOfBasicServiceView,
+)
 from .request_cooperation_view import RequestCooperationView
 
 __all__ = [
@@ -15,6 +18,7 @@ __all__ = [
     "InviteWorkerToCompanyView",
     "RegisterPrivateConsumptionView",
     "RegisterPrivateConsumptionOfBasicServiceView",
+    "RegisterProductiveConsumptionOfBasicServiceView",
     "QueryCompaniesView",
     "QueryOffersView",
     "RequestCooperationView",

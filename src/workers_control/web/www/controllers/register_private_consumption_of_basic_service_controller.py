@@ -23,7 +23,9 @@ class FormError:
     form: RegisterPrivateConsumptionOfBasicServiceForm
 
 
-ViewModel = RegisterPrivateConsumptionOfBasicServiceRequest | Redirect | FormError
+ImportFormDataResult = (
+    RegisterPrivateConsumptionOfBasicServiceRequest | Redirect | FormError
+)
 
 
 @dataclass
@@ -33,7 +35,7 @@ class RegisterPrivateConsumptionOfBasicServiceController:
     url_index: UrlIndex
     validator: Validator
 
-    def import_form_data(self, request: Request) -> ViewModel:
+    def import_form_data(self, request: Request) -> ImportFormDataResult:
         basic_service_id: UUID
         amount: Decimal
         basic_service_id_errors: list[str] = []

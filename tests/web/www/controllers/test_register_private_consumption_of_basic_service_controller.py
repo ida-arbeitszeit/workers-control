@@ -11,8 +11,8 @@ from workers_control.core.interactors.register_private_consumption_of_basic_serv
 )
 from workers_control.web.www.controllers.register_private_consumption_of_basic_service_controller import (
     FormError,
+    ImportFormDataResult,
     RegisterPrivateConsumptionOfBasicServiceController,
-    ViewModel,
 )
 from workers_control.web.www.response import Redirect
 
@@ -115,7 +115,7 @@ class RegisterPrivateConsumptionOfBasicServiceControllerTests(BaseTestCase):
         self,
         basic_service_id: Optional[str] = None,
         amount: Optional[str] = None,
-    ) -> ViewModel:
+    ) -> ImportFormDataResult:
         request = FakeRequest()
         if basic_service_id is None:
             request.set_form("basic_service_id", str(uuid4()))

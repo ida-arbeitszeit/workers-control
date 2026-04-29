@@ -160,6 +160,17 @@ class GeneralUrlIndex:
             type_of_consumption=type_string,
         )
 
+    def get_register_productive_consumption_of_basic_service_url(
+        self,
+        basic_service_id: Optional[UUID] = None,
+        amount: Optional[Decimal] = None,
+    ) -> str:
+        return url_for(
+            endpoint="main_company.register_productive_consumption_of_basic_service",
+            amount=amount,
+            basic_service_id=basic_service_id,
+        )
+
     def get_company_consumptions_url(self) -> str:
         return url_for(endpoint="main_company.my_consumptions")
 

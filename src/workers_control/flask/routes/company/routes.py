@@ -70,6 +70,9 @@ from workers_control.flask.views.register_hours_worked_view import (
 from workers_control.flask.views.register_productive_consumption import (
     RegisterProductiveConsumptionView,
 )
+from workers_control.flask.views.register_productive_consumption_of_basic_service_view import (
+    RegisterProductiveConsumptionOfBasicServiceView,
+)
 from workers_control.flask.views.remove_worker_from_company_view import (
     RemoveWorkerFromCompanyView,
 )
@@ -269,6 +272,15 @@ class registered_hours_worked(ListRegisteredHoursWorkedView): ...
 @CompanyRoute("/register_productive_consumption", methods=["GET", "POST"])
 @as_flask_view()
 class register_productive_consumption(RegisterProductiveConsumptionView): ...
+
+
+@CompanyRoute(
+    "/register_productive_consumption_of_basic_service", methods=["GET", "POST"]
+)
+@as_flask_view()
+class register_productive_consumption_of_basic_service(
+    RegisterProductiveConsumptionOfBasicServiceView
+): ...
 
 
 @CompanyRoute("/plan_details/<uuid:plan_id>")

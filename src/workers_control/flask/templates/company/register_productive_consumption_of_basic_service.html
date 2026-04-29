@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% from 'macros/navbar.html' import navbar %}
+
+{% block navbar_start %}
+{{ navbar(navbar_items) }}
+{% endblock %}
+
+{% block content %}
+<div class="section has-text-centered">
+    <div class="columns">
+        <div class="column"></div>
+        <div class="column is-6">
+            <h1 class="title">
+                {{ gettext("Register consumption") }}
+            </h1>
+            <br>
+            <div class="content">
+                {% if form.general_errors %}
+                <ul>
+                  {% for error in form.general_errors %}
+                  <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
+                <form method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="field">
+                        <label class="label">{{ gettext("Basic service ID") }}</label>
+                        <div class="control">
+                          <input
+                            class="input"
+                            id="basic_service_id"
+                            name="basic_service_id"
+                            placeholder="{{ gettext('Basic service ID') }}"
+                            type="text"
+                            value="{{ form.basic_service_id_value }}"
+                            {% if view_model and view_model.valid_basic_service_selected %}readonly{% endif %}
+                            required
+                            >
+                        </div>
+                        {% if form.basic_service_id_errors %}
+                        <ul>
+                          {% for error in form.basic_service_id_errors %}
+                          <li>{{ error }}</li>
+                          {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                    {% if view_model and view_model.valid_basic_service_selected %}
+                    <div class="notification is-info">
+                        <p>
+                            {{ gettext("Basic service ID") }}: {{ view_model.basic_service_id }}
+                        </p>
+                        <p>
+                            {{ gettext("Basic service name") }}: {{ view_model.basic_service_name }}
+                        </p>
+                        <p>
+                            {{ gettext("Basic service description") }}: {{ view_model.basic_service_description }}
+                        </p>
+                        <p>
+                            {{ gettext("Provider") }}: {{ view_model.provider_name }}
+                        </p>
+                    </div>
+                    {% endif %}
+                    <div class="field">
+                        <label class="label">{{ gettext("Amount") }}</label>
+                        <div class="control">
+                          <input
+                            class="input"
+                            id="amount"
+                            name="amount"
+                            placeholder="{{ gettext('Amount') }}"
+                            type="text"
+                            value="{{ form.amount_value }}"
+                            required
+                            >
+                        </div>
+                        <p class="help">{{ gettext("Number of hours of the service to be consumed.") }}</p>
+                        {% if form.amount_errors %}
+                        <ul>
+                          {% for error in form.amount_errors %}
+                          <li>{{ error }}</li>
+                          {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-primary" type="submit">{{ gettext("Register") }}</button>
+                            {% if view_model and view_model.valid_basic_service_selected %}
+                            <a class="button is-light" href="{{ url_for('main_user.query_offers') }}">{{ gettext("Cancel") }}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="column"></div>
+    </div>
+</div>
+
+{% endblock %}

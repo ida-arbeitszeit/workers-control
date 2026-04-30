@@ -17,6 +17,13 @@ class InteractorTests(BaseTestCase):
         )
         self.member = self.member_generator.create_member()
 
+    def test_that_member_name_is_shown(self):
+        expected_name = "Test Name"
+        member = self.member_generator.create_member(name=expected_name)
+        request = get_member_dashboard.Request(member=member)
+        member_info = self.interactor.get_member_dashboard(request)
+        assert member_info.name == expected_name
+
     def test_that_correct_workplace_id_is_shown(self):
         company = self.company_generator.create_company(
             workers=[self.member],

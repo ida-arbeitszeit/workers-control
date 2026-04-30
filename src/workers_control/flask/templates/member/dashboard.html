@@ -8,12 +8,6 @@
       <div class="column"></div>
       <div class="column is-one-third">
         <div class="box">
-          <p class="has-text-weight-semibold">{{ gettext("Your ID") }}:</p>
-          <p>{{ view_model.member_id }}</p>
-          <p class="has-text-weight-semibold">{{ gettext("Your email") }}:</p>
-          <p>{{ view_model.email }}</p>
-          <p class="has-text-weight-semibold">{{ gettext("Your credit") }}:</p>
-          <p>{{ view_model.account_balance }}</p>
           <p class="has-text-weight-semibold">{{ gettext("Your workplaces") }}:</p>
           {% if view_model.show_workplaces %}
           <ul>

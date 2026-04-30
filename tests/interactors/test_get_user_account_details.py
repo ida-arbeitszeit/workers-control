@@ -54,6 +54,32 @@ class GetUserAccountDetailsTests(BaseTestCase):
         assert response.user_info
         assert response.user_info.id == accountant
 
+    def test_that_returned_user_name_is_equal_to_member_name_requested(self) -> None:
+        member_name = "Test Member"
+        member = self.member_generator.create_member(name=member_name)
+        request = get_user_account_details.Request(user_id=member)
+        response = self.interactor.get_user_account_details(request)
+        assert response.user_info
+        assert response.user_info.name == member_name
+
+    def test_that_returned_user_name_is_equal_to_company_name_requested(self) -> None:
+        company_name = "Test Company"
+        company = self.company_generator.create_company(name=company_name)
+        request = get_user_account_details.Request(user_id=company)
+        response = self.interactor.get_user_account_details(request)
+        assert response.user_info
+        assert response.user_info.name == company_name
+
+    def test_that_returned_user_name_is_equal_to_accountant_name_requested(
+        self,
+    ) -> None:
+        accountant_name = "Test Accountant"
+        accountant = self.accountant_generator.create_accountant(name=accountant_name)
+        request = get_user_account_details.Request(user_id=accountant)
+        response = self.interactor.get_user_account_details(request)
+        assert response.user_info
+        assert response.user_info.name == accountant_name
+
     def test_that_users_email_address_is_shown(self) -> None:
         for expected_email_address in [
             "testmail@test.test",

@@ -8,6 +8,7 @@ from workers_control.web.url_index import UrlIndex
 @dataclass
 class ViewModel:
     user_id: str
+    user_name: str
     email_address: str
     current_user_time: str
     request_email_address_change_url: str
@@ -22,6 +23,7 @@ class UserAccountDetailsPresenter:
         assert response.user_info
         return ViewModel(
             user_id=str(response.user_info.id),
+            user_name=response.user_info.name,
             email_address=response.user_info.email_address,
             current_user_time=self.datetime_formatter.format_datetime(
                 response.user_info.current_time, fmt="%Y-%m-%d %H:%M:%S %z (%Z)"

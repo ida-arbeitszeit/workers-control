@@ -280,6 +280,9 @@ class Accountant:
     id: UUID
     name: str
 
+    def get_name(self) -> str:
+        return self.name
+
 
 @dataclass
 class PlanningStatistics:

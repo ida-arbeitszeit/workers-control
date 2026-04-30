@@ -20,10 +20,7 @@ class GetCompanyDashboardPresenter:
 
     @dataclass
     class ViewModel:
-        has_workers: bool
         company_name: str
-        company_id: str
-        company_email: str
         accounts_tile: GetCompanyDashboardPresenter.Tile
 
     url_index: UrlIndex
@@ -33,10 +30,7 @@ class GetCompanyDashboardPresenter:
         self, interactor_response: GetCompanyDashboardInteractor.Response
     ) -> ViewModel:
         return self.ViewModel(
-            has_workers=interactor_response.has_workers,
             company_name=interactor_response.company_info.name,
-            company_id=str(interactor_response.company_info.id),
-            company_email=interactor_response.company_info.email,
             accounts_tile=self._create_accounts_tile(interactor_response),
         )
 

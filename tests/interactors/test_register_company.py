@@ -1,10 +1,8 @@
 from uuid import UUID
 
 from workers_control.core import email_notifications
+from workers_control.core.interactors import get_user_account_details
 from workers_control.core.interactors.confirm_member import ConfirmMemberInteractor
-from workers_control.core.interactors.get_company_dashboard import (
-    GetCompanyDashboardInteractor,
-)
 from workers_control.core.interactors.register_company import RegisterCompany
 
 from .base_test_case import BaseTestCase
@@ -14,8 +12,8 @@ class RegisterCompanyTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.interactor = self.injector.get(RegisterCompany)
-        self.get_company_dashboard_interactor = self.injector.get(
-            GetCompanyDashboardInteractor
+        self.get_user_account_details_interactor = self.injector.get(
+            get_user_account_details.GetUserAccountDetailsInteractor
         )
         self.confirm_member_interactor = self.injector.get(ConfirmMemberInteractor)
 
@@ -51,7 +49,7 @@ class RegisterCompanyTests(BaseTestCase):
         assert response.company_id
         company_info = self._get_company_info(response.company_id)
         assert company_info.name == expected_name
-        assert company_info.email == expected_email
+        assert company_info.email_address == expected_email
 
     def test_that_company_registration_with_preexisting_member_email_address_is_rejected_when_provided_password_does_not_match_member_password(
         self,
@@ -120,11 +118,12 @@ class RegisterCompanyTests(BaseTestCase):
             password=password,
         )
 
-    def _get_company_info(
-        self, company: UUID
-    ) -> GetCompanyDashboardInteractor.Response.CompanyInfo:
-        response = self.get_company_dashboard_interactor.get_dashboard(company)
-        return response.company_info
+    def _get_company_info(self, company: UUID) -> get_user_account_details.UserInfo:
+        response = self.get_user_account_details_interactor.get_user_account_details(
+            request=get_user_account_details.Request(user_id=company)
+        )
+        assert response.user_info
+        return response.user_info
 
     def _assert_company_received_registration_message(self, email: str) -> None:
         for mail in self.delivered_registration_mails():

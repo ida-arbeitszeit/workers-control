@@ -1,9 +1,6 @@
 from workers_control.core import email_notifications
-from workers_control.core.interactors import get_member_dashboard
+from workers_control.core.interactors import get_user_account_details
 from workers_control.core.interactors.confirm_company import ConfirmCompanyInteractor
-from workers_control.core.interactors.get_member_dashboard import (
-    GetMemberDashboardInteractor,
-)
 from workers_control.core.interactors.log_in_member import LogInMemberInteractor
 from workers_control.core.interactors.register_member import RegisterMemberInteractor
 
@@ -21,10 +18,10 @@ class RegisterMemberTests(BaseTestCase):
         super().setUp()
         self.interactor = self.injector.get(RegisterMemberInteractor)
         self.login_interactor = self.injector.get(LogInMemberInteractor)
-        self.get_member_dashboard_interactor = self.injector.get(
-            GetMemberDashboardInteractor
-        )
         self.confirm_company_interactor = self.injector.get(ConfirmCompanyInteractor)
+        self.get_user_account_details_interactor = self.injector.get(
+            get_user_account_details.GetUserAccountDetailsInteractor
+        )
 
     def test_that_a_token_is_sent_out_when_a_member_registers(self) -> None:
         self.interactor.register_member(RegisterMemberInteractor.Request(**DEFAULT))
@@ -60,12 +57,15 @@ class RegisterMemberTests(BaseTestCase):
         request = RegisterMemberInteractor.Request(**DEFAULT)
         response = self.interactor.register_member(request)
         assert response.user_id
-        dashboard_request = get_member_dashboard.Request(member=response.user_id)
-        dashboard_response = self.get_member_dashboard_interactor.get_member_dashboard(
-            dashboard_request
+        info_request = get_user_account_details.Request(user_id=response.user_id)
+        info_response = (
+            self.get_user_account_details_interactor.get_user_account_details(
+                info_request
+            )
         )
-        assert dashboard_response.email == DEFAULT["email"]
-        assert dashboard_response.name == DEFAULT["name"]
+        assert info_response.user_info
+        assert info_response.user_info.email_address == DEFAULT["email"]
+        assert info_response.user_info.name == DEFAULT["name"]
 
     def test_that_correct_error_is_raised_when_user_with_mail_exists(self) -> None:
         self.member_generator.create_member(email="test@cp.org")

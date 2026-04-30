@@ -20,9 +20,6 @@ class Invite:
 
 @dataclass
 class GetMemberDashboardViewModel:
-    member_id: str
-    account_balance: str
-    email: str
     workplaces: List[Workplace]
     show_workplaces: bool
     show_workplace_registration_info: bool
@@ -43,11 +40,6 @@ class GetMemberDashboardPresenter:
             self._get_invites_web(invite) for invite in interactor_response.invites
         ]
         return GetMemberDashboardViewModel(
-            member_id=str(interactor_response.id),
-            account_balance=self.translator.gettext(
-                "%(num).2f hours" % dict(num=interactor_response.account_balance)
-            ),
-            email=interactor_response.email,
             workplaces=[
                 Workplace(
                     name=workplace.workplace_name,

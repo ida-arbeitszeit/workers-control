@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from decimal import Decimal
 from typing import List
 from uuid import UUID
 
@@ -29,10 +28,7 @@ class WorkInvitation:
 class Response:
     workplaces: List[Workplace]
     invites: List[WorkInvitation]
-    account_balance: Decimal
     name: str
-    email: str
-    id: UUID
 
 
 @dataclass
@@ -40,32 +36,13 @@ class GetMemberDashboardInteractor:
     database_gateway: DatabaseGateway
 
     def get_member_dashboard(self, request: Request) -> Response:
-        record = (
-            self.database_gateway.get_members()
-            .with_id(request.member)
-            .joined_with_email_address()
-            .first()
-        )
-        assert record
-        _member, email = record
+        member = self.database_gateway.get_members().with_id(request.member).first()
+        assert member
         return Response(
             workplaces=self._get_workplaces(request.member),
             invites=self._get_invites(request.member),
-            account_balance=self._get_account_balance(request.member),
-            name=_member.name,
-            email=email.address,
-            id=_member.id,
+            name=member.name,
         )
-
-    def _get_account_balance(self, member: UUID) -> Decimal:
-        result = (
-            self.database_gateway.get_accounts()
-            .owned_by_member(member)
-            .joined_with_balance()
-            .first()
-        )
-        assert result
-        return result[1]
 
     def _get_workplaces(self, member: UUID) -> List[Workplace]:
         return [

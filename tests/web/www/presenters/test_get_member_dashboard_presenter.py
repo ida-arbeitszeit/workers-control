@@ -1,4 +1,3 @@
-from decimal import Decimal
 from typing import List, Optional
 from uuid import UUID, uuid4
 
@@ -86,14 +85,6 @@ class GetMemberDashboardPresenterTests(BaseTestCase):
         presentation = self.presenter.present(response)
         self.assertFalse(presentation.show_workplace_registration_info)
 
-    def test_that_account_balance_shows_only_two_digits_after_comma(self):
-        response = self.get_response(account_balance=Decimal(1.3333333))
-        presentation = self.presenter.present(response)
-        self.assertEqual(
-            presentation.account_balance,
-            self.translator.gettext("%.2f hours") % response.account_balance,
-        )
-
     def test_invites_is_empty_when_no_invites_exist(self):
         response = self.get_response()
         presentation = self.presenter.present(response)
@@ -148,20 +139,14 @@ class GetMemberDashboardPresenterTests(BaseTestCase):
     def get_response(
         self,
         workplaces: Optional[List[get_member_dashboard.Workplace]] = None,
-        account_balance: Optional[Decimal] = None,
         invites: Optional[List[get_member_dashboard.WorkInvitation]] = None,
     ) -> get_member_dashboard.Response:
         if workplaces is None:
             workplaces = []
-        if account_balance is None:
-            account_balance = Decimal(0)
         if invites is None:
             invites = []
         return get_member_dashboard.Response(
             workplaces=workplaces,
             invites=invites,
-            account_balance=account_balance,
             name="worker",
-            email="worker@cp.org",
-            id=uuid4(),
         )

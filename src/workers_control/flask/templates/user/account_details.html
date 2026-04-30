@@ -1,23 +1,34 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="section has-text-centered">
-  <h1 class="title">{{ gettext('User Account Data') }}</h1>
-  <div>
-    <p>
-      {{ gettext("Account ID:") }} {{ view_model.user_id}}
-    </p>
-    <p>
-      {{ gettext("Email address:") }} {{ view_model.email_address }}
-    </p>
-    <p>
-      <a href="{{ view_model.request_email_address_change_url }}">
-        {{ gettext("Change email address") }}
-      </a>
-    </p>
-    <p>
-      {{ gettext("Current time:") }} {{ view_model.current_user_time }}
-    </p>
+<div class="section">
+  <h1 class="title has-text-centered">{{ gettext('User Account Data') }}</h1>
+  <div class="table-container is-flex is-justify-content-center">
+    <table class="table is-bordered is-striped is-narrow">
+      <tbody>
+        <tr>
+          <th>{{ gettext("Name:") }}</th>
+          <td>{{ view_model.user_name }}</td>
+        </tr>
+        <tr>
+          <th>{{ gettext("Email address:") }}</th>
+          <td>
+            {{ view_model.email_address }}
+            <a href="{{ view_model.request_email_address_change_url }}" class="ml-2">
+              {{ gettext("Change email address") }}
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <th>{{ gettext("Current time:") }}</th>
+          <td>{{ view_model.current_user_time }}</td>
+        </tr>
+        <tr>
+          <th>{{ gettext("Account ID:") }}</th>
+          <td>{{ view_model.user_id }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 {% endblock %}

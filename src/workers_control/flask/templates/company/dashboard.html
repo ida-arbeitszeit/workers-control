@@ -5,29 +5,6 @@
 <div class="section">
   <div class="has-text-centered pb-5">
     <h1 class="title is-2">{{ gettext("Welcome, %(name)s!", name= view_model.company_name) }}</h1>
-    <div class="columns">
-      <div class="column"></div>
-      <div class="column is-one-third">
-        <div class="box">
-          <p class="has-text-weight-semibold">{{ gettext("Your ID") }}:</p>
-          <p>{{ view_model.company_id }}</p>
-          <p class="has-text-weight-semibold">{{ gettext("Your email") }}:</p>
-          <p>{{ view_model.company_email }}</p>
-          <div class="content">
-            {% if not view_model.has_workers %}
-            <div class="block pt-3">
-              <span class="icon">{{ "exclamation-triangle"|icon }}</span><br>
-              <a href="{{ url_for('main_company.invite_worker_to_company') }}">
-                {{ gettext("No workers are registered with your company. Click here to add some.")
-                }}
-              </a>
-            </div>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-      <div class="column"></div>
-    </div>
 
     <div class="has-text-centered py-5">
       <h1 class="title is-3">{{ gettext("Company accounting") }}</h1>

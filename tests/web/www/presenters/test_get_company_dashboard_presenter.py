@@ -17,16 +17,14 @@ class CompanyDashboardBaseTestCase(BaseTestCase):
 
     def get_interactor_response(
         self,
-        has_workers: bool = False,
         company_info: Optional[Interactor.Response.CompanyInfo] = None,
     ) -> Interactor.Response:
         if company_info is None:
             company_info = Interactor.Response.CompanyInfo(
-                id=uuid4(), name="company name", email="mail@test.de"
+                id=uuid4(), name="company name"
             )
         return Interactor.Response(
             company_info=company_info,
-            has_workers=has_workers,
         )
 
 
@@ -34,42 +32,15 @@ class CompanyDashboardPresenterTests(CompanyDashboardBaseTestCase):
     def test_presenter_successfully_presents_a_interactor_response(self):
         self.assertTrue(self.presenter.present(self.get_interactor_response()))
 
-    def test_presenter_correctly_shows_that_company_has_no_workers(self):
-        has_workers = self.presenter.present(
-            self.get_interactor_response(has_workers=False)
-        ).has_workers
-        self.assertFalse(has_workers)
-
     def test_presenter_correctly_shows_company_name(self):
         view_model = self.presenter.present(
             self.get_interactor_response(
                 company_info=Interactor.Response.CompanyInfo(
-                    id=uuid4(), name="company test name", email="mail@test.de"
+                    id=uuid4(), name="company test name"
                 )
             )
         )
         self.assertEqual(view_model.company_name, "company test name")
-
-    def test_presenter_correctly_shows_company_id(self):
-        company_id = uuid4()
-        view_model = self.presenter.present(
-            self.get_interactor_response(
-                company_info=Interactor.Response.CompanyInfo(
-                    id=company_id, name="company test name", email="mail@test.de"
-                )
-            )
-        )
-        self.assertEqual(view_model.company_id, str(company_id))
-
-    def test_presenter_correctly_shows_company_email(self):
-        view_model = self.presenter.present(
-            self.get_interactor_response(
-                company_info=Interactor.Response.CompanyInfo(
-                    id=uuid4(), name="company test name", email="mail@test.de"
-                )
-            )
-        )
-        self.assertEqual(view_model.company_email, "mail@test.de")
 
 
 class CompanyDashboardTileTests(CompanyDashboardBaseTestCase):
@@ -99,7 +70,6 @@ class CompanyDashboardTileTests(CompanyDashboardBaseTestCase):
                 company_info=Interactor.Response.CompanyInfo(
                     id=expected_company_id,
                     name="company test name",
-                    email="mail@test.de",
                 )
             )
         )

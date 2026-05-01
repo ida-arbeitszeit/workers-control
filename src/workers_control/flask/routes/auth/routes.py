@@ -20,7 +20,6 @@ from workers_control.core.interactors.log_in_member import LogInMemberInteractor
 from workers_control.core.interactors.resend_confirmation_mail import (
     ResendConfirmationMailInteractor,
 )
-from workers_control.core.interactors.start_page import StartPageInteractor
 from workers_control.db import commit_changes
 from workers_control.flask.class_based_view import as_flask_view
 from workers_control.flask.dependency_injection import with_injection
@@ -56,20 +55,13 @@ from workers_control.web.www.presenters.log_in_company_presenter import (
 from workers_control.web.www.presenters.log_in_member_presenter import (
     LogInMemberPresenter,
 )
-from workers_control.web.www.presenters.start_page_presenter import StartPagePresenter
 
 auth = Blueprint("auth", __name__)
 
 
 @auth.route("/")
-@with_injection()
-def start(
-    start_page: StartPageInteractor,
-    start_page_presenter: StartPagePresenter,
-):
-    response = start_page.show_start_page()
-    view_model = start_page_presenter.show_start_page(response)
-    return render_template("auth/start.html", view_model=view_model)
+def start():
+    return render_template("auth/start.html")
 
 
 @auth.route("/help")

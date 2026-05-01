@@ -29,6 +29,20 @@ class AuthTests(ViewTestCase):
         )
 
 
+class CompanyWithConsumptionsTests(ViewTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.url = "/company/consumptions"
+
+    def test_logged_in_company_gets_200_after_consuming_a_basic_service(self) -> None:
+        company = self.login_company()
+        self.consumption_generator.create_productive_consumption_of_basic_service(
+            consumer=company
+        )
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+
 class UnconfirmedCompanyTests(ViewTestCase):
     def setUp(self) -> None:
         super().setUp()

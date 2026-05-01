@@ -530,7 +530,7 @@ class BasicServiceRowTests(BaseTestCase):
         self.assertTrue(presentation.results.rows[0].show_consumption_icon)
         self.assertFalse(presentation.results.rows[0].is_consumption_disabled)
 
-    def test_basic_service_consumption_url_links_to_register_view_for_member(
+    def test_basic_service_consumption_url_links_to_consumption_view_for_member(
         self,
     ) -> None:
         bs_id = uuid4()
@@ -545,12 +545,30 @@ class BasicServiceRowTests(BaseTestCase):
             ),
         )
 
-    def test_basic_service_consumption_icon_is_disabled_for_company(self) -> None:
+    def test_basic_service_consumption_icon_is_shown_and_enabled_for_company(
+        self,
+    ) -> None:
         self.session.login_company(uuid4())
         response = self.generator.get_response([self.generator.get_basic_service()])
         presentation = self.presenter.present(response)
-        self.assertTrue(presentation.results.rows[0].is_consumption_disabled)
-        self.assertEqual(presentation.results.rows[0].consumption_url, "")
+        self.assertTrue(presentation.results.rows[0].show_consumption_icon)
+        self.assertFalse(presentation.results.rows[0].is_consumption_disabled)
+
+    def test_basic_service_consumption_url_links_to_consumption_view_for_company(
+        self,
+    ) -> None:
+        self.session.login_company(uuid4())
+        bs_id = uuid4()
+        response = self.generator.get_response(
+            [self.generator.get_basic_service(basic_service_id=bs_id)]
+        )
+        presentation = self.presenter.present(response)
+        self.assertEqual(
+            presentation.results.rows[0].consumption_url,
+            self.url_index.get_register_productive_consumption_of_basic_service_url(
+                basic_service_id=bs_id
+            ),
+        )
 
     def test_basic_service_consumption_icon_is_disabled_for_providing_member(
         self,

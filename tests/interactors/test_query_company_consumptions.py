@@ -16,7 +16,7 @@ class InteractorTests(BaseTestCase):
         self,
     ) -> None:
         company = self.company_generator.create_company()
-        results = list(self.interactor.execute(company))
+        results = self.interactor.execute(company).consumptions
         assert not results
 
     def test_that_consumption_with_specified_plan_is_queried_after_consumption_for_this_plan_was_done(
@@ -27,7 +27,7 @@ class InteractorTests(BaseTestCase):
         self.consumption_generator.create_resource_consumption_by_company(
             consumer=company, plan=plan
         )
-        results = list(self.interactor.execute(company))
+        results = self.interactor.execute(company).consumptions
         assert len(results) == 1
         latest_consumption = results[0]
         assert latest_consumption.plan_id == plan
@@ -46,6 +46,49 @@ class InteractorTests(BaseTestCase):
         self.consumption_generator.create_resource_consumption_by_company(
             consumer=company, plan=second_plan
         )
-        results = list(self.interactor.execute(company))
+        results = self.interactor.execute(company).consumptions
         assert results[0].plan_id == second_plan
         assert results[1].plan_id == first_plan
+
+    def test_basic_service_consumption_is_returned(self) -> None:
+        company = self.company_generator.create_company()
+        self.consumption_generator.create_productive_consumption_of_basic_service(
+            consumer=company
+        )
+        results = self.interactor.execute(company).consumptions
+        assert len(results) == 1
+
+    def test_basic_service_and_plan_consumptions_are_both_returned(self) -> None:
+        company = self.company_generator.create_company()
+        self.consumption_generator.create_resource_consumption_by_company(
+            consumer=company
+        )
+        self.consumption_generator.create_productive_consumption_of_basic_service(
+            consumer=company
+        )
+        results = self.interactor.execute(company).consumptions
+        assert len(results) == 2
+
+    def test_basic_service_consumption_is_returned_with_no_plan_id(self) -> None:
+        company = self.company_generator.create_company()
+        self.consumption_generator.create_productive_consumption_of_basic_service(
+            consumer=company
+        )
+        results = self.interactor.execute(company).consumptions
+        assert results[0].plan_id is None
+
+    def test_basic_service_consumption_is_returned_after_more_recent_plan_consumption(
+        self,
+    ) -> None:
+        self.datetime_service.freeze_time(datetime_utc(2000, 1, 1))
+        company = self.company_generator.create_company()
+        self.consumption_generator.create_productive_consumption_of_basic_service(
+            consumer=company
+        )
+        self.datetime_service.advance_time(timedelta(days=1))
+        self.consumption_generator.create_resource_consumption_by_company(
+            consumer=company
+        )
+        results = self.interactor.execute(company).consumptions
+        assert results[0].plan_id is not None
+        assert results[1].plan_id is None

@@ -82,37 +82,60 @@ class QueryOffersPresenter:
         user_role: Optional[UserRole],
         current_user: Optional[UUID],
     ) -> ResultTableRow:
-        description = "".join(result.description.splitlines())[:150]
-        show_consumption_icon = user_role in (UserRole.member, UserRole.company)
         if result.is_basic_service:
-            is_own_basic_service = (
-                user_role == UserRole.member and current_user == result.provider_id
-            )
-            if user_role == UserRole.member and not is_own_basic_service:
-                bs_consumption_url = self.url_index.get_register_private_consumption_of_basic_service_url(
+            return self._build_basic_service_row(result, user_role, current_user)
+        return self._build_plan_row(result, user_role, current_user)
+
+    def _build_basic_service_row(
+        self,
+        result: QueriedOffer,
+        user_role: Optional[UserRole],
+        current_user: Optional[UUID],
+    ) -> ResultTableRow:
+        is_own_basic_service = (
+            user_role == UserRole.member and current_user == result.provider_id
+        )
+        if user_role == UserRole.member and not is_own_basic_service:
+            consumption_url = (
+                self.url_index.get_register_private_consumption_of_basic_service_url(
                     basic_service_id=result.id
                 )
-                bs_consumption_disabled = False
-            else:
-                bs_consumption_url = ""
-                bs_consumption_disabled = True
-            return ResultTableRow(
-                offer_details_url=self.url_index.get_basic_service_url(result.id),
-                provider_url="",
-                provider_name=result.provider_name,
-                name=result.name,
-                description=description,
-                price_per_unit="",
-                is_basic_service=True,
-                is_public_service=False,
-                is_cooperating=False,
-                is_expired=False,
-                is_own_plan=False,
-                is_own_basic_service=is_own_basic_service,
-                show_consumption_icon=show_consumption_icon,
-                is_consumption_disabled=bs_consumption_disabled,
-                consumption_url=bs_consumption_url,
             )
+            is_consumption_disabled = False
+        elif user_role == UserRole.company:
+            consumption_url = (
+                self.url_index.get_register_productive_consumption_of_basic_service_url(
+                    basic_service_id=result.id
+                )
+            )
+            is_consumption_disabled = False
+        else:
+            consumption_url = ""
+            is_consumption_disabled = True
+        return ResultTableRow(
+            offer_details_url=self.url_index.get_basic_service_url(result.id),
+            provider_url="",
+            provider_name=result.provider_name,
+            name=result.name,
+            description=self._format_description(result.description),
+            price_per_unit="",
+            is_basic_service=True,
+            is_public_service=False,
+            is_cooperating=False,
+            is_expired=False,
+            is_own_plan=False,
+            is_own_basic_service=is_own_basic_service,
+            show_consumption_icon=user_role in (UserRole.member, UserRole.company),
+            is_consumption_disabled=is_consumption_disabled,
+            consumption_url=consumption_url,
+        )
+
+    def _build_plan_row(
+        self,
+        result: QueriedOffer,
+        user_role: Optional[UserRole],
+        current_user: Optional[UUID],
+    ) -> ResultTableRow:
         is_own_plan = (
             user_role == UserRole.company and current_user == result.provider_id
         )
@@ -134,7 +157,7 @@ class QueryOffersPresenter:
             ),
             provider_name=result.provider_name,
             name=result.name,
-            description=description,
+            description=self._format_description(result.description),
             price_per_unit=str(round(result.price_per_unit, 2)),
             is_basic_service=False,
             is_public_service=result.is_public_service,
@@ -142,10 +165,14 @@ class QueryOffersPresenter:
             is_expired=result.is_expired,
             is_own_plan=is_own_plan,
             is_own_basic_service=False,
-            show_consumption_icon=show_consumption_icon,
+            show_consumption_icon=user_role in (UserRole.member, UserRole.company),
             is_consumption_disabled=result.is_expired or is_own_plan,
             consumption_url=consumption_url,
         )
+
+    @staticmethod
+    def _format_description(description: str) -> str:
+        return "".join(description.splitlines())[:150]
 
     def _create_pagination(self, response: OfferQueryResponse) -> Pagination:
         paginator = Paginator(

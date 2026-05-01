@@ -13,7 +13,11 @@ from uuid import UUID, uuid4
 
 from tests.datetime_service import FakeDatetimeService
 from workers_control.core import records
-from workers_control.core.interactors import confirm_member, get_coop_summary
+from workers_control.core.interactors import (
+    confirm_member,
+    get_coop_summary,
+    register_productive_consumption_of_basic_service,
+)
 from workers_control.core.interactors.accept_cooperation import (
     AcceptCooperationInteractor,
     AcceptCooperationRequest,
@@ -365,6 +369,9 @@ class ConsumptionGenerator:
     register_basic_service_interactor: (
         RegisterPrivateConsumptionOfBasicServiceInteractor
     )
+    register_productive_basic_service_interactor: (
+        register_productive_consumption_of_basic_service.RegisterProductiveConsumptionOfBasicServiceInteractor
+    )
 
     def create_resource_consumption_by_company(
         self,
@@ -457,6 +464,25 @@ class ConsumptionGenerator:
             amount=amount, basic_service=basic_service, consumer=consumer
         )
         response = self.register_basic_service_interactor.execute(request)
+        if not response.is_accepted:
+            assert response.rejection_reason
+            raise response.rejection_reason
+        return response
+
+    def create_productive_consumption_of_basic_service(
+        self,
+        consumer: Optional[UUID] = None,
+        amount: Decimal = Decimal(1),
+        basic_service: Optional[UUID] = None,
+    ) -> register_productive_consumption_of_basic_service.Response:
+        if consumer is None:
+            consumer = self.company_generator.create_company()
+        if basic_service is None:
+            basic_service = self.basic_service_generator.create_basic_service()
+        request = register_productive_consumption_of_basic_service.Request(
+            amount=amount, basic_service=basic_service, consumer=consumer
+        )
+        response = self.register_productive_basic_service_interactor.execute(request)
         if not response.is_accepted:
             assert response.rejection_reason
             raise response.rejection_reason

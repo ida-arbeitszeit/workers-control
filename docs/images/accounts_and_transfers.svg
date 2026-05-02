@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.2" width="158mm" height="825mm" viewBox="0 0 15800 82500" preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" xmlns:ooo="http://xml.openoffice.org/svg/export" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:presentation="http://sun.com/xmlns/staroffice/presentation" xmlns:smil="http://www.w3.org/2001/SMIL20/" xmlns:anim="urn:oasis:names:tc:opendocument:xmlns:animation:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xml:space="preserve">
+<svg version="1.2" width="158mm" height="865mm" viewBox="0 0 15800 86500" preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" xmlns:ooo="http://xml.openoffice.org/svg/export" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:presentation="http://sun.com/xmlns/staroffice/presentation" xmlns:smil="http://www.w3.org/2001/SMIL20/" xmlns:anim="urn:oasis:names:tc:opendocument:xmlns:animation:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xml:space="preserve">
  <defs class="ClipPathGroup">
   <clipPath id="presentation_clip_path" clipPathUnits="userSpaceOnUse">
-   <rect x="0" y="0" width="15800" height="82500"/>
+   <rect x="0" y="0" width="15800" height="86500"/>
   </clipPath>
   <clipPath id="presentation_clip_path_shrink" clipPathUnits="userSpaceOnUse">
-   <rect x="15" y="82" width="15769" height="82335"/>
+   <rect x="15" y="86" width="15769" height="86327"/>
   </clipPath>
  </defs>
  <defs>
   <font id="EmbeddedFont_1" horiz-adv-x="2048">
    <font-face font-family="Liberation Sans embedded" units-per-em="2048" font-weight="normal" font-style="normal" ascent="1852" descent="423"/>
    <missing-glyph horiz-adv-x="2048" d="M 0,0 L 2047,0 2047,2047 0,2047 0,0 Z"/>
-   <glyph unicode="–" horiz-adv-x="1134" d="M 0,451 L 0,588 1138,588 1138,451 0,451 Z"/>
+   <glyph unicode="×" horiz-adv-x="910" d="M 142,330 L 496,684 144,1036 248,1139 598,786 948,1137 1053,1032 703,684 1055,332 953,227 600,580 244,225 142,330 Z"/>
    <glyph unicode="y" horiz-adv-x="1012" d="M 191,-425 C 142,-425 100,-421 67,-414 L 67,-279 C 92,-283 120,-285 151,-285 263,-285 352,-203 417,-38 L 434,5 5,1082 197,1082 425,484 C 428,475 432,464 437,451 442,438 457,394 482,320 507,246 521,205 523,196 L 593,393 830,1082 1020,1082 604,0 C 559,-115 518,-201 479,-258 440,-314 398,-356 351,-384 304,-411 250,-425 191,-425 Z"/>
    <glyph unicode="x" horiz-adv-x="976" d="M 801,0 L 510,444 217,0 23,0 408,556 41,1082 240,1082 510,661 778,1082 979,1082 612,558 1002,0 801,0 Z"/>
    <glyph unicode="w" horiz-adv-x="1481" d="M 1174,0 L 965,0 776,765 740,934 C 734,904 725,861 712,805 699,748 631,480 508,0 L 300,0 -3,1082 175,1082 358,347 C 363,331 377,265 401,149 L 418,223 644,1082 837,1082 1026,339 1072,149 1103,288 1308,1082 1484,1082 1174,0 Z"/>
@@ -52,7 +52,6 @@
    <glyph unicode="A" horiz-adv-x="1353" d="M 1167,0 L 1006,412 364,412 202,0 4,0 579,1409 796,1409 1362,0 1167,0 Z M 685,1265 L 676,1237 C 659,1182 635,1111 602,1024 L 422,561 949,561 768,1026 C 749,1072 731,1124 712,1182 L 685,1265 Z"/>
    <glyph unicode="1" horiz-adv-x="880" d="M 156,0 L 156,153 515,153 515,1237 197,1010 197,1180 530,1409 696,1409 696,153 1039,153 1039,0 156,0 Z"/>
    <glyph unicode="-" horiz-adv-x="499" d="M 91,464 L 91,624 591,624 591,464 91,464 Z"/>
-   <glyph unicode="*" horiz-adv-x="731" d="M 456,1114 L 720,1217 765,1085 483,1012 668,762 549,690 399,948 243,692 124,764 313,1012 33,1085 78,1219 345,1112 333,1409 469,1409 456,1114 Z"/>
    <glyph unicode=")" horiz-adv-x="543" d="M 555,528 C 555,335 525,162 465,9 404,-144 311,-289 186,-424 L 12,-424 C 137,-284 229,-136 287,19 345,174 374,344 374,530 374,716 345,887 287,1042 228,1197 137,1345 12,1484 L 186,1484 C 312,1348 405,1203 465,1050 525,896 555,723 555,532 L 555,528 Z"/>
    <glyph unicode="(" horiz-adv-x="542" d="M 127,532 C 127,725 157,898 218,1051 278,1204 371,1349 496,1484 L 670,1484 C 545,1345 454,1198 396,1042 337,886 308,715 308,530 308,345 337,175 395,20 452,-135 544,-283 670,-424 L 496,-424 C 370,-288 277,-143 217,11 157,164 127,337 127,528 L 127,532 Z"/>
    <glyph unicode=" " horiz-adv-x="556"/>
@@ -88,7 +87,7 @@
   </font>
  </defs>
  <defs class="TextShapeIndex">
-  <g ooo:slide="id1" ooo:id-list="id3 id4 id5 id6 id7 id8 id9 id10 id11 id12 id13 id14 id15 id16 id17 id18 id19 id20 id21 id22 id23 id24 id25 id26 id27 id28 id29 id30 id31 id32 id33 id34 id35 id36 id37 id38 id39 id40 id41 id42 id43 id44 id45 id46 id47 id48 id49 id50 id51 id52 id53 id54 id55 id56 id57 id58 id59 id60 id61 id62 id63 id64 id65 id66 id67 id68 id69 id70 id71 id72 id73 id74 id75 id76 id77 id78 id79 id80 id81 id82 id83 id84 id85 id86"/>
+  <g ooo:slide="id1" ooo:id-list="id3 id4 id5 id6 id7 id8 id9 id10 id11 id12 id13 id14 id15 id16 id17 id18 id19 id20 id21 id22 id23 id24 id25 id26 id27 id28 id29 id30 id31 id32 id33 id34 id35 id36 id37 id38 id39 id40 id41 id42 id43 id44 id45 id46 id47 id48 id49 id50 id51 id52 id53 id54 id55 id56 id57 id58 id59 id60 id61 id62 id63 id64 id65 id66 id67 id68 id69 id70 id71 id72 id73 id74 id75 id76 id77 id78 id79 id80 id81 id82 id83 id84 id85 id86 id87 id88 id89 id90 id91 id92"/>
  </defs>
  <defs class="EmbeddedBulletChars">
   <g id="bullet-char-template-57356" transform="scale(0.00048828125,-0.00048828125)">
@@ -135,640 +134,688 @@
      <g class="Page">
       <g class="TextShape">
        <g id="id3">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1332" y="15293" width="6502" height="807"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1582" y="15867"><tspan font-family="Liberation Sans, sans-serif" font-size="494px" font-weight="400" text-decoration="underline" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Approval of productive plan</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1494" y="15293" width="6502" height="807"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1744" y="15867"><tspan font-family="Liberation Sans, sans-serif" font-size="494px" font-weight="400" text-decoration="underline" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Approval of productive plan</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id4">
-        <rect class="BoundingBox" stroke="none" fill="none" x="12865" y="16601" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 12866,16602 L 14367,16602 14367,18103 12866,18103 12866,16602 12866,16602 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 12866,16602 L 14367,16602 14367,18103 12866,18103 12866,16602 12866,16602 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13164" y="17186"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13545" y="17662"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">P</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="16601" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 12920,16602 L 14421,16602 14421,18103 12920,18103 12920,16602 12920,16602 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,16602 L 14421,16602 14421,18103 12920,18103 12920,16602 12920,16602 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13218" y="17186"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13599" y="17662"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">P</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.ConnectorShape">
        <g id="id5">
-        <rect class="BoundingBox" stroke="none" fill="none" x="3065" y="17150" width="9802" height="353"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 3066,17350 L 7967,17350 7967,17352 12586,17352"/>
-        <path fill="rgb(52,101,164)" stroke="none" d="M 12566,17202 L 12866,17352 12566,17502 12566,17202 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7451" y="17304"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Planned P </tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="3240" y="17150" width="9681" height="353"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3241,17350 L 8081,17350 8081,17352 12640,17352"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12620,17202 L 12920,17352 12620,17502 12620,17202 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="6490" y="17304"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Planned P </tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id6">
-        <rect class="BoundingBox" stroke="none" fill="none" x="12865" y="18351" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 12866,18352 L 14367,18352 14367,19853 12866,19853 12866,18352 12866,18352 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 12866,18352 L 14367,18352 14367,19853 12866,19853 12866,18352 12866,18352 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13164" y="18936"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13539" y="19412"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">R</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="18351" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 12920,18352 L 14421,18352 14421,19853 12920,19853 12920,18352 12920,18352 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,18352 L 14421,18352 14421,19853 12920,19853 12920,18352 12920,18352 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13218" y="18936"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13593" y="19412"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">R</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.ConnectorShape">
        <g id="id7">
-        <rect class="BoundingBox" stroke="none" fill="none" x="3065" y="18900" width="9802" height="353"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 3066,19100 L 7967,19100 7967,19102 12586,19102"/>
-        <path fill="rgb(52,101,164)" stroke="none" d="M 12566,18952 L 12866,19102 12566,19252 12566,18952 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7442" y="19054"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Planned  R</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="3240" y="18900" width="9681" height="353"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3241,19100 L 8081,19100 8081,19102 12640,19102"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12620,18952 L 12920,19102 12620,19252 12620,18952 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="6490" y="19054"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Planned  R</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id8">
-        <rect class="BoundingBox" stroke="none" fill="none" x="12865" y="20101" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 12866,20102 L 14367,20102 14367,21603 12866,21603 12866,20102 12866,20102 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 12866,20102 L 14367,20102 14367,21603 12866,21603 12866,20102 12866,20102 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13164" y="20686"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13545" y="21162"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">A</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="20101" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 12920,20102 L 14421,20102 14421,21603 12920,21603 12920,20102 12920,20102 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,20102 L 14421,20102 14421,21603 12920,21603 12920,20102 12920,20102 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13218" y="20686"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13599" y="21162"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">A</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.ConnectorShape">
        <g id="id9">
-        <rect class="BoundingBox" stroke="none" fill="none" x="3065" y="20650" width="9802" height="353"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 3066,20850 L 7967,20850 7967,20852 12586,20852"/>
-        <path fill="rgb(52,101,164)" stroke="none" d="M 12566,20702 L 12866,20852 12566,21002 12566,20702 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7459" y="20804"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Planned A </tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="3240" y="20650" width="9681" height="353"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3241,20850 L 8081,20850 8081,20852 12640,20852"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12620,20702 L 12920,20852 12620,21002 12620,20702 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="6490" y="20804"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Planned A </tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
        <g id="id10">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1332" y="23286" width="5511" height="807"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1582" y="23860"><tspan font-family="Liberation Sans, sans-serif" font-size="494px" font-weight="400" text-decoration="underline" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Approval of public plan</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1500" y="23250" width="5511" height="807"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1750" y="23824"><tspan font-family="Liberation Sans, sans-serif" font-size="494px" font-weight="400" text-decoration="underline" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Approval of public plan</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id11">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1556" y="24742" width="1504" height="1504"/>
-        <path fill="rgb(255,255,0)" stroke="none" d="M 1557,24743 L 3058,24743 3058,26244 1557,26244 1557,24743 1557,24743 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 1557,24743 L 3058,24743 3058,26244 1557,26244 1557,24743 1557,24743 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2018" y="25089"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Social </tspan></tspan><tspan class="TextPosition" x="1889" y="25327"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Account-</tspan></tspan><tspan class="TextPosition" x="2167" y="25565"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">ing</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2101" y="26041"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PSF</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1740" y="24742" width="1504" height="1504"/>
+        <path fill="rgb(255,255,0)" stroke="none" d="M 1741,24743 L 3242,24743 3242,26244 1741,26244 1741,24743 1741,24743 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 1741,24743 L 3242,24743 3242,26244 1741,26244 1741,24743 1741,24743 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2202" y="25089"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Social </tspan></tspan><tspan class="TextPosition" x="2073" y="25327"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Account-</tspan></tspan><tspan class="TextPosition" x="2351" y="25565"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">ing</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2285" y="26041"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PSF</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id12">
-        <rect class="BoundingBox" stroke="none" fill="none" x="12865" y="24742" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 12866,24743 L 14367,24743 14367,26244 12866,26244 12866,24743 12866,24743 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 12866,24743 L 14367,24743 14367,26244 12866,26244 12866,24743 12866,24743 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13164" y="25327"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13545" y="25803"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">P</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="24742" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 12920,24743 L 14421,24743 14421,26244 12920,26244 12920,24743 12920,24743 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,24743 L 14421,24743 14421,26244 12920,26244 12920,24743 12920,24743 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13218" y="25327"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13599" y="25803"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">P</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.ConnectorShape">
        <g id="id13">
-        <rect class="BoundingBox" stroke="none" fill="none" x="3056" y="25292" width="9811" height="393"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 3057,25493 L 12586,25493"/>
-        <path fill="rgb(52,101,164)" stroke="none" d="M 12566,25343 L 12866,25493 12566,25643 12566,25343 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7474" y="25446"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Planned P</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="7933" y="25684"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="3240" y="25292" width="9681" height="393"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3241,25493 L 12640,25493"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12620,25343 L 12920,25493 12620,25643 12620,25343 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="6490" y="25446"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Planned P</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="10052" y="25684"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre"> </tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id14">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1556" y="26492" width="1504" height="1504"/>
-        <path fill="rgb(255,255,0)" stroke="none" d="M 1557,26493 L 3058,26493 3058,27994 1557,27994 1557,26493 1557,26493 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 1557,26493 L 3058,26493 3058,27994 1557,27994 1557,26493 1557,26493 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2018" y="26839"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Social </tspan></tspan><tspan class="TextPosition" x="1889" y="27077"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Account-</tspan></tspan><tspan class="TextPosition" x="2167" y="27315"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">ing</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2101" y="27791"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PSF</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1740" y="26492" width="1504" height="1504"/>
+        <path fill="rgb(255,255,0)" stroke="none" d="M 1741,26493 L 3242,26493 3242,27994 1741,27994 1741,26493 1741,26493 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 1741,26493 L 3242,26493 3242,27994 1741,27994 1741,26493 1741,26493 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2202" y="26839"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Social </tspan></tspan><tspan class="TextPosition" x="2073" y="27077"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Account-</tspan></tspan><tspan class="TextPosition" x="2351" y="27315"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">ing</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2285" y="27791"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PSF</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id15">
-        <rect class="BoundingBox" stroke="none" fill="none" x="12865" y="26492" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 12866,26493 L 14367,26493 14367,27994 12866,27994 12866,26493 12866,26493 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 12866,26493 L 14367,26493 14367,27994 12866,27994 12866,26493 12866,26493 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13164" y="27077"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13539" y="27553"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">R</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="26492" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 12920,26493 L 14421,26493 14421,27994 12920,27994 12920,26493 12920,26493 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,26493 L 14421,26493 14421,27994 12920,27994 12920,26493 12920,26493 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13218" y="27077"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13593" y="27553"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">R</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.ConnectorShape">
        <g id="id16">
-        <rect class="BoundingBox" stroke="none" fill="none" x="3056" y="27042" width="9811" height="352"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 3057,27243 L 12586,27243"/>
-        <path fill="rgb(52,101,164)" stroke="none" d="M 12566,27093 L 12866,27243 12566,27393 12566,27093 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7468" y="27196"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Planned R</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="3240" y="27042" width="9681" height="352"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3241,27243 L 12640,27243"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12620,27093 L 12920,27243 12620,27393 12620,27093 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="6490" y="27196"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Planned R</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id17">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1556" y="28242" width="1504" height="1504"/>
-        <path fill="rgb(255,255,0)" stroke="none" d="M 1557,28243 L 3058,28243 3058,29744 1557,29744 1557,28243 1557,28243 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 1557,28243 L 3058,28243 3058,29744 1557,29744 1557,28243 1557,28243 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2018" y="28589"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Social </tspan></tspan><tspan class="TextPosition" x="1889" y="28827"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Account-</tspan></tspan><tspan class="TextPosition" x="2167" y="29065"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">ing</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2101" y="29541"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PSF</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1740" y="28242" width="1504" height="1504"/>
+        <path fill="rgb(255,255,0)" stroke="none" d="M 1741,28243 L 3242,28243 3242,29744 1741,29744 1741,28243 1741,28243 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 1741,28243 L 3242,28243 3242,29744 1741,29744 1741,28243 1741,28243 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2202" y="28589"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Social </tspan></tspan><tspan class="TextPosition" x="2073" y="28827"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Account-</tspan></tspan><tspan class="TextPosition" x="2351" y="29065"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">ing</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2285" y="29541"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PSF</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id18">
-        <rect class="BoundingBox" stroke="none" fill="none" x="12865" y="28242" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 12866,28243 L 14367,28243 14367,29744 12866,29744 12866,28243 12866,28243 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 12866,28243 L 14367,28243 14367,29744 12866,29744 12866,28243 12866,28243 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13164" y="28827"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13545" y="29303"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">A</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="28242" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 12920,28243 L 14421,28243 14421,29744 12920,29744 12920,28243 12920,28243 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,28243 L 14421,28243 14421,29744 12920,29744 12920,28243 12920,28243 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13218" y="28827"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13599" y="29303"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">A</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.ConnectorShape">
        <g id="id19">
-        <rect class="BoundingBox" stroke="none" fill="none" x="3056" y="28792" width="9811" height="352"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 3057,28993 L 12586,28993"/>
-        <path fill="rgb(52,101,164)" stroke="none" d="M 12566,28843 L 12866,28993 12566,29143 12566,28843 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7455" y="28946"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Planned A </tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="3240" y="28792" width="9681" height="352"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3241,28993 L 12640,28993"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12620,28843 L 12920,28993 12620,29143 12620,28843 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="6490" y="28946"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Planned A </tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
        <g id="id20">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1291" y="31743" width="6806" height="807"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1541" y="32317"><tspan font-family="Liberation Sans, sans-serif" font-size="494px" font-weight="400" text-decoration="underline" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Registration of hours worked</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1460" y="31743" width="6806" height="807"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1710" y="32317"><tspan font-family="Liberation Sans, sans-serif" font-size="494px" font-weight="400" text-decoration="underline" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Registration of hours worked</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id21">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1559" y="33274" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 1560,33275 L 3061,33275 3061,34776 1560,34776 1560,33275 1560,33275 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 1560,33275 L 3061,33275 3061,34776 1560,34776 1560,33275 1560,33275 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1858" y="33859"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2239" y="34335"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">A</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1740" y="33274" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 1741,33275 L 3242,33275 3242,34776 1741,34776 1741,33275 1741,33275 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 1741,33275 L 3242,33275 3242,34776 1741,34776 1741,33275 1741,33275 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2039" y="33859"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2420" y="34335"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">A</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id22">
-        <rect class="BoundingBox" stroke="none" fill="none" x="12874" y="33274" width="1504" height="1504"/>
-        <path fill="rgb(129,212,26)" stroke="none" d="M 12875,33275 L 14376,33275 14376,34776 12875,34776 12875,33275 12875,33275 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 12875,33275 L 14376,33275 14376,34776 12875,34776 12875,33275 12875,33275 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13237" y="34097"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Member</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="33274" width="1504" height="1504"/>
+        <path fill="rgb(129,212,26)" stroke="none" d="M 12920,33275 L 14421,33275 14421,34776 12920,34776 12920,33275 12920,33275 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,33275 L 14421,33275 14421,34776 12920,34776 12920,33275 12920,33275 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13282" y="34097"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Member</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id23">
-        <rect class="BoundingBox" stroke="none" fill="none" x="12874" y="35449" width="1504" height="1504"/>
-        <path fill="rgb(255,255,0)" stroke="none" d="M 12875,35450 L 14376,35450 14376,36951 12875,36951 12875,35450 12875,35450 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 12875,35450 L 14376,35450 14376,36951 12875,36951 12875,35450 12875,35450 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13336" y="35796"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Social </tspan></tspan><tspan class="TextPosition" x="13207" y="36034"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Account-</tspan></tspan><tspan class="TextPosition" x="13485" y="36272"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">ing</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13419" y="36748"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PSF</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="35449" width="1504" height="1504"/>
+        <path fill="rgb(255,255,0)" stroke="none" d="M 12920,35450 L 14421,35450 14421,36951 12920,36951 12920,35450 12920,35450 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,35450 L 14421,35450 14421,36951 12920,36951 12920,35450 12920,35450 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13381" y="35796"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Social </tspan></tspan><tspan class="TextPosition" x="13252" y="36034"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Account-</tspan></tspan><tspan class="TextPosition" x="13530" y="36272"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">ing</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13464" y="36748"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PSF</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.ConnectorShape">
        <g id="id24">
-        <rect class="BoundingBox" stroke="none" fill="none" x="3059" y="33824" width="9817" height="352"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 3060,34025 L 12595,34025"/>
-        <path fill="rgb(52,101,164)" stroke="none" d="M 12575,33875 L 12875,34025 12575,34175 12575,33875 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7311" y="33978"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Worked hours</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="3240" y="33824" width="9681" height="352"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3241,34025 L 12640,34025"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12620,33875 L 12920,34025 12620,34175 12620,33875 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="6490" y="33978"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Worked hours</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.ConnectorShape">
        <g id="id25">
-        <rect class="BoundingBox" stroke="none" fill="none" x="3059" y="35974" width="9817" height="376"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 3060,36150 L 12595,36199"/>
-        <path fill="rgb(52,101,164)" stroke="none" d="M 12576,36048 L 12875,36200 12574,36348 12576,36048 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="6847" y="36128"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Worked hours * (1- FIC)</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="3229" y="35974" width="9692" height="376"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3230,36150 L 12640,36199"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12621,36048 L 12920,36200 12619,36348 12621,36048 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="6479" y="36128"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Worked hours × (1 - FIC)</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
        <g id="id26">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1375" y="38998" width="4990" height="807"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1625" y="39572"><tspan font-family="Liberation Sans, sans-serif" font-size="494px" font-weight="400" text-decoration="underline" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Private consumption</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1518" y="38998" width="4990" height="807"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1768" y="39572"><tspan font-family="Liberation Sans, sans-serif" font-size="494px" font-weight="400" text-decoration="underline" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Private consumption</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id27">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1574" y="40322" width="1504" height="1504"/>
-        <path fill="rgb(129,212,26)" stroke="none" d="M 1575,40323 L 3076,40323 3076,41824 1575,41824 1575,40323 1575,40323 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 1575,40323 L 3076,40323 3076,41824 1575,41824 1575,40323 1575,40323 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1937" y="41145"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Member</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1740" y="40322" width="1504" height="1504"/>
+        <path fill="rgb(129,212,26)" stroke="none" d="M 1741,40323 L 3242,40323 3242,41824 1741,41824 1741,40323 1741,40323 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 1741,40323 L 3242,40323 3242,41824 1741,41824 1741,40323 1741,40323 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2103" y="41145"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Member</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id28">
-        <rect class="BoundingBox" stroke="none" fill="none" x="12849" y="40322" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 12850,40323 L 14351,40323 14351,41824 12850,41824 12850,40323 12850,40323 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 12850,40323 L 14351,40323 14351,41824 12850,41824 12850,40323 12850,40323 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13148" y="40907"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13377" y="41383"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="40322" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 12920,40323 L 14421,40323 14421,41824 12920,41824 12920,40323 12920,40323 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,40323 L 14421,40323 14421,41824 12920,41824 12920,40323 12920,40323 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13218" y="40907"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13447" y="41383"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.ConnectorShape">
        <g id="id29">
-        <rect class="BoundingBox" stroke="none" fill="none" x="3074" y="40872" width="9777" height="352"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 3075,41073 L 12570,41073"/>
-        <path fill="rgb(52,101,164)" stroke="none" d="M 12550,40923 L 12850,41073 12550,41223 12550,40923 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7452" y="41026"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Coop price</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="3240" y="40872" width="9681" height="352"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3241,41073 L 12640,41073"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12620,40923 L 12920,41073 12620,41223 12620,40923 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="6490" y="41026"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Coop price</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
        <g id="id30">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1525" y="54198" width="12149" height="807"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1775" y="54772"><tspan font-family="Liberation Sans, sans-serif" font-size="494px" font-weight="400" text-decoration="underline" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Productive consumption of fixed means of production</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1497" y="55993" width="12149" height="807"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1747" y="56567"><tspan font-family="Liberation Sans, sans-serif" font-size="494px" font-weight="400" text-decoration="underline" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Productive consumption of fixed means of production</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
        <g id="id31">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1475" y="65123" width="12259" height="807"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1725" y="65697"><tspan font-family="Liberation Sans, sans-serif" font-size="494px" font-weight="400" text-decoration="underline" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Productive consumption of liquid means of production</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1486" y="66918" width="12259" height="807"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1736" y="67492"><tspan font-family="Liberation Sans, sans-serif" font-size="494px" font-weight="400" text-decoration="underline" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Productive consumption of liquid means of production</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id32">
-        <rect class="BoundingBox" stroke="none" fill="none" x="12849" y="43147" width="1504" height="1504"/>
-        <path fill="rgb(255,64,0)" stroke="none" d="M 12850,43148 L 14351,43148 14351,44649 12850,44649 12850,43148 12850,43148 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 12850,43148 L 14351,43148 14351,44649 12850,44649 12850,43148 12850,43148 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13159" y="43851"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">Coopera-</tspan></tspan><tspan class="TextPosition" x="13430" y="44089"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">tion</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="43147" width="1504" height="1504"/>
+        <path fill="rgb(255,64,0)" stroke="none" d="M 12920,43148 L 14421,43148 14421,44649 12920,44649 12920,43148 12920,43148 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,43148 L 14421,43148 14421,44649 12920,44649 12920,43148 12920,43148 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13229" y="43851"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">Coopera-</tspan></tspan><tspan class="TextPosition" x="13500" y="44089"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">tion</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.ConnectorShape">
        <g id="id33">
-        <rect class="BoundingBox" stroke="none" fill="none" x="3774" y="43700" width="9077" height="350"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 3775,43905 L 12570,43898"/>
-        <path fill="rgb(52,101,164)" stroke="none" d="M 12550,43748 L 12850,43898 12550,44048 12550,43748 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="6982" y="43854"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Coop price – individual price</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="3897" y="43700" width="9024" height="350"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3898,43905 L 12640,43898"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12620,43748 L 12920,43898 12620,44048 12620,43748 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7147" y="43854"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Coop price - individual price</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id34">
-        <rect class="BoundingBox" stroke="none" fill="none" x="12949" y="55509" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 12950,55510 L 14451,55510 14451,57011 12950,57011 12950,55510 12950,55510 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 12950,55510 L 14451,55510 14451,57011 12950,57011 12950,55510 12950,55510 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13312" y="55975"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">(Selling)</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13248" y="56213"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13477" y="56689"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="57304" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 12920,57305 L 14421,57305 14421,58806 12920,58806 12920,57305 12920,57305 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,57305 L 14421,57305 14421,58806 12920,58806 12920,57305 12920,57305 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13282" y="57770"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">(Selling)</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13218" y="58008"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13447" y="58484"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.ConnectorShape">
        <g id="id35">
-        <rect class="BoundingBox" stroke="none" fill="none" x="3115" y="56059" width="9836" height="352"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 3116,56260 L 12670,56260"/>
-        <path fill="rgb(52,101,164)" stroke="none" d="M 12650,56110 L 12950,56260 12650,56410 12650,56110 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7522" y="56213"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Coop price</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="3165" y="57854" width="9756" height="352"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3166,58055 L 12640,58055"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12620,57905 L 12920,58055 12620,58205 12620,57905 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="6415" y="58008"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Coop price</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id36">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1640" y="55509" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 1641,55510 L 3142,55510 3142,57011 1641,57011 1641,55510 1641,55510 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 1641,55510 L 3142,55510 3142,57011 1641,57011 1641,55510 1641,55510 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1939" y="56094"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2320" y="56570"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">P</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1740" y="57304" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 1741,57305 L 3242,57305 3242,58806 1741,58806 1741,57305 1741,57305 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 1741,57305 L 3242,57305 3242,58806 1741,58806 1741,57305 1741,57305 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2039" y="57889"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2420" y="58365"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">P</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id37">
-        <rect class="BoundingBox" stroke="none" fill="none" x="2274" y="43154" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 2275,43155 L 3776,43155 3776,44656 2275,44656 2275,43155 2275,43155 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 2275,43155 L 3776,43155 3776,44656 2275,44656 2275,43155 2275,43155 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2573" y="43739"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2802" y="44215"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="2397" y="43154" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 2398,43155 L 3899,43155 3899,44656 2398,44656 2398,43155 2398,43155 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 2398,43155 L 3899,43155 3899,44656 2398,44656 2398,43155 2398,43155 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2696" y="43739"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2925" y="44215"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
        <g id="id38">
-        <rect class="BoundingBox" stroke="none" fill="none" x="2125" y="42155" width="7949" height="608"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2375" y="42568"><tspan font-family="Liberation Sans, sans-serif" font-size="318px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">If coop price &gt; individual price (=overproductive plan)</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="2313" y="42155" width="7949" height="608"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2563" y="42568"><tspan font-family="Liberation Sans, sans-serif" font-size="318px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">If coop price &gt; individual price (=overproductive plan)</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id39">
-        <rect class="BoundingBox" stroke="none" fill="none" x="2274" y="46004" width="1504" height="1504"/>
-        <path fill="rgb(255,64,0)" stroke="none" d="M 2275,46005 L 3776,46005 3776,47506 2275,47506 2275,46005 2275,46005 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 2275,46005 L 3776,46005 3776,47506 2275,47506 2275,46005 2275,46005 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2584" y="46708"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">Coopera-</tspan></tspan><tspan class="TextPosition" x="2855" y="46946"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">tion</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="2397" y="46004" width="1504" height="1504"/>
+        <path fill="rgb(255,64,0)" stroke="none" d="M 2398,46005 L 3899,46005 3899,47506 2398,47506 2398,46005 2398,46005 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 2398,46005 L 3899,46005 3899,47506 2398,47506 2398,46005 2398,46005 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2707" y="46708"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">Coopera-</tspan></tspan><tspan class="TextPosition" x="2978" y="46946"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">tion</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id40">
-        <rect class="BoundingBox" stroke="none" fill="none" x="12849" y="46004" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 12850,46005 L 14351,46005 14351,47506 12850,47506 12850,46005 12850,46005 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 12850,46005 L 14351,46005 14351,47506 12850,47506 12850,46005 12850,46005 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13148" y="46589"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13377" y="47065"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="46004" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 12920,46005 L 14421,46005 14421,47506 12920,47506 12920,46005 12920,46005 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,46005 L 14421,46005 14421,47506 12920,47506 12920,46005 12920,46005 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13218" y="46589"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13447" y="47065"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.ConnectorShape">
        <g id="id41">
-        <rect class="BoundingBox" stroke="none" fill="none" x="3774" y="46554" width="9077" height="352"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 3775,46755 L 12570,46755"/>
-        <path fill="rgb(52,101,164)" stroke="none" d="M 12550,46605 L 12850,46755 12550,46905 12550,46605 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7002" y="46708"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Individual price – coop price</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="3897" y="46554" width="9024" height="352"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3898,46755 L 12640,46755"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12620,46605 L 12920,46755 12620,46905 12620,46605 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7147" y="46708"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Individual price - coop price</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
        <g id="id42">
-        <rect class="BoundingBox" stroke="none" fill="none" x="2214" y="45005" width="8144" height="608"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2464" y="45418"><tspan font-family="Liberation Sans, sans-serif" font-size="318px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">If coop price &lt; individual price (=underproductive plan)</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="2216" y="45005" width="8144" height="608"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2466" y="45418"><tspan font-family="Liberation Sans, sans-serif" font-size="318px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">If coop price &lt; individual price (=underproductive plan)</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id43">
-        <rect class="BoundingBox" stroke="none" fill="none" x="12949" y="58547" width="1504" height="1504"/>
-        <path fill="rgb(255,64,0)" stroke="none" d="M 12950,58548 L 14451,58548 14451,60049 12950,60049 12950,58548 12950,58548 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 12950,58548 L 14451,58548 14451,60049 12950,60049 12950,58548 12950,58548 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13259" y="59251"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">Coopera-</tspan></tspan><tspan class="TextPosition" x="13530" y="59489"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">tion</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="60342" width="1504" height="1504"/>
+        <path fill="rgb(255,64,0)" stroke="none" d="M 12920,60343 L 14421,60343 14421,61844 12920,61844 12920,60343 12920,60343 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,60343 L 14421,60343 14421,61844 12920,61844 12920,60343 12920,60343 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13229" y="61046"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">Coopera-</tspan></tspan><tspan class="TextPosition" x="13500" y="61284"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">tion</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.ConnectorShape">
        <g id="id44">
-        <rect class="BoundingBox" stroke="none" fill="none" x="3816" y="59100" width="9135" height="350"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 3817,59305 L 12670,59298"/>
-        <path fill="rgb(52,101,164)" stroke="none" d="M 12650,59148 L 12950,59298 12650,59448 12650,59148 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7053" y="59254"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Coop price – individual price</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="3897" y="60895" width="9024" height="350"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3898,61100 L 12640,61093"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12620,60943 L 12920,61093 12620,61243 12620,60943 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7147" y="61049"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Coop price - individual price</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id45">
-        <rect class="BoundingBox" stroke="none" fill="none" x="2316" y="58554" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 2317,58555 L 3818,58555 3818,60056 2317,60056 2317,58555 2317,58555 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 2317,58555 L 3818,58555 3818,60056 2317,60056 2317,58555 2317,58555 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2679" y="59020"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">(Selling)</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2615" y="59258"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2844" y="59734"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="2397" y="60349" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 2398,60350 L 3899,60350 3899,61851 2398,61851 2398,60350 2398,60350 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 2398,60350 L 3899,60350 3899,61851 2398,61851 2398,60350 2398,60350 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2760" y="60815"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">(Selling)</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2696" y="61053"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2925" y="61529"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
        <g id="id46">
-        <rect class="BoundingBox" stroke="none" fill="none" x="2267" y="57355" width="7949" height="608"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2517" y="57768"><tspan font-family="Liberation Sans, sans-serif" font-size="318px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">If coop price &gt; </tspan><tspan font-family="Liberation Sans, sans-serif" font-size="318px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">individual price (=overproductive plan)</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="2313" y="59150" width="7949" height="608"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2563" y="59563"><tspan font-family="Liberation Sans, sans-serif" font-size="318px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">If coop price &gt; </tspan><tspan font-family="Liberation Sans, sans-serif" font-size="318px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">individual price (=overproductive plan)</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id47">
-        <rect class="BoundingBox" stroke="none" fill="none" x="2316" y="61604" width="1504" height="1504"/>
-        <path fill="rgb(255,64,0)" stroke="none" d="M 2317,61605 L 3818,61605 3818,63106 2317,63106 2317,61605 2317,61605 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 2317,61605 L 3818,61605 3818,63106 2317,63106 2317,61605 2317,61605 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2626" y="62308"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">Coopera-</tspan></tspan><tspan class="TextPosition" x="2897" y="62546"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">tion</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="2397" y="63399" width="1504" height="1504"/>
+        <path fill="rgb(255,64,0)" stroke="none" d="M 2398,63400 L 3899,63400 3899,64901 2398,64901 2398,63400 2398,63400 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 2398,63400 L 3899,63400 3899,64901 2398,64901 2398,63400 2398,63400 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2707" y="64103"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">Coopera-</tspan></tspan><tspan class="TextPosition" x="2978" y="64341"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">tion</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id48">
-        <rect class="BoundingBox" stroke="none" fill="none" x="12949" y="61604" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 12950,61605 L 14451,61605 14451,63106 12950,63106 12950,61605 12950,61605 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 12950,61605 L 14451,61605 14451,63106 12950,63106 12950,61605 12950,61605 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13312" y="62070"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">(Selling)</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13248" y="62308"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13477" y="62784"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="63399" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 12920,63400 L 14421,63400 14421,64901 12920,64901 12920,63400 12920,63400 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,63400 L 14421,63400 14421,64901 12920,64901 12920,63400 12920,63400 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13282" y="63865"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">(Selling)</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13218" y="64103"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13447" y="64579"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.ConnectorShape">
        <g id="id49">
-        <rect class="BoundingBox" stroke="none" fill="none" x="3816" y="62154" width="9135" height="352"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 3817,62355 L 12670,62355"/>
-        <path fill="rgb(52,101,164)" stroke="none" d="M 12650,62205 L 12950,62355 12650,62505 12650,62205 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7073" y="62308"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Individual price – coop price</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="3897" y="63949" width="9024" height="352"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3898,64150 L 12640,64150"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12620,64000 L 12920,64150 12620,64300 12620,64000 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7147" y="64103"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Individual price - coop price</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
        <g id="id50">
-        <rect class="BoundingBox" stroke="none" fill="none" x="2256" y="60605" width="8144" height="608"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2506" y="61018"><tspan font-family="Liberation Sans, sans-serif" font-size="318px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">If coop price &lt; </tspan><tspan font-family="Liberation Sans, sans-serif" font-size="318px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">individual price (=underproductive plan)</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="2216" y="62400" width="8144" height="608"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2466" y="62813"><tspan font-family="Liberation Sans, sans-serif" font-size="318px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">If coop price &lt; </tspan><tspan font-family="Liberation Sans, sans-serif" font-size="318px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">individual price (=underproductive plan)</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id51">
-        <rect class="BoundingBox" stroke="none" fill="none" x="12949" y="66654" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 12950,66655 L 14451,66655 14451,68156 12950,68156 12950,66655 12950,66655 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 12950,66655 L 14451,66655 14451,68156 12950,68156 12950,66655 12950,66655 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13312" y="67120"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">(Selling)</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13248" y="67358"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13477" y="67834"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="68449" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 12920,68450 L 14421,68450 14421,69951 12920,69951 12920,68450 12920,68450 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,68450 L 14421,68450 14421,69951 12920,69951 12920,68450 12920,68450 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13282" y="68915"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">(Selling)</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13218" y="69153"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13447" y="69629"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.ConnectorShape">
        <g id="id52">
-        <rect class="BoundingBox" stroke="none" fill="none" x="3115" y="67204" width="9836" height="352"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 3116,67405 L 12670,67405"/>
-        <path fill="rgb(52,101,164)" stroke="none" d="M 12650,67255 L 12950,67405 12650,67555 12650,67255 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7522" y="67358"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Coop price</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="3165" y="68999" width="9756" height="352"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3166,69200 L 12640,69200"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12620,69050 L 12920,69200 12620,69350 12620,69050 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="6415" y="69153"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Coop price</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id53">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1640" y="66654" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 1641,66655 L 3142,66655 3142,68156 1641,68156 1641,66655 1641,66655 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 1641,66655 L 3142,66655 3142,68156 1641,68156 1641,66655 1641,66655 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1939" y="67239"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2314" y="67715"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">R</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1740" y="68449" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 1741,68450 L 3242,68450 3242,69951 1741,69951 1741,68450 1741,68450 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 1741,68450 L 3242,68450 3242,69951 1741,69951 1741,68450 1741,68450 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2039" y="69034"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2414" y="69510"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">R</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
        <g id="id54">
-        <rect class="BoundingBox" stroke="none" fill="none" x="2167" y="68500" width="7949" height="608"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2417" y="68913"><tspan font-family="Liberation Sans, sans-serif" font-size="318px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">If coop price &gt; </tspan><tspan font-family="Liberation Sans, sans-serif" font-size="318px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">individual price (=overproductive plan)</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="2313" y="70295" width="7949" height="608"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2563" y="70708"><tspan font-family="Liberation Sans, sans-serif" font-size="318px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">If coop price &gt; </tspan><tspan font-family="Liberation Sans, sans-serif" font-size="318px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">individual price (=overproductive plan)</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id55">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1565" y="16599" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 1566,16600 L 3067,16600 3067,18101 1566,18101 1566,16600 1566,16600 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 1566,16600 L 3067,16600 3067,18101 1566,18101 1566,16600 1566,16600 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1864" y="17184"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2093" y="17660"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1740" y="16599" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 1741,16600 L 3242,16600 3242,18101 1741,18101 1741,16600 1741,16600 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 1741,16600 L 3242,16600 3242,18101 1741,18101 1741,16600 1741,16600 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2039" y="17184"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2268" y="17660"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id56">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1565" y="18349" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 1566,18350 L 3067,18350 3067,19851 1566,19851 1566,18350 1566,18350 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 1566,18350 L 3067,18350 3067,19851 1566,19851 1566,18350 1566,18350 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1864" y="18934"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2093" y="19410"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1740" y="18349" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 1741,18350 L 3242,18350 3242,19851 1741,19851 1741,18350 1741,18350 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 1741,18350 L 3242,18350 3242,19851 1741,19851 1741,18350 1741,18350 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2039" y="18934"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2268" y="19410"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id57">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1565" y="20099" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 1566,20100 L 3067,20100 3067,21601 1566,21601 1566,20100 1566,20100 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 1566,20100 L 3067,20100 3067,21601 1566,21601 1566,20100 1566,20100 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1864" y="20684"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2093" y="21160"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1740" y="20099" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 1741,20100 L 3242,20100 3242,21601 1741,21601 1741,20100 1741,20100 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 1741,20100 L 3242,20100 3242,21601 1741,21601 1741,20100 1741,20100 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2039" y="20684"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2268" y="21160"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id58">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1559" y="35399" width="1504" height="1504"/>
-        <path fill="rgb(129,212,26)" stroke="none" d="M 1560,35400 L 3061,35400 3061,36901 1560,36901 1560,35400 1560,35400 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 1560,35400 L 3061,35400 3061,36901 1560,36901 1560,35400 1560,35400 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1922" y="36222"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Member</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1729" y="35399" width="1504" height="1504"/>
+        <path fill="rgb(129,212,26)" stroke="none" d="M 1730,35400 L 3231,35400 3231,36901 1730,36901 1730,35400 1730,35400 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 1730,35400 L 3231,35400 3231,36901 1730,36901 1730,35400 1730,35400 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2092" y="36222"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Member</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id59">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1549" y="3274" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 1550,3275 L 3051,3275 3051,4776 1550,4776 1550,3275 1550,3275 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 1550,3275 L 3051,3275 3051,4776 1550,4776 1550,3275 1550,3275 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1848" y="3859"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2229" y="4335"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">P</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1718" y="3274" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 1719,3275 L 3220,3275 3220,4776 1719,4776 1719,3275 1719,3275 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 1719,3275 L 3220,3275 3220,4776 1719,4776 1719,3275 1719,3275 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2017" y="3859"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2398" y="4335"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">P</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
        <g id="id60">
-        <rect class="BoundingBox" stroke="none" fill="none" x="950" y="1115" width="4001" height="1039"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1200" y="1879"><tspan font-family="Liberation Sans, sans-serif" font-size="706px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Accounts</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1488" y="1115" width="4001" height="1039"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1738" y="1879"><tspan font-family="Liberation Sans, sans-serif" font-size="706px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Accounts</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id61">
-        <rect class="BoundingBox" stroke="none" fill="none" x="4099" y="3274" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 4100,3275 L 5601,3275 5601,4776 4100,4776 4100,3275 4100,3275 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 4100,3275 L 5601,3275 5601,4776 4100,4776 4100,3275 4100,3275 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="4398" y="3859"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="4773" y="4335"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">R</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="4268" y="3274" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 4269,3275 L 5770,3275 5770,4776 4269,4776 4269,3275 4269,3275 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 4269,3275 L 5770,3275 5770,4776 4269,4776 4269,3275 4269,3275 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="4567" y="3859"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="4942" y="4335"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">R</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id62">
-        <rect class="BoundingBox" stroke="none" fill="none" x="6734" y="3274" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 6735,3275 L 8236,3275 8236,4776 6735,4776 6735,3275 6735,3275 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 6735,3275 L 8236,3275 8236,4776 6735,4776 6735,3275 6735,3275 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7033" y="3859"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="7414" y="4335"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">A</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="6903" y="3274" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 6904,3275 L 8405,3275 8405,4776 6904,4776 6904,3275 6904,3275 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 6904,3275 L 8405,3275 8405,4776 6904,4776 6904,3275 6904,3275 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7202" y="3859"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="7583" y="4335"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">A</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id63">
-        <rect class="BoundingBox" stroke="none" fill="none" x="9309" y="3274" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 9310,3275 L 10811,3275 10811,4776 9310,4776 9310,3275 9310,3275 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 9310,3275 L 10811,3275 10811,4776 9310,4776 9310,3275 9310,3275 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="9608" y="3859"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="9837" y="4335"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="9478" y="3274" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 9479,3275 L 10980,3275 10980,4776 9479,4776 9479,3275 9479,3275 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 9479,3275 L 10980,3275 10980,4776 9479,4776 9479,3275 9479,3275 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="9777" y="3859"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="10006" y="4335"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id64">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1586" y="5649" width="1504" height="1504"/>
-        <path fill="rgb(255,255,0)" stroke="none" d="M 1587,5650 L 3088,5650 3088,7151 1587,7151 1587,5650 1587,5650 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 1587,5650 L 3088,5650 3088,7151 1587,7151 1587,5650 1587,5650 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2048" y="5996"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Social </tspan></tspan><tspan class="TextPosition" x="1919" y="6234"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Account-</tspan></tspan><tspan class="TextPosition" x="2197" y="6472"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">ing</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2131" y="6948"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PSF</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1755" y="5649" width="1504" height="1504"/>
+        <path fill="rgb(255,255,0)" stroke="none" d="M 1756,5650 L 3257,5650 3257,7151 1756,7151 1756,5650 1756,5650 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 1756,5650 L 3257,5650 3257,7151 1756,7151 1756,5650 1756,5650 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2217" y="5996"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Social </tspan></tspan><tspan class="TextPosition" x="2088" y="6234"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Account-</tspan></tspan><tspan class="TextPosition" x="2366" y="6472"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">ing</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2300" y="6948"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PSF</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id65">
-        <rect class="BoundingBox" stroke="none" fill="none" x="4112" y="5649" width="1504" height="1504"/>
-        <path fill="rgb(129,212,26)" stroke="none" d="M 4113,5650 L 5614,5650 5614,7151 4113,7151 4113,5650 4113,5650 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 4113,5650 L 5614,5650 5614,7151 4113,7151 4113,5650 4113,5650 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="4475" y="6472"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Member</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="4281" y="5649" width="1504" height="1504"/>
+        <path fill="rgb(129,212,26)" stroke="none" d="M 4282,5650 L 5783,5650 5783,7151 4282,7151 4282,5650 4282,5650 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 4282,5650 L 5783,5650 5783,7151 4282,7151 4282,5650 4282,5650 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="4644" y="6472"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Member</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
        <g id="id66">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1053" y="8965" width="4114" height="1039"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1303" y="9729"><tspan font-family="Liberation Sans, sans-serif" font-size="706px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Transfers</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1513" y="8965" width="4114" height="1039"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1763" y="9729"><tspan font-family="Liberation Sans, sans-serif" font-size="706px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Transfers</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id67">
-        <rect class="BoundingBox" stroke="none" fill="none" x="6764" y="5649" width="1504" height="1504"/>
-        <path fill="rgb(255,64,0)" stroke="none" d="M 6765,5650 L 8266,5650 8266,7151 6765,7151 6765,5650 6765,5650 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 6765,5650 L 8266,5650 8266,7151 6765,7151 6765,5650 6765,5650 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7074" y="6353"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">Coopera-</tspan></tspan><tspan class="TextPosition" x="7345" y="6591"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">tion</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="6933" y="5649" width="1504" height="1504"/>
+        <path fill="rgb(255,64,0)" stroke="none" d="M 6934,5650 L 8435,5650 8435,7151 6934,7151 6934,5650 6934,5650 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 6934,5650 L 8435,5650 8435,7151 6934,7151 6934,5650 6934,5650 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7243" y="6353"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">Coopera-</tspan></tspan><tspan class="TextPosition" x="7514" y="6591"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">tion</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id68">
-        <rect class="BoundingBox" stroke="none" fill="none" x="12949" y="69692" width="1504" height="1504"/>
-        <path fill="rgb(255,64,0)" stroke="none" d="M 12950,69693 L 14451,69693 14451,71194 12950,71194 12950,69693 12950,69693 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 12950,69693 L 14451,69693 14451,71194 12950,71194 12950,69693 12950,69693 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13259" y="70396"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">Coopera-</tspan></tspan><tspan class="TextPosition" x="13530" y="70634"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">tion</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="71487" width="1504" height="1504"/>
+        <path fill="rgb(255,64,0)" stroke="none" d="M 12920,71488 L 14421,71488 14421,72989 12920,72989 12920,71488 12920,71488 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,71488 L 14421,71488 14421,72989 12920,72989 12920,71488 12920,71488 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13229" y="72191"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">Coopera-</tspan></tspan><tspan class="TextPosition" x="13500" y="72429"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">tion</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.ConnectorShape">
        <g id="id69">
-        <rect class="BoundingBox" stroke="none" fill="none" x="3970" y="70245" width="8981" height="350"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 3971,70450 L 12670,70443"/>
-        <path fill="rgb(52,101,164)" stroke="none" d="M 12650,70293 L 12950,70443 12650,70593 12650,70293 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7130" y="70399"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Coop price – individual price</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="3897" y="72040" width="9024" height="350"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3898,72245 L 12640,72238"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12620,72088 L 12920,72238 12620,72388 12620,72088 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7147" y="72194"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Coop price - individual price</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id70">
-        <rect class="BoundingBox" stroke="none" fill="none" x="2470" y="69699" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 2471,69700 L 3972,69700 3972,71201 2471,71201 2471,69700 2471,69700 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 2471,69700 L 3972,69700 3972,71201 2471,71201 2471,69700 2471,69700 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2833" y="70165"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">(Selling)</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2769" y="70403"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2998" y="70879"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="2397" y="71494" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 2398,71495 L 3899,71495 3899,72996 2398,72996 2398,71495 2398,71495 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 2398,71495 L 3899,71495 3899,72996 2398,72996 2398,71495 2398,71495 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2760" y="71960"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">(Selling)</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2696" y="72198"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2925" y="72674"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id71">
-        <rect class="BoundingBox" stroke="none" fill="none" x="2470" y="72749" width="1504" height="1504"/>
-        <path fill="rgb(255,64,0)" stroke="none" d="M 2471,72750 L 3972,72750 3972,74251 2471,74251 2471,72750 2471,72750 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 2471,72750 L 3972,72750 3972,74251 2471,74251 2471,72750 2471,72750 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2780" y="73453"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">Coopera-</tspan></tspan><tspan class="TextPosition" x="3051" y="73691"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">tion</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="2397" y="74544" width="1504" height="1504"/>
+        <path fill="rgb(255,64,0)" stroke="none" d="M 2398,74545 L 3899,74545 3899,76046 2398,76046 2398,74545 2398,74545 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 2398,74545 L 3899,74545 3899,76046 2398,76046 2398,74545 2398,74545 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2707" y="75248"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">Coopera-</tspan></tspan><tspan class="TextPosition" x="2978" y="75486"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(255,255,255)" stroke="none" style="white-space: pre">tion</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id72">
-        <rect class="BoundingBox" stroke="none" fill="none" x="12949" y="72749" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 12950,72750 L 14451,72750 14451,74251 12950,74251 12950,72750 12950,72750 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 12950,72750 L 14451,72750 14451,74251 12950,74251 12950,72750 12950,72750 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13312" y="73215"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">(Selling)</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13248" y="73453"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13477" y="73929"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="74544" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 12920,74545 L 14421,74545 14421,76046 12920,76046 12920,74545 12920,74545 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,74545 L 14421,74545 14421,76046 12920,76046 12920,74545 12920,74545 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13282" y="75010"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">(Selling)</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13218" y="75248"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13447" y="75724"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PRD</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.ConnectorShape">
        <g id="id73">
-        <rect class="BoundingBox" stroke="none" fill="none" x="3970" y="73299" width="8981" height="352"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 3971,73500 L 12670,73500"/>
-        <path fill="rgb(52,101,164)" stroke="none" d="M 12650,73350 L 12950,73500 12650,73650 12650,73350 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7150" y="73453"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Individual price – coop price</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="3897" y="75094" width="9024" height="352"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3898,75295 L 12640,75295"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12620,75145 L 12920,75295 12620,75445 12620,75145 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7147" y="75248"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Individual price - coop price</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
        <g id="id74">
-        <rect class="BoundingBox" stroke="none" fill="none" x="2256" y="71750" width="8144" height="608"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2506" y="72163"><tspan font-family="Liberation Sans, sans-serif" font-size="318px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">If coop price &lt; </tspan><tspan font-family="Liberation Sans, sans-serif" font-size="318px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">individual price (=underproductive plan)</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="2216" y="73545" width="8144" height="608"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2466" y="73958"><tspan font-family="Liberation Sans, sans-serif" font-size="318px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">If coop price &lt; </tspan><tspan font-family="Liberation Sans, sans-serif" font-size="318px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">individual price (=underproductive plan)</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id75">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1515" y="12361" width="1504" height="1504"/>
-        <path fill="rgb(255,255,255)" stroke="none" d="M 1516,12362 L 3017,12362 3017,13863 1516,13863 1516,12362 1516,12362 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 1516,12362 L 3017,12362 3017,13863 1516,13863 1516,12362 1516,12362 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2020" y="13065"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Debit </tspan></tspan><tspan class="TextPosition" x="1895" y="13303"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">account</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1740" y="12361" width="1504" height="1504"/>
+        <path fill="rgb(255,255,255)" stroke="none" d="M 1741,12362 L 3242,12362 3242,13863 1741,13863 1741,12362 1741,12362 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 1741,12362 L 3242,12362 3242,13863 1741,13863 1741,12362 1741,12362 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2245" y="13065"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Debit </tspan></tspan><tspan class="TextPosition" x="2120" y="13303"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">account</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id76">
-        <rect class="BoundingBox" stroke="none" fill="none" x="12840" y="12361" width="1504" height="1504"/>
-        <path fill="rgb(255,255,255)" stroke="none" d="M 12841,12362 L 14342,12362 14342,13863 12841,13863 12841,12362 12841,12362 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 12841,12362 L 14342,12362 14342,13863 12841,13863 12841,12362 12841,12362 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13309" y="13065"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Credit </tspan></tspan><tspan class="TextPosition" x="13220" y="13303"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">account</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="12361" width="1504" height="1504"/>
+        <path fill="rgb(255,255,255)" stroke="none" d="M 12920,12362 L 14421,12362 14421,13863 12920,13863 12920,12362 12920,12362 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,12362 L 14421,12362 14421,13863 12920,13863 12920,12362 12920,12362 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13388" y="13065"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Credit </tspan></tspan><tspan class="TextPosition" x="13299" y="13303"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">account</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.ConnectorShape">
        <g id="id77">
-        <rect class="BoundingBox" stroke="none" fill="none" x="3015" y="12911" width="9827" height="352"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 3016,13112 L 12561,13112"/>
-        <path fill="rgb(52,101,164)" stroke="none" d="M 12541,12962 L 12841,13112 12541,13262 12541,12962 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7665" y="13065"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Value</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="3240" y="12911" width="9681" height="352"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3241,13112 L 12640,13112"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12620,12962 L 12920,13112 12620,13262 12620,12962 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="6490" y="13065"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Value</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
        <g id="id78">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1253" y="10800" width="2648" height="1039"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1503" y="11433"><tspan font-family="Liberation Sans, sans-serif" font-size="564px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Legend</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1491" y="10800" width="2648" height="1039"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1741" y="11433"><tspan font-family="Liberation Sans, sans-serif" font-size="564px" font-style="italic" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Legend</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
        <g id="id79">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1372" y="49236" width="8538" height="807"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1622" y="49810"><tspan font-family="Liberation Sans, sans-serif" font-size="494px" font-weight="400" text-decoration="underline" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Private consumption of basic service</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1502" y="49236" width="8538" height="807"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1752" y="49810"><tspan font-family="Liberation Sans, sans-serif" font-size="494px" font-weight="400" text-decoration="underline" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Private consumption of basic service</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id80">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1571" y="50560" width="1504" height="1504"/>
-        <path fill="rgb(129,212,26)" stroke="none" d="M 1572,50561 L 3073,50561 3073,52062 1572,52062 1572,50561 1572,50561 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 1572,50561 L 3073,50561 3073,52062 1572,52062 1572,50561 1572,50561 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1934" y="51383"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Member</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1740" y="50522" width="1504" height="1504"/>
+        <path fill="rgb(129,212,26)" stroke="none" d="M 1741,50523 L 3242,50523 3242,52024 1741,52024 1741,50523 1741,50523 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 1741,50523 L 3242,50523 3242,52024 1741,52024 1741,50523 1741,50523 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2103" y="51345"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Member</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.ConnectorShape">
        <g id="id81">
-        <rect class="BoundingBox" stroke="none" fill="none" x="3071" y="51110" width="9777" height="352"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 3072,51311 L 12567,51311"/>
-        <path fill="rgb(52,101,164)" stroke="none" d="M 12547,51161 L 12847,51311 12547,51461 12547,51161 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7154" y="51264"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Consumed hours</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="3240" y="51072" width="9681" height="352"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3241,51273 L 12640,51273"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12620,51123 L 12920,51273 12620,51423 12620,51123 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="6490" y="51226"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Consumed hours</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id82">
-        <rect class="BoundingBox" stroke="none" fill="none" x="12846" y="50485" width="1504" height="1504"/>
-        <path fill="rgb(129,212,26)" stroke="none" d="M 12847,50486 L 14348,50486 14348,51987 12847,51987 12847,50486 12847,50486 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 12847,50486 L 14348,50486 14348,51987 12847,51987 12847,50486 12847,50486 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13361" y="51070"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">(Pro-</tspan></tspan><tspan class="TextPosition" x="13285" y="51308"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">viding)</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13209" y="51546"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Member</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="50522" width="1504" height="1504"/>
+        <path fill="rgb(129,212,26)" stroke="none" d="M 12920,50523 L 14421,50523 14421,52024 12920,52024 12920,50523 12920,50523 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,50523 L 14421,50523 14421,52024 12920,52024 12920,50523 12920,50523 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13434" y="51107"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">(Pro-</tspan></tspan><tspan class="TextPosition" x="13358" y="51345"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">viding)</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13282" y="51583"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Member</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="TextShape">
        <g id="id83">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1750" y="76373" width="12259" height="807"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2000" y="76947"><tspan font-family="Liberation Sans, sans-serif" font-size="494px" font-weight="400" text-decoration="underline" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Productive consumption of basic service</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1527" y="78168" width="12259" height="807"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="1777" y="78742"><tspan font-family="Liberation Sans, sans-serif" font-size="494px" font-weight="400" text-decoration="underline" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Productive consumption of basic service</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.ConnectorShape">
        <g id="id84">
-        <rect class="BoundingBox" stroke="none" fill="none" x="3390" y="78454" width="9836" height="352"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 3391,78655 L 12945,78655"/>
-        <path fill="rgb(52,101,164)" stroke="none" d="M 12925,78505 L 13225,78655 12925,78805 12925,78505 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="7503" y="78608"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Consumed hours</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="3240" y="80246" width="9681" height="350"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3241,80450 L 8081,80450 8081,80445 12640,80445"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12620,80295 L 12920,80445 12620,80595 12620,80295 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="6490" y="80400"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Consumed hours</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id85">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1915" y="77904" width="1504" height="1504"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 1916,77905 L 3417,77905 3417,79406 1916,79406 1916,77905 1916,77905 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 1916,77905 L 3417,77905 3417,79406 1916,79406 1916,77905 1916,77905 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2214" y="78489"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2589" y="78965"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">R</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="1740" y="79699" width="1504" height="1504"/>
+        <path fill="rgb(114,159,207)" stroke="none" d="M 1741,79700 L 3242,79700 3242,81201 1741,81201 1741,79700 1741,79700 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 1741,79700 L 3242,79700 3242,81201 1741,81201 1741,79700 1741,79700 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2039" y="80284"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Company</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2414" y="80760"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">R</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.CustomShape">
        <g id="id86">
-        <rect class="BoundingBox" stroke="none" fill="none" x="13249" y="77899" width="1504" height="1504"/>
-        <path fill="rgb(129,212,26)" stroke="none" d="M 13250,77900 L 14751,77900 14751,79401 13250,79401 13250,77900 13250,77900 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 13250,77900 L 14751,77900 14751,79401 13250,79401 13250,77900 13250,77900 Z"/>
-        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13612" y="78722"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Member</tspan></tspan></tspan></text>
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="79694" width="1504" height="1504"/>
+        <path fill="rgb(129,212,26)" stroke="none" d="M 12920,79695 L 14421,79695 14421,81196 12920,81196 12920,79695 12920,79695 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,79695 L 14421,79695 14421,81196 12920,81196 12920,79695 12920,79695 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13282" y="80517"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Member</tspan></tspan></tspan></text>
+       </g>
+      </g>
+      <g class="com.sun.star.drawing.CustomShape">
+       <g id="id87">
+        <rect class="BoundingBox" stroke="none" fill="none" x="1740" y="52414" width="1504" height="1504"/>
+        <path fill="rgb(129,212,26)" stroke="none" d="M 1741,52415 L 3242,52415 3242,53916 1741,53916 1741,52415 1741,52415 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 1741,52415 L 3242,52415 3242,53916 1741,53916 1741,52415 1741,52415 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2255" y="52999"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">(Pro-</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2179" y="53237"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">viding)</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="2103" y="53475"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Member</tspan></tspan></tspan></text>
+       </g>
+      </g>
+      <g class="com.sun.star.drawing.ConnectorShape">
+       <g id="id88">
+        <rect class="BoundingBox" stroke="none" fill="none" x="3240" y="52964" width="9681" height="352"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3241,53165 L 12640,53165"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12620,53015 L 12920,53165 12620,53315 12620,53015 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="6490" y="53118"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Consumed hours × (1 - FIC)</tspan></tspan></tspan></text>
+       </g>
+      </g>
+      <g class="com.sun.star.drawing.CustomShape">
+       <g id="id89">
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="52414" width="1504" height="1504"/>
+        <path fill="rgb(255,255,0)" stroke="none" d="M 12920,52415 L 14421,52415 14421,53916 12920,53916 12920,52415 12920,52415 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,52415 L 14421,52415 14421,53916 12920,53916 12920,52415 12920,52415 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13381" y="52761"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Social </tspan></tspan><tspan class="TextPosition" x="13252" y="52999"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Account-</tspan></tspan><tspan class="TextPosition" x="13530" y="53237"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">ing</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13464" y="53713"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PSF</tspan></tspan></tspan></text>
+       </g>
+      </g>
+      <g class="com.sun.star.drawing.CustomShape">
+       <g id="id90">
+        <rect class="BoundingBox" stroke="none" fill="none" x="1740" y="81659" width="1504" height="1504"/>
+        <path fill="rgb(129,212,26)" stroke="none" d="M 1741,81660 L 3242,81660 3242,83161 1741,83161 1741,81660 1741,81660 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 1741,81660 L 3242,81660 3242,83161 1741,83161 1741,81660 1741,81660 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="2103" y="82482"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Member</tspan></tspan></tspan></text>
+       </g>
+      </g>
+      <g class="com.sun.star.drawing.ConnectorShape">
+       <g id="id91">
+        <rect class="BoundingBox" stroke="none" fill="none" x="3240" y="82209" width="9681" height="352"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 3241,82410 L 12640,82410"/>
+        <path fill="rgb(52,101,164)" stroke="none" d="M 12620,82260 L 12920,82410 12620,82560 12620,82260 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="6490" y="82363"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Consumed hours × (1 - FIC)</tspan></tspan></tspan></text>
+       </g>
+      </g>
+      <g class="com.sun.star.drawing.CustomShape">
+       <g id="id92">
+        <rect class="BoundingBox" stroke="none" fill="none" x="12919" y="81659" width="1504" height="1504"/>
+        <path fill="rgb(255,255,0)" stroke="none" d="M 12920,81660 L 14421,81660 14421,83161 12920,83161 12920,81660 12920,81660 Z"/>
+        <path fill="none" stroke="rgb(52,101,164)" d="M 12920,81660 L 14421,81660 14421,83161 12920,83161 12920,81660 12920,81660 Z"/>
+        <text class="SVGTextShape"><tspan class="TextParagraph"><tspan class="TextPosition" x="13381" y="82006"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Social </tspan></tspan><tspan class="TextPosition" x="13252" y="82244"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">Account-</tspan></tspan><tspan class="TextPosition" x="13530" y="82482"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">ing</tspan></tspan></tspan><tspan class="TextParagraph"><tspan class="TextPosition" x="13464" y="82958"><tspan font-family="Liberation Sans, sans-serif" font-size="212px" font-weight="400" fill="rgb(0,0,0)" stroke="none" style="white-space: pre">PSF</tspan></tspan></tspan></text>
        </g>
       </g>
      </g>

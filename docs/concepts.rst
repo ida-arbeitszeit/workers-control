@@ -41,7 +41,7 @@ There are seven account types in our app. See :ref:`transfers-of-labor-time` for
      - Each company has a "prd" account ("Produkt" - product), where quantities of planned and delivered products are recorded. When a productive plan gets approved, the total planned costs are debited from this account. As the finished product gets consumed and work certificates are spent for it, the account balance increases back toward zero, item by item.
    * - member
      - Member
-     - Each member has a "member" account where inflows and outflows of work certificates are recorded. Work certificates are credited when a company registers work and debited when the member consumes a product. 
+     - Each member has a "member" account where inflows and outflows of work certificates are recorded. Work certificates are credited when the member works and debited when the member consumes a product. 
    * - psf
      - Social Accounting
      - The "psf" account (Public Sector Fund) is used to track hours credited to and debited from the public sector. In the current implementation of the app, there is one Social Accounting instance with one psf account.
@@ -90,27 +90,40 @@ Key differences from plans:
 * No approval by Social Accounting is required. A Basic Service is visible and searchable immediately upon creation.
 * There is no cooperative price mechanism for Basic Services.
 
-**Creating a Basic Service**
-
 A member creates a Basic Service by providing a name and a description. The service is immediately discoverable by other users.
 
 
 Consumption
 -----------
 
-Productive consumption is the consumption of products by companies. Companies cannot consume products from public plans. The consuming company specifies whether it is acquiring fixed or liquid means of production. The cost of the product is then subtracted from either the P or R account of the consuming company and added to the PRD account of the producing company.
+Workers Control distinguishes between *productive consumption* (a company consumes something for its own production process) and *private consumption* (a member consumes something for personal use). Both kinds of consumption can target either a product offered through a :ref:`plan <plans>` or a :ref:`basic service <basic-services>`.
 
-Private consumption is the consumption by members. The cost of the product is subtracted from the member's account and added to the PRD account of the producing company.
+**Productive consumption of a planned product**
 
+Companies consume products from other companies' productive plans. They cannot consume products from public plans. The consuming company specifies whether it is acquiring fixed or liquid means of production. The cost of the product (the cooperative price, if applicable) is then subtracted from either the P or R account of the consuming company and added to the PRD account of the producing company.
+
+**Private consumption of a planned product**
+
+Members consume products from any productive plan. The cost of the product (the cooperative price, if applicable) is subtracted from the member's account and added to the PRD account of the producing company.
+
+**Productive consumption of a basic service**
+
+A basic service represents living labour offered directly by a member, so a company that consumes one is consuming raw labour rather than an objectified product. The cost is subtracted from the consuming company's R account (basic services are treated as liquid means of production) and added to the providing member's account.
+
+**Private consumption of a basic service**
+
+A member consumes living labour offered by another member. The cost is subtracted from the consuming member's account and added to the providing member's account.
+
+.. _certificates-and-fic:
 
 Labor Certificates and Factor of Individual Consumption (FIC)
 -------------------------------------------------------------
 
-Companies are registering the worked hours of its members. The respective members then receive the number of registered hours on their account. 
+There are two ways for a member to credit work certificates to their account: a company they work for can register their worked hours, or another user can consume a :ref:`basic service <basic-services>` they offer. In both cases the member receives certificates equal to the number of hours of living labour they contributed.
 
-At the same time, a certain amount of certificates are subtracted from the member's account and added to the PSF account in order to cover the costs of public plans.
+At the same time, a certain amount of certificates is subtracted from the member's account and added to the PSF account in order to cover the costs of public plans. This deduction applies to both sources of certificates: when a company registers ``h`` worked hours for a member, and equivalently when a member's basic service is consumed for ``h`` hours, ``h * (1 - FIC)`` certificates are moved from the member's account to the PSF account.
 
-This amount is determined by the FIC. The FIC is calculated as follows:
+The amount is determined by the FIC. The FIC is calculated as follows:
 
 .. math::
 
@@ -124,8 +137,8 @@ where :math:`L` is the sum of all working hours in productive plans,
 
 The FIC ranges from 0 to 1.
 
-* If FIC = 0, all labor is allocated to public plans, making all goods and services freely available. When workers register hours worked, they do not receive any work certificates, since their work goes entirely to freely available public-sector goods and services and thus cannot be exchanged for private consumption.
-* If FIC = 1, all labor is dedicated to productive plans, meaning nothing is freely available. Work certificates are issued in full without deductions.
+* If FIC = 0, all labor is allocated to public plans, making all goods and services freely available. When workers register hours worked or members provide basic services, the member does not net any work certificates, since their work goes entirely to freely available public-sector goods and services and thus cannot be exchanged for private consumption.
+* If FIC = 1, all labor is dedicated to productive plans, meaning nothing is freely available. Work certificates from registered hours and from basic-service consumption are credited in full without deductions.
 
 Now, which plans are taken into account for the FIC calculation? We decided that the FIC should 
 be captured over a defined time window. The procedure is as follows:
@@ -239,7 +252,7 @@ Transfers occur between two accounts, where the debit account is charged, and th
    * - taxes
      - member
      - psf
-     - On registration of worked hours, :math:`hours * (1 - FIC)` are subtracted from the member's account and added to the PSF account.
+     - On registration of worked hours and on private or productive consumption of a :ref:`basic service <basic-services>`, :math:`hours * (1 - FIC)` are subtracted from the working/providing member's account and added to the PSF account.
 
 Here is a graphical overview of the accounts and transfers:
 

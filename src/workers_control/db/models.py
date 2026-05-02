@@ -288,7 +288,10 @@ class PrivateConsumptionOfBasicService(Base):
 
     id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
     basic_service: Mapped[UUID] = mapped_column(Uuid, ForeignKey("basic_service.id"))
-    transfer: Mapped[UUID] = mapped_column(Uuid, ForeignKey("transfer.id"))
+    transfer_of_consumption: Mapped[UUID] = mapped_column(
+        Uuid, ForeignKey("transfer.id")
+    )
+    transfer_of_taxes: Mapped[UUID] = mapped_column(Uuid, ForeignKey("transfer.id"))
 
 
 class ProductiveConsumption(Base):
@@ -310,7 +313,10 @@ class ProductiveConsumptionOfBasicService(Base):
 
     id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
     basic_service: Mapped[UUID] = mapped_column(Uuid, ForeignKey("basic_service.id"))
-    transfer: Mapped[UUID] = mapped_column(Uuid, ForeignKey("transfer.id"))
+    transfer_of_consumption: Mapped[UUID] = mapped_column(
+        Uuid, ForeignKey("transfer.id")
+    )
+    transfer_of_taxes: Mapped[UUID] = mapped_column(Uuid, ForeignKey("transfer.id"))
 
 
 class RegisteredHoursWorked(Base):

@@ -571,7 +571,8 @@ class DatabaseGateway(Protocol):
     def create_private_consumption_of_basic_service(
         self,
         basic_service: UUID,
-        transfer: UUID,
+        transfer_of_consumption: UUID,
+        transfer_of_taxes: UUID,
     ) -> records.PrivateConsumptionOfBasicService: ...
 
     def get_private_consumptions_of_basic_service(
@@ -591,7 +592,8 @@ class DatabaseGateway(Protocol):
     def create_productive_consumption_of_basic_service(
         self,
         basic_service: UUID,
-        transfer: UUID,
+        transfer_of_consumption: UUID,
+        transfer_of_taxes: UUID,
     ) -> records.ProductiveConsumptionOfBasicService: ...
 
     def get_productive_consumptions_of_basic_service(

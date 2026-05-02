@@ -101,15 +101,20 @@ class ShowMemberAccountDetailsTests(BaseTestCase):
             consumer=consumer, amount=expected_amount, basic_service=basic_service
         )
         response = self.interactor.execute(provider)
-        assert len(response.transfers) == 1
-        assert response.transfers[0].transfer_party.name is ANONYMIZED_STR
-        assert response.transfers[0].transfer_party.id is ANONYMIZED_UUID
-        assert response.transfers[0].transfer_party.type == TransferPartyType.member
-        assert response.transfers[0].volume == expected_amount
-        assert (
-            response.transfers[0].type
-            == TransferType.private_consumption_of_basic_service
+        assert len(response.transfers) == 2
+        consumption_transfer = next(
+            t
+            for t in response.transfers
+            if t.type == TransferType.private_consumption_of_basic_service
         )
+        assert consumption_transfer.transfer_party.name is ANONYMIZED_STR
+        assert consumption_transfer.transfer_party.id is ANONYMIZED_UUID
+        assert consumption_transfer.transfer_party.type == TransferPartyType.member
+        assert consumption_transfer.volume == expected_amount
+        tax_transfer = next(
+            t for t in response.transfers if t.type == TransferType.taxes
+        )
+        assert tax_transfer.volume == Decimal(0)
         assert response.balance == expected_amount
 
     def test_that_a_transfer_with_volume_zero_is_shown_correctly(self) -> None:

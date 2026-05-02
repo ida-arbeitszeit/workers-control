@@ -27,15 +27,21 @@ class ProductiveConsumptionOfBasicServiceTests(DatabaseTestCase):
             self.database_gateway.get_members().with_id(provider_id.provider).first()
         )
         assert provider
-        transfer = self.transfer_generator.create_transfer(
+        transfer_of_consumption = self.transfer_generator.create_transfer(
             debit_account=consumer.raw_material_account,
             credit_account=provider.account,
             value=amount,
             type=TransferType.productive_consumption_of_basic_service,
         )
+        transfer_of_taxes = self.transfer_generator.create_transfer(
+            debit_account=provider.account,
+            value=Decimal(0),
+            type=TransferType.taxes,
+        )
         return self.database_gateway.create_productive_consumption_of_basic_service(
             basic_service=basic_service,
-            transfer=transfer.id,
+            transfer_of_consumption=transfer_of_consumption.id,
+            transfer_of_taxes=transfer_of_taxes.id,
         )
 
     def test_that_by_default_no_consumptions_of_basic_service_are_in_db(self) -> None:
@@ -63,7 +69,8 @@ class ProductiveConsumptionOfBasicServiceTests(DatabaseTestCase):
         )
         assert consumption
         transfer_ids = {t.id for t in self.database_gateway.get_transfers()}
-        assert consumption.transfer in transfer_ids
+        assert consumption.transfer_of_consumption in transfer_ids
+        assert consumption.transfer_of_taxes in transfer_ids
 
     def test_that_two_different_consumptions_reference_different_transfers(
         self,
@@ -73,7 +80,10 @@ class ProductiveConsumptionOfBasicServiceTests(DatabaseTestCase):
         consumption_1, consumption_2 = list(
             self.database_gateway.get_productive_consumptions_of_basic_service()
         )
-        assert consumption_1.transfer != consumption_2.transfer
+        assert (
+            consumption_1.transfer_of_consumption
+            != consumption_2.transfer_of_consumption
+        )
 
     def test_can_filter_consumptions_by_consumer(self) -> None:
         company = self.company_generator.create_company_record()
@@ -94,7 +104,7 @@ class ProductiveConsumptionOfBasicServiceTests(DatabaseTestCase):
         )
         assert result
         consumption, transfer, basic_service = result
-        assert consumption.transfer == transfer.id
+        assert consumption.transfer_of_consumption == transfer.id
         assert consumption.basic_service == basic_service.id
 
     def test_that_amount_of_transfer_equals_amount_specified_when_creating_the_consumption(

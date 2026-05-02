@@ -104,49 +104,89 @@ class TestPresenter(BaseTestCase):
         self,
     ):
         response = self.get_interactor_response(
-            [self.get_transfer(type=TransferType.work_certificates)]
+            [
+                self.get_transfer(
+                    type=TransferType.work_certificates,
+                    transfer_party=TransferParty(
+                        id=uuid4(),
+                        name="Some party name",
+                        type=TransferPartyType.company,
+                    ),
+                )
+            ]
         )
         view_model = self.presenter.present_member_account(response)
         self.assertEqual(
             view_model.transfers[0].transfer_type,
             self.translator.gettext("Work certificates"),
         )
+        self.assertEqual(view_model.transfers[0].party_icon, "industry")
 
     def test_that_transfer_type_is_shown_correctly_for_consumption_of_consumer_product(
         self,
     ):
         response = self.get_interactor_response(
-            [self.get_transfer(type=TransferType.private_consumption)]
+            [
+                self.get_transfer(
+                    type=TransferType.private_consumption,
+                    transfer_party=TransferParty(
+                        id=uuid4(),
+                        name="Some party name",
+                        type=TransferPartyType.company,
+                    ),
+                )
+            ]
         )
         view_model = self.presenter.present_member_account(response)
         self.assertEqual(
             view_model.transfers[0].transfer_type,
             self.translator.gettext("Private consumption"),
         )
+        self.assertEqual(view_model.transfers[0].party_icon, "industry")
 
     def test_that_transfer_type_is_shown_correctly_for_taxes(
         self,
     ):
         response = self.get_interactor_response(
-            [self.get_transfer(type=TransferType.taxes)]
+            [
+                self.get_transfer(
+                    type=TransferType.taxes,
+                    transfer_party=TransferParty(
+                        id=uuid4(),
+                        name="Some party name",
+                        type=TransferPartyType.social_accounting,
+                    ),
+                )
+            ]
         )
         view_model = self.presenter.present_member_account(response)
         self.assertEqual(
             view_model.transfers[0].transfer_type,
             self.translator.gettext("Contribution to public sector"),
         )
+        self.assertEqual(view_model.transfers[0].party_icon, "users")
 
     def test_that_transfer_type_is_shown_correctly_for_consumption_of_basic_service(
         self,
     ):
         response = self.get_interactor_response(
-            [self.get_transfer(type=TransferType.private_consumption_of_basic_service)]
+            [
+                self.get_transfer(
+                    type=TransferType.private_consumption_of_basic_service,
+                    transfer_party=TransferParty(
+                        id=uuid4(),
+                        name="Some party name",
+                        type=TransferPartyType.member,
+                    ),
+                )
+            ]
         )
         view_model = self.presenter.present_member_account(response)
         self.assertEqual(
             view_model.transfers[0].transfer_type,
             self.translator.gettext("Private consumption of basic service"),
         )
+        self.assertEqual(view_model.transfers[0].party_icon, "user")
 
     @parameterized.expand([(t,) for t in TransferType])
     def test_that_no_transfer_type_raises_when_presented(

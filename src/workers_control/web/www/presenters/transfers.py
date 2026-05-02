@@ -2,7 +2,11 @@ from dataclasses import dataclass
 from typing import assert_never
 
 from workers_control.core.anonymization import ANONYMIZED_STR
-from workers_control.core.services.account_details import AccountTransfer, TransferParty
+from workers_control.core.services.account_details import (
+    AccountTransfer,
+    TransferParty,
+    TransferPartyType,
+)
 from workers_control.core.transfers import TransferType
 from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
 from workers_control.web.translator import Translator
@@ -49,13 +53,15 @@ class TransferPresenter:
     ) -> str:
         if debtor_equals_creditor:
             return ""
-        match transfer_party.type.name:
-            case "member":
+        match transfer_party.type:
+            case TransferPartyType.member:
                 return "user"
-            case "company":
+            case TransferPartyType.company:
                 return "industry"
-            case "cooperation":
+            case TransferPartyType.cooperation:
                 return "hands-helping"
+            case TransferPartyType.social_accounting:
+                return "users"
             case _:
                 return ""
 

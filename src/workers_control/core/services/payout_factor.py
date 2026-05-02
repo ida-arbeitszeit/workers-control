@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from decimal import Decimal
+from itertools import chain
 from typing import Iterable, Protocol
 
 from workers_control.core.datetime_service import DatetimeService
@@ -34,13 +35,18 @@ class PayoutFactorService:
         See dev docs for an explanation.
         """
         now = self.datetime_service.now()
-        relevant_plans = self._get_info_of_relevant_plans(now)
-        return self._calculate_payout_factor(relevant_plans)
-
-    def _get_info_of_relevant_plans(self, now: datetime) -> Iterable[PlanInfo]:
         window_length_in_days = self.payout_factor_config.get_window_length_in_days()
         window_start = now - timedelta(days=window_length_in_days / 2)
         window_end = now + timedelta(days=window_length_in_days / 2)
+        relevant_plans = self._get_info_of_relevant_plans(window_start, window_end)
+        bs_consumption = self._get_basic_service_consumption_in_window(
+            window_start, window_end
+        )
+        return self._calculate_payout_factor(relevant_plans, bs_consumption)
+
+    def _get_info_of_relevant_plans(
+        self, window_start: datetime, window_end: datetime
+    ) -> Iterable[PlanInfo]:
         plans = (
             self.database_gateway.get_plans()
             .that_were_approved_before(window_end)
@@ -67,6 +73,21 @@ class PayoutFactorService:
                 coverage=coverage,
             )
 
+    def _get_basic_service_consumption_in_window(
+        self, window_start: datetime, window_end: datetime
+    ) -> Decimal:
+        private = (
+            self.database_gateway.get_private_consumptions_of_basic_service().joined_with_transfer_and_basic_service()
+        )
+        productive = (
+            self.database_gateway.get_productive_consumptions_of_basic_service().joined_with_transfer_and_basic_service()
+        )
+        total = Decimal(0)
+        for _, transfer, _ in chain(private, productive):
+            if window_start <= transfer.date <= window_end:
+                total += transfer.value
+        return total
+
     @staticmethod
     def calculate_coverage(
         window_start: datetime,
@@ -88,17 +109,16 @@ class PayoutFactorService:
         return coverage
 
     @staticmethod
-    def _calculate_payout_factor(plan_info: Iterable[PlanInfo]) -> Decimal:
+    def _calculate_payout_factor(
+        plan_info: Iterable[PlanInfo], bs_consumption: Decimal
+    ) -> Decimal:
         # payout factor or factor of individual consumption (FIC)
         # = (l − ( p_o + r_o )) / (l + l_o)
         # where:
-        # l = labour in productive plans
+        # l = labour in productive plans + consumed basic services in window
         # l_o = labour in public plans
         # p_o = means of production in public plans
         # r_o = raw materials in public plans
-
-        if not plan_info:
-            return Decimal(1)
 
         l: Decimal = Decimal(0)
         l_o: Decimal = Decimal(0)
@@ -110,6 +130,7 @@ class PayoutFactorService:
                 p_o_and_r_o += (plan.p + plan.r) * plan.coverage
             else:
                 l += plan.l * plan.coverage
+        l += bs_consumption
         total_labour = l + l_o
 
         if not total_labour:

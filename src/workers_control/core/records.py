@@ -303,7 +303,8 @@ class PrivateConsumption:
 class PrivateConsumptionOfBasicService:
     id: UUID
     basic_service: UUID
-    transfer: UUID
+    transfer_of_consumption: UUID
+    transfer_of_taxes: UUID
 
 
 @dataclass(frozen=True)
@@ -319,7 +320,8 @@ class ProductiveConsumption:
 class ProductiveConsumptionOfBasicService:
     id: UUID
     basic_service: UUID
-    transfer: UUID
+    transfer_of_consumption: UUID
+    transfer_of_taxes: UUID
 
 
 AccountOwner = Union[Member, Company, SocialAccounting, Cooperation]

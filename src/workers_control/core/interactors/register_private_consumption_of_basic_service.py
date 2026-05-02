@@ -8,7 +8,9 @@ from uuid import UUID
 
 from workers_control.core.control_thresholds import ControlThresholds
 from workers_control.core.datetime_service import DatetimeService
+from workers_control.core.records import SocialAccounting
 from workers_control.core.repositories import DatabaseGateway
+from workers_control.core.services.payout_factor import PayoutFactorService
 from workers_control.core.transfers import TransferType
 
 
@@ -40,6 +42,8 @@ class RegisterPrivateConsumptionOfBasicServiceInteractor:
     control_thresholds: ControlThresholds
     datetime_service: DatetimeService
     database_gateway: DatabaseGateway
+    payout_factor_service: PayoutFactorService
+    social_accounting: SocialAccounting
 
     def execute(
         self, request: RegisterPrivateConsumptionOfBasicServiceRequest
@@ -72,16 +76,26 @@ class RegisterPrivateConsumptionOfBasicServiceInteractor:
         assert provider
         if not self._is_account_balance_sufficient(request.amount, consumer.account):
             raise RejectionReason.insufficient_balance
-        transfer = self.database_gateway.create_transfer(
-            date=self.datetime_service.now(),
+        now = self.datetime_service.now()
+        fic = self.payout_factor_service.calculate_current_payout_factor()
+        transfer_of_consumption = self.database_gateway.create_transfer(
+            date=now,
             debit_account=consumer.account,
             credit_account=provider.account,
             value=request.amount,
             type=TransferType.private_consumption_of_basic_service,
         )
+        transfer_of_taxes = self.database_gateway.create_transfer(
+            date=now,
+            debit_account=provider.account,
+            credit_account=self.social_accounting.account_psf,
+            value=request.amount * (Decimal(1) - fic),
+            type=TransferType.taxes,
+        )
         self.database_gateway.create_private_consumption_of_basic_service(
             basic_service=basic_service.id,
-            transfer=transfer.id,
+            transfer_of_consumption=transfer_of_consumption.id,
+            transfer_of_taxes=transfer_of_taxes.id,
         )
         return RegisterPrivateConsumptionOfBasicServiceResponse(rejection_reason=None)
 

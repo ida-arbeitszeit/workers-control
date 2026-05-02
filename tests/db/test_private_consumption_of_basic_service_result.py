@@ -37,7 +37,8 @@ class PrivateConsumptionOfBasicServiceTests(DatabaseTestCase):
         )
         assert consumption
         transfer_ids = {t.id for t in self.database_gateway.get_transfers()}
-        assert consumption.transfer in transfer_ids
+        assert consumption.transfer_of_consumption in transfer_ids
+        assert consumption.transfer_of_taxes in transfer_ids
 
     def test_that_two_different_consumptions_reference_different_transfers(
         self,
@@ -47,7 +48,10 @@ class PrivateConsumptionOfBasicServiceTests(DatabaseTestCase):
         consumption_1, consumption_2 = list(
             self.database_gateway.get_private_consumptions_of_basic_service()
         )
-        assert consumption_1.transfer != consumption_2.transfer
+        assert (
+            consumption_1.transfer_of_consumption
+            != consumption_2.transfer_of_consumption
+        )
 
     def test_can_filter_consumptions_by_consumer(self) -> None:
         member = self.member_generator.create_member()
@@ -68,7 +72,7 @@ class PrivateConsumptionOfBasicServiceTests(DatabaseTestCase):
         )
         assert result
         consumption, transfer, basic_service = result
-        assert consumption.transfer == transfer.id
+        assert consumption.transfer_of_consumption == transfer.id
         assert consumption.basic_service == basic_service.id
 
     def test_that_amount_of_transfer_equals_amount_specified_when_creating_the_consumption(

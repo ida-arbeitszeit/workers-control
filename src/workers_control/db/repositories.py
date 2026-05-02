@@ -1523,7 +1523,8 @@ class PrivateConsumptionOfBasicServiceResult(
         return self._with_modified_query(
             lambda query: query.join(
                 transfer,
-                models.PrivateConsumptionOfBasicService.transfer == transfer.id,
+                models.PrivateConsumptionOfBasicService.transfer_of_consumption
+                == transfer.id,
             )
             .join(account, transfer.debit_account == account.id)
             .join(
@@ -1565,7 +1566,8 @@ class PrivateConsumptionOfBasicServiceResult(
             mapper=mapper,
             query=self.query.join(
                 transfer,
-                models.PrivateConsumptionOfBasicService.transfer == transfer.id,
+                models.PrivateConsumptionOfBasicService.transfer_of_consumption
+                == transfer.id,
             )
             .join(
                 basic_service,
@@ -1588,7 +1590,8 @@ class ProductiveConsumptionOfBasicServiceResult(
         return self._with_modified_query(
             lambda query: query.join(
                 transfer,
-                models.ProductiveConsumptionOfBasicService.transfer == transfer.id,
+                models.ProductiveConsumptionOfBasicService.transfer_of_consumption
+                == transfer.id,
             )
             .join(account, transfer.debit_account == account.id)
             .join(
@@ -1630,7 +1633,8 @@ class ProductiveConsumptionOfBasicServiceResult(
             mapper=mapper,
             query=self.query.join(
                 transfer,
-                models.ProductiveConsumptionOfBasicService.transfer == transfer.id,
+                models.ProductiveConsumptionOfBasicService.transfer_of_consumption
+                == transfer.id,
             )
             .join(
                 basic_service,
@@ -2401,12 +2405,14 @@ class DatabaseGatewayImpl:
     def create_productive_consumption_of_basic_service(
         self,
         basic_service: UUID,
-        transfer: UUID,
+        transfer_of_consumption: UUID,
+        transfer_of_taxes: UUID,
     ) -> records.ProductiveConsumptionOfBasicService:
         orm = models.ProductiveConsumptionOfBasicService(
             id=uuid4(),
             basic_service=basic_service,
-            transfer=transfer,
+            transfer_of_consumption=transfer_of_consumption,
+            transfer_of_taxes=transfer_of_taxes,
         )
         self.db.session.add(orm)
         self.db.session.flush()
@@ -2428,7 +2434,8 @@ class DatabaseGatewayImpl:
         return records.ProductiveConsumptionOfBasicService(
             id=orm.id,
             basic_service=orm.basic_service,
-            transfer=orm.transfer,
+            transfer_of_consumption=orm.transfer_of_consumption,
+            transfer_of_taxes=orm.transfer_of_taxes,
         )
 
     def create_private_consumption(
@@ -2459,12 +2466,14 @@ class DatabaseGatewayImpl:
     def create_private_consumption_of_basic_service(
         self,
         basic_service: UUID,
-        transfer: UUID,
+        transfer_of_consumption: UUID,
+        transfer_of_taxes: UUID,
     ) -> records.PrivateConsumptionOfBasicService:
         orm = models.PrivateConsumptionOfBasicService(
             id=uuid4(),
             basic_service=basic_service,
-            transfer=transfer,
+            transfer_of_consumption=transfer_of_consumption,
+            transfer_of_taxes=transfer_of_taxes,
         )
         self.db.session.add(orm)
         self.db.session.flush()
@@ -2486,7 +2495,8 @@ class DatabaseGatewayImpl:
         return records.PrivateConsumptionOfBasicService(
             id=orm.id,
             basic_service=orm.basic_service,
-            transfer=orm.transfer,
+            transfer_of_consumption=orm.transfer_of_consumption,
+            transfer_of_taxes=orm.transfer_of_taxes,
         )
 
     @classmethod

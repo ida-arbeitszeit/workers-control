@@ -1078,7 +1078,7 @@ class PrivateConsumptionOfBasicServiceResult(
         def filtered_items() -> Iterator[records.PrivateConsumptionOfBasicService]:
             member_account = self.database.members[member].account
             for consumption in self.items():
-                transfer = self.database.transfers[consumption.transfer]
+                transfer = self.database.transfers[consumption.transfer_of_consumption]
                 if transfer.debit_account == member_account:
                     yield consumption
 
@@ -1101,7 +1101,7 @@ class PrivateConsumptionOfBasicServiceResult(
             ]
         ]:
             for consumption in self.items():
-                transfer = self.database.transfers[consumption.transfer]
+                transfer = self.database.transfers[consumption.transfer_of_consumption]
                 basic_service = self.database.basic_services[consumption.basic_service]
                 yield consumption, transfer, basic_service
 
@@ -1120,7 +1120,7 @@ class ProductiveConsumptionOfBasicServiceResult(
             if company_record is None:
                 return None
             for consumption in self.items():
-                transfer = self.database.transfers[consumption.transfer]
+                transfer = self.database.transfers[consumption.transfer_of_consumption]
                 if transfer.debit_account == company_record.raw_material_account:
                     yield consumption
 
@@ -1143,7 +1143,7 @@ class ProductiveConsumptionOfBasicServiceResult(
             ]
         ]:
             for consumption in self.items():
-                transfer = self.database.transfers[consumption.transfer]
+                transfer = self.database.transfers[consumption.transfer_of_consumption]
                 basic_service = self.database.basic_services[consumption.basic_service]
                 yield consumption, transfer, basic_service
 
@@ -1897,12 +1897,14 @@ class MockDatabase:
     def create_private_consumption_of_basic_service(
         self,
         basic_service: UUID,
-        transfer: UUID,
+        transfer_of_consumption: UUID,
+        transfer_of_taxes: UUID,
     ) -> records.PrivateConsumptionOfBasicService:
         consumption = records.PrivateConsumptionOfBasicService(
             id=uuid4(),
             basic_service=basic_service,
-            transfer=transfer,
+            transfer_of_consumption=transfer_of_consumption,
+            transfer_of_taxes=transfer_of_taxes,
         )
         self.private_consumptions_of_basic_service[consumption.id] = consumption
         return consumption
@@ -1944,12 +1946,14 @@ class MockDatabase:
     def create_productive_consumption_of_basic_service(
         self,
         basic_service: UUID,
-        transfer: UUID,
+        transfer_of_consumption: UUID,
+        transfer_of_taxes: UUID,
     ) -> records.ProductiveConsumptionOfBasicService:
         consumption = records.ProductiveConsumptionOfBasicService(
             id=uuid4(),
             basic_service=basic_service,
-            transfer=transfer,
+            transfer_of_consumption=transfer_of_consumption,
+            transfer_of_taxes=transfer_of_taxes,
         )
         self.productive_consumptions_of_basic_service[consumption.id] = consumption
         return consumption

@@ -130,10 +130,10 @@ The amount is determined by the FIC. The FIC is calculated as follows:
   \text{FIC} = \frac{L-(P_o + R_o)}{L + L_o}     
   
 
-where :math:`L` is the sum of all working hours in productive plans, 
+where :math:`L` is the sum of all working hours in productive plans plus the working hours of basic services consumed within the calculation window,
 :math:`L_o` is the sum of all working hours in public plans,
 :math:`P_o` is the sum of all fixed means of production in public plans, and
-:math:`R_o` is the sum of all liquid means of production in public plans. 
+:math:`R_o` is the sum of all liquid means of production in public plans.
 
 The FIC ranges from 0 to 1.
 
@@ -149,6 +149,8 @@ Planned labour and means of production that fall within this window are weighted
 plan lies 100% within the current time window (i.e. it starts and ends within the window), its planned costs
 enter the FIC at 100%. If it lies 50% within the window, they enter at
 only 50%. If it lies entirely outside the window, it does not contribute at all, and so on.
+
+Consumed basic services, in contrast, are point-in-time events rather than time-spanning plans. A consumed basic service is included in :math:`L` in full if its consumption date lies within the calculation window, and not at all otherwise.
 
 .. _cooperations:
 

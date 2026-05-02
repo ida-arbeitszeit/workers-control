@@ -402,6 +402,85 @@ class PayoutFactorTests(BaseTestCase):
         return int(plan_duration), plan_start
 
 
+class BasicServiceConsumptionTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.service = self.injector.get(PayoutFactorService)
+        self.payout_factor_config = self.injector.get(PayoutFactorConfigTestImpl)
+        self.now = datetime(2025, 12, 1)
+        self.datetime_service.freeze_time(self.now)
+
+    def test_that_private_bs_consumption_inside_window_does_not_change_pf_when_no_plans_exist(
+        self,
+    ) -> None:
+        self.consumption_generator.create_private_consumption_of_basic_service(
+            amount=Decimal(10)
+        )
+        pf = self.service.calculate_current_payout_factor()
+        assert pf == Decimal(1)
+
+    def test_that_productive_bs_consumption_inside_window_does_not_change_pf_when_no_plans_exist(
+        self,
+    ) -> None:
+        self.consumption_generator.create_productive_consumption_of_basic_service(
+            amount=Decimal(10)
+        )
+        pf = self.service.calculate_current_payout_factor()
+        assert pf == Decimal(1)
+
+    def test_that_private_bs_consumption_inside_window_pushes_pf_up(self) -> None:
+        self.plan_generator.create_plan(costs=DEFAULT_COSTS, is_public_service=True)
+        pf_before = self.service.calculate_current_payout_factor()
+        self.consumption_generator.create_private_consumption_of_basic_service(
+            amount=Decimal(100)
+        )
+        pf_after = self.service.calculate_current_payout_factor()
+        assert pf_after > pf_before
+
+    def test_that_productive_bs_consumption_inside_window_pushes_pf_up(self) -> None:
+        self.plan_generator.create_plan(costs=DEFAULT_COSTS, is_public_service=True)
+        pf_before = self.service.calculate_current_payout_factor()
+        self.consumption_generator.create_productive_consumption_of_basic_service(
+            amount=Decimal(100)
+        )
+        pf_after = self.service.calculate_current_payout_factor()
+        assert pf_after > pf_before
+
+    def test_that_bs_consumption_outside_window_does_not_affect_pf(self) -> None:
+        self.plan_generator.create_plan(costs=DEFAULT_COSTS, is_public_service=True)
+        pf_baseline = self.service.calculate_current_payout_factor()
+        window_size = self.payout_factor_config.get_window_length_in_days()
+        far_in_the_past = self.now - timedelta(days=window_size * 3)
+        self.datetime_service.freeze_time(far_in_the_past)
+        self.consumption_generator.create_private_consumption_of_basic_service(
+            amount=Decimal(100)
+        )
+        self.datetime_service.freeze_time(self.now)
+        pf_after = self.service.calculate_current_payout_factor()
+        self.assertAlmostEqual(pf_after, pf_baseline)
+
+    def test_that_bs_consumption_value_enters_productive_labour_in_formula(
+        self,
+    ) -> None:
+        # One public plan with l=2, p+r=2 means p_o_and_r_o = 2, l_o = 2.
+        # No productive plans, no BS yet ⇒ FIC = max(0, (0 - 2) / 2) = 0.
+        # Add BS consumption of 6h ⇒ l = 6, total_labour = 6 + 2 = 8,
+        # FIC = (6 - 2) / 8 = 0.5.
+        self.plan_generator.create_plan(
+            costs=ProductionCosts(
+                means_cost=Decimal(1),
+                resource_cost=Decimal(1),
+                labour_cost=Decimal(2),
+            ),
+            is_public_service=True,
+        )
+        self.consumption_generator.create_private_consumption_of_basic_service(
+            amount=Decimal(6)
+        )
+        pf = self.service.calculate_current_payout_factor()
+        self.assertAlmostEqual(pf, Decimal("0.5"))
+
+
 class CoverageTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()

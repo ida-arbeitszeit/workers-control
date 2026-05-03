@@ -131,3 +131,39 @@ class ProductiveConsumptionOfBasicServiceTests(DatabaseTestCase):
             .where_consumer_is_company(company.id)
             .joined_with_transfer_and_basic_service()
         )
+
+    def test_can_retrieve_transfer_with_consumption(self) -> None:
+        self._create_consumption()
+        result = (
+            self.database_gateway.get_productive_consumptions_of_basic_service()
+            .joined_with_transfer()
+            .first()
+        )
+        assert result
+        consumption, transfer = result
+        assert consumption.transfer_of_consumption == transfer.id
+
+    def test_that_amount_of_transfer_from_join_with_transfer_equals_amount_specified_when_creating_the_consumption(
+        self,
+    ) -> None:
+        expected_amount = Decimal("5")
+        self._create_consumption(amount=expected_amount)
+        result = (
+            self.database_gateway.get_productive_consumptions_of_basic_service()
+            .joined_with_transfer()
+            .first()
+        )
+        assert result
+        _, transfer = result
+        assert transfer.value == expected_amount
+
+    def test_can_combine_filtering_and_joining_of_consumptions_with_transfer(
+        self,
+    ) -> None:
+        company = self.company_generator.create_company_record()
+        self._create_consumption(consumer=company)
+        assert (
+            self.database_gateway.get_productive_consumptions_of_basic_service()
+            .where_consumer_is_company(company.id)
+            .joined_with_transfer()
+        )

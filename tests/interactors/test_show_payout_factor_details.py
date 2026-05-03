@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from decimal import Decimal
 
 from parameterized import parameterized
 
@@ -192,3 +193,75 @@ class PlanDataTests(BaseTestCase):
         self.plan_generator.create_plan()
         response = self.interactor.show_payout_factor_details()
         assert response.plans[0].coverage is not None
+
+
+class BasicServiceConsumptionsTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.interactor = self.injector.get(
+            show_payout_factor_details.ShowPayoutFactorDetailsInteractor
+        )
+        self.payout_factor_config = self.injector.get(PayoutFactorConfigTestImpl)
+        self.now = datetime(2025, 12, 1)
+        self.datetime_service.freeze_time(self.now)
+
+    def test_response_has_empty_list_when_no_consumptions(self) -> None:
+        response = self.interactor.show_payout_factor_details()
+        assert response.basic_service_consumptions == []
+
+    def test_private_consumption_in_window_appears_in_response(self) -> None:
+        self.consumption_generator.create_private_consumption_of_basic_service(
+            amount=Decimal(3)
+        )
+        response = self.interactor.show_payout_factor_details()
+        assert len(response.basic_service_consumptions) == 1
+        assert response.basic_service_consumptions[0].value == Decimal(3)
+
+    def test_productive_consumption_in_window_appears_in_response(self) -> None:
+        self.consumption_generator.create_productive_consumption_of_basic_service(
+            amount=Decimal(8)
+        )
+        response = self.interactor.show_payout_factor_details()
+        assert len(response.basic_service_consumptions) == 1
+        assert response.basic_service_consumptions[0].value == Decimal(8)
+
+    def test_consumption_outside_window_does_not_appear(self) -> None:
+        window_size = self.payout_factor_config.get_window_length_in_days()
+        far_in_the_past = self.now - timedelta(days=window_size * 3)
+        self.datetime_service.freeze_time(far_in_the_past)
+        self.consumption_generator.create_private_consumption_of_basic_service(
+            amount=Decimal(2)
+        )
+        self.datetime_service.freeze_time(self.now)
+        response = self.interactor.show_payout_factor_details()
+        assert response.basic_service_consumptions == []
+
+    def test_mix_of_private_and_productive_both_appear(self) -> None:
+        self.consumption_generator.create_private_consumption_of_basic_service(
+            amount=Decimal(2)
+        )
+        self.consumption_generator.create_productive_consumption_of_basic_service(
+            amount=Decimal(5)
+        )
+        response = self.interactor.show_payout_factor_details()
+        assert len(response.basic_service_consumptions) == 2
+
+    def test_consumptions_are_sorted_by_date(self) -> None:
+        first_date = self.now - timedelta(days=2)
+        second_date = self.now - timedelta(days=1)
+        self.datetime_service.freeze_time(second_date)
+        self.consumption_generator.create_private_consumption_of_basic_service(
+            amount=Decimal(2)
+        )
+        self.datetime_service.freeze_time(first_date)
+        self.consumption_generator.create_productive_consumption_of_basic_service(
+            amount=Decimal(1)
+        )
+        self.datetime_service.freeze_time(self.now)
+        response = self.interactor.show_payout_factor_details()
+        dates = [dp.date for dp in response.basic_service_consumptions]
+        assert dates == sorted(dates)
+        assert [dp.value for dp in response.basic_service_consumptions] == [
+            Decimal(1),
+            Decimal(2),
+        ]

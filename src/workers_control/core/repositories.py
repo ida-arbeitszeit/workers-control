@@ -277,6 +277,12 @@ class PrivateConsumptionOfBasicServiceResult(
 ):
     def where_consumer_is_member(self, member: UUID) -> Self: ...
 
+    def joined_with_transfer(
+        self,
+    ) -> QueryResult[
+        Tuple[records.PrivateConsumptionOfBasicService, records.Transfer]
+    ]: ...
+
     def joined_with_transfer_and_basic_service(
         self,
     ) -> QueryResult[
@@ -292,6 +298,12 @@ class ProductiveConsumptionOfBasicServiceResult(
     QueryResult[records.ProductiveConsumptionOfBasicService], Protocol
 ):
     def where_consumer_is_company(self, company: UUID) -> Self: ...
+
+    def joined_with_transfer(
+        self,
+    ) -> QueryResult[
+        Tuple[records.ProductiveConsumptionOfBasicService, records.Transfer]
+    ]: ...
 
     def joined_with_transfer_and_basic_service(
         self,

@@ -59,13 +59,13 @@ class PayoutFactorDetailsPlotter:
 
     def plot(self, response: show_payout_factor_details.Response) -> bytes:
 
-        plans: list[str] = []
+        plan_indices: list[int] = []
         start: list[datetime] = []
         end: list[datetime] = []
         colors_list: list[str] = []
 
         for i, p in enumerate(response.plans):
-            plans.append(f"{i}")
+            plan_indices.append(i)
             start.append(p.approval_date)
             end.append(p.expiration_date)
             if p.is_public_service:
@@ -74,16 +74,33 @@ class PayoutFactorDetailsPlotter:
                 colors_list.append(self.colors.primary)
 
         plan_durations = [(e - s).days for s, e in zip(start, end)]
+        bs_row_y = -1
 
         fig = Figure()
         ax = fig.add_subplot(1, 1, 1)
 
         ax.barh(
-            plans,
+            plan_indices,
             plan_durations,
             left=[mdates.date2num(s) for s in start],
             color=colors_list,
         )
+        bs_label = self.translator.gettext("Basic services")
+        bs_dates = [
+            mdates.date2num(c.date) for c in response.basic_service_consumptions
+        ]
+        ax.scatter(
+            bs_dates,
+            [bs_row_y] * len(bs_dates),
+            marker="*",
+            s=80,
+            color=self.colors.success,
+            label=bs_label,
+            zorder=3,
+        )
+        ax.set_yticks(plan_indices + [bs_row_y])
+        ax.set_yticklabels([str(i) for i in plan_indices] + [bs_label])
+
         title = self.translator.gettext("Payout Factor Calculation Window")
         ax.set_title(title)
         ylabel = self.translator.gettext("Plans")
@@ -110,7 +127,7 @@ class PayoutFactorDetailsPlotter:
             label=self.translator.gettext("Now"),
         )
         ax.legend()
-        fig.set_size_inches(14, len(plans) * 0.3 + 2)
+        fig.set_size_inches(14, (len(plan_indices) + 1) * 0.3 + 2)
 
         margin = timedelta(days=response.window_size_in_days / 2)
         ax.set_xlim(

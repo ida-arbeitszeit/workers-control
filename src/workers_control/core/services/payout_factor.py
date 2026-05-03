@@ -23,6 +23,12 @@ class PlanInfo:
     coverage: Decimal
 
 
+@dataclass(frozen=True)
+class BasicServiceConsumptionDataPoint:
+    date: datetime
+    value: Decimal
+
+
 @dataclass
 class PayoutFactorService:
     datetime_service: DatetimeService
@@ -76,17 +82,32 @@ class PayoutFactorService:
     def _get_basic_service_consumption_in_window(
         self, window_start: datetime, window_end: datetime
     ) -> Decimal:
+        return sum(
+            (
+                dp.value
+                for dp in self.get_basic_service_consumptions_in_window(
+                    window_start, window_end
+                )
+            ),
+            Decimal(0),
+        )
+
+    def get_basic_service_consumptions_in_window(
+        self, window_start: datetime, window_end: datetime
+    ) -> list[BasicServiceConsumptionDataPoint]:
         private = (
-            self.database_gateway.get_private_consumptions_of_basic_service().joined_with_transfer_and_basic_service()
+            self.database_gateway.get_private_consumptions_of_basic_service().joined_with_transfer()
         )
         productive = (
-            self.database_gateway.get_productive_consumptions_of_basic_service().joined_with_transfer_and_basic_service()
+            self.database_gateway.get_productive_consumptions_of_basic_service().joined_with_transfer()
         )
-        total = Decimal(0)
-        for _, transfer, _ in chain(private, productive):
-            if window_start <= transfer.date <= window_end:
-                total += transfer.value
-        return total
+        data_points = [
+            BasicServiceConsumptionDataPoint(date=transfer.date, value=transfer.value)
+            for _, transfer in chain(private, productive)
+            if window_start <= transfer.date <= window_end
+        ]
+        data_points.sort(key=lambda dp: dp.date)
+        return data_points
 
     @staticmethod
     def calculate_coverage(

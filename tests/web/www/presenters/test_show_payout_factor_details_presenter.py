@@ -7,6 +7,7 @@ from parameterized import parameterized
 from tests.datetime_service import datetime_min_utc
 from tests.web.base_test_case import BaseTestCase
 from workers_control.core.interactors.show_payout_factor_details import (
+    BasicServiceConsumptionData,
     PlanData,
     Response,
 )
@@ -28,6 +29,7 @@ class PresenterBaseTestCase(BaseTestCase):
         window_start: datetime | None = None,
         window_end: datetime | None = None,
         plans: list[PlanData] | None = None,
+        basic_service_consumptions: list[BasicServiceConsumptionData] | None = None,
     ) -> Response:
         if window_center is None:
             window_center = datetime_min_utc()
@@ -37,6 +39,8 @@ class PresenterBaseTestCase(BaseTestCase):
             window_end = datetime_min_utc() + timedelta(days=window_size_in_days)
         if plans is None:
             plans = []
+        if basic_service_consumptions is None:
+            basic_service_consumptions = []
         return Response(
             payout_factor=payout_factor,
             window_center=window_center,
@@ -44,6 +48,7 @@ class PresenterBaseTestCase(BaseTestCase):
             window_start=window_start,
             window_end=window_end,
             plans=plans,
+            basic_service_consumptions=basic_service_consumptions,
         )
 
 
@@ -208,6 +213,35 @@ class PlanRowsTests(PresenterBaseTestCase):
             timeframe=timeframe,
             coverage=coverage,
         )
+
+
+class BasicServicesSummaryTests(PresenterBaseTestCase):
+    def _expected_summary(self, count: int, value: str) -> str:
+        return self.translator.gettext(
+            "Basic services consumed in window: %(count)s" " (total hours: %(value)s)."
+        ) % {"count": count, "value": value}
+
+    def test_summary_with_zero_consumptions(self) -> None:
+        response = self._create_response(basic_service_consumptions=[])
+        view_model = self.presenter.present(response)
+        assert view_model.basic_services_summary == self._expected_summary(0, "0.00")
+
+    def test_summary_with_one_consumption(self) -> None:
+        consumptions = [
+            BasicServiceConsumptionData(date=datetime_min_utc(), value=Decimal("4")),
+        ]
+        response = self._create_response(basic_service_consumptions=consumptions)
+        view_model = self.presenter.present(response)
+        assert view_model.basic_services_summary == self._expected_summary(1, "4.00")
+
+    def test_summary_sums_values_of_multiple_consumptions(self) -> None:
+        consumptions = [
+            BasicServiceConsumptionData(date=datetime_min_utc(), value=Decimal("2")),
+            BasicServiceConsumptionData(date=datetime_min_utc(), value=Decimal("3.5")),
+        ]
+        response = self._create_response(basic_service_consumptions=consumptions)
+        view_model = self.presenter.present(response)
+        assert view_model.basic_services_summary == self._expected_summary(2, "5.50")
 
 
 class NavbarTests(PresenterBaseTestCase):

@@ -22,6 +22,7 @@ class Response:
     window_start: datetime
     window_end: datetime
     plans: list[PlanData]
+    basic_service_consumptions: list[BasicServiceConsumptionData]
 
 
 @dataclass
@@ -33,6 +34,12 @@ class PlanData:
     is_public_service: bool
     timeframe: int
     coverage: Decimal
+
+
+@dataclass
+class BasicServiceConsumptionData:
+    date: datetime
+    value: Decimal
 
 
 @dataclass
@@ -55,6 +62,12 @@ class ShowPayoutFactorDetailsInteractor:
             )
             for p in plan_records
         ]
+        basic_service_consumptions = [
+            BasicServiceConsumptionData(date=dp.date, value=dp.value)
+            for dp in self.payout_factor_service.get_basic_service_consumptions_in_window(
+                window_start, window_end
+            )
+        ]
         return Response(
             payout_factor=self.payout_factor_service.calculate_current_payout_factor(),
             window_center=now,
@@ -62,6 +75,7 @@ class ShowPayoutFactorDetailsInteractor:
             window_start=window_start,
             window_end=window_end,
             plans=plans,
+            basic_service_consumptions=basic_service_consumptions,
         )
 
     def _get_plans_sorted(

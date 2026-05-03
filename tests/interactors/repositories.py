@@ -1084,6 +1084,23 @@ class PrivateConsumptionOfBasicServiceResult(
 
         return self.from_iterable(items=filtered_items)
 
+    def joined_with_transfer(
+        self,
+    ) -> QueryResultImpl[
+        Tuple[records.PrivateConsumptionOfBasicService, records.Transfer]
+    ]:
+        def joined_items() -> (
+            Iterator[Tuple[records.PrivateConsumptionOfBasicService, records.Transfer]]
+        ):
+            for consumption in self.items():
+                transfer = self.database.transfers[consumption.transfer_of_consumption]
+                yield consumption, transfer
+
+        return QueryResultImpl(
+            items=joined_items,
+            database=self.database,
+        )
+
     def joined_with_transfer_and_basic_service(
         self,
     ) -> QueryResultImpl[
@@ -1125,6 +1142,25 @@ class ProductiveConsumptionOfBasicServiceResult(
                     yield consumption
 
         return self.from_iterable(items=filtered_items)
+
+    def joined_with_transfer(
+        self,
+    ) -> QueryResultImpl[
+        Tuple[records.ProductiveConsumptionOfBasicService, records.Transfer]
+    ]:
+        def joined_items() -> (
+            Iterator[
+                Tuple[records.ProductiveConsumptionOfBasicService, records.Transfer]
+            ]
+        ):
+            for consumption in self.items():
+                transfer = self.database.transfers[consumption.transfer_of_consumption]
+                yield consumption, transfer
+
+        return QueryResultImpl(
+            items=joined_items,
+            database=self.database,
+        )
 
     def joined_with_transfer_and_basic_service(
         self,

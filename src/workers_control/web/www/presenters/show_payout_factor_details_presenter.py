@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from decimal import Decimal
 
 from workers_control.core.interactors import show_payout_factor_details
 from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
@@ -19,6 +20,7 @@ class ViewModel:
     window_end: str
     plot_url: str
     plans: list[PlanRow]
+    basic_services_summary: str
 
 
 @dataclass
@@ -57,7 +59,20 @@ class ShowPayoutFactorDetailsPresenter:
             plans=[
                 self._convert_plan(i, plan) for i, plan in enumerate(response.plans)
             ],
+            basic_services_summary=self._build_basic_services_summary(
+                response.basic_service_consumptions
+            ),
         )
+
+    def _build_basic_services_summary(
+        self,
+        consumptions: list[show_payout_factor_details.BasicServiceConsumptionData],
+    ) -> str:
+        count = len(consumptions)
+        total_value = sum((c.value for c in consumptions), Decimal(0))
+        return self.translator.gettext(
+            "Basic services consumed in window: %(count)s" " (total hours: %(value)s)."
+        ) % {"count": count, "value": f"{total_value:.2f}"}
 
     def _convert_plan(
         self, i: int, plan: show_payout_factor_details.PlanData

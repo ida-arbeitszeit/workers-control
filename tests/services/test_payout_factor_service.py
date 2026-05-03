@@ -481,6 +481,93 @@ class BasicServiceConsumptionTests(BaseTestCase):
         self.assertAlmostEqual(pf, Decimal("0.5"))
 
 
+class BasicServiceConsumptionDataPointTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.service = self.injector.get(PayoutFactorService)
+        self.payout_factor_config = self.injector.get(PayoutFactorConfigTestImpl)
+        self.now = datetime(2025, 12, 1)
+        self.datetime_service.freeze_time(self.now)
+        window_size = self.payout_factor_config.get_window_length_in_days()
+        self.window_start = self.now - timedelta(days=window_size / 2)
+        self.window_end = self.now + timedelta(days=window_size / 2)
+
+    def test_no_data_points_when_no_consumptions(self) -> None:
+        data_points = self.service.get_basic_service_consumptions_in_window(
+            self.window_start, self.window_end
+        )
+        assert data_points == []
+
+    def test_private_consumption_in_window_yields_one_data_point(self) -> None:
+        self.consumption_generator.create_private_consumption_of_basic_service(
+            amount=Decimal(7)
+        )
+        data_points = self.service.get_basic_service_consumptions_in_window(
+            self.window_start, self.window_end
+        )
+        assert len(data_points) == 1
+        assert data_points[0].value == Decimal(7)
+        assert self.window_start <= data_points[0].date <= self.window_end
+
+    def test_productive_consumption_in_window_yields_one_data_point(self) -> None:
+        self.consumption_generator.create_productive_consumption_of_basic_service(
+            amount=Decimal(11)
+        )
+        data_points = self.service.get_basic_service_consumptions_in_window(
+            self.window_start, self.window_end
+        )
+        assert len(data_points) == 1
+        assert data_points[0].value == Decimal(11)
+        assert self.window_start <= data_points[0].date <= self.window_end
+
+    def test_consumption_outside_window_is_excluded(self) -> None:
+        window_size = self.payout_factor_config.get_window_length_in_days()
+        far_in_the_past = self.now - timedelta(days=window_size * 3)
+        self.datetime_service.freeze_time(far_in_the_past)
+        self.consumption_generator.create_private_consumption_of_basic_service(
+            amount=Decimal(5)
+        )
+        self.datetime_service.freeze_time(self.now)
+        data_points = self.service.get_basic_service_consumptions_in_window(
+            self.window_start, self.window_end
+        )
+        assert data_points == []
+
+    def test_data_points_are_sorted_by_date(self) -> None:
+        first_date = self.now - timedelta(days=2)
+        second_date = self.now - timedelta(days=1)
+        third_date = self.now
+        self.datetime_service.freeze_time(third_date)
+        self.consumption_generator.create_productive_consumption_of_basic_service(
+            amount=Decimal(3)
+        )
+        self.datetime_service.freeze_time(first_date)
+        self.consumption_generator.create_private_consumption_of_basic_service(
+            amount=Decimal(1)
+        )
+        self.datetime_service.freeze_time(second_date)
+        self.consumption_generator.create_productive_consumption_of_basic_service(
+            amount=Decimal(2)
+        )
+        self.datetime_service.freeze_time(self.now)
+        data_points = self.service.get_basic_service_consumptions_in_window(
+            self.window_start, self.window_end
+        )
+        assert [dp.value for dp in data_points] == [Decimal(1), Decimal(2), Decimal(3)]
+
+    def test_mix_of_private_and_productive_both_included(self) -> None:
+        self.consumption_generator.create_private_consumption_of_basic_service(
+            amount=Decimal(4)
+        )
+        self.consumption_generator.create_productive_consumption_of_basic_service(
+            amount=Decimal(6)
+        )
+        data_points = self.service.get_basic_service_consumptions_in_window(
+            self.window_start, self.window_end
+        )
+        assert sorted(dp.value for dp in data_points) == [Decimal(4), Decimal(6)]
+
+
 class CoverageTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()

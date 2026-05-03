@@ -1534,6 +1534,33 @@ class PrivateConsumptionOfBasicServiceResult(
             .filter(consuming_member.id == member)
         )
 
+    def joined_with_transfer(
+        self,
+    ) -> SqlQueryResult[
+        Tuple[records.PrivateConsumptionOfBasicService, records.Transfer]
+    ]:
+        def mapper(
+            orm,
+        ) -> Tuple[records.PrivateConsumptionOfBasicService, records.Transfer]:
+            consumption_orm, transfer_orm = orm
+            return (
+                DatabaseGatewayImpl.private_consumption_of_basic_service_from_orm(
+                    consumption_orm
+                ),
+                DatabaseGatewayImpl.transfer_from_orm(transfer_orm),
+            )
+
+        transfer = aliased(models.Transfer)
+        return SqlQueryResult(
+            db=self.db,
+            mapper=mapper,
+            query=self.query.join(
+                transfer,
+                models.PrivateConsumptionOfBasicService.transfer_of_consumption
+                == transfer.id,
+            ).with_entities(models.PrivateConsumptionOfBasicService, transfer),
+        )
+
     def joined_with_transfer_and_basic_service(
         self,
     ) -> SqlQueryResult[
@@ -1599,6 +1626,33 @@ class ProductiveConsumptionOfBasicServiceResult(
                 account.id == consuming_company.r_account,
             )
             .filter(consuming_company.id == company)
+        )
+
+    def joined_with_transfer(
+        self,
+    ) -> SqlQueryResult[
+        Tuple[records.ProductiveConsumptionOfBasicService, records.Transfer]
+    ]:
+        def mapper(
+            orm,
+        ) -> Tuple[records.ProductiveConsumptionOfBasicService, records.Transfer]:
+            consumption_orm, transfer_orm = orm
+            return (
+                DatabaseGatewayImpl.productive_consumption_of_basic_service_from_orm(
+                    consumption_orm
+                ),
+                DatabaseGatewayImpl.transfer_from_orm(transfer_orm),
+            )
+
+        transfer = aliased(models.Transfer)
+        return SqlQueryResult(
+            db=self.db,
+            mapper=mapper,
+            query=self.query.join(
+                transfer,
+                models.ProductiveConsumptionOfBasicService.transfer_of_consumption
+                == transfer.id,
+            ).with_entities(models.ProductiveConsumptionOfBasicService, transfer),
         )
 
     def joined_with_transfer_and_basic_service(

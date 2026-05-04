@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Arbeitszeitapp\n"
 "Report-Msgid-Bugs-To: community-arbeitszeitapp@systemli.org\n"
-"POT-Creation-Date: 2026-04-26 14:03+0200\n"
+"POT-Creation-Date: 2026-05-04 18:03+0200\n"
 "PO-Revision-Date: 2024-03-11 22:27+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -32,12 +32,14 @@ msgid "Offer ID"
 msgstr "Angebots-ID"
 
 #: src/workers_control/flask/forms.py:46
+#: src/workers_control/flask/templates/company/my_consumptions.html:24
+#: src/workers_control/flask/templates/member/consumptions.html:28
 msgid "Offer name"
 msgstr "Angebotsname"
 
 #: src/workers_control/flask/forms.py:49
-#: src/workers_control/flask/templates/company/dashboard.html:110
-#: src/workers_control/flask/templates/member/dashboard.html:96
+#: src/workers_control/flask/templates/company/dashboard.html:87
+#: src/workers_control/flask/templates/member/dashboard.html:82
 msgid "Search offers"
 msgstr "Angebote suchen"
 
@@ -84,11 +86,10 @@ msgstr "Richtige E-Mail-Adresse erforderlich"
 #: src/workers_control/flask/forms.py:256
 #: src/workers_control/flask/templates/auth/signup_accountant.html:27
 #: src/workers_control/flask/templates/auth/signup_member.html:27
+#: src/workers_control/flask/templates/company/consumption_details.html:26
 #: src/workers_control/flask/templates/company/invite_worker_to_company.html:23
-#: src/workers_control/flask/templates/company/my_consumptions.html:24
 #: src/workers_control/flask/templates/macros/company_summary.html:20
 #: src/workers_control/flask/templates/member/basic_services.html:29
-#: src/workers_control/flask/templates/member/consumptions.html:27
 #: src/workers_control/flask/templates/member/create_basic_service.html:25
 #: src/workers_control/flask/templates/user/coop_summary.html:22
 #: src/workers_control/flask/templates/user/list_all_cooperations.html:18
@@ -159,9 +160,9 @@ msgid "Definition"
 msgstr "Definition"
 
 #: src/workers_control/flask/forms.py:260
-#: src/workers_control/flask/templates/company/my_consumptions.html:25
+#: src/workers_control/flask/templates/company/consumption_details.html:30
 #: src/workers_control/flask/templates/member/basic_services.html:30
-#: src/workers_control/flask/templates/member/consumptions.html:28
+#: src/workers_control/flask/templates/member/consumption_details.html:25
 #: src/workers_control/flask/templates/member/create_basic_service.html:33
 msgid "Description"
 msgstr "Beschreibung"
@@ -178,24 +179,30 @@ msgstr "Plan-ID"
 
 #: src/workers_control/flask/forms.py:290
 #: src/workers_control/flask/routes/plots/routes.py:79
-#: src/workers_control/flask/templates/company/my_consumptions.html:28
+#: src/workers_control/flask/templates/company/consumption_details.html:38
 #: src/workers_control/flask/templates/company/register_hours_worked.html:21
 #: src/workers_control/flask/templates/company/register_productive_consumption.html:55
+#: src/workers_control/flask/templates/company/register_productive_consumption_of_basic_service.html:66
+#: src/workers_control/flask/templates/company/register_productive_consumption_of_basic_service.html:72
 #: src/workers_control/flask/templates/macros/draft_form.html:72
-#: src/workers_control/flask/templates/member/consumptions.html:30
+#: src/workers_control/flask/templates/member/consumption_details.html:29
 #: src/workers_control/flask/templates/member/register_private_consumption.html:63
 #: src/workers_control/flask/templates/member/register_private_consumption.html:69
+#: src/workers_control/flask/templates/member/register_private_consumption_of_basic_service.html:66
+#: src/workers_control/flask/templates/member/register_private_consumption_of_basic_service.html:72
 #: src/workers_control/web/formatters/plan_details_formatter.py:76
 msgid "Amount"
 msgstr "Menge"
 
 #: src/workers_control/flask/forms.py:297
-#: src/workers_control/web/www/presenters/company_consumptions_presenter.py:66
+#: src/workers_control/web/www/presenters/company_consumptions_presenter.py:61
+#: src/workers_control/web/www/presenters/productive_consumption_details_presenter.py:65
 msgid "Fixed means of production"
 msgstr "Feste Produktionsmittel"
 
 #: src/workers_control/flask/forms.py:300
-#: src/workers_control/web/www/presenters/company_consumptions_presenter.py:64
+#: src/workers_control/web/www/presenters/company_consumptions_presenter.py:59
+#: src/workers_control/web/www/presenters/productive_consumption_details_presenter.py:63
 msgid "Liquid means of production"
 msgstr "Flüssige Produktionsmittel"
 
@@ -215,23 +222,27 @@ msgstr "E-Mail-Adresse ist erforderlich."
 msgid "Current password"
 msgstr "Aktuelles Passwort"
 
-#: src/workers_control/flask/plotter.py:87
+#: src/workers_control/flask/plotter.py:88
+msgid "Basic services"
+msgstr "Basis-Dienstleistungen"
+
+#: src/workers_control/flask/plotter.py:104
 msgid "Payout Factor Calculation Window"
 msgstr "Berechnungsfenster des Auszahlungfaktors"
 
-#: src/workers_control/flask/plotter.py:89
-#: src/workers_control/flask/templates/company/dashboard.html:39
+#: src/workers_control/flask/plotter.py:106
+#: src/workers_control/flask/templates/company/dashboard.html:16
 #: src/workers_control/flask/templates/macros/company_summary.html:134
 #: src/workers_control/flask/templates/user/statistics.html:26
 #: src/workers_control/flask/templates/user/statistics.html:53
 msgid "Plans"
 msgstr "Pläne"
 
-#: src/workers_control/flask/plotter.py:104
+#: src/workers_control/flask/plotter.py:121
 msgid "Calculation window"
 msgstr "Berechnungsfenster"
 
-#: src/workers_control/flask/plotter.py:110
+#: src/workers_control/flask/plotter.py:127
 msgid "Now"
 msgstr "Jetzt"
 
@@ -271,14 +282,10 @@ msgid "Welcome, %(name)s!"
 msgstr "Willkommen, %(name)s!"
 
 #: src/workers_control/flask/templates/accountant/dashboard.html:12
-#: src/workers_control/flask/templates/company/dashboard.html:12
-#: src/workers_control/flask/templates/member/dashboard.html:11
 msgid "Your ID"
 msgstr "Deine ID"
 
 #: src/workers_control/flask/templates/accountant/dashboard.html:14
-#: src/workers_control/flask/templates/company/dashboard.html:14
-#: src/workers_control/flask/templates/member/dashboard.html:13
 msgid "Your email"
 msgstr "Deine E-Mail"
 
@@ -557,7 +564,7 @@ msgid "Member"
 msgstr "Mitglied"
 
 #: src/workers_control/flask/templates/auth/start.html:14
-#: src/workers_control/flask/templates/company/dashboard.html:95
+#: src/workers_control/flask/templates/company/dashboard.html:72
 #: src/workers_control/flask/templates/company/my_cooperations.html:68
 msgid "Company"
 msgstr "Betrieb"
@@ -565,10 +572,6 @@ msgstr "Betrieb"
 #: src/workers_control/flask/templates/auth/start.html:15
 msgid "Accountant"
 msgstr "Buchhalter*in"
-
-#: src/workers_control/flask/templates/auth/start.html:18
-msgid "Latest plans"
-msgstr "Neueste Pläne"
 
 #: src/workers_control/flask/templates/auth/unconfirmed_company.html:14
 #: src/workers_control/flask/templates/auth/unconfirmed_member.html:13
@@ -598,6 +601,39 @@ msgstr "Du hast keine E-Mail erhalten?"
 #: src/workers_control/flask/templates/auth/unconfirmed_member.html:17
 msgid "Resend mail"
 msgstr "E-Mail erneut senden"
+
+#: src/workers_control/flask/templates/company/consumption_details.html:13
+#: src/workers_control/web/www/presenters/productive_consumption_details_presenter.py:55
+msgid "Consumption"
+msgstr "Verbrauch"
+
+#: src/workers_control/flask/templates/company/consumption_details.html:22
+#: src/workers_control/flask/templates/company/my_consumptions.html:23
+#: src/workers_control/flask/templates/member/consumption_details.html:21
+#: src/workers_control/flask/templates/member/consumptions.html:26
+msgid "Date"
+msgstr "Datum"
+
+#: src/workers_control/flask/templates/company/consumption_details.html:34
+msgid "Purpose"
+msgstr "Zweck"
+
+#: src/workers_control/flask/templates/company/consumption_details.html:42
+#: src/workers_control/flask/templates/member/consumption_details.html:33
+msgid "Price per unit"
+msgstr "Einzelpreis"
+
+#: src/workers_control/flask/templates/company/consumption_details.html:46
+#: src/workers_control/flask/templates/company/my_consumptions.html:27
+#: src/workers_control/flask/templates/member/consumption_details.html:37
+#: src/workers_control/flask/templates/member/consumptions.html:30
+msgid "Hours paid"
+msgstr "Bezahlte Stunden"
+
+#: src/workers_control/flask/templates/company/consumption_details.html:54
+#: src/workers_control/flask/templates/member/consumption_details.html:45
+msgid "View plan"
+msgstr "Plan anzeigen"
 
 #: src/workers_control/flask/templates/company/create_cooperation.html:4
 #: src/workers_control/flask/templates/company/my_cooperations.html:4
@@ -650,100 +686,96 @@ msgstr "Als Entwurf speichern"
 #: src/workers_control/flask/templates/company/draft_details.html:30
 #: src/workers_control/flask/templates/company/my_cooperations.html:142
 #: src/workers_control/flask/templates/company/register_productive_consumption.html:76
+#: src/workers_control/flask/templates/company/register_productive_consumption_of_basic_service.html:91
 #: src/workers_control/flask/templates/member/register_private_consumption.html:87
+#: src/workers_control/flask/templates/member/register_private_consumption_of_basic_service.html:91
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: src/workers_control/flask/templates/company/dashboard.html:21
-msgid "No workers are registered with your company. Click here to add some."
-msgstr ""
-"Es sind keine Arbeiter*innen bei deinem Betrieb registriert. Klicke hier, "
-"um welche hinzuzufügen."
-
-#: src/workers_control/flask/templates/company/dashboard.html:33
+#: src/workers_control/flask/templates/company/dashboard.html:10
 msgid "Company accounting"
 msgstr "Betriebliche Buchhaltung"
 
-#: src/workers_control/flask/templates/company/dashboard.html:42
+#: src/workers_control/flask/templates/company/dashboard.html:19
 msgid "Your plans"
 msgstr "Deine Pläne"
 
-#: src/workers_control/flask/templates/company/dashboard.html:48
+#: src/workers_control/flask/templates/company/dashboard.html:25
 msgid "Hours worked"
 msgstr "Gearbeitete Stunden"
 
-#: src/workers_control/flask/templates/company/dashboard.html:49
+#: src/workers_control/flask/templates/company/dashboard.html:26
 msgid "Your registered working hours"
 msgstr "Deine registrierten Arbeitsstunden"
 
-#: src/workers_control/flask/templates/company/dashboard.html:55
+#: src/workers_control/flask/templates/company/dashboard.html:32
 #: src/workers_control/flask/templates/company/invite_worker_to_company.html:4
 #: src/workers_control/flask/templates/user/statistics.html:22
 #: src/workers_control/web/www/presenters/list_pending_work_invites_presenter.py:38
 msgid "Workers"
 msgstr "Arbeiter*innen"
 
-#: src/workers_control/flask/templates/company/dashboard.html:56
+#: src/workers_control/flask/templates/company/dashboard.html:33
 msgid "Members of your collective"
 msgstr "Mitglieder deines Kollektivs"
 
-#: src/workers_control/flask/templates/company/dashboard.html:71
+#: src/workers_control/flask/templates/company/dashboard.html:48
 #: src/workers_control/flask/templates/user/statistics.html:30
 msgid "Cooperations"
 msgstr "Kooperationen"
 
-#: src/workers_control/flask/templates/company/dashboard.html:73
+#: src/workers_control/flask/templates/company/dashboard.html:50
 msgid "Your cooperations"
 msgstr "Deine Kooperationen"
 
-#: src/workers_control/flask/templates/company/dashboard.html:79
+#: src/workers_control/flask/templates/company/dashboard.html:56
 msgid "Consumptions"
 msgstr "Verbräuche"
 
-#: src/workers_control/flask/templates/company/dashboard.html:81
+#: src/workers_control/flask/templates/company/dashboard.html:58
 msgid "Your consumptions"
 msgstr "Deine Verbräuche"
 
-#: src/workers_control/flask/templates/company/dashboard.html:87
+#: src/workers_control/flask/templates/company/dashboard.html:64
 msgid "Product transfers"
 msgstr "Produktweitergaben"
 
-#: src/workers_control/flask/templates/company/dashboard.html:89
+#: src/workers_control/flask/templates/company/dashboard.html:66
 msgid "Your product transfers"
 msgstr "Deine Produktweitergaben"
 
-#: src/workers_control/flask/templates/company/dashboard.html:97
+#: src/workers_control/flask/templates/company/dashboard.html:74
 msgid "Your company"
 msgstr "Dein Betrieb"
 
-#: src/workers_control/flask/templates/company/dashboard.html:103
-#: src/workers_control/flask/templates/member/dashboard.html:81
+#: src/workers_control/flask/templates/company/dashboard.html:80
+#: src/workers_control/flask/templates/member/dashboard.html:75
 msgid "Public accounting"
 msgstr "Öffentliche Buchhaltung"
 
-#: src/workers_control/flask/templates/company/dashboard.html:117
-#: src/workers_control/flask/templates/member/dashboard.html:110
+#: src/workers_control/flask/templates/company/dashboard.html:94
+#: src/workers_control/flask/templates/member/dashboard.html:96
 #: src/workers_control/flask/templates/user/query_companies.html:4
 msgid "All companies"
 msgstr "Alle Betriebe"
 
-#: src/workers_control/flask/templates/company/dashboard.html:124
-#: src/workers_control/flask/templates/member/dashboard.html:103
+#: src/workers_control/flask/templates/company/dashboard.html:101
+#: src/workers_control/flask/templates/member/dashboard.html:89
 #: src/workers_control/flask/templates/user/list_transfers.html:5
 msgid "All transfers"
 msgstr "Alle Transaktionen"
 
-#: src/workers_control/flask/templates/company/dashboard.html:131
+#: src/workers_control/flask/templates/company/dashboard.html:108
 #: src/workers_control/flask/templates/user/list_all_cooperations.html:4
 #: src/workers_control/flask/templates/user/list_all_cooperations.html:11
 msgid "All cooperations"
 msgstr "Alle Kooperationen"
 
-#: src/workers_control/flask/templates/company/dashboard.html:139
-#: src/workers_control/flask/templates/member/dashboard.html:88
+#: src/workers_control/flask/templates/company/dashboard.html:116
+#: src/workers_control/flask/templates/member/dashboard.html:103
 #: src/workers_control/flask/templates/user/statistics.html:4
 #: src/workers_control/flask/templates/user/statistics.html:11
-#: src/workers_control/web/www/presenters/show_payout_factor_details_presenter.py:44
+#: src/workers_control/web/www/presenters/show_payout_factor_details_presenter.py:46
 #: src/workers_control/web/www/presenters/show_psf_account_details_presenter.py:38
 msgid "Global statistics"
 msgstr "Globale Statistiken"
@@ -839,7 +871,8 @@ msgstr "Registriere gearbeitete Stunden"
 
 #: src/workers_control/flask/templates/company/my_consumptions.html:4
 #: src/workers_control/flask/templates/member/consumptions.html:4
-#: src/workers_control/flask/templates/member/dashboard.html:67
+#: src/workers_control/flask/templates/member/dashboard.html:61
+#: src/workers_control/web/www/presenters/productive_consumption_details_presenter.py:51
 msgid "My consumptions"
 msgstr "Meine Verbräuche"
 
@@ -852,25 +885,16 @@ msgstr "Meine vergangenen Verbräuche"
 msgid "Here you can view your past consumptions."
 msgstr "Hier kannst du deine vergangenen Verbräuche sehen."
 
-#: src/workers_control/flask/templates/company/my_consumptions.html:23
-#: src/workers_control/flask/templates/member/consumptions.html:26
-msgid "Date"
-msgstr "Datum"
+#: src/workers_control/flask/templates/company/my_consumptions.html:25
+#: src/workers_control/flask/templates/member/consumptions.html:29
+msgid "Offer description"
+msgstr "Angebotsbeschreibung"
 
 #: src/workers_control/flask/templates/company/my_consumptions.html:26
-msgid "Purpose"
-msgstr "Zweck"
+msgid "Kind"
+msgstr "Art"
 
-#: src/workers_control/flask/templates/company/my_consumptions.html:27
-msgid "Unit price"
-msgstr "Preis pro Einheit"
-
-#: src/workers_control/flask/templates/company/my_consumptions.html:29
-#: src/workers_control/flask/templates/member/consumptions.html:31
-msgid "Total price"
-msgstr "Gesamtpreis"
-
-#: src/workers_control/flask/templates/company/my_consumptions.html:46
+#: src/workers_control/flask/templates/company/my_consumptions.html:48
 msgid "You haven't consumed anything yet."
 msgstr "Du hast noch nichts konsumiert."
 
@@ -897,7 +921,8 @@ msgstr "Eingehende Kooperationsanfragen (von anderen)"
 
 #: src/workers_control/flask/templates/company/my_cooperations.html:73
 #: src/workers_control/flask/templates/company/my_cooperations.html:128
-#: src/workers_control/flask/templates/user/show_payout_factor_details.html:47
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:51
+#: src/workers_control/web/www/presenters/private_consumptions_presenter.py:65
 msgid "Plan"
 msgstr "Plan"
 
@@ -983,7 +1008,7 @@ msgstr "Kooperierender Plan"
 #: src/workers_control/flask/templates/company/my_plans.html:40
 #: src/workers_control/flask/templates/company/my_plans.html:79
 #: src/workers_control/flask/templates/user/query_offers.html:88
-#: src/workers_control/flask/templates/user/show_payout_factor_details.html:58
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:62
 #: src/workers_control/web/formatters/plan_details_formatter.py:92
 #: src/workers_control/web/www/presenters/show_my_plans_presenter.py:234
 msgid "Public"
@@ -1028,7 +1053,7 @@ msgid "Costs"
 msgstr "Kosten"
 
 #: src/workers_control/flask/templates/company/my_plans.html:107
-#: src/workers_control/flask/templates/user/show_payout_factor_details.html:48
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:52
 #: src/workers_control/web/formatters/plan_details_formatter.py:90
 msgid "Type"
 msgstr "Typ"
@@ -1098,9 +1123,11 @@ msgstr "Aktionen"
 
 #: src/workers_control/flask/templates/company/plan_details.html:20
 #: src/workers_control/flask/templates/company/plan_details.html:22
+#: src/workers_control/flask/templates/company/register_productive_consumption_of_basic_service.html:14
 #: src/workers_control/flask/templates/member/plan_details.html:17
 #: src/workers_control/flask/templates/member/plan_details.html:19
 #: src/workers_control/flask/templates/member/register_private_consumption.html:14
+#: src/workers_control/flask/templates/member/register_private_consumption_of_basic_service.html:14
 #: src/workers_control/web/www/presenters/register_private_consumption_of_basic_service_presenter.py:86
 #: src/workers_control/web/www/presenters/register_private_consumption_presenter.py:83
 msgid "Register consumption"
@@ -1129,7 +1156,9 @@ msgstr "Arbeiter*in"
 
 #: src/workers_control/flask/templates/company/register_hours_worked.html:43
 #: src/workers_control/flask/templates/company/register_productive_consumption.html:75
+#: src/workers_control/flask/templates/company/register_productive_consumption_of_basic_service.html:89
 #: src/workers_control/flask/templates/member/register_private_consumption.html:85
+#: src/workers_control/flask/templates/member/register_private_consumption_of_basic_service.html:89
 msgid "Register"
 msgstr "Registrieren"
 
@@ -1142,6 +1171,7 @@ msgid "No workers registered yet"
 msgstr "Noch keine Arbeiter*innen registriert"
 
 #: src/workers_control/flask/templates/company/register_productive_consumption.html:15
+#: src/workers_control/web/www/presenters/register_productive_consumption_of_basic_service_presenter.py:61
 #: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:33
 msgid "Registration of productive consumption"
 msgstr "Registrierung produktiven Konsums"
@@ -1159,6 +1189,35 @@ msgstr "Planbeschreibung"
 #: src/workers_control/flask/templates/company/register_productive_consumption.html:78
 msgid "Select"
 msgstr "Auswählen"
+
+#: src/workers_control/flask/templates/company/register_productive_consumption_of_basic_service.html:28
+#: src/workers_control/flask/templates/company/register_productive_consumption_of_basic_service.html:34
+#: src/workers_control/flask/templates/company/register_productive_consumption_of_basic_service.html:52
+#: src/workers_control/flask/templates/member/register_private_consumption_of_basic_service.html:28
+#: src/workers_control/flask/templates/member/register_private_consumption_of_basic_service.html:34
+#: src/workers_control/flask/templates/member/register_private_consumption_of_basic_service.html:52
+msgid "Basic service ID"
+msgstr "ID der Basis-Dienstleistung"
+
+#: src/workers_control/flask/templates/company/register_productive_consumption_of_basic_service.html:55
+#: src/workers_control/flask/templates/member/register_private_consumption_of_basic_service.html:55
+msgid "Basic service name"
+msgstr "Name der Basis-Dienstleistung"
+
+#: src/workers_control/flask/templates/company/register_productive_consumption_of_basic_service.html:58
+#: src/workers_control/flask/templates/member/register_private_consumption_of_basic_service.html:58
+msgid "Basic service description"
+msgstr "Beschreibung der Basis-Dienstleistung"
+
+#: src/workers_control/flask/templates/company/register_productive_consumption_of_basic_service.html:61
+#: src/workers_control/flask/templates/member/register_private_consumption_of_basic_service.html:61
+msgid "Provider"
+msgstr "Anbieter*in"
+
+#: src/workers_control/flask/templates/company/register_productive_consumption_of_basic_service.html:78
+#: src/workers_control/flask/templates/member/register_private_consumption_of_basic_service.html:78
+msgid "Number of hours of the service to be consumed."
+msgstr "Anzahl der Stunden der zu konsumierenden Dienstleistung."
 
 #: src/workers_control/flask/templates/company/rejected_plan_notification.html:2
 #, python-format
@@ -1542,7 +1601,7 @@ msgstr ""
 #: src/workers_control/flask/templates/member/basic_services.html:4
 #: src/workers_control/flask/templates/member/basic_services.html:12
 #: src/workers_control/flask/templates/member/create_basic_service.html:4
-#: src/workers_control/flask/templates/member/dashboard.html:74
+#: src/workers_control/flask/templates/member/dashboard.html:68
 msgid "My basic services"
 msgstr "Meine Basis-Dienstleistungen"
 
@@ -1561,19 +1620,31 @@ msgstr "Basis-Dienstleistung erstellen"
 msgid "Created on"
 msgstr "Erstellt am"
 
+#: src/workers_control/flask/templates/member/basic_services.html:32
+msgid "Delete"
+msgstr "Löschen"
+
 #: src/workers_control/flask/templates/member/basic_services.html:45
+msgid "Delete basic service"
+msgstr "Basis-Dienstleistung löschen"
+
+#: src/workers_control/flask/templates/member/basic_services.html:54
 msgid "You have not created any basic services yet."
 msgstr "Du hast noch keine Basis-Dienstleistungen erstellt."
+
+#: src/workers_control/flask/templates/member/consumption_details.html:4
+msgid "Consumption details"
+msgstr "Konsumdetails"
 
 #: src/workers_control/flask/templates/member/consumptions.html:17
 msgid "Your past consumptions are shown here."
 msgstr "Deine vergangenen Verbräuche werden hier gezeigt."
 
-#: src/workers_control/flask/templates/member/consumptions.html:29
-msgid "Price per unit"
-msgstr "Einzelpreis"
+#: src/workers_control/flask/templates/member/consumptions.html:27
+msgid "Offer type"
+msgstr "Angebotstyp"
 
-#: src/workers_control/flask/templates/member/consumptions.html:47
+#: src/workers_control/flask/templates/member/consumptions.html:51
 msgid "You have not consumed anything yet."
 msgstr "Du hast noch nichts konsumiert."
 
@@ -1587,15 +1658,11 @@ msgstr ""
 "werden dein Name und deine E-Mail-Adresse für andere registrierte "
 "Nutzer*innen dieser App sichtbar, damit sie dich kontaktieren können."
 
-#: src/workers_control/flask/templates/member/dashboard.html:15
-msgid "Your credit"
-msgstr "Dein Guthaben"
-
-#: src/workers_control/flask/templates/member/dashboard.html:17
+#: src/workers_control/flask/templates/member/dashboard.html:11
 msgid "Your workplaces"
 msgstr "Deine Arbeitsplätze"
 
-#: src/workers_control/flask/templates/member/dashboard.html:30
+#: src/workers_control/flask/templates/member/dashboard.html:24
 msgid ""
 "You are not registered with any company. Tell your company your member ID "
 "so that they register you."
@@ -1603,11 +1670,11 @@ msgstr ""
 "Du bist bei keinem Betrieb angemeldet. Teile deinem Betrieb deine "
 "Mitglieds-ID mit, so dass sie dich anmelden können."
 
-#: src/workers_control/flask/templates/member/dashboard.html:53
+#: src/workers_control/flask/templates/member/dashboard.html:47
 msgid "My area"
 msgstr "Mein Bereich"
 
-#: src/workers_control/flask/templates/member/dashboard.html:60
+#: src/workers_control/flask/templates/member/dashboard.html:54
 #: src/workers_control/flask/templates/member/my_account.html:4
 msgid "My account"
 msgstr "Mein Konto"
@@ -1636,22 +1703,26 @@ msgstr "Ablehnen"
 msgid "User Account Data"
 msgstr "Nutzerkontodaten"
 
-#: src/workers_control/flask/templates/user/account_details.html:8
-msgid "Account ID:"
-msgstr "Konto-ID:"
+#: src/workers_control/flask/templates/user/account_details.html:10
+msgid "Name:"
+msgstr "Name:"
 
-#: src/workers_control/flask/templates/user/account_details.html:11
+#: src/workers_control/flask/templates/user/account_details.html:14
 msgid "Email address:"
 msgstr "E-Mail-Adresse:"
 
-#: src/workers_control/flask/templates/user/account_details.html:15
+#: src/workers_control/flask/templates/user/account_details.html:18
 #: src/workers_control/flask/templates/user/request_email_address_change.html:5
 msgid "Change email address"
 msgstr "E-Mail-Adresse ändern"
 
-#: src/workers_control/flask/templates/user/account_details.html:19
+#: src/workers_control/flask/templates/user/account_details.html:23
 msgid "Current time:"
 msgstr "Aktuelle Zeit:"
+
+#: src/workers_control/flask/templates/user/account_details.html:27
+msgid "Account ID:"
+msgstr "Konto-ID:"
 
 #: src/workers_control/flask/templates/user/account_psf.html:16
 msgid "Account of Public Sector Fund (PSF)"
@@ -1687,7 +1758,7 @@ msgstr "Das Konto für flüssige Produktionsmittel"
 
 #: src/workers_control/flask/templates/user/company_accounts.html:4
 #: src/workers_control/flask/templates/user/company_accounts.html:13
-#: src/workers_control/web/www/presenters/get_company_dashboard_presenter.py:47
+#: src/workers_control/web/www/presenters/get_company_dashboard_presenter.py:41
 #: src/workers_control/web/www/presenters/show_a_account_details_presenter.py:38
 #: src/workers_control/web/www/presenters/show_p_account_details_presenter.py:43
 #: src/workers_control/web/www/presenters/show_prd_account_details_presenter.py:39
@@ -1817,6 +1888,7 @@ msgstr "Suche"
 #: src/workers_control/flask/templates/user/query_offers.html:13
 #: src/workers_control/web/www/presenters/register_private_consumption_of_basic_service_presenter.py:82
 #: src/workers_control/web/www/presenters/register_private_consumption_presenter.py:79
+#: src/workers_control/web/www/presenters/register_productive_consumption_of_basic_service_presenter.py:57
 #: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:29
 msgid "Offers"
 msgstr "Angebote"
@@ -1836,6 +1908,10 @@ msgstr "Basis-Dienstleistung"
 #: src/workers_control/flask/templates/user/query_offers.html:94
 msgid "Our plan"
 msgstr "Unser Plan"
+
+#: src/workers_control/flask/templates/user/query_offers.html:97
+msgid "My offer"
+msgstr "Mein Angebot"
 
 #: src/workers_control/flask/templates/user/request_email_address_change.html:32
 msgid "Submit"
@@ -1898,13 +1974,15 @@ msgstr ""
 #: src/workers_control/flask/templates/user/show_payout_factor_details.html:22
 msgid ""
 "It expresses what proportion of total work time is paid out as work "
-"certificates. It is calculated by relating the costs of productive versus "
-"public plans and can take values between 0 and 1."
+"certificates. It is calculated by relating the costs of the productive "
+"sector (productive plans together with consumed basic services) to the "
+"costs of the public sector and can take values between 0 and 1."
 msgstr ""
-"Er drückt aus, welcher Anteil der gesamten Arbeitszeit als "
-"Arbeitszertifikate ausgezahlt wird. Er wird berechnet, indem die Kosten "
-"produktiver Pläne zu den Kosten öffentlicher Pläne in Beziehung gesetzt "
-"werden und kann Werte zwischen 0 und 1 annehmen."
+"Er gibt an, welcher Anteil der gesamten Arbeitszeit als Arbeitszertifikate "
+"ausgezahlt wird. Er wird berechnet, indem die Kosten des produktiven "
+"Sektors (produktiven Pläne zusammen mit verbrauchten Basis-Dienstleistungen) "
+"zu den Kosten des öffentlichen Sektors in Beziehung gesetzt werden und kann "
+"Werte zwischen 0 und 1 annehmen."
 
 #: src/workers_control/flask/templates/user/show_payout_factor_details.html:22
 msgid ""
@@ -1933,6 +2011,14 @@ msgstr ""
 "Für jeden Plan wird eine Abdeckung berechnet, die angibt, wie viel des "
 "Plans innerhalb des Berechnungsfensters liegt."
 
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:23
+msgid ""
+"Consumed basic services are counted in full if their consumption took place"
+" within the calculation window, and not at all otherwise."
+msgstr ""
+"Verbrauchte Basis-Dienstleistungen werden vollständig gezählt, wenn ihr "
+"Verbrauch innerhalb des Berechnungsfensters stattfand, ansonsten gar nicht." 
+
 #: src/workers_control/flask/templates/user/show_payout_factor_details.html:30
 msgid "Current payout factor:"
 msgstr "Aktueller Auszahlungsfaktor:"
@@ -1949,17 +2035,17 @@ msgstr "Beginn des Fensters:"
 msgid "Window end:"
 msgstr "Ende des Fensters:"
 
-#: src/workers_control/flask/templates/user/show_payout_factor_details.html:49
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:53
 msgid "Coverage"
 msgstr "Abdeckung"
 
-#: src/workers_control/flask/templates/user/show_payout_factor_details.html:58
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:62
 #: src/workers_control/web/formatters/plan_details_formatter.py:94
 #: src/workers_control/web/www/presenters/show_my_plans_presenter.py:236
 msgid "Productive"
 msgstr "Produktiv"
 
-#: src/workers_control/flask/templates/user/show_payout_factor_details.html:63
+#: src/workers_control/flask/templates/user/show_payout_factor_details.html:67
 msgid "No plans."
 msgstr "Keine Pläne."
 
@@ -2127,6 +2213,7 @@ msgstr "Das ist keine ganze Zahl."
 #: src/workers_control/web/forms/formfield_parsers.py:50
 #: src/workers_control/web/www/controllers/register_private_consumption_form_validator.py:33
 #: src/workers_control/web/www/controllers/register_private_consumption_of_basic_service_form_validator.py:33
+#: src/workers_control/web/www/controllers/register_productive_consumption_of_basic_service_form_validator.py:33
 msgid "Must be a number larger than zero."
 msgstr "Muss eine Nummer größer als Null sein."
 
@@ -2205,15 +2292,19 @@ msgstr "Plan-ID ist ungültig."
 
 #: src/workers_control/web/www/controllers/register_private_consumption_form_validator.py:31
 #: src/workers_control/web/www/controllers/register_private_consumption_of_basic_service_form_validator.py:27
+#: src/workers_control/web/www/controllers/register_productive_consumption_of_basic_service_form_validator.py:27
 msgid "You must specify an amount."
 msgstr "Du musst eine Menge angeben."
 
 #: src/workers_control/web/www/controllers/register_private_consumption_of_basic_service_form_validator.py:21
 #: src/workers_control/web/www/controllers/register_private_consumption_of_basic_service_form_validator.py:23
+#: src/workers_control/web/www/controllers/register_productive_consumption_of_basic_service_form_validator.py:21
+#: src/workers_control/web/www/controllers/register_productive_consumption_of_basic_service_form_validator.py:23
 msgid "Basic service ID is invalid."
 msgstr "Basis-Dienstleistungs-ID ist ungültig."
 
 #: src/workers_control/web/www/controllers/register_private_consumption_of_basic_service_form_validator.py:31
+#: src/workers_control/web/www/controllers/register_productive_consumption_of_basic_service_form_validator.py:31
 msgid "This is not a valid number."
 msgstr "Dies ist keine gültige Zahl."
 
@@ -2240,10 +2331,12 @@ msgid "The provided amount is not a valid integer."
 msgstr "Die angegebene Menge ist keine gültige ganze Zahl."
 
 #: src/workers_control/web/www/controllers/select_private_consumption_of_basic_service_controller.py:43
+#: src/workers_control/web/www/controllers/select_productive_consumption_of_basic_service_controller.py:43
 msgid "The provided basic service ID is not a valid UUID."
 msgstr "Die angegebene Basis-Dienstleistungs-ID ist keine gültige UUID."
 
 #: src/workers_control/web/www/controllers/select_private_consumption_of_basic_service_controller.py:64
+#: src/workers_control/web/www/controllers/select_productive_consumption_of_basic_service_controller.py:64
 msgid "The provided amount is not a valid number."
 msgstr "Die angegebene Menge ist keine gültige Zahl."
 
@@ -2336,6 +2429,11 @@ msgstr ""
 msgid "Email address changed successfully."
 msgstr "E-Mail-Adresse erfolgreich geändert."
 
+#: src/workers_control/web/www/presenters/company_consumptions_presenter.py:63
+#: src/workers_control/web/www/presenters/private_consumptions_presenter.py:67
+msgid "Basic service"
+msgstr "Basis-Dienstleistung"
+
 #: src/workers_control/web/www/presenters/create_basic_service_presenter.py:26
 msgid "Successfully created basic service."
 msgstr "Basis-Dienstleistung erfolgreich erstellt."
@@ -2363,6 +2461,14 @@ msgstr "Ein neuer Entwurf wurde von einem abgelaufenen Plan erstellt."
 #: src/workers_control/web/www/presenters/create_draft_presenter.py:27
 msgid "Plan draft successfully created"
 msgstr "Planentwurf erfolgreich erstellt"
+
+#: src/workers_control/web/www/presenters/deactivate_basic_service_presenter.py:19
+msgid "Could not delete basic service."
+msgstr "Basis-Dienstleistung konnte nicht gelöscht werden."
+
+#: src/workers_control/web/www/presenters/deactivate_basic_service_presenter.py:22
+msgid "Basic service was deleted."
+msgstr "Basis-Dienstleistung wurde gelöscht."
 
 #: src/workers_control/web/www/presenters/delete_draft_presenter.py:26
 #, python-format
@@ -2401,7 +2507,7 @@ msgstr "Plan erfolgreich bei öffentlicher Buchhaltung eingereicht"
 msgid "Could not file plan with social accounting"
 msgstr "Konnte Plan nicht bei öffentlicher Buchhaltung einreichen"
 
-#: src/workers_control/web/www/presenters/get_company_dashboard_presenter.py:48
+#: src/workers_control/web/www/presenters/get_company_dashboard_presenter.py:42
 msgid "You have four accounts"
 msgstr "Du hast vier Konten"
 
@@ -2413,20 +2519,12 @@ msgstr "Ausstehend"
 msgid "Closed"
 msgstr "Abgeschlossen"
 
-#: src/workers_control/web/www/presenters/get_member_dashboard_presenter.py:48
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:40
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:43
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:46
-#, python-format
-msgid "%(num).2f hours"
-msgstr "%(num).2f Stunden"
-
-#: src/workers_control/web/www/presenters/get_member_dashboard_presenter.py:62
+#: src/workers_control/web/www/presenters/get_member_dashboard_presenter.py:54
 #, python-format
 msgid "Welcome, %s!"
 msgstr "Willkommen, %s!"
 
-#: src/workers_control/web/www/presenters/get_member_dashboard_presenter.py:72
+#: src/workers_control/web/www/presenters/get_member_dashboard_presenter.py:64
 #, python-format
 msgid "Company %(company)s has invited you!"
 msgstr "Betrieb %(company)s hat dich eingeladen!"
@@ -2435,6 +2533,13 @@ msgstr "Betrieb %(company)s hat dich eingeladen!"
 #, python-format
 msgid "%(num).2f days"
 msgstr "%(num).2f Tage"
+
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:40
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:43
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:46
+#, python-format
+msgid "%(num).2f hours"
+msgstr "%(num).2f Stunden"
 
 #: src/workers_control/web/www/presenters/hide_plan_presenter.py:18
 #, python-format
@@ -2542,6 +2647,7 @@ msgid "Consumption successfully registered."
 msgstr "Konsum erfolgreich registriert."
 
 #: src/workers_control/web/www/presenters/register_private_consumption_of_basic_service_presenter.py:49
+#: src/workers_control/web/www/presenters/register_productive_consumption_of_basic_service_presenter.py:48
 msgid "There is no basic service with the specified ID in the database."
 msgstr "Es gibt keine Basis-Dienstleistung mit der angegebenen ID in der Datenbank."
 
@@ -2576,6 +2682,7 @@ msgstr ""
 msgid "There is no plan with the specified ID in the database."
 msgstr "Die Plan-ID existiert nicht im System."
 
+#: src/workers_control/web/www/presenters/register_productive_consumption_of_basic_service_presenter.py:37
 #: src/workers_control/web/www/presenters/register_productive_consumption_presenter.py:46
 msgid "Successfully registered."
 msgstr "Erfolgreich registriert."
@@ -2725,6 +2832,7 @@ msgid "Filing of plan has been successfully revoked."
 msgstr "Planeinreichung wurde erfolgreich widerrufen."
 
 #: src/workers_control/web/www/presenters/select_private_consumption_of_basic_service_presenter.py:48
+#: src/workers_control/web/www/presenters/select_productive_consumption_of_basic_service_presenter.py:48
 msgid "The selected basic service does not exist."
 msgstr "Die ausgewählte Basis-Dienstleistung existiert nicht."
 
@@ -2746,67 +2854,80 @@ msgstr ""
 msgid "You don't have any plans."
 msgstr "Du hast keine Pläne."
 
-#: src/workers_control/web/www/presenters/show_payout_factor_details_presenter.py:48
+#: src/workers_control/web/www/presenters/show_payout_factor_details_presenter.py:50
 msgid "Payout Factor Details"
 msgstr "Details zum Auszahlungsfaktor"
+
+#: src/workers_control/web/www/presenters/show_payout_factor_details_presenter.py:74
+#, python-format
+msgid "Basic services consumed in window: %(count)s (total hours: %(value)s)."
+msgstr "Verbrauchte Basis-Dienstleistungen im Fenster: %(count)s (Gesamtstunden: %(value)s)."
 
 #: src/workers_control/web/www/presenters/show_psf_account_details_presenter.py:42
 msgid "Account PSF"
 msgstr "FÖS-Konto"
 
-#: src/workers_control/web/www/presenters/transfers.py:68
+#: src/workers_control/web/www/presenters/transfers.py:75
 msgid "Anonymous worker"
 msgstr "Anonyme*r Arbeiter*in"
 
-#: src/workers_control/web/www/presenters/transfers.py:80
+#: src/workers_control/web/www/presenters/transfers.py:87
 msgid "Planned fixed means of production"
 msgstr "Geplante feste Produktionsmittel"
 
-#: src/workers_control/web/www/presenters/transfers.py:82
+#: src/workers_control/web/www/presenters/transfers.py:89
 msgid "Planned liquid means of production"
 msgstr "Geplante flüssige Produktionsmittel"
 
-#: src/workers_control/web/www/presenters/transfers.py:84
+#: src/workers_control/web/www/presenters/transfers.py:91
 msgid "Planned labour"
 msgstr "Geplante Arbeit"
 
-#: src/workers_control/web/www/presenters/transfers.py:86
+#: src/workers_control/web/www/presenters/transfers.py:93
 msgid "Planned fixed means of production (public plan)"
 msgstr "Geplante feste Produktionsmittel (öffentlicher Plan)"
 
-#: src/workers_control/web/www/presenters/transfers.py:89
+#: src/workers_control/web/www/presenters/transfers.py:96
 msgid "Planned liquid means of production (public plan)"
 msgstr "Geplante flüssige Produktionsmittel (öffentlicher Plan)"
 
-#: src/workers_control/web/www/presenters/transfers.py:92
+#: src/workers_control/web/www/presenters/transfers.py:99
 msgid "Planned labour (public plan)"
 msgstr "Geplante Arbeit (öffentlicher Plan)"
 
-#: src/workers_control/web/www/presenters/transfers.py:94
+#: src/workers_control/web/www/presenters/transfers.py:101
 msgid "Private consumption"
 msgstr "Privater Konsum"
 
-#: src/workers_control/web/www/presenters/transfers.py:97
+#: src/workers_control/web/www/presenters/transfers.py:103
+msgid "Private consumption of basic service"
+msgstr "Privater Konsum von Basis-Dienstleistungen"
+
+#: src/workers_control/web/www/presenters/transfers.py:106
 msgid "Productive consumption of fixed means of production"
 msgstr "Produktiver Konsum von festen Produktionsmitteln"
 
-#: src/workers_control/web/www/presenters/transfers.py:101
+#: src/workers_control/web/www/presenters/transfers.py:110
 msgid "Productive consumption of liquid means of production"
 msgstr "Produktiver Konsum von flüssigen Produktionsmitteln"
 
-#: src/workers_control/web/www/presenters/transfers.py:104
+#: src/workers_control/web/www/presenters/transfers.py:113
+msgid "Productive consumption of basic service"
+msgstr "Produktiver Konsum von Basis-Dienstleistungen"
+
+#: src/workers_control/web/www/presenters/transfers.py:115
 msgid "Compensation for overproductive planning"
 msgstr "Ausgleich für überproduktive Planung"
 
-#: src/workers_control/web/www/presenters/transfers.py:106
+#: src/workers_control/web/www/presenters/transfers.py:117
 msgid "Compensation for underproductive planning"
 msgstr "Ausgleich für unterproduktive Planung"
 
-#: src/workers_control/web/www/presenters/transfers.py:108
+#: src/workers_control/web/www/presenters/transfers.py:119
 msgid "Work certificates"
 msgstr "Arbeitszertifikate"
 
-#: src/workers_control/web/www/presenters/transfers.py:110
+#: src/workers_control/web/www/presenters/transfers.py:121
 msgid "Contribution to public sector"
 msgstr "Beitrag für öffentlichen Sektor"
 
@@ -3520,4 +3641,38 @@ msgstr "Beitrag für öffentlichen Sektor"
 
 #~ msgid "No results."
 #~ msgstr "Keine Ergebnisse."
+
+#~ msgid "Latest plans"
+#~ msgstr "Neueste Pläne"
+
+#~ msgid "No workers are registered with your company. Click here to add some."
+#~ msgstr ""
+#~ "Es sind keine Arbeiter*innen bei deinem"
+#~ " Betrieb registriert. Klicke hier, um "
+#~ "welche hinzuzufügen."
+
+#~ msgid "Unit price"
+#~ msgstr "Preis pro Einheit"
+
+#~ msgid "Total price"
+#~ msgstr "Gesamtpreis"
+
+#~ msgid "Your credit"
+#~ msgstr "Dein Guthaben"
+
+#~ msgid ""
+#~ "It expresses what proportion of total "
+#~ "work time is paid out as work "
+#~ "certificates. It is calculated by relating"
+#~ " the costs of productive versus public"
+#~ " plans and can take values between "
+#~ "0 and 1."
+#~ msgstr ""
+#~ "Er drückt aus, welcher Anteil der "
+#~ "gesamten Arbeitszeit als Arbeitszertifikate "
+#~ "ausgezahlt wird. Er wird berechnet, indem"
+#~ " die Kosten produktiver Pläne zu den"
+#~ " Kosten öffentlicher Pläne in Beziehung "
+#~ "gesetzt werden und kann Werte zwischen "
+#~ "0 und 1 annehmen."
 

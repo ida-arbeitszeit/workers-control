@@ -29,6 +29,7 @@
           <th>{{ gettext("Name") }}</th>
           <th>{{ gettext("Description") }}</th>
           <th>{{ gettext("Created on") }}</th>
+          <th>{{ gettext("Delete") }}</th>
         </tr>
       </thead>
       <tbody>
@@ -38,11 +39,19 @@
           <td><a href="{{ url_for('main_user.show_basic_service', basic_service_id=service.id) }}">{{ service.name }}</a></td>
           <td>{{ service.description }}</td>
           <td>{{ service.created_on }}</td>
+          <td>
+            <form method="post" action="{{ service.delete_url }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button class="button is-ghost" type="submit" title="{{ gettext('Delete basic service') }}">
+                {{ "trash"|icon }}
+              </button>
+            </form>
+          </td>
         </tr>
         {% endfor %}
         {% else %}
         <tr>
-          <td colspan="3">{{ gettext("You have not created any basic services yet.") }}</td>
+          <td colspan="4">{{ gettext("You have not created any basic services yet.") }}</td>
         </tr>
         {% endif %}
       </tbody>

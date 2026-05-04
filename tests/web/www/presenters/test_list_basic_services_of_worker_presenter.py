@@ -58,6 +58,37 @@ class PresenterTests(BaseTestCase):
         )
         assert view_model.services[0].created_on == expected_formatted
 
+    def test_delete_url_is_built_from_url_index(self) -> None:
+        service_id = uuid4()
+        response = self._create_response_with_one_service(service_id=service_id)
+        view_model = self.presenter.present(response)
+        expected_url = self.url_index.get_deactivate_basic_service_url(
+            basic_service_id=service_id
+        )
+        assert view_model.services[0].delete_url == expected_url
+
+    def test_each_service_has_its_own_delete_url(self) -> None:
+        first_id = uuid4()
+        second_id = uuid4()
+        response = Response(
+            basic_services=[
+                ListedBasicService(
+                    id=first_id,
+                    name="A",
+                    description="d",
+                    created_on=datetime(2026, 1, 1, 0, 0),
+                ),
+                ListedBasicService(
+                    id=second_id,
+                    name="B",
+                    description="d",
+                    created_on=datetime(2026, 1, 1, 0, 0),
+                ),
+            ]
+        )
+        view_model = self.presenter.present(response)
+        assert view_model.services[0].delete_url != view_model.services[1].delete_url
+
     def _create_response_with_one_service(
         self,
         service_id: UUID | None = None,

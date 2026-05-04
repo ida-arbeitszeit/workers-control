@@ -180,6 +180,8 @@ class UrlIndex(Protocol):
 
     def get_basic_service_url(self, basic_service_id: UUID) -> str: ...
 
+    def get_deactivate_basic_service_url(self, basic_service_id: UUID) -> str: ...
+
 
 @dataclass
 class UserUrlIndex:

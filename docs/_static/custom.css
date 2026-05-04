@@ -3,3 +3,10 @@
 .rst-content table.docutils th {
     white-space: normal;
 }
+
+.framed-image {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 12px;
+    background: #fafafa;
+}

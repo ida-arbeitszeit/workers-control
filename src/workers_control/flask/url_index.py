@@ -309,3 +309,9 @@ class GeneralUrlIndex:
         return url_for(
             "main_user.show_basic_service", basic_service_id=basic_service_id
         )
+
+    def get_deactivate_basic_service_url(self, basic_service_id: UUID) -> str:
+        return url_for(
+            "main_member.deactivate_basic_service",
+            basic_service_id=basic_service_id,
+        )

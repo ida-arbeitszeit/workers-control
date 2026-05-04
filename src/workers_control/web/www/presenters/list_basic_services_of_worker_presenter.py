@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from workers_control.core.interactors.list_basic_services_of_worker import Response
 from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
+from workers_control.web.url_index import UrlIndex
 
 
 @dataclass
@@ -14,11 +15,13 @@ class ListBasicServicesOfWorkerPresenter:
             name: str
             description: str
             created_on: str
+            delete_url: str
 
         is_services_visible: bool
         services: list[Service]
 
     datetime_formatter: DatetimeFormatter
+    url_index: UrlIndex
 
     def present(self, response: Response) -> ViewModel:
         return self.ViewModel(
@@ -31,6 +34,9 @@ class ListBasicServicesOfWorkerPresenter:
                     created_on=self.datetime_formatter.format_datetime(
                         date=service.created_on,
                         fmt="%d.%m.%Y %H:%M",
+                    ),
+                    delete_url=self.url_index.get_deactivate_basic_service_url(
+                        basic_service_id=service.id
                     ),
                 )
                 for service in response.basic_services

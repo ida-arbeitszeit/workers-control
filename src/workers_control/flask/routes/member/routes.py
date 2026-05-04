@@ -20,6 +20,9 @@ from workers_control.flask.views import (
 from workers_control.flask.views.create_basic_service_view import (
     CreateBasicServiceView,
 )
+from workers_control.flask.views.deactivate_basic_service_view import (
+    DeactivateBasicServiceView,
+)
 from workers_control.flask.views.get_private_consumption_details import (
     GetPrivateConsumptionDetailsView,
 )
@@ -56,6 +59,11 @@ class consumption_details(GetPrivateConsumptionDetailsView): ...
 @MemberRoute("/basic_services")
 @as_flask_view()
 class basic_services(ListBasicServicesOfWorkerView): ...
+
+
+@MemberRoute("/basic_services/<uuid:basic_service_id>/deactivate", methods=["POST"])
+@as_flask_view()
+class deactivate_basic_service(DeactivateBasicServiceView): ...
 
 
 @MemberRoute("/create_basic_service", methods=["GET", "POST"])

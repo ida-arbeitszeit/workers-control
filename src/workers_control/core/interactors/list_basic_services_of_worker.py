@@ -30,7 +30,11 @@ class ListBasicServicesOfWorkerInteractor:
     database_gateway: DatabaseGateway
 
     def list_basic_services_of_worker(self, request: Request) -> Response:
-        records = self.database_gateway.get_basic_services().of_provider(request.member)
+        records = (
+            self.database_gateway.get_basic_services()
+            .of_provider(request.member)
+            .that_are_active()
+        )
         return Response(
             basic_services=[
                 ListedBasicService(

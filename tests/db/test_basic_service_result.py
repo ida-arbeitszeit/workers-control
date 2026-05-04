@@ -237,3 +237,72 @@ class BasicServiceResultTests(DatabaseTestCase):
             self.database_gateway.get_basic_services().joined_with_provider()
         )
         assert len(results) == 2
+
+    def test_freshly_created_basic_service_has_no_deactivation_timestamp(self) -> None:
+        member = self.member_generator.create_member()
+        service = self.database_gateway.create_basic_service(
+            name="name",
+            description="description",
+            provider=member,
+            created_on=datetime_utc(2000, 1, 1),
+        )
+        assert service.deactivated_on is None
+
+    def test_that_are_active_includes_freshly_created_services(self) -> None:
+        member = self.member_generator.create_member()
+        self.database_gateway.create_basic_service(
+            name="name",
+            description="description",
+            provider=member,
+            created_on=datetime_utc(2000, 1, 1),
+        )
+        assert self.database_gateway.get_basic_services().that_are_active()
+
+    def test_that_are_active_excludes_deactivated_services(self) -> None:
+        member = self.member_generator.create_member()
+        service = self.database_gateway.create_basic_service(
+            name="name",
+            description="description",
+            provider=member,
+            created_on=datetime_utc(2000, 1, 1),
+        )
+        self.database_gateway.get_basic_services().with_id(
+            service.id
+        ).update().set_deactivated_on(datetime_utc(2000, 6, 1)).perform()
+        assert not self.database_gateway.get_basic_services().that_are_active()
+
+    def test_set_deactivated_on_persists_timestamp(self) -> None:
+        member = self.member_generator.create_member()
+        service = self.database_gateway.create_basic_service(
+            name="name",
+            description="description",
+            provider=member,
+            created_on=datetime_utc(2000, 1, 1),
+        )
+        expected = datetime_utc(2026, 5, 3, 9, 30)
+        self.database_gateway.get_basic_services().with_id(
+            service.id
+        ).update().set_deactivated_on(expected).perform()
+        reloaded = (
+            self.database_gateway.get_basic_services().with_id(service.id).first()
+        )
+        assert reloaded is not None
+        assert reloaded.deactivated_on == expected
+
+    def test_set_deactivated_on_returns_number_of_affected_rows(self) -> None:
+        member = self.member_generator.create_member()
+        for _ in range(3):
+            self.database_gateway.create_basic_service(
+                name="name",
+                description="description",
+                provider=member,
+                created_on=datetime_utc(2000, 1, 1),
+            )
+        affected = (
+            self.database_gateway.get_basic_services()
+            .of_provider(member)
+            .update()
+            .set_deactivated_on(datetime_utc(2026, 5, 3))
+            .perform()
+        )
+        assert affected == 3

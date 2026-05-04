@@ -493,6 +493,21 @@ class BasicServiceInteractorTests(BaseTestCase):
             "B_company",
         ]
 
+    def test_deactivated_basic_services_are_not_returned(self) -> None:
+        self.basic_service_generator.create_basic_service(
+            deactivated=True,
+        )
+        response = self.interactor.execute(self._make_request())
+        assert not any(r.is_basic_service for r in response.results)
+
+    def test_deactivated_basic_services_do_not_count_toward_total_results(self) -> None:
+        self.basic_service_generator.create_basic_service()
+        self.basic_service_generator.create_basic_service(
+            deactivated=True,
+        )
+        response = self.interactor.execute(self._make_request())
+        assert response.total_results == 1
+
     def _make_request(
         self,
         query: str | None = None,

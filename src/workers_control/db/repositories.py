@@ -2361,6 +2361,11 @@ class BasicServiceResult(SqlQueryResult[records.BasicService]):
             lambda query: query.filter(models.BasicService.provider == member)
         )
 
+    def that_are_active(self) -> Self:
+        return self._with_modified_query(
+            lambda query: query.filter(models.BasicService.deactivated_on.is_(None))
+        )
+
     def with_name_containing(self, query: str) -> Self:
         return self._with_modified_query(
             lambda db_query: db_query.filter(
@@ -2412,6 +2417,42 @@ class BasicServiceResult(SqlQueryResult[records.BasicService]):
             mapper=mapper,
             query=query,
         )
+
+    def update(self) -> BasicServiceUpdate:
+        return BasicServiceUpdate(
+            query=self.query,
+            db=self.db,
+        )
+
+
+@dataclass
+class BasicServiceUpdate:
+    query: Query
+    db: Database
+    update_values: Dict[str, Any] = field(default_factory=dict)
+
+    def set_deactivated_on(self, deactivated_on: datetime) -> Self:
+        return replace(
+            self,
+            update_values=dict(self.update_values, deactivated_on=deactivated_on),
+        )
+
+    def perform(self) -> int:
+        if not self.update_values:
+            return 0
+        sql_statement = (
+            update(models.BasicService)
+            .where(
+                models.BasicService.id.in_(
+                    self.query.with_entities(models.BasicService.id).scalar_subquery()
+                )
+            )
+            .values(**self.update_values)
+            .execution_options(synchronize_session="fetch")
+        )
+        result = self.db.session.execute(sql_statement)
+        self.db.session.flush()
+        return cast(CursorResult, result).rowcount
 
 
 @dataclass
@@ -3166,6 +3207,7 @@ class DatabaseGatewayImpl:
             description=orm.description,
             provider=orm.provider,
             created_on=orm.created_on,
+            deactivated_on=orm.deactivated_on,
         )
 
     def create_basic_service(

@@ -37,6 +37,12 @@ from workers_control.core.interactors.create_cooperation import (
     CreateCooperationRequest,
 )
 from workers_control.core.interactors.create_plan_draft import CreatePlanDraft, Request
+from workers_control.core.interactors.deactivate_basic_service import (
+    DeactivateBasicServiceInteractor,
+)
+from workers_control.core.interactors.deactivate_basic_service import (
+    Request as DeactivateBasicServiceRequest,
+)
 from workers_control.core.interactors.file_plan_with_accounting import (
     FilePlanWithAccounting,
 )
@@ -754,6 +760,7 @@ class RegisteredHoursWorkedGenerator:
 @dataclass
 class BasicServiceGenerator:
     interactor: CreateBasicServiceInteractor
+    deactivate_basic_service_interactor: DeactivateBasicServiceInteractor
     member_generator: MemberGenerator
 
     def create_basic_service(
@@ -762,6 +769,7 @@ class BasicServiceGenerator:
         member: UUID | None = None,
         name: str = "Default Basic Service",
         description: str = "Default description",
+        deactivated: bool = False,
     ) -> UUID:
         if member is None:
             member = self.member_generator.create_member()
@@ -773,4 +781,9 @@ class BasicServiceGenerator:
         response = self.interactor.execute(request)
         assert not response.is_rejected
         assert response.basic_service_id is not None
+        if deactivated:
+            deactivation_response = self.deactivate_basic_service_interactor.execute(
+                DeactivateBasicServiceRequest(basic_service=response.basic_service_id)
+            )
+            assert not deactivation_response.is_rejected
         return response.basic_service_id

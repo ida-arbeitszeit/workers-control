@@ -73,3 +73,22 @@ class InteractorTests(BaseTestCase):
             Request(member=member1)
         )
         assert len(response.basic_services) == 1
+
+    def test_does_not_include_deactivated_services(self) -> None:
+        member = self.member_generator.create_member()
+        self.basic_service_generator.create_basic_service(
+            member=member,
+            deactivated=True,
+        )
+        response = self.interactor.list_basic_services_of_worker(Request(member=member))
+        assert response.basic_services == []
+
+    def test_includes_active_services_and_excludes_deactivated_services(self) -> None:
+        member = self.member_generator.create_member()
+        self.basic_service_generator.create_basic_service(member=member)
+        self.basic_service_generator.create_basic_service(
+            member=member,
+            deactivated=True,
+        )
+        response = self.interactor.list_basic_services_of_worker(Request(member=member))
+        assert len(response.basic_services) == 1

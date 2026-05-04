@@ -105,7 +105,7 @@ class QueryOffersInteractor:
     def _query_basic_services(
         self, request: QueryOffersRequest
     ) -> tuple[list[QueriedOffer], int]:
-        basic_services = self.database_gateway.get_basic_services()
+        basic_services = self.database_gateway.get_basic_services().that_are_active()
         basic_services = self._apply_basic_service_filter(
             basic_services, request.query_string, request.filter_category
         )

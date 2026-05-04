@@ -1806,6 +1806,9 @@ class BasicServiceResult(QueryResultImpl[BasicService]):
     def of_provider(self, member: UUID) -> Self:
         return self._filter_elements(lambda s: s.provider == member)
 
+    def that_are_active(self) -> Self:
+        return self._filter_elements(lambda s: s.deactivated_on is None)
+
     def with_name_containing(self, query: str) -> Self:
         return self._filter_elements(lambda s: query.casefold() in s.name.casefold())
 
@@ -1833,6 +1836,35 @@ class BasicServiceResult(QueryResultImpl[BasicService]):
             database=self.database,
             items=items,
         )
+
+    def update(self) -> BasicServiceUpdate:
+        return BasicServiceUpdate(
+            items=self.items,
+            update_functions=[],
+        )
+
+
+@dataclass
+class BasicServiceUpdate:
+    items: Callable[[], Iterable[BasicService]]
+    update_functions: List[Callable[[BasicService], None]]
+
+    def set_deactivated_on(self, deactivated_on: datetime) -> Self:
+        def update(service: BasicService) -> None:
+            service.deactivated_on = deactivated_on
+
+        return self._add_update(update)
+
+    def perform(self) -> int:
+        items_affected = 0
+        for item in self.items():
+            for update in self.update_functions:
+                update(item)
+            items_affected += 1
+        return items_affected
+
+    def _add_update(self, update: Callable[[BasicService], None]) -> Self:
+        return replace(self, update_functions=self.update_functions + [update])
 
 
 @singleton

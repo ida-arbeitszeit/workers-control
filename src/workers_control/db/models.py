@@ -389,3 +389,4 @@ class BasicService(Base):
     description: Mapped[str] = mapped_column(String(5000))
     provider: Mapped[UUID] = mapped_column(Uuid, ForeignKey("member.id"))
     created_on: Mapped[datetime] = mapped_column(TZDateTime)
+    deactivated_on: Mapped[datetime | None] = mapped_column(TZDateTime)

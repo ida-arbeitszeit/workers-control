@@ -349,6 +349,7 @@ class BasicService:
     description: str
     provider: UUID
     created_on: datetime
+    deactivated_on: Optional[datetime] = None
 
 
 @dataclass

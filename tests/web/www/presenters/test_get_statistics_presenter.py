@@ -13,6 +13,7 @@ TESTING_RESPONSE_MODEL = StatisticsResponse(
     cooperations_count=10,
     active_plans_count=6,
     active_plans_public_count=2,
+    active_basic_services_count=4,
     avg_timeframe=Decimal("30.5"),
     planned_work=Decimal("500.23"),
     planned_resources=Decimal("400.1"),
@@ -115,6 +116,19 @@ class GetStatisticsPresenterTests(BaseTestCase):
         self.assertEqual(
             view_model.active_plans_public_count,
             "2",
+        )
+
+    def test_active_basic_services_count_is_displayed_correctly_as_number(
+        self,
+    ) -> None:
+        response = replace(
+            TESTING_RESPONSE_MODEL,
+            active_basic_services_count=9,
+        )
+        view_model = self.presenter.present(response)
+        self.assertEqual(
+            view_model.active_basic_services_count,
+            "9",
         )
 
     def test_average_timeframe_days_are_truncated_at_2_digits_after_comma(self) -> None:

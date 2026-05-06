@@ -143,6 +143,30 @@ class CountActivePublicPlansTests(StatisticsBaseTestCase):
         assert stats.active_plans_public_count == 0
 
 
+class CountActiveBasicServicesTests(StatisticsBaseTestCase):
+    @parameterized.expand(
+        [
+            (0,),
+            (1,),
+            (2,),
+        ]
+    )
+    def test_that_active_basic_services_are_counted(
+        self,
+        num_basic_services: int,
+    ) -> None:
+        for _ in range(num_basic_services):
+            self.basic_service_generator.create_basic_service()
+        stats = self.interactor.get_statistics()
+        assert stats.active_basic_services_count == num_basic_services
+
+    def test_that_deactivated_basic_services_are_ignored(self) -> None:
+        self.basic_service_generator.create_basic_service(deactivated=True)
+        self.basic_service_generator.create_basic_service(deactivated=True)
+        stats = self.interactor.get_statistics()
+        assert stats.active_basic_services_count == 0
+
+
 class CalculateAverageTimeframeTests(StatisticsBaseTestCase):
     def test_average_calculation_of_two_active_plan_timeframes(self) -> None:
         self.plan_generator.create_plan(timeframe=3)

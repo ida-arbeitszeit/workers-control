@@ -7,22 +7,59 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-05-06
+
+### Added
+
+- Private consumption of basic services for members. (#1446, #1449)
+- Productive consumption of basic services for companies, including a consumption details view. (#1453, #1456, #1457, #1459, #1461)
+- New transfer types for private and productive consumption of basic services. (#1431)
+- Listing of consumed basic services in the member consumption list, with a new consumption details view. (#1451)
+- Consumption link on the "all plans" list, allowing members and companies to consume products directly from there. A colored tag signals to companies that a plan is their own. (#1434)
+- Plan preview on the member private consumption form, mirroring the existing company flow. (#1433)
+- Deduction of the contribution to public plans on basic-service consumption. (#1466)
+- Inclusion of consumed basic services in the payout factor (FIC) calculation. (#1468)
+- Basic service consumptions are now shown in the FIC details view. (#1470)
+- Functionality for workers to deactivate their basic service offers. (#1473, #1474)
+- Counter for basic services on the global statistics page. (#1478)
+- User name in the user account info. (#1460)
+
+### Changed
+
+- Unify "query plans" and "query basic services" into a single "Search offers" workflow accessible from member and company dashboards. (#1443, #1444)
+- Move the "create new plan" button from the company dashboard to the "My plans" view. (#1438)
+- Move the "register hours worked" button from the company dashboard to the "registered hours worked" view, and improve related redirections and navigation bar. (#1439)
+- Improve developer documentation on core concepts. (#1476)
+- Update translations. (#1448, #1475)
+
+### Removed
+
+- "Latest plans" panel from member and company dashboards. (#1435)
+- "Latest plans" section from the start page. (#1464)
+- "Private consumption" button from the member dashboard; the main entry point is now the "all plans" list. (#1436)
+- "Productive consumption" button from the company dashboard; the main entry point is now the "all plans" list. (#1437)
+- Duplicated information from member and company dashboards. (#1460)
+
+### Fixed
+
+- Nix flake checks could hang on failure when PostgreSQL was not terminated; a trap now kills it on exit. (#1430)
+
 ## [0.1.7] - 2026-04-24
 
 ### Added
 
-- "Create basic service" functionality (#1423)
-- "Show basic service" functionality (#1414)
-- "List worker's basic services" functionality (#1421)
-- "Query basic services" functionality (#1427)
+- "Create basic service" functionality. (#1423)
+- "Show basic service" functionality. (#1414)
+- "List worker's basic services" functionality. (#1421)
+- "Query basic services" functionality. (#1427)
 
 ### Removed
 
-- Unclear graph and metrics from statistics page (#1418)
+- Unclear graph and metrics from statistics page. (#1418)
 
 ### Fixed
 
-- Don't force HTTPS on http dev server (#1420)
+- Don't force HTTPS on http dev server. (#1420)
 
 ## [0.1.6] - 2026-03-22
 

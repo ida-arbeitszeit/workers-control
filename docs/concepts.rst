@@ -1,24 +1,24 @@
 Core Concepts
 ==============
 
-The core principle of labor time accounting is to prevent the exploitation of others' work. To achieve this, all transfers of working hours must be recorded through bookkeeping of transfers between accounts. These accounts belong to different kind of users.
+Labour time accounting prevents the exploitation of others' work by recording every transfer of working hours through bookkeeping between accounts. The accounts belong to different types of users, which guarantees accountability.
 
-User Roles
-----------
+Users
+-----
 
-There are three user roles:
+There are three types of users:
 
-* **Companies** can file plans for each product (or service) they offer. A plan describes a product and defines how much working time it will cost.
+* **Companies** file plans for the products and services they offer. They may join cooperations with other companies producing the same product. Companies consume products from other companies' plans and basic services from members, and they register members' worked hours, which credits work certificates to those members.
 
-* **Members** are workers in companies. They receive work certificates for their worked hours. They can use them to consume products and services. Members can also create and offer so-called :ref:`basic-services`.
+* **Members** are individual workers. They earn work certificates by working for a company or by offering basic services. They consume products from companies' plans and basic services from other members.
 
-* **Accountants** are delegates of the cooperating network of companies. They can approve company plans based on collectively agreed criteria.
+* **Accountants** review and approve or reject company plans based on collectively agreed criteria.
 
 
-Accounts  
----------
+Accounts
+--------
 
-There are seven account types in our app. See :ref:`transfers-of-labor-time` for a list of allowed transfers between these accounts.
+The app has seven account types. See :ref:`transfers-of-labour-time` for a list of allowed transfers between them.
 
 .. list-table::
    :widths: auto
@@ -29,25 +29,34 @@ There are seven account types in our app. See :ref:`transfers-of-labor-time` for
      - Description
    * - p
      - Company
-     - Each company has a "p" account ("Produktionsmittel" - means of production) where transfers related to the consumption or provision of "fixed means of production" are recorded. Fixed means of production are, for example, machines or buildings that wear out gradually and do not transfer their value to the product in one planning cycle all at once.
+     - Hours allocated to the company for fixed means of production (German: *Produktionsmittel*) — e.g. machines or buildings, which transfer their value to the product gradually over multiple planning cycles. Credited on approval of a plan, debited as the company consumes fixed means of production.
    * - r
      - Company
-     - Each company has a "r" account ("Rohstoffe" - raw materials) where transfers related to the consumption or provision of "liquid means of production" are recorded. Liquid means of production are, for example, raw materials that transfer their value to the product in one planning cycle all at once.
+     - Hours allocated to the company for liquid means of production (German: *Rohstoffe* — raw materials), which transfer their value to the product within a single planning cycle. Credited on plan approval, debited as the company consumes liquid means of production.
    * - a
      - Company
-     - Each company has an "a" account ("Arbeit" - work), where inflows and outflows of work certificates are recorded.
+     - Hours allocated to the company for labour (German: *Arbeit*). Credited on plan approval, debited as the company registers worked hours.
    * - prd
      - Company
-     - Each company has a "prd" account ("Produkt" - product), where quantities of planned and delivered products are recorded. When a productive plan gets approved, the total planned costs are debited from this account. As the finished product gets consumed and work certificates are spent for it, the account balance increases back toward zero, item by item.
+     - Tracks planned and delivered products (German: *Produkt*). When a productive plan is approved, the total planned cost is debited from this account; as the product is consumed in exchange for work certificates, the balance returns toward zero.
    * - member
      - Member
-     - Each member has a "member" account where inflows and outflows of work certificates are recorded. Work certificates are credited when the member works and debited when the member consumes a product. 
+     - Tracks a member's work certificates: credited when they work for a company or when their basic service is consumed, debited when they consume a product or service.
    * - psf
      - Social Accounting
-     - The "psf" account (Public Sector Fund) is used to track hours credited to and debited from the public sector. In the current implementation of the app, there is one Social Accounting instance with one psf account.
+     - Public Sector Fund — tracks hours credited to and debited from the public sector. Currently the app has a single Social Accounting instance with one psf account.
    * - cooperation
      - Cooperation
-     - Each cooperation has an account that tracks the differences between the cooperative (averaged) prices and the actual costs of the products (see :ref:`cooperations` for details).
+     - Accumulates the deltas between cooperative price and individual product cost on each consumption of a cooperating plan (see :ref:`cooperations`).
+
+
+Overview
+--------
+
+.. image:: images/accounts_and_transfers.svg
+  :alt: Overview of accounts and transfers
+  :width: 600px
+  :class: framed-image
 
 
 .. _plans:
@@ -55,137 +64,111 @@ There are seven account types in our app. See :ref:`transfers-of-labor-time` for
 Plans
 -----
 
-Companies define in plans, beside other things, the product to be produced, the planned timeframe and the planned production costs (in hours). Companies create either productive or public plans. The difference between them is that the products of productive plans are to be consumed in exchange for labor certificates, while the products of public plans are freely available.
+A plan describes a product to produce, the planned timeframe, and the planned production cost in hours. Plans are either *productive* — their products are consumed in exchange for work certificates — or *public* — their products are freely available.
 
-In our app, we distinguish between plan drafts and plans: A company creates a plan draft first. From the moment it files the plan with Social Accounting, it becomes a proper plan. 
+A company first creates a *plan draft*. Filing the draft with Social Accounting turns it into a plan, which can then be approved or rejected. An approved plan is "active" until its expiration date (approval date plus planned timeframe); after that, no further consumption can be registered against it.
 
-From now on, the plan has the following attributes:
+On approval, the planned hours for fixed means of production, raw materials, and labour are credited to the company's P, R, and A accounts. The corresponding amount is debited from the company's own PRD account (productive plan) or from Social Accounting's PSF account (public plan).
 
-* approved: bool 
-* rejected: bool
-* expired: bool
-
-When a plan gets approved, a couple of transfers of labour time are happening: The planning company receives the planned hours credited to their P, R, and A accounts. If the plan is a productive plan, the planned hours are debited from the company's own PRD account, otherwise they are debited from Social Accounting's PSF account.
-
-We consider a plan "active" when it has been approved and not yet expired. The expiration date is approval date plus planned timeframe. After expiration, consumption cannot be registered anymore on that plan.
-
-See the "PlanDraft" and "Plan" records in :py:mod:`workers_control.core.records` for details and actual implementation. To dive deeper, you could also have a look at the following interactors in :py:mod:`workers_control.core.interactors`:
-
-* CreatePlanDraft
-* FilePlanWithAccounting
-* ApprovePlanInteractor
-* RejectPlanInteractor
 
 .. _basic-services:
 
 Basic Services
 --------------
 
-Basic Services (BS) are offerings made by individual workers (members). Unlike :ref:`plans <plans>`, which are filed by companies and may involve objectified labour (means of production, raw materials), a Basic Service represents purely living labour: a worker directly offers their personal time and skills to others.
+A basic service (BS) is an offering by an individual worker (member).
 
-Key differences from plans:
+Differences from plans:
 
-* Only **members** can create Basic Services; companies cannot (companies continue to represent their services via plans).
-* A Basic Service has no fixed duration and no planned quantity (there is no "X units per hour" calculation).
-* No approval by Social Accounting is required. A Basic Service is visible and searchable immediately upon creation.
-* There is no cooperative price mechanism for Basic Services.
-
-A member creates a Basic Service by providing a name and a description. The service is immediately discoverable by other users.
+* Only members can create basic services; companies represent their services via plans.
+* Unlike plans, which may involve objectified labour (means of production, raw materials), a basic service represents purely living labour: a worker offers their personal time and skills directly to others.
+* No fixed duration and no planned quantity (no "X units per hour").
+* No approval by Social Accounting is required; a basic service is searchable immediately upon creation.
+* No cooperative price mechanism.
 
 
 Consumption
 -----------
 
-Workers Control distinguishes between *productive consumption* (a company consumes something for its own production process) and *private consumption* (a member consumes something for personal use). Both kinds of consumption can target either a product offered through a :ref:`plan <plans>` or a :ref:`basic service <basic-services>`.
+Workers Control distinguishes *productive consumption* (a company consumes for its production process) from *private consumption* (a member consumes for personal use). Either kind of consumption can target a planned product or a basic service. Companies cannot consume products from public plans.
 
-**Productive consumption of a planned product**
+For each combination, the cost — the cooperative price where applicable — flows as follows:
 
-Companies consume products from other companies' productive plans. They cannot consume products from public plans. The consuming company specifies whether it is acquiring fixed or liquid means of production. The cost of the product (the cooperative price, if applicable) is then subtracted from either the P or R account of the consuming company and added to the PRD account of the producing company.
+.. list-table::
+   :widths: auto
+   :header-rows: 1
 
-**Private consumption of a planned product**
+   * - Consumer
+     - Consumed
+     - Debited
+     - Credited
+   * - Company (productive)
+     - Planned product
+     - Consuming company's P or R account, depending on whether the product is acquired as a fixed or liquid means of production
+     - Producing company's PRD
+   * - Member (private)
+     - Planned product
+     - Consuming member's account
+     - Producing company's PRD
+   * - Company (productive)
+     - Basic service
+     - Consuming company's R account (basic services count as liquid means of production)
+     - Providing member's account
+   * - Member (private)
+     - Basic service
+     - Consuming member's account
+     - Providing member's account
 
-Members consume products from any productive plan. The cost of the product (the cooperative price, if applicable) is subtracted from the member's account and added to the PRD account of the producing company.
-
-**Productive consumption of a basic service**
-
-A basic service represents living labour offered directly by a member, so a company that consumes one is consuming raw labour rather than an objectified product. The cost is subtracted from the consuming company's R account (basic services are treated as liquid means of production) and added to the providing member's account.
-
-**Private consumption of a basic service**
-
-A member consumes living labour offered by another member. The cost is subtracted from the consuming member's account and added to the providing member's account.
 
 .. _certificates-and-fic:
 
-Labor Certificates and Factor of Individual Consumption (FIC)
--------------------------------------------------------------
+Labour Certificates and Factor of Individual Consumption (FIC)
+--------------------------------------------------------------
 
-There are two ways for a member to credit work certificates to their account: a company they work for can register their worked hours, or another user can consume a :ref:`basic service <basic-services>` they offer. In both cases the member receives certificates equal to the number of hours of living labour they contributed.
+A member's account is credited with work certificates in two ways: when a company registers their worked hours, or when another user consumes a basic service they offer. In both cases the member receives certificates equal to the hours of living labour they contributed.
 
-At the same time, a certain amount of certificates is subtracted from the member's account and added to the PSF account in order to cover the costs of public plans. This deduction applies to both sources of certificates: when a company registers ``h`` worked hours for a member, and equivalently when a member's basic service is consumed for ``h`` hours, ``h * (1 - FIC)`` certificates are moved from the member's account to the PSF account.
-
-The amount is determined by the FIC. The FIC is calculated as follows:
+At the same time, a portion of those certificates is transferred from the member's account to the PSF account in order to fund public plans. For :math:`h` hours of contributed labour, :math:`h \cdot (1 - \text{FIC})` certificates are deducted. The Factor of Individual Consumption (FIC) is calculated as:
 
 .. math::
 
-  \text{FIC} = \frac{L-(P_o + R_o)}{L + L_o}     
-  
+  \text{FIC} = \frac{L-(P_o + R_o)}{L + L_o}
 
-where :math:`L` is the sum of all working hours in productive plans plus the working hours of basic services consumed within the calculation window,
-:math:`L_o` is the sum of all working hours in public plans,
-:math:`P_o` is the sum of all fixed means of production in public plans, and
-:math:`R_o` is the sum of all liquid means of production in public plans.
+where :math:`L` is the total working hours in productive plans plus the working hours of basic services consumed within the calculation window, :math:`L_o` is the total working hours in public plans, and :math:`P_o` and :math:`R_o` are the totals of fixed and liquid means of production in public plans.
 
-The FIC ranges from 0 to 1.
+The FIC ranges from 0 to 1:
 
-* If FIC = 0, all labor is allocated to public plans, making all goods and services freely available. When workers register hours worked or members provide basic services, the member does not net any work certificates, since their work goes entirely to freely available public-sector goods and services and thus cannot be exchanged for private consumption.
-* If FIC = 1, all labor is dedicated to productive plans, meaning nothing is freely available. Work certificates from registered hours and from basic-service consumption are credited in full without deductions.
+* **FIC = 0**: all labour is allocated to public plans, so all goods and services are freely available. Members net zero certificates from work or from basic services — their entire contribution funds public-sector goods and cannot be exchanged for private consumption.
+* **FIC = 1**: all labour is allocated to productive plans, and nothing is freely available. Certificates are credited in full without deduction.
 
-Now, which plans are taken into account for the FIC calculation? We decided that the FIC should 
-be captured over a defined time window. The procedure is as follows:
-We define a time window of t days that extends from the current time t/2 backwards into the past
-and t/2 forwards into the future.
+**Calculation window.** The window spans :math:`t` days, from :math:`t/2` in the past to :math:`t/2` in the future. Plans contribute weighted by overlap: a plan that lies entirely within the window contributes 100% of its planned costs; one that overlaps 50% contributes 50%; one fully outside contributes nothing. Consumed basic services are point-in-time events and contribute to :math:`L` in full if their consumption date falls within the window, and not at all otherwise.
 
-Planned labour and means of production that fall within this window are weighted in the FIC: If a
-plan lies 100% within the current time window (i.e. it starts and ends within the window), its planned costs
-enter the FIC at 100%. If it lies 50% within the window, they enter at
-only 50%. If it lies entirely outside the window, it does not contribute at all, and so on.
-
-Consumed basic services, in contrast, are point-in-time events rather than time-spanning plans. A consumed basic service is included in :math:`L` in full if its consumption date lies within the calculation window, and not at all otherwise.
 
 .. _cooperations:
 
-Cooperations 
--------------
+Cooperations
+------------
 
-Companies that produce the same product can attach their plans to so-called "cooperations". These cooperations are the means whereby companies within a given industry may express their intention to cooperate, to overcome competition and to align their production. Cooperations are a first step towards such alignment by calculating an average labor cost per product. This average labor cost is also known as the cooperative price, which is equal for all cooperating plans and which is what customers will pay for a product.
-
-The cooperative price is determined as the average cost per product of all plans in the cooperation:
+Companies that produce the same product can attach their plans to a *cooperation*. Cooperations are how companies in an industry express the intention to overcome competition and align their production. The first step toward such alignment is a shared *cooperative price* — the average labour cost per product across all cooperating plans. This is what consumers pay regardless of which plan supplied their item:
 
 .. math::
 
   \text{cooperative price} = \frac{1}{n} \sum_{i=1}^{n} \frac{\text{cost}_i}{\text{pieces}_i}
 
-where :math:`\text{cost}_i` is the total cost of the :math:`i`-th plan in the cooperation and :math:`\text{pieces}_i` is the total amount of produced pieces of the :math:`i`-th plan. The sum runs over all :math:`n` plans in the cooperation.
+where :math:`\text{cost}_i` and :math:`\text{pieces}_i` are the total planned cost and total pieces of the :math:`i`-th of the :math:`n` plans in the cooperation. The cooperative price thus approximates the socially necessary cost of the product.
 
-The cooperative price thus approximates the average socially necessary cost of the product.
+**Productivity and compensation.** A plan that needs more labour per product than the average is *underproductive*; one that needs less is *overproductive*. When such a product is consumed, the consumer spends fewer or more certificates than the plan's individual cost. To track this, compensation transfers between the producing company and the cooperation account are recorded on each consumption (see :ref:`transfers-of-labour-time`).
 
-**Productivity and compensation transfers**
+**Coordinators.** A cooperation begins empty; any company can create one and automatically becomes its *coordinator*. Coordinators accept or deny incoming cooperation requests, remove plans from the cooperation, and can transfer the role to another company. The history of past coordinators is visible to all users.
 
-A plan in a cooperation that is less productive than the average (needs more labour time per product) is called *underproductive*; if more productive, *overproductive*. When the product of an over- or underproductive plan is consumed, the consumer spends less or more labour certificates as required for the production of the individual product. In order to track such differences, certain "compensation" transfers between companies and cooperations are recorded whenever consumption happens (see :ref:`transfers-of-labor-time`).
-
-**Coordinators of Cooperations**
-
-A cooperation begins its life as empty, without any plans attached to it. Companies may then freely choose to join the new cooperation. An empty cooperation can be created by any company. The company that creates a cooperation automatically becomes the "coordinator" of that cooperation. A coordinator has several privileges and duties: They can accept or deny incoming cooperation requests, remove plans from the cooperation, or transfer the coordination role to another company. The history of past coordinator tenures is visible to all users.
-
-While this implementation may seem undemocratic at first glance, it must be noted that the workers control app only provides the technical front-end to diverse political processes that must happen in "real life". The app does not prescribe the political procedures that companies and communities choose to elect coordinators or to define cooperations. Because every company is able to create cooperations, companies that are unhappy with a certain coordination can easily form a new cooperation.
+The app provides only the technical front-end; the political processes by which coordinators are chosen happen outside it. Companies dissatisfied with a given coordination can always create a new cooperation.
 
 
-.. _transfers-of-labor-time:
+.. _transfers-of-labour-time:
 
-Transfers of labor time
------------------------
+Transfers of labour time
+------------------------
 
-Transfers occur between two accounts, where the debit account is charged, and the credit account is credited. The table below lists the allowed transfers and their corresponding variable names in the code.
+A transfer charges the *debit* account and credits the *credit* account. The table below lists every allowed transfer along with the variable name used in code.
 
 .. list-table::
    :widths: 10 20 20 60
@@ -206,7 +189,7 @@ Transfers occur between two accounts, where the debit account is charged, and th
    * - credit_a
      - prd
      - a
-     - On approval of a productive plan, the planned hours for labor are subtracted from the PRD account of the company and added to the A account of the company.
+     - On approval of a productive plan, the planned hours for labour are subtracted from the PRD account of the company and added to the A account of the company.
    * - credit_public_p
      - psf
      - p
@@ -218,7 +201,7 @@ Transfers occur between two accounts, where the debit account is charged, and th
    * - credit_public_a
      - psf
      - a
-     - On approval of a public plan, the planned hours for labor are subtracted from the PSF account and added to the A account of the company. 
+     - On approval of a public plan, the planned hours for labour are subtracted from the PSF account and added to the A account of the company.
    * - private_consumption
      - member
      - prd
@@ -226,7 +209,7 @@ Transfers occur between two accounts, where the debit account is charged, and th
    * - private_consumption_of_basic_service
      - member
      - member
-     - On private consumption of a :ref:`basic service <basic-services>`, the consumed hours are subtracted from the consuming member's account and added to the account of the member providing the service.
+     - On private consumption of a basic service, the consumed hours are subtracted from the consuming member's account and added to the account of the member providing the service.
    * - productive_consumption_p
      - p
      - prd
@@ -238,7 +221,7 @@ Transfers occur between two accounts, where the debit account is charged, and th
    * - productive_consumption_of_basic_service
      - r
      - member
-     - On productive consumption of a :ref:`basic service <basic-services>`, the consumed hours are subtracted from the R account of the consuming company (basic services are consumed as liquid means of production) and added to the account of the member providing the service.
+     - On productive consumption of a basic service, the consumed hours are subtracted from the R account of the consuming company (basic services count as liquid means of production) and added to the account of the member providing the service.
    * - compensation_for_coop
      - prd
      - cooperation
@@ -254,10 +237,4 @@ Transfers occur between two accounts, where the debit account is charged, and th
    * - taxes
      - member
      - psf
-     - On registration of worked hours and on private or productive consumption of a :ref:`basic service <basic-services>`, :math:`hours * (1 - FIC)` are subtracted from the working/providing member's account and added to the PSF account.
-
-Here is a graphical overview of the accounts and transfers:
-
-.. image:: images/accounts_and_transfers.svg
-  :alt: Overview of accounts and transfers of worker control app
-  :width: 600px
+     - On registration of worked hours and on private or productive consumption of a basic service, :math:`h \cdot (1 - \text{FIC})` are subtracted from the working/providing member's account and added to the PSF account (see :ref:`certificates-and-fic`).

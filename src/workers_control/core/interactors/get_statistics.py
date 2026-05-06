@@ -14,6 +14,7 @@ class StatisticsResponse:
     cooperations_count: int
     active_plans_count: int
     active_plans_public_count: int
+    active_basic_services_count: int
     avg_timeframe: Decimal
     planned_work: Decimal
     planned_resources: Decimal
@@ -45,6 +46,9 @@ class GetStatisticsInteractor:
             cooperations_count=len(self.database.get_cooperations()),
             active_plans_count=len(active_plans),
             active_plans_public_count=len(active_plans.that_are_public()),
+            active_basic_services_count=len(
+                self.database.get_basic_services().that_are_active()
+            ),
             avg_timeframe=planning_statistics.average_plan_duration_in_days,
             planned_work=planning_statistics.total_planned_costs.labour_cost,
             planned_resources=planning_statistics.total_planned_costs.resource_cost,

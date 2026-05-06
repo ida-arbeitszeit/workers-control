@@ -13,6 +13,7 @@ class GetStatisticsViewModel:
     cooperations_count: str
     active_plans_count: str
     active_plans_public_count: str
+    active_basic_services_count: str
     average_timeframe_days: str
     planned_work_hours: str
     planned_resources_hours: str
@@ -58,6 +59,9 @@ class GetStatisticsPresenter:
             active_plans_count=str(interactor_response.active_plans_count),
             active_plans_public_count=str(
                 interactor_response.active_plans_public_count
+            ),
+            active_basic_services_count=str(
+                interactor_response.active_basic_services_count
             ),
             average_timeframe_days=average_timeframe,
             payout_factor=self._format_payout_factor(interactor_response.payout_factor),

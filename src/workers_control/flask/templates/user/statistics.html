@@ -11,7 +11,7 @@
         <h1 class="title">{{ gettext("Global statistics") }}</h1>
     </div>
     <div class="block py-2"></div>
-    <div class="fixed-grid has-4-cols has-1-cols-mobile has-text-centered">
+    <div class="fixed-grid has-5-cols has-1-cols-mobile has-text-centered">
         <div class="grid">
             <div class="cell box mb-0">
                 <h1 class="title">{{ view_model.registered_companies_count }}</h1>
@@ -24,6 +24,10 @@
             <div class="cell box mb-0">
                 <h1 class="title">{{ view_model.active_plans_count }}</h1>
                 <div class="subtitle">{{ gettext("Plans") }}</div>
+            </div>
+            <div class="cell box mb-0">
+                <h1 class="title">{{ view_model.active_basic_services_count }}</h1>
+                <div class="subtitle">{{ gettext("Basic services") }}</div>
             </div>
             <div class="cell box mb-0">
                 <h1 class="title">{{ view_model.cooperations_count }}</h1>

@@ -18,6 +18,7 @@ class ShowBasicServiceResponse:
     @dataclass
     class Details:
         provider_name: str
+        provider_email: str
         name: str
         description: str
         created_on: datetime
@@ -39,13 +40,18 @@ class ShowBasicServiceInteractor:
         )
         if basic_service is None:
             return ShowBasicServiceResponse(details=None)
-        member = (
-            self.database_gateway.get_members().with_id(basic_service.provider).first()
+        result = (
+            self.database_gateway.get_members()
+            .with_id(basic_service.provider)
+            .joined_with_email_address()
+            .first()
         )
-        assert member
+        assert result
+        member, email = result
         return ShowBasicServiceResponse(
             details=ShowBasicServiceResponse.Details(
                 provider_name=member.name,
+                provider_email=email.address,
                 name=basic_service.name,
                 description=basic_service.description,
                 created_on=basic_service.created_on,

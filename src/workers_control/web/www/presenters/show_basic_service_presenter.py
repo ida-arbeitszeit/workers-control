@@ -13,6 +13,7 @@ class ShowBasicServicePresenter:
     @dataclass
     class ViewModel:
         provider_name: str
+        provider_email: str
         name: str
         description: str
         created_on: str
@@ -25,6 +26,7 @@ class ShowBasicServicePresenter:
             return None
         return self.ViewModel(
             provider_name=details.provider_name,
+            provider_email=details.provider_email,
             name=details.name,
             description=details.description,
             created_on=self.datetime_formatter.format_datetime(

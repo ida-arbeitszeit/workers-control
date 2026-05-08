@@ -31,6 +31,13 @@ class ShowBasicServicePresenterTests(BaseTestCase):
         assert view_model is not None
         assert view_model.provider_name == expected_name
 
+    def test_view_model_contains_correct_provider_email(self) -> None:
+        expected_email = "alice@example.org"
+        response = self._create_response(provider_email=expected_email)
+        view_model = self.presenter.present(response)
+        assert view_model is not None
+        assert view_model.provider_email == expected_email
+
     def test_view_model_contains_correct_name(self) -> None:
         expected_name = "Haircut"
         response = self._create_response(name=expected_name)
@@ -59,6 +66,7 @@ class ShowBasicServicePresenterTests(BaseTestCase):
     def _create_response(
         self,
         provider_name: str = "Test Provider",
+        provider_email: str = "provider@example.org",
         name: str = "Test Service",
         description: str = "Test Description",
         created_on: datetime | None = None,
@@ -68,6 +76,7 @@ class ShowBasicServicePresenterTests(BaseTestCase):
         return ShowBasicServiceResponse(
             details=ShowBasicServiceResponse.Details(
                 provider_name=provider_name,
+                provider_email=provider_email,
                 name=name,
                 description=description,
                 created_on=created_on,

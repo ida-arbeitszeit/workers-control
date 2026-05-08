@@ -48,6 +48,12 @@ class InteractorTests(BaseTestCase):
         assert response.details is not None
         assert response.details.provider_name == expected_name
 
+    def test_returns_correct_provider_email(self) -> None:
+        expected_email = "alice@example.org"
+        response = self.create_and_show_basic_service(member_email=expected_email)
+        assert response.details is not None
+        assert response.details.provider_email == expected_email
+
     def test_returns_correct_creation_timestamp(self) -> None:
         expected_time = datetime_utc(1990, 1, 1, 12, 0)
         response = self.create_and_show_basic_service(created_on=expected_time)
@@ -57,12 +63,15 @@ class InteractorTests(BaseTestCase):
     def create_and_show_basic_service(
         self,
         member_name: str = "Test Member",
+        member_email: str | None = None,
         service_name: str = "Test Service",
         description: str = "Test Description",
         created_on: datetime = datetime_utc(2026, 3, 22, 12, 0),
     ) -> ShowBasicServiceResponse:
         self.datetime_service.freeze_time(created_on)
-        member = self.member_generator.create_member(name=member_name)
+        member = self.member_generator.create_member(
+            name=member_name, email=member_email
+        )
         basic_service_id = self.basic_service_generator.create_basic_service(
             member=member, name=service_name, description=description
         )

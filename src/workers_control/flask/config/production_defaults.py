@@ -11,6 +11,7 @@ LANGUAGES = {"en": "English", "de": "Deutsch", "es": "Español"}
 MAIL_PLUGIN = (
     "workers_control.flask.mail_service.mail_storage_service:MailStorageService"
 )
+MAIL_SENDER_PLUGIN = "workers_control.email_sending_worker.smtp_service:SmtpMailService"
 MAIL_ENCRYPTION_TYPE = "tls"
 MAIL_PORT = 587
 AUTO_MIGRATE = os.getenv("AUTO_MIGRATE", False)

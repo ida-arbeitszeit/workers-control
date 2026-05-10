@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from workers_control.core.datetime_service import DatetimeService
 from workers_control.core.repositories import DatabaseGateway
+from workers_control.email_sending_worker.interface import EmailSenderPlugin
 from workers_control.flask.mail_service.interface import EmailPlugin
 
 
@@ -30,3 +31,19 @@ class DebugMailService(EmailPlugin):
             print(f"subject: {subject}")
             print(f"sender: {sender}")
             print(f"content: {html}")
+
+
+@dataclass
+class DebugMailSender(EmailSenderPlugin):
+    def send_message(
+        self,
+        subject: str,
+        recipient: list[str],
+        html: str,
+        sender: str,
+    ) -> None:
+        print("Email 'sent' by DebugMailSender (no SMTP):")
+        print(f"recipient: {recipient}")
+        print(f"subject: {subject}")
+        print(f"sender: {sender}")
+        print(f"content: {html}")

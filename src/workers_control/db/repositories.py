@@ -2455,6 +2455,74 @@ class BasicServiceUpdate:
         return cast(CursorResult, result).rowcount
 
 
+class EmailResult(SqlQueryResult[records.Email]):
+    def with_id(self, id_: UUID) -> Self:
+        return self._with_modified_query(
+            lambda query: query.filter(models.EmailOutbox.id == id_)
+        )
+
+    def that_have_not_been_sent(self) -> Self:
+        return self._with_modified_query(
+            lambda query: query.filter(models.EmailOutbox.sent_at.is_(None))
+        )
+
+    def ordered_by_creation_date(self, ascending: bool = True) -> Self:
+        ordering = (
+            models.EmailOutbox.created_at.asc()
+            if ascending
+            else models.EmailOutbox.created_at.desc()
+        )
+        return self._with_modified_query(lambda query: query.order_by(ordering))
+
+    def update(self) -> EmailUpdate:
+        return EmailUpdate(query=self.query, db=self.db)
+
+
+@dataclass
+class EmailUpdate:
+    query: Query
+    db: Database
+    update_values: Dict[str, Any] = field(default_factory=dict)
+
+    def set_sent_at(self, sent_at: datetime) -> Self:
+        return replace(
+            self,
+            update_values=dict(self.update_values, sent_at=sent_at),
+        )
+
+    def set_last_error(self, message: str) -> Self:
+        return replace(
+            self,
+            update_values=dict(self.update_values, last_error=message),
+        )
+
+    def increment_retry_count(self) -> Self:
+        return replace(
+            self,
+            update_values=dict(
+                self.update_values,
+                retry_count=models.EmailOutbox.retry_count + 1,
+            ),
+        )
+
+    def perform(self) -> int:
+        if not self.update_values:
+            return 0
+        sql_statement = (
+            update(models.EmailOutbox)
+            .where(
+                models.EmailOutbox.id.in_(
+                    self.query.with_entities(models.EmailOutbox.id).scalar_subquery()
+                )
+            )
+            .values(**self.update_values)
+            .execution_options(synchronize_session="fetch")
+        )
+        result = self.db.session.execute(sql_statement)
+        self.db.session.flush()
+        return cast(CursorResult, result).rowcount
+
+
 @dataclass
 class DatabaseGatewayImpl:
     db: Database
@@ -3249,6 +3317,13 @@ class DatabaseGatewayImpl:
         self.db.session.add(orm)
         self.db.session.flush()
         return self.email_from_orm(orm)
+
+    def get_emails(self) -> EmailResult:
+        return EmailResult(
+            db=self.db,
+            query=self.db.session.query(models.EmailOutbox),
+            mapper=self.email_from_orm,
+        )
 
     @classmethod
     def email_from_orm(cls, orm: models.EmailOutbox) -> records.Email:

@@ -76,3 +76,46 @@ with the accountant's email address::
     flask --app workers_control.flask.wsgi:app invite-accountant example@mail.de
 
 This sends an email with a registration link to the given address.
+
+
+Email sending worker
+--------------------
+
+Outbound email is delivered asynchronously by a separate worker process.
+The Flask app writes outbound messages to an ``email_outbox`` database
+table inside the same transaction as the data change that triggered them
+(transactional outbox pattern). A long-running worker polls that table,
+sends each message via SMTP, and records success or failure on the row.
+
+Run the worker with::
+
+    flask --app workers_control.flask.wsgi:app send-emails
+
+The worker should be supervised so that it is restarted automatically. A
+minimal systemd service unit looks like this::
+
+    [Unit]
+    Description=Workers Control email sending worker
+    After=network.target
+
+    [Service]
+    Type=simple
+    Environment=WOCO_CONFIGURATION_PATH=/etc/workers-control/workers-control.py
+    ExecStart=/usr/bin/flask --app workers_control.flask.wsgi:app send-emails
+    Restart=on-failure
+    RestartSec=5s
+
+    [Install]
+    WantedBy=multi-user.target
+
+Without a running worker, mail accumulates in the ``email_outbox`` table
+but is never delivered.
+
+The worker's delivery backend is selected via the ``MAIL_SENDER_PLUGIN``
+configuration option. The default,
+``workers_control.email_sending_worker.smtp_service:SmtpMailService``,
+delivers via SMTP using the standard ``MAIL_SERVER``, ``MAIL_PORT``,
+``MAIL_ENCRYPTION_TYPE``, ``MAIL_USERNAME`` and ``MAIL_PASSWORD`` settings.
+You normally do not need to change this; it exists so that development and
+test environments can substitute a non-SMTP backend that simply logs each
+message.

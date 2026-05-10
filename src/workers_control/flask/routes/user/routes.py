@@ -13,6 +13,7 @@ from workers_control.core.interactors.get_user_account_details import (
 from workers_control.core.interactors.request_email_address_change import (
     RequestEmailAddressChangeInteractor,
 )
+from workers_control.db import commit_changes
 from workers_control.flask.class_based_view import as_flask_view
 from workers_control.flask.forms import RequestEmailAddressChangeForm
 from workers_control.flask.types import Response
@@ -99,6 +100,7 @@ def company_summary(
 
 
 @AuthenticatedUserRoute("/request-email-change", methods=["GET", "POST"])
+@commit_changes
 def request_email_change(
     controller: RequestEmailAddressChangeController,
     presenter: RequestEmailAddressChangePresenter,

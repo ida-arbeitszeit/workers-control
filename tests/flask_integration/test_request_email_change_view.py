@@ -168,6 +168,26 @@ class SentEmailTestsWithoutAdminMailInConfig(SentEmailTestCase):
             assert new_email in recipients
 
 
+class OutboxPersistenceTests(ViewTestCase):
+    def test_email_rows_are_committed_to_outbox(self) -> None:
+        password = "123_pw"
+        self.login_member(password=password)
+        emails_before = len(list(self.database_gateway.get_emails()))
+        response = self.client.post(
+            URL,
+            data={
+                "new_email": "new_email@test.test",
+                "current_password": password,
+            },
+        )
+        assert response.status_code == 302
+        # Discard uncommitted state so we only see rows the request actually
+        # committed.
+        self.db.session.rollback()
+        emails_after = len(list(self.database_gateway.get_emails()))
+        assert emails_after - emails_before == 2
+
+
 class SentEmailTestsWithAdminMailInConfig(SentEmailTestCase):
     @property
     def expected_admin_mail(self) -> str:

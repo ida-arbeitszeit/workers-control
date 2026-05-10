@@ -63,3 +63,19 @@ class ConfirmedMemberTests(ViewTestCase):
             )
             self.assertEqual(response.status_code, 302)
             assert len(outbox) == 0
+
+
+class OutboxPersistenceTests(ViewTestCase):
+    def test_member_resend_commits_email_row_to_outbox(self) -> None:
+        self.login_member(confirm_member=False)
+        self.client.get("/member/resend")
+        # Discard uncommitted state so we only see rows the request actually
+        # committed.
+        self.db.session.rollback()
+        assert self.database_gateway.get_emails().first() is not None
+
+    def test_company_resend_commits_email_row_to_outbox(self) -> None:
+        self.login_company(confirm_company=False)
+        self.client.get("/company/resend")
+        self.db.session.rollback()
+        assert self.database_gateway.get_emails().first() is not None

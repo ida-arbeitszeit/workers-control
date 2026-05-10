@@ -1,6 +1,6 @@
 from tests.datetime_service import datetime_utc
 from tests.web.base_test_case import BaseTestCase
-from tests.web.email import Email
+from workers_control.core import records
 from workers_control.web.email.registration_email_presenter import (
     RegistrationEmailPresenter,
 )
@@ -12,24 +12,20 @@ class MemberPresenterTests(BaseTestCase):
         self.presenter = self.injector.get(RegistrationEmailPresenter)
         self.email_address = "test@test.test"
 
-    def test_that_some_email_is_sent_out(self) -> None:
+    def test_that_one_email_is_sent_out(self) -> None:
         self.presenter.show_member_registration_message(self.email_address)
-        self.assertTrue(self.email_service.sent_mails)
-
-    def test_that_email_is_sent_to_exactly_one_recipient(self) -> None:
-        self.presenter.show_member_registration_message(self.email_address)
-        email = self.get_sent_email()
-        self.assertEqual(len(email.recipients), 1)
+        assert len(self.email_service.sent_mails) == 1
 
     def test_that_email_sender_is_set_correctly(self) -> None:
         self.presenter.show_member_registration_message(self.email_address)
-        email = self.get_sent_email()
-        self.assertEqual(email.sender, self.email_configuration.get_sender_address())
+        self.assertEqual(
+            self.email_service.sent_mails[0].sender,
+            self.email_configuration.get_sender_address(),
+        )
 
     def test_that_email_is_sent_to_member_address(self) -> None:
         self.presenter.show_member_registration_message(self.email_address)
-        email = self.get_sent_email()
-        recipient = email.recipients[0]
+        recipient = self.email_service.sent_mails[0].recipient
         self.assertEqual(self.email_address, recipient)
 
     def test_that_correct_message_is_rendered(self) -> None:
@@ -37,7 +33,7 @@ class MemberPresenterTests(BaseTestCase):
         token = self.token_service.generate_token(self.email_address)
         expected_url = self.url_index.get_member_confirmation_url(token=token)
         self.presenter.show_member_registration_message(self.email_address)
-        email = self.get_sent_email()
+        email = self.email_service.sent_mails[0]
         self.assertEqual(
             email.html,
             self.text_renderer.render_member_registration_message(
@@ -47,11 +43,8 @@ class MemberPresenterTests(BaseTestCase):
 
     def test_that_subject_line_is_correct(self) -> None:
         self.presenter.show_member_registration_message(self.email_address)
-        email = self.get_sent_email()
+        email = self.email_service.sent_mails[0]
         self.assertEqual(email.subject, self.translator.gettext("Account confirmation"))
-
-    def get_sent_email(self) -> Email:
-        return self.email_service.sent_mails[0]
 
 
 class CompanyPresenterTests(BaseTestCase):
@@ -60,14 +53,9 @@ class CompanyPresenterTests(BaseTestCase):
         self.presenter = self.injector.get(RegistrationEmailPresenter)
         self.email_address = "test@test.test"
 
-    def test_that_some_email_is_sent_out(self) -> None:
+    def test_that_one_email_is_sent_out(self) -> None:
         self.presenter.show_company_registration_message(self.email_address)
-        self.assertTrue(self.email_service.sent_mails)
-
-    def test_that_email_is_sent_to_exactly_one_recipient(self) -> None:
-        self.presenter.show_company_registration_message(self.email_address)
-        email = self.get_sent_email()
-        self.assertEqual(len(email.recipients), 1)
+        assert len(self.email_service.sent_mails) == 1
 
     def test_that_email_sender_is_set_correctly(self) -> None:
         self.presenter.show_company_registration_message(self.email_address)
@@ -77,7 +65,7 @@ class CompanyPresenterTests(BaseTestCase):
     def test_that_email_is_sent_to_company_address(self) -> None:
         self.presenter.show_company_registration_message(self.email_address)
         email = self.get_sent_email()
-        recipient = email.recipients[0]
+        recipient = email.recipient
         self.assertEqual(self.email_address, recipient)
 
     def test_that_correct_message_is_rendered(self) -> None:
@@ -98,5 +86,5 @@ class CompanyPresenterTests(BaseTestCase):
         email = self.get_sent_email()
         self.assertEqual(email.subject, self.translator.gettext("Account confirmation"))
 
-    def get_sent_email(self) -> Email:
+    def get_sent_email(self) -> records.Email:
         return self.email_service.sent_mails[0]

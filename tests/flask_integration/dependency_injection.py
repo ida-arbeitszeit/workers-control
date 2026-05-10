@@ -26,7 +26,7 @@ class FlaskTestConfiguration(dict):
                 "TESTING": True,
                 "MAIL_DEFAULT_SENDER": "test_sender@cp.org",
                 "MAIL_ADMIN": "test_admin@cp.org",
-                "MAIL_PLUGIN": "tests.flask_integration.mail_service:MockEmailService",
+                "MAIL_PLUGIN": "tests.mail_service:MockEmailService",
                 "MAIL_ENCRYPTION_TYPE": "tls",
                 "MAIL_SERVER": "localhost",
                 "MAIL_PORT": 0,

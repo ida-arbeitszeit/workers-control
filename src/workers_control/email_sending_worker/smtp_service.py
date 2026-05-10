@@ -1,19 +1,30 @@
 import email.utils
 from contextlib import contextmanager
+from dataclasses import dataclass
 from email.message import EmailMessage
 from smtplib import SMTP, SMTP_SSL
 from typing import Generator
 
-from flask import current_app
-
-from .interface import EmailPlugin
+from workers_control.email_sending_worker.interface import EmailSenderPlugin
 
 
-class SmtpMailService(EmailPlugin):
+@dataclass
+class SmtpMailServerConfig:
+    mail_server: str
+    mail_port: int
+    encryption_type: str
+    username: str | None = None
+    password: str | None = None
+
+
+@dataclass
+class SmtpMailService(EmailSenderPlugin):
+    config: SmtpMailServerConfig
+
     def send_message(
         self,
         subject: str,
-        recipients: list[str],
+        recipient: list[str],
         html: str,
         sender: str,
     ) -> None:
@@ -24,19 +35,15 @@ class SmtpMailService(EmailPlugin):
         message.set_content(html, subtype="html")
 
         with self.create_smtp_connection() as connection:
-            for recipient in recipients:
-                del message["Message-ID"]
-                del message["To"]
-                message["Message-ID"] = email.utils.make_msgid(domain="workers-control")
-                message["To"] = recipient
-                connection.send_message(message)
+            message["Message-ID"] = email.utils.make_msgid(domain="workers-control")
+            message["To"] = recipient
+            connection.send_message(message)
 
-    @classmethod
     @contextmanager
-    def create_smtp_connection(cls) -> Generator[SMTP | SMTP_SSL, None, None]:
-        server = current_app.config.get("MAIL_SERVER", "localhost")
-        port = current_app.config.get("MAIL_PORT", 587)
-        encryption_type = current_app.config.get("MAIL_ENCRYPTION_TYPE", "tls")
+    def create_smtp_connection(self) -> Generator[SMTP | SMTP_SSL, None, None]:
+        server = self.config.mail_server
+        port = self.config.mail_port
+        encryption_type = self.config.encryption_type
         connection: SMTP | SMTP_SSL
 
         if encryption_type == "ssl":
@@ -46,8 +53,8 @@ class SmtpMailService(EmailPlugin):
             connection.starttls()
 
         connection.ehlo()
-        username = current_app.config.get("MAIL_USERNAME", "")
-        password = current_app.config.get("MAIL_PASSWORD", "")
+        username = self.config.username
+        password = self.config.password
         if username and password:
             connection.login(username, password)
         yield connection

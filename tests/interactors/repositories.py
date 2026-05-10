@@ -1867,6 +1867,70 @@ class BasicServiceUpdate:
         return replace(self, update_functions=self.update_functions + [update])
 
 
+@dataclass
+class EmailOutboxStatus:
+    sent_at: Optional[datetime] = None
+    retry_count: int = 0
+    last_error: Optional[str] = None
+
+
+class EmailResult(QueryResultImpl[records.Email]):
+    def with_id(self, id_: UUID) -> Self:
+        return self._filter_elements(lambda email: email.id == id_)
+
+    def that_have_not_been_sent(self) -> Self:
+        return self._filter_elements(
+            lambda email: self.database.email_outbox_status[email.id].sent_at is None
+        )
+
+    def ordered_by_creation_date(self, ascending: bool = True) -> Self:
+        return self.sorted_by(key=lambda email: email.created_at, reverse=not ascending)
+
+    def update(self) -> EmailUpdate:
+        return EmailUpdate(
+            database=self.database,
+            items=self.items,
+            update_functions=[],
+        )
+
+
+@dataclass
+class EmailUpdate:
+    database: MockDatabase
+    items: Callable[[], Iterable[records.Email]]
+    update_functions: List[Callable[[EmailOutboxStatus], None]]
+
+    def set_sent_at(self, sent_at: datetime) -> Self:
+        def update(status: EmailOutboxStatus) -> None:
+            status.sent_at = sent_at
+
+        return self._add_update(update)
+
+    def set_last_error(self, message: str) -> Self:
+        def update(status: EmailOutboxStatus) -> None:
+            status.last_error = message
+
+        return self._add_update(update)
+
+    def increment_retry_count(self) -> Self:
+        def update(status: EmailOutboxStatus) -> None:
+            status.retry_count += 1
+
+        return self._add_update(update)
+
+    def perform(self) -> int:
+        items_affected = 0
+        for email in self.items():
+            status = self.database.email_outbox_status[email.id]
+            for update in self.update_functions:
+                update(status)
+            items_affected += 1
+        return items_affected
+
+    def _add_update(self, update: Callable[[EmailOutboxStatus], None]) -> Self:
+        return replace(self, update_functions=self.update_functions + [update])
+
+
 @singleton
 class FakeLanguageRepository:
     def __init__(self) -> None:
@@ -1912,6 +1976,8 @@ class MockDatabase:
             UUID, records.ProductiveConsumptionOfBasicService
         ] = dict()
         self.company_work_invites: List[CompanyWorkInvite] = list()
+        self.emails: list[records.Email] = list()
+        self.email_outbox_status: Dict[UUID, EmailOutboxStatus] = dict()
         self.email_addresses: Dict[str, records.EmailAddress] = dict()
         self.drafts: Dict[UUID, PlanDraft] = dict()
         self.reset_password_requests: List[records.PasswordResetRequest] = list()
@@ -2437,6 +2503,27 @@ class MockDatabase:
         return BasicServiceResult(
             database=self,
             items=self.basic_services.values,
+        )
+
+    def create_email(
+        self, created_at: datetime, recipient: str, sender: str, subject: str, html: str
+    ) -> records.Email:
+        record = records.Email(
+            id=uuid4(),
+            created_at=created_at,
+            recipient=recipient,
+            sender=sender,
+            subject=subject,
+            html=html,
+        )
+        self.emails.append(record)
+        self.email_outbox_status[record.id] = EmailOutboxStatus()
+        return record
+
+    def get_emails(self) -> EmailResult:
+        return EmailResult(
+            database=self,
+            items=lambda: list(self.emails),
         )
 
 

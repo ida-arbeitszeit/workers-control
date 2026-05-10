@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from functools import wraps
 
+from flask import current_app
+
 from workers_control.core import records
 from workers_control.core import repositories as interfaces
 from workers_control.core.control_thresholds import ControlThresholds
@@ -19,6 +21,7 @@ from workers_control.core.services.payout_factor import PayoutFactorConfig
 from workers_control.db import get_social_accounting
 from workers_control.db.db import Database
 from workers_control.db.repositories import DatabaseGatewayImpl
+from workers_control.email_sending_worker.smtp_service import SmtpMailServerConfig
 from workers_control.flask.control_thresholds import ControlThresholdsFlask
 from workers_control.flask.datetime import (
     FlaskDatetimeFormatter,
@@ -89,6 +92,7 @@ class FlaskModule(Module):
         binder[Session] = AliasProvider(FlaskSession)
         binder[Notifier] = AliasProvider(FlaskFlashNotifier)
         binder[MailService] = CallableProvider(provide_email_service)
+        binder[SmtpMailServerConfig] = CallableProvider(self.provide_smtp_config)
         binder[Translator] = AliasProvider(FlaskTranslator)
         binder[HexColors] = AliasProvider(FlaskColors)
         binder[ControlThresholds] = AliasProvider(ControlThresholdsFlask)
@@ -116,6 +120,17 @@ class FlaskModule(Module):
     def provide_database() -> Database:
         #  db gets configured in create_app
         return Database()
+
+    @staticmethod
+    def provide_smtp_config() -> SmtpMailServerConfig:
+        cfg = current_app.config
+        return SmtpMailServerConfig(
+            mail_server=cfg["MAIL_SERVER"],
+            mail_port=int(cfg["MAIL_PORT"]),
+            encryption_type=cfg["MAIL_ENCRYPTION_TYPE"],
+            username=cfg.get("MAIL_USERNAME") or None,
+            password=cfg.get("MAIL_PASSWORD") or None,
+        )
 
 
 class with_injection:

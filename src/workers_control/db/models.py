@@ -16,6 +16,7 @@ from sqlalchemy import (
     ForeignKey,
     String,
     Table,
+    Text,
     TypeDecorator,
     Uuid,
     event,
@@ -390,3 +391,17 @@ class BasicService(Base):
     provider: Mapped[UUID] = mapped_column(Uuid, ForeignKey("member.id"))
     created_on: Mapped[datetime] = mapped_column(TZDateTime)
     deactivated_on: Mapped[datetime | None] = mapped_column(TZDateTime)
+
+
+class EmailOutbox(Base):
+    __tablename__ = "email_outbox"
+
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
+    created_at: Mapped[datetime] = mapped_column(TZDateTime)
+    recipient: Mapped[str] = mapped_column(String(1000))
+    sender: Mapped[str] = mapped_column(String(1000))
+    subject: Mapped[str] = mapped_column(String(1000))
+    html: Mapped[str] = mapped_column(Text)
+    sent_at: Mapped[datetime | None] = mapped_column(TZDateTime)
+    retry_count: Mapped[int] = mapped_column(default=0)
+    last_error: Mapped[str | None] = mapped_column(Text)

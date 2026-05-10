@@ -63,7 +63,11 @@ def create_app(
     app.template_filter("icon")(icon_filter)
 
     with app.app_context():
-        from workers_control.flask.commands import invite_accountant, run_alembic
+        from workers_control.flask.commands import (
+            invite_accountant,
+            run_alembic,
+            send_emails,
+        )
 
         app.cli.command("invite-accountant")(invite_accountant)
         app.cli.command(
@@ -75,6 +79,7 @@ def create_app(
             ),
             add_help_option=False,
         )(run_alembic)
+        app.cli.command("send-emails")(send_emails)
 
         from workers_control.db.models import Accountant, Company, Member
 

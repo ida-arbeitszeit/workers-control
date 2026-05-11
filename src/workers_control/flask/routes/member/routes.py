@@ -1,17 +1,4 @@
-from dataclasses import dataclass
-from uuid import UUID
-
-from flask import Response as FlaskResponse
-from flask import render_template
-
-from workers_control.core.interactors import get_member_dashboard
-from workers_control.core.interactors.get_plan_details import GetPlanDetailsInteractor
-from workers_control.core.interactors.show_member_account_details import (
-    ShowMemberAccountDetailsInteractor,
-)
 from workers_control.flask.class_based_view import as_flask_view
-from workers_control.flask.flask_session import FlaskSession
-from workers_control.flask.types import Response
 from workers_control.flask.views import (
     CompanyWorkInviteView,
     RegisterPrivateConsumptionOfBasicServiceView,
@@ -23,24 +10,21 @@ from workers_control.flask.views.create_basic_service_view import (
 from workers_control.flask.views.deactivate_basic_service_view import (
     DeactivateBasicServiceView,
 )
+from workers_control.flask.views.get_plan_details_member_view import (
+    GetPlanDetailsMemberView,
+)
 from workers_control.flask.views.get_private_consumption_details import (
     GetPrivateConsumptionDetailsView,
 )
-from workers_control.flask.views.http_error_view import http_404
 from workers_control.flask.views.list_basic_services_of_worker_view import (
     ListBasicServicesOfWorkerView,
 )
+from workers_control.flask.views.member_dashboard_view import MemberDashboardView
 from workers_control.flask.views.query_private_consumptions import (
     QueryPrivateConsumptionsView,
 )
-from workers_control.web.www.presenters.get_member_dashboard_presenter import (
-    GetMemberDashboardPresenter,
-)
-from workers_control.web.www.presenters.get_plan_details_member_presenter import (
-    GetPlanDetailsMemberMemberPresenter,
-)
-from workers_control.web.www.presenters.show_member_account_details_presenter import (
-    ShowMemberAccountDetailsPresenter,
+from workers_control.flask.views.show_member_account_details_view import (
+    ShowMemberAccountDetailsView,
 )
 
 from .blueprint import MemberRoute
@@ -85,67 +69,17 @@ class register_private_consumption_of_basic_service(
 
 @MemberRoute("/dashboard")
 @as_flask_view()
-@dataclass
-class dashboard:
-    interactor: get_member_dashboard.GetMemberDashboardInteractor
-    presenter: GetMemberDashboardPresenter
-    flask_session: FlaskSession
-
-    def GET(self) -> Response:
-        current_user = self.flask_session.get_current_user()
-        assert current_user
-        request = get_member_dashboard.Request(member=current_user)
-        response = self.interactor.get_member_dashboard(request)
-        view_model = self.presenter.present(response)
-        return FlaskResponse(
-            render_template(
-                "member/dashboard.html",
-                view_model=view_model,
-            )
-        )
+class dashboard(MemberDashboardView): ...
 
 
 @MemberRoute("/my_account")
 @as_flask_view()
-@dataclass
-class my_account:
-    show_member_account_details: ShowMemberAccountDetailsInteractor
-    presenter: ShowMemberAccountDetailsPresenter
-    flask_session: FlaskSession
-
-    def GET(self) -> Response:
-        current_user = self.flask_session.get_current_user()
-        assert current_user
-        response = self.show_member_account_details.execute(current_user)
-        view_model = self.presenter.present_member_account(response)
-        return FlaskResponse(
-            render_template(
-                "member/my_account.html",
-                view_model=view_model,
-            )
-        )
+class my_account(ShowMemberAccountDetailsView): ...
 
 
 @MemberRoute("/plan_details/<uuid:plan_id>")
 @as_flask_view()
-@dataclass
-class plan_details:
-    interactor: GetPlanDetailsInteractor
-    presenter: GetPlanDetailsMemberMemberPresenter
-
-    def GET(self, plan_id: UUID) -> Response:
-        interactor_request = GetPlanDetailsInteractor.Request(plan_id)
-        interactor_response = self.interactor.get_plan_details(interactor_request)
-        if interactor_response:
-            view_model = self.presenter.present(interactor_response)
-            return FlaskResponse(
-                render_template(
-                    "member/plan_details.html",
-                    view_model=view_model,
-                )
-            )
-        else:
-            return http_404()
+class plan_details(GetPlanDetailsMemberView): ...
 
 
 @MemberRoute("/invite_details/<uuid:invite_id>", methods=["GET", "POST"])

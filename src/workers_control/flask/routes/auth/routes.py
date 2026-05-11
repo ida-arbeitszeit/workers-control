@@ -17,9 +17,6 @@ from workers_control.core.interactors.confirm_member import ConfirmMemberInterac
 from workers_control.core.interactors.log_in_accountant import LogInAccountantInteractor
 from workers_control.core.interactors.log_in_company import LogInCompanyInteractor
 from workers_control.core.interactors.log_in_member import LogInMemberInteractor
-from workers_control.core.interactors.resend_confirmation_mail import (
-    ResendConfirmationMailInteractor,
-)
 from workers_control.db import commit_changes
 from workers_control.flask.class_based_view import as_flask_view
 from workers_control.flask.dependency_injection import with_injection
@@ -28,6 +25,10 @@ from workers_control.flask.forms import LoginForm
 from workers_control.flask.types import Response
 from workers_control.flask.views.request_password_reset_view import (
     RequestPasswordResetView,
+)
+from workers_control.flask.views.resend_confirmation_view import (
+    ResendConfirmationCompanyView,
+    ResendConfirmationMemberView,
 )
 from workers_control.flask.views.reset_password_view import ResetPasswordView
 from workers_control.flask.views.signup_accountant_view import SignupAccountantView
@@ -141,23 +142,10 @@ def login_member(
     return render_template("auth/login_member.html", form=login_form)
 
 
-@auth.route("/member/resend")
-@with_injection()
-@commit_changes
+@auth.route("/member/resend", methods=["POST"])
 @login_required
-def resend_confirmation_member(
-    interactor: ResendConfirmationMailInteractor,
-    session: FlaskSession,
-):
-    current_user = session.get_current_user()
-    assert current_user
-    request = interactor.Request(user=current_user)
-    response = interactor.resend_confirmation_mail(request)
-    if response.is_token_sent:
-        flash("Eine neue Bestätigungsmail wurde gesendet.")
-    else:
-        flash("Bestätigungsmail konnte nicht gesendet werden!")
-    return redirect(url_for("auth.unconfirmed_member"))
+@as_flask_view()
+class resend_confirmation_member(ResendConfirmationMemberView): ...
 
 
 @auth.route("/company/unconfirmed")
@@ -234,22 +222,10 @@ def confirm_email_company(
     return redirect(url_for("auth.unconfirmed_company"))
 
 
-@auth.route("/company/resend")
-@with_injection()
-@commit_changes
+@auth.route("/company/resend", methods=["POST"])
 @login_required
-def resend_confirmation_company(
-    interactor: ResendConfirmationMailInteractor, flask_session: FlaskSession
-):
-    current_user = flask_session.get_current_user()
-    assert current_user
-    request = interactor.Request(user=current_user)
-    response = interactor.resend_confirmation_mail(request)
-    if response.is_token_sent:
-        flash("Eine neue Bestätigungsmail wurde gesendet.")
-    else:
-        flash("Bestätigungsmail konnte nicht gesendet werden!")
-    return redirect(url_for("auth.unconfirmed_company"))
+@as_flask_view()
+class resend_confirmation_company(ResendConfirmationCompanyView): ...
 
 
 @auth.route("/accountant/signup/<token>", methods=["GET", "POST"])

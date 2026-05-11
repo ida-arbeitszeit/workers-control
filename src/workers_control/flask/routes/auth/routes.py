@@ -143,6 +143,7 @@ def login_member(
 
 @auth.route("/member/resend")
 @with_injection()
+@commit_changes
 @login_required
 def resend_confirmation_member(
     interactor: ResendConfirmationMailInteractor,
@@ -235,6 +236,7 @@ def confirm_email_company(
 
 @auth.route("/company/resend")
 @with_injection()
+@commit_changes
 @login_required
 def resend_confirmation_company(
     interactor: ResendConfirmationMailInteractor, flask_session: FlaskSession

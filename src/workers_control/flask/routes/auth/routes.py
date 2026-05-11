@@ -1,8 +1,5 @@
 from flask import (
     Blueprint,
-)
-from flask import Response as FlaskResponse
-from flask import (
     flash,
     redirect,
     render_template,
@@ -14,15 +11,14 @@ from flask_login import login_required
 
 from workers_control.core.interactors.confirm_company import ConfirmCompanyInteractor
 from workers_control.core.interactors.confirm_member import ConfirmMemberInteractor
-from workers_control.core.interactors.log_in_accountant import LogInAccountantInteractor
-from workers_control.core.interactors.log_in_company import LogInCompanyInteractor
-from workers_control.core.interactors.log_in_member import LogInMemberInteractor
 from workers_control.db import commit_changes
 from workers_control.flask.class_based_view import as_flask_view
 from workers_control.flask.dependency_injection import with_injection
 from workers_control.flask.flask_session import FlaskSession
-from workers_control.flask.forms import LoginForm
 from workers_control.flask.types import Response
+from workers_control.flask.views.log_in_accountant_view import LogInAccountantView
+from workers_control.flask.views.log_in_company_view import LogInCompanyView
+from workers_control.flask.views.log_in_member_view import LogInMemberView
 from workers_control.flask.views.request_password_reset_view import (
     RequestPasswordResetView,
 )
@@ -43,18 +39,6 @@ from workers_control.web.www.controllers.confirm_company_controller import (
 )
 from workers_control.web.www.controllers.confirm_member_controller import (
     ConfirmMemberController,
-)
-from workers_control.web.www.controllers.log_in_accountant_controller import (
-    LogInAccountantController,
-)
-from workers_control.web.www.presenters.log_in_accountant_presenter import (
-    LogInAccountantPresenter,
-)
-from workers_control.web.www.presenters.log_in_company_presenter import (
-    LogInCompanyPresenter,
-)
-from workers_control.web.www.presenters.log_in_member_presenter import (
-    LogInMemberPresenter,
 )
 
 auth = Blueprint("auth", __name__)
@@ -108,38 +92,8 @@ def confirm_email_member(
 
 
 @auth.route("/login-member", methods=["GET", "POST"])
-@with_injection()
-@commit_changes
-def login_member(
-    flask_session: FlaskSession,
-    presenter: LogInMemberPresenter,
-    interactor: LogInMemberInteractor,
-):
-    login_form = LoginForm(request.form)
-    if request.method == "POST" and login_form.validate():
-        email = login_form.data["email"]
-        password = login_form.data["password"]
-        response = interactor.log_in_member(
-            LogInMemberInteractor.Request(
-                email=email,
-                password=password,
-            )
-        )
-        view_model = presenter.present_login_process(response, login_form)
-        if view_model.redirect_url:
-            return redirect(view_model.redirect_url)
-        else:
-            return FlaskResponse(
-                render_template("auth/login_member.html", form=login_form), status=401
-            )
-
-    if flask_session.is_current_user_authenticated():
-        if flask_session.is_logged_in_as_member():
-            return redirect(url_for("main_member.dashboard"))
-        else:
-            flask_session.logout()
-
-    return render_template("auth/login_member.html", form=login_form)
+@as_flask_view()
+class login_member(LogInMemberView): ...
 
 
 @auth.route("/member/resend", methods=["POST"])
@@ -158,40 +112,8 @@ def unconfirmed_company(authenticator: CompanyAuthenticator):
 
 
 @auth.route("/company/login", methods=["GET", "POST"])
-@with_injection()
-@commit_changes
-def login_company(
-    flask_session: FlaskSession,
-    log_in_interactor: LogInCompanyInteractor,
-    log_in_presenter: LogInCompanyPresenter,
-):
-    login_form = LoginForm(request.form)
-    if request.method == "POST" and login_form.validate():
-        email = login_form.data["email"]
-        password = login_form.data["password"]
-
-        interactor_request = LogInCompanyInteractor.Request(
-            email_address=email,
-            password=password,
-        )
-        interactor_response = log_in_interactor.log_in_company(interactor_request)
-        view_model = log_in_presenter.present_login_process(
-            response=interactor_response,
-            form=login_form,
-        )
-        if view_model.redirect_url:
-            return redirect(view_model.redirect_url)
-        return FlaskResponse(
-            render_template("auth/login_company.html", form=login_form), status=401
-        )
-
-    if flask_session.is_current_user_authenticated():
-        if flask_session.is_logged_in_as_company():
-            return redirect(url_for("main_company.dashboard"))
-        else:
-            flask_session.logout()
-
-    return render_template("auth/login_company.html", form=login_form)
+@as_flask_view()
+class login_company(LogInCompanyView): ...
 
 
 @auth.route("/company/signup", methods=["GET", "POST"])
@@ -234,26 +156,8 @@ class signup_accountant(SignupAccountantView): ...
 
 
 @auth.route("/accountant/login", methods=["GET", "POST"])
-@commit_changes
-@with_injection()
-def login_accountant(
-    controller: LogInAccountantController,
-    interactor: LogInAccountantInteractor,
-    presenter: LogInAccountantPresenter,
-):
-    form = LoginForm(request.form)
-    if request.method == "POST" and form.validate():
-        interactor_request = controller.process_login_form(form)
-        interactor_response = interactor.log_in_accountant(interactor_request)
-        view_model = presenter.present_login_process(
-            form=form, response=interactor_response
-        )
-        if view_model.redirect_url is not None:
-            return redirect(view_model.redirect_url)
-        return FlaskResponse(
-            render_template("auth/login_accountant.html", form=form), status=401
-        )
-    return render_template("auth/login_accountant.html", form=form)
+@as_flask_view()
+class login_accountant(LogInAccountantView): ...
 
 
 @auth.route("/logout")

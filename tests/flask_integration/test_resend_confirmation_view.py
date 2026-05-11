@@ -18,15 +18,20 @@ class AuthTests(ViewTestCase):
             (LogInUser.member, 302),
         ]
     )
-    def test_correct_status_codes_on_get_requests(
+    def test_correct_status_codes_on_post_requests(
         self, login: Optional[LogInUser], expected_code: int
     ) -> None:
         self.assert_response_has_expected_code(
             url=self.url,
-            method="get",
+            method="post",
             login=login,
             expected_code=expected_code,
         )
+
+    def test_get_returns_405_because_route_only_accepts_post(self) -> None:
+        self.login_member(confirm_member=False)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 405)
 
 
 class AuthenticatedButUnconfirmedMemberTests(ViewTestCase):
@@ -38,11 +43,8 @@ class AuthenticatedButUnconfirmedMemberTests(ViewTestCase):
     def test_authenticated_and_unconfirmed_users_get_redirected_and_mail_gets_send(
         self,
     ) -> None:
-        response = self.client.get(self.url)
         with self.email_service.record_messages() as outbox:
-            response = self.client.get(
-                self.url,
-            )
+            response = self.client.post(self.url)
             self.assertEqual(response.status_code, 302)
             assert len(outbox) == 1
 
@@ -56,11 +58,8 @@ class ConfirmedMemberTests(ViewTestCase):
     def test_already_confirmed_member_gets_redirected_and_no_mail_gets_sent(
         self,
     ) -> None:
-        response = self.client.get(self.url)
         with self.email_service.record_messages() as outbox:
-            response = self.client.get(
-                self.url,
-            )
+            response = self.client.post(self.url)
             self.assertEqual(response.status_code, 302)
             assert len(outbox) == 0
 
@@ -68,7 +67,7 @@ class ConfirmedMemberTests(ViewTestCase):
 class OutboxPersistenceTests(ViewTestCase):
     def test_member_resend_commits_email_row_to_outbox(self) -> None:
         self.login_member(confirm_member=False)
-        self.client.get("/member/resend")
+        self.client.post("/member/resend")
         # Discard uncommitted state so we only see rows the request actually
         # committed.
         self.db.session.rollback()
@@ -76,6 +75,6 @@ class OutboxPersistenceTests(ViewTestCase):
 
     def test_company_resend_commits_email_row_to_outbox(self) -> None:
         self.login_company(confirm_company=False)
-        self.client.get("/company/resend")
+        self.client.post("/company/resend")
         self.db.session.rollback()
         assert self.database_gateway.get_emails().first() is not None

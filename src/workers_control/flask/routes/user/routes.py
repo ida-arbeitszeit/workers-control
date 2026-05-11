@@ -1,7 +1,6 @@
 from uuid import UUID
 
-from flask import Response as FlaskResponse
-from flask import redirect, render_template, request
+from flask import render_template
 
 from workers_control.core.interactors.get_company_summary import (
     GetCompanySummaryInteractor,
@@ -10,12 +9,7 @@ from workers_control.core.interactors.get_company_summary import (
 from workers_control.core.interactors.get_user_account_details import (
     GetUserAccountDetailsInteractor,
 )
-from workers_control.core.interactors.request_email_address_change import (
-    RequestEmailAddressChangeInteractor,
-)
-from workers_control.db import commit_changes
 from workers_control.flask.class_based_view import as_flask_view
-from workers_control.flask.forms import RequestEmailAddressChangeForm
 from workers_control.flask.types import Response
 from workers_control.flask.views import QueryCompaniesView, QueryOffersView
 from workers_control.flask.views.change_email_address_view import ChangeEmailAddressView
@@ -29,6 +23,9 @@ from workers_control.flask.views.list_coordinators_of_cooperation_view import (
     ListCoordinationsOfCooperationView,
 )
 from workers_control.flask.views.list_transfers import ListTransfersView
+from workers_control.flask.views.request_email_address_change_view import (
+    RequestEmailAddressChangeView,
+)
 from workers_control.flask.views.show_a_account_details_view import (
     ShowAAccountDetailsView,
 )
@@ -51,17 +48,11 @@ from workers_control.flask.views.show_psf_account_details_view import (
 from workers_control.flask.views.show_r_account_details_view import (
     ShowRAccountDetailsView,
 )
-from workers_control.web.www.controllers.request_email_address_change_controller import (
-    RequestEmailAddressChangeController,
-)
 from workers_control.web.www.controllers.user_account_details_controller import (
     UserAccountDetailsController,
 )
 from workers_control.web.www.presenters.get_company_summary_presenter import (
     GetCompanySummarySuccessPresenter,
-)
-from workers_control.web.www.presenters.request_email_address_change_presenter import (
-    RequestEmailAddressChangePresenter,
 )
 from workers_control.web.www.presenters.user_account_details_presenter import (
     UserAccountDetailsPresenter,
@@ -100,31 +91,8 @@ def company_summary(
 
 
 @AuthenticatedUserRoute("/request-email-change", methods=["GET", "POST"])
-@commit_changes
-def request_email_change(
-    controller: RequestEmailAddressChangeController,
-    presenter: RequestEmailAddressChangePresenter,
-    interactor: RequestEmailAddressChangeInteractor,
-) -> Response:
-    template_name = "user/request_email_address_change.html"
-    form = RequestEmailAddressChangeForm(request.form)
-    match request.method:
-        case "POST":
-            if not form.validate():
-                return FlaskResponse(
-                    render_template(template_name, form=form), status=400
-                )
-            uc_request = controller.process_email_address_change_request(form)
-            uc_response = interactor.request_email_address_change(uc_request)
-            view_model = presenter.render_response(uc_response, form)
-            if view_model.redirect_url:
-                return redirect(view_model.redirect_url)
-            else:
-                return FlaskResponse(
-                    render_template(template_name, form=form), status=400
-                )
-        case _:
-            return FlaskResponse(render_template(template_name, form=form), status=200)
+@as_flask_view()
+class request_email_change(RequestEmailAddressChangeView): ...
 
 
 @AuthenticatedUserRoute("/change-email/<token>", methods=["GET", "POST"])

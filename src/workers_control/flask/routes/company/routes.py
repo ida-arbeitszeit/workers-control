@@ -1,43 +1,4 @@
-from uuid import UUID
-
-from flask import Response as FlaskResponse
-from flask import redirect, render_template, url_for
-
-from workers_control.core.interactors.create_draft_from_plan import (
-    CreateDraftFromPlanInteractor,
-)
-from workers_control.core.interactors.delete_draft import DeleteDraftInteractor
-from workers_control.core.interactors.file_plan_with_accounting import (
-    FilePlanWithAccounting,
-)
-from workers_control.core.interactors.get_plan_details import GetPlanDetailsInteractor
-from workers_control.core.interactors.hide_plan import HidePlanInteractor
-from workers_control.core.interactors.list_coordinations_of_company import (
-    ListCoordinationsOfCompanyInteractor,
-    ListCoordinationsOfCompanyRequest,
-)
-from workers_control.core.interactors.list_my_cooperating_plans import (
-    ListMyCooperatingPlansInteractor,
-)
-from workers_control.core.interactors.query_company_consumptions import (
-    QueryCompanyConsumptionsInteractor,
-)
-from workers_control.core.interactors.revoke_plan_filing import (
-    RevokePlanFilingInteractor,
-)
-from workers_control.core.interactors.show_company_cooperations import (
-    Request,
-    ShowCompanyCooperationsInteractor,
-)
-from workers_control.core.interactors.show_my_plans import (
-    ShowMyPlansInteractor,
-    ShowMyPlansRequest,
-)
-from workers_control.db import commit_changes
 from workers_control.flask.class_based_view import as_flask_view
-from workers_control.flask.flask_request import FlaskRequest
-from workers_control.flask.flask_session import FlaskSession
-from workers_control.flask.types import Response
 from workers_control.flask.views import (
     EndCooperationView,
     InviteWorkerToCompanyView,
@@ -51,18 +12,31 @@ from workers_control.flask.views.cancel_cooperation_request_view import (
 )
 from workers_control.flask.views.company_dashboard_view import CompanyDashboardView
 from workers_control.flask.views.create_cooperation_view import CreateCooperationView
+from workers_control.flask.views.create_draft_from_plan_view import (
+    CreateDraftFromPlanView,
+)
 from workers_control.flask.views.create_draft_view import CreateDraftView
+from workers_control.flask.views.delete_draft_view import DeleteDraftView
 from workers_control.flask.views.deny_cooperation_view import DenyCooperationView
 from workers_control.flask.views.draft_details_view import DraftDetailsView
+from workers_control.flask.views.file_plan_with_accounting_view import (
+    FilePlanWithAccountingView,
+)
+from workers_control.flask.views.get_plan_details_company_view import (
+    GetPlanDetailsCompanyView,
+)
 from workers_control.flask.views.get_productive_consumption_details import (
     GetProductiveConsumptionDetailsView,
 )
-from workers_control.flask.views.http_error_view import http_404
+from workers_control.flask.views.hide_plan_view import HidePlanView
 from workers_control.flask.views.list_pending_work_invites_view import (
     ListPendingWorkInvitesView,
 )
 from workers_control.flask.views.list_registered_hours_worked_view import (
     ListRegisteredHoursWorkedView,
+)
+from workers_control.flask.views.query_company_consumptions_view import (
+    QueryCompanyConsumptionsView,
 )
 from workers_control.flask.views.register_hours_worked_view import (
     RegisterHoursWorkedView,
@@ -82,46 +56,14 @@ from workers_control.flask.views.request_coordination_transfer_view import (
 from workers_control.flask.views.review_registered_consumptions_view import (
     ReviewRegisteredConsumptionsView,
 )
+from workers_control.flask.views.revoke_plan_filing_view import RevokePlanFilingView
 from workers_control.flask.views.show_coordination_transfer_request_view import (
     ShowCoordinationTransferRequestView,
 )
-from workers_control.web.www.controllers.create_draft_from_plan_controller import (
-    CreateDraftFromPlanController,
+from workers_control.flask.views.show_my_cooperations_view import (
+    ShowMyCooperationsView,
 )
-from workers_control.web.www.controllers.delete_draft_controller import (
-    DeleteDraftController,
-)
-from workers_control.web.www.controllers.file_plan_with_accounting_controller import (
-    FilePlanWithAccountingController,
-)
-from workers_control.web.www.controllers.revoke_plan_filing_controller import (
-    RevokePlanFilingController,
-)
-from workers_control.web.www.presenters.company_consumptions_presenter import (
-    CompanyConsumptionsPresenter,
-)
-from workers_control.web.www.presenters.create_draft_from_plan_presenter import (
-    CreateDraftFromPlanPresenter,
-)
-from workers_control.web.www.presenters.delete_draft_presenter import (
-    DeleteDraftPresenter,
-)
-from workers_control.web.www.presenters.file_plan_with_accounting_presenter import (
-    FilePlanWithAccountingPresenter,
-)
-from workers_control.web.www.presenters.get_plan_details_company_presenter import (
-    GetPlanDetailsCompanyPresenter,
-)
-from workers_control.web.www.presenters.hide_plan_presenter import HidePlanPresenter
-from workers_control.web.www.presenters.revoke_plan_filing_presenter import (
-    RevokePlanFilingPresenter,
-)
-from workers_control.web.www.presenters.show_my_cooperations_presenter import (
-    ShowMyCooperationsPresenter,
-)
-from workers_control.web.www.presenters.show_my_plans_presenter import (
-    ShowMyPlansPresenter,
-)
+from workers_control.flask.views.show_my_plans_view import ShowMyPlansView
 
 from .blueprint import CompanyRoute
 
@@ -132,21 +74,8 @@ class dashboard(CompanyDashboardView): ...
 
 
 @CompanyRoute("/consumptions")
-def my_consumptions(
-    query_consumptions: QueryCompanyConsumptionsInteractor,
-    presenter: CompanyConsumptionsPresenter,
-    flask_session: FlaskSession,
-):
-    current_user = flask_session.get_current_user()
-    assert current_user
-    response = query_consumptions.execute(current_user)
-    view_model = presenter.present(response)
-    return FlaskResponse(
-        render_template(
-            "company/my_consumptions.html",
-            view_model=view_model,
-        )
-    )
+@as_flask_view()
+class my_consumptions(QueryCompanyConsumptionsView): ...
 
 
 @CompanyRoute("/consumptions/<uuid:consumption_id>")
@@ -155,37 +84,13 @@ class consumption_details(GetProductiveConsumptionDetailsView): ...
 
 
 @CompanyRoute("/draft/delete/<uuid:draft_id>", methods=["POST"])
-@commit_changes
-def delete_draft(
-    draft_id: UUID,
-    controller: DeleteDraftController,
-    interactor: DeleteDraftInteractor,
-    presenter: DeleteDraftPresenter,
-) -> Response:
-    interactor_request = controller.get_request(request=FlaskRequest(), draft=draft_id)
-    try:
-        interactor_response = interactor.delete_draft(interactor_request)
-    except interactor.Failure:
-        return http_404()
-    view_model = presenter.present_draft_deletion(interactor_response)
-    return redirect(view_model.redirect_target)
+@as_flask_view()
+class delete_draft(DeleteDraftView): ...
 
 
 @CompanyRoute("/draft/from-plan/<uuid:plan_id>", methods=["POST"])
-@commit_changes
-def create_draft_from_plan(
-    plan_id: UUID,
-    interactor: CreateDraftFromPlanInteractor,
-    controller: CreateDraftFromPlanController,
-    presenter: CreateDraftFromPlanPresenter,
-) -> Response:
-    uc_request = controller.create_interactor_request(plan_id)
-    uc_response = interactor.create_draft_from_plan(uc_request)
-    view_model = presenter.render_response(
-        interactor_response=uc_response,
-        request=FlaskRequest(),
-    )
-    return redirect(view_model.redirect_url)
+@as_flask_view()
+class create_draft_from_plan(CreateDraftFromPlanView): ...
 
 
 @CompanyRoute("/create_draft", methods=["GET", "POST"])
@@ -194,23 +99,8 @@ class create_draft(CreateDraftView): ...
 
 
 @CompanyRoute("/file_plan/<draft_id>", methods=["POST"])
-@commit_changes
-def file_plan(
-    draft_id: str,
-    session: FlaskSession,
-    controller: FilePlanWithAccountingController,
-    interactor: FilePlanWithAccounting,
-    presenter: FilePlanWithAccountingPresenter,
-):
-    try:
-        request = controller.process_file_plan_with_accounting_request(
-            draft_id=draft_id, session=session
-        )
-    except controller.InvalidRequest:
-        return http_404()
-    response = interactor.file_plan_with_accounting(request)
-    view_model = presenter.present_response(response)
-    return redirect(view_model.redirect_url)
+@as_flask_view()
+class file_plan(FilePlanWithAccountingView): ...
 
 
 @CompanyRoute("/draft/<uuid:draft_id>", methods=["GET", "POST"])
@@ -219,44 +109,18 @@ class get_draft_details(DraftDetailsView): ...
 
 
 @CompanyRoute("/my_plans", methods=["GET"])
-def my_plans(
-    show_my_plans_interactor: ShowMyPlansInteractor,
-    show_my_plans_presenter: ShowMyPlansPresenter,
-    flask_session: FlaskSession,
-):
-    current_user = flask_session.get_current_user()
-    assert current_user
-    request = ShowMyPlansRequest(company_id=current_user)
-    response = show_my_plans_interactor.show_company_plans(request)
-    view_model = show_my_plans_presenter.present(response)
-    return render_template(
-        "company/my_plans.html",
-        **view_model.to_dict(),
-    )
+@as_flask_view()
+class my_plans(ShowMyPlansView): ...
 
 
 @CompanyRoute("/plan/revoke/<uuid:plan_id>", methods=["POST"])
-@commit_changes
-def revoke_plan_filing(
-    plan_id: UUID,
-    controller: RevokePlanFilingController,
-    interactor: RevokePlanFilingInteractor,
-    presenter: RevokePlanFilingPresenter,
-):
-    request = controller.create_request(plan_id=plan_id)
-    response = interactor.revoke_plan_filing(request=request)
-    presenter.present(response)
-    return redirect(url_for("main_company.my_plans"))
+@as_flask_view()
+class revoke_plan_filing(RevokePlanFilingView): ...
 
 
 @CompanyRoute("/hide_plan/<uuid:plan_id>", methods=["GET", "POST"])
-@commit_changes
-def hide_plan(
-    plan_id: UUID, hide_plan: HidePlanInteractor, presenter: HidePlanPresenter
-):
-    response = hide_plan.execute(plan_id)
-    presenter.present(response)
-    return redirect(url_for("main_company.my_plans"))
+@as_flask_view()
+class hide_plan(HidePlanView): ...
 
 
 @CompanyRoute("/register_hours_worked", methods=["GET", "POST"])
@@ -284,17 +148,8 @@ class register_productive_consumption_of_basic_service(
 
 
 @CompanyRoute("/plan_details/<uuid:plan_id>")
-def plan_details(
-    plan_id: UUID,
-    interactor: GetPlanDetailsInteractor,
-    presenter: GetPlanDetailsCompanyPresenter,
-):
-    interactor_request = GetPlanDetailsInteractor.Request(plan_id)
-    interactor_response = interactor.get_plan_details(interactor_request)
-    if not interactor_response:
-        return http_404()
-    view_model = presenter.present(interactor_response)
-    return render_template("company/plan_details.html", view_model=view_model)
+@as_flask_view()
+class plan_details(GetPlanDetailsCompanyView): ...
 
 
 @CompanyRoute(
@@ -324,30 +179,8 @@ class request_cooperation(RequestCooperationView): ...
 
 
 @CompanyRoute("/my_cooperations", methods=["GET"])
-def my_cooperations(
-    list_coordinations: ListCoordinationsOfCompanyInteractor,
-    show_company_cooperations: ShowCompanyCooperationsInteractor,
-    list_my_cooperating_plans: ListMyCooperatingPlansInteractor,
-    presenter: ShowMyCooperationsPresenter,
-    flask_session: FlaskSession,
-):
-    current_user = flask_session.get_current_user()
-    assert current_user
-    list_coord_response = list_coordinations.execute(
-        ListCoordinationsOfCompanyRequest(current_user)
-    )
-    show_company_cooperations_response = (
-        show_company_cooperations.show_company_cooperations(Request(current_user))
-    )
-    list_my_coop_plans_response = list_my_cooperating_plans.list_cooperations(
-        ListMyCooperatingPlansInteractor.Request(company=current_user)
-    )
-    view_model = presenter.present(
-        list_coord_response=list_coord_response,
-        show_company_cooperations_response=show_company_cooperations_response,
-        list_my_cooperating_plans_response=list_my_coop_plans_response,
-    )
-    return render_template("company/my_cooperations.html", **view_model.to_dict())
+@as_flask_view()
+class my_cooperations(ShowMyCooperationsView): ...
 
 
 @CompanyRoute("/accept_cooperation_request", methods=["POST"])

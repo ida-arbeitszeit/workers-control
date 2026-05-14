@@ -99,7 +99,7 @@ CONFIG_OPTIONS = [
         name="SECRET_KEY",
         converts_to_types=(str,),
         description_paragraphs=[
-            "A password used for protecting against Cross-site request forgery and more. Setting this option is obligatory for many security measures."
+            "A long, random secret value used by the application to cryptographically sign user sessions, CSRF tokens, and security-relevant tokens such as password-reset and email-confirmation links. Setting this option is obligatory. Keep it secret; if it leaks, rotate it."
         ],
         default=None,
     ),
@@ -107,7 +107,7 @@ CONFIG_OPTIONS = [
         name="SECURITY_PASSWORD_SALT",
         converts_to_types=(str,),
         description_paragraphs=[
-            "This option is used when encrypting passwords. Don't lose it."
+            "A secret value used together with ``SECRET_KEY`` to sign security tokens (password-reset and email-confirmation links). Despite its name, it is not used to hash user passwords. Changing or losing it invalidates any tokens that have already been issued but not yet redeemed; it does not affect stored passwords."
         ],
         default=None,
     ),

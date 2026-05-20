@@ -12,6 +12,7 @@ class ViewModel:
     email_address: str
     current_user_time: str
     request_email_address_change_url: str
+    change_user_name_url: str
 
 
 @dataclass
@@ -29,4 +30,5 @@ class UserAccountDetailsPresenter:
                 response.user_info.current_time, fmt="%Y-%m-%d %H:%M:%S %z (%Z)"
             ),
             request_email_address_change_url=self.url_index.get_request_change_email_url(),
+            change_user_name_url=self.url_index.get_change_user_name_url(),
         )

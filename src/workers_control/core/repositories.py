@@ -244,6 +244,12 @@ class MemberResult(QueryResult[records.Member], Protocol):
         self,
     ) -> QueryResult[Tuple[records.Member, records.EmailAddress]]: ...
 
+    def update(self) -> MemberUpdate: ...
+
+
+class MemberUpdate(DatabaseUpdate, Protocol):
+    def set_name(self, name: str) -> Self: ...
+
 
 class PrivateConsumptionResult(QueryResult[records.PrivateConsumption], Protocol):
     def ordered_by_creation_date(self, *, ascending: bool = ...) -> Self: ...
@@ -374,6 +380,12 @@ class CompanyResult(QueryResult[records.Company], Protocol):
         self,
     ) -> QueryResult[Tuple[records.Company, records.EmailAddress]]: ...
 
+    def update(self) -> CompanyUpdate: ...
+
+
+class CompanyUpdate(DatabaseUpdate, Protocol):
+    def set_name(self, name: str) -> Self: ...
+
 
 class AccountantResult(QueryResult[records.Accountant], Protocol):
     def with_email_address(self, email: str) -> Self: ...
@@ -383,6 +395,12 @@ class AccountantResult(QueryResult[records.Accountant], Protocol):
     def joined_with_email_address(
         self,
     ) -> QueryResult[Tuple[records.Accountant, records.EmailAddress]]: ...
+
+    def update(self) -> AccountantUpdate: ...
+
+
+class AccountantUpdate(DatabaseUpdate, Protocol):
+    def set_name(self, name: str) -> Self: ...
 
 
 class TransferResult(QueryResult[records.Transfer], Protocol):

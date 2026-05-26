@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-05-26
+
+### Added
+
+- Functionality for members, companies and accountants to change their name. (#1492)
+- The provider's email address is now shown in the basic service detail view. (#1481)
+
+### Changed
+
+- Emails are now sent through a transactional outbox, so they are only dispatched after the database transaction has committed. (#1484, #1485, #1486, #1487)
+- Refactor member and company request handlers into separate view classes. (#1488, #1489)
+- Improve documentation for the `SECRET_KEY` and `SECURITY_PASSWORD_SALT` settings. (#1490)
+- Verify documentation generation as part of the `run-checks` script. (#1491)
+- Update dependencies.
+- Update translations.
+
 ## [0.2.0] - 2026-05-06
 
 ### Added

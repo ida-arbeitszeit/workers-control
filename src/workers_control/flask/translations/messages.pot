@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-05-04 18:03+0200\n"
+"POT-Creation-Date: 2026-05-26 20:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,7 +65,7 @@ msgstr ""
 #: src/workers_control/flask/forms.py:95 src/workers_control/flask/forms.py:140
 #: src/workers_control/flask/forms.py:189
 #: src/workers_control/flask/forms.py:218
-#: src/workers_control/flask/forms.py:372
+#: src/workers_control/flask/forms.py:396
 #: src/workers_control/flask/templates/auth/login_accountant.html:18
 #: src/workers_control/flask/templates/auth/login_company.html:18
 #: src/workers_control/flask/templates/auth/login_member.html:18
@@ -106,7 +106,7 @@ msgstr ""
 #: src/workers_control/flask/forms.py:109
 #: src/workers_control/flask/forms.py:154
 #: src/workers_control/flask/forms.py:198
-#: src/workers_control/flask/forms.py:383
+#: src/workers_control/flask/forms.py:407
 #: src/workers_control/flask/templates/auth/login_accountant.html:27
 #: src/workers_control/flask/templates/auth/login_company.html:27
 #: src/workers_control/flask/templates/auth/login_member.html:27
@@ -119,17 +119,17 @@ msgstr ""
 
 #: src/workers_control/flask/forms.py:114
 #: src/workers_control/flask/forms.py:159
-#: src/workers_control/flask/forms.py:388
+#: src/workers_control/flask/forms.py:412
 msgid "The password must be at least 8 characters in length"
 msgstr ""
 
 #: src/workers_control/flask/forms.py:118
-#: src/workers_control/flask/forms.py:392
+#: src/workers_control/flask/forms.py:416
 msgid "Passwords must match"
 msgstr ""
 
 #: src/workers_control/flask/forms.py:122
-#: src/workers_control/flask/forms.py:396
+#: src/workers_control/flask/forms.py:420
 #: src/workers_control/flask/templates/auth/reset_password.html:32
 #: src/workers_control/flask/templates/auth/signup_company.html:48
 #: src/workers_control/flask/templates/auth/signup_member.html:51
@@ -145,12 +145,13 @@ msgid "The entered email is not the one the invitation was sent to"
 msgstr ""
 
 #: src/workers_control/flask/forms.py:192
-#: src/workers_control/flask/forms.py:375
+#: src/workers_control/flask/forms.py:399
 msgid "Email address required"
 msgstr ""
 
 #: src/workers_control/flask/forms.py:200
 #: src/workers_control/flask/forms.py:350
+#: src/workers_control/flask/forms.py:381
 msgid "Password is required"
 msgstr ""
 
@@ -227,10 +228,20 @@ msgid "Email address is required."
 msgstr ""
 
 #: src/workers_control/flask/forms.py:348
+#: src/workers_control/flask/forms.py:379
 msgid "Current password"
 msgstr ""
 
+#: src/workers_control/flask/forms.py:372
+msgid "New name"
+msgstr ""
+
+#: src/workers_control/flask/forms.py:374
+msgid "A name is required."
+msgstr ""
+
 #: src/workers_control/flask/plotter.py:88
+#: src/workers_control/flask/templates/user/statistics.html:30
 msgid "Basic services"
 msgstr ""
 
@@ -242,7 +253,7 @@ msgstr ""
 #: src/workers_control/flask/templates/company/dashboard.html:16
 #: src/workers_control/flask/templates/macros/company_summary.html:134
 #: src/workers_control/flask/templates/user/statistics.html:26
-#: src/workers_control/flask/templates/user/statistics.html:53
+#: src/workers_control/flask/templates/user/statistics.html:57
 msgid "Plans"
 msgstr ""
 
@@ -579,8 +590,8 @@ msgstr ""
 msgid "You did not get an email?"
 msgstr ""
 
-#: src/workers_control/flask/templates/auth/unconfirmed_company.html:19
-#: src/workers_control/flask/templates/auth/unconfirmed_member.html:17
+#: src/workers_control/flask/templates/auth/unconfirmed_company.html:21
+#: src/workers_control/flask/templates/auth/unconfirmed_member.html:19
 msgid "Resend mail"
 msgstr ""
 
@@ -699,7 +710,7 @@ msgid "Members of your collective"
 msgstr ""
 
 #: src/workers_control/flask/templates/company/dashboard.html:48
-#: src/workers_control/flask/templates/user/statistics.html:30
+#: src/workers_control/flask/templates/user/statistics.html:34
 msgid "Cooperations"
 msgstr ""
 
@@ -1639,19 +1650,24 @@ msgid "Name:"
 msgstr ""
 
 #: src/workers_control/flask/templates/user/account_details.html:14
+#: src/workers_control/flask/templates/user/change_user_name.html:5
+msgid "Change name"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/account_details.html:19
 msgid "Email address:"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/account_details.html:18
+#: src/workers_control/flask/templates/user/account_details.html:23
 #: src/workers_control/flask/templates/user/request_email_address_change.html:5
 msgid "Change email address"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/account_details.html:23
+#: src/workers_control/flask/templates/user/account_details.html:28
 msgid "Current time:"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/account_details.html:27
+#: src/workers_control/flask/templates/user/account_details.html:32
 msgid "Account ID:"
 msgstr ""
 
@@ -1669,6 +1685,11 @@ msgstr ""
 #: src/workers_control/flask/templates/user/company_account_prd.html:22
 #: src/workers_control/flask/templates/user/company_account_r.html:23
 msgid "Balance:"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/change_user_name.html:33
+#: src/workers_control/flask/templates/user/request_email_address_change.html:32
+msgid "Submit"
 msgstr ""
 
 #: src/workers_control/flask/templates/user/company_account_a.html:21
@@ -1798,6 +1819,18 @@ msgstr ""
 msgid "Account"
 msgstr ""
 
+#: src/workers_control/flask/templates/user/name_change_confirmation.html:1
+msgid ""
+"Dear user of the Workers Control app,\n"
+"\n"
+"the name of your account has been changed. If this was not you, please "
+"contact the administrators of the app immediately."
+msgstr ""
+
+#: src/workers_control/flask/templates/user/name_change_confirmation.html:5
+msgid "New name:"
+msgstr ""
+
 #: src/workers_control/flask/templates/user/query_companies.html:11
 msgid "Search companies"
 msgstr ""
@@ -1840,10 +1873,6 @@ msgstr ""
 msgid "My offer"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/request_email_address_change.html:32
-msgid "Submit"
-msgstr ""
-
 #: src/workers_control/flask/templates/user/request_email_change_notification.html:1
 msgid ""
 "Dear user of the Workers Control app,\n"
@@ -1869,10 +1898,14 @@ msgid "Provider:"
 msgstr ""
 
 #: src/workers_control/flask/templates/user/show_basic_service.html:14
-msgid "Description:"
+msgid "Email:"
 msgstr ""
 
 #: src/workers_control/flask/templates/user/show_basic_service.html:15
+msgid "Description:"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/show_basic_service.html:16
 msgid "Created on:"
 msgstr ""
 
@@ -1949,48 +1982,48 @@ msgstr ""
 msgid "No plans."
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:38
+#: src/workers_control/flask/templates/user/statistics.html:42
 msgid "FIC (Payout factor)"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:39
+#: src/workers_control/flask/templates/user/statistics.html:43
 msgid "Go to details"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:45
+#: src/workers_control/flask/templates/user/statistics.html:49
 msgid "Balance for Public Sector Fund (PSF)"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:46
+#: src/workers_control/flask/templates/user/statistics.html:50
 msgid "Go to account details"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:59
+#: src/workers_control/flask/templates/user/statistics.html:63
 msgid "Planned ressources"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:69
+#: src/workers_control/flask/templates/user/statistics.html:73
 msgid "Active plans"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:70
+#: src/workers_control/flask/templates/user/statistics.html:74
 msgid "Public active plans"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:71
-#: src/workers_control/flask/templates/user/statistics.html:78
+#: src/workers_control/flask/templates/user/statistics.html:75
+#: src/workers_control/flask/templates/user/statistics.html:82
 msgid "Average plan duration"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:72
+#: src/workers_control/flask/templates/user/statistics.html:76
 msgid "Currently planned fixed means"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:73
+#: src/workers_control/flask/templates/user/statistics.html:77
 msgid "Currently planned liquid means"
 msgstr ""
 
-#: src/workers_control/flask/templates/user/statistics.html:74
+#: src/workers_control/flask/templates/user/statistics.html:78
 msgid "Currently planned work"
 msgstr ""
 
@@ -2021,6 +2054,10 @@ msgstr ""
 
 #: src/workers_control/web/email/invite_worker_presenter.py:24
 msgid "Invitation from a company on Workers Control app"
+msgstr ""
+
+#: src/workers_control/web/email/name_change_confirmation_presenter.py:20
+msgid "Your account name was changed"
 msgstr ""
 
 #: src/workers_control/web/email/notify_about_worker_removal_from_company_presenter.py:19
@@ -2317,6 +2354,23 @@ msgstr ""
 msgid "Email address changed successfully."
 msgstr ""
 
+#: src/workers_control/web/www/presenters/change_user_name_presenter.py:33
+msgid "The new name is invalid."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/change_user_name_presenter.py:39
+#: src/workers_control/web/www/presenters/request_email_address_change_presenter.py:53
+msgid "The password is incorrect."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/change_user_name_presenter.py:49
+msgid "Your name has been changed."
+msgstr ""
+
+#: src/workers_control/web/www/presenters/change_user_name_presenter.py:54
+msgid "Your request to change your name was rejected."
+msgstr ""
+
 #: src/workers_control/web/www/presenters/company_consumptions_presenter.py:63
 #: src/workers_control/web/www/presenters/private_consumptions_presenter.py:67
 msgid "Basic service"
@@ -2417,14 +2471,14 @@ msgstr ""
 msgid "Company %(company)s has invited you!"
 msgstr ""
 
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:37
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:38
 #, python-format
 msgid "%(num).2f days"
 msgstr ""
 
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:40
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:43
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:46
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:41
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:44
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:47
 #, python-format
 msgid "%(num).2f hours"
 msgstr ""
@@ -2659,10 +2713,6 @@ msgstr ""
 
 #: src/workers_control/web/www/presenters/request_email_address_change_presenter.py:46
 msgid "The email address seems to be already taken."
-msgstr ""
-
-#: src/workers_control/web/www/presenters/request_email_address_change_presenter.py:53
-msgid "The password is incorrect."
 msgstr ""
 
 #: src/workers_control/web/www/presenters/request_email_address_change_presenter.py:61

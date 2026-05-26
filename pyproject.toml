@@ -26,7 +26,7 @@ dependencies = [
     "flask-talisman==1.1.0",
     "flask-login==0.6.3",
     "flask-wtf==1.2.2",
-    "matplotlib>=3.10.5, <=3.10.8" # different versions in stable/unstable nixpkgs
+    "matplotlib>=3.10.5, <=3.10.9" # different versions in stable/unstable nixpkgs
 ]
 
 [project.optional-dependencies]

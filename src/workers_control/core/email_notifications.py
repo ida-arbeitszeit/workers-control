@@ -58,6 +58,12 @@ class EmailChangeConfirmation:
 
 
 @dataclass
+class NameChangeConfirmation:
+    email_address: str
+    new_name: str
+
+
+@dataclass
 class CooperationRequestEmail:
     coordinator_email_address: str
     coordinator_name: str
@@ -102,6 +108,7 @@ Message: TypeAlias = Union[
     EmailChangeWarning,
     EmailChangeConfirmation,
     MemberRegistration,
+    NameChangeConfirmation,
     RejectedPlanNotification,
     ResetPasswordConfirmation,
     ResetPasswordRequest,

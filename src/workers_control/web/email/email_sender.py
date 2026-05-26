@@ -14,6 +14,7 @@ from .company_notifier import CompanyNotifier
 from .cooperation_request_email_presenter import CooperationRequestEmailPresenter
 from .email_change_confirmation_presenter import EmailChangeConfirmationPresenter
 from .invite_worker_presenter import InviteWorkerPresenterImpl
+from .name_change_confirmation_presenter import NameChangeConfirmationPresenter
 from .notify_accountant_about_new_plan_presenter import (
     NotifyAccountantsAboutNewPlanPresenterImpl,
 )
@@ -36,6 +37,7 @@ class EmailSender:
     )
     company_notifier: CompanyNotifier
     reset_password_email_presenter: ResetPasswordEmailPresenter
+    name_change_confirmation_presenter: NameChangeConfirmationPresenter
 
     def send_email(self, message: interface.Message) -> None:
         if isinstance(message, interface.MemberRegistration):
@@ -77,6 +79,10 @@ class EmailSender:
             self.reset_password_email_presenter.present_reset_password_request(message)
         elif isinstance(message, interface.ResetPasswordConfirmation):
             self.reset_password_email_presenter.present_reset_password_confirmation(
+                message
+            )
+        elif isinstance(message, interface.NameChangeConfirmation):
+            self.name_change_confirmation_presenter.present_name_change_confirmation(
                 message
             )
 

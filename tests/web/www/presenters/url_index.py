@@ -90,6 +90,7 @@ class UrlIndexTestImpl:
     get_remove_worker_from_company_url = UrlIndexMethod()
     get_renew_plan_url = UrlIndexMethod()
     get_request_change_email_url = UrlIndexMethod()
+    get_change_user_name_url = UrlIndexMethod()
     get_request_coop_url = UrlIndexMethod()
     get_request_coordination_transfer_url = UrlIndexMethod()
     get_revoke_plan_filing_url = UrlIndexMethod()

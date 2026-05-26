@@ -8,7 +8,12 @@
       <tbody>
         <tr>
           <th>{{ gettext("Name:") }}</th>
-          <td>{{ view_model.user_name }}</td>
+          <td>
+            {{ view_model.user_name }}
+            <a href="{{ view_model.change_user_name_url }}" class="ml-2">
+              {{ gettext("Change name") }}
+            </a>
+          </td>
         </tr>
         <tr>
           <th>{{ gettext("Email address:") }}</th>

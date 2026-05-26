@@ -13,6 +13,7 @@ from workers_control.flask.class_based_view import as_flask_view
 from workers_control.flask.types import Response
 from workers_control.flask.views import QueryCompaniesView, QueryOffersView
 from workers_control.flask.views.change_email_address_view import ChangeEmailAddressView
+from workers_control.flask.views.change_user_name_view import ChangeUserNameView
 from workers_control.flask.views.coop_summary_view import CoopSummaryView
 from workers_control.flask.views.get_statistics_view import GetStatisticsView
 from workers_control.flask.views.http_error_view import http_404
@@ -98,6 +99,11 @@ class request_email_change(RequestEmailAddressChangeView): ...
 @AuthenticatedUserRoute("/change-email/<token>", methods=["GET", "POST"])
 @as_flask_view()
 class change_email_address(ChangeEmailAddressView): ...
+
+
+@AuthenticatedUserRoute("/change-name", methods=["GET", "POST"])
+@as_flask_view()
+class change_user_name(ChangeUserNameView): ...
 
 
 @AuthenticatedUserRoute("/query_offers", methods=["GET"])

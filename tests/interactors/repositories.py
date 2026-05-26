@@ -729,6 +729,29 @@ class MemberResult(QueryResultImpl[Member]):
             database=self.database,
         )
 
+    def update(self) -> MemberUpdate:
+        return MemberUpdate(items=self.items, update_functions=[])
+
+
+@dataclass
+class MemberUpdate:
+    items: Callable[[], Iterable[Member]]
+    update_functions: List[Callable[[Member], None]]
+
+    def set_name(self, name: str) -> Self:
+        def update(member: Member) -> None:
+            member.name = name
+
+        return replace(self, update_functions=self.update_functions + [update])
+
+    def perform(self) -> int:
+        items_affected = 0
+        for item in self.items():
+            for update in self.update_functions:
+                update(item)
+            items_affected += 1
+        return items_affected
+
 
 class CompanyResult(QueryResultImpl[Company]):
     def with_id(self, id_: UUID) -> Self:
@@ -832,6 +855,29 @@ class CompanyResult(QueryResultImpl[Company]):
             database=self.database,
         )
 
+    def update(self) -> CompanyUpdate:
+        return CompanyUpdate(items=self.items, update_functions=[])
+
+
+@dataclass
+class CompanyUpdate:
+    items: Callable[[], Iterable[Company]]
+    update_functions: List[Callable[[Company], None]]
+
+    def set_name(self, name: str) -> Self:
+        def update(company: Company) -> None:
+            company.name = name
+
+        return replace(self, update_functions=self.update_functions + [update])
+
+    def perform(self) -> int:
+        items_affected = 0
+        for item in self.items():
+            for update in self.update_functions:
+                update(item)
+            items_affected += 1
+        return items_affected
+
 
 class AccountantResult(QueryResultImpl[Accountant]):
     def with_email_address(self, email: str) -> Self:
@@ -867,6 +913,29 @@ class AccountantResult(QueryResultImpl[Accountant]):
             database=self.database,
             items=items,
         )
+
+    def update(self) -> AccountantUpdate:
+        return AccountantUpdate(items=self.items, update_functions=[])
+
+
+@dataclass
+class AccountantUpdate:
+    items: Callable[[], Iterable[Accountant]]
+    update_functions: List[Callable[[Accountant], None]]
+
+    def set_name(self, name: str) -> Self:
+        def update(accountant: Accountant) -> None:
+            accountant.name = name
+
+        return replace(self, update_functions=self.update_functions + [update])
+
+    def perform(self) -> int:
+        items_affected = 0
+        for item in self.items():
+            for update in self.update_functions:
+                update(item)
+            items_affected += 1
+        return items_affected
 
 
 class TransferResult(QueryResultImpl[records.Transfer]):

@@ -482,6 +482,14 @@ class GeneralUrlIndexTests(ViewTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
+    def test_change_user_name_url_leads_to_functional_url(
+        self,
+    ) -> None:
+        self.login_member()
+        url = self.url_index.get_change_user_name_url()
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
     def test_that_get_member_login_url_returns_a_valid_url(self) -> None:
         url = self.url_index.get_member_login_url()
         response = self.client.get(url)

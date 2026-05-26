@@ -180,3 +180,51 @@ class CreateMemberTests(MemberResultTests):
         self.create_member(email_address=email)
         with self.assertRaises(IntegrityError):
             self.create_member(email_address=email)
+
+
+class MemberUpdateTests(MemberResultTests):
+    def test_that_set_name_changes_the_name(self) -> None:
+        member = self.create_member()
+        new_name = "New Member Name"
+        self.database_gateway.get_members().with_id(member.id).update().set_name(
+            new_name
+        ).perform()
+        retrieved = self.database_gateway.get_members().with_id(member.id).first()
+        assert retrieved
+        assert retrieved.name == new_name
+
+    def test_that_set_name_without_perform_does_not_change_the_name(self) -> None:
+        member = self.create_member()
+        original_name = member.name
+        self.database_gateway.get_members().with_id(member.id).update().set_name(
+            "Different Name"
+        )
+        retrieved = self.database_gateway.get_members().with_id(member.id).first()
+        assert retrieved
+        assert retrieved.name == original_name
+
+    def test_that_updating_one_member_does_not_change_another(self) -> None:
+        target = self.create_member(email_address="target@test.test")
+        other = self.create_member(email_address="other@test.test")
+        original_other_name = other.name
+        self.database_gateway.get_members().with_id(target.id).update().set_name(
+            "Renamed"
+        ).perform()
+        retrieved_other = self.database_gateway.get_members().with_id(other.id).first()
+        assert retrieved_other
+        assert retrieved_other.name == original_other_name
+
+    def test_that_perform_returns_number_of_affected_rows(self) -> None:
+        update = self.database_gateway.get_members().update().set_name("any")
+        assert update.perform() == 0
+        self.create_member()
+        assert update.perform() == 1
+
+    def test_that_calling_set_name_returns_a_new_update_object(self) -> None:
+        member = self.create_member()
+        update = self.database_gateway.get_members().with_id(member.id).update()
+        update.set_name("Should Not Stick")
+        update.perform()
+        retrieved = self.database_gateway.get_members().with_id(member.id).first()
+        assert retrieved
+        assert retrieved.name != "Should Not Stick"

@@ -691,6 +691,36 @@ class MemberQueryResult(SqlQueryResult[records.Member]):
             .with_entities(models.Member, email),
         )
 
+    def update(self) -> MemberUpdate:
+        return MemberUpdate(db=self.db, query=self.query)
+
+
+@dataclass
+class MemberUpdate:
+    db: Database
+    query: Query
+    changes: Dict[str, Any] = field(default_factory=dict)
+
+    def set_name(self, name: str) -> Self:
+        return replace(self, changes=dict(self.changes, name=name))
+
+    def perform(self) -> int:
+        if not self.changes:
+            return 0
+        sql_statement = (
+            update(models.Member)
+            .where(
+                models.Member.id.in_(
+                    self.query.with_entities(models.Member.id).scalar_subquery()
+                )
+            )
+            .values(**self.changes)
+            .execution_options(synchronize_session="fetch")
+        )
+        rowcount = cast(CursorResult, self.db.session.execute(sql_statement)).rowcount
+        self.db.session.flush()
+        return rowcount
+
 
 class CompanyQueryResult(SqlQueryResult[records.Company]):
     def with_id(self, id_: UUID) -> Self:
@@ -788,6 +818,36 @@ class CompanyQueryResult(SqlQueryResult[records.Company]):
             .with_entities(models.Company, email),
         )
 
+    def update(self) -> CompanyUpdate:
+        return CompanyUpdate(db=self.db, query=self.query)
+
+
+@dataclass
+class CompanyUpdate:
+    db: Database
+    query: Query
+    changes: Dict[str, Any] = field(default_factory=dict)
+
+    def set_name(self, name: str) -> Self:
+        return replace(self, changes=dict(self.changes, name=name))
+
+    def perform(self) -> int:
+        if not self.changes:
+            return 0
+        sql_statement = (
+            update(models.Company)
+            .where(
+                models.Company.id.in_(
+                    self.query.with_entities(models.Company.id).scalar_subquery()
+                )
+            )
+            .values(**self.changes)
+            .execution_options(synchronize_session="fetch")
+        )
+        rowcount = cast(CursorResult, self.db.session.execute(sql_statement)).rowcount
+        self.db.session.flush()
+        return rowcount
+
 
 class AccountantResult(SqlQueryResult[records.Accountant]):
     def with_email_address(self, email: str) -> Self:
@@ -825,6 +885,36 @@ class AccountantResult(SqlQueryResult[records.Accountant]):
             query=query,
             mapper=mapper,
         )
+
+    def update(self) -> AccountantUpdate:
+        return AccountantUpdate(db=self.db, query=self.query)
+
+
+@dataclass
+class AccountantUpdate:
+    db: Database
+    query: Query
+    changes: Dict[str, Any] = field(default_factory=dict)
+
+    def set_name(self, name: str) -> Self:
+        return replace(self, changes=dict(self.changes, name=name))
+
+    def perform(self) -> int:
+        if not self.changes:
+            return 0
+        sql_statement = (
+            update(models.Accountant)
+            .where(
+                models.Accountant.id.in_(
+                    self.query.with_entities(models.Accountant.id).scalar_subquery()
+                )
+            )
+            .values(**self.changes)
+            .execution_options(synchronize_session="fetch")
+        )
+        rowcount = cast(CursorResult, self.db.session.execute(sql_statement)).rowcount
+        self.db.session.flush()
+        return rowcount
 
 
 class TransferQueryResult(SqlQueryResult[records.Transfer]):

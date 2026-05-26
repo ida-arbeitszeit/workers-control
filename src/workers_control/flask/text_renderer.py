@@ -43,6 +43,12 @@ class TextRendererImpl:
             change_email_url=change_email_url,
         )
 
+    def render_name_change_confirmation(self, *, new_name: str) -> str:
+        return render_template(
+            "user/name_change_confirmation.html",
+            new_name=new_name,
+        )
+
     def render_company_notification_about_rejected_plan(
         self, company_name: str, product_name: str, plan_id: str
     ) -> str:

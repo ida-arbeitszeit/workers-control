@@ -26,3 +26,4 @@ class TextRendererImpl:
     render_company_notification_about_rejected_plan = RenderMethod()
     render_password_reset_request_email = RenderMethod()
     render_password_reset_confirmation_email = RenderMethod()
+    render_name_change_confirmation = RenderMethod()

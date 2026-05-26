@@ -160,3 +160,59 @@ class JoinedWithEmailAddressTests(AccountantResultTests):
             len(self.database_gateway.get_accountants().joined_with_email_address())
             == n
         )
+
+
+class AccountantUpdateTests(AccountantResultTests):
+    def test_that_set_name_changes_the_name(self) -> None:
+        accountant = self.create_accountant()
+        new_name = "Renamed Accountant"
+        self.database_gateway.get_accountants().with_id(
+            accountant.id
+        ).update().set_name(new_name).perform()
+        retrieved = (
+            self.database_gateway.get_accountants().with_id(accountant.id).first()
+        )
+        assert retrieved
+        assert retrieved.name == new_name
+
+    def test_that_set_name_without_perform_does_not_change_the_name(self) -> None:
+        accountant = self.create_accountant()
+        original_name = accountant.name
+        self.database_gateway.get_accountants().with_id(
+            accountant.id
+        ).update().set_name("Different Name")
+        retrieved = (
+            self.database_gateway.get_accountants().with_id(accountant.id).first()
+        )
+        assert retrieved
+        assert retrieved.name == original_name
+
+    def test_that_updating_one_accountant_does_not_change_another(self) -> None:
+        target = self.create_accountant(email_address="target@test.test")
+        other = self.create_accountant(email_address="other@test.test")
+        original_other_name = other.name
+        self.database_gateway.get_accountants().with_id(target.id).update().set_name(
+            "Renamed"
+        ).perform()
+        retrieved_other = (
+            self.database_gateway.get_accountants().with_id(other.id).first()
+        )
+        assert retrieved_other
+        assert retrieved_other.name == original_other_name
+
+    def test_that_perform_returns_number_of_affected_rows(self) -> None:
+        update = self.database_gateway.get_accountants().update().set_name("any")
+        assert update.perform() == 0
+        self.create_accountant()
+        assert update.perform() == 1
+
+    def test_that_calling_set_name_returns_a_new_update_object(self) -> None:
+        accountant = self.create_accountant()
+        update = self.database_gateway.get_accountants().with_id(accountant.id).update()
+        update.set_name("Should Not Stick")
+        update.perform()
+        retrieved = (
+            self.database_gateway.get_accountants().with_id(accountant.id).first()
+        )
+        assert retrieved
+        assert retrieved.name != "Should Not Stick"

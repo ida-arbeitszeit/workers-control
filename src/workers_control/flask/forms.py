@@ -367,6 +367,30 @@ class ConfirmEmailAddressChangeForm(Form):
         return WtFormField(self.is_accepted)
 
 
+class ChangeUserNameForm(Form):
+    new_name = StringField(
+        label=trans.lazy_gettext("New name"),
+        validators=[
+            validators.InputRequired(message=trans.lazy_gettext("A name is required."))
+        ],
+    )
+
+    current_password = PasswordField(
+        label=trans.lazy_gettext("Current password"),
+        validators=[
+            validators.InputRequired(message=trans.lazy_gettext("Password is required"))
+        ],
+    )
+
+    @property
+    def new_name_field(self) -> WtFormField[str]:
+        return WtFormField(self.new_name)
+
+    @property
+    def current_password_field(self) -> WtFormField[str]:
+        return WtFormField(self.current_password)
+
+
 class RequestPasswordResetForm(Form):
     email = StringField(
         trans.lazy_gettext("Email"),

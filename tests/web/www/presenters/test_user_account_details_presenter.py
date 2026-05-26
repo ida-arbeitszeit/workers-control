@@ -48,6 +48,13 @@ class UserAccountDetailsPresenterTests(BaseTestCase):
             == self.url_index.get_request_change_email_url()
         )
 
+    def test_that_change_user_name_url_is_shown(self) -> None:
+        response = self.create_response_with_user_info()
+        view_model = self.presenter.render_user_account_details(response)
+        assert (
+            view_model.change_user_name_url == self.url_index.get_change_user_name_url()
+        )
+
     def test_that_date_and_time_is_formatted_correctly(self) -> None:
         expected_time = datetime_utc(2025, 1, 1, 10, 20, 10)
         self.datetime_service.freeze_time(expected_time)

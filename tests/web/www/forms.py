@@ -110,6 +110,19 @@ class RequestEmailAddressChangeFormImpl:
         )
 
 
+@dataclass
+class ChangeUserNameFormImpl:
+    new_name_field: FormFieldImpl[str]
+    current_password_field: FormFieldImpl[str]
+
+    @classmethod
+    def from_values(cls, new_name: str, current_password: str) -> Self:
+        return cls(
+            new_name_field=FormFieldImpl(value=new_name),
+            current_password_field=FormFieldImpl(value=current_password),
+        )
+
+
 class RequestCoordinationTransferFormImpl:
     def __init__(self, candidate: str, cooperation: str) -> None:
         self._candidate_field = FormFieldImpl(value=candidate)

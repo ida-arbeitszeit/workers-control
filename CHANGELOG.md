@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-05-30
+
+### Changed
+
+- Automate publishing to PyPI. (#1496)
+
+### Fixed
+
+- Fix a foreign key violation that could occur when changing a user's email address. (#1495)
+
 ## [0.2.1] - 2026-05-26
 
 ### Added

@@ -51,5 +51,19 @@ Maintainers regularly release new versions of the app. Procedure:
 #. Create a Pull Request with label "release". This will trigger integration tests against
    the `deployment repo <https://github.com/ida-arbeitszeit/workers-control-deployment>`_.
    On failure, fix current branch or deployment repo.
-#. After merging: tag the ``master`` branch (scheme: ``git tag v1.2.3 -m "Release version 1.2.3"``) and push the tag.
-#. Create sdist and wheel via ``python -m build`` and upload to PyPi with twine: ``twine upload dist/*``.
+#. After merging: create a new git tag (scheme: ``git tag v1.2.3 -m "Release version 1.2.3"``) and push the tag. 
+   Pushing the ``vX.Y.Z`` tag triggers the ``publish-pypi.yml`` GitHub Actions workflow,
+   which builds the sdist and wheel and uploads them to PyPi.
+
+
+One-time PyPI release setup
+...........................
+
+Automated publishing uses `PyPI Trusted Publishing
+<https://docs.pypi.org/trusted-publishers/>`_ (OIDC). Configure once by a maintainer:
+
+#. On PyPi, open the ``workers-control`` project and add a new
+   GitHub trusted publisher with: Owner ``ida-arbeitszeit``, Repository
+   ``workers-control``, Workflow ``publish-pypi.yml``.
+#. On Github, restrict who can create the triggering tag: add a repository ruleset 
+   targeting tags matching ``v*`` and a bypass list limited to maintainers/admins.

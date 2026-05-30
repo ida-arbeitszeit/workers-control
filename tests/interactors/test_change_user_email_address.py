@@ -142,6 +142,25 @@ class ChangeUserEmailAddressTests(BaseTestCase):
         self.can_change_to_email(member, "some_email@test.test")
         self.can_change_to_email(company, disputed_email)
 
+    def test_that_pending_password_reset_requests_for_the_old_address_are_removed(
+        self,
+    ) -> None:
+        old_email = "old@test.test"
+        member = self.member_generator.create_member(email=old_email)
+        self.database_gateway.create_password_reset_request(
+            email_address=old_email,
+            reset_token="some-token",
+            created_at=self.datetime_service.now(),
+        )
+        request = Request(user=member, new_email="new@test.test")
+        response = self.interactor.change_user_email_address(request)
+        assert not response.is_rejected
+        assert (
+            not self.database_gateway.get_password_reset_requests().with_email_address(
+                old_email
+            )
+        )
+
     def test_cannot_confirm_new_email_address_of_member(self) -> None:
         new_email = "some_new_mail@test.test"
         member = self.member_generator.create_member(email="old@test.test")

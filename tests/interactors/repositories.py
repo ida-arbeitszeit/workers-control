@@ -1494,6 +1494,14 @@ class PasswordResetRequestResult(QueryResultImpl[records.PasswordResetRequest]):
             lambda record: record.created_at > creation_threshold
         )
 
+    def delete(self) -> None:
+        ids_to_delete = {req.id for req in self.items()}
+        self.database.reset_password_requests = [
+            req
+            for req in self.database.reset_password_requests
+            if req.id not in ids_to_delete
+        ]
+
 
 class EmailAddressResult(QueryResultImpl[records.EmailAddress]):
     def with_address(self, *addresses: str) -> Self:

@@ -69,6 +69,29 @@ class ChangeEmailAddressViewTests(ViewTestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.location, "/user/account")
 
+    def test_that_change_succeeds_when_a_password_reset_request_exists_for_the_old_address(
+        self,
+    ) -> None:
+        old_email = "old_email@mail.org"
+        self.login_member(email=old_email)
+        self.database_gateway.create_password_reset_request(
+            email_address=old_email,
+            reset_token="some-token",
+            created_at=self.datetime_service.now(),
+        )
+        response = self.client.post(
+            self._construct_url(token=self._valid_token()),
+            data=dict(is_accepted="y"),
+            follow_redirects=False,
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.location, "/user/account")
+        assert (
+            not self.database_gateway.get_password_reset_requests().with_email_address(
+                old_email
+            )
+        )
+
     def _valid_token(self) -> str:
         return self.token_service.generate_token(
             input="old_email@mail.org:new_email@mail.org"

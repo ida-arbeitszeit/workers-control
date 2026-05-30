@@ -31,6 +31,9 @@ class ChangeUserEmailAddressInteractor:
             account_credentials.update().change_email_address(
                 request.new_email
             ).perform()
+            self.database.get_password_reset_requests().with_email_address(
+                old_email
+            ).delete()
             self.database.get_email_addresses().with_address(old_email).delete()
             self.database.get_email_addresses().with_address(
                 request.new_email

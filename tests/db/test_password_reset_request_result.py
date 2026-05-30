@@ -90,6 +90,53 @@ class PasswordResetRequestResultTests(DatabaseTestCase):
         assert len(result_records) == 3
         assert self._check_all_results_for_same_email(result_records, email_address)
 
+    def test_deleting_password_reset_requests_filtered_by_email_removes_only_those_records(
+        self,
+    ) -> None:
+        email_address = self._generate_email_address()
+        other_email_address = self._generate_email_address()
+        self.datetime_service.freeze_time(datetime_utc(2021, 2, 13, hour=10))
+        self._create_password_reset_request(email_address)
+        self._create_password_reset_request(email_address)
+        self._create_password_reset_request(other_email_address)
+
+        self.database_gateway.get_password_reset_requests().with_email_address(
+            email_address
+        ).delete()
+
+        assert (
+            len(
+                self.database_gateway.get_password_reset_requests().with_email_address(
+                    email_address
+                )
+            )
+            == 0
+        )
+        assert (
+            len(
+                self.database_gateway.get_password_reset_requests().with_email_address(
+                    other_email_address
+                )
+            )
+            == 1
+        )
+
+    def test_email_address_can_be_deleted_after_its_reset_requests_have_been_deleted(
+        self,
+    ) -> None:
+        email_address = self._generate_email_address()
+        self.datetime_service.freeze_time(datetime_utc(2021, 2, 13, hour=10))
+        self._create_password_reset_request(email_address)
+
+        self.database_gateway.get_password_reset_requests().with_email_address(
+            email_address
+        ).delete()
+        self.database_gateway.get_email_addresses().with_address(email_address).delete()
+
+        assert not self.database_gateway.get_email_addresses().with_address(
+            email_address
+        )
+
     def test_querying_interleaved_non_spammed_and_spammed_requests(self) -> None:
         spammed_email_address = self._generate_email_address()
         not_spammed_email_address = self._generate_email_address()

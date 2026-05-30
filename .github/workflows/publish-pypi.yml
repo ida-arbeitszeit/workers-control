@@ -1,0 +1,47 @@
+name: Publish to PyPI
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify tag matches pyproject version
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          version="$(python -c 'import tomllib, pathlib; print(tomllib.loads(pathlib.Path("pyproject.toml").read_text())["project"]["version"])')"
+          if [ "$tag" != "$version" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match pyproject version $version" >&2
+            exit 1
+          fi
+      - name: Build sdist and wheel
+        run: |
+          python -m pip install --upgrade build twine
+          python -m build
+          twine check dist/*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write          # required for Trusted Publishing (OIDC)
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1

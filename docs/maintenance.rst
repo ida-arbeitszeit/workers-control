@@ -45,7 +45,7 @@ Releases
 Maintainers regularly release new versions of the app. Procedure:
 
 #. Increment the version number of our app in :py:mod:`pyproject.toml`
-   and :py:mod:`nix/pythonPackages/workers-control.nix` (follow https://semver.org/spec/v2.0.0.html).
+   (follow https://semver.org/spec/v2.0.0.html).
 #. Add a new entry to :py:mod:`CHANGELOG.md` (follow https://keepachangelog.com/en/1.1.0/).
 #. Copy the constraints from :py:mod:`constraints.txt` into the dependencies in :py:mod:`pyproject.toml`.
 #. Create a Pull Request with label "release". This will trigger integration tests against

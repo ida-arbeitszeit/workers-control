@@ -20,9 +20,12 @@
   sphinx,
   sphinx-rtd-theme,
 }:
+let
+  pyproject = builtins.fromTOML (builtins.readFile ../../../pyproject.toml);
+in
 buildPythonPackage {
   pname = "workers-control";
-  version = "0.2.2";
+  version = pyproject.project.version;
   src = ../../..;
   outputs = [
     "out"

@@ -2439,6 +2439,10 @@ class PasswordResetRequestResult(SqlQueryResult[records.PasswordResetRequest]):
             )
         )
 
+    def delete(self) -> None:
+        self.query.delete()
+        self.db.session.flush()
+
 
 class BasicServiceResult(SqlQueryResult[records.BasicService]):
     def with_id(self, id_: UUID) -> Self:

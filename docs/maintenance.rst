@@ -18,25 +18,53 @@ resolution and are satisfied with the older versions from nixpkgs in both enviro
 If, exceptionally, nixpkgs has a newer version, we use the older version from pip in both environments,
 i.e. we have to maintain custom nix expressions for the affected packages.
 
-This process is largely automated by the command ``python -m dev.update_dependencies``.
-It updates the Python packages in the nix environment and then writes the discovered version numbers
-into the pip-consumable :py:mod:`constraints.txt`. To run the command, nix must be installed.
+This process is largely automated by the command ``python -m dev.update_dependencies``
+(nix must be installed). Running it performs, in order:
+
+#. ``nix flake update`` — refresh ``flake.lock``.
+#. Refresh the custom nix pins for ``flask-babel`` and ``flask-login``
+   (``dev/nix/pythonPackages/*.json``).
+#. Refresh the vendored ``bulma.css``.
+#. Regenerate ``constraints.txt`` (the pip-consumable pin file) from the resolved
+   nix Python environment.
+#. Regenerate the type stubs and auto-format the code.
 
 Then developers using pip can upgrade by running ``pip install -r requirements-dev.txt``.
+
+The few packages where we deliberately keep an *older* version than nixpkgs provides
+(currently ``flask-login`` and ``flask-babel``) are recorded, together with the reason,
+in ``VersionDowngrader.LOWER_PYPI_VERSIONS``
+(``dev/update_dependencies/update_constraints.py``). Their custom nix expressions live at
+``dev/nix/pythonPackages/flask-babel.nix`` and ``flask-login.nix`` (wired up in
+``dev/nix/pythonPackages.nix``). These are refreshed automatically by the command above,
+so you normally do not edit them by hand.
 
 
 Change Dependencies
 -------------------
 
-To add or remove a direct dependency, we do so (without specifying the version number)
-in the following files:
+To add or remove a *direct* dependency, edit the relevant files **without specifying
+a version number** (versions are pinned afterwards by the update command). Which files
+you touch depends on whether the dependency is needed at runtime or only for development.
 
-- nix/pythonPackages/workers-control.nix
-- nix/devShell.nix
-- requirements.txt
-- requirements-dev.txt
+A **runtime dependency** (needed by the app in production) is declared in three places:
 
-Run ``python -m dev.update_dependencies`` afterwards.
+- ``pyproject.toml`` → ``[project].dependencies``
+- ``requirements.txt``
+- ``dev/nix/pythonPackages/workers-control.nix`` → ``dependencies = [ ... ]``
+
+A **development-only dependency** (linter, test, build or docs tool) is declared in
+two places:
+
+- ``requirements-dev.txt``
+- ``dev/nix/devShell.nix`` → ``packages = [ ... ]``
+
+Optional extras (e.g. profiling) go in ``pyproject.toml`` →
+``[project.optional-dependencies]`` and in the matching ``passthru.optional-dependencies``
+in ``dev/nix/pythonPackages/workers-control.nix``.
+
+Run ``python -m dev.update_dependencies`` afterwards to pin the versions across both
+environments.
 
 
 Releases
@@ -44,10 +72,10 @@ Releases
 
 Maintainers regularly release new versions of the app. Procedure:
 
-#. Increment the version number of our app in :py:mod:`pyproject.toml`
+#. Increment the version number of our app in ``pyproject.toml``
    (follow https://semver.org/spec/v2.0.0.html).
-#. Add a new entry to :py:mod:`CHANGELOG.md` (follow https://keepachangelog.com/en/1.1.0/).
-#. Copy the constraints from :py:mod:`constraints.txt` into the dependencies in :py:mod:`pyproject.toml`.
+#. Add a new entry to ``CHANGELOG.md`` (follow https://keepachangelog.com/en/1.1.0/).
+#. Copy the constraints from ``constraints.txt`` into the dependencies in ``pyproject.toml``.
 #. Create a Pull Request with label "release". This will trigger integration tests against
    the `deployment repo <https://github.com/ida-arbeitszeit/workers-control-deployment>`_.
    On failure, fix current branch or deployment repo.

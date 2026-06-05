@@ -1,10 +1,9 @@
 from alembic import command
 from alembic.config import Config
 from alembic.script import ScriptDirectory
-from sqlalchemy import inspect, text
+from sqlalchemy import Connection, MetaData, inspect, text
 
 from tests.db.base_test_case import TestCaseWithResettedDatabase
-from workers_control.db.db import Base
 from workers_control.flask import create_app
 
 from .dependency_injection import FlaskTestConfiguration
@@ -19,18 +18,22 @@ class MigrationsTestCase(TestCaseWithResettedDatabase):
 
     def setUp(self) -> None:
         super().setUp()
-        Base.metadata.drop_all(bind=self.db.engine)
         with self.db.engine.begin() as conn:
-            conn.execute(text("DROP TABLE IF EXISTS alembic_version;"))
+            self._reset_database(conn)
 
         self.alembic_config = Config("tests/flask_integration/alembic.ini")
         self.flask_config = FlaskTestConfiguration.default()
 
     def tearDown(self) -> None:
         with self.db.engine.begin() as conn:
-            Base.metadata.drop_all(bind=conn)
-            conn.execute(text("DROP TABLE IF EXISTS alembic_version;"))
+            self._reset_database(conn)
         super().tearDown()
+
+    @staticmethod
+    def _reset_database(conn: Connection) -> None:
+        metadata = MetaData()
+        metadata.reflect(bind=conn)
+        metadata.drop_all(bind=conn)
 
     def table_exists(self, table_name: str) -> bool:
         inspector = inspect(self.db.engine)

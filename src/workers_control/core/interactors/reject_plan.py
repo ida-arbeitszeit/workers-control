@@ -34,7 +34,7 @@ class RejectPlanInteractor:
         assert planner
         if plan.is_rejected:
             return self.Response(is_plan_rejected=False)
-        matching_plans.update().set_rejection_date(now).perform()
+        self.database_gateway.create_plan_rejection(plan_id=plan.id, date=now)
         email_address_from_planner = (
             self.database_gateway.get_email_addresses()
             .that_belong_to_company(planner.id)

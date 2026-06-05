@@ -146,11 +146,6 @@ class PlanUpdate(DatabaseUpdate, Protocol):
         updated through this method.
         """
 
-    def set_rejection_date(self, rejection_date: Optional[datetime]) -> Self:
-        """Set the rejection date on all matching plans. The return
-        value counts all the plans that were changed by this method.
-        """
-
     def hide(self) -> Self: ...
 
 
@@ -805,6 +800,12 @@ class DatabaseGateway(Protocol):
     ) -> records.PlanApproval: ...
 
     def get_plan_approvals(self) -> PlanApprovalResult: ...
+
+    def create_plan_rejection(
+        self,
+        plan_id: UUID,
+        date: datetime,
+    ) -> records.PlanRejection: ...
 
     def create_basic_service(
         self,

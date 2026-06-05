@@ -20,6 +20,10 @@ depends_on: Union[str, Sequence[str], None] = None
 
 
 def upgrade() -> None:
+    inspector = sa.inspect(op.get_bind())
+    if "transaction" not in inspector.get_table_names():
+        return
+
     with op.batch_alter_table("transaction") as batch_op:
         batch_op.drop_constraint(
             "transaction_receiving_account_fkey", type_="foreignkey"

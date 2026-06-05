@@ -114,16 +114,11 @@ class PlanQueryResult(SqlQueryResult[records.Plan]):
         )
 
     def ordered_by_rejection_date(self, ascending: bool = True) -> Self:
-        review = aliased(models.PlanReview)
-        ordering = (
-            review.rejection_date.asc() if ascending else review.rejection_date.desc()
+        rejection = aliased(models.PlanRejection)
+        ordering = rejection.date.asc() if ascending else rejection.date.desc()
+        return self._with_modified_query(
+            lambda query: query.outerjoin(rejection).order_by(ordering)
         )
-        query = self._with_modified_query(
-            lambda query: query.join(review, review.plan_id == models.Plan.id).order_by(
-                ordering
-            )
-        )
-        return query
 
     def with_id_containing(self, query: str) -> Self:
         return self._with_modified_query(
@@ -143,11 +138,8 @@ class PlanQueryResult(SqlQueryResult[records.Plan]):
         )
 
     def that_are_rejected(self) -> Self:
-        plan_review = aliased(models.PlanReview)
         return self._with_modified_query(
-            lambda query: query.join(plan_review).filter(
-                plan_review.rejection_date != None
-            )
+            lambda query: query.filter(models.Plan.rejection != None)
         )
 
     def that_were_approved_before(self, timestamp: datetime) -> Self:
@@ -207,14 +199,11 @@ class PlanQueryResult(SqlQueryResult[records.Plan]):
         )
 
     def without_completed_review(self) -> Self:
-        plan_review = aliased(models.PlanReview)
         return self._with_modified_query(
-            lambda query: query.join(
-                plan_review, plan_review.plan_id == models.Plan.id
-            ).filter(
+            lambda query: query.filter(
                 and_(
                     models.Plan.approval == None,
-                    plan_review.rejection_date == None,
+                    models.Plan.rejection == None,
                 )
             )
         )
@@ -436,7 +425,6 @@ class PlanUpdate:
     query: Query
     db: Database
     plan_update_values: Dict[str, Any] = field(default_factory=dict)
-    review_update_values: Dict[str, Any] = field(default_factory=dict)
     cooperation_update: SetCooperation | None = None
 
     @dataclass
@@ -459,19 +447,6 @@ class PlanUpdate:
             )
             result = self.db.session.execute(sql_statement)
             row_count = cast(CursorResult, result).rowcount
-        if self.review_update_values:
-            sql_statement = (
-                update(models.PlanReview)
-                .where(
-                    models.PlanReview.plan_id.in_(
-                        self.query.with_entities(models.Plan.id).scalar_subquery()
-                    )
-                )
-                .values(**self.review_update_values)
-                .execution_options(synchronize_session="fetch")
-            )
-            result = self.db.session.execute(sql_statement)
-            row_count = max(row_count, cast(CursorResult, result).rowcount)
         if self.cooperation_update:
             match self.cooperation_update:
                 case self.SetCooperation(cooperation=None):
@@ -524,14 +499,6 @@ class PlanUpdate:
             plan_update_values=dict(
                 self.plan_update_values,
                 requested_cooperation=cooperation,
-            ),
-        )
-
-    def set_rejection_date(self, rejection_date: Optional[datetime]) -> Self:
-        return replace(
-            self,
-            review_update_values=dict(
-                self.review_update_values, rejection_date=rejection_date
             ),
         )
 
@@ -2803,9 +2770,7 @@ class DatabaseGatewayImpl:
             timeframe=duration_in_days,
             is_public_service=is_public_service,
         )
-        review = models.PlanReview(plan=plan, rejection_date=None)
         self.db.session.add(plan)
-        self.db.session.add(review)
         self.db.session.flush()
         return self.plan_from_orm(plan)
 
@@ -2828,7 +2793,7 @@ class DatabaseGatewayImpl:
             timeframe=int(plan.timeframe),
             is_public_service=plan.is_public_service,
             approval_date=plan.approval.date if plan.approval else None,
-            rejection_date=plan.review.rejection_date if plan.review else None,
+            rejection_date=plan.rejection.date if plan.rejection else None,
             requested_cooperation=(
                 plan.requested_cooperation if plan.requested_cooperation else None
             ),
@@ -3359,6 +3324,33 @@ class DatabaseGatewayImpl:
             db=self.db,
             query=self.db.session.query(models.PlanApproval),
             mapper=self.plan_approval_from_orm,
+        )
+
+    def create_plan_rejection(
+        self,
+        plan_id: UUID,
+        date: datetime,
+    ) -> records.PlanRejection:
+        rejection_orm = models.PlanRejection(
+            id=uuid4(),
+            plan_id=plan_id,
+            date=date,
+        )
+        plan_orm = self.db.session.query(models.Plan).filter_by(id=plan_id).first()
+        assert plan_orm
+        plan_orm.rejection = rejection_orm
+        self.db.session.add(rejection_orm)
+        self.db.session.flush()
+        return self.plan_rejection_from_orm(rejection_orm)
+
+    @classmethod
+    def plan_rejection_from_orm(
+        cls, orm: models.PlanRejection
+    ) -> records.PlanRejection:
+        return records.PlanRejection(
+            id=orm.id,
+            plan_id=orm.plan_id,
+            date=orm.date,
         )
 
     @classmethod

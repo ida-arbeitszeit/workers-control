@@ -48,26 +48,29 @@ class PlanResultTests(DatabaseTestCase):
         assert plan.timeframe == expected_duration
         assert plan.is_public_service == expected_is_public_service
 
-    def test_that_created_plan_can_have_its_rejection_date_changed(self) -> None:
+    def test_that_created_plan_can_be_rejected(self) -> None:
         plan = self.create_plan()
         expected_rejection_date = datetime_utc(2020, 1, 1)
-        self.database_gateway.get_plans().with_id(plan.id).update().set_rejection_date(
-            expected_rejection_date
-        ).perform()
-        changed_plan = self.database_gateway.get_plans().with_id(plan.id).first()
-        assert changed_plan
-        assert changed_plan.rejection_date == expected_rejection_date
+        self.database_gateway.create_plan_rejection(
+            plan_id=plan.id, date=expected_rejection_date
+        )
+        rejected_plan = self.database_gateway.get_plans().with_id(plan.id).first()
+        assert rejected_plan
+        assert rejected_plan.rejection_date == expected_rejection_date
 
     def test_that_plan_gets_deleted(self) -> None:
         plan = self.create_plan()
         self.database_gateway.get_plans().with_id(plan.id).delete()
         assert not len(self.database_gateway.get_plans().with_id(plan.id))
 
-    def test_that_plan_review_gets_deleted_when_plan_gets_deleted(self) -> None:
+    def test_that_plan_rejection_gets_deleted_when_plan_gets_deleted(self) -> None:
         plan = self.create_plan()
-        assert self.database_gateway.db.session.query(models.PlanReview).all()
+        self.database_gateway.create_plan_rejection(
+            plan_id=plan.id, date=datetime_utc(2020, 1, 1)
+        )
+        assert self.database_gateway.db.session.query(models.PlanRejection).all()
         self.database_gateway.get_plans().with_id(plan.id).delete()
-        assert not self.database_gateway.db.session.query(models.PlanReview).all()
+        assert not self.database_gateway.db.session.query(models.PlanRejection).all()
 
     def create_plan(self) -> Plan:
         return self.database_gateway.create_plan(
@@ -449,11 +452,15 @@ class GetAllPlans(DatabaseTestCase):
         _, cooperation = result
         assert not cooperation
 
-    def test_can_set_rejection_date(self) -> None:
-        plan = self.plan_generator.create_plan(approved=False, rejected=True)
-        plans = self.database_gateway.get_plans().with_id(plan)
+    def test_that_create_plan_rejection_sets_the_rejection_date_on_the_plan(
+        self,
+    ) -> None:
+        plan = self.plan_generator.create_plan(approved=False, rejected=False)
         expected_rejection_date = datetime_utc(2000, 3, 2)
-        assert plans.update().set_rejection_date(expected_rejection_date).perform()
+        self.database_gateway.create_plan_rejection(
+            plan_id=plan, date=expected_rejection_date
+        )
+        plans = self.database_gateway.get_plans().with_id(plan)
         assert all(plan.rejection_date == expected_rejection_date for plan in plans)
 
 

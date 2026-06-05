@@ -245,6 +245,13 @@ class PlanApproval:
     transfer_of_credit_a: UUID
 
 
+@dataclass
+class PlanRejection:
+    id: UUID
+    plan_id: UUID
+    date: datetime
+
+
 class ConsumptionType(Enum):
     means_of_prod = "means_of_prod"
     raw_materials = "raw_materials"

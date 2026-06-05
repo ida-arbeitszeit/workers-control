@@ -410,12 +410,6 @@ class PlanUpdate:
 
         return self._add_update(update)
 
-    def set_rejection_date(self, rejection_date: Optional[datetime]) -> Self:
-        def update(plan: Plan) -> None:
-            plan.rejection_date = rejection_date
-
-        return self._add_update(update)
-
     def hide(self) -> Self:
         def update(plan: records.Plan) -> None:
             plan.hidden_by_user = True
@@ -2558,6 +2552,21 @@ class MockDatabase:
             database=self,
             items=lambda: self.plan_approvals,
         )
+
+    def create_plan_rejection(
+        self,
+        plan_id: UUID,
+        date: datetime,
+    ) -> records.PlanRejection:
+        record = records.PlanRejection(
+            id=uuid4(),
+            plan_id=plan_id,
+            date=date,
+        )
+        plan = self.get_plans().with_id(plan_id).first()
+        assert plan
+        plan.rejection_date = record.date
+        return record
 
     def create_basic_service(
         self,

@@ -191,8 +191,8 @@ class Plan(Base):
     )
     hidden_by_user: Mapped[bool] = mapped_column(default=False)
 
-    review: Mapped["PlanReview  | None"] = relationship(
-        "PlanReview", back_populates="plan"
+    rejection: Mapped["PlanRejection | None"] = relationship(
+        "PlanRejection", back_populates="plan"
     )
     approval: Mapped["PlanApproval | None"] = relationship(
         "PlanApproval", back_populates="plan"
@@ -206,19 +206,19 @@ class PlanCooperation(Base):
     cooperation: Mapped[UUID] = mapped_column(Uuid, ForeignKey("cooperation.id"))
 
 
-class PlanReview(Base):
-    __tablename__ = "plan_review"
+class PlanRejection(Base):
+    __tablename__ = "plan_rejection"
 
     id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
-    rejection_date: Mapped[datetime | None] = mapped_column(TZDateTime)
     plan_id: Mapped[UUID] = mapped_column(
         Uuid, ForeignKey("plan.id", ondelete="CASCADE")
     )
+    date: Mapped[datetime] = mapped_column(TZDateTime)
 
-    plan: Mapped["Plan"] = relationship("Plan", back_populates="review")
+    plan: Mapped["Plan"] = relationship("Plan", back_populates="rejection")
 
     def __repr__(self) -> str:
-        return f"PlanReview(id={self.id!r}, plan_id={self.plan_id!r}, rejection_date={self.rejection_date!r})"
+        return f"PlanRejection(id={self.id!r}, plan_id={self.plan_id!r}, date={self.date!r})"
 
 
 class PlanApproval(Base):

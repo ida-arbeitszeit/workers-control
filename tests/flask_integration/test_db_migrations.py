@@ -1,7 +1,7 @@
 from alembic import command
 from alembic.config import Config
 from alembic.script import ScriptDirectory
-from sqlalchemy import inspect, text
+from sqlalchemy import Connection, inspect, text
 
 from tests.db.base_test_case import TestCaseWithResettedDatabase
 from workers_control.db.db import Base
@@ -21,7 +21,7 @@ class MigrationsTestCase(TestCaseWithResettedDatabase):
         super().setUp()
         Base.metadata.drop_all(bind=self.db.engine)
         with self.db.engine.begin() as conn:
-            conn.execute(text("DROP TABLE IF EXISTS alembic_version;"))
+            self._drop_non_model_tables(conn)
 
         self.alembic_config = Config("tests/flask_integration/alembic.ini")
         self.flask_config = FlaskTestConfiguration.default()
@@ -29,8 +29,17 @@ class MigrationsTestCase(TestCaseWithResettedDatabase):
     def tearDown(self) -> None:
         with self.db.engine.begin() as conn:
             Base.metadata.drop_all(bind=conn)
-            conn.execute(text("DROP TABLE IF EXISTS alembic_version;"))
+            self._drop_non_model_tables(conn)
         super().tearDown()
+
+    @staticmethod
+    def _drop_non_model_tables(conn: Connection) -> None:
+        # Tables that are not part of the current model metadata and therefore
+        # are not removed by ``Base.metadata.drop_all``. ``plan_review`` is
+        # recreated by the downgrade of the migration that replaced it with
+        # ``plan_rejection``, so it must be cleaned up explicitly.
+        conn.execute(text("DROP TABLE IF EXISTS alembic_version;"))
+        conn.execute(text("DROP TABLE IF EXISTS plan_review;"))
 
     def table_exists(self, table_name: str) -> bool:
         inspector = inspect(self.db.engine)

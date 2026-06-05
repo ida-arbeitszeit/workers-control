@@ -143,3 +143,10 @@ class TestDowngrade(MigrationsTestCase):
             self.alembic_config.attributes["connection"] = connection
             command.upgrade(self.alembic_config, "head")
             command.downgrade(self.alembic_config, "base")
+
+    def test_that_after_downgrade_to_base_upgrading_to_head_is_possible(self) -> None:
+        with self.db.engine.begin() as connection:
+            self.alembic_config.attributes["connection"] = connection
+            command.upgrade(self.alembic_config, "head")
+            command.downgrade(self.alembic_config, "base")
+            command.upgrade(self.alembic_config, "head")

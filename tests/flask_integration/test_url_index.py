@@ -525,3 +525,10 @@ class GeneralUrlIndexTests(ViewTestCase):
         url = self.url_index.get_basic_service_url(basic_service_id=basic_service_id)
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
+
+    def test_that_get_plan_review_url_leads_to_functional_url(self) -> None:
+        self.login_accountant()
+        plan = self.plan_generator.create_plan()
+        url = self.url_index.get_plan_review_url(plan_id=plan)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)

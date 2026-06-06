@@ -1,9 +1,8 @@
 from uuid import UUID
 
 from flask import Response as FlaskResponse
-from flask import redirect, render_template
+from flask import render_template
 
-from workers_control.core.interactors.approve_plan import ApprovePlanInteractor
 from workers_control.core.interactors.get_accountant_dashboard import (
     GetAccountantDashboardInteractor,
 )
@@ -11,20 +10,11 @@ from workers_control.core.interactors.get_plan_details import GetPlanDetailsInte
 from workers_control.core.interactors.list_plans_with_pending_review import (
     ListPlansWithPendingReviewInteractor,
 )
-from workers_control.core.interactors.reject_plan import RejectPlanInteractor
-from workers_control.db import commit_changes
+from workers_control.flask.class_based_view import as_flask_view
 from workers_control.flask.flask_session import FlaskSession
 from workers_control.flask.types import Response
 from workers_control.flask.views.http_error_view import http_404
-from workers_control.web.www.controllers.approve_plan_controller import (
-    ApprovePlanController,
-)
-from workers_control.web.www.controllers.reject_plan_controller import (
-    RejectPlanController,
-)
-from workers_control.web.www.presenters.approve_plan_presenter import (
-    ApprovePlanPresenter,
-)
+from workers_control.flask.views.review_plan_view import ReviewPlanView
 from workers_control.web.www.presenters.get_accountant_dashboard_presenter import (
     GetAccountantDashboardPresenter,
 )
@@ -34,7 +24,6 @@ from workers_control.web.www.presenters.get_plan_details_accountant_presenter im
 from workers_control.web.www.presenters.list_plans_with_pending_review_presenter import (
     ListPlansWithPendingReviewPresenter,
 )
-from workers_control.web.www.presenters.reject_plan_presenter import RejectPlanPresenter
 
 from .blueprint import AccountantRoute
 
@@ -68,32 +57,9 @@ def list_plans_with_pending_review(
     )
 
 
-@AccountantRoute("/accountant/plans/<uuid:plan>/approve", methods=["POST"])
-@commit_changes
-def approve_plan(
-    plan: UUID,
-    controller: ApprovePlanController,
-    interactor: ApprovePlanInteractor,
-    presenter: ApprovePlanPresenter,
-) -> Response:
-    request = controller.approve_plan(plan)
-    response = interactor.approve_plan(request)
-    view_model = presenter.approve_plan(response)
-    return redirect(view_model.redirect_url)
-
-
-@AccountantRoute("/accountant/plans/<uuid:plan>/reject", methods=["POST"])
-@commit_changes
-def reject_plan(
-    plan: UUID,
-    controller: RejectPlanController,
-    interactor: RejectPlanInteractor,
-    presenter: RejectPlanPresenter,
-) -> Response:
-    request = controller.reject_plan(plan)
-    response = interactor.reject_plan(request)
-    view_model = presenter.reject_plan(response)
-    return redirect(view_model.redirect_url)
+@AccountantRoute("/accountant/plans/<uuid:plan_id>/review", methods=["GET", "POST"])
+@as_flask_view()
+class review_plan(ReviewPlanView): ...
 
 
 @AccountantRoute("/accountant/plan_details/<uuid:plan_id>")

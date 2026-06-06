@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block navbar_start %}
+{% from 'macros/navbar.html' import navbar %}
+{{ navbar(view_model.navbar_items) }}
+{% endblock %}
+
+{% block content %}
+<section class="section has-text-centered">
+  <h1 class="title">{{ view_model.product_name }}</h1>
+  <p>
+    <a href="{{ view_model.plan_details_url }}">{{ gettext("Show plan details") }}</a>
+  </p>
+</section>
+<section class="section">
+  <div class="column is-4 is-offset-4 has-text-left">
+    <form method="post" action="{{ view_model.review_form_action_url }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="field">
+        <label class="radio">
+          <input type="radio" name="decision" value="approve" required>
+          {{ gettext("Approve") }}
+        </label>
+      </div>
+      <div class="field">
+        <label class="radio">
+          <input type="radio" name="decision" value="reject" required>
+          {{ gettext("Reject") }}
+        </label>
+      </div>
+      <div class="field">
+        <div class="control">
+          <button class="button is-primary" type="submit">
+            {{ gettext("Submit review") }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}

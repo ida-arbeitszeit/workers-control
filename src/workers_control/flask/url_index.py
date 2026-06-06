@@ -204,11 +204,8 @@ class GeneralUrlIndex:
     def get_unreviewed_plans_list_view_url(self) -> str:
         return url_for("main_accountant.list_plans_with_pending_review")
 
-    def get_approve_plan_url(self, plan_id: UUID) -> str:
-        return url_for("main_accountant.approve_plan", plan=plan_id)
-
-    def get_reject_plan_url(self, plan_id: UUID) -> str:
-        return url_for("main_accountant.reject_plan", plan=plan_id)
+    def get_plan_review_url(self, plan_id: UUID) -> str:
+        return url_for("main_accountant.review_plan", plan_id=plan_id)
 
     def get_create_draft_url(self) -> str:
         return url_for("main_company.create_draft")

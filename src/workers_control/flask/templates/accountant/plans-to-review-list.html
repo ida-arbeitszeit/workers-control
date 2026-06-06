@@ -22,18 +22,9 @@
       </div>
       <div class="media-right">
         <div class="content pt-1">
-          <form method="post" action="{{ plan.approve_plan_url }}">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button class="button is-ghost" type="submit" title="{{ gettext('Approve plan') }}">
-              {{ 'check'|icon }}
-            </button>
-          </form>
-          <form method="post" action="{{ plan.reject_plan_url }}">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button class="button is-ghost" type="submit" title="{{ gettext('Reject plan') }}">
-              {{ "times"|icon }}
-            </button>
-          </form>
+          <a class="button is-ghost" href="{{ plan.review_plan_url }}">
+            {{ gettext("Review") }}
+          </a>
         </div>
       </div>
     </article>

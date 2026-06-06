@@ -6,6 +6,7 @@ from workers_control.core.interactors.create_basic_service import (
 
 from ...notification import Notifier
 from ...translator import Translator
+from ..navbar import NavbarItem
 
 
 @dataclass
@@ -17,6 +18,11 @@ class CreateBasicServiceViewModel:
 class CreateBasicServicePresenter:
     user_notifier: Notifier
     translator: Translator
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [
+            NavbarItem(text=self.translator.gettext("Create basic service"), url=None)
+        ]
 
     def present(
         self, interactor_response: CreateBasicServiceResponse

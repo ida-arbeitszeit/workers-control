@@ -69,6 +69,10 @@ class RemoveWorkerFromCompanyView:
             list_workers_interactor_response
         )
         return FlaskResponse(
-            render_template(TEMPLATE_NAME, workers=list_workers_view_model.workers),
+            render_template(
+                TEMPLATE_NAME,
+                workers=list_workers_view_model.workers,
+                navbar_items=self.remove_worker_presenter.create_navbar_items(),
+            ),
             status=status_code,
         )

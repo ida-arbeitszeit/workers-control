@@ -34,5 +34,6 @@ class ReviewRegisteredConsumptionsView:
             flask.render_template(
                 "company/review_registered_consumptions.html",
                 view_model=view_model,
+                navbar_items=self.presenter.create_navbar_items(),
             )
         )

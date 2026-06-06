@@ -174,3 +174,15 @@ class ReviewRegisteredConsumptionsPresenterTests(BaseTestCase):
             plan_id=plan_id,
             labour_hours_consumed=labour_hours_consumed,
         )
+
+
+class NavbarItemsTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(ReviewRegisteredConsumptionsPresenter)
+
+    def test_navbar_shows_product_transfers_as_current_page(self) -> None:
+        items = self.presenter.create_navbar_items()
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0].text, self.translator.gettext("My product transfers"))
+        self.assertIsNone(items[0].url)

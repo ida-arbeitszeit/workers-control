@@ -10,6 +10,7 @@ from workers_control.core.interactors.get_company_summary import (
 from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex, UserUrlIndex
+from workers_control.web.www.navbar import NavbarItem
 
 
 @dataclass
@@ -61,6 +62,9 @@ class GetCompanySummarySuccessPresenter:
     url_index: UrlIndex
     control_thresholds: ControlThresholds
     datetime_formatter: DatetimeFormatter
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [NavbarItem(text=self.translator.gettext("Company overview"), url=None)]
 
     def present(
         self, interactor_response: GetCompanySummarySuccess

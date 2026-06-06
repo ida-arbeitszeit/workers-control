@@ -80,3 +80,15 @@ class PresenterTests(BaseTestCase):
             paid_price_per_unit=paid_price_per_unit,
             paid_price_total=paid_price_total,
         )
+
+
+class NavbarItemsTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(PrivateConsumptionDetailsPresenter)
+
+    def test_navbar_shows_consumption_details_as_current_page(self) -> None:
+        items = self.presenter.create_navbar_items()
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0].text, self.translator.gettext("Consumption details"))
+        self.assertIsNone(items[0].url)

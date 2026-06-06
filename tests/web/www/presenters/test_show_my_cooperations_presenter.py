@@ -269,3 +269,15 @@ class CooperatingPlansTest(BaseTestCase):
             self.url_index.get_coop_summary_url(coop_id=self.COOP_ID),
             self.view_model.list_of_my_cooperating_plans.rows[0].coop_url,
         )
+
+
+class NavbarItemsTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(ShowMyCooperationsPresenter)
+
+    def test_navbar_shows_my_cooperations_as_current_page(self) -> None:
+        items = self.presenter.create_navbar_items()
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0].text, self.translator.gettext("My cooperations"))
+        self.assertIsNone(items[0].url)

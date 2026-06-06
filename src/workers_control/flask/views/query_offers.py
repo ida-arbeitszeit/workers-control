@@ -55,4 +55,5 @@ class QueryOffersView:
             TEMPLATE_NAME,
             form=form,
             view_model=view_model,
+            navbar_items=self.presenter.create_navbar_items(),
         )

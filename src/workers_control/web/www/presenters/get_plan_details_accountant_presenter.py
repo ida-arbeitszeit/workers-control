@@ -6,6 +6,7 @@ from workers_control.web.formatters.plan_details_formatter import (
     PlanDetailsWeb,
 )
 from workers_control.web.url_index import UrlIndex
+from workers_control.web.www.navbar import NavbarItem
 
 from ...translator import Translator
 
@@ -20,6 +21,9 @@ class GetPlanDetailsAccountantPresenter:
     trans: Translator
     plan_details_service: PlanDetailsFormatter
     url_index: UrlIndex
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [NavbarItem(text=self.trans.gettext("Plan information"), url=None)]
 
     def present(
         self, response: GetPlanDetailsInteractor.Response

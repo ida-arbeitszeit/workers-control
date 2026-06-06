@@ -53,6 +53,7 @@ class InviteWorkerToCompanyView:
                 TEMPLATE_NAME,
                 form=InviteWorkerToCompanyForm(""),
                 view_model=list_workers_view_model,
+                navbar_items=self.invite_worker_presenter.create_navbar_items(),
             )
         )
 
@@ -93,6 +94,7 @@ class InviteWorkerToCompanyView:
                 TEMPLATE_NAME,
                 form=form,
                 view_model=list_workers_view_model,
+                navbar_items=self.invite_worker_presenter.create_navbar_items(),
             ),
             status=400,
         )

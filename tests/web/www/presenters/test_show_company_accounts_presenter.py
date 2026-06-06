@@ -80,3 +80,15 @@ class ShowCompanyAccountsPresenterTests(BaseTestCase):
             company = uuid4()
         balances = [Decimal(0), Decimal(-1), Decimal(2.0051), Decimal(2.5)]
         return ShowCompanyAccountsResponse(balances=balances, company=company)
+
+
+class NavbarItemsTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(ShowCompanyAccountsPresenter)
+
+    def test_navbar_shows_accounts_as_current_page(self) -> None:
+        items = self.presenter.create_navbar_items()
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0].text, self.translator.gettext("Accounts"))
+        self.assertIsNone(items[0].url)

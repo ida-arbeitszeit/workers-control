@@ -400,3 +400,11 @@ class ResultsTests(ListTransfersPresenterBase):
         )
         view_model = self.presenter.present(uc_response)
         assert view_model.results.rows[0].value == expected
+
+
+class NavbarItemsTests(ListTransfersPresenterBase):
+    def test_navbar_shows_all_transfers_as_current_page(self) -> None:
+        items = self.presenter.create_navbar_items()
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0].text, self.translator.gettext("All transfers"))
+        self.assertIsNone(items[0].url)

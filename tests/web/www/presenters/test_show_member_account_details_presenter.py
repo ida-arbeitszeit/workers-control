@@ -249,3 +249,15 @@ class TestPresenter(BaseTestCase):
             transfer_party=transfer_party,
             debtor_equals_creditor=False,
         )
+
+
+class NavbarItemsTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(ShowMemberAccountDetailsPresenter)
+
+    def test_navbar_shows_my_account_as_current_page(self) -> None:
+        items = self.presenter.create_navbar_items()
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0].text, self.translator.gettext("My account"))
+        self.assertIsNone(items[0].url)

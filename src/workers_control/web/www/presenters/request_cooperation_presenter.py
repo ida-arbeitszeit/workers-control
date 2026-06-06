@@ -5,6 +5,7 @@ from workers_control.core.interactors.request_cooperation import (
     RequestCooperationResponse,
 )
 from workers_control.web.translator import Translator
+from workers_control.web.www.navbar import NavbarItem
 
 
 @dataclass
@@ -16,6 +17,11 @@ class RequestCooperationViewModel:
 @dataclass
 class RequestCooperationPresenter:
     translator: Translator
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [
+            NavbarItem(text=self.translator.gettext("Request cooperation"), url=None)
+        ]
 
     def present(
         self, interactor_response: RequestCooperationResponse

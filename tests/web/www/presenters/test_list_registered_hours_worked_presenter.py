@@ -135,3 +135,19 @@ class ListRegisteredHoursWorkedPresenterTests(BaseTestCase):
         return list_registered_hours_worked.Response(
             registered_hours_worked=registered_hours_worked
         )
+
+
+class NavbarItemsTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(
+            list_registered_hours_worked_presenter.ListRegisteredHoursWorkedPresenter
+        )
+
+    def test_navbar_shows_registered_working_hours_as_current_page(self) -> None:
+        items = self.presenter.create_navbar_items()
+        self.assertEqual(len(items), 1)
+        self.assertEqual(
+            items[0].text, self.translator.gettext("Registered working hours")
+        )
+        self.assertIsNone(items[0].url)

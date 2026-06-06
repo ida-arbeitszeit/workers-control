@@ -28,5 +28,6 @@ class ListRegisteredHoursWorkedView:
             flask.render_template(
                 "company/list_registered_hours_worked.html",
                 view_model=view_model,
+                navbar_items=self.presenter.create_navbar_items(),
             )
         )

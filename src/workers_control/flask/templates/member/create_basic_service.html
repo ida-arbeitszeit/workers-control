@@ -1,8 +1,8 @@
 {% extends "base.html" %}
+{% from 'macros/navbar.html' import navbar %}
 
 {% block navbar_start %}
-<a class="navbar-item" href="{{ url_for('main_member.basic_services') }}">{{ gettext("My basic services") }}</a>
-<div class="navbar-item">{{ gettext("Create basic service") }}</div>
+{{ navbar(navbar_items) }}
 {% endblock %}
 
 {% block content %}

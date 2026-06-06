@@ -19,5 +19,9 @@ class GetStatisticsView:
         interactor_response = self.get_statistics_interactor.get_statistics()
         view_model = self.presenter.present(interactor_response)
         return FlaskResponse(
-            render_template("user/statistics.html", view_model=view_model)
+            render_template(
+                "user/statistics.html",
+                view_model=view_model,
+                navbar_items=self.presenter.create_navbar_items(),
+            )
         )

@@ -86,6 +86,7 @@ def company_summary(
         return render_template(
             "user/company_summary.html",
             view_model=view_model,
+            navbar_items=presenter.create_navbar_items(),
         )
     else:
         return http_404()

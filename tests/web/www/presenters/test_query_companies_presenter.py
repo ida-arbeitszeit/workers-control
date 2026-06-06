@@ -103,3 +103,15 @@ class PaginationTests(BaseTestCase):
                 assert page.is_current
             else:
                 assert not page.is_current
+
+
+class NavbarItemsTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(QueryCompaniesPresenter)
+
+    def test_navbar_shows_all_companies_as_current_page(self) -> None:
+        items = self.presenter.create_navbar_items()
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0].text, self.translator.gettext("All companies"))
+        self.assertIsNone(items[0].url)

@@ -30,4 +30,8 @@ class GetPrivateConsumptionDetailsView:
         if interactor_response is None:
             return http_404()
         view_model = self.presenter.present(interactor_response)
-        return render_template("member/consumption_details.html", view_model=view_model)
+        return render_template(
+            "member/consumption_details.html",
+            view_model=view_model,
+            navbar_items=self.presenter.create_navbar_items(),
+        )

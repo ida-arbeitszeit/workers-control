@@ -49,4 +49,8 @@ class ShowMyCooperationsView:
             show_company_cooperations_response=show_company_cooperations_response,
             list_my_cooperating_plans_response=list_my_coop_plans_response,
         )
-        return render_template("company/my_cooperations.html", **view_model.to_dict())
+        return render_template(
+            "company/my_cooperations.html",
+            navbar_items=self.presenter.create_navbar_items(),
+            **view_model.to_dict(),
+        )

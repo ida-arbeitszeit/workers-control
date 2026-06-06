@@ -3,7 +3,9 @@ from dataclasses import dataclass
 from workers_control.core.interactors.show_company_accounts import (
     ShowCompanyAccountsResponse,
 )
+from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
+from workers_control.web.www.navbar import NavbarItem
 
 
 @dataclass
@@ -25,6 +27,10 @@ class ViewModel:
 @dataclass
 class ShowCompanyAccountsPresenter:
     url_index: UrlIndex
+    translator: Translator
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [NavbarItem(text=self.translator.gettext("Accounts"), url=None)]
 
     def present(self, interactor_response: ShowCompanyAccountsResponse) -> ViewModel:
         balances = [str(round(balance, 2)) for balance in interactor_response.balances]

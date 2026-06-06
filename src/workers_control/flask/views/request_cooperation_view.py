@@ -39,6 +39,7 @@ class RequestCooperationView:
             render_template(
                 TEMPLATE_NAME,
                 list_plans_view_model=list_plans_view_model,
+                navbar_items=self.presenter.create_navbar_items(),
             )
         )
 
@@ -58,6 +59,7 @@ class RequestCooperationView:
                 TEMPLATE_NAME,
                 view_model=view_model,
                 list_plans_view_model=list_plans_view_model,
+                navbar_items=self.presenter.create_navbar_items(),
             )
         )
 
@@ -67,7 +69,11 @@ class RequestCooperationView:
         field = getattr(form, result.field)
         field.errors += (result.message,)
         return Response(
-            render_template(TEMPLATE_NAME, form=form),
+            render_template(
+                TEMPLATE_NAME,
+                form=form,
+                navbar_items=self.presenter.create_navbar_items(),
+            ),
             status=400,
         )
 

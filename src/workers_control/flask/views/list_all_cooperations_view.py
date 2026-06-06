@@ -19,4 +19,8 @@ class ListAllCooperationsView:
     def GET(self) -> Response:
         response = self.interactor.execute()
         view_model = self.presenter.present(response)
-        return render_template("user/list_all_cooperations.html", view_model=view_model)
+        return render_template(
+            "user/list_all_cooperations.html",
+            view_model=view_model,
+            navbar_items=self.presenter.create_navbar_items(),
+        )

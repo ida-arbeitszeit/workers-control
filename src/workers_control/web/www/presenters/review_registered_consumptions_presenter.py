@@ -9,7 +9,9 @@ from workers_control.core.interactors.review_registered_consumptions import (
 )
 from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
 from workers_control.web.session import UserRole
+from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
+from workers_control.web.www.navbar import NavbarItem
 
 
 @dataclass
@@ -32,6 +34,12 @@ class ViewModel:
 class ReviewRegisteredConsumptionsPresenter:
     datetime_formatter: DatetimeFormatter
     url_index: UrlIndex
+    translator: Translator
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [
+            NavbarItem(text=self.translator.gettext("My product transfers"), url=None)
+        ]
 
     def present(self, interactor_response: Interactor.Response) -> ViewModel:
         consumptions = [

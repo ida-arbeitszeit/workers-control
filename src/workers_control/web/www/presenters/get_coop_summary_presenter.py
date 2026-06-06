@@ -4,7 +4,9 @@ from typing import List, Optional
 
 from workers_control.core.interactors.get_coop_summary import GetCoopSummaryResponse
 
+from ...translator import Translator
 from ...url_index import UrlIndex, UserUrlIndex
+from ..navbar import NavbarItem
 
 
 @dataclass
@@ -37,6 +39,10 @@ class GetCoopSummaryViewModel:
 class GetCoopSummarySuccessPresenter:
     user_url_index: UserUrlIndex
     url_index: UrlIndex
+    translator: Translator
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [NavbarItem(text=self.translator.gettext("Cooperation"), url=None)]
 
     def present(self, response: GetCoopSummaryResponse) -> GetCoopSummaryViewModel:
         return GetCoopSummaryViewModel(

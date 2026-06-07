@@ -305,6 +305,9 @@ class GeneralUrlIndex:
     def get_password_reset_url(self, *, token: str) -> str:
         return url_for("auth.reset_password", token=token, _external=True)
 
+    def get_my_basic_services_url(self) -> str:
+        return url_for("main_member.basic_services")
+
     def get_basic_service_url(self, basic_service_id: UUID) -> str:
         return url_for(
             "main_user.show_basic_service", basic_service_id=basic_service_id

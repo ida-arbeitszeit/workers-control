@@ -61,8 +61,16 @@ class NavbarItemsTests(BaseTestCase):
         super().setUp()
         self.presenter = self.injector.get(CreateBasicServicePresenter)
 
+    def test_navbar_shows_two_elements(self) -> None:
+        items = self.presenter.create_navbar_items()
+        self.assertEqual(len(items), 2)
+
+    def test_navbar_shows_my_basic_services_as_parent_page(self) -> None:
+        items = self.presenter.create_navbar_items()
+        self.assertEqual(items[0].text, self.translator.gettext("My basic services"))
+        self.assertEqual(items[0].url, self.url_index.get_my_basic_services_url())
+
     def test_navbar_shows_create_basic_service_as_current_page(self) -> None:
         items = self.presenter.create_navbar_items()
-        self.assertEqual(len(items), 1)
-        self.assertEqual(items[0].text, self.translator.gettext("Create basic service"))
-        self.assertIsNone(items[0].url)
+        self.assertEqual(items[1].text, self.translator.gettext("Create basic service"))
+        self.assertIsNone(items[1].url)

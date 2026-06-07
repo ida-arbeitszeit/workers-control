@@ -25,7 +25,13 @@ class RemoveWorkerFromCompanyPresenter:
     url_index: UrlIndex
 
     def create_navbar_items(self) -> list[NavbarItem]:
-        return [NavbarItem(text=self.translator.gettext("Remove worker"), url=None)]
+        return [
+            NavbarItem(
+                text=self.translator.gettext("Workers"),
+                url=self.url_index.get_invite_worker_to_company_url(),
+            ),
+            NavbarItem(text=self.translator.gettext("Remove worker"), url=None),
+        ]
 
     def present(self, interactor_response: InteractorResponse) -> ViewModel:
         if not interactor_response.is_rejected:

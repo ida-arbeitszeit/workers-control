@@ -28,7 +28,11 @@ class PrivateConsumptionDetailsPresenter:
 
     def create_navbar_items(self) -> list[NavbarItem]:
         return [
-            NavbarItem(text=self.translator.gettext("Consumption details"), url=None)
+            NavbarItem(
+                text=self.translator.gettext("My consumptions"),
+                url=self.url_index.get_my_private_consumptions_url(),
+            ),
+            NavbarItem(text=self.translator.gettext("Consumption details"), url=None),
         ]
 
     def present(

@@ -28,5 +28,6 @@ class QueryCompanyConsumptionsView:
             render_template(
                 "company/my_consumptions.html",
                 view_model=view_model,
+                navbar_items=self.presenter.create_navbar_items(),
             )
         )

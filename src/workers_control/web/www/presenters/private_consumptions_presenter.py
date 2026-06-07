@@ -9,6 +9,7 @@ from workers_control.core.interactors.query_private_consumptions import (
 from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
+from workers_control.web.www.navbar import NavbarItem
 
 
 @dataclass
@@ -30,6 +31,9 @@ class PrivateConsumptionsPresenter:
     datetime_formatter: DatetimeFormatter
     translator: Translator
     url_index: UrlIndex
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [NavbarItem(text=self.translator.gettext("My consumptions"), url=None)]
 
     def present_private_consumptions(self, response: Response) -> ViewModel:
         return self.ViewModel(

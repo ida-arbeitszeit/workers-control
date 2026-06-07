@@ -2,7 +2,9 @@ from dataclasses import dataclass
 
 from workers_control.core.interactors import list_registered_hours_worked
 from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
+from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
+from workers_control.web.www.navbar import NavbarItem
 
 
 @dataclass
@@ -23,6 +25,14 @@ class ViewModel:
 class ListRegisteredHoursWorkedPresenter:
     datetime_formatter: DatetimeFormatter
     url_index: UrlIndex
+    translator: Translator
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [
+            NavbarItem(
+                text=self.translator.gettext("Registered working hours"), url=None
+            )
+        ]
 
     def present(self, response: list_registered_hours_worked.Response) -> ViewModel:
         registered_hours_worked = [

@@ -103,5 +103,6 @@ class UrlIndexTestImpl:
     get_global_statistics_url = UrlIndexMethod()
     get_request_password_reset_url = UrlIndexMethod()
     get_password_reset_url = UrlIndexMethod()
+    get_my_basic_services_url = UrlIndexMethod()
     get_basic_service_url = UrlIndexMethod()
     get_deactivate_basic_service_url = UrlIndexMethod()

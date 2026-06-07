@@ -144,3 +144,15 @@ class InviteWorkerToCompanyPresenterTests(BaseTestCase):
         assert self.notifier.infos[0] == self.translator.gettext(
             "Worker has been invited successfully."
         )
+
+
+class NavbarItemsTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(InviteWorkerToCompanyPresenter)
+
+    def test_navbar_shows_workers_as_current_page(self) -> None:
+        items = self.presenter.create_navbar_items()
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0].text, self.translator.gettext("Workers"))
+        self.assertIsNone(items[0].url)

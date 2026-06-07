@@ -4,7 +4,9 @@ from typing import List
 from workers_control.core.interactors.list_all_cooperations import (
     ListAllCooperationsResponse,
 )
+from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
+from workers_control.web.www.navbar import NavbarItem
 
 
 @dataclass
@@ -24,6 +26,10 @@ class ListAllCooperationsViewModel:
 @dataclass
 class ListAllCooperationsPresenter:
     url_index: UrlIndex
+    translator: Translator
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [NavbarItem(text=self.translator.gettext("All cooperations"), url=None)]
 
     def present(
         self, response: ListAllCooperationsResponse

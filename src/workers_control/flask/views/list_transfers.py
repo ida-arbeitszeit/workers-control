@@ -23,4 +23,10 @@ class ListTransfersView:
         uc_request = self.controller.create_interactor_request()
         uc_response = self.interactor.list_transfers(uc_request)
         view_model = self.presenter.present(uc_response)
-        return Response(render_template(TEMPLATE_NAME, view_model=view_model))
+        return Response(
+            render_template(
+                TEMPLATE_NAME,
+                view_model=view_model,
+                navbar_items=self.presenter.create_navbar_items(),
+            )
+        )

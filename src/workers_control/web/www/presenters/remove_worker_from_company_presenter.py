@@ -6,6 +6,7 @@ from workers_control.core.interactors.remove_worker_from_company import (
 from workers_control.web.notification import Notifier
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
+from workers_control.web.www.navbar import NavbarItem
 from workers_control.web.www.response import Redirect
 
 
@@ -22,6 +23,15 @@ class RemoveWorkerFromCompanyPresenter:
     notifier: Notifier
     translator: Translator
     url_index: UrlIndex
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [
+            NavbarItem(
+                text=self.translator.gettext("Workers"),
+                url=self.url_index.get_invite_worker_to_company_url(),
+            ),
+            NavbarItem(text=self.translator.gettext("Remove worker"), url=None),
+        ]
 
     def present(self, interactor_response: InteractorResponse) -> ViewModel:
         if not interactor_response.is_rejected:

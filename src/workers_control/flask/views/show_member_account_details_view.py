@@ -28,5 +28,6 @@ class ShowMemberAccountDetailsView:
             render_template(
                 "member/my_account.html",
                 view_model=view_model,
+                navbar_items=self.presenter.create_navbar_items(),
             )
         )

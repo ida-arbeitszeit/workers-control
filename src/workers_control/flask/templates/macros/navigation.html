@@ -1,0 +1,63 @@
+{% from 'macros/language_selection.html' import language_selection with context %}
+
+{% macro navigation(brand_url, brand_label, brand_icon=none, dashboard_url=none, is_anonymous=false) %}
+
+<nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a href="{{ brand_url }}" class="navbar-item has-background-primary">
+      {% if brand_icon is not none %}
+      <span class="icon">{{ brand_icon|icon }}</span>&nbsp;
+      {% endif %}
+      {{ brand_label }}
+    </a>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+      data-target="navbarOnTop">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarOnTop" class="navbar-menu">
+    <div class="navbar-start">
+      {% if dashboard_url is not none %}
+      <a href="{{ dashboard_url }}" class="navbar-item">
+        {{ gettext("Dashboard") }}
+      </a>
+      {% endif %}
+      {{ caller() }}
+    </div>
+
+    <div class="navbar-end">
+      {{ language_selection() }}
+      {% if is_anonymous %}
+      <div class="navbar-item">
+        <a class="button is-primary" href="{{ url_for('auth.help') }}">
+          {{ gettext('Help') }}
+        </a>
+      </div>
+      {% if request.endpoint != 'auth.start' %}
+      <div class="navbar-item">
+        <a class="button" href="{{ url_for('auth.start') }}">
+          {{ gettext('Back') }}
+        </a>
+      </div>
+      {% endif %}
+      {% else %}
+      <div class="navbar-item">
+        <a class="button" href="{{ url_for('auth.logout') }}">
+          {{ gettext('Sign out') }}
+        </a>
+      </div>
+      <div class="navbar-item">
+        <a class="button" href="{{ url_for('auth.help') }}">
+          {{ gettext('Help') }}
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+{% endmacro %}

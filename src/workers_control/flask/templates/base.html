@@ -1,7 +1,4 @@
-{% from 'macros/accountant_navigation.html' import accountant_navigation with context %}
-{% from 'macros/company_navigation.html' import company_navigation with context %}
-{% from 'macros/member_navigation.html' import member_navigation with context %}
-{% from 'macros/anonymous_navigation.html' import anonymous_navigation with context%}
+{% from 'macros/navigation.html' import navigation with context %}
 {% from 'macros/show_notifications.html' import show_notifications %}
 
 <!DOCTYPE html>
@@ -24,21 +21,35 @@
 </head>
 
 <body>
-  {% if session['user_type'] is defined and (session['user_type'] == 'company') %}
-  {% set user_navigation = company_navigation %}
-
-  {% elif session['user_type'] is defined and (session['user_type'] == 'member') %}
-  {% set user_navigation = member_navigation %}
-
-  {% elif session['user_type'] is defined and (session['user_type'] == 'accountant') %}
-  {% set user_navigation = accountant_navigation %}
-
+  {% set user_type = session.get('user_type') %}
+  {% if user_type in ['company', 'member', 'accountant'] %}
+    {% set brand_url = url_for('main_user.account_details') %}
+    {% set brand_label = current_user.name|truncate(20, True) %}
+    {% set is_anonymous = false %}
+    {% if user_type == 'company' %}
+      {% set brand_icon = 'industry' %}
+      {% set dashboard_url = url_for('main_company.dashboard') %}
+    {% elif user_type == 'member' %}
+      {% set brand_icon = 'user' %}
+      {% set dashboard_url = url_for('main_member.dashboard') %}
+    {% else %}
+      {% set brand_icon = 'book' %}
+      {% set dashboard_url = url_for('main_accountant.dashboard') %}
+    {% endif %}
   {% else %}
-  {% set user_navigation = anonymous_navigation %}
-
+    {% set brand_url = url_for('auth.start') %}
+    {% set brand_label = 'Workers Control' %}
+    {% set brand_icon = none %}
+    {% set dashboard_url = none %}
+    {% set is_anonymous = true %}
   {% endif %}
 
-  {% call user_navigation() %}
+  {% call navigation(
+        brand_url=brand_url,
+        brand_label=brand_label,
+        brand_icon=brand_icon,
+        dashboard_url=dashboard_url,
+        is_anonymous=is_anonymous) %}
   {% block navbar_start %}
   {% endblock navbar_start %}
   {% endcall %}

@@ -14,6 +14,7 @@ from workers_control.web.pagination import Pagination, Paginator
 from workers_control.web.request import Request
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
+from workers_control.web.www.navbar import NavbarItem
 from workers_control.web.www.presenters.transfers import (
     description_from_transfer_type,
 )
@@ -51,6 +52,9 @@ class ListTransfersPresenter:
     translator: Translator
     url_index: UrlIndex
     datetime_formatter: DatetimeFormatter
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [NavbarItem(text=self.translator.gettext("All transfers"), url=None)]
 
     def present(self, response: InteractorResponse) -> ListTransfersViewModel:
         pagination = self._create_pagination(response)

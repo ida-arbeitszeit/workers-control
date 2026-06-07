@@ -1,8 +1,9 @@
 {% from 'macros/pagination.html' import render_pagination %}
 {% extends "base.html" %}
+{% from 'macros/navbar.html' import navbar %}
 
 {% block navbar_start %}
-<div class="navbar-item">{{ gettext("Offers") }}</div>
+{{ navbar(navbar_items) }}
 {% endblock %}
 
 {% block content %}

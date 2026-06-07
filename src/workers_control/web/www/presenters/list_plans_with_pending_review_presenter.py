@@ -7,7 +7,9 @@ from workers_control.core.interactors.list_plans_with_pending_review import (
     ListPlansWithPendingReviewInteractor as Interactor,
 )
 from workers_control.web.session import UserRole
+from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
+from workers_control.web.www.navbar import NavbarItem
 
 
 @dataclass
@@ -26,6 +28,12 @@ class ListPlansWithPendingReviewPresenter:
         plans: List[ListPlansWithPendingReviewPresenter.Plan]
 
     url_index: UrlIndex
+    translator: Translator
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [
+            NavbarItem(text=self.translator.gettext("List unreviewed plans"), url=None)
+        ]
 
     def list_plans_with_pending_review(
         self, response: Interactor.Response

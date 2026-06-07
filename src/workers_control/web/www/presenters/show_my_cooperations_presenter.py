@@ -14,7 +14,9 @@ from workers_control.core.interactors.show_company_cooperations import (
     Response,
 )
 from workers_control.web.session import UserRole
+from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
+from workers_control.web.www.navbar import NavbarItem
 
 
 @dataclass
@@ -89,6 +91,10 @@ class ShowMyCooperationsViewModel:
 @dataclass
 class ShowMyCooperationsPresenter:
     url_index: UrlIndex
+    translator: Translator
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [NavbarItem(text=self.translator.gettext("My cooperations"), url=None)]
 
     def present(
         self,

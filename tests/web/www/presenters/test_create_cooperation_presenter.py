@@ -77,3 +77,19 @@ class CreateCooperationPresenterTests(BaseTestCase):
 
     def _get_warning_notifications(self) -> List[str]:
         return self.notifier.warnings
+
+
+class NavbarItemsTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(CreateCooperationPresenter)
+
+    def test_navbar_links_to_my_cooperations_then_shows_create_as_current_page(
+        self,
+    ) -> None:
+        items = self.presenter.create_navbar_items()
+        self.assertEqual(len(items), 2)
+        self.assertEqual(items[0].text, self.translator.gettext("My cooperations"))
+        self.assertEqual(items[0].url, self.url_index.get_my_cooperations_url())
+        self.assertEqual(items[1].text, self.translator.gettext("Create Cooperation"))
+        self.assertIsNone(items[1].url)

@@ -244,3 +244,15 @@ class GetCoopSummarySuccessPresenterTests(BaseTestCase):
             coop_price=coop_price,
             plans=plans,
         )
+
+
+class NavbarItemsTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(GetCoopSummarySuccessPresenter)
+
+    def test_navbar_shows_cooperation_as_current_page(self) -> None:
+        items = self.presenter.create_navbar_items()
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0].text, self.translator.gettext("Cooperation"))
+        self.assertIsNone(items[0].url)

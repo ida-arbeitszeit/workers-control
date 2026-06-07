@@ -4,6 +4,7 @@ from decimal import Decimal
 from workers_control.core.interactors.get_statistics import StatisticsResponse
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
+from workers_control.web.www.navbar import NavbarItem
 
 
 @dataclass
@@ -31,6 +32,9 @@ class GetStatisticsViewModel:
 class GetStatisticsPresenter:
     translator: Translator
     url_index: UrlIndex
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [NavbarItem(text=self.translator.gettext("Global statistics"), url=None)]
 
     def present(
         self, interactor_response: StatisticsResponse

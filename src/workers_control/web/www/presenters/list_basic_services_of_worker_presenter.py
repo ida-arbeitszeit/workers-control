@@ -2,7 +2,9 @@ from dataclasses import dataclass
 
 from workers_control.core.interactors.list_basic_services_of_worker import Response
 from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
+from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
+from workers_control.web.www.navbar import NavbarItem
 
 
 @dataclass
@@ -22,6 +24,10 @@ class ListBasicServicesOfWorkerPresenter:
 
     datetime_formatter: DatetimeFormatter
     url_index: UrlIndex
+    translator: Translator
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [NavbarItem(text=self.translator.gettext("My basic services"), url=None)]
 
     def present(self, response: Response) -> ViewModel:
         return self.ViewModel(

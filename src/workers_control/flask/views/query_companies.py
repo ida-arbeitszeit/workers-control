@@ -63,4 +63,5 @@ class QueryCompaniesView:
             TEMPLATE_NAME,
             form=search_form,
             view_model=view_model,
+            navbar_items=self.presenter.create_navbar_items(),
         )

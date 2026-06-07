@@ -42,4 +42,8 @@ class CreateCooperationView:
         return redirect(url_for("main_company.my_cooperations"))
 
     def _render_template(self, form: CreateCooperationForm) -> str:
-        return render_template("company/create_cooperation.html", form=form)
+        return render_template(
+            "company/create_cooperation.html",
+            form=form,
+            navbar_items=self.presenter.create_navbar_items(),
+        )

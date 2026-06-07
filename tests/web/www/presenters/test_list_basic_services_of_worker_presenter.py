@@ -110,3 +110,15 @@ class PresenterTests(BaseTestCase):
                 )
             ]
         )
+
+
+class NavbarItemsTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(ListBasicServicesOfWorkerPresenter)
+
+    def test_navbar_shows_my_basic_services_as_current_page(self) -> None:
+        items = self.presenter.create_navbar_items()
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0].text, self.translator.gettext("My basic services"))
+        self.assertIsNone(items[0].url)

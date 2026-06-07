@@ -7,6 +7,7 @@ from workers_control.web.pagination import Pagination, Paginator
 from workers_control.web.request import Request
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
+from workers_control.web.www.navbar import NavbarItem
 
 
 @dataclass
@@ -35,6 +36,9 @@ class QueryCompaniesPresenter:
     url_index: UrlIndex
     translator: Translator
     request: Request
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [NavbarItem(text=self.translator.gettext("All companies"), url=None)]
 
     def present(self, response: CompanyQueryResponse) -> QueryCompaniesViewModel:
         if not response.results:

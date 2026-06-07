@@ -5,6 +5,7 @@ from workers_control.core.interactors.invite_worker_to_company import (
 )
 from workers_control.web.notification import Notifier
 from workers_control.web.translator import Translator
+from workers_control.web.www.navbar import NavbarItem
 
 
 @dataclass
@@ -17,6 +18,9 @@ class ViewModel:
 class InviteWorkerToCompanyPresenter:
     translator: Translator
     notifier: Notifier
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [NavbarItem(text=self.translator.gettext("Workers"), url=None)]
 
     def present(
         self, interactor_response: InviteWorkerToCompanyInteractor.Response

@@ -27,5 +27,6 @@ class ShowMyPlansView:
         view_model = self.show_my_plans_presenter.present(response)
         return render_template(
             "company/my_plans.html",
+            navbar_items=self.show_my_plans_presenter.create_navbar_items(),
             **view_model.to_dict(),
         )

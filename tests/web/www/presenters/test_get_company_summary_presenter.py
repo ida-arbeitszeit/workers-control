@@ -329,3 +329,15 @@ class PlansOfCompanyTests(BaseTestCase):
         self.control_thresholds.set_acceptable_relative_account_deviation(100)
         view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
         self.assertFalse(view_model.plan_details[0].deviation_relative.is_critical)
+
+
+class NavbarItemsTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(GetCompanySummarySuccessPresenter)
+
+    def test_navbar_shows_company_overview_as_current_page(self) -> None:
+        items = self.presenter.create_navbar_items()
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0].text, self.translator.gettext("Company overview"))
+        self.assertIsNone(items[0].url)

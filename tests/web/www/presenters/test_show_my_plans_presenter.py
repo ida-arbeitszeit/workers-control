@@ -397,3 +397,11 @@ class RejectedPlansTests(PresenterBase):
             row.is_public_service,
             IS_PUBLIC_SERVICE,
         )
+
+
+class NavbarItemsTests(PresenterBase):
+    def test_navbar_shows_my_plans_as_current_page(self) -> None:
+        items = self.presenter.create_navbar_items()
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0].text, self.translator.gettext("My plans"))
+        self.assertIsNone(items[0].url)

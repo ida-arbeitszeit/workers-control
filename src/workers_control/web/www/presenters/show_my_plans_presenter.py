@@ -8,6 +8,7 @@ from workers_control.core.interactors.show_my_plans import ShowMyPlansResponse
 from workers_control.web.notification import Notifier
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex, UserUrlIndex
+from workers_control.web.www.navbar import NavbarItem
 
 
 @dataclass
@@ -131,6 +132,9 @@ class ShowMyPlansPresenter:
             rejected_plans=self._create_rejected_plans_table(response),
             create_draft_url=self.url_index.get_create_draft_url(),
         )
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [NavbarItem(text=self.translator.gettext("My plans"), url=None)]
 
     def _create_active_plans_table(
         self, response: ShowMyPlansResponse

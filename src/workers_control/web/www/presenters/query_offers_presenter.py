@@ -11,6 +11,7 @@ from workers_control.web.request import Request
 from workers_control.web.session import Session, UserRole
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex, UserUrlIndex
+from workers_control.web.www.navbar import NavbarItem
 
 
 @dataclass
@@ -52,6 +53,9 @@ class QueryOffersPresenter:
     translator: Translator
     request: Request
     session: Session
+
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [NavbarItem(text=self.translator.gettext("Offers"), url=None)]
 
     def present(self, response: OfferQueryResponse) -> QueryOffersViewModel:
         user_role = self.session.get_user_role()

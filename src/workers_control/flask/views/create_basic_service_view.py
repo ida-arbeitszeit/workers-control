@@ -46,4 +46,8 @@ class CreateBasicServiceView:
         return redirect(url_for("main_member.basic_services"))
 
     def _render_template(self, form: CreateBasicServiceForm) -> str:
-        return render_template("member/create_basic_service.html", form=form)
+        return render_template(
+            "member/create_basic_service.html",
+            form=form,
+            navbar_items=self.presenter.create_navbar_items(),
+        )

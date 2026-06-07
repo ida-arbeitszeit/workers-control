@@ -93,5 +93,58 @@ Automated publishing uses `PyPI Trusted Publishing
 #. On PyPi, open the ``workers-control`` project and add a new
    GitHub trusted publisher with: Owner ``ida-arbeitszeit``, Repository
    ``workers-control``, Workflow ``publish-pypi.yml``.
-#. On Github, restrict who can create the triggering tag: add a repository ruleset 
+#. On Github, restrict who can create the triggering tag: add a repository ruleset
    targeting tags matching ``v*`` and a bypass list limited to maintainers/admins.
+
+
+.. _translation-catalogs:
+
+Translations
+------------
+
+We use `Flask-Babel <https://python-babel.github.io/flask-babel/>`_
+for translation. The translation files reside in
+:py:mod:`workers_control.flask.translations`. You find there a ``.pot`` file
+as well as language-specific ``.po`` files.
+
+Developers mark user-facing strings for translation as described in
+:ref:`marking-translatable-strings`. The workflow for maintaining the
+translation catalogs is as follows:
+
+#. Add a language (optional)
+
+   Initialize a new language::
+
+    python -m build_support.translations initialize LOCALE
+    # For example French
+    python -m build_support.translations initialize fr
+
+   Add the language to the LANGUAGES variable in :py:mod:`workers_control.flask.config.production_defaults`.
+
+#. Update language files
+
+   Update the ``.pot`` file with new translatable strings found
+   in the source code::
+
+    python -m build_support.translations extract
+
+   Update language-specific ``.po`` files based on the updated
+   ``.pot`` file::
+
+    python -m build_support.translations update
+
+#. Translate
+
+   Translate language-specific ``.po`` files. This is the actual translation step.
+
+   For programs that help with editing, see `this page
+   <https://www.gnu.org/software/trans-coord/manual/web-trans/html_node/PO-Editors.html>`_.
+   There is also an extension for the VS Code editor called "gettext".
+
+#. Compile (optional)
+
+   Compile ``.po`` files to ``.mo`` files. This is only necessary if you
+   want to update the translations in your development
+   environment. For deployment this step is automatically done by the build system::
+
+    python -m build_support.translations compile

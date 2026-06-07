@@ -7,9 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.3] - 2026-06-07
+
 ### Changed
 
-- The nix package now reads its version from `pyproject.toml`, so the release version only needs to be bumped in one place.
+- Accountants now review a plan from a dedicated page instead of approving or rejecting it directly in the list of plans to be reviewed. (#1502)
+- Replace the `PlanReview` model with a `PlanRejection` record that is created only when a plan is rejected, mirroring plan approval. (#1501)
+- Improve the accessibility of the navigation bar: the burger menu keeps its `aria-expanded` state in sync and closes on outside clicks or navigation. (#1503)
+- Update the supported Python versions: drop 3.12 and add 3.14. (#1504)
+
+### Fixed
+
+- Add missing parent navbar elements for the private consumption details, create basic service, and remove worker pages. (#1503)
+- Avoid attempting to drop a non-existent transaction table during a database migration. (#1500)
 
 ## [0.2.2] - 2026-05-30
 

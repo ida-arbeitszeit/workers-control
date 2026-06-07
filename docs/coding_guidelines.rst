@@ -570,6 +570,42 @@ handler for this path must accept a ``member_id`` argument of type
             return f"Deleting member account for member {member_id}"
 
 
+Navigation and breadcrumbs
+--------------------------
+
+The main navigation bar is rendered once by ``base.html``; you
+usually do not touch that shell. In addition to the main navigation,
+the app has breadcrumbs that shows the user where they are in the app
+and simplifies navigation.
+
+Breadcrumbs are built for each page in the presenter by exposing a
+``create_navbar_items`` method returning
+:py:class:`workers_control.web.www.navbar.NavbarItem` objects. A
+``NavbarItem`` with ``url=None`` is the current page; items with an ``url``
+are linked ancestors::
+
+  def create_navbar_items(self) -> list[NavbarItem]:
+      return [
+          NavbarItem(
+              text=self.translator.gettext("My cooperations"),
+              url=self.url_index.get_my_cooperations_url(),
+          ),
+          NavbarItem(text=self.translator.gettext("Create cooperation"), url=None),
+      ]
+
+The request handler passes the result to ``render_template``
+and the template renders it with the ``navbar`` macro::
+
+  {% from 'macros/navbar.html' import navbar %}
+
+  {% block navbar_start %}
+  {{ navbar(navbar_items) }}
+  {% endblock %}
+
+Since the breadcrumb lives in the presenter, it is covered by an ordinary
+presenter test.
+
+
 Date and Time
 -------------
 

@@ -8,12 +8,12 @@ name = "workers-control"
 version = "0.2.2"
 description = "A flask app for labour time accounting."
 license = "AGPL-3.0-or-later"
-requires-python = ">=3.12"
+requires-python = ">=3.13"
 classifiers = [
     "Framework :: Flask",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
 readme = "README.rst"
 
@@ -41,7 +41,7 @@ Changelog = "https://github.com/ida-arbeitszeit/workers-control/blob/master/CHAN
 where = [ "src" ]
 
 [tool.black]
-target-version = ['py312']
+target-version = ['py313']
 extend-exclude = '''
 (
   ^/src/workers_control/db/migrations/versions/

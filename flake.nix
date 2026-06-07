@@ -41,8 +41,12 @@
             nixos-unstable = pkgs.callPackage dev/nix/devShell.nix {
               includeGlibcLocales = !isMacOs;
             };
-            python312 = pkgs.callPackage dev/nix/devShell.nix {
-              python3 = pkgs.python312;
+            python313 = pkgs.callPackage dev/nix/devShell.nix {
+              python3 = pkgs.python313;
+              includeGlibcLocales = !isMacOs;
+            };
+            python314 = pkgs.callPackage dev/nix/devShell.nix {
+              python3 = pkgs.python314;
               includeGlibcLocales = !isMacOs;
             };
           };
@@ -57,11 +61,11 @@
             # python3 interpreter and also explicitly list all
             # versions we want to support.
             woco-python3-nixpkgs-unstable = pkgs.python3.pkgs.workers-control;
-            woco-python312-nixpkgs-unstable = pkgs.python312.pkgs.workers-control;
             woco-python313-nixpkgs-unstable = pkgs.python313.pkgs.workers-control;
+            woco-python314-nixpkgs-unstable = pkgs.python314.pkgs.workers-control;
             woco-python3-nixpkgs-stable = pkgs-26-05.python3.pkgs.workers-control;
-            woco-python312-nixpkgs-stable = pkgs-26-05.python312.pkgs.workers-control;
             woco-python313-nixpkgs-stable = pkgs-26-05.python313.pkgs.workers-control;
+            woco-python314-nixpkgs-stable = pkgs-26-05.python314.pkgs.workers-control;
           };
         }
       );

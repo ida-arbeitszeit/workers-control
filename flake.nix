@@ -2,7 +2,7 @@
   description = "Workers control - a web app for labour time accounting.";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixos-25-11.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixos-26-05.url = "github:NixOS/nixpkgs/nixos-26.05";
     flake-utils.url = "github:numtide/flake-utils";
     flask-profiler.url = "github:seppeljordan/flask-profiler";
   };
@@ -13,7 +13,7 @@
       nixpkgs,
       flake-utils,
       flask-profiler,
-      nixos-25-11,
+      nixos-26-05,
     }:
     let
       supportedSystems = [
@@ -29,7 +29,7 @@
             inherit system;
             overlays = [ self.overlays.default ];
           };
-          pkgs-25-11 = import nixos-25-11 {
+          pkgs-26-05 = import nixos-26-05 {
             inherit system;
             overlays = [ self.overlays.default ];
           };
@@ -37,12 +37,16 @@
         {
           devShells = rec {
             default = nixos-unstable;
-            nixos-25-11 = pkgs-25-11.callPackage dev/nix/devShell.nix { includeGlibcLocales = !isMacOs; };
+            nixos-26-05 = pkgs-26-05.callPackage dev/nix/devShell.nix { includeGlibcLocales = !isMacOs; };
             nixos-unstable = pkgs.callPackage dev/nix/devShell.nix {
               includeGlibcLocales = !isMacOs;
             };
-            python312 = pkgs.callPackage dev/nix/devShell.nix {
-              python3 = pkgs.python312;
+            python313 = pkgs.callPackage dev/nix/devShell.nix {
+              python3 = pkgs.python313;
+              includeGlibcLocales = !isMacOs;
+            };
+            python314 = pkgs.callPackage dev/nix/devShell.nix {
+              python3 = pkgs.python314;
               includeGlibcLocales = !isMacOs;
             };
           };
@@ -57,11 +61,11 @@
             # python3 interpreter and also explicitly list all
             # versions we want to support.
             woco-python3-nixpkgs-unstable = pkgs.python3.pkgs.workers-control;
-            woco-python312-nixpkgs-unstable = pkgs.python312.pkgs.workers-control;
             woco-python313-nixpkgs-unstable = pkgs.python313.pkgs.workers-control;
-            woco-python3-nixpkgs-stable = pkgs-25-11.python3.pkgs.workers-control;
-            woco-python312-nixpkgs-stable = pkgs-25-11.python312.pkgs.workers-control;
-            woco-python313-nixpkgs-stable = pkgs-25-11.python313.pkgs.workers-control;
+            woco-python314-nixpkgs-unstable = pkgs.python314.pkgs.workers-control;
+            woco-python3-nixpkgs-stable = pkgs-26-05.python3.pkgs.workers-control;
+            woco-python313-nixpkgs-stable = pkgs-26-05.python313.pkgs.workers-control;
+            woco-python314-nixpkgs-stable = pkgs-26-05.python314.pkgs.workers-control;
           };
         }
       );

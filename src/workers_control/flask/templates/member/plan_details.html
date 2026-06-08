@@ -8,19 +8,4 @@
 {% block content %}
 {% from 'macros/plan_details.html' import plan_details %}
 {{ plan_details(view_model) }}
-
-<h1 class="title">
-    {{ gettext("Actions") }}
-</h1>
-<div class="column is-offset-2 is-8">
-    <div class="box">
-        <div class="box has-background-danger-light">
-            <h1 class="title is-4">{{ gettext("Register consumption") }}</h1>
-            <a class="button is-primary" href="{{ view_model.register_private_consumption_url }}">
-                <span>{{ gettext("Register consumption") }}</span>
-            </a>
-        </div>
-    </div>
-</div>
-
 {% endblock %}

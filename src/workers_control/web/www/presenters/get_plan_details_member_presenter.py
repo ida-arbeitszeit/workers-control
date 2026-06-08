@@ -5,7 +5,6 @@ from workers_control.web.formatters.plan_details_formatter import (
     PlanDetailsFormatter,
     PlanDetailsWeb,
 )
-from workers_control.web.url_index import UrlIndex
 from workers_control.web.www.navbar import NavbarItem
 
 from ...translator import Translator
@@ -14,14 +13,12 @@ from ...translator import Translator
 @dataclass
 class GetPlanDetailsMemberViewModel:
     details: PlanDetailsWeb
-    register_private_consumption_url: str
 
 
 @dataclass
 class GetPlanDetailsMemberMemberPresenter:
     trans: Translator
     plan_details_service: PlanDetailsFormatter
-    url_index: UrlIndex
 
     def create_navbar_items(self) -> list[NavbarItem]:
         return [NavbarItem(text=self.trans.gettext("Plan information"), url=None)]
@@ -32,8 +29,5 @@ class GetPlanDetailsMemberMemberPresenter:
         return GetPlanDetailsMemberViewModel(
             details=self.plan_details_service.format_plan_details(
                 response.plan_details
-            ),
-            register_private_consumption_url=self.url_index.get_register_private_consumption_url(
-                amount=None, plan_id=response.plan_details.plan_id
             ),
         )

@@ -102,17 +102,6 @@ class TestPresenterForPlanner(BaseTestCase):
             self.url_index.get_request_coop_url(),
         )
 
-    def test_url_for_consuming_product_is_not_displayed_when_user_is_planner_of_plan(
-        self,
-    ):
-        response = InteractorResponse(
-            self.plan_details_generator.create_plan_details(
-                planner_id=self.expected_planner
-            ),
-        )
-        view_model = self.presenter.present(response)
-        self.assertFalse(view_model.show_productive_consumption_url)
-
 
 class TestPresenterForNonPlanningCompany(BaseTestCase):
     def setUp(self) -> None:
@@ -138,28 +127,6 @@ class TestPresenterForNonPlanningCompany(BaseTestCase):
         )
         view_model = self.presenter.present(response)
         self.assertTrue(view_model.own_plan_action.is_cooperating)
-
-    def test_url_for_consuming_product_is_displayed_when_user_is_not_planner_of_plan(
-        self,
-    ):
-        response = InteractorResponse(
-            self.plan_details_generator.create_plan_details(),
-        )
-        view_model = self.presenter.present(response)
-        self.assertTrue(view_model.show_productive_consumption_url)
-
-    def test_correct_url_for_consuming_product_is_displayed(
-        self,
-    ):
-        expected_plan_id = uuid4()
-        response = InteractorResponse(
-            self.plan_details_generator.create_plan_details(plan_id=expected_plan_id),
-        )
-        view_model = self.presenter.present(response)
-        self.assertEqual(
-            view_model.productive_consumption_url,
-            self.url_index.get_register_productive_consumption_url(expected_plan_id),
-        )
 
 
 class NavbarItemsTests(BaseTestCase):

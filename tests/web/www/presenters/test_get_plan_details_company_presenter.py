@@ -22,10 +22,12 @@ class TestPresenterForPlanner(BaseTestCase):
         self.expected_planner = uuid4()
         self.session.login_company(company=self.expected_planner)
 
-    def test_action_section_is_shown_when_current_user_is_planner(self):
+    def test_action_section_is_shown_when_current_user_is_planner_of_cooperating_plan(
+        self,
+    ):
         response = InteractorResponse(
             plan_details=self.plan_details_generator.create_plan_details(
-                planner_id=self.expected_planner
+                is_cooperating=True, planner_id=self.expected_planner
             ),
         )
         view_model = self.presenter.present(response)
@@ -37,6 +39,17 @@ class TestPresenterForPlanner(BaseTestCase):
         response = InteractorResponse(
             plan_details=self.plan_details_generator.create_plan_details(
                 is_active=False, planner_id=self.expected_planner
+            ),
+        )
+        view_model = self.presenter.present(response)
+        self.assertFalse(view_model.show_own_plan_action_section)
+
+    def test_action_section_is_not_shown_when_planner_plan_is_active_but_not_cooperating(
+        self,
+    ):
+        response = InteractorResponse(
+            plan_details=self.plan_details_generator.create_plan_details(
+                is_cooperating=False, planner_id=self.expected_planner
             ),
         )
         view_model = self.presenter.present(response)
@@ -76,32 +89,6 @@ class TestPresenterForPlanner(BaseTestCase):
         view_model = self.presenter.present(response)
         assert not view_model.own_plan_action.cooperation_id
 
-    def test_no_url_for_requesting_cooperation_is_displayed_when_plan_is_cooperating(
-        self,
-    ):
-        response = InteractorResponse(
-            plan_details=self.plan_details_generator.create_plan_details(
-                is_cooperating=True, planner_id=self.expected_planner
-            ),
-        )
-        view_model = self.presenter.present(response)
-        self.assertIsNone(view_model.own_plan_action.request_coop_url)
-
-    def test_url_for_requesting_cooperation_is_displayed_correctly_when_plan_is_not_cooperating(
-        self,
-    ):
-        response = InteractorResponse(
-            plan_details=self.plan_details_generator.create_plan_details(
-                is_cooperating=False, cooperation=None, planner_id=self.expected_planner
-            ),
-        )
-        view_model = self.presenter.present(response)
-        self.assertFalse(view_model.own_plan_action.is_cooperating)
-        self.assertEqual(
-            view_model.own_plan_action.request_coop_url,
-            self.url_index.get_request_coop_url(),
-        )
-
 
 class TestPresenterForNonPlanningCompany(BaseTestCase):
     def setUp(self) -> None:
@@ -116,17 +103,6 @@ class TestPresenterForNonPlanningCompany(BaseTestCase):
         )
         view_model = self.presenter.present(response)
         self.assertFalse(view_model.show_own_plan_action_section)
-
-    def test_view_model_shows_plan_as_cooperating_when_plan_is_cooperating(
-        self,
-    ):
-        response = InteractorResponse(
-            plan_details=self.plan_details_generator.create_plan_details(
-                is_cooperating=True
-            ),
-        )
-        view_model = self.presenter.present(response)
-        self.assertTrue(view_model.own_plan_action.is_cooperating)
 
 
 class NavbarItemsTests(BaseTestCase):

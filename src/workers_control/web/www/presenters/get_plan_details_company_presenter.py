@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Optional
 
 from workers_control.core.interactors.get_plan_details import GetPlanDetailsInteractor
 from workers_control.core.services.plan_details import PlanDetails
@@ -11,15 +10,11 @@ from workers_control.web.session import Session
 from workers_control.web.translator import Translator
 from workers_control.web.www.navbar import NavbarItem
 
-from ...url_index import UrlIndex
-
 
 @dataclass
 class OwnPlanAction:
-    is_cooperating: bool
     plan_id: str
     cooperation_id: str | None
-    request_coop_url: Optional[str]
 
 
 @dataclass
@@ -32,7 +27,6 @@ class GetPlanDetailsCompanyViewModel:
 @dataclass
 class GetPlanDetailsCompanyPresenter:
     plan_details_service: PlanDetailsFormatter
-    url_index: UrlIndex
     session: Session
     translator: Translator
 
@@ -47,7 +41,9 @@ class GetPlanDetailsCompanyPresenter:
         assert current_user
         current_user_is_planner = response.plan_details.planner_id == current_user
         show_own_plan_action_section = (
-            current_user_is_planner and plan_details.is_active
+            current_user_is_planner
+            and plan_details.is_active
+            and plan_details.is_cooperating
         )
         view_model = GetPlanDetailsCompanyViewModel(
             details=self.plan_details_service.format_plan_details(plan_details),
@@ -58,13 +54,7 @@ class GetPlanDetailsCompanyPresenter:
 
     def _create_own_plan_action_section(self, plan: PlanDetails) -> OwnPlanAction:
         section = OwnPlanAction(
-            is_cooperating=plan.is_cooperating,
             plan_id=str(plan.plan_id),
             cooperation_id=str(plan.cooperation) if plan.cooperation else None,
-            request_coop_url=(
-                self.url_index.get_request_coop_url()
-                if not plan.is_cooperating
-                else None
-            ),
         )
         return section

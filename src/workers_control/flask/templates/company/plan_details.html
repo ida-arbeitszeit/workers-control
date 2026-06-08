@@ -18,7 +18,6 @@
     <div class="column is-offset-2 is-8">
         <div class="box">
             <div class="box has-background-danger-light">
-                {% if view_model.own_plan_action.is_cooperating %}
                 <h1 class="title is-4">{{ gettext("End cooperation:") }}</h1>
                 <form method="post" action="{{ url_for('.end_cooperation') }}">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -28,12 +27,6 @@
                         <span>{{ gettext("End") }}</span>
                     </button>
                 </form>
-                {% else %}
-                <h1 class="title is-4">{{ gettext("Join a cooperation") }} </h1>
-                <a class="button is-primary" href="{{ view_model.own_plan_action.request_coop_url }}">
-                    <span>{{ gettext("Join") }}</span>
-                </a>
-                {% endif %}
             </div>
         </div>
     </div>

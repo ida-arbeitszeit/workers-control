@@ -19,6 +19,9 @@ from workers_control.flask.views.create_draft_view import CreateDraftView
 from workers_control.flask.views.delete_draft_view import DeleteDraftView
 from workers_control.flask.views.deny_cooperation_view import DenyCooperationView
 from workers_control.flask.views.draft_details_view import DraftDetailsView
+from workers_control.flask.views.end_plan_cooperation_view import (
+    EndPlanCooperationView,
+)
 from workers_control.flask.views.file_plan_with_accounting_view import (
     FilePlanWithAccountingView,
 )
@@ -216,6 +219,11 @@ class list_pending_work_invites(ListPendingWorkInvitesView): ...
 @CompanyRoute("/end_cooperation", methods=["POST"])
 @as_flask_view()
 class end_cooperation(EndCooperationView): ...
+
+
+@CompanyRoute("/end_plan_cooperation", methods=["POST"])
+@as_flask_view()
+class end_plan_cooperation(EndPlanCooperationView): ...
 
 
 @CompanyRoute("/review_registered_consumptions")

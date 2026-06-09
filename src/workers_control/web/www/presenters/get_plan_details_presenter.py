@@ -5,29 +5,28 @@ from workers_control.web.formatters.plan_details_formatter import (
     PlanDetailsFormatter,
     PlanDetailsWeb,
 )
+from workers_control.web.translator import Translator
 from workers_control.web.www.navbar import NavbarItem
-
-from ...translator import Translator
 
 
 @dataclass
-class GetPlanDetailsMemberViewModel:
+class GetPlanDetailsViewModel:
     details: PlanDetailsWeb
 
 
 @dataclass
-class GetPlanDetailsMemberMemberPresenter:
-    trans: Translator
-    plan_details_service: PlanDetailsFormatter
+class GetPlanDetailsPresenter:
+    translator: Translator
+    plan_details_formatter: PlanDetailsFormatter
 
     def create_navbar_items(self) -> list[NavbarItem]:
-        return [NavbarItem(text=self.trans.gettext("Plan information"), url=None)]
+        return [NavbarItem(text=self.translator.gettext("Plan information"), url=None)]
 
     def present(
         self, response: GetPlanDetailsInteractor.Response
-    ) -> GetPlanDetailsMemberViewModel:
-        return GetPlanDetailsMemberViewModel(
-            details=self.plan_details_service.format_plan_details(
+    ) -> GetPlanDetailsViewModel:
+        return GetPlanDetailsViewModel(
+            details=self.plan_details_formatter.format_plan_details(
                 response.plan_details
             ),
         )

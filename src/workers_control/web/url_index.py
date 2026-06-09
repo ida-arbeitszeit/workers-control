@@ -7,21 +7,17 @@ need different urls for different roles include the user role in the
 arguments of the declared method.
 """
 
-from dataclasses import dataclass
 from decimal import Decimal
 from typing import Optional, Protocol
 from uuid import UUID
 
 from workers_control.core.records import ConsumptionType
-from workers_control.web.session import Session, UserRole
 
 
 class UrlIndex(Protocol):
     def get_member_dashboard_url(self) -> str: ...
 
-    def get_plan_details_url(
-        self, *, user_role: Optional[UserRole], plan_id: UUID
-    ) -> str: ...
+    def get_plan_details_url(self, plan_id: UUID) -> str: ...
 
     def get_work_invite_url(self, invite_id: UUID) -> str: ...
 
@@ -183,22 +179,3 @@ class UrlIndex(Protocol):
     def get_basic_service_url(self, basic_service_id: UUID) -> str: ...
 
     def get_deactivate_basic_service_url(self, basic_service_id: UUID) -> str: ...
-
-
-@dataclass
-class UserUrlIndex:
-    """This class is not an interface and therefore should not be
-    implemented by the web framework. It is merely used internally as
-    a convinience interface. You should refrain from using this class
-    in your tests and instead rely on the UrlIndex interface. In a
-    test scenario you most likely know in advance if you expect a url
-    intended for a member, company or any other role. This is why the
-    UrlIndex interface is much better suited for testing needs.
-    """
-
-    session: Session
-    url_index: UrlIndex
-
-    def get_plan_details_url(self, plan_id: UUID) -> str:
-        user_role = self.session.get_user_role()
-        return self.url_index.get_plan_details_url(user_role=user_role, plan_id=plan_id)

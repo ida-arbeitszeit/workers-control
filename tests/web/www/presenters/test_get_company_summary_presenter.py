@@ -12,7 +12,6 @@ from workers_control.core.interactors.get_company_summary import (
     PlanDetails,
     Supplier,
 )
-from workers_control.web.session import UserRole
 from workers_control.web.www.presenters.get_company_summary_presenter import (
     Deviation,
     GetCompanySummarySuccessPresenter,
@@ -178,37 +177,17 @@ class PlansOfCompanyTests(BaseTestCase):
             str(RESPONSE_WITH_2_PLANS.plan_details[1].name),
         )
 
-    def test_urls_of_plans_are_shown_for_companies(self):
+    def test_urls_of_plans_are_shown(self):
         view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
         self.assertEqual(
             view_model.plan_details[0].url,
             self.url_index.get_plan_details_url(
-                user_role=UserRole.company,
                 plan_id=RESPONSE_WITH_2_PLANS.plan_details[0].id,
             ),
         )
         self.assertEqual(
             view_model.plan_details[1].url,
             self.url_index.get_plan_details_url(
-                user_role=UserRole.company,
-                plan_id=RESPONSE_WITH_2_PLANS.plan_details[1].id,
-            ),
-        )
-
-    def test_urls_of_plans_are_shown_for_members(self):
-        self.session.login_member(uuid4())
-        view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
-        self.assertEqual(
-            view_model.plan_details[0].url,
-            self.url_index.get_plan_details_url(
-                user_role=UserRole.member,
-                plan_id=RESPONSE_WITH_2_PLANS.plan_details[0].id,
-            ),
-        )
-        self.assertEqual(
-            view_model.plan_details[1].url,
-            self.url_index.get_plan_details_url(
-                user_role=UserRole.member,
                 plan_id=RESPONSE_WITH_2_PLANS.plan_details[1].id,
             ),
         )

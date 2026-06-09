@@ -5,7 +5,7 @@ from typing import List, Optional
 from workers_control.core.interactors.get_coop_summary import GetCoopSummaryResponse
 
 from ...translator import Translator
-from ...url_index import UrlIndex, UserUrlIndex
+from ...url_index import UrlIndex
 from ..navbar import NavbarItem
 
 
@@ -37,7 +37,6 @@ class GetCoopSummaryViewModel:
 
 @dataclass
 class GetCoopSummarySuccessPresenter:
-    user_url_index: UserUrlIndex
     url_index: UrlIndex
     translator: Translator
 
@@ -73,7 +72,7 @@ class GetCoopSummarySuccessPresenter:
                 AssociatedPlan(
                     plan_id=str(plan.plan_id),
                     plan_name=plan.plan_name,
-                    plan_url=self.user_url_index.get_plan_details_url(plan.plan_id),
+                    plan_url=self.url_index.get_plan_details_url(plan_id=plan.plan_id),
                     plan_individual_price=self.__format_price(
                         plan.plan_individual_price
                     ),

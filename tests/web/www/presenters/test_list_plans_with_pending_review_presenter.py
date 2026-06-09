@@ -5,7 +5,6 @@ from tests.web.base_test_case import BaseTestCase
 from workers_control.core.interactors.list_plans_with_pending_review import (
     ListPlansWithPendingReviewInteractor as Interactor,
 )
-from workers_control.web.session import UserRole
 from workers_control.web.www.presenters.list_plans_with_pending_review_presenter import (
     ListPlansWithPendingReviewPresenter,
 )
@@ -62,9 +61,7 @@ class PresenterTests(BaseTestCase):
         )
         assert view_model.plans[
             0
-        ].plan_details_url == self.url_index.get_plan_details_url(
-            user_role=UserRole.accountant, plan_id=plan_id
-        )
+        ].plan_details_url == self.url_index.get_plan_details_url(plan_id=plan_id)
 
     def test_that_company_summary_url_is_set_correctly(self) -> None:
         planner_id = uuid4()

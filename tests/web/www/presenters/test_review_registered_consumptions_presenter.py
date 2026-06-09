@@ -11,7 +11,6 @@ from workers_control.core.interactors.review_registered_consumptions import (
 from workers_control.core.interactors.review_registered_consumptions import (
     ReviewRegisteredConsumptionsInteractor as Interactor,
 )
-from workers_control.web.session import UserRole
 from workers_control.web.www.presenters.review_registered_consumptions_presenter import (
     ReviewRegisteredConsumptionsPresenter,
 )
@@ -141,9 +140,7 @@ class ReviewRegisteredConsumptionsPresenterTests(BaseTestCase):
         view_model = self.presenter.present(interactor_response)
         assert view_model.consumptions[
             0
-        ].plan_url == self.url_index.get_plan_details_url(
-            plan_id=consumption.plan_id, user_role=UserRole.company
-        )
+        ].plan_url == self.url_index.get_plan_details_url(plan_id=consumption.plan_id)
 
     def test_that_an_interactor_response_results_in_a_view_model_with_formatted_labour_hours_consumed(
         self,

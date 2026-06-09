@@ -6,7 +6,6 @@ from typing import List
 from workers_control.core.interactors.list_plans_with_pending_review import (
     ListPlansWithPendingReviewInteractor as Interactor,
 )
-from workers_control.web.session import UserRole
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
 from workers_control.web.www.navbar import NavbarItem
@@ -45,7 +44,7 @@ class ListPlansWithPendingReviewPresenter:
                     product_name=plan.product_name,
                     planner_name=plan.planner_name,
                     plan_details_url=self.url_index.get_plan_details_url(
-                        user_role=UserRole.accountant, plan_id=plan.id
+                        plan_id=plan.id
                     ),
                     company_summary_url=self.url_index.get_company_summary_url(
                         company_id=plan.planner_id

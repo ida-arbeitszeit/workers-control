@@ -5,19 +5,11 @@ from uuid import UUID
 from flask import url_for
 
 from workers_control.core.records import ConsumptionType
-from workers_control.web.session import UserRole
 
 
 class GeneralUrlIndex:
-    def get_plan_details_url(self, user_role: Optional[UserRole], plan_id: UUID) -> str:
-        if user_role == UserRole.company:
-            return url_for("main_company.plan_details", plan_id=plan_id)
-        elif user_role == UserRole.member:
-            return url_for("main_member.plan_details", plan_id=plan_id)
-        elif user_role == UserRole.accountant:
-            return url_for("main_accountant.plan_details", plan_id=plan_id)
-        else:
-            raise ValueError(f"Plan summary url is unsupported for {user_role}")
+    def get_plan_details_url(self, plan_id: UUID) -> str:
+        return url_for("main_user.plan_details", plan_id=plan_id)
 
     def get_accountant_invitation_url(self, token: str) -> str:
         return url_for("auth.signup_accountant", token=token)

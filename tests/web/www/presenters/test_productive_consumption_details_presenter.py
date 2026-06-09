@@ -8,7 +8,6 @@ from workers_control.core.interactors.get_productive_consumption_details import 
     GetProductiveConsumptionDetailsInteractor,
 )
 from workers_control.core.records import ConsumptionType
-from workers_control.web.session import UserRole
 from workers_control.web.www.presenters.productive_consumption_details_presenter import (
     ProductiveConsumptionDetailsPresenter,
 )
@@ -73,9 +72,7 @@ class PresenterTests(BaseTestCase):
         view_model = self.presenter.present(response)
         self.assertEqual(
             view_model.plan_details_url,
-            self.url_index.get_plan_details_url(
-                user_role=UserRole.company, plan_id=plan_id
-            ),
+            self.url_index.get_plan_details_url(plan_id=plan_id),
         )
 
     def test_that_first_navbar_item_links_to_company_consumptions(self) -> None:

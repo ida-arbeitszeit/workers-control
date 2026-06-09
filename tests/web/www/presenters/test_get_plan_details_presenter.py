@@ -1,13 +1,13 @@
 from tests.web.base_test_case import BaseTestCase
-from workers_control.web.www.presenters.get_plan_details_accountant_presenter import (
-    GetPlanDetailsAccountantPresenter,
+from workers_control.web.www.presenters.get_plan_details_presenter import (
+    GetPlanDetailsPresenter,
 )
 
 
 class NavbarItemsTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
-        self.presenter = self.injector.get(GetPlanDetailsAccountantPresenter)
+        self.presenter = self.injector.get(GetPlanDetailsPresenter)
 
     def test_navbar_shows_plan_information_as_current_page(self) -> None:
         items = self.presenter.create_navbar_items()

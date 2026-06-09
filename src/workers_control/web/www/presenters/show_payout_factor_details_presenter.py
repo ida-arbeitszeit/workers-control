@@ -5,7 +5,6 @@ from decimal import Decimal
 
 from workers_control.core.interactors import show_payout_factor_details
 from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
-from workers_control.web.session import Session
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
 from workers_control.web.www.navbar import NavbarItem
@@ -37,7 +36,6 @@ class ShowPayoutFactorDetailsPresenter:
     datetime_formatter: DatetimeFormatter
     translator: Translator
     url_index: UrlIndex
-    session: Session
 
     def present(self, response: show_payout_factor_details.Response) -> ViewModel:
         return ViewModel(
@@ -77,13 +75,10 @@ class ShowPayoutFactorDetailsPresenter:
     def _convert_plan(
         self, i: int, plan: show_payout_factor_details.PlanData
     ) -> PlanRow:
-        user_role = self.session.get_user_role()
         return PlanRow(
             row_index=str(i),
             shortened_plan_name=plan.name[:30],
-            plan_url=self.url_index.get_plan_details_url(
-                user_role=user_role, plan_id=plan.id_
-            ),
+            plan_url=self.url_index.get_plan_details_url(plan_id=plan.id_),
             is_public=plan.is_public_service,
             coverage=f"{plan.coverage * 100:.0f}%",
         )

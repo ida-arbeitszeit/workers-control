@@ -10,9 +10,6 @@ from workers_control.flask.views.create_basic_service_view import (
 from workers_control.flask.views.deactivate_basic_service_view import (
     DeactivateBasicServiceView,
 )
-from workers_control.flask.views.get_plan_details_member_view import (
-    GetPlanDetailsMemberView,
-)
 from workers_control.flask.views.get_private_consumption_details import (
     GetPrivateConsumptionDetailsView,
 )
@@ -75,11 +72,6 @@ class dashboard(MemberDashboardView): ...
 @MemberRoute("/my_account")
 @as_flask_view()
 class my_account(ShowMemberAccountDetailsView): ...
-
-
-@MemberRoute("/plan_details/<uuid:plan_id>")
-@as_flask_view()
-class plan_details(GetPlanDetailsMemberView): ...
 
 
 @MemberRoute("/invite_details/<uuid:invite_id>", methods=["GET", "POST"])

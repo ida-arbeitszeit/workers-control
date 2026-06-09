@@ -13,7 +13,6 @@ from workers_control.core.interactors.show_company_cooperations import (
     OutboundCoopRequest,
     Response,
 )
-from workers_control.web.session import UserRole
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
 from workers_control.web.www.navbar import NavbarItem
@@ -157,9 +156,7 @@ class ShowMyCooperationsPresenter:
             coop_name=plan.coop_name,
             plan_id=str(plan.plan_id),
             plan_name=plan.plan_name,
-            plan_url=self.url_index.get_plan_details_url(
-                user_role=UserRole.company, plan_id=plan.plan_id
-            ),
+            plan_url=self.url_index.get_plan_details_url(plan_id=plan.plan_id),
             planner_name=plan.planner_name,
             planner_url=self.url_index.get_company_summary_url(
                 company_id=plan.planner_id
@@ -172,9 +169,7 @@ class ShowMyCooperationsPresenter:
         return ListOfOutboundCooperationRequestsRow(
             plan_id=str(plan.plan_id),
             plan_name=plan.plan_name,
-            plan_url=self.url_index.get_plan_details_url(
-                user_role=UserRole.company, plan_id=plan.plan_id
-            ),
+            plan_url=self.url_index.get_plan_details_url(plan_id=plan.plan_id),
             coop_id=str(plan.coop_id),
             coop_name=plan.coop_name,
         )
@@ -185,9 +180,7 @@ class ShowMyCooperationsPresenter:
         return CooperatingPlan(
             plan_id=str(plan.plan_id),
             plan_name=plan.plan_name,
-            plan_url=self.url_index.get_plan_details_url(
-                user_role=UserRole.company, plan_id=plan.plan_id
-            ),
+            plan_url=self.url_index.get_plan_details_url(plan_id=plan.plan_id),
             coop_id=str(plan.coop_id),
             coop_name=plan.coop_name,
             coop_url=self.url_index.get_coop_summary_url(coop_id=plan.coop_id),

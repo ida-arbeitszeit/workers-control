@@ -6,15 +6,15 @@ from flask import render_template
 from workers_control.core.interactors.get_plan_details import GetPlanDetailsInteractor
 from workers_control.flask.types import Response
 from workers_control.flask.views.http_error_view import http_404
-from workers_control.web.www.presenters.get_plan_details_company_presenter import (
-    GetPlanDetailsCompanyPresenter,
+from workers_control.web.www.presenters.get_plan_details_presenter import (
+    GetPlanDetailsPresenter,
 )
 
 
 @dataclass
-class GetPlanDetailsCompanyView:
+class GetPlanDetailsView:
     interactor: GetPlanDetailsInteractor
-    presenter: GetPlanDetailsCompanyPresenter
+    presenter: GetPlanDetailsPresenter
 
     def GET(self, plan_id: UUID) -> Response:
         interactor_request = GetPlanDetailsInteractor.Request(plan_id)
@@ -23,7 +23,7 @@ class GetPlanDetailsCompanyView:
             return http_404()
         view_model = self.presenter.present(interactor_response)
         return render_template(
-            "company/plan_details.html",
+            "user/plan_details.html",
             view_model=view_model,
             navbar_items=self.presenter.create_navbar_items(),
         )

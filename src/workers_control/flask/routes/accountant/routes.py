@@ -1,25 +1,17 @@
-from uuid import UUID
-
-from flask import Response as FlaskResponse
 from flask import render_template
 
 from workers_control.core.interactors.get_accountant_dashboard import (
     GetAccountantDashboardInteractor,
 )
-from workers_control.core.interactors.get_plan_details import GetPlanDetailsInteractor
 from workers_control.core.interactors.list_plans_with_pending_review import (
     ListPlansWithPendingReviewInteractor,
 )
 from workers_control.flask.class_based_view import as_flask_view
 from workers_control.flask.flask_session import FlaskSession
 from workers_control.flask.types import Response
-from workers_control.flask.views.http_error_view import http_404
 from workers_control.flask.views.review_plan_view import ReviewPlanView
 from workers_control.web.www.presenters.get_accountant_dashboard_presenter import (
     GetAccountantDashboardPresenter,
-)
-from workers_control.web.www.presenters.get_plan_details_accountant_presenter import (
-    GetPlanDetailsAccountantPresenter,
 )
 from workers_control.web.www.presenters.list_plans_with_pending_review_presenter import (
     ListPlansWithPendingReviewPresenter,
@@ -61,24 +53,3 @@ def list_plans_with_pending_review(
 @AccountantRoute("/accountant/plans/<uuid:plan_id>/review", methods=["GET", "POST"])
 @as_flask_view()
 class review_plan(ReviewPlanView): ...
-
-
-@AccountantRoute("/accountant/plan_details/<uuid:plan_id>")
-def plan_details(
-    plan_id: UUID,
-    interactor: GetPlanDetailsInteractor,
-    presenter: GetPlanDetailsAccountantPresenter,
-) -> Response:
-    interactor_request = GetPlanDetailsInteractor.Request(plan_id)
-    interactor_response = interactor.get_plan_details(interactor_request)
-    if interactor_response:
-        view_model = presenter.present(interactor_response)
-        return FlaskResponse(
-            render_template(
-                "accountant/plan_details.html",
-                view_model=view_model,
-                navbar_items=presenter.create_navbar_items(),
-            )
-        )
-    else:
-        return http_404()

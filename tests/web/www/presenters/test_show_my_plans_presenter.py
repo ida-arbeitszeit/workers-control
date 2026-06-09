@@ -128,7 +128,7 @@ class ActivePlansTests(PresenterBase):
         presentation = self.presenter.present(response)
         row = presentation.active_plans.rows[0]
         assert row.plan_details_url == self.url_index.get_plan_details_url(
-            user_role=None, plan_id=PLAN_ID
+            plan_id=PLAN_ID
         )
         assert row.prd_name == PRD_NAME
         assert row.price_per_unit == "10.00"
@@ -206,7 +206,7 @@ class ExpiredPlansTests(PresenterBase):
         row = presentation.expired_plans.rows[0]
         self.assertEqual(
             row.plan_details_url,
-            self.url_index.get_plan_details_url(user_role=None, plan_id=PLAN_ID),
+            self.url_index.get_plan_details_url(plan_id=PLAN_ID),
         )
         self.assertEqual(
             row.prd_name,
@@ -239,7 +239,7 @@ class NonActivePlansTests(PresenterBase):
         row = presentation.non_active_plans.rows[0]
         self.assertEqual(
             row.plan_details_url,
-            self.url_index.get_plan_details_url(user_role=None, plan_id=PLAN_ID),
+            self.url_index.get_plan_details_url(plan_id=PLAN_ID),
         )
         self.assertEqual(
             row.prd_name,
@@ -386,7 +386,7 @@ class RejectedPlansTests(PresenterBase):
         row = presentation.rejected_plans.rows[0]
         self.assertEqual(
             row.plan_details_url,
-            self.url_index.get_plan_details_url(user_role=None, plan_id=PLAN_ID),
+            self.url_index.get_plan_details_url(plan_id=PLAN_ID),
         )
         self.assertEqual(row.prd_name, PRD_NAME)
         self.assertEqual(

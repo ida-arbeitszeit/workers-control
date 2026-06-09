@@ -5,7 +5,6 @@ from workers_control.core.interactors.get_productive_consumption_details import 
 )
 from workers_control.core.records import ConsumptionType
 from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
-from workers_control.web.session import UserRole
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
 from workers_control.web.www.navbar import NavbarItem
@@ -44,7 +43,7 @@ class ProductiveConsumptionDetailsPresenter:
             price_per_unit=str(round(response.paid_price_per_unit, 2)),
             price_total=str(round(response.paid_price_total, 2)),
             plan_details_url=self.url_index.get_plan_details_url(
-                user_role=UserRole.company, plan_id=response.plan_id
+                plan_id=response.plan_id
             ),
             navbar_items=[
                 NavbarItem(

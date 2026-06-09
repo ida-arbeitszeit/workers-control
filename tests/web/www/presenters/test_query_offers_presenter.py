@@ -6,7 +6,6 @@ from parameterized import parameterized
 from tests.web.base_test_case import BaseTestCase
 from tests.web.www.presenters.data_generators import QueriedOfferGenerator
 from workers_control.web.pagination import PAGE_PARAMETER_NAME
-from workers_control.web.session import UserRole
 from workers_control.web.www.presenters.query_offers_presenter import (
     QueryOffersPresenter,
 )
@@ -62,9 +61,7 @@ class QueryOffersPresenterTests(BaseTestCase):
         table_row = presentation.results.rows[0]
         self.assertEqual(
             table_row.offer_details_url,
-            self.url_index.get_plan_details_url(
-                user_role=UserRole.member, plan_id=plan_id
-            ),
+            self.url_index.get_plan_details_url(plan_id=plan_id),
         )
 
     def test_correct_company_url_is_shown(self) -> None:

@@ -1,11 +1,17 @@
 from dataclasses import dataclass
+from datetime import datetime, timedelta
 from decimal import Decimal
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 from parameterized import parameterized
 from pytest import approx
 
-from workers_control.core.interactors.get_plan_details import GetPlanDetailsInteractor
+from tests.datetime_service import datetime_utc
+from workers_control.core.interactors.approve_plan import ApprovePlanInteractor
+from workers_control.core.interactors.get_plan_details import (
+    GetPlanDetailsInteractor,
+    PlanDetails,
+)
 from workers_control.core.records import ProductionCosts
 
 from .base_test_case import BaseTestCase
@@ -15,6 +21,7 @@ class InteractorTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.interactor = self.injector.get(GetPlanDetailsInteractor)
+        self.approve_plan_interactor = self.injector.get(ApprovePlanInteractor)
         self.company = self.company_generator.create_company_record()
 
     def test_that_none_is_returned_when_plan_does_not_exist(self) -> None:
@@ -25,6 +32,176 @@ class InteractorTests(BaseTestCase):
         plan = self.plan_generator.create_plan()
         request = GetPlanDetailsInteractor.Request(plan)
         self.assertTrue(self.interactor.get_plan_details(request))
+
+    def test_that_correct_plan_id_is_shown(self) -> None:
+        plan = self.plan_generator.create_plan()
+        self.assertEqual(self.get_details(plan).plan_id, plan)
+
+    def test_that_correct_planner_name_is_shown(self) -> None:
+        planner = self.company_generator.create_company_record()
+        plan = self.plan_generator.create_plan(planner=planner.id)
+        self.assertEqual(self.get_details(plan).planner_name, planner.name)
+
+    def test_that_correct_active_status_is_shown_when_plan_is_active(self) -> None:
+        plan = self.plan_generator.create_plan()
+        self.assertTrue(self.get_details(plan).is_active)
+
+    def test_that_correct_production_costs_are_shown(self) -> None:
+        plan = self.plan_generator.create_plan(
+            costs=ProductionCosts(
+                means_cost=Decimal(1),
+                labour_cost=Decimal(2),
+                resource_cost=Decimal(3),
+            )
+        )
+        details = self.get_details(plan)
+        self.assertEqual(details.means_cost, Decimal(1))
+        self.assertEqual(details.labour_cost, Decimal(2))
+        self.assertEqual(details.resources_cost, Decimal(3))
+
+    @parameterized.expand(
+        [
+            (True, False),
+            (False, True),
+            (True, True),
+            (False, False),
+        ]
+    )
+    def test_that_correct_cost_per_unit_is_shown(
+        self, is_public_service: bool, approved: bool
+    ) -> None:
+        plan = self.plan_generator.create_plan(
+            is_public_service=is_public_service,
+            amount=2,
+            approved=approved,
+            costs=ProductionCosts(
+                means_cost=Decimal(1),
+                labour_cost=Decimal(2),
+                resource_cost=Decimal(3),
+            ),
+        )
+        self.assertEqual(self.get_details(plan).cost_per_unit, Decimal(3))
+
+    @parameterized.expand(
+        [
+            ("test product name",),
+            ("another product name",),
+        ]
+    )
+    def test_that_correct_product_name_is_shown(
+        self, expected_product_name: str
+    ) -> None:
+        plan = self.plan_generator.create_plan(product_name=expected_product_name)
+        assert self.get_details(plan).product_name == expected_product_name
+
+    @parameterized.expand(
+        [
+            ("test description",),
+            ("another description",),
+        ]
+    )
+    def test_that_correct_product_description_is_shown(
+        self, expected_description: str
+    ) -> None:
+        plan = self.plan_generator.create_plan(description=expected_description)
+        assert self.get_details(plan).description == expected_description
+
+    @parameterized.expand(
+        [
+            ("test unit",),
+            ("another test unit",),
+        ]
+    )
+    def test_that_correct_product_unit_is_shown(self, expected_unit: str) -> None:
+        plan = self.plan_generator.create_plan(production_unit=expected_unit)
+        assert self.get_details(plan).production_unit == expected_unit
+
+    def test_that_correct_amount_is_shown(self) -> None:
+        plan = self.plan_generator.create_plan(amount=123)
+        self.assertEqual(self.get_details(plan).amount, 123)
+
+    def test_that_correct_public_service_is_shown(self) -> None:
+        plan = self.plan_generator.create_plan(is_public_service=True)
+        self.assertTrue(self.get_details(plan).is_public_service)
+
+    def test_that_no_cooperation_is_shown_when_plan_is_not_cooperating(self) -> None:
+        plan = self.plan_generator.create_plan(cooperation=None)
+        details = self.get_details(plan)
+        self.assertFalse(details.is_cooperating)
+        self.assertIsNone(details.cooperation)
+
+    def test_that_correct_cooperation_is_shown(self) -> None:
+        coop = self.cooperation_generator.create_cooperation()
+        plan = self.plan_generator.create_plan(cooperation=coop)
+        details = self.get_details(plan)
+        self.assertTrue(details.is_cooperating)
+        self.assertEqual(details.cooperation, coop)
+
+    def test_that_zero_active_days_is_shown_if_plan_is_not_active_yet(self) -> None:
+        plan = self.plan_generator.create_plan(approved=False)
+        self.assertEqual(self.get_details(plan).active_days, 0)
+
+    def test_that_zero_active_days_is_shown_if_plan_is_active_since_less_than_one_day(
+        self,
+    ) -> None:
+        plan = self.plan_generator.create_plan()
+        self.assertEqual(self.get_details(plan).active_days, 0)
+
+    def test_that_one_active_days_is_shown_if_plan_is_active_since_25_hours(
+        self,
+    ) -> None:
+        self.datetime_service.freeze_time(datetime_utc(2000, 1, 1))
+        plan = self.plan_generator.create_plan()
+        self.datetime_service.freeze_time(datetime_utc(2000, 1, 2, hour=1))
+        self.assertEqual(self.get_details(plan).active_days, 1)
+
+    def test_that_a_plans_timeframe_is_shown_as_active_days_if_plan_is_expired(
+        self,
+    ) -> None:
+        timeframe = 7
+        self.datetime_service.freeze_time(datetime_utc(2000, 1, 1))
+        plan = self.plan_generator.create_plan(timeframe=timeframe)
+        self.datetime_service.freeze_time(datetime_utc(2000, 1, 11))
+        self.assertEqual(self.get_details(plan).active_days, timeframe)
+
+    @parameterized.expand(
+        [
+            (datetime_utc(2000, 1, 1), timedelta(days=1)),
+            (datetime_utc(2001, 2, 2), timedelta(hours=1)),
+        ]
+    )
+    def test_that_creation_date_is_shown(
+        self, expected_creation_date: datetime, time_since_creation: timedelta
+    ) -> None:
+        self.datetime_service.freeze_time(expected_creation_date)
+        plan = self.plan_generator.create_plan()
+        self.datetime_service.advance_time(time_since_creation)
+        self.assertEqual(self.get_details(plan).creation_date, expected_creation_date)
+
+    @parameterized.expand(
+        [
+            (datetime_utc(2000, 1, 1), timedelta(days=1), timedelta(days=1)),
+            (datetime_utc(2001, 2, 2), timedelta(hours=1), timedelta(days=2)),
+        ]
+    )
+    def test_that_approval_date_is_shown_if_it_exists(
+        self,
+        expected_approval_date: datetime,
+        time_between_creation_and_approval: timedelta,
+        time_since_approval: timedelta,
+    ) -> None:
+        self.datetime_service.freeze_time(
+            expected_approval_date - time_between_creation_and_approval
+        )
+        plan = self.plan_generator.create_plan(approved=False)
+        self.datetime_service.freeze_time(expected_approval_date)
+        self.approve_plan(plan)
+        self.datetime_service.advance_time(time_since_approval)
+        self.assertEqual(self.get_details(plan).approval_date, expected_approval_date)
+
+    def test_that_expiration_date_is_shown_if_it_exists(self) -> None:
+        plan = self.plan_generator.create_plan(timeframe=5)
+        self.assertTrue(self.get_details(plan).expiration_date)
 
     @parameterized.expand(
         [
@@ -146,6 +323,18 @@ class InteractorTests(BaseTestCase):
         )
         assert response
         assert response.plan_details.price_per_unit == Decimal(0)
+
+    def get_details(self, plan_id: UUID) -> PlanDetails:
+        response = self.interactor.get_plan_details(
+            GetPlanDetailsInteractor.Request(plan_id)
+        )
+        assert response
+        return response.plan_details
+
+    def approve_plan(self, plan: UUID) -> None:
+        request = ApprovePlanInteractor.Request(plan=plan)
+        response = self.approve_plan_interactor.approve_plan(request)
+        assert response.is_plan_approved
 
     def create_production_costs(
         self, total_costs: Decimal = Decimal(1)

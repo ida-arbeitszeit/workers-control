@@ -2,11 +2,14 @@ from dataclasses import dataclass
 from decimal import Decimal
 from typing import List, Optional, Tuple
 
-from workers_control.core.services.plan_details import PlanDetails
+from workers_control.core.interactors.get_plan_details import (
+    GetPlanDetailsInteractor,
+    PlanDetails,
+)
+from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
-
-from .datetime_formatter import DatetimeFormatter
+from workers_control.web.www.navbar import NavbarItem
 
 
 @dataclass
@@ -32,12 +35,27 @@ class PlanDetailsWeb:
 
 
 @dataclass
-class PlanDetailsFormatter:
-    url_index: UrlIndex
+class GetPlanDetailsViewModel:
+    details: PlanDetailsWeb
+
+
+@dataclass
+class GetPlanDetailsPresenter:
     translator: Translator
+    url_index: UrlIndex
     datetime_formatter: DatetimeFormatter
 
-    def format_plan_details(self, plan_details: PlanDetails) -> PlanDetailsWeb:
+    def create_navbar_items(self) -> list[NavbarItem]:
+        return [NavbarItem(text=self.translator.gettext("Plan information"), url=None)]
+
+    def present(
+        self, response: GetPlanDetailsInteractor.Response
+    ) -> GetPlanDetailsViewModel:
+        return GetPlanDetailsViewModel(
+            details=self._format_plan_details(response.plan_details),
+        )
+
+    def _format_plan_details(self, plan_details: PlanDetails) -> PlanDetailsWeb:
         return PlanDetailsWeb(
             plan_id=(self.translator.gettext("Plan ID"), str(plan_details.plan_id)),
             activity_string=(

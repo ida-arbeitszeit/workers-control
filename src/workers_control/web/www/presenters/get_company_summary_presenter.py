@@ -9,7 +9,7 @@ from workers_control.core.interactors.get_company_summary import (
 )
 from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
 from workers_control.web.translator import Translator
-from workers_control.web.url_index import UrlIndex, UserUrlIndex
+from workers_control.web.url_index import UrlIndex
 from workers_control.web.www.navbar import NavbarItem
 
 
@@ -57,7 +57,6 @@ class GetCompanySummaryViewModel:
 
 @dataclass
 class GetCompanySummarySuccessPresenter:
-    user_url_index: UserUrlIndex
     translator: Translator
     url_index: UrlIndex
     control_thresholds: ControlThresholds
@@ -125,8 +124,8 @@ class GetCompanySummarySuccessPresenter:
         return PlanDetailsWeb(
             id=str(plan_details.id),
             name=plan_details.name,
-            url=self.user_url_index.get_plan_details_url(
-                plan_details.id,
+            url=self.url_index.get_plan_details_url(
+                plan_id=plan_details.id,
             ),
             status=(
                 self.translator.gettext("Active")

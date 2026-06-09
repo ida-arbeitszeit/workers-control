@@ -25,9 +25,6 @@ from workers_control.flask.views.end_plan_cooperation_view import (
 from workers_control.flask.views.file_plan_with_accounting_view import (
     FilePlanWithAccountingView,
 )
-from workers_control.flask.views.get_plan_details_company_view import (
-    GetPlanDetailsCompanyView,
-)
 from workers_control.flask.views.get_productive_consumption_details import (
     GetProductiveConsumptionDetailsView,
 )
@@ -148,11 +145,6 @@ class register_productive_consumption(RegisterProductiveConsumptionView): ...
 class register_productive_consumption_of_basic_service(
     RegisterProductiveConsumptionOfBasicServiceView
 ): ...
-
-
-@CompanyRoute("/plan_details/<uuid:plan_id>")
-@as_flask_view()
-class plan_details(GetPlanDetailsCompanyView): ...
 
 
 @CompanyRoute(

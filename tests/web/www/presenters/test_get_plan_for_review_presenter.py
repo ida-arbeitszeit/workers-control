@@ -4,7 +4,6 @@ from tests.web.base_test_case import BaseTestCase
 from workers_control.core.interactors.get_plan_for_review import (
     GetPlanForReviewInteractor as Interactor,
 )
-from workers_control.web.session import UserRole
 from workers_control.web.www.presenters.get_plan_for_review_presenter import (
     GetPlanForReviewPresenter,
 )
@@ -23,7 +22,7 @@ class GetPlanForReviewPresenterTests(BaseTestCase):
         plan_id = uuid4()
         view_model = self.presenter.present(self._response(plan_id=plan_id))
         assert view_model.plan_details_url == self.url_index.get_plan_details_url(
-            user_role=UserRole.accountant, plan_id=plan_id
+            plan_id=plan_id
         )
 
     def test_that_review_form_action_url_is_set_correctly(self) -> None:

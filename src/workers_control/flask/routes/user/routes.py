@@ -15,6 +15,7 @@ from workers_control.flask.views import QueryCompaniesView, QueryOffersView
 from workers_control.flask.views.change_email_address_view import ChangeEmailAddressView
 from workers_control.flask.views.change_user_name_view import ChangeUserNameView
 from workers_control.flask.views.coop_summary_view import CoopSummaryView
+from workers_control.flask.views.get_plan_details_view import GetPlanDetailsView
 from workers_control.flask.views.get_statistics_view import GetStatisticsView
 from workers_control.flask.views.http_error_view import http_404
 from workers_control.flask.views.list_all_cooperations_view import (
@@ -182,3 +183,8 @@ class show_payout_factor_details(ShowPayoutFactorDetailsView): ...
 @AuthenticatedUserRoute("/basic_service/<uuid:basic_service_id>")
 @as_flask_view()
 class show_basic_service(ShowBasicServiceView): ...
+
+
+@AuthenticatedUserRoute("/plan_details/<uuid:plan_id>")
+@as_flask_view()
+class plan_details(GetPlanDetailsView): ...

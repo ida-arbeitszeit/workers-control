@@ -147,11 +147,7 @@ class PlanRowsTests(PresenterBaseTestCase):
         plan = self._create_plan_data()
         response = self._create_response(plans=[plan])
         view_model = self.presenter.present(response)
-        user_role = self.session.get_user_role()
-        expected_url = self.url_index.get_plan_details_url(
-            user_role=user_role,
-            plan_id=plan.id_,
-        )
+        expected_url = self.url_index.get_plan_details_url(plan_id=plan.id_)
         assert view_model.plans[0].plan_url == expected_url
 
     @parameterized.expand(

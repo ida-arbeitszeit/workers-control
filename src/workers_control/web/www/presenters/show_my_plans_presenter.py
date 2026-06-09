@@ -7,7 +7,7 @@ from workers_control.core.datetime_service import DatetimeService
 from workers_control.core.interactors.show_my_plans import ShowMyPlansResponse
 from workers_control.web.notification import Notifier
 from workers_control.web.translator import Translator
-from workers_control.web.url_index import UrlIndex, UserUrlIndex
+from workers_control.web.url_index import UrlIndex
 from workers_control.web.www.navbar import NavbarItem
 
 
@@ -109,7 +109,6 @@ class ShowMyPlansViewModel:
 @dataclass
 class ShowMyPlansPresenter:
     url_index: UrlIndex
-    user_url_index: UserUrlIndex
     translator: Translator
     datetime_service: DatetimeService
     notifier: Notifier
@@ -142,7 +141,9 @@ class ShowMyPlansPresenter:
         return ActivePlansTable(
             rows=[
                 ActivePlansRow(
-                    plan_details_url=self.user_url_index.get_plan_details_url(plan.id),
+                    plan_details_url=self.url_index.get_plan_details_url(
+                        plan_id=plan.id
+                    ),
                     prd_name=plan.prd_name,
                     price_per_unit=self.__format_price(plan.price_per_unit),
                     approval_date=self.__format_date(plan.approval_date),
@@ -163,7 +164,9 @@ class ShowMyPlansPresenter:
         return NonActivePlansTable(
             rows=[
                 NonActivePlansRow(
-                    plan_details_url=self.user_url_index.get_plan_details_url(plan.id),
+                    plan_details_url=self.url_index.get_plan_details_url(
+                        plan_id=plan.id
+                    ),
                     prd_name=f"{plan.prd_name}",
                     price_per_unit=self.__format_price(plan.price_per_unit),
                     type_of_plan=self.__get_type_of_plan(plan.is_public_service),
@@ -182,7 +185,9 @@ class ShowMyPlansPresenter:
         return ExpiredPlansTable(
             rows=[
                 ExpiredPlansRow(
-                    plan_details_url=self.user_url_index.get_plan_details_url(plan.id),
+                    plan_details_url=self.url_index.get_plan_details_url(
+                        plan_id=plan.id
+                    ),
                     prd_name=f"{plan.prd_name}",
                     is_public_service=plan.is_public_service,
                     plan_creation_date=self.__format_date(plan.plan_creation_date),
@@ -215,7 +220,9 @@ class ShowMyPlansPresenter:
             rows=[
                 RejectedPlansRow(
                     rejection_date=self.__format_date(plan.rejection_date),
-                    plan_details_url=self.user_url_index.get_plan_details_url(plan.id),
+                    plan_details_url=self.url_index.get_plan_details_url(
+                        plan_id=plan.id
+                    ),
                     prd_name=f"{plan.prd_name}",
                     price_per_unit=self.__format_price(plan.price_per_unit),
                     is_public_service=plan.is_public_service,

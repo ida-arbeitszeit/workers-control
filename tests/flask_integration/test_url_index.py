@@ -10,7 +10,6 @@ from workers_control.core.interactors.send_accountant_registration_token import 
     SendAccountantRegistrationTokenInteractor,
 )
 from workers_control.core.records import ConsumptionType
-from workers_control.web.session import UserRole
 
 from .base_test_case import ViewTestCase
 
@@ -102,21 +101,12 @@ class GeneralUrlIndexTests(ViewTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
-    def test_plan_company_summary_url_for_existing_plan_leads_to_functional_url(
+    def test_plan_details_url_for_existing_plan_leads_to_functional_url(
         self,
     ) -> None:
         self.login_company()
         plan = self.plan_generator.create_plan()
-        url = self.url_index.get_plan_details_url(UserRole.company, plan)
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-
-    def test_plan_member_summary_url_for_existing_plan_leads_to_functional_url(
-        self,
-    ) -> None:
-        self.login_member()
-        plan = self.plan_generator.create_plan()
-        url = self.url_index.get_plan_details_url(UserRole.member, plan)
+        url = self.url_index.get_plan_details_url(plan)
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 

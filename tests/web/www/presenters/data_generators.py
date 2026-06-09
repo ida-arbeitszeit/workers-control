@@ -4,6 +4,7 @@ from typing import List, Optional
 from uuid import UUID, uuid4
 
 from tests.datetime_service import datetime_utc
+from workers_control.core.interactors.get_plan_details import PlanDetails
 from workers_control.core.interactors.query_companies import (
     CompanyFilter,
     CompanyQueryResponse,
@@ -17,7 +18,6 @@ from workers_control.core.interactors.query_offers import (
     QueriedOffer,
     QueryOffersRequest,
 )
-from workers_control.core.services.plan_details import PlanDetails
 
 
 class QueriedOfferGenerator:

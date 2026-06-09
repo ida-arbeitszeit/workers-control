@@ -15,7 +15,6 @@ from workers_control.core.interactors.show_company_cooperations import (
     OutboundCoopRequest,
     Response,
 )
-from workers_control.web.session import UserRole
 from workers_control.web.www.presenters.show_my_cooperations_presenter import (
     ShowMyCooperationsPresenter,
 )
@@ -165,9 +164,7 @@ class InboundTest(BaseTestCase):
     def test_inbound_plan_url_is_presented_correctly(self) -> None:
         self.assertEqual(
             self.view_model.list_of_inbound_coop_requests.rows[0].plan_url,
-            self.url_index.get_plan_details_url(
-                user_role=UserRole.company, plan_id=self.PLAN_ID
-            ),
+            self.url_index.get_plan_details_url(plan_id=self.PLAN_ID),
         )
 
     def test_inbound_planner_url_is_presented_correctly(self) -> None:
@@ -224,9 +221,7 @@ class OutboundTest(BaseTestCase):
     def test_outbound_plan_url_is_presented_correctly(self) -> None:
         self.assertEqual(
             self.view_model.list_of_outbound_coop_requests.rows[0].plan_url,
-            self.url_index.get_plan_details_url(
-                user_role=UserRole.company, plan_id=self.PLAN_ID
-            ),
+            self.url_index.get_plan_details_url(plan_id=self.PLAN_ID),
         )
 
 
@@ -270,9 +265,7 @@ class CooperatingPlansTest(BaseTestCase):
 
     def test_plan_url_is_shown_correctly(self) -> None:
         self.assertEqual(
-            self.url_index.get_plan_details_url(
-                user_role=UserRole.company, plan_id=self.PLAN_ID
-            ),
+            self.url_index.get_plan_details_url(plan_id=self.PLAN_ID),
             self.view_model.list_of_my_cooperating_plans.rows[0].plan_url,
         )
 

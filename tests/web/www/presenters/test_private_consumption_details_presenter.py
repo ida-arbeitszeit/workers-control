@@ -7,7 +7,6 @@ from tests.web.base_test_case import BaseTestCase
 from workers_control.core.interactors.get_private_consumption_details import (
     GetPrivateConsumptionDetailsInteractor,
 )
-from workers_control.web.session import UserRole
 from workers_control.web.www.presenters.private_consumption_details_presenter import (
     PrivateConsumptionDetailsPresenter,
 )
@@ -56,9 +55,7 @@ class PresenterTests(BaseTestCase):
         view_model = self.presenter.present(response)
         self.assertEqual(
             view_model.plan_details_url,
-            self.url_index.get_plan_details_url(
-                user_role=UserRole.member, plan_id=plan_id
-            ),
+            self.url_index.get_plan_details_url(plan_id=plan_id),
         )
 
     def _response(

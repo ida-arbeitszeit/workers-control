@@ -8,7 +8,6 @@ from workers_control.core.interactors.review_registered_consumptions import (
     ReviewRegisteredConsumptionsInteractor as Interactor,
 )
 from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
-from workers_control.web.session import UserRole
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
 from workers_control.web.www.navbar import NavbarItem
@@ -58,9 +57,7 @@ class ReviewRegisteredConsumptionsPresenter:
             consumer_url=self._get_consumer_url(consumption),
             consumer_type_icon=self._get_consumer_type_icon(consumption),
             product_name=consumption.product_name,
-            plan_url=self.url_index.get_plan_details_url(
-                plan_id=consumption.plan_id, user_role=UserRole.company
-            ),
+            plan_url=self.url_index.get_plan_details_url(plan_id=consumption.plan_id),
             labour_hours_consumed=str(round(consumption.labour_hours_consumed, 2)),
         )
 

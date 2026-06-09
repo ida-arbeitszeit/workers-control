@@ -10,7 +10,7 @@ from workers_control.web.pagination import Pagination, Paginator
 from workers_control.web.request import Request
 from workers_control.web.session import Session, UserRole
 from workers_control.web.translator import Translator
-from workers_control.web.url_index import UrlIndex, UserUrlIndex
+from workers_control.web.url_index import UrlIndex
 from workers_control.web.www.navbar import NavbarItem
 
 
@@ -48,7 +48,6 @@ class QueryOffersViewModel:
 
 @dataclass
 class QueryOffersPresenter:
-    user_url_index: UserUrlIndex
     url_index: UrlIndex
     translator: Translator
     request: Request
@@ -155,7 +154,7 @@ class QueryOffersPresenter:
             consumption_url = ""
         assert result.price_per_unit is not None
         return ResultTableRow(
-            offer_details_url=self.user_url_index.get_plan_details_url(result.id),
+            offer_details_url=self.url_index.get_plan_details_url(plan_id=result.id),
             provider_url=self.url_index.get_company_summary_url(
                 company_id=result.provider_id,
             ),

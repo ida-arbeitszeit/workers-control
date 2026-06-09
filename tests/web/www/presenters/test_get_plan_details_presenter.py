@@ -3,26 +3,51 @@ from uuid import uuid4
 
 from tests.web.base_test_case import BaseTestCase
 from tests.web.www.presenters.data_generators import PlanDetailsGenerator
-from workers_control.web.formatters.plan_details_formatter import PlanDetailsFormatter
+from workers_control.core.interactors.get_plan_details import (
+    GetPlanDetailsInteractor,
+    PlanDetails,
+)
+from workers_control.web.www.presenters.get_plan_details_presenter import (
+    GetPlanDetailsPresenter,
+    PlanDetailsWeb,
+)
 
 
-class PlanDetailsFormatterTests(BaseTestCase):
+class NavbarItemsTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
-        self.formatter = self.injector.get(PlanDetailsFormatter)
+        self.presenter = self.injector.get(GetPlanDetailsPresenter)
+
+    def test_navbar_shows_plan_information_as_current_page(self) -> None:
+        items = self.presenter.create_navbar_items()
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0].text, self.translator.gettext("Plan information"))
+        self.assertIsNone(items[0].url)
+
+
+class FormatPlanDetailsTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(GetPlanDetailsPresenter)
         self.plan_details_generator = self.injector.get(PlanDetailsGenerator)
         self.plan_details = self.plan_details_generator.create_plan_details()
         self.session.login_company(company=uuid4())
 
+    def format_details(self, plan_details: PlanDetails) -> PlanDetailsWeb:
+        view_model = self.presenter.present(
+            GetPlanDetailsInteractor.Response(plan_details=plan_details)
+        )
+        return view_model.details
+
     def test_plan_id_is_displayed_correctly_as_tuple_of_strings(self):
-        web_details = self.formatter.format_plan_details(self.plan_details)
+        web_details = self.format_details(self.plan_details)
         self.assertTupleEqual(
             web_details.plan_id,
             (self.translator.gettext("Plan ID"), str(self.plan_details.plan_id)),
         )
 
     def test_active_status_is_displayed_correctly_as_tuple_of_strings(self):
-        web_details = self.formatter.format_plan_details(self.plan_details)
+        web_details = self.format_details(self.plan_details)
         self.assertTupleEqual(
             web_details.activity_string,
             (self.translator.gettext("Status"), self.translator.gettext("Active")),
@@ -30,7 +55,7 @@ class PlanDetailsFormatterTests(BaseTestCase):
 
     def test_inactive_status_is_displayed_correctly_as_tuple_of_strings(self):
         plan_details = self.plan_details_generator.create_plan_details(is_active=False)
-        web_details = self.formatter.format_plan_details(plan_details)
+        web_details = self.format_details(plan_details)
         self.assertTupleEqual(
             web_details.activity_string,
             (self.translator.gettext("Status"), self.translator.gettext("Inactive")),
@@ -42,7 +67,7 @@ class PlanDetailsFormatterTests(BaseTestCase):
         plan_details = self.plan_details_generator.create_plan_details(
             planner_id=PLANNER_ID, planner_name=PLANNER_NAME
         )
-        web_details = self.formatter.format_plan_details(plan_details)
+        web_details = self.format_details(plan_details)
         self.assertTupleEqual(
             web_details.planner,
             (
@@ -58,7 +83,7 @@ class PlanDetailsFormatterTests(BaseTestCase):
         plan_details = self.plan_details_generator.create_plan_details(
             product_name=PRODUCT_NAME
         )
-        web_details = self.formatter.format_plan_details(plan_details)
+        web_details = self.format_details(plan_details)
         self.assertTupleEqual(
             web_details.product_name,
             (
@@ -74,7 +99,7 @@ class PlanDetailsFormatterTests(BaseTestCase):
         plan_details = self.plan_details_generator.create_plan_details(
             description=DESCRIPTION
         )
-        web_details = self.formatter.format_plan_details(plan_details)
+        web_details = self.format_details(plan_details)
         self.assertTupleEqual(
             web_details.description,
             (
@@ -90,7 +115,7 @@ class PlanDetailsFormatterTests(BaseTestCase):
         plan_details = self.plan_details_generator.create_plan_details(
             description=DESCRIPTION
         )
-        web_details = self.formatter.format_plan_details(plan_details)
+        web_details = self.format_details(plan_details)
         self.assertTupleEqual(
             web_details.description,
             (
@@ -100,7 +125,7 @@ class PlanDetailsFormatterTests(BaseTestCase):
         )
 
     def test_timeframe_is_displayed_correctly_as_tuple_of_strings(self):
-        web_details = self.formatter.format_plan_details(self.plan_details)
+        web_details = self.format_details(self.plan_details)
         self.assertTupleEqual(
             web_details.timeframe,
             (
@@ -110,7 +135,7 @@ class PlanDetailsFormatterTests(BaseTestCase):
         )
 
     def test_production_unit_is_displayed_correctly_as_tuple_of_strings(self):
-        web_details = self.formatter.format_plan_details(self.plan_details)
+        web_details = self.format_details(self.plan_details)
         self.assertTupleEqual(
             web_details.production_unit,
             (
@@ -120,14 +145,14 @@ class PlanDetailsFormatterTests(BaseTestCase):
         )
 
     def test_amount_is_displayed_correctly_as_tuple_of_strings(self):
-        web_details = self.formatter.format_plan_details(self.plan_details)
+        web_details = self.format_details(self.plan_details)
         self.assertTupleEqual(
             web_details.amount,
             (self.translator.gettext("Amount"), str(self.plan_details.amount)),
         )
 
     def test_means_cost_is_displayed_correctly_as_tuple_of_strings(self):
-        web_details = self.formatter.format_plan_details(self.plan_details)
+        web_details = self.format_details(self.plan_details)
         self.assertTupleEqual(
             web_details.means_cost,
             (
@@ -137,7 +162,7 @@ class PlanDetailsFormatterTests(BaseTestCase):
         )
 
     def test_resources_cost_is_displayed_correctly_as_tuple_of_strings(self):
-        web_details = self.formatter.format_plan_details(self.plan_details)
+        web_details = self.format_details(self.plan_details)
         self.assertTupleEqual(
             web_details.resources_cost,
             (
@@ -147,7 +172,7 @@ class PlanDetailsFormatterTests(BaseTestCase):
         )
 
     def test_labour_cost_is_displayed_correctly_as_tuple_of_strings(self):
-        web_details = self.formatter.format_plan_details(self.plan_details)
+        web_details = self.format_details(self.plan_details)
         self.assertTupleEqual(
             web_details.labour_cost,
             (
@@ -162,7 +187,7 @@ class PlanDetailsFormatterTests(BaseTestCase):
         plan_details = self.plan_details_generator.create_plan_details(
             is_public_service=False
         )
-        web_details = self.formatter.format_plan_details(plan_details)
+        web_details = self.format_details(plan_details)
         self.assertTupleEqual(
             web_details.type_of_plan,
             (
@@ -177,7 +202,7 @@ class PlanDetailsFormatterTests(BaseTestCase):
         plan_details = self.plan_details_generator.create_plan_details(
             is_public_service=True
         )
-        web_details = self.formatter.format_plan_details(plan_details)
+        web_details = self.format_details(plan_details)
         self.assertTupleEqual(
             web_details.type_of_plan,
             (
@@ -191,7 +216,7 @@ class PlanDetailsFormatterTests(BaseTestCase):
         plan_details = self.plan_details_generator.create_plan_details(
             cooperation=COOP_ID, is_cooperating=True, price_per_unit=Decimal("0.061")
         )
-        web_details = self.formatter.format_plan_details(plan_details)
+        web_details = self.format_details(plan_details)
         self.assertTupleEqual(
             web_details.price_per_unit,
             (
@@ -203,7 +228,7 @@ class PlanDetailsFormatterTests(BaseTestCase):
         )
 
     def test_active_days_is_displayed_correctly_as_string(self):
-        web_details = self.formatter.format_plan_details(self.plan_details)
+        web_details = self.format_details(self.plan_details)
         self.assertEqual(
             web_details.active_days,
             str(self.plan_details.active_days),
@@ -214,7 +239,7 @@ class PlanDetailsFormatterTests(BaseTestCase):
         plan_details = self.plan_details_generator.create_plan_details(
             creation_date=CREATION_DATE
         )
-        web_details = self.formatter.format_plan_details(plan_details)
+        web_details = self.format_details(plan_details)
         self.assertEqual(
             web_details.creation_date,
             self.datetime_formatter.format_datetime(
@@ -226,7 +251,7 @@ class PlanDetailsFormatterTests(BaseTestCase):
         plan_details = self.plan_details_generator.create_plan_details(
             approval_date=None
         )
-        web_details = self.formatter.format_plan_details(plan_details)
+        web_details = self.format_details(plan_details)
         self.assertEqual(web_details.approval_date, "-")
 
     def test_correct_approval_date_is_shown_if_it_exists(self):
@@ -234,7 +259,7 @@ class PlanDetailsFormatterTests(BaseTestCase):
         plan_details = self.plan_details_generator.create_plan_details(
             approval_date=APPROVAL_DATE
         )
-        web_details = self.formatter.format_plan_details(plan_details)
+        web_details = self.format_details(plan_details)
         self.assertEqual(
             web_details.approval_date,
             self.datetime_formatter.format_datetime(
@@ -246,7 +271,7 @@ class PlanDetailsFormatterTests(BaseTestCase):
         plan_details = self.plan_details_generator.create_plan_details(
             expiration_date=None
         )
-        web_details = self.formatter.format_plan_details(plan_details)
+        web_details = self.format_details(plan_details)
         self.assertEqual(web_details.expiration_date, "-")
 
     def test_correct_expiration_date_is_shown_if_it_exists(self):
@@ -254,7 +279,7 @@ class PlanDetailsFormatterTests(BaseTestCase):
         plan_details = self.plan_details_generator.create_plan_details(
             expiration_date=EXPIRATION_DATE
         )
-        web_details = self.formatter.format_plan_details(plan_details)
+        web_details = self.format_details(plan_details)
         self.assertEqual(
             web_details.expiration_date,
             self.datetime_formatter.format_datetime(

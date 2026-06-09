@@ -250,6 +250,18 @@ class CooperatingPlansTest(BaseTestCase):
     def test_show_one_plan_if_one_plan_exists(self) -> None:
         assert len(self.view_model.list_of_my_cooperating_plans.rows) == 1
 
+    def test_plan_id_is_shown_correctly(self) -> None:
+        self.assertEqual(
+            self.view_model.list_of_my_cooperating_plans.rows[0].plan_id,
+            str(self.PLAN_ID),
+        )
+
+    def test_coop_id_is_shown_correctly(self) -> None:
+        self.assertEqual(
+            self.view_model.list_of_my_cooperating_plans.rows[0].coop_id,
+            str(self.COOP_ID),
+        )
+
     def test_name_of_plan_is_shown(self) -> None:
         assert self.view_model.list_of_my_cooperating_plans.rows[0].plan_name
 

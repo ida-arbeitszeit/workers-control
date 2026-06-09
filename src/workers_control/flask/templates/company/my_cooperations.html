@@ -183,6 +183,18 @@
                     </p>
                 </div>
             </div>
+            <div class="media-right">
+                <form action="{{ url_for('main_company.end_plan_cooperation') }}" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="plan_id" value="{{ plan.plan_id }}">
+                    <input type="hidden" name="cooperation_id" value="{{ plan.coop_id }}">
+                    <button class="button large-button is-danger"
+                            type="submit"
+                            title="{{ gettext('End cooperation') }}">
+                        {{ "times"|icon }}
+                    </button>
+                </form>
+            </div>
         </article>
         {% endfor %}
         {% else %}

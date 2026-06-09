@@ -51,8 +51,10 @@ class ListOfOutboundCooperationRequestsRow:
 
 @dataclass
 class CooperatingPlan:
+    plan_id: str
     plan_name: str
     plan_url: str
+    coop_id: str
     coop_name: str
     coop_url: str
 
@@ -181,10 +183,12 @@ class ShowMyCooperationsPresenter:
         self, plan: ListMyCooperatingPlansInteractor.CooperatingPlan
     ) -> CooperatingPlan:
         return CooperatingPlan(
+            plan_id=str(plan.plan_id),
             plan_name=plan.plan_name,
             plan_url=self.url_index.get_plan_details_url(
                 user_role=UserRole.company, plan_id=plan.plan_id
             ),
+            coop_id=str(plan.coop_id),
             coop_name=plan.coop_name,
             coop_url=self.url_index.get_coop_summary_url(coop_id=plan.coop_id),
         )

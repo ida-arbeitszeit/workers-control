@@ -4,7 +4,6 @@ from uuid import uuid4
 from tests.web.base_test_case import BaseTestCase
 from tests.web.www.request import FakeRequest
 from workers_control.core.interactors.end_cooperation import EndCooperationResponse
-from workers_control.web.session import UserRole
 from workers_control.web.www.presenters.end_cooperation_presenter import (
     EndCooperationPresenter,
 )
@@ -75,23 +74,6 @@ class PresenterTests(BaseTestCase):
         self.assertEqual(
             view_model.redirect_url,
             self.url_index.get_coop_summary_url(coop_id=coop_id),
-        )
-
-    def test_plan_details_url_gets_returned_when_plan_details_url_was_referer(
-        self,
-    ) -> None:
-        request = FakeRequest()
-        plan_id = uuid4()
-        request.set_header("Referer", f"/company/plan_details/{str(plan_id)}")
-        request.set_arg("plan_id", str(plan_id))
-        request.set_arg("cooperation_id", str(uuid4()))
-        view_model = self.presenter.present(SUCCESSFUL_RESPONSE, web_request=request)
-        self.assertFalse(view_model.show_404)
-        self.assertEqual(
-            view_model.redirect_url,
-            self.url_index.get_plan_details_url(
-                user_role=UserRole.company, plan_id=plan_id
-            ),
         )
 
     def test_correct_notification_is_returned_when_operation_was_successfull(

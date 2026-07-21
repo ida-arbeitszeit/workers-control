@@ -1,9 +1,4 @@
 from workers_control.flask.class_based_view import as_flask_view
-from workers_control.flask.views import (
-    EndCooperationView,
-    InviteWorkerToCompanyView,
-    RequestCooperationView,
-)
 from workers_control.flask.views.accept_cooperation_request_view import (
     AcceptCooperationRequestView,
 )
@@ -19,6 +14,7 @@ from workers_control.flask.views.create_draft_view import CreateDraftView
 from workers_control.flask.views.delete_draft_view import DeleteDraftView
 from workers_control.flask.views.deny_cooperation_view import DenyCooperationView
 from workers_control.flask.views.draft_details_view import DraftDetailsView
+from workers_control.flask.views.end_cooperation_view import EndCooperationView
 from workers_control.flask.views.end_plan_cooperation_view import (
     EndPlanCooperationView,
 )
@@ -29,6 +25,9 @@ from workers_control.flask.views.get_productive_consumption_details import (
     GetProductiveConsumptionDetailsView,
 )
 from workers_control.flask.views.hide_plan_view import HidePlanView
+from workers_control.flask.views.invite_worker_to_company import (
+    InviteWorkerToCompanyView,
+)
 from workers_control.flask.views.list_pending_work_invites_view import (
     ListPendingWorkInvitesView,
 )
@@ -50,6 +49,7 @@ from workers_control.flask.views.register_productive_consumption_of_basic_servic
 from workers_control.flask.views.remove_worker_from_company_view import (
     RemoveWorkerFromCompanyView,
 )
+from workers_control.flask.views.request_cooperation_view import RequestCooperationView
 from workers_control.flask.views.request_coordination_transfer_view import (
     RequestCoordinationTransferView,
 )

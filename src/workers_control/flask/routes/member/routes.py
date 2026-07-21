@@ -1,9 +1,5 @@
 from workers_control.flask.class_based_view import as_flask_view
-from workers_control.flask.views import (
-    CompanyWorkInviteView,
-    RegisterPrivateConsumptionOfBasicServiceView,
-    RegisterPrivateConsumptionView,
-)
+from workers_control.flask.views.company_work_invite_view import CompanyWorkInviteView
 from workers_control.flask.views.create_basic_service_view import (
     CreateBasicServiceView,
 )
@@ -19,6 +15,12 @@ from workers_control.flask.views.list_basic_services_of_worker_view import (
 from workers_control.flask.views.member_dashboard_view import MemberDashboardView
 from workers_control.flask.views.query_private_consumptions import (
     QueryPrivateConsumptionsView,
+)
+from workers_control.flask.views.register_private_consumption import (
+    RegisterPrivateConsumptionView,
+)
+from workers_control.flask.views.register_private_consumption_of_basic_service_view import (
+    RegisterPrivateConsumptionOfBasicServiceView,
 )
 from workers_control.flask.views.show_member_account_details_view import (
     ShowMemberAccountDetailsView,

@@ -47,10 +47,9 @@ To add or remove a *direct* dependency, edit the relevant files **without specif
 a version number** (versions are pinned afterwards by the update command). Which files
 you touch depends on whether the dependency is needed at runtime or only for development.
 
-A **runtime dependency** (needed by the app in production) is declared in three places:
+A **runtime dependency** (needed by the app in production) is declared in two places:
 
 - ``pyproject.toml`` → ``[project].dependencies``
-- ``requirements.txt``
 - ``dev/nix/pythonPackages/workers-control.nix`` → ``dependencies = [ ... ]``
 
 A **development-only dependency** (linter, test, build or docs tool) is declared in

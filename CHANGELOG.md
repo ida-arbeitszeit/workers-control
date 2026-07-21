@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.4] - 2026-07-21
+
+### Changed
+
+- Unify the three role-specific plan details pages (member, company, accountant) into a single plan details page at `/user/plan_details/<id>`, accessible to all authenticated users. (#1508, #1517)
+- Move the request-cooperation and end-cooperation actions from the company plan details page to the "My cooperations" page. (#1513, #1515)
+- Remove the private- and productive-consumption actions from the plan details page. No functionality is lost: consumption is still registered via the offers query and the dedicated consumption routes. (#1509, #1510)
+- Update dependencies. (#1519)
+
 ## [0.2.3] - 2026-06-07
 
 ### Changed

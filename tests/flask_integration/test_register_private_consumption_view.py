@@ -99,6 +99,8 @@ class AuthenticatedCompanyTests(ViewTestCase):
         self.login_company()
         self.url = "/member/register_private_consumption"
 
-    def test_company_gets_redirected_when_trying_to_access_consumer_product_view(self):
+    def test_company_gets_redirected_when_trying_to_access_consumer_product_view(
+        self,
+    ) -> None:
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 302)

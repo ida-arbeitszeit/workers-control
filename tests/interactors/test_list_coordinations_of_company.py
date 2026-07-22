@@ -14,7 +14,7 @@ from .dependency_injection import injection_test
 @injection_test
 def test_empty_list_is_returned_if_requesting_company_does_not_exist(
     interactor: ListCoordinationsOfCompanyInteractor,
-):
+) -> None:
     response = interactor.execute(ListCoordinationsOfCompanyRequest(company=uuid4()))
     assert len(response.coordinations) == 0
 
@@ -24,7 +24,7 @@ def test_empty_list_is_returned_when_plans_are_not_cooperating(
     interactor: ListCoordinationsOfCompanyInteractor,
     plan_generator: PlanGenerator,
     company_generator: CompanyGenerator,
-):
+) -> None:
     plan_generator.create_plan()
     plan_generator.create_plan()
     company = company_generator.create_company_record()
@@ -38,7 +38,7 @@ def test_empty_list_is_returned_when_requester_is_not_coordinator_of_cooperation
     plan_generator: PlanGenerator,
     company_generator: CompanyGenerator,
     cooperation_generator: CooperationGenerator,
-):
+) -> None:
     p1 = plan_generator.create_plan()
     p2 = plan_generator.create_plan()
     cooperation_generator.create_cooperation(plans=[p1, p2])
@@ -53,7 +53,7 @@ def test_cooperation_is_listed_when_requester_is_coordinator_of_cooperation(
     plan_generator: PlanGenerator,
     company_generator: CompanyGenerator,
     cooperation_generator: CooperationGenerator,
-):
+) -> None:
     p1 = plan_generator.create_plan()
     p2 = plan_generator.create_plan()
     company = company_generator.create_company_record()
@@ -71,7 +71,7 @@ def test_only_cooperations_are_listed_where_requester_is_coordinator(
     plan_generator: PlanGenerator,
     company_generator: CompanyGenerator,
     cooperation_generator: CooperationGenerator,
-):
+) -> None:
     p1 = plan_generator.create_plan()
     p2 = plan_generator.create_plan()
     company = company_generator.create_company_record()

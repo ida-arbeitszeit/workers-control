@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass
-from typing import Dict, Iterable, Protocol, Tuple, Type
+from typing import Any, Dict, Iterable, Protocol, Tuple, Type
 
 
 class BenchmarkCatalog:
@@ -32,7 +32,7 @@ class BenchmarkResult:
 
 
 def render_results_as_json(results: Dict[str, BenchmarkResult]) -> str:
-    def result_to_json(result: BenchmarkResult):
+    def result_to_json(result: BenchmarkResult) -> Dict[str, Any]:
         return {
             "name": result.name,
             "average_execution_time_in_secs": result.average_execution_time_in_secs,

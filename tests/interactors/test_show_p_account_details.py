@@ -26,7 +26,7 @@ class InteractorTestBase(BaseTestCase):
 
 
 class ShowMeansAccountTests(InteractorTestBase):
-    def test_company_id_from_request_is_returned(self):
+    def test_company_id_from_request_is_returned(self) -> None:
         response = self.interactor.show_details(
             self.create_interactor_request(self.company.id)
         )

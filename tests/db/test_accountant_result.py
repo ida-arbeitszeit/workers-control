@@ -142,7 +142,7 @@ class WithEmailAddressTests(AccountantResultTests):
 class JoinedWithEmailAddressTests(AccountantResultTests):
     @parameterized.expand(["test@test.test"])
     def test_that_email_address_is_the_one_that_accountant_was_created_with(
-        self, expected_address
+        self, expected_address: str
     ) -> None:
         self.create_accountant(email_address=expected_address)
         assert all(

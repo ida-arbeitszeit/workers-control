@@ -1392,17 +1392,14 @@ class AccountResult(QueryResultImpl[Account]):
         return self._filter_elements(lambda account: account.id in id_)
 
     def owned_by_member(self, *member: UUID) -> Self:
-        def items():
+        def items() -> Iterable[Account]:
             memberes = set(member)
             for account in self.items():
                 owner_ids = self.database.indices.member_by_account.get(account.id)
                 if memberes & owner_ids:
                     yield account
 
-        return replace(
-            self,
-            items=items,
-        )
+        return self.from_iterable(items=items)
 
     def owned_by_company(self, *company: UUID) -> Self:
         def items() -> Iterable[Account]:
@@ -1843,7 +1840,7 @@ class AccountCredentialsUpdate:
             self.perform_all_actions(item)
         return item_count
 
-    def perform_all_actions(self, item) -> None:
+    def perform_all_actions(self, item: records.AccountCredentials) -> None:
         for action in self.actions:
             action(self.database, item)
 

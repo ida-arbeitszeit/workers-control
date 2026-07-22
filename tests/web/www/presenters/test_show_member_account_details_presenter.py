@@ -28,21 +28,21 @@ class TestPresenter(BaseTestCase):
 
     def test_that_empty_transfer_list_is_shown_if_no_transfers_took_place(
         self,
-    ):
+    ) -> None:
         response = self.get_interactor_response([])
         view_model = self.presenter.present_member_account(response)
         self.assertFalse(view_model.transfers)
 
     def test_that_one_transfer_is_shown_if_one_transfer_took_place(
         self,
-    ):
+    ) -> None:
         response = self.get_interactor_response([self.get_transfer()])
         view_model = self.presenter.present_member_account(response)
         self.assertEqual(len(view_model.transfers), 1)
 
     def test_that_two_transfers_are_shown_if_two_transfers_took_place(
         self,
-    ):
+    ) -> None:
         response = self.get_interactor_response(
             [self.get_transfer(), self.get_transfer()]
         )
@@ -51,41 +51,41 @@ class TestPresenter(BaseTestCase):
 
     def test_that_correct_balance_is_returned(
         self,
-    ):
+    ) -> None:
         response = self.get_interactor_response([], balance=Decimal("10"))
         view_model = self.presenter.present_member_account(response)
         self.assertEqual(view_model.balance, "10.00")
 
     def test_that_balance_sign_is_shown_correctly_if_balance_is_negative(
         self,
-    ):
+    ) -> None:
         response = self.get_interactor_response([], balance=Decimal("-10"))
         view_model = self.presenter.present_member_account(response)
         self.assertFalse(view_model.is_balance_positive)
 
     def test_that_balance_sign_is_shown_correctly_if_balance_is_zero(
         self,
-    ):
+    ) -> None:
         response = self.get_interactor_response([], balance=Decimal("0"))
         view_model = self.presenter.present_member_account(response)
         self.assertTrue(view_model.is_balance_positive)
 
     def test_that_balance_sign_is_shown_correctly_if_balance_is_positive(
         self,
-    ):
+    ) -> None:
         response = self.get_interactor_response([], balance=Decimal("10"))
         view_model = self.presenter.present_member_account(response)
         self.assertTrue(view_model.is_balance_positive)
 
     def test_that_date_of_transfer_is_formatted_correctly(
         self,
-    ):
+    ) -> None:
         test_date = datetime_utc(2022, 8, 1, 10, 30)
         response = self.get_interactor_response([self.get_transfer(date=test_date)])
         view_model = self.presenter.present_member_account(response)
         self.assertEqual(view_model.transfers[0].date, "01.08.2022 10:30")
 
-    def test_that_transfer_volume_is_formatted_correctly(self):
+    def test_that_transfer_volume_is_formatted_correctly(self) -> None:
         response = self.get_interactor_response([self.get_transfer()])
         view_model = self.presenter.present_member_account(response)
         self.assertEqual(view_model.transfers[0].transfer_volume, "20.01")
@@ -93,7 +93,7 @@ class TestPresenter(BaseTestCase):
     @parameterized.expand([(True,), (False,)])
     def test_that_transfer_is_shown_as_debit_transfer_if_that_is_the_case(
         self, is_debit_transfer: bool
-    ):
+    ) -> None:
         response = self.get_interactor_response(
             [self.get_transfer(is_debit_transfer=is_debit_transfer)]
         )
@@ -102,7 +102,7 @@ class TestPresenter(BaseTestCase):
 
     def test_that_transfer_type_is_shown_correctly_for_incoming_wages(
         self,
-    ):
+    ) -> None:
         response = self.get_interactor_response(
             [
                 self.get_transfer(
@@ -124,7 +124,7 @@ class TestPresenter(BaseTestCase):
 
     def test_that_transfer_type_is_shown_correctly_for_consumption_of_consumer_product(
         self,
-    ):
+    ) -> None:
         response = self.get_interactor_response(
             [
                 self.get_transfer(
@@ -146,7 +146,7 @@ class TestPresenter(BaseTestCase):
 
     def test_that_transfer_type_is_shown_correctly_for_taxes(
         self,
-    ):
+    ) -> None:
         response = self.get_interactor_response(
             [
                 self.get_transfer(
@@ -168,7 +168,7 @@ class TestPresenter(BaseTestCase):
 
     def test_that_transfer_type_is_shown_correctly_for_consumption_of_basic_service(
         self,
-    ):
+    ) -> None:
         response = self.get_interactor_response(
             [
                 self.get_transfer(
@@ -191,7 +191,7 @@ class TestPresenter(BaseTestCase):
     @parameterized.expand([(t,) for t in TransferType])
     def test_that_no_transfer_type_raises_when_presented(
         self, transfer_type: TransferType
-    ):
+    ) -> None:
         response = self.get_interactor_response([self.get_transfer(type=transfer_type)])
         view_model = self.presenter.present_member_account(response)
         self.assertTrue(view_model.transfers[0].transfer_type)

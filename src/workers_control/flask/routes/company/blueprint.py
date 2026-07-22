@@ -15,7 +15,9 @@ class CompanyRoute:
         self.route_string = route_string
         self.methods = methods or ["GET"]
 
-    def __call__(self, view_function: Callable[..., types.Response]):
+    def __call__(
+        self, view_function: Callable[..., types.Response]
+    ) -> Callable[..., types.Response]:
         @wraps(view_function)
         def _wrapper(*args: Any, **kwargs: Any) -> types.Response:
             injector = create_dependency_injector()

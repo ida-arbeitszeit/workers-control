@@ -10,7 +10,7 @@ from workers_control.core.interactors import (
 
 
 class ResendInviteTestCase(BaseTestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp()
         self.company = self.company_generator.create_company()
         self.worker = self.member_generator.create_member()

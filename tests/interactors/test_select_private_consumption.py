@@ -14,21 +14,23 @@ class InteractorTests(BaseTestCase):
             select_private_consumption.SelectPrivateConsumptionInteractor
         )
 
-    def test_that_no_plan_response_is_returned_when_no_plan_id_is_provided(self):
+    def test_that_no_plan_response_is_returned_when_no_plan_id_is_provided(
+        self,
+    ) -> None:
         request = self.create_request()
         response = self.interactor.select_private_consumption(request)
         assert isinstance(response, select_private_consumption.NoPlanResponse)
 
     def test_that_invalid_plan_response_is_returned_when_plan_id_is_provided_but_plan_does_not_exist(
         self,
-    ):
+    ) -> None:
         request = self.create_request(plan_id=uuid4())
         response = self.interactor.select_private_consumption(request)
         assert isinstance(response, select_private_consumption.InvalidPlanResponse)
 
     def test_that_invalid_plan_response_is_returned_when_plan_id_is_provided_but_plan_is_not_approved(
         self,
-    ):
+    ) -> None:
         plan = self.plan_generator.create_plan(approved=False)
         request = self.create_request(plan_id=plan)
         response = self.interactor.select_private_consumption(request)
@@ -36,7 +38,7 @@ class InteractorTests(BaseTestCase):
 
     def test_that_invalid_plan_response_is_returned_when_plan_id_is_provided_but_plan_is_expired(
         self,
-    ):
+    ) -> None:
         self.datetime_service.freeze_time()
         plan = self.plan_generator.create_plan(timeframe=1)
         self.datetime_service.advance_time(timedelta(days=2))
@@ -46,30 +48,33 @@ class InteractorTests(BaseTestCase):
 
     def test_that_valid_plan_response_is_returned_when_plan_id_is_provided_and_plan_exists(
         self,
-    ):
+    ) -> None:
         plan = self.plan_generator.create_plan()
         request = self.create_request(plan_id=plan)
         response = self.interactor.select_private_consumption(request)
         assert isinstance(response, select_private_consumption.ValidPlanResponse)
 
     @parameterized.expand([(None,), (0,), (1,), (2,)])
-    def test_that_amount_from_request_is_passed_to_response(self, amount: int | None):
+    def test_that_amount_from_request_is_passed_to_response(
+        self, amount: int | None
+    ) -> None:
         request = self.create_request(amount=amount)
         response = self.interactor.select_private_consumption(request)
         assert response.amount == amount
 
     def test_that_plan_id_of_valid_plan_response_is_the_same_as_the_provided_plan_id(
         self,
-    ):
+    ) -> None:
         plan = self.plan_generator.create_plan()
         request = self.create_request(plan_id=plan)
         response = self.interactor.select_private_consumption(request)
+        assert isinstance(response, select_private_consumption.ValidPlanResponse)
         assert response.plan_id == plan
 
     @parameterized.expand([("Plan Name 1",), ("Plan Name 2",)])
     def test_that_plan_name_of_valid_plan_response_is_the_same_as_the_provided_plan_name(
         self, plan_name: str
-    ):
+    ) -> None:
         plan = self.plan_generator.create_plan(product_name=plan_name)
         request = self.create_request(plan_id=plan)
         response = self.interactor.select_private_consumption(request)
@@ -79,7 +84,7 @@ class InteractorTests(BaseTestCase):
     @parameterized.expand([("Plan Description 1",), ("Plan Description 2",)])
     def test_that_plan_description_of_valid_plan_response_is_the_same_as_the_provided_plan_description(
         self, plan_description: str
-    ):
+    ) -> None:
         plan = self.plan_generator.create_plan(description=plan_description)
         request = self.create_request(plan_id=plan)
         response = self.interactor.select_private_consumption(request)

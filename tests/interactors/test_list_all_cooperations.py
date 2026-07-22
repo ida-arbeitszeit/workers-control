@@ -18,7 +18,7 @@ def coop_in_response(cooperation: UUID, response: ListAllCooperationsResponse) -
 @injection_test
 def test_empty_list_is_returned_when_there_are_no_cooperations(
     interactor: ListAllCooperationsInteractor,
-):
+) -> None:
     response = interactor.execute()
     assert len(response.cooperations) == 0
 
@@ -27,7 +27,7 @@ def test_empty_list_is_returned_when_there_are_no_cooperations(
 def test_one_empty_cooperation_is_returned_if_there_is_one_coop_without_plans(
     interactor: ListAllCooperationsInteractor,
     cooperation_generator: CooperationGenerator,
-):
+) -> None:
     cooperation = cooperation_generator.create_cooperation()
     response = interactor.execute()
     assert len(response.cooperations) == 1
@@ -40,7 +40,7 @@ def test_one_returned_cooperation_shows_correct_info(
     interactor: ListAllCooperationsInteractor,
     cooperation_generator: CooperationGenerator,
     plan_generator: PlanGenerator,
-):
+) -> None:
     expected_cooperation_name = "Test Cooperation"
     plan = plan_generator.create_plan()
     cooperation = cooperation_generator.create_cooperation(

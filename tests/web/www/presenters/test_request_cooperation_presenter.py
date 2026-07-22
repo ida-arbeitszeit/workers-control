@@ -16,11 +16,11 @@ class RequestCooperationPresenterTests(BaseTestCase):
         super().setUp()
         self.presenter = self.injector.get(RequestCooperationPresenter)
 
-    def test_do_not_show_as_error_if_request_was_successful(self):
+    def test_do_not_show_as_error_if_request_was_successful(self) -> None:
         presentation = self.presenter.present(self.get_successful_request())
         self.assertFalse(presentation.is_error)
 
-    def test_show_correct_notificiation_if_request_was_successful(self):
+    def test_show_correct_notificiation_if_request_was_successful(self) -> None:
         presentation = self.presenter.present(self.get_successful_request())
         expected = self.translator.gettext("Request has been sent.")
         self.assertEqual(presentation.notifications[0], expected)
@@ -29,13 +29,13 @@ class RequestCooperationPresenterTests(BaseTestCase):
         self.presenter.present(self.get_successful_request())
         assert not self.email_service.sent_mails
 
-    def test_show_as_error_if_request_was_rejected(self):
+    def test_show_as_error_if_request_was_rejected(self) -> None:
         presentation = self.presenter.present(
             self.get_rejected_request(rejection_reason=RejectionReason.plan_not_found)
         )
         self.assertTrue(presentation.is_error)
 
-    def test_correct_notification_when_rejected_because_plan_not_found(self):
+    def test_correct_notification_when_rejected_because_plan_not_found(self) -> None:
         presentation = self.presenter.present(
             self.get_rejected_request(rejection_reason=RejectionReason.plan_not_found)
         )
@@ -43,7 +43,7 @@ class RequestCooperationPresenterTests(BaseTestCase):
             presentation.notifications[0], self.translator.gettext("Plan not found.")
         )
 
-    def test_correct_notification_when_rejected_because_coop_not_found(self):
+    def test_correct_notification_when_rejected_because_coop_not_found(self) -> None:
         presentation = self.presenter.present(
             self.get_rejected_request(
                 rejection_reason=RejectionReason.cooperation_not_found
@@ -54,7 +54,7 @@ class RequestCooperationPresenterTests(BaseTestCase):
             self.translator.gettext("Cooperation not found."),
         )
 
-    def test_correct_notification_when_rejected_because_plan_inactive(self):
+    def test_correct_notification_when_rejected_because_plan_inactive(self) -> None:
         presentation = self.presenter.present(
             self.get_rejected_request(rejection_reason=RejectionReason.plan_inactive)
         )
@@ -64,7 +64,7 @@ class RequestCooperationPresenterTests(BaseTestCase):
 
     def test_correct_notification_when_rejected_because_plan_has_cooperation(
         self,
-    ):
+    ) -> None:
         presentation = self.presenter.present(
             self.get_rejected_request(
                 rejection_reason=RejectionReason.plan_has_cooperation
@@ -79,7 +79,7 @@ class RequestCooperationPresenterTests(BaseTestCase):
 
     def test_correct_notification_when_rejected_because_plan_is_requesting_cooperation(
         self,
-    ):
+    ) -> None:
         presentation = self.presenter.present(
             self.get_rejected_request(
                 rejection_reason=RejectionReason.plan_is_already_requesting_cooperation
@@ -94,7 +94,7 @@ class RequestCooperationPresenterTests(BaseTestCase):
 
     def test_correct_notification_when_rejected_because_plan_is_public_service(
         self,
-    ):
+    ) -> None:
         presentation = self.presenter.present(
             self.get_rejected_request(
                 rejection_reason=RejectionReason.plan_is_public_service
@@ -107,7 +107,7 @@ class RequestCooperationPresenterTests(BaseTestCase):
 
     def test_correct_notification_when_rejected_because_requester_not_planner(
         self,
-    ):
+    ) -> None:
         presentation = self.presenter.present(
             self.get_rejected_request(
                 rejection_reason=RejectionReason.requester_is_not_planner

@@ -45,18 +45,18 @@ auth = Blueprint("auth", __name__)
 
 
 @auth.route("/")
-def start():
+def start() -> Response:
     return render_template("auth/start.html")
 
 
 @auth.route("/help")
 @with_injection()
-def help():
+def help() -> Response:
     return render_template("auth/help.html")
 
 
 @auth.route("/language=<language>")
-def set_language(language: str):
+def set_language(language: str) -> Response:
     redirection_url = request.headers.get("Referer") or url_for("auth.start")
     session["language"] = language
     return redirect(redirection_url)
@@ -65,7 +65,7 @@ def set_language(language: str):
 @auth.route("/unconfirmed-member")
 @with_injection()
 @login_required
-def unconfirmed_member(authenticator: MemberAuthenticator):
+def unconfirmed_member(authenticator: MemberAuthenticator) -> Response:
     if authenticator.is_unconfirmed_member():
         return render_template("auth/unconfirmed_member.html")
     return redirect(url_for("auth.start"))
@@ -105,7 +105,7 @@ class resend_confirmation_member(ResendConfirmationMemberView): ...
 @auth.route("/company/unconfirmed")
 @with_injection()
 @login_required
-def unconfirmed_company(authenticator: CompanyAuthenticator):
+def unconfirmed_company(authenticator: CompanyAuthenticator) -> Response:
     if authenticator.is_unconfirmed_company():
         return render_template("auth/unconfirmed_company.html")
     return redirect(url_for("auth.start"))
@@ -125,7 +125,7 @@ class signup_company(SignupCompanyView): ...
 @commit_changes
 @with_injection()
 def confirm_email_company(
-    token,
+    token: str,
     confirm_company_interactor: ConfirmCompanyInteractor,
     session: FlaskSession,
     controller: ConfirmCompanyController,
@@ -163,7 +163,7 @@ class login_accountant(LogInAccountantView): ...
 @auth.route("/logout")
 @with_injection()
 @login_required
-def logout(flask_session: FlaskSession):
+def logout(flask_session: FlaskSession) -> Response:
     flask_session.logout()
     return redirect(url_for("auth.start"))
 

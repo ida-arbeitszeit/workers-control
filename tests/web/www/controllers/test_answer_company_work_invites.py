@@ -66,7 +66,9 @@ class LoggedInUsertests(SubBaseTestCase):
         )
         self.assertSuccess(request, lambda r: r.invite_id == expected_uuid)
 
-    def test_when_form_rejects_invite_then_render_request_that_rejects_invite(self):
+    def test_when_form_rejects_invite_then_render_request_that_rejects_invite(
+        self,
+    ) -> None:
         request = self.controller.import_form_data(
             self._get_request_form(is_accepted=False),
             invite_id=uuid4(),

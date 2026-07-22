@@ -10,7 +10,7 @@ from workers_control.web.www.presenters.list_pending_work_invites_presenter impo
 
 
 class ListPendingWorkInvitesPresenterTests(BaseTestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp()
         self.presenter = self.injector.get(ListPendingWorkInvitesPresenter)
 

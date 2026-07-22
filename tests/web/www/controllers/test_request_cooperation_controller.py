@@ -51,7 +51,7 @@ class RequestCooperationControllerTests(BaseTestCase):
 
     def test_returns_malformed_data_instance_if_plan_id_cannot_be_converted_to_uuid(
         self,
-    ):
+    ) -> None:
         malformed_form = replace(fake_form, plan_id="malformed plan id")
         self.session.login_company(uuid4())
         interactor_request = self.controller.import_form_data(form=malformed_form)
@@ -64,7 +64,7 @@ class RequestCooperationControllerTests(BaseTestCase):
 
     def test_returns_malformed_data_instance_if_coop_id_cannot_be_converted_to_uuid(
         self,
-    ):
+    ) -> None:
         malformed_form = replace(fake_form, cooperation_id="malformed coop id")
         self.session.login_company(uuid4())
         interactor_request = self.controller.import_form_data(form=malformed_form)
@@ -76,7 +76,9 @@ class RequestCooperationControllerTests(BaseTestCase):
             self.translator.gettext("Invalid cooperation ID."),
         )
 
-    def test_controller_can_convert_plan_and_cooperation_id_into_correct_uuid(self):
+    def test_controller_can_convert_plan_and_cooperation_id_into_correct_uuid(
+        self,
+    ) -> None:
         self.session.login_company(uuid4())
         interactor_request = self.controller.import_form_data(form=fake_form)
         assert interactor_request is not None

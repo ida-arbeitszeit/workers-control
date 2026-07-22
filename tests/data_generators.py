@@ -204,7 +204,7 @@ class PlanGenerator:
         amount: int = 100,
         approved: bool = True,
         costs: Optional[records.ProductionCosts] = None,
-        description="Beschreibung für Produkt A.",
+        description: str = "Beschreibung für Produkt A.",
         is_public_service: bool = False,
         planner: Optional[UUID] = None,
         product_name: str = "Produkt A",
@@ -715,7 +715,7 @@ class WorkerAffiliationGenerator:
     invite_worker_interactor: InviteWorkerToCompanyInteractor
     answer_invite_interactor: AnswerCompanyWorkInviteInteractor
 
-    def add_workers_to_company(self, company: UUID, workers=Iterable[UUID]) -> None:
+    def add_workers_to_company(self, company: UUID, workers: Iterable[UUID]) -> None:
         for worker in workers:
             self._add_worker_to_company(company, worker)
 

@@ -1,5 +1,5 @@
 from functools import wraps
-from typing import Callable, TypeVar
+from typing import Any, Callable, TypeVar
 
 from flask import Blueprint, redirect, request
 
@@ -20,7 +20,7 @@ class AuthenticatedUserRoute:
 
     def __call__(self, view_function: ViewFunction) -> ViewFunction:
         @wraps(view_function)
-        def wrapper(*args, **kwargs) -> types.Response:
+        def wrapper(*args: Any, **kwargs: Any) -> types.Response:
             injector = create_dependency_injector()
             authenticator = injector.get(UserAuthenticator)
             if not authenticator.is_user_authenticated():

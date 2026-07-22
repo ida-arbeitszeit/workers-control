@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from functools import wraps
+from typing import Any, Callable
 
 from flask import current_app
 
@@ -137,14 +138,14 @@ class with_injection:
     def __init__(self) -> None:
         self._injector = create_dependency_injector()
 
-    def __call__(self, original_function):
+    def __call__(self, original_function: Callable[..., Any]) -> Callable[..., Any]:
         """When you wrap a function, make sure that the parameters to be
         injected come after the the parameters that the caller should
         provide.
         """
 
         @wraps(original_function)
-        def wrapped_function(*args, **kwargs):
+        def wrapped_function(*args: Any, **kwargs: Any) -> Any:
             return self._injector.call_with_injection(
                 original_function, args=args, kwargs=kwargs
             )

@@ -1,15 +1,15 @@
 """This module shall contain a mock implementation of the UrlIndex."""
 
-from typing import Any, Callable
+from typing import Any, Callable, Optional
 from urllib.parse import quote
 
 
 class UrlIndexMethod:
-    def __set_name__(self, owner, name: str) -> None:
+    def __set_name__(self, owner: type, name: str) -> None:
         self._attribute_name = name
 
-    def __get__(self, obj: Any, objtype=None) -> Callable[..., str]:
-        def method(*args, **kwargs) -> str:
+    def __get__(self, obj: Any, objtype: Optional[type] = None) -> Callable[..., str]:
+        def method(*args: Any, **kwargs: Any) -> str:
             sorted_args = sorted(list(map(str, args)))
             sorted_kwargs = sorted(
                 [f"{key}: {str(value)}" for key, value in kwargs.items()]

@@ -23,7 +23,7 @@ class SignupMemberView:
     register_member_presenter: RegisterMemberPresenter
     flask_session: FlaskSession
 
-    def GET(self):
+    def GET(self) -> Response:
         if self.flask_session.is_current_user_authenticated():
             if self.flask_session.is_logged_in_as_member():
                 return redirect(url_for("main_member.dashboard"))
@@ -46,7 +46,7 @@ class SignupMemberView:
             render_template("auth/signup_member.html", form=register_form), 400
         )
 
-    def _handle_valid_post_request(self, register_form: RegisterForm):
+    def _handle_valid_post_request(self, register_form: RegisterForm) -> Response:
         interactor_request = self.controller.create_request(register_form)
         response = self.register_member.register_member(interactor_request)
         view_model = self.register_member_presenter.present_member_registration(

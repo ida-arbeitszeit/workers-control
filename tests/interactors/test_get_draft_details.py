@@ -23,7 +23,7 @@ def test_that_correct_planner_id_is_returned(
     plan_generator: PlanGenerator,
     get_draft_details: GetDraftDetailsInteractor,
     company_generator: CompanyGenerator,
-):
+) -> None:
     planner = company_generator.create_company()
     draft = plan_generator.draft_plan(planner=planner)
     details = get_draft_details.execute(draft)
@@ -34,7 +34,7 @@ def test_that_correct_planner_id_is_returned(
 def test_that_correct_production_costs_are_shown(
     plan_generator: PlanGenerator,
     get_draft_details: GetDraftDetailsInteractor,
-):
+) -> None:
     draft = plan_generator.draft_plan(
         costs=ProductionCosts(
             means_cost=Decimal(1),
@@ -59,7 +59,7 @@ def test_that_correct_production_costs_are_shown(
 def test_that_correct_product_name_is_shown(
     plan_generator: PlanGenerator,
     get_draft_details: GetDraftDetailsInteractor,
-):
+) -> None:
     draft = plan_generator.draft_plan(product_name="test product")
     details = get_draft_details.execute(draft)
     assert_success(details, lambda s: s.product_name == "test product")
@@ -69,7 +69,7 @@ def test_that_correct_product_name_is_shown(
 def test_that_correct_product_description_is_shown(
     plan_generator: PlanGenerator,
     get_draft_details: GetDraftDetailsInteractor,
-):
+) -> None:
     draft = plan_generator.draft_plan(description="test description")
     details = get_draft_details.execute(draft)
     assert_success(details, lambda s: s.description == "test description")
@@ -79,7 +79,7 @@ def test_that_correct_product_description_is_shown(
 def test_that_correct_product_unit_is_shown(
     plan_generator: PlanGenerator,
     get_draft_details: GetDraftDetailsInteractor,
-):
+) -> None:
     draft = plan_generator.draft_plan(production_unit="test unit")
     details = get_draft_details.execute(draft)
     assert_success(details, lambda s: s.production_unit == "test unit")
@@ -89,7 +89,7 @@ def test_that_correct_product_unit_is_shown(
 def test_that_correct_amount_is_shown(
     plan_generator: PlanGenerator,
     get_draft_details: GetDraftDetailsInteractor,
-):
+) -> None:
     draft = plan_generator.draft_plan(amount=123)
     details = get_draft_details.execute(draft)
     assert_success(details, lambda s: s.amount == 123)

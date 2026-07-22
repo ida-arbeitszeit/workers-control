@@ -8,13 +8,13 @@ from workers_control.flask.filters import icon_filter
 
 
 class IconFilterUnitTests(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp()
         self.mock_file_reader = Mock()
 
     def test_that_icon_filter_returns_empty_string_for_empty_icon_name(
         self,
-    ):
+    ) -> None:
         valid_icon_template_content = (
             '<svg viewBox="0 0 448 512"><!-- no path to keep it short --></svg>'
         )
@@ -27,7 +27,7 @@ class IconFilterUnitTests(unittest.TestCase):
 
     def test_that_icon_filter_returns_empty_string_for_whitespace_icon_name(
         self,
-    ):
+    ) -> None:
         valid_icon_template_content = (
             '<svg viewBox="0 0 448 512"><!-- no path to keep it short --></svg>'
         )
@@ -42,7 +42,7 @@ class IconFilterUnitTests(unittest.TestCase):
 
     def test_that_icon_filter_raises_exception_for_invalid_template(
         self,
-    ):
+    ) -> None:
         non_valid_icon_template_content = "<div>No SVG content here</div>"
         self.mock_file_reader.return_value = non_valid_icon_template_content
 
@@ -55,7 +55,7 @@ class IconFilterUnitTests(unittest.TestCase):
 
     def test_that_icon_filter_transforms_valid_template_to_html_svg_with_default_attributes(
         self,
-    ):
+    ) -> None:
         valid_icon_template_content = (
             '<svg viewBox="0 0 448 512"><!-- no path to keep it short --></svg>'
         )
@@ -70,7 +70,7 @@ class IconFilterUnitTests(unittest.TestCase):
 
     def test_that_icon_filter_transforms_template_to_html_svg_with_custom_attributes(
         self,
-    ):
+    ) -> None:
         svg_content = (
             '<svg viewBox="0 0 448 512"><!-- no path to keep it short --></svg>'
         )
@@ -94,7 +94,7 @@ class IconFilterUnitTests(unittest.TestCase):
 
     def test_that_icon_filter_passes_enriched_file_not_found_error(
         self,
-    ):
+    ) -> None:
         self.mock_file_reader.side_effect = FileNotFoundError("File not found")
 
         with self.assertRaises(FileNotFoundError) as context:
@@ -104,7 +104,7 @@ class IconFilterUnitTests(unittest.TestCase):
                 'Error for "nonexistent" icon: File not found', str(context.exception)
             )
 
-    def test_that_icon_filter_passes_generic_exception(self):
+    def test_that_icon_filter_passes_generic_exception(self) -> None:
         self.mock_file_reader.side_effect = Exception("Some error message")
 
         with self.assertRaises(Exception) as context:
@@ -118,7 +118,7 @@ class IconFilterUnitTests(unittest.TestCase):
 class IconFilterIntegrationTest(ViewTestCase):
     def test_that_icon_filter_renders_a_valid_key_icon_svg_element_in_the_login_form_on_page_load(
         self,
-    ):
+    ) -> None:
         response = self.client.get("/login-member")
         self.assertEqual(response.status_code, 200)
         self.assertIn(

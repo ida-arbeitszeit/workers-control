@@ -63,38 +63,40 @@ class GetCompanySummaryPresenterTests(BaseTestCase):
         self.control_thresholds = self.injector.get(ControlThresholdsTestImpl)
         self.session.login_company(uuid4())
 
-    def test_company_id_is_shown(self):
+    def test_company_id_is_shown(self) -> None:
         view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
         self.assertEqual(view_model.id, str(RESPONSE_WITH_2_PLANS.id))
 
-    def test_company_name_is_shown(self):
+    def test_company_name_is_shown(self) -> None:
         view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
         self.assertEqual(view_model.name, RESPONSE_WITH_2_PLANS.name)
 
-    def test_company_email_is_shown(self):
+    def test_company_email_is_shown(self) -> None:
         view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
         self.assertEqual(view_model.email, RESPONSE_WITH_2_PLANS.email)
 
-    def test_company_register_date_is_formatted_correctly(self):
+    def test_company_register_date_is_formatted_correctly(self) -> None:
         view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
         self.assertEqual(view_model.registered_on, "02.01.2022")
 
-    def test_expectations_are_shown_as_list_of_strings(self):
+    def test_expectations_are_shown_as_list_of_strings(self) -> None:
         view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
         self.assertEqual(view_model.expectations, ["1.00", "2.00", "3.00", "-4.56"])
 
-    def test_company_account_balances_is_shown_as_list_of_strings(self):
+    def test_company_account_balances_is_shown_as_list_of_strings(self) -> None:
         view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
         self.assertEqual(view_model.account_balances, ["1.00", "2.00", "3.00", "-4.56"])
 
-    def test_company_relative_deviations_is_list_of_four_deviation_objects(self):
+    def test_company_relative_deviations_is_list_of_four_deviation_objects(
+        self,
+    ) -> None:
         view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
         self.assertEqual(len(view_model.deviations_relative), 4)
         self.assertIsInstance(view_model.deviations_relative[0], Deviation)
 
     def test_company_relative_deviations_shows_correct_percentages_and_critical_status(
         self,
-    ):
+    ) -> None:
         self.control_thresholds.set_acceptable_relative_account_deviation(20)
         view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
         expected_percentages = ["inf", "20", "-300", "-5"]
@@ -155,7 +157,7 @@ class PlansOfCompanyTests(BaseTestCase):
         self.control_thresholds = self.injector.get(ControlThresholdsTestImpl)
         self.session.login_company(uuid4())
 
-    def test_ids_of_plans_are_shown(self):
+    def test_ids_of_plans_are_shown(self) -> None:
         view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
         self.assertEqual(
             view_model.plan_details[0].id,
@@ -166,7 +168,7 @@ class PlansOfCompanyTests(BaseTestCase):
             str(RESPONSE_WITH_2_PLANS.plan_details[1].id),
         )
 
-    def test_names_of_plans_are_shown(self):
+    def test_names_of_plans_are_shown(self) -> None:
         view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
         self.assertEqual(
             view_model.plan_details[0].name,
@@ -177,7 +179,7 @@ class PlansOfCompanyTests(BaseTestCase):
             str(RESPONSE_WITH_2_PLANS.plan_details[1].name),
         )
 
-    def test_urls_of_plans_are_shown(self):
+    def test_urls_of_plans_are_shown(self) -> None:
         view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
         self.assertEqual(
             view_model.plan_details[0].url,
@@ -192,7 +194,7 @@ class PlansOfCompanyTests(BaseTestCase):
             ),
         )
 
-    def test_status_of_plans_are_shown(self):
+    def test_status_of_plans_are_shown(self) -> None:
         view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
         self.assertEqual(
             view_model.plan_details[0].status,
@@ -203,7 +205,7 @@ class PlansOfCompanyTests(BaseTestCase):
             self.translator.gettext("Inactive"),
         )
 
-    def test_planned_sales_volume_and_balance_of_plans_are_shown(self):
+    def test_planned_sales_volume_and_balance_of_plans_are_shown(self) -> None:
         view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
         self.assertEqual(
             view_model.plan_details[0].sales_volume,
@@ -214,22 +216,22 @@ class PlansOfCompanyTests(BaseTestCase):
             f"{round(RESPONSE_WITH_2_PLANS.plan_details[0].sales_balance, 2)}",
         )
 
-    def test_relative_deviation_of_plan_is_shown(self):
+    def test_relative_deviation_of_plan_is_shown(self) -> None:
         view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
         self.assertEqual(
             view_model.plan_details[0].deviation_relative.percentage,
             f"{round(RESPONSE_WITH_2_PLANS.plan_details[0].deviation_relative)}",
         )
 
-    def test_list_of_suppliers_is_empty_if_none_exist(self):
+    def test_list_of_suppliers_is_empty_if_none_exist(self) -> None:
         view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
         self.assertFalse(view_model.suppliers_ordered_by_volume)
 
-    def test_suppliers_are_not_shown_if_no_supplier_exist(self):
+    def test_suppliers_are_not_shown_if_no_supplier_exist(self) -> None:
         view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
         self.assertFalse(view_model.show_suppliers)
 
-    def test_suppliers_are_shown_if_a_supplier_exists(self):
+    def test_suppliers_are_shown_if_a_supplier_exists(self) -> None:
         response = replace(
             RESPONSE_WITH_2_PLANS,
             suppliers_ordered_by_volume=[
@@ -243,7 +245,7 @@ class PlansOfCompanyTests(BaseTestCase):
         view_model = self.presenter.present(response)
         self.assertTrue(view_model.show_suppliers)
 
-    def test_correct_supplier_summary_url_is_shown(self):
+    def test_correct_supplier_summary_url_is_shown(self) -> None:
         supplier_id = uuid4()
         response = replace(
             RESPONSE_WITH_2_PLANS,
@@ -261,7 +263,7 @@ class PlansOfCompanyTests(BaseTestCase):
             self.url_index.get_company_summary_url(company_id=supplier_id),
         )
 
-    def test_correct_supplier_name_is_shown(self):
+    def test_correct_supplier_name_is_shown(self) -> None:
         response = replace(
             RESPONSE_WITH_2_PLANS,
             suppliers_ordered_by_volume=[
@@ -278,7 +280,7 @@ class PlansOfCompanyTests(BaseTestCase):
             "supplier name",
         )
 
-    def test_correct_sales_volume_of_supplier_is_shown(self):
+    def test_correct_sales_volume_of_supplier_is_shown(self) -> None:
         response = replace(
             RESPONSE_WITH_2_PLANS,
             suppliers_ordered_by_volume=[
@@ -297,14 +299,14 @@ class PlansOfCompanyTests(BaseTestCase):
 
     def test_that_relative_deviation_is_marked_as_critical_if_it_exceeds_threshold(
         self,
-    ):
+    ) -> None:
         self.control_thresholds.set_acceptable_relative_account_deviation(33)
         view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
         self.assertTrue(view_model.plan_details[0].deviation_relative.is_critical)
 
     def test_that_relative_deviation_is_not_marked_as_critical_if_it_does_not_exceed_threshold(
         self,
-    ):
+    ) -> None:
         self.control_thresholds.set_acceptable_relative_account_deviation(100)
         view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
         self.assertFalse(view_model.plan_details[0].deviation_relative.is_critical)

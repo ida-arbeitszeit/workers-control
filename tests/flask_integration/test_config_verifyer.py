@@ -11,7 +11,7 @@ from workers_control.flask.config.options import ConfigOption
 
 
 class ConfigValidatorTests(TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp()
 
     def test_validator_raises_exception_if_expected_option_is_missing(self) -> None:

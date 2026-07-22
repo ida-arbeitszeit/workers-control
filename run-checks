@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from typing import List
 
 
-def main():
+def main() -> None:
     configuration = get_configuration()
     autoformatted_paths = read_autoformat_target_paths()
     run_check_command(["black", "--check"] + autoformatted_paths)

@@ -641,7 +641,7 @@ class MemberQueryResult(SqlQueryResult[records.Member]):
     def joined_with_email_address(
         self,
     ) -> SqlQueryResult[Tuple[records.Member, records.EmailAddress]]:
-        def mapper(row):
+        def mapper(row: Any) -> Tuple[records.Member, records.EmailAddress]:
             member_orm, email_orm = row
             return (
                 DatabaseGatewayImpl.member_from_orm(member_orm),
@@ -768,7 +768,7 @@ class CompanyQueryResult(SqlQueryResult[records.Company]):
     def joined_with_email_address(
         self,
     ) -> SqlQueryResult[Tuple[records.Company, records.EmailAddress]]:
-        def mapper(row):
+        def mapper(row: Any) -> Tuple[records.Company, records.EmailAddress]:
             company_orm, email_orm = row
             return (
                 DatabaseGatewayImpl.company_from_orm(company_orm),
@@ -882,6 +882,18 @@ class AccountantUpdate:
         rowcount = cast(CursorResult, self.db.session.execute(sql_statement)).rowcount
         self.db.session.flush()
         return rowcount
+
+
+class AccountOwnerAliases:
+    """Aliases for all ORM models that can own an account. One instance
+    is needed per side (debtor, creditor) of a transfer query.
+    """
+
+    def __init__(self) -> None:
+        self.member = aliased(models.Member)
+        self.company = aliased(models.Company)
+        self.social_accounting = aliased(models.SocialAccounting)
+        self.cooperation = aliased(models.Cooperation)
 
 
 class TransferQueryResult(SqlQueryResult[records.Transfer]):
@@ -1092,14 +1104,7 @@ class TransferQueryResult(SqlQueryResult[records.Transfer]):
             db=self.db,
         )
 
-    def _create_account_owner_aliases(self):
-        class AccountOwnerAliases:
-            def __init__(self):
-                self.member = aliased(models.Member)
-                self.company = aliased(models.Company)
-                self.social_accounting = aliased(models.SocialAccounting)
-                self.cooperation = aliased(models.Cooperation)
-
+    def _create_account_owner_aliases(self) -> AccountOwnerAliases:
         return AccountOwnerAliases()
 
     @classmethod
@@ -1136,7 +1141,11 @@ class TransferQueryResult(SqlQueryResult[records.Transfer]):
 
     @classmethod
     def _determine_account_owner(
-        cls, member, company, social_accounting, cooperation
+        cls,
+        member: Optional[Member],
+        company: Optional[Company],
+        social_accounting: Optional[SocialAccounting],
+        cooperation: Optional[models.Cooperation],
     ) -> records.AccountOwner:
         if member:
             return DatabaseGatewayImpl.member_from_orm(member)
@@ -1312,7 +1321,7 @@ class ProductiveConsumptionResult(SqlQueryResult[records.ProductiveConsumption])
         Tuple[records.ProductiveConsumption, records.Transfer, records.Plan]
     ]:
         def mapper(
-            orm,
+            orm: Any,
         ) -> Tuple[records.ProductiveConsumption, records.Transfer, records.Plan]:
             consumption_orm, transfer_orm, plan_orm = orm
             return (
@@ -1339,7 +1348,7 @@ class ProductiveConsumptionResult(SqlQueryResult[records.ProductiveConsumption])
         self,
     ) -> SqlQueryResult[Tuple[records.ProductiveConsumption, records.Transfer]]:
         def mapper(
-            orm,
+            orm: Any,
         ) -> Tuple[records.ProductiveConsumption, records.Transfer]:
             consumption_orm, transfer_orm = orm
             return (
@@ -1364,7 +1373,7 @@ class ProductiveConsumptionResult(SqlQueryResult[records.ProductiveConsumption])
         Tuple[records.ProductiveConsumption, records.Transfer, records.Company]
     ]:
         def mapper(
-            orm,
+            orm: Any,
         ) -> Tuple[records.ProductiveConsumption, records.Transfer, records.Company]:
             consumption_orm, transfer_orm, provider_orm = orm
             return (
@@ -1400,7 +1409,7 @@ class ProductiveConsumptionResult(SqlQueryResult[records.ProductiveConsumption])
         ]
     ]:
         def mapper(
-            orm,
+            orm: Any,
         ) -> Tuple[
             records.ProductiveConsumption,
             records.Transfer,
@@ -1499,7 +1508,7 @@ class PrivateConsumptionResult(SqlQueryResult[records.PrivateConsumption]):
         Tuple[records.PrivateConsumption, records.Transfer, records.Plan]
     ]:
         def mapper(
-            orm,
+            orm: Any,
         ) -> Tuple[records.PrivateConsumption, records.Transfer, records.Plan]:
             consumption_orm, transfer_orm, plan_orm = orm
             return (
@@ -1533,7 +1542,7 @@ class PrivateConsumptionResult(SqlQueryResult[records.PrivateConsumption]):
         ]
     ]:
         def mapper(
-            orm,
+            orm: Any,
         ) -> Tuple[
             records.PrivateConsumption,
             records.Transfer,
@@ -1597,7 +1606,7 @@ class PrivateConsumptionOfBasicServiceResult(
         Tuple[records.PrivateConsumptionOfBasicService, records.Transfer]
     ]:
         def mapper(
-            orm,
+            orm: Any,
         ) -> Tuple[records.PrivateConsumptionOfBasicService, records.Transfer]:
             consumption_orm, transfer_orm = orm
             return (
@@ -1628,7 +1637,7 @@ class PrivateConsumptionOfBasicServiceResult(
         ]
     ]:
         def mapper(
-            orm,
+            orm: Any,
         ) -> Tuple[
             records.PrivateConsumptionOfBasicService,
             records.Transfer,
@@ -1691,7 +1700,7 @@ class ProductiveConsumptionOfBasicServiceResult(
         Tuple[records.ProductiveConsumptionOfBasicService, records.Transfer]
     ]:
         def mapper(
-            orm,
+            orm: Any,
         ) -> Tuple[records.ProductiveConsumptionOfBasicService, records.Transfer]:
             consumption_orm, transfer_orm = orm
             return (
@@ -1722,7 +1731,7 @@ class ProductiveConsumptionOfBasicServiceResult(
         ]
     ]:
         def mapper(
-            orm,
+            orm: Any,
         ) -> Tuple[
             records.ProductiveConsumptionOfBasicService,
             records.Transfer,
@@ -1796,7 +1805,7 @@ class CooperationResult(SqlQueryResult[records.Cooperation]):
         self,
     ) -> SqlQueryResult[Tuple[records.Cooperation, records.Company]]:
         def mapper(
-            orm,
+            orm: Any,
         ) -> Tuple[records.Cooperation, records.Company]:
             cooperation_orm, company_orm = orm
             return (
@@ -1842,7 +1851,7 @@ class CoordinationTenureResult(SqlQueryResult[records.CoordinationTenure]):
         self,
     ) -> SqlQueryResult[Tuple[records.CoordinationTenure, records.Company]]:
         def mapper(
-            orm,
+            orm: Any,
         ) -> Tuple[records.CoordinationTenure, records.Company]:
             tenure_orm, company_orm = orm
             return (
@@ -1892,7 +1901,7 @@ class CoordinationTransferRequestResult(
         Tuple[records.CoordinationTransferRequest, records.Cooperation]
     ]:
         def mapper(
-            orm,
+            orm: Any,
         ) -> Tuple[records.CoordinationTransferRequest, records.Cooperation]:
             request_orm, cooperation_orm = orm
             return (
@@ -1942,7 +1951,7 @@ class CompanyWorkInviteResult(SqlQueryResult[records.CompanyWorkInvite]):
     def joined_with_member(
         self,
     ) -> SqlQueryResult[Tuple[records.CompanyWorkInvite, records.Member]]:
-        def mapper(orm) -> Tuple[records.CompanyWorkInvite, records.Member]:
+        def mapper(orm: Any) -> Tuple[records.CompanyWorkInvite, records.Member]:
             invite_orm, member_orm = orm
             return (
                 DatabaseGatewayImpl.company_work_invite_from_orm(invite_orm),
@@ -2041,7 +2050,7 @@ class RegisteredHoursWorkedResult(SqlQueryResult[records.RegisteredHoursWorked])
         ]
     ]:
         def mapper(
-            orm,
+            orm: Any,
         ) -> Tuple[records.RegisteredHoursWorked, records.Member]:
             hours_orm, member_orm = orm
             return (
@@ -2067,7 +2076,7 @@ class RegisteredHoursWorkedResult(SqlQueryResult[records.RegisteredHoursWorked])
         ]
     ]:
         def mapper(
-            orm,
+            orm: Any,
         ) -> Tuple[records.RegisteredHoursWorked, records.Transfer]:
             hours_orm, transfer_orm = orm
             return (
@@ -2095,7 +2104,7 @@ class RegisteredHoursWorkedResult(SqlQueryResult[records.RegisteredHoursWorked])
         ]
     ]:
         def mapper(
-            orm,
+            orm: Any,
         ) -> Tuple[records.RegisteredHoursWorked, records.Member, records.Transfer]:
             hours_orm, member_orm, transfer_orm = orm
             return (

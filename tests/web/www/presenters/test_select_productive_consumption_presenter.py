@@ -26,7 +26,7 @@ class PresenterTests(BaseTestCase):
         self,
         amount: int | None,
         consumption_type: ConsumptionType | None,
-    ):
+    ) -> None:
         response = self.create_no_plan_response(amount, consumption_type)
         view_model = self.presenter.render_response(response)
         assert view_model.valid_plan_selected is False
@@ -39,7 +39,7 @@ class PresenterTests(BaseTestCase):
         )
         assert view_model.status_code == 200
 
-    def test_that_warning_is_displayed_when_plan_is_invalid(self):
+    def test_that_warning_is_displayed_when_plan_is_invalid(self) -> None:
         assert not self.notifier.warnings
         response = self.create_invalid_plan_response(5, ConsumptionType.means_of_prod)
         self.presenter.render_response(response)
@@ -56,7 +56,7 @@ class PresenterTests(BaseTestCase):
         self,
         amount: int | None,
         consumption_type: ConsumptionType | None,
-    ):
+    ) -> None:
         response = self.create_invalid_plan_response(amount, consumption_type)
         view_model = self.presenter.render_response(response)
         assert view_model.valid_plan_selected is False
@@ -102,7 +102,7 @@ class PresenterTests(BaseTestCase):
         consumption_type: ConsumptionType | None,
         plan_name: str,
         plan_description: str,
-    ):
+    ) -> None:
         response = self.create_valid_plan_response(
             plan_id, amount, consumption_type, plan_name, plan_description
         )

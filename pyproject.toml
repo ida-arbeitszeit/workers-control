@@ -68,23 +68,18 @@ exclude = '''
 '''
 disable_error_code = "type-abstract"
 explicit_package_bases = true
+disallow_untyped_defs = true
 
 [[tool.mypy.overrides]]
 module = [
-    "src",
-    "dev",
-    "tests"
-]
-allow_untyped_defs = false
-
-[[tool.mypy.overrides]]
-module = [
-    "flask_babel",
-    "flask_login",
-    "flask_wtf",
+    "flask_babel.*",
+    "flask_login.*",
+    "flask_talisman.*",
+    "flask_wtf.*",
     "parameterized.*",
     "wtforms.*",
 ]
+allow_untyped_defs = true
 ignore_errors = true
 
 [tool.coverage.run]

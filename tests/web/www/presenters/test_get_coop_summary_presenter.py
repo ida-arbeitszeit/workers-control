@@ -21,12 +21,12 @@ class GetCoopSummarySuccessPresenterTests(BaseTestCase):
         self.presenter = self.injector.get(GetCoopSummarySuccessPresenter)
         self.session.login_company(company=uuid4())
 
-    def test_coop_id_is_displayed_correctly(self):
+    def test_coop_id_is_displayed_correctly(self) -> None:
         coop_summary = self.get_coop_summary()
         view_model = self.presenter.present(coop_summary)
         self.assertEqual(view_model.coop_id, str(view_model.coop_id))
 
-    def test_coop_name_is_displayed_correctly(self):
+    def test_coop_name_is_displayed_correctly(self) -> None:
         coop_summary = self.get_coop_summary()
         view_model = self.presenter.present(coop_summary)
         self.assertEqual(view_model.coop_name, view_model.coop_name)
@@ -34,7 +34,7 @@ class GetCoopSummarySuccessPresenterTests(BaseTestCase):
     @parameterized.expand(["coop def\ncoop def2", "coop def\n\rcoop def2"])
     def test_coop_definition_is_displayed_correctly_as_list_of_strings(
         self, coop_definition: str
-    ):
+    ) -> None:
         expected_definition = coop_definition.splitlines()
         coop_summary = self.get_coop_summary(coop_definition=coop_definition)
         view_model = self.presenter.present(coop_summary)
@@ -42,21 +42,21 @@ class GetCoopSummarySuccessPresenterTests(BaseTestCase):
 
     def test_no_url_to_request_coordination_transfer_page_is_displayed_if_user_is_not_coordinator(
         self,
-    ):
+    ) -> None:
         coop_summary = self.get_coop_summary(requester_is_coordinator=False)
         view_model = self.presenter.present(coop_summary)
         self.assertIsNone(view_model.transfer_coordination_url)
 
     def test_url_to_request_coordination_transfer_page_is_displayed_if_user_is_coordinator(
         self,
-    ):
+    ) -> None:
         coop_summary = self.get_coop_summary(requester_is_coordinator=True)
         view_model = self.presenter.present(coop_summary)
         self.assertIsNotNone(view_model.transfer_coordination_url)
 
     def test_correct_url_to_request_coordination_transfer_page_is_displayed_if_user_is_coordinator(
         self,
-    ):
+    ) -> None:
         coop_summary = self.get_coop_summary(requester_is_coordinator=True)
         view_model = self.presenter.present(coop_summary)
         self.assertEqual(
@@ -66,7 +66,7 @@ class GetCoopSummarySuccessPresenterTests(BaseTestCase):
             ),
         )
 
-    def test_coordinator_id_is_displayed_correctly(self):
+    def test_coordinator_id_is_displayed_correctly(self) -> None:
         coop_summary = self.get_coop_summary()
         view_model = self.presenter.present(coop_summary)
         self.assertEqual(
@@ -74,7 +74,7 @@ class GetCoopSummarySuccessPresenterTests(BaseTestCase):
             str(coop_summary.current_coordinator),
         )
 
-    def test_coordinator_name_is_displayed_correctly(self):
+    def test_coordinator_name_is_displayed_correctly(self) -> None:
         expected_coordinator_name = "A coordinator name"
         coop_summary = self.get_coop_summary(coordinator_name=expected_coordinator_name)
         view_model = self.presenter.present(coop_summary)
@@ -83,7 +83,9 @@ class GetCoopSummarySuccessPresenterTests(BaseTestCase):
             expected_coordinator_name,
         )
 
-    def test_link_to_coordinators_company_summary_page_is_displayed_correctly(self):
+    def test_link_to_coordinators_company_summary_page_is_displayed_correctly(
+        self,
+    ) -> None:
         coop_summary = self.get_coop_summary()
         view_model = self.presenter.present(coop_summary)
         self.assertEqual(
@@ -93,7 +95,7 @@ class GetCoopSummarySuccessPresenterTests(BaseTestCase):
             ),
         )
 
-    def test_link_to_list_of_coordinators_is_displayed_correctly(self):
+    def test_link_to_list_of_coordinators_is_displayed_correctly(self) -> None:
         coop_summary = self.get_coop_summary()
         view_model = self.presenter.present(coop_summary)
         self.assertEqual(
@@ -103,7 +105,7 @@ class GetCoopSummarySuccessPresenterTests(BaseTestCase):
             ),
         )
 
-    def test_coop_price_is_displayed_correctly_if_it_is_not_none(self):
+    def test_coop_price_is_displayed_correctly_if_it_is_not_none(self) -> None:
         coop_price = Decimal(50.005)
         expected_coop_price = f"{round(coop_price, 2)}"
         coop_summary = self.get_coop_summary(coop_price=coop_price)
@@ -113,7 +115,7 @@ class GetCoopSummarySuccessPresenterTests(BaseTestCase):
             expected_coop_price,
         )
 
-    def test_coop_price_is_displayed_as_a_dash_if_coop_price_is_none(self):
+    def test_coop_price_is_displayed_as_a_dash_if_coop_price_is_none(self) -> None:
         coop_summary = self.get_coop_summary()
         coop_summary = replace(coop_summary, coop_price=None)
         view_model = self.presenter.present(coop_summary)
@@ -122,7 +124,7 @@ class GetCoopSummarySuccessPresenterTests(BaseTestCase):
             "-",
         )
 
-    def test_first_plans_name_is_displayed_correctly(self):
+    def test_first_plans_name_is_displayed_correctly(self) -> None:
         coop_summary = self.get_coop_summary()
         view_model = self.presenter.present(coop_summary)
         self.assertEqual(view_model.plans[0].plan_name, coop_summary.plans[0].plan_name)
@@ -130,7 +132,7 @@ class GetCoopSummarySuccessPresenterTests(BaseTestCase):
     @parameterized.expand([(Decimal("1"),), (Decimal("0"),), (Decimal("0.509"),)])
     def test_first_plans_individual_price_is_displayed_correctly(
         self, plan_individual_price: Decimal
-    ):
+    ) -> None:
         expected_price = f"{round(plan_individual_price, 2)}"
         coop_summary = self.get_coop_summary(
             plans=[
@@ -140,12 +142,12 @@ class GetCoopSummarySuccessPresenterTests(BaseTestCase):
         view_model = self.presenter.present(coop_summary)
         self.assertEqual(view_model.plans[0].plan_individual_price, expected_price)
 
-    def test_first_plans_plan_id_is_displayed_correctly(self):
+    def test_first_plans_plan_id_is_displayed_correctly(self) -> None:
         coop_summary = self.get_coop_summary()
         view_model = self.presenter.present(coop_summary)
         assert view_model.plans[0].plan_id == str(coop_summary.plans[0].plan_id)
 
-    def test_first_plans_planner_name_is_displayed_correctly(self):
+    def test_first_plans_planner_name_is_displayed_correctly(self) -> None:
         coop_summary = self.get_coop_summary()
         view_model = self.presenter.present(coop_summary)
         self.assertEqual(
@@ -155,7 +157,7 @@ class GetCoopSummarySuccessPresenterTests(BaseTestCase):
 
     def test_url_to_first_plans_planner_company_summary_page_is_displayed_correctly(
         self,
-    ):
+    ) -> None:
         coop_summary = self.get_coop_summary()
         view_model = self.presenter.present(coop_summary)
         self.assertEqual(

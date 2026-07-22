@@ -25,21 +25,21 @@ def hsl_to_hex(hue: float, saturation: float, lightness: float) -> str:
 class FlaskColors:
     # hsl values must be in sync with colors.css
     @property
-    def primary(self):
+    def primary(self) -> str:
         return hsl_to_hex(171, 100, 41)
 
     @property
-    def info(self):
+    def info(self) -> str:
         return hsl_to_hex(207, 61, 53)
 
     @property
-    def warning(self):
+    def warning(self) -> str:
         return hsl_to_hex(44, 100, 77)
 
     @property
-    def danger(self):
+    def danger(self) -> str:
         return hsl_to_hex(348, 86, 61)
 
     @property
-    def success(self):
+    def success(self) -> str:
         return hsl_to_hex(153, 53, 53)

@@ -208,7 +208,7 @@ class SuccessfulValidationTests(CreateDraftControllerBase):
 
 
 class UnsuccessfulValidationTests(CreateDraftControllerBase):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp()
 
     def test_that_invalid_form_data_is_converted_to_web_form(self) -> None:

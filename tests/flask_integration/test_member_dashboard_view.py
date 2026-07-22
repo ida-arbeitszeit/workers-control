@@ -8,13 +8,13 @@ class AnonymousUserTest(ViewTestCase):
 
     def test_anonymous_user_gets_302(
         self,
-    ):
+    ) -> None:
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 302)
 
     def test_anonymous_user_gets_redirected_to_start(
         self,
-    ):
+    ) -> None:
         response = self.client.get(self.url)
         self.assertEqual(response.location, "/")
 

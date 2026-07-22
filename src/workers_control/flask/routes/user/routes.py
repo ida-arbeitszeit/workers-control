@@ -81,7 +81,7 @@ def company_summary(
     company_id: UUID,
     get_company_summary: GetCompanySummaryInteractor,
     presenter: GetCompanySummarySuccessPresenter,
-):
+) -> Response:
     interactor_response = get_company_summary.execute(company_id)
     if isinstance(interactor_response, GetCompanySummarySuccess):
         view_model = presenter.present(interactor_response)

@@ -19,7 +19,9 @@ class GetTransferRequestDetailsTests(BaseTestCase):
             AcceptCoordinationTransferInteractor
         )
 
-    def test_interactor_returns_none_when_transfer_request_does_not_exists(self):
+    def test_interactor_returns_none_when_transfer_request_does_not_exists(
+        self,
+    ) -> None:
         request = Interactor.Request(coordination_transfer_request=uuid4())
         response = self.interactor.get_details(request)
         self.assertIsNone(response)

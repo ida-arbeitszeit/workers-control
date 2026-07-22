@@ -17,14 +17,14 @@ class InteractorTests(BaseTestCase):
         )
         self.member = self.member_generator.create_member()
 
-    def test_that_member_name_is_shown(self):
+    def test_that_member_name_is_shown(self) -> None:
         expected_name = "Test Name"
         member = self.member_generator.create_member(name=expected_name)
         request = get_member_dashboard.Request(member=member)
         member_info = self.interactor.get_member_dashboard(request)
         assert member_info.name == expected_name
 
-    def test_that_correct_workplace_id_is_shown(self):
+    def test_that_correct_workplace_id_is_shown(self) -> None:
         company = self.company_generator.create_company(
             workers=[self.member],
         )
@@ -32,7 +32,7 @@ class InteractorTests(BaseTestCase):
         member_info = self.interactor.get_member_dashboard(request)
         assert member_info.workplaces[0].workplace_id == company
 
-    def test_that_correct_workplace_name_is_shown(self):
+    def test_that_correct_workplace_name_is_shown(self) -> None:
         self.company_generator.create_company(
             name="SomeCompanyNameXY",
             workers=[self.member],
@@ -41,12 +41,12 @@ class InteractorTests(BaseTestCase):
         member_info = self.interactor.get_member_dashboard(request)
         assert member_info.workplaces[0].workplace_name == "SomeCompanyNameXY"
 
-    def test_no_invites_are_shown_when_none_was_sent(self):
+    def test_no_invites_are_shown_when_none_was_sent(self) -> None:
         request = get_member_dashboard.Request(member=self.member)
         response = self.interactor.get_member_dashboard(request)
         assert not response.invites
 
-    def test_invites_are_shown_when_worker_was_previously_invited(self):
+    def test_invites_are_shown_when_worker_was_previously_invited(self) -> None:
         inviting_company = self.company_generator.create_company_record()
         self.invite_worker_to_company.invite_worker(
             InviteWorkerToCompanyInteractor.Request(inviting_company.id, self.member)
@@ -55,7 +55,7 @@ class InteractorTests(BaseTestCase):
         response = self.interactor.get_member_dashboard(request)
         assert response.invites
 
-    def test_show_id_of_company_that_sent_the_invite(self):
+    def test_show_id_of_company_that_sent_the_invite(self) -> None:
         inviting_company = self.company_generator.create_company_record()
         self.invite_worker_to_company.invite_worker(
             InviteWorkerToCompanyInteractor.Request(inviting_company.id, self.member)
@@ -64,7 +64,7 @@ class InteractorTests(BaseTestCase):
         response = self.interactor.get_member_dashboard(request)
         assert response.invites[0].company_id == inviting_company.id
 
-    def test_show_name_of_company_that_sent_the_invite(self):
+    def test_show_name_of_company_that_sent_the_invite(self) -> None:
         inviting_company = self.company_generator.create_company_record()
         self.invite_worker_to_company.invite_worker(
             InviteWorkerToCompanyInteractor.Request(inviting_company.id, self.member)
@@ -73,7 +73,7 @@ class InteractorTests(BaseTestCase):
         response = self.interactor.get_member_dashboard(request)
         assert response.invites[0].company_name == inviting_company.name
 
-    def test_show_correct_invite_id(self):
+    def test_show_correct_invite_id(self) -> None:
         inviting_company = self.company_generator.create_company_record()
         invite_response = self.invite_worker_to_company.invite_worker(
             InviteWorkerToCompanyInteractor.Request(inviting_company.id, self.member)

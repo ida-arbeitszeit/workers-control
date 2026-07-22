@@ -7,7 +7,7 @@ from workers_control.web.www.controllers.resend_work_invite_controller import (
 
 
 class TestResendWorkInviteController(BaseTestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp()
         self.controller = self.injector.get(ResendWorkInviteController)
         self.company = self.company_generator.create_company()

@@ -15,7 +15,7 @@ from tests.dependency_injection import TestingModule
 from tests.lazy_property import _lazy_property
 from tests.markers import database_required
 from tests.web.www.datetime_formatter import FakeTimezoneConfiguration
-from workers_control.core.injector import Injector
+from workers_control.core.injector import Injector, Module
 from workers_control.db.db import Base, Database
 from workers_control.db.repositories import DatabaseGatewayImpl
 
@@ -24,9 +24,9 @@ from workers_control.db.repositories import DatabaseGatewayImpl
 class TestCaseWithResettedDatabase(TestCase):
     _is_db_resetted = False
 
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp()
-        self.dependencies = [DatabaseTestModule()]
+        self.dependencies: list[Module] = [DatabaseTestModule()]
         self.injector = Injector(self.dependencies)
         self.db = self.injector.get(Database)
         self.reset_test_db_once_per_testrun()

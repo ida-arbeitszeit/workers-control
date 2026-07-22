@@ -120,7 +120,7 @@ class PaginationTests(BaseTestCase):
 
     def test_if_no_page_is_specified_in_query_args_use_offset_of_0(
         self,
-    ):
+    ) -> None:
         request = FakeRequest()
         interactor_request = self.controller.import_form_data(request=request)
         assert interactor_request.offset == 0
@@ -135,7 +135,9 @@ class PaginationTests(BaseTestCase):
         interactor_request = self.controller.import_form_data(request=request)
         assert interactor_request.offset == 15
 
-    def test_that_offset_0_is_assumed_if_no_valid_integer_is_specified_as_page(self):
+    def test_that_offset_0_is_assumed_if_no_valid_integer_is_specified_as_page(
+        self,
+    ) -> None:
         request = FakeRequest()
         request.set_arg(arg="page", value="123abc")
         interactor_request = self.controller.import_form_data(request=request)

@@ -2084,10 +2084,6 @@ class MockDatabase:
             transfer_of_compensation=transfer_of_compensation,
         )
         self.private_consumptions[consumption.id] = consumption
-        self.indices.private_consumption_by_transfer.add(
-            transfer_of_private_consumption, consumption.id
-        )
-        self.indices.private_consumption_by_plan.add(plan, consumption.id)
         return consumption
 
     def get_private_consumptions(self) -> PrivateConsumptionResult:
@@ -2134,10 +2130,6 @@ class MockDatabase:
             transfer_of_compensation=transfer_of_compensation,
         )
         self.productive_consumptions[consumption.id] = consumption
-        self.indices.productive_consumption_by_transfer.add(
-            transfer_of_productive_consumption, consumption.id
-        )
-        self.indices.productive_consumption_by_plan.add(plan, consumption.id)
         return consumption
 
     def get_productive_consumptions(self) -> ProductiveConsumptionResult:
@@ -2709,10 +2701,6 @@ class Indices:
     member_by_account: Index[UUID, UUID] = field(default_factory=Index)
     company_by_account: Index[UUID, UUID] = field(default_factory=Index)
     cooperation_by_account: Index[UUID, UUID] = field(default_factory=Index)
-    private_consumption_by_transfer: Index[UUID, UUID] = field(default_factory=Index)
-    private_consumption_by_plan: Index[UUID, UUID] = field(default_factory=Index)
-    productive_consumption_by_transfer: Index[UUID, UUID] = field(default_factory=Index)
-    productive_consumption_by_plan: Index[UUID, UUID] = field(default_factory=Index)
     coordination_tenure_by_cooperation: Index[UUID, UUID] = field(default_factory=Index)
     account_credentials_by_email_address_lowercased: Index[str, UUID] = field(
         default_factory=Index

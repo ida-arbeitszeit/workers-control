@@ -136,7 +136,7 @@ class Company(Base):
     a_account: Mapped[UUID] = mapped_column(Uuid, ForeignKey("account.id"))
     prd_account: Mapped[UUID] = mapped_column(Uuid, ForeignKey("account.id"))
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "<Company(name='%s')>" % (self.name,)
 
     workers = relationship(

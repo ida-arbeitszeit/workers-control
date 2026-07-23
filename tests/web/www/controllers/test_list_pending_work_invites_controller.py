@@ -6,11 +6,13 @@ from workers_control.web.www.controllers.list_pending_work_invites_controller im
 
 
 class ListPendingInvitesControllerTests(BaseTestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp()
         self.controller = self.injector.get(ListPendingWorkInvitesController)
 
-    def test_company_id_of_logged_in_company_is_passed_to_interactor_request(self):
+    def test_company_id_of_logged_in_company_is_passed_to_interactor_request(
+        self,
+    ) -> None:
         company_id = self.company_generator.create_company()
         session = self.injector.get(Session)
         session.login_company(company=company_id)

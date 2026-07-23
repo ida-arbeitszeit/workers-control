@@ -27,7 +27,7 @@ class ChangeUserPasswordTest(BaseTestCase):
             and m.email_address == sent_to_email
         ]
 
-    def test_given_member_reset_password_confirmation_message_is_sent(self):
+    def test_given_member_reset_password_confirmation_message_is_sent(self) -> None:
         sent_to_email = "test@email.com"
         self.member_generator.create_member(
             email=sent_to_email, password="old_password"
@@ -44,7 +44,7 @@ class ChangeUserPasswordTest(BaseTestCase):
             len(self._delivered_reset_password_confirmation_message(sent_to_email)), 1
         )
 
-    def test_given_company_reset_password_confirmation_message_is_sent(self):
+    def test_given_company_reset_password_confirmation_message_is_sent(self) -> None:
         sent_to_email = "test@email.com"
         self.company_generator.create_company(
             email=sent_to_email, password="old_password"
@@ -61,7 +61,7 @@ class ChangeUserPasswordTest(BaseTestCase):
             len(self._delivered_reset_password_confirmation_message(sent_to_email)), 1
         )
 
-    def test_given_accountant_reset_password_confirmation_message_is_sent(self):
+    def test_given_accountant_reset_password_confirmation_message_is_sent(self) -> None:
         sent_to_email = "test@email.com"
         self.accountant_generator.create_accountant(
             email_address=sent_to_email, password="old_password"
@@ -78,7 +78,9 @@ class ChangeUserPasswordTest(BaseTestCase):
             len(self._delivered_reset_password_confirmation_message(sent_to_email)), 1
         )
 
-    def test_given_member_password_reset_then_user_can_login_with_new_password(self):
+    def test_given_member_password_reset_then_user_can_login_with_new_password(
+        self,
+    ) -> None:
         sent_to_email = "test@email.com"
         new_password = "new_password"
         self.member_generator.create_member(
@@ -96,7 +98,9 @@ class ChangeUserPasswordTest(BaseTestCase):
 
         self.assertTrue(response.is_logged_in)
 
-    def test_given_member_password_reset_then_user_cannot_login_with_old_password(self):
+    def test_given_member_password_reset_then_user_cannot_login_with_old_password(
+        self,
+    ) -> None:
         sent_to_email = "test@email.com"
         old_password = "old_password"
         self.member_generator.create_member(email=sent_to_email, password=old_password)
@@ -112,7 +116,9 @@ class ChangeUserPasswordTest(BaseTestCase):
 
         self.assertFalse(response.is_logged_in)
 
-    def test_given_company_password_reset_then_user_can_login_with_new_password(self):
+    def test_given_company_password_reset_then_user_can_login_with_new_password(
+        self,
+    ) -> None:
         sent_to_email = "test@email.com"
         new_password = "new_password"
         self.company_generator.create_company(
@@ -134,7 +140,7 @@ class ChangeUserPasswordTest(BaseTestCase):
 
     def test_given_company_password_reset_then_user_cannot_login_with_old_password(
         self,
-    ):
+    ) -> None:
         sent_to_email = "test@email.com"
         old_password = "old_password"
         self.company_generator.create_company(
@@ -156,7 +162,7 @@ class ChangeUserPasswordTest(BaseTestCase):
 
     def test_given_accountant_password_reset_then_user_can_login_with_new_password(
         self,
-    ):
+    ) -> None:
         sent_to_email = "test@email.com"
         new_password = "new_password"
         self.accountant_generator.create_accountant(
@@ -178,7 +184,7 @@ class ChangeUserPasswordTest(BaseTestCase):
 
     def test_given_accountant_password_reset_then_user_cannot_login_with_old_password(
         self,
-    ):
+    ) -> None:
         sent_to_email = "test@email.com"
         old_password = "old_password"
         self.accountant_generator.create_accountant(
@@ -200,7 +206,7 @@ class ChangeUserPasswordTest(BaseTestCase):
 
     def test_given_member_no_password_is_updated_when_account_with_email_does_not_exist(
         self,
-    ):
+    ) -> None:
         sent_to_email = "test@email.com"
         self.member_generator.create_member(
             email=sent_to_email, password="old_password"
@@ -220,7 +226,7 @@ class ChangeUserPasswordTest(BaseTestCase):
 
     def test_given_company_no_password_is_updated_when_account_with_email_does_not_exist(
         self,
-    ):
+    ) -> None:
         sent_to_email = "test@email.com"
         self.company_generator.create_company(
             email=sent_to_email, password="old_password"
@@ -240,7 +246,7 @@ class ChangeUserPasswordTest(BaseTestCase):
 
     def test_given_accountant_no_password_is_updated_when_account_with_email_does_not_exist(
         self,
-    ):
+    ) -> None:
         sent_to_email = "test@email.com"
         self.accountant_generator.create_accountant(
             email_address=sent_to_email, password="old_password"

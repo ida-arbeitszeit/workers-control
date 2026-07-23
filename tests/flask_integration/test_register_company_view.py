@@ -24,15 +24,15 @@ class AuthenticatedMemberTests(ViewTestCase):
 
 
 class UnauthenticatedAndUnconfirmedCompanyTests(ViewTestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp()
         self.url = "/company/signup"
 
-    def test_unauthenticated_and_unconfirmed_company_gets_200(self):
+    def test_unauthenticated_and_unconfirmed_company_gets_200(self) -> None:
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
 
-    def test_correct_posting_is_possible_and_redirects_company(self):
+    def test_correct_posting_is_possible_and_redirects_company(self) -> None:
         response = self.client.post(
             self.url,
             data=dict(
@@ -44,7 +44,9 @@ class UnauthenticatedAndUnconfirmedCompanyTests(ViewTestCase):
         )
         self.assertEqual(response.status_code, 302)
 
-    def test_correct_posting_makes_that_confirmations_mail_is_sent_to_company(self):
+    def test_correct_posting_makes_that_confirmations_mail_is_sent_to_company(
+        self,
+    ) -> None:
         company_email = "test2@cp.org"
         with self.email_service.record_messages() as outbox:
             response = self.client.post(
@@ -115,6 +117,6 @@ class UnauthenticatedAndUnconfirmedCompanyTests(ViewTestCase):
     )
     def test_invalid_form_posting_with_incorrect_form_does_not_redirect_company(
         self, invalid_form_data: dict
-    ):
+    ) -> None:
         response = self.client.post(self.url, data=invalid_form_data)
         self.assertEqual(response.status_code, 400)

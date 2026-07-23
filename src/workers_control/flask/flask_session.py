@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional
+from typing import Any, Optional
 from urllib.parse import urljoin, urlparse
 from uuid import UUID
 
@@ -42,7 +42,7 @@ class FlaskLoginUser:
     def is_anonymous(self) -> bool:
         return False
 
-    def __getattr__(self, name):
+    def __getattr__(self, name: str) -> Any:
         return getattr(self.orm_user, name)
 
 

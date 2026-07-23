@@ -1,8 +1,10 @@
+from uuid import UUID
+
 from tests.flask_integration.base_test_case import ViewTestCase
 
 
 class DeactivateTests(ViewTestCase):
-    def _url(self, basic_service_id) -> str:
+    def _url(self, basic_service_id: UUID) -> str:
         return f"/member/basic_services/{basic_service_id}/deactivate"
 
     def test_post_with_own_service_redirects(self) -> None:

@@ -1,5 +1,5 @@
 from functools import wraps
-from typing import Any
+from typing import Any, Callable
 
 from flask import request
 
@@ -13,9 +13,9 @@ def _not_implemented_view(*args: Any, **kwargs: Any) -> Response:
 
 
 class as_flask_view:
-    def __call__(self, view_class):
+    def __call__(self, view_class: type[Any]) -> Callable[..., Response]:
         @wraps(view_class)
-        def wrapper(*args, **kwargs):
+        def wrapper(*args: Any, **kwargs: Any) -> Response:
             injector = create_dependency_injector()
             view = injector.get(view_class)
             dispatched_method = getattr(view, request.method, _not_implemented_view)

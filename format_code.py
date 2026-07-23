@@ -6,11 +6,12 @@ installed, we also format all ".nix" files in the repository.
 
 import os
 from os import path
+from typing import Iterator
 
 from dev.command import Shell, Subprocess, SubprocessRunner
 
 
-def main(subprocess_runner: SubprocessRunner):
+def main(subprocess_runner: SubprocessRunner) -> None:
     format_python_files(subprocess_runner, read_autoformat_target_paths())
     if is_nixfmt_installed(subprocess_runner):
         format_nix_files(subprocess_runner)
@@ -28,12 +29,12 @@ def format_python_files(
     subprocess_runner.run_command(Subprocess(["black"] + python_files, check=True))
 
 
-def format_nix_files(subprocess_runner: SubprocessRunner):
+def format_nix_files(subprocess_runner: SubprocessRunner) -> None:
     for nix_file in get_nix_files():
         format_nix_file(subprocess_runner, nix_file)
 
 
-def format_nix_file(subprocess_runner: SubprocessRunner, path: str):
+def format_nix_file(subprocess_runner: SubprocessRunner, path: str) -> None:
     if (
         subprocess_runner.run_command(
             Subprocess(["nixfmt", "--check", path], capture_output=True, check=False)
@@ -44,14 +45,14 @@ def format_nix_file(subprocess_runner: SubprocessRunner, path: str):
         subprocess_runner.run_command(Subprocess(["nixfmt", path]))
 
 
-def get_nix_files():
+def get_nix_files() -> Iterator[str]:
     for root, _, files in os.walk("."):
         for file_name in files:
             if file_name.endswith(".nix"):
                 yield path.join(root, file_name)
 
 
-def is_nixfmt_installed(subprocess_runner: SubprocessRunner):
+def is_nixfmt_installed(subprocess_runner: SubprocessRunner) -> bool:
     try:
         subprocess_runner.run_command(
             Subprocess(["nixfmt", "--help"], capture_output=True)

@@ -11,7 +11,6 @@ from workers_control.core.interactors.get_user_account_details import (
 )
 from workers_control.flask.class_based_view import as_flask_view
 from workers_control.flask.types import Response
-from workers_control.flask.views import QueryCompaniesView, QueryOffersView
 from workers_control.flask.views.change_email_address_view import ChangeEmailAddressView
 from workers_control.flask.views.change_user_name_view import ChangeUserNameView
 from workers_control.flask.views.coop_summary_view import CoopSummaryView
@@ -25,6 +24,8 @@ from workers_control.flask.views.list_coordinators_of_cooperation_view import (
     ListCoordinationsOfCooperationView,
 )
 from workers_control.flask.views.list_transfers import ListTransfersView
+from workers_control.flask.views.query_companies import QueryCompaniesView
+from workers_control.flask.views.query_offers import QueryOffersView
 from workers_control.flask.views.request_email_address_change_view import (
     RequestEmailAddressChangeView,
 )
@@ -80,7 +81,7 @@ def company_summary(
     company_id: UUID,
     get_company_summary: GetCompanySummaryInteractor,
     presenter: GetCompanySummarySuccessPresenter,
-):
+) -> Response:
     interactor_response = get_company_summary.execute(company_id)
     if isinstance(interactor_response, GetCompanySummarySuccess):
         view_model = presenter.present(interactor_response)

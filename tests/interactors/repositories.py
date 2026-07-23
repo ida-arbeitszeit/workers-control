@@ -1392,17 +1392,14 @@ class AccountResult(QueryResultImpl[Account]):
         return self._filter_elements(lambda account: account.id in id_)
 
     def owned_by_member(self, *member: UUID) -> Self:
-        def items():
+        def items() -> Iterable[Account]:
             memberes = set(member)
             for account in self.items():
                 owner_ids = self.database.indices.member_by_account.get(account.id)
                 if memberes & owner_ids:
                     yield account
 
-        return replace(
-            self,
-            items=items,
-        )
+        return self.from_iterable(items=items)
 
     def owned_by_company(self, *company: UUID) -> Self:
         def items() -> Iterable[Account]:
@@ -1843,7 +1840,7 @@ class AccountCredentialsUpdate:
             self.perform_all_actions(item)
         return item_count
 
-    def perform_all_actions(self, item) -> None:
+    def perform_all_actions(self, item: records.AccountCredentials) -> None:
         for action in self.actions:
             action(self.database, item)
 
@@ -2087,10 +2084,6 @@ class MockDatabase:
             transfer_of_compensation=transfer_of_compensation,
         )
         self.private_consumptions[consumption.id] = consumption
-        self.indices.private_consumption_by_transfer.add(
-            transfer_of_private_consumption, consumption.id
-        )
-        self.indices.private_consumption_by_plan.add(plan, consumption.id)
         return consumption
 
     def get_private_consumptions(self) -> PrivateConsumptionResult:
@@ -2137,10 +2130,6 @@ class MockDatabase:
             transfer_of_compensation=transfer_of_compensation,
         )
         self.productive_consumptions[consumption.id] = consumption
-        self.indices.productive_consumption_by_transfer.add(
-            transfer_of_productive_consumption, consumption.id
-        )
-        self.indices.productive_consumption_by_plan.add(plan, consumption.id)
         return consumption
 
     def get_productive_consumptions(self) -> ProductiveConsumptionResult:
@@ -2712,10 +2701,6 @@ class Indices:
     member_by_account: Index[UUID, UUID] = field(default_factory=Index)
     company_by_account: Index[UUID, UUID] = field(default_factory=Index)
     cooperation_by_account: Index[UUID, UUID] = field(default_factory=Index)
-    private_consumption_by_transfer: Index[UUID, UUID] = field(default_factory=Index)
-    private_consumption_by_plan: Index[UUID, UUID] = field(default_factory=Index)
-    productive_consumption_by_transfer: Index[UUID, UUID] = field(default_factory=Index)
-    productive_consumption_by_plan: Index[UUID, UUID] = field(default_factory=Index)
     coordination_tenure_by_cooperation: Index[UUID, UUID] = field(default_factory=Index)
     account_credentials_by_email_address_lowercased: Index[str, UUID] = field(
         default_factory=Index

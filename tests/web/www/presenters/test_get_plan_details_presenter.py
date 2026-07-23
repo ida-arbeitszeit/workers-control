@@ -39,21 +39,21 @@ class FormatPlanDetailsTests(BaseTestCase):
         )
         return view_model.details
 
-    def test_plan_id_is_displayed_correctly_as_tuple_of_strings(self):
+    def test_plan_id_is_displayed_correctly_as_tuple_of_strings(self) -> None:
         web_details = self.format_details(self.plan_details)
         self.assertTupleEqual(
             web_details.plan_id,
             (self.translator.gettext("Plan ID"), str(self.plan_details.plan_id)),
         )
 
-    def test_active_status_is_displayed_correctly_as_tuple_of_strings(self):
+    def test_active_status_is_displayed_correctly_as_tuple_of_strings(self) -> None:
         web_details = self.format_details(self.plan_details)
         self.assertTupleEqual(
             web_details.activity_string,
             (self.translator.gettext("Status"), self.translator.gettext("Active")),
         )
 
-    def test_inactive_status_is_displayed_correctly_as_tuple_of_strings(self):
+    def test_inactive_status_is_displayed_correctly_as_tuple_of_strings(self) -> None:
         plan_details = self.plan_details_generator.create_plan_details(is_active=False)
         web_details = self.format_details(plan_details)
         self.assertTupleEqual(
@@ -61,7 +61,7 @@ class FormatPlanDetailsTests(BaseTestCase):
             (self.translator.gettext("Status"), self.translator.gettext("Inactive")),
         )
 
-    def test_planner_is_displayed_correctly_as_tuple_of_strings(self):
+    def test_planner_is_displayed_correctly_as_tuple_of_strings(self) -> None:
         PLANNER_ID = uuid4()
         PLANNER_NAME = "pl name"
         plan_details = self.plan_details_generator.create_plan_details(
@@ -78,7 +78,7 @@ class FormatPlanDetailsTests(BaseTestCase):
             ),
         )
 
-    def test_product_name_is_displayed_correctly_as_tuple_of_strings(self):
+    def test_product_name_is_displayed_correctly_as_tuple_of_strings(self) -> None:
         PRODUCT_NAME = "pr name"
         plan_details = self.plan_details_generator.create_plan_details(
             product_name=PRODUCT_NAME
@@ -94,7 +94,7 @@ class FormatPlanDetailsTests(BaseTestCase):
 
     def test_description_is_displayed_correctly_as_tuple_of_string_and_list_of_string(
         self,
-    ):
+    ) -> None:
         DESCRIPTION = "descr"
         plan_details = self.plan_details_generator.create_plan_details(
             description=DESCRIPTION
@@ -110,7 +110,7 @@ class FormatPlanDetailsTests(BaseTestCase):
 
     def test_description_is_splitted_correctly_at_carriage_return_in_list_of_strings(
         self,
-    ):
+    ) -> None:
         DESCRIPTION = "first paragraph\rsecond paragraph"
         plan_details = self.plan_details_generator.create_plan_details(
             description=DESCRIPTION
@@ -124,7 +124,7 @@ class FormatPlanDetailsTests(BaseTestCase):
             ),
         )
 
-    def test_timeframe_is_displayed_correctly_as_tuple_of_strings(self):
+    def test_timeframe_is_displayed_correctly_as_tuple_of_strings(self) -> None:
         web_details = self.format_details(self.plan_details)
         self.assertTupleEqual(
             web_details.timeframe,
@@ -134,7 +134,7 @@ class FormatPlanDetailsTests(BaseTestCase):
             ),
         )
 
-    def test_production_unit_is_displayed_correctly_as_tuple_of_strings(self):
+    def test_production_unit_is_displayed_correctly_as_tuple_of_strings(self) -> None:
         web_details = self.format_details(self.plan_details)
         self.assertTupleEqual(
             web_details.production_unit,
@@ -144,14 +144,14 @@ class FormatPlanDetailsTests(BaseTestCase):
             ),
         )
 
-    def test_amount_is_displayed_correctly_as_tuple_of_strings(self):
+    def test_amount_is_displayed_correctly_as_tuple_of_strings(self) -> None:
         web_details = self.format_details(self.plan_details)
         self.assertTupleEqual(
             web_details.amount,
             (self.translator.gettext("Amount"), str(self.plan_details.amount)),
         )
 
-    def test_means_cost_is_displayed_correctly_as_tuple_of_strings(self):
+    def test_means_cost_is_displayed_correctly_as_tuple_of_strings(self) -> None:
         web_details = self.format_details(self.plan_details)
         self.assertTupleEqual(
             web_details.means_cost,
@@ -161,7 +161,7 @@ class FormatPlanDetailsTests(BaseTestCase):
             ),
         )
 
-    def test_resources_cost_is_displayed_correctly_as_tuple_of_strings(self):
+    def test_resources_cost_is_displayed_correctly_as_tuple_of_strings(self) -> None:
         web_details = self.format_details(self.plan_details)
         self.assertTupleEqual(
             web_details.resources_cost,
@@ -171,7 +171,7 @@ class FormatPlanDetailsTests(BaseTestCase):
             ),
         )
 
-    def test_labour_cost_is_displayed_correctly_as_tuple_of_strings(self):
+    def test_labour_cost_is_displayed_correctly_as_tuple_of_strings(self) -> None:
         web_details = self.format_details(self.plan_details)
         self.assertTupleEqual(
             web_details.labour_cost,
@@ -183,7 +183,7 @@ class FormatPlanDetailsTests(BaseTestCase):
 
     def test_type_of_plan_is_displayed_correctly_as_tuple_of_strings_when_productive_plan(
         self,
-    ):
+    ) -> None:
         plan_details = self.plan_details_generator.create_plan_details(
             is_public_service=False
         )
@@ -198,7 +198,7 @@ class FormatPlanDetailsTests(BaseTestCase):
 
     def test_type_of_plan_is_displayed_correctly_as_tuple_of_strings_when_public_plan(
         self,
-    ):
+    ) -> None:
         plan_details = self.plan_details_generator.create_plan_details(
             is_public_service=True
         )
@@ -211,7 +211,9 @@ class FormatPlanDetailsTests(BaseTestCase):
             ),
         )
 
-    def test_price_per_unit_is_displayed_correctly_as_tuple_of_strings_and_bool(self):
+    def test_price_per_unit_is_displayed_correctly_as_tuple_of_strings_and_bool(
+        self,
+    ) -> None:
         COOP_ID = uuid4()
         plan_details = self.plan_details_generator.create_plan_details(
             cooperation=COOP_ID, is_cooperating=True, price_per_unit=Decimal("0.061")
@@ -227,14 +229,14 @@ class FormatPlanDetailsTests(BaseTestCase):
             ),
         )
 
-    def test_active_days_is_displayed_correctly_as_string(self):
+    def test_active_days_is_displayed_correctly_as_string(self) -> None:
         web_details = self.format_details(self.plan_details)
         self.assertEqual(
             web_details.active_days,
             str(self.plan_details.active_days),
         )
 
-    def test_correct_creation_date_is_shown(self):
+    def test_correct_creation_date_is_shown(self) -> None:
         CREATION_DATE = self.datetime_service.now()
         plan_details = self.plan_details_generator.create_plan_details(
             creation_date=CREATION_DATE
@@ -247,14 +249,14 @@ class FormatPlanDetailsTests(BaseTestCase):
             ),
         )
 
-    def test_dash_is_shown_if_approval_date_does_not_exist(self):
+    def test_dash_is_shown_if_approval_date_does_not_exist(self) -> None:
         plan_details = self.plan_details_generator.create_plan_details(
             approval_date=None
         )
         web_details = self.format_details(plan_details)
         self.assertEqual(web_details.approval_date, "-")
 
-    def test_correct_approval_date_is_shown_if_it_exists(self):
+    def test_correct_approval_date_is_shown_if_it_exists(self) -> None:
         APPROVAL_DATE = self.datetime_service.now()
         plan_details = self.plan_details_generator.create_plan_details(
             approval_date=APPROVAL_DATE
@@ -267,14 +269,14 @@ class FormatPlanDetailsTests(BaseTestCase):
             ),
         )
 
-    def test_dash_is_shown_if_expiration_date_does_not_exist(self):
+    def test_dash_is_shown_if_expiration_date_does_not_exist(self) -> None:
         plan_details = self.plan_details_generator.create_plan_details(
             expiration_date=None
         )
         web_details = self.format_details(plan_details)
         self.assertEqual(web_details.expiration_date, "-")
 
-    def test_correct_expiration_date_is_shown_if_it_exists(self):
+    def test_correct_expiration_date_is_shown_if_it_exists(self) -> None:
         EXPIRATION_DATE = self.datetime_service.now()
         plan_details = self.plan_details_generator.create_plan_details(
             expiration_date=EXPIRATION_DATE

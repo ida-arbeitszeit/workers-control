@@ -10,7 +10,7 @@ class AccountCredentialsResultTests(DatabaseTestCase):
     def setUp(self) -> None:
         super().setUp()
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         super().tearDown()
 
     def create_account_credentials(

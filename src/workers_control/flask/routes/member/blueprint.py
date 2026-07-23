@@ -18,7 +18,9 @@ class MemberRoute:
         else:
             self.methods = methods
 
-    def __call__(self, view_function: Callable[..., types.Response]):
+    def __call__(
+        self, view_function: Callable[..., types.Response]
+    ) -> Callable[..., types.Response]:
         @wraps(view_function)
         def _wrapper(*args: Any, **kwargs: Any) -> types.Response:
             injector = create_dependency_injector()

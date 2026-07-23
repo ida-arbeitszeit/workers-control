@@ -1,4 +1,4 @@
-from typing import Any, Generic, Type, TypeVar
+from typing import Any, Generic, Optional, Type, TypeVar
 
 T = TypeVar("T")
 
@@ -15,10 +15,10 @@ class _lazy_property(Generic[T]):
         """
         self.cls = cls
 
-    def __set_name__(self, owner, name: str) -> None:
+    def __set_name__(self, owner: type, name: str) -> None:
         self._attribute_name = name
 
-    def __get__(self, obj: Any, objtype=None) -> T:
+    def __get__(self, obj: Any, objtype: Optional[type] = None) -> T:
         cache = obj._lazy_property_cache
         instance = cache.get(self._attribute_name)
         if instance is None:

@@ -14,7 +14,7 @@ class InviteWorkerToCompanyPresenterTests(BaseTestCase):
         super().setUp()
         self.presenter = self.injector.get(InviteWorkerToCompanyPresenter)
 
-    def test_when_worker_is_not_found_code_400_is_presented(self):
+    def test_when_worker_is_not_found_code_400_is_presented(self) -> None:
         response = InviteWorkerToCompanyInteractor.Response(
             worker=uuid4(),
             rejection_reason=InviteWorkerToCompanyInteractor.Response.RejectionReason.WORKER_NOT_FOUND,
@@ -22,7 +22,9 @@ class InviteWorkerToCompanyPresenterTests(BaseTestCase):
         view_model = self.presenter.present(response)
         assert view_model.worker == str(response.worker)
 
-    def test_when_worker_is_not_found_worker_id_from_response_is_presented(self):
+    def test_when_worker_is_not_found_worker_id_from_response_is_presented(
+        self,
+    ) -> None:
         response = InviteWorkerToCompanyInteractor.Response(
             worker=uuid4(),
             rejection_reason=InviteWorkerToCompanyInteractor.Response.RejectionReason.WORKER_NOT_FOUND,
@@ -30,7 +32,7 @@ class InviteWorkerToCompanyPresenterTests(BaseTestCase):
         view_model = self.presenter.present(response)
         assert view_model.worker == str(response.worker)
 
-    def test_when_worker_is_not_found_warning_is_presented(self):
+    def test_when_worker_is_not_found_warning_is_presented(self) -> None:
         response = InviteWorkerToCompanyInteractor.Response(
             worker=uuid4(),
             rejection_reason=InviteWorkerToCompanyInteractor.Response.RejectionReason.WORKER_NOT_FOUND,
@@ -40,7 +42,7 @@ class InviteWorkerToCompanyPresenterTests(BaseTestCase):
             "Worker could not be found."
         )
 
-    def test_when_company_is_not_found_code_400_is_presented(self):
+    def test_when_company_is_not_found_code_400_is_presented(self) -> None:
         response = InviteWorkerToCompanyInteractor.Response(
             worker=uuid4(),
             rejection_reason=InviteWorkerToCompanyInteractor.Response.RejectionReason.COMPANY_NOT_FOUND,
@@ -48,7 +50,9 @@ class InviteWorkerToCompanyPresenterTests(BaseTestCase):
         view_model = self.presenter.present(response)
         assert view_model.status_code == 400
 
-    def test_when_company_is_not_found_worker_id_from_response_is_presented(self):
+    def test_when_company_is_not_found_worker_id_from_response_is_presented(
+        self,
+    ) -> None:
         response = InviteWorkerToCompanyInteractor.Response(
             worker=uuid4(),
             rejection_reason=InviteWorkerToCompanyInteractor.Response.RejectionReason.COMPANY_NOT_FOUND,
@@ -56,7 +60,7 @@ class InviteWorkerToCompanyPresenterTests(BaseTestCase):
         view_model = self.presenter.present(response)
         assert view_model.worker == str(response.worker)
 
-    def test_when_company_is_not_found_warning_is_presented(self):
+    def test_when_company_is_not_found_warning_is_presented(self) -> None:
         response = InviteWorkerToCompanyInteractor.Response(
             worker=uuid4(),
             rejection_reason=InviteWorkerToCompanyInteractor.Response.RejectionReason.COMPANY_NOT_FOUND,
@@ -66,7 +70,7 @@ class InviteWorkerToCompanyPresenterTests(BaseTestCase):
             "Company could not be found."
         )
 
-    def test_when_worker_works_already_for_company_code_400_is_presented(self):
+    def test_when_worker_works_already_for_company_code_400_is_presented(self) -> None:
         response = InviteWorkerToCompanyInteractor.Response(
             worker=uuid4(),
             rejection_reason=InviteWorkerToCompanyInteractor.Response.RejectionReason.WORKER_ALREADY_WORKS_FOR_COMPANY,
@@ -76,7 +80,7 @@ class InviteWorkerToCompanyPresenterTests(BaseTestCase):
 
     def test_when_worker_works_already_for_company_worker_id_from_response_is_presented(
         self,
-    ):
+    ) -> None:
         response = InviteWorkerToCompanyInteractor.Response(
             worker=uuid4(),
             rejection_reason=InviteWorkerToCompanyInteractor.Response.RejectionReason.WORKER_ALREADY_WORKS_FOR_COMPANY,
@@ -84,7 +88,7 @@ class InviteWorkerToCompanyPresenterTests(BaseTestCase):
         view_model = self.presenter.present(response)
         assert view_model.worker == str(response.worker)
 
-    def test_when_worker_works_already_for_company_warning_is_presented(self):
+    def test_when_worker_works_already_for_company_warning_is_presented(self) -> None:
         response = InviteWorkerToCompanyInteractor.Response(
             worker=uuid4(),
             rejection_reason=InviteWorkerToCompanyInteractor.Response.RejectionReason.WORKER_ALREADY_WORKS_FOR_COMPANY,
@@ -94,7 +98,7 @@ class InviteWorkerToCompanyPresenterTests(BaseTestCase):
             "Worker already works for the company."
         )
 
-    def test_when_invitation_is_already_issued_code_400_is_presented(self):
+    def test_when_invitation_is_already_issued_code_400_is_presented(self) -> None:
         response = InviteWorkerToCompanyInteractor.Response(
             worker=uuid4(),
             rejection_reason=InviteWorkerToCompanyInteractor.Response.RejectionReason.INVITATION_ALREADY_ISSUED,
@@ -104,7 +108,7 @@ class InviteWorkerToCompanyPresenterTests(BaseTestCase):
 
     def test_when_invitation_is_already_issued_worker_id_from_response_is_presented(
         self,
-    ):
+    ) -> None:
         response = InviteWorkerToCompanyInteractor.Response(
             worker=uuid4(),
             rejection_reason=InviteWorkerToCompanyInteractor.Response.RejectionReason.INVITATION_ALREADY_ISSUED,
@@ -112,7 +116,7 @@ class InviteWorkerToCompanyPresenterTests(BaseTestCase):
         view_model = self.presenter.present(response)
         assert view_model.worker == str(response.worker)
 
-    def test_when_invitation_is_already_issued_warning_is_presented(self):
+    def test_when_invitation_is_already_issued_warning_is_presented(self) -> None:
         response = InviteWorkerToCompanyInteractor.Response(
             worker=uuid4(),
             rejection_reason=InviteWorkerToCompanyInteractor.Response.RejectionReason.INVITATION_ALREADY_ISSUED,
@@ -122,21 +126,21 @@ class InviteWorkerToCompanyPresenterTests(BaseTestCase):
             "Invitation has already been issued."
         )
 
-    def test_when_worker_is_invited_code_302_is_presented(self):
+    def test_when_worker_is_invited_code_302_is_presented(self) -> None:
         response = InviteWorkerToCompanyInteractor.Response(
             worker=uuid4(),
         )
         view_model = self.presenter.present(response)
         assert view_model.status_code == 302
 
-    def test_when_worker_is_invited_worker_id_from_response_is_presented(self):
+    def test_when_worker_is_invited_worker_id_from_response_is_presented(self) -> None:
         response = InviteWorkerToCompanyInteractor.Response(
             worker=uuid4(),
         )
         view_model = self.presenter.present(response)
         assert view_model.worker == str(response.worker)
 
-    def test_when_worker_is_invited_info_is_presented(self):
+    def test_when_worker_is_invited_info_is_presented(self) -> None:
         response = InviteWorkerToCompanyInteractor.Response(
             worker=uuid4(),
         )

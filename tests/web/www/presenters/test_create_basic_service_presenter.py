@@ -23,11 +23,13 @@ class CreateBasicServicePresenterTests(BaseTestCase):
         super().setUp()
         self.presenter = self.injector.get(CreateBasicServicePresenter)
 
-    def test_info_notification_returned_when_creation_was_successful(self):
+    def test_info_notification_returned_when_creation_was_successful(self) -> None:
         self.presenter.present(SUCCESSFUL_CREATE_RESPONSE)
         self.assertTrue(self._get_info_notifications())
 
-    def test_correct_info_notification_returned_when_creation_was_successful(self):
+    def test_correct_info_notification_returned_when_creation_was_successful(
+        self,
+    ) -> None:
         self.presenter.present(SUCCESSFUL_CREATE_RESPONSE)
         self.assertIn(
             self.translator.gettext("Successfully created basic service."),
@@ -36,13 +38,13 @@ class CreateBasicServicePresenterTests(BaseTestCase):
 
     def test_warning_notification_returned_when_creation_was_rejected_because_member_not_found(
         self,
-    ):
+    ) -> None:
         self.presenter.present(REJECTED_RESPONSE_MEMBER_NOT_FOUND)
         self.assertTrue(self._get_warning_notifications())
 
     def test_correct_warning_notification_is_returned_when_creation_was_rejected_because_member_not_found(
         self,
-    ):
+    ) -> None:
         self.presenter.present(REJECTED_RESPONSE_MEMBER_NOT_FOUND)
         self.assertIn(
             self.translator.gettext("Basic service creation failed: Member not found."),

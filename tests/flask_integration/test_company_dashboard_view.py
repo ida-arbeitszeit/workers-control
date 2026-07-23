@@ -36,7 +36,7 @@ class AnonymousUserTest(ViewTestCase):
 
     def test_anonymous_user_gets_redirected_to_start_page(
         self,
-    ):
+    ) -> None:
         response = self.client.get(self.url, follow_redirects=True)
         assert response.request.url == self.url_index.get_start_page_url()
 

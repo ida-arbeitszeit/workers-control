@@ -29,11 +29,11 @@ class CreateCooperationPresenterTests(BaseTestCase):
         super().setUp()
         self.presenter = self.injector.get(CreateCooperationPresenter)
 
-    def test_notification_returned_when_creation_was_successful(self):
+    def test_notification_returned_when_creation_was_successful(self) -> None:
         self.presenter.present(SUCCESSFUL_CREATE_RESPONSE)
         self.assertTrue(self._get_info_notifications())
 
-    def test_correct_notification_returned_when_creation_was_successful(self):
+    def test_correct_notification_returned_when_creation_was_successful(self) -> None:
         self.presenter.present(SUCCESSFUL_CREATE_RESPONSE)
         self.assertIn(
             self.translator.gettext("Successfully created cooperation."),
@@ -42,13 +42,13 @@ class CreateCooperationPresenterTests(BaseTestCase):
 
     def test_notification_returned_when_creation_was_rejected_because_coop_name_existed(
         self,
-    ):
+    ) -> None:
         self.presenter.present(REJECTED_RESPONSE_NAME_EXISTS)
         self.assertTrue(self._get_warning_notifications())
 
     def test_correct_notification_is_returned_when_creation_was_rejected_because_coop_name_existed(
         self,
-    ):
+    ) -> None:
         self.presenter.present(REJECTED_RESPONSE_NAME_EXISTS)
         self.assertIn(
             self.translator.gettext(
@@ -59,13 +59,13 @@ class CreateCooperationPresenterTests(BaseTestCase):
 
     def test_notification_returned_when_creation_was_rejected_because_coordinator_not_found(
         self,
-    ):
+    ) -> None:
         self.presenter.present(REJECTED_RESPONSE_COORDINATOR_NOT_FOUND)
         self.assertTrue(self._get_warning_notifications())
 
     def test_correct_notification_is_returned_when_creation_was_rejected_because_coordinator_not_found(
         self,
-    ):
+    ) -> None:
         self.presenter.present(REJECTED_RESPONSE_COORDINATOR_NOT_FOUND)
         self.assertIn(
             self.translator.gettext("Internal error: Coordinator not found."),

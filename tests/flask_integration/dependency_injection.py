@@ -1,3 +1,5 @@
+from typing import Any
+
 from flask import Flask
 
 from tests.db.dependency_injection import provide_test_database_uri
@@ -6,7 +8,7 @@ from workers_control.flask import create_app
 
 
 class FlaskTestConfiguration(dict):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         for key, value in self.items():
             if key.isupper():
@@ -50,12 +52,12 @@ class FlaskTestConfiguration(dict):
     def _set_template_folder(self, template_folder: str | None) -> None:
         self["template_folder"] = template_folder
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key: str, value: Any) -> None:
         super().__setitem__(key, value)
         if key.isupper():
             setattr(self, key, value)
 
-    def __delitem__(self, key):
+    def __delitem__(self, key: str) -> None:
         super().__delitem__(key)
         if key.isupper():
             delattr(self, key)

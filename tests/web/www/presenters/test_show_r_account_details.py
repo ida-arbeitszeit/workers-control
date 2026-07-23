@@ -129,7 +129,7 @@ class ShowRAccountDetailsPresenterTests(BaseTestCase):
         self,
         type: TransferType = TransferType.credit_r,
         date: datetime | None = None,
-        volume=Decimal(10),
+        volume: Decimal = Decimal(10),
         is_debit: bool = False,
     ) -> AccountTransfer:
         if date is None:

@@ -34,35 +34,43 @@ class PresentInteractorResponseTests(BaseTestCase):
         super().setUp()
         self.presenter = self.injector.get(RegisterHoursWorkedPresenter)
 
-    def test_presenter_renders_warning_if_interactor_response_is_rejected(self):
+    def test_presenter_renders_warning_if_interactor_response_is_rejected(self) -> None:
         self.presenter.present_interactor_response(REJECTED_INTERACTOR_RESPONSE)
         self.assertTrue(self.notifier.warnings)
         self.assertFalse(self.notifier.infos)
 
-    def test_presenter_returns_status_404_if_interactor_response_is_rejected(self):
+    def test_presenter_returns_status_404_if_interactor_response_is_rejected(
+        self,
+    ) -> None:
         view_model = self.presenter.present_interactor_response(
             REJECTED_INTERACTOR_RESPONSE
         )
         self.assertEqual(view_model.status_code, 404)
 
-    def test_presenter_does_not_redirect_when_interactor_response_is_rejected(self):
+    def test_presenter_does_not_redirect_when_interactor_response_is_rejected(
+        self,
+    ) -> None:
         view_model = self.presenter.present_interactor_response(
             REJECTED_INTERACTOR_RESPONSE
         )
         self.assertIsNone(view_model.redirect_url)
 
-    def test_presenter_renders_info_if_interactor_response_is_successfull(self):
+    def test_presenter_renders_info_if_interactor_response_is_successfull(self) -> None:
         self.presenter.present_interactor_response(SUCCESS_INTERACTOR_RESPONSE)
         self.assertTrue(self.notifier.infos)
         self.assertFalse(self.notifier.warnings)
 
-    def test_presenter_returns_status_302_if_interactor_response_is_successfull(self):
+    def test_presenter_returns_status_302_if_interactor_response_is_successfull(
+        self,
+    ) -> None:
         view_model = self.presenter.present_interactor_response(
             SUCCESS_INTERACTOR_RESPONSE
         )
         self.assertEqual(view_model.status_code, 302)
 
-    def test_presenter_redirects_to_registered_hours_worked_view_on_success(self):
+    def test_presenter_redirects_to_registered_hours_worked_view_on_success(
+        self,
+    ) -> None:
         view_model = self.presenter.present_interactor_response(
             SUCCESS_INTERACTOR_RESPONSE
         )
@@ -85,7 +93,7 @@ class PresentControllerResponseTests(BaseTestCase):
 
     def test_presenter_renders_correct_warning_if_controller_rejects_invalid_input(
         self,
-    ):
+    ) -> None:
         self.presenter.present_controller_warnings(
             REJECTED_CONTROLLER_RES_INVALID_INPUT
         )
@@ -95,7 +103,7 @@ class PresentControllerResponseTests(BaseTestCase):
 
     def test_presenter_renders_correct_warning_if_controller_rejects_negative_amount(
         self,
-    ):
+    ) -> None:
         self.presenter.present_controller_warnings(
             REJECTED_CONTROLLER_RES_NEGATIVE_AMOUNT
         )

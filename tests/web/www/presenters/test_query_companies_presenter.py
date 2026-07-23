@@ -11,31 +11,31 @@ from workers_control.web.www.presenters.query_companies_presenter import (
 
 
 class QueryCompaniesPresenterTests(BaseTestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp()
         self.queried_company_generator = self.injector.get(QueriedCompanyGenerator)
         self.presenter = self.injector.get(QueryCompaniesPresenter)
         self.session.login_member(uuid4())
 
-    def test_empty_view_model_does_not_show_results(self):
+    def test_empty_view_model_does_not_show_results(self) -> None:
         presentation = self.presenter.get_empty_view_model()
         self.assertFalse(presentation.show_results)
 
-    def test_empty_view_model_does_not_show_pagination(self):
+    def test_empty_view_model_does_not_show_pagination(self) -> None:
         presentation = self.presenter.get_empty_view_model()
         self.assertFalse(presentation.pagination.is_visible)
 
-    def test_non_empty_interactor_response_leads_to_showing_results(self):
+    def test_non_empty_interactor_response_leads_to_showing_results(self) -> None:
         response = self.queried_company_generator.get_response()
         presentation = self.presenter.present(response)
         self.assertTrue(presentation.show_results)
 
-    def test_show_notification_when_no_results_are_found(self):
+    def test_show_notification_when_no_results_are_found(self) -> None:
         response = self.queried_company_generator.get_response(queried_companies=[])
         self.presenter.present(response)
         self.assertTrue(self.notifier.warnings)
 
-    def test_dont_show_notifications_when_results_are_found(self):
+    def test_dont_show_notifications_when_results_are_found(self) -> None:
         response = self.queried_company_generator.get_response()
         self.presenter.present(response)
         self.assertFalse(self.notifier.warnings)

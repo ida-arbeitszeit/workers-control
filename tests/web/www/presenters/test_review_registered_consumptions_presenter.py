@@ -17,7 +17,7 @@ from workers_control.web.www.presenters.review_registered_consumptions_presenter
 
 
 class ReviewRegisteredConsumptionsPresenterTests(BaseTestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp()
         self.presenter = self.injector.get(ReviewRegisteredConsumptionsPresenter)
 

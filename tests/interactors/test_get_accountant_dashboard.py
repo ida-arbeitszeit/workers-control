@@ -11,21 +11,21 @@ class InteractorTests(BaseTestCase):
         super().setUp()
         self.interactor = self.injector.get(GetAccountantDashboardInteractor)
 
-    def test_retrieving_dashboard_for_nonexisting_accountant_fails(self):
+    def test_retrieving_dashboard_for_nonexisting_accountant_fails(self) -> None:
         with self.assertRaises(self.interactor.Failure):
             self.interactor.get_dashboard(uuid4())
 
-    def test_retrieving_dashboard_for_existing_accountant_succeeds(self):
+    def test_retrieving_dashboard_for_existing_accountant_succeeds(self) -> None:
         accountant = self.accountant_generator.create_accountant()
         response = self.interactor.get_dashboard(accountant)
         assert isinstance(response, self.interactor.Response)
 
-    def test_retrieved_dashboard_has_correct_id(self):
+    def test_retrieved_dashboard_has_correct_id(self) -> None:
         expected_accountant = self.accountant_generator.create_accountant()
         response = self.interactor.get_dashboard(expected_accountant)
         self.assertEqual(response.accountant_id, expected_accountant)
 
-    def test_retrieved_dashboard_has_correct_accountant_name(self):
+    def test_retrieved_dashboard_has_correct_accountant_name(self) -> None:
         expected_name = "test acc name"
         expected_accountant = self.accountant_generator.create_accountant(
             name=expected_name
@@ -33,7 +33,7 @@ class InteractorTests(BaseTestCase):
         response = self.interactor.get_dashboard(expected_accountant)
         self.assertEqual(response.name, expected_name)
 
-    def test_retrieved_dashboard_has_an_accountant_email(self):
+    def test_retrieved_dashboard_has_an_accountant_email(self) -> None:
         expected_email = "testmail@cp.org"
         expected_accountant = self.accountant_generator.create_accountant(
             email_address=expected_email

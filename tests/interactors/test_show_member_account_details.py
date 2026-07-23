@@ -14,7 +14,7 @@ from workers_control.core.transfers import TransferType
 
 
 class ShowMemberAccountDetailsTests(BaseTestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp()
         self.interactor = self.injector.get(ShowMemberAccountDetailsInteractor)
         self.social_accounting_name = self.injector.get(

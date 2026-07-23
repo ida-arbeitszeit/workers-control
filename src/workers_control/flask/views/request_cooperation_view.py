@@ -16,7 +16,10 @@ from workers_control.web.malformed_input_data import MalformedInputData
 from workers_control.web.www.controllers.request_cooperation_controller import (
     RequestCooperationController,
 )
-from workers_control.web.www.presenters.list_plans_presenter import ListPlansPresenter
+from workers_control.web.www.presenters.list_plans_presenter import (
+    ListPlansPresenter,
+    ListPlansViewModel,
+)
 from workers_control.web.www.presenters.request_cooperation_presenter import (
     RequestCooperationPresenter,
 )
@@ -77,7 +80,7 @@ class RequestCooperationView:
             status=400,
         )
 
-    def _get_list_plans_view_model(self):
+    def _get_list_plans_view_model(self) -> ListPlansViewModel:
         current_user = self.flask_session.get_current_user()
         assert current_user
         plans_list_response = self.list_plans.execute(current_user)

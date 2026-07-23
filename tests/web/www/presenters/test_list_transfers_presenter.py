@@ -394,7 +394,7 @@ class ResultsTests(ListTransfersPresenterBase):
     )
     def test_that_transfer_value_is_formatted_correctly(
         self, value: Decimal, expected: str
-    ):
+    ) -> None:
         uc_response = self.create_interactor_response(
             transfers=[self.create_transfer_entry(value=value)]
         )

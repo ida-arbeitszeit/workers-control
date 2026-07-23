@@ -11,7 +11,7 @@ from workers_control.web.www.presenters.show_company_accounts_presenter import (
 
 
 class ShowCompanyAccountsPresenterTests(BaseTestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp()
         self.presenter = self.injector.get(ShowCompanyAccountsPresenter)
 

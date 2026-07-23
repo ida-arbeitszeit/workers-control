@@ -15,14 +15,14 @@ FAILED_DELETE_RESPONSE = HidePlanResponse(
 
 
 class HidePlanPresenterTests(BaseTestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp()
         self.presenter = self.injector.get(HidePlanPresenter)
 
-    def test_that_a_notification_is_shown_when_deletion_was_successful(self):
+    def test_that_a_notification_is_shown_when_deletion_was_successful(self) -> None:
         self.presenter.present(SUCCESSFUL_DELETE_RESPONSE)
         self.assertTrue(self.notifier.infos)
 
-    def test_that_no_notification_is_shown_when_deletion_was_a_failure(self):
+    def test_that_no_notification_is_shown_when_deletion_was_a_failure(self) -> None:
         self.presenter.present(FAILED_DELETE_RESPONSE)
         self.assertFalse(self.notifier.infos)

@@ -4,7 +4,7 @@ import enum
 from dataclasses import dataclass
 from datetime import datetime
 from decimal import Decimal
-from typing import List, Optional
+from typing import Any, Callable, List, Optional
 from uuid import UUID
 
 from workers_control.core import records
@@ -157,7 +157,7 @@ class QueryOffersInteractor:
             return basic_services.ordered_by_provider_name()
         return basic_services.ordered_by_creation_date(ascending=False)
 
-    def _sort_key(self, sort_by: OfferSorting):
+    def _sort_key(self, sort_by: OfferSorting) -> Callable[[QueriedOffer], Any]:
         if sort_by == OfferSorting.by_provider_name:
             return lambda offer: offer.provider_name.lower()
         return lambda offer: -offer.created_or_approved_on.timestamp()

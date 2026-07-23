@@ -19,7 +19,7 @@ TARGET_PACKAGES = [
 T = TypeVar("T")
 
 
-def main(subprocess_runner: SubprocessRunner):
+def main(subprocess_runner: SubprocessRunner) -> None:
     LOGGER.info("Update type stubs from dependencies")
     packages = list(flatten(["-p", package_name] for package_name in TARGET_PACKAGES))
     shutil.rmtree("dev/type_stubs")

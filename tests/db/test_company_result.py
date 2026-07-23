@@ -197,7 +197,7 @@ class WithNameContainingTests(DatabaseTestCase):
     def setUp(self) -> None:
         super().setUp()
 
-    def test_that_companies_can_be_filtered_by_name(self):
+    def test_that_companies_can_be_filtered_by_name(self) -> None:
         expected_company_id = self.company_generator.create_company(name="abc123")
         returned_company = list(
             self.database_gateway.get_companies().with_name_containing("abc123")
@@ -205,7 +205,7 @@ class WithNameContainingTests(DatabaseTestCase):
         assert returned_company
         assert returned_company[0].id == expected_company_id
 
-    def test_that_companies_can_be_filtered_by_subset_of_name(self):
+    def test_that_companies_can_be_filtered_by_subset_of_name(self) -> None:
         expected_company_id = self.company_generator.create_company(name="abc123")
         returned_company = list(
             self.database_gateway.get_companies().with_name_containing("bc1")
@@ -213,7 +213,9 @@ class WithNameContainingTests(DatabaseTestCase):
         assert returned_company
         assert returned_company[0].id == expected_company_id
 
-    def test_that_companies_can_be_filtered_by_subset_of_name_regardless_of_case(self):
+    def test_that_companies_can_be_filtered_by_subset_of_name_regardless_of_case(
+        self,
+    ) -> None:
         expected_company_id = self.company_generator.create_company(name="abc123")
         returned_company = list(
             self.database_gateway.get_companies().with_name_containing("bC1")
@@ -223,7 +225,7 @@ class WithNameContainingTests(DatabaseTestCase):
 
 
 class WithEmailContainingTests(DatabaseTestCase):
-    def test_that_companies_can_be_filtered_by_email(self):
+    def test_that_companies_can_be_filtered_by_email(self) -> None:
         expected_company_id = self.company_generator.create_company(
             email="some.mail@cp.org"
         )
@@ -235,7 +237,7 @@ class WithEmailContainingTests(DatabaseTestCase):
         assert returned_companies
         assert returned_companies[0].id == expected_company_id
 
-    def test_that_companies_can_be_filtered_by_email_case_insensitive(self):
+    def test_that_companies_can_be_filtered_by_email_case_insensitive(self) -> None:
         email = "some.mail@cp.org"
         expected_company_id = self.company_generator.create_company(email=email)
         altered_email = Utility.mangle_case(email)
@@ -244,7 +246,7 @@ class WithEmailContainingTests(DatabaseTestCase):
         )
         assert returned_companies[0].id == expected_company_id
 
-    def test_that_companies_can_be_filtered_by_substring_of_email(self):
+    def test_that_companies_can_be_filtered_by_substring_of_email(self) -> None:
         expected_company_id = self.company_generator.create_company(
             email="some.mail@cp.org"
         )
@@ -254,7 +256,7 @@ class WithEmailContainingTests(DatabaseTestCase):
         assert returned_company
         assert returned_company[0].id == expected_company_id
 
-    def test_that_companies_can_be_filtered_regardless_of_case(self):
+    def test_that_companies_can_be_filtered_regardless_of_case(self) -> None:
         expected_company_id = self.company_generator.create_company(
             email="some.mail@cp.org"
         )

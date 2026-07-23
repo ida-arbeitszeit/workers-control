@@ -380,7 +380,7 @@ class GetAllPlans(DatabaseTestCase):
         assert plan_requesting_at_coop in [plan.id for plan in results]
         assert plan_requesting_at_other_coop not in [plan.id for plan in results]
 
-    def test_can_filter_for_cooperating_plans(self):
+    def test_can_filter_for_cooperating_plans(self) -> None:
         coop = self.cooperation_generator.create_cooperation()
         cooperating_plan = self.plan_generator.create_plan(cooperation=coop)
         non_cooperating_plan = self.plan_generator.create_plan(cooperation=None)
@@ -897,7 +897,7 @@ class JoinedWithProvidedProductAmountTests(DatabaseTestCase):
 
 
 class ThatRequestCooperationWithCoordinatorTests(DatabaseTestCase):
-    def test_possible_to_set_and_unset_requested_cooperation_attribute(self):
+    def test_possible_to_set_and_unset_requested_cooperation_attribute(self) -> None:
         cooperation = self.cooperation_generator.create_cooperation()
         plan = self.plan_generator.create_plan()
         plan_result = self.database_gateway.get_plans().with_id(plan)

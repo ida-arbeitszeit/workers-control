@@ -29,10 +29,10 @@ class CompanyDashboardBaseTestCase(BaseTestCase):
 
 
 class CompanyDashboardPresenterTests(CompanyDashboardBaseTestCase):
-    def test_presenter_successfully_presents_a_interactor_response(self):
+    def test_presenter_successfully_presents_a_interactor_response(self) -> None:
         self.assertTrue(self.presenter.present(self.get_interactor_response()))
 
-    def test_presenter_correctly_shows_company_name(self):
+    def test_presenter_correctly_shows_company_name(self) -> None:
         view_model = self.presenter.present(
             self.get_interactor_response(
                 company_info=Interactor.Response.CompanyInfo(

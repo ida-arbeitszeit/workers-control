@@ -22,16 +22,18 @@ class GetMemberDashboardPresenterTests(BaseTestCase):
             self.translator.gettext("Welcome, %s!") % self.get_response().name,
         )
 
-    def test_that_workplaces_are_not_shown_when_worker_is_not_employed(self):
+    def test_that_workplaces_are_not_shown_when_worker_is_not_employed(self) -> None:
         presentation = self.presenter.present(self.get_response())
         self.assertFalse(presentation.show_workplaces)
         self.assertFalse(presentation.workplaces)
 
-    def test_that_work_registration_info_is_shown_when_worker_is_not_employed(self):
+    def test_that_work_registration_info_is_shown_when_worker_is_not_employed(
+        self,
+    ) -> None:
         presentation = self.presenter.present(self.get_response())
         self.assertTrue(presentation.show_workplace_registration_info)
 
-    def test_that_workplaces_are_shown_when_worker_is_employed(self):
+    def test_that_workplaces_are_shown_when_worker_is_employed(self) -> None:
         response = self.get_response(
             workplaces=[
                 get_member_dashboard.Workplace(
@@ -49,7 +51,9 @@ class GetMemberDashboardPresenterTests(BaseTestCase):
             ("Workplace Name 2",),
         ]
     )
-    def test_that_the_correct_name_of_workplace_is_shown(self, workplace_name: str):
+    def test_that_the_correct_name_of_workplace_is_shown(
+        self, workplace_name: str
+    ) -> None:
         response = self.get_response(
             workplaces=[
                 get_member_dashboard.Workplace(
@@ -60,7 +64,7 @@ class GetMemberDashboardPresenterTests(BaseTestCase):
         presentation = self.presenter.present(response)
         assert presentation.workplaces[0].name == workplace_name
 
-    def test_that_url_of_workplace_leads_to_company_summary_page(self):
+    def test_that_url_of_workplace_leads_to_company_summary_page(self) -> None:
         workplace_id = uuid4()
         response = self.get_response(
             workplaces=[
@@ -74,7 +78,9 @@ class GetMemberDashboardPresenterTests(BaseTestCase):
             company_id=workplace_id
         )
 
-    def test_that_work_registration_info_is_not_shown_when_worker_is_employed(self):
+    def test_that_work_registration_info_is_not_shown_when_worker_is_employed(
+        self,
+    ) -> None:
         response = self.get_response(
             workplaces=[
                 get_member_dashboard.Workplace(
@@ -85,27 +91,27 @@ class GetMemberDashboardPresenterTests(BaseTestCase):
         presentation = self.presenter.present(response)
         self.assertFalse(presentation.show_workplace_registration_info)
 
-    def test_invites_is_empty_when_no_invites_exist(self):
+    def test_invites_is_empty_when_no_invites_exist(self) -> None:
         response = self.get_response()
         presentation = self.presenter.present(response)
         self.assertFalse(presentation.invites)
 
-    def test_invites_is_not_empty_when_invite_exists(self):
+    def test_invites_is_not_empty_when_invite_exists(self) -> None:
         response = self.get_response(invites=[self.get_invite()])
         presentation = self.presenter.present(response)
         self.assertTrue(presentation.invites)
 
-    def test_show_invites_is_false_when_no_invites_exist(self):
+    def test_show_invites_is_false_when_no_invites_exist(self) -> None:
         response = self.get_response()
         presentation = self.presenter.present(response)
         self.assertFalse(presentation.show_invites)
 
-    def test_show_invites_is_true_when_invite_exists(self):
+    def test_show_invites_is_true_when_invite_exists(self) -> None:
         response = self.get_response(invites=[self.get_invite()])
         presentation = self.presenter.present(response)
         self.assertTrue(presentation.show_invites)
 
-    def test_correct_invite_message_is_shown(self):
+    def test_correct_invite_message_is_shown(self) -> None:
         expected_company_name = "company name"
         expected_message = self.translator.gettext(
             "Company %(expected_company_name)s has invited you!"
@@ -116,7 +122,7 @@ class GetMemberDashboardPresenterTests(BaseTestCase):
         presentation = self.presenter.present(response)
         self.assertEqual(presentation.invites[0].invite_message, expected_message)
 
-    def test_correct_invite_details_url_is_shown(self):
+    def test_correct_invite_details_url_is_shown(self) -> None:
         invite_id = uuid4()
         response = self.get_response(invites=[self.get_invite(invite_id=invite_id)])
         presentation = self.presenter.present(response)

@@ -71,7 +71,7 @@ class MigrationsTestCase(TestCaseWithResettedDatabase):
 
 
 class TestsWithFreshDatabaseAndAutoMigration(MigrationsTestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp()
         self.flask_config["AUTO_MIGRATE"] = True
 
@@ -87,7 +87,7 @@ class TestsWithFreshDatabaseAndAutoMigration(MigrationsTestCase):
 
 
 class TestsWithFreshDatabaseAndNoAutoMigration(MigrationsTestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp()
         self.flask_config["AUTO_MIGRATE"] = False
 

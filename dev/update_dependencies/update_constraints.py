@@ -177,7 +177,7 @@ class PackageFilter:
         return not package_name.startswith("types-")
 
 
-def parse_arguments():
+def parse_arguments() -> None:
     parser = argparse.ArgumentParser(
         description="Synchronize constraints.txt file with nix python environment.  This command must be run in a shell/process environment where the current project dependecies are installed."
     )

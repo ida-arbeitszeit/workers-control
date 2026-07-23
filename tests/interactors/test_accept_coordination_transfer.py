@@ -18,7 +18,7 @@ from workers_control.core.interactors.request_coordination_transfer import (
 
 
 class TestAcceptCoordinationTransferInteractor(BaseTestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp()
         self.interactor = self.injector.get(AcceptCoordinationTransferInteractor)
         self.list_coordinations_interactor = self.injector.get(
@@ -78,6 +78,7 @@ class TestAcceptCoordinationTransferInteractor(BaseTestCase):
         candidate = self.company_generator.create_company()
         request = self.create_interactor_request(candidate=candidate)
         response = self.interactor.accept_coordination_transfer(request=request)
+        assert response.cooperation_id
         self.assertCompanyHasCoordinatedCooperation(candidate, response.cooperation_id)
 
     def test_after_accepting_the_candidate_is_current_coordinator_of_cooperation(
@@ -86,6 +87,7 @@ class TestAcceptCoordinationTransferInteractor(BaseTestCase):
         candidate = self.company_generator.create_company()
         request = self.create_interactor_request(candidate=candidate)
         response = self.interactor.accept_coordination_transfer(request=request)
+        assert response.cooperation_id
         self.assertCompanyIsCurrentCoordinatorOfCooperation(
             candidate, response.cooperation_id
         )
@@ -156,4 +158,5 @@ class TestAcceptCoordinationTransferInteractor(BaseTestCase):
         get_coop_summary_response = self.get_coop_summary_interactor.execute(
             GetCoopSummaryRequest(requester_id=uuid4(), coop_id=cooperation)
         )
+        assert get_coop_summary_response
         self.assertEqual(get_coop_summary_response.current_coordinator, company)

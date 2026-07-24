@@ -4,17 +4,17 @@ from uuid import UUID
 
 from flask import Flask
 
-from tests import data_generators
 from tests.db.base_test_case import DatabaseTestCase
 from tests.flask_integration.dependency_injection import FlaskTestingModule
 from tests.lazy_property import _lazy_property
 from tests.mail_service import MockEmailService
+from workers_control.core.datetime_service import DatetimeService
 from workers_control.core.injector import Injector, Module
-from workers_control.db.repositories import DatabaseGatewayImpl
 from workers_control.flask.dependency_injection import FlaskModule
 from workers_control.flask.token import FlaskTokenService
 from workers_control.flask.url_index import GeneralUrlIndex
 from workers_control.web.email import MailService
+from workers_control.web.formatters.datetime_formatter import TimezoneConfiguration
 
 
 class FlaskTestCase(DatabaseTestCase):
@@ -38,29 +38,13 @@ class FlaskTestCase(DatabaseTestCase):
         # flask configuration)
         return []
 
-    accountant_generator = _lazy_property(data_generators.AccountantGenerator)
-    basic_service_generator = _lazy_property(data_generators.BasicServiceGenerator)
-    company_generator = _lazy_property(data_generators.CompanyGenerator)
-    consumption_generator = _lazy_property(data_generators.ConsumptionGenerator)
-
-    cooperation_generator = _lazy_property(data_generators.CooperationGenerator)
-    coordination_transfer_request_generator = _lazy_property(
-        data_generators.CoordinationTransferRequestGenerator
-    )
-    database_gateway = _lazy_property(DatabaseGatewayImpl)
-    email_generator = _lazy_property(data_generators.EmailGenerator)
+    datetime_service = _lazy_property(DatetimeService)  # type: ignore[assignment]
     email_service: MockEmailService = _lazy_property(MailService)  # type: ignore
-    member_generator = _lazy_property(data_generators.MemberGenerator)
-    plan_generator = _lazy_property(data_generators.PlanGenerator)
-    registered_hours_worked_generator = _lazy_property(
-        data_generators.RegisteredHoursWorkedGenerator
+    timezone_configuration = _lazy_property(  # type: ignore[assignment]
+        TimezoneConfiguration
     )
     token_service = _lazy_property(FlaskTokenService)
-    transfer_generator = _lazy_property(data_generators.TransferGenerator)
     url_index = _lazy_property(GeneralUrlIndex)
-    worker_affiliation_generator = _lazy_property(
-        data_generators.WorkerAffiliationGenerator
-    )
 
 
 class LogInUser(Enum):

@@ -4,6 +4,7 @@ from alembic.script import ScriptDirectory
 from sqlalchemy import Connection, MetaData, inspect, text
 
 from tests.db.base_test_case import TestCaseWithResettedDatabase
+from workers_control.db.db import Base
 from workers_control.flask import create_app
 
 from .dependency_injection import FlaskTestConfiguration
@@ -27,6 +28,7 @@ class MigrationsTestCase(TestCaseWithResettedDatabase):
     def tearDown(self) -> None:
         with self.db.engine.begin() as conn:
             self._reset_database(conn)
+            self._restore_orm_schema(conn)
         super().tearDown()
 
     @staticmethod
@@ -34,6 +36,15 @@ class MigrationsTestCase(TestCaseWithResettedDatabase):
         metadata = MetaData()
         metadata.reflect(bind=conn)
         metadata.drop_all(bind=conn)
+
+    @staticmethod
+    def _restore_orm_schema(conn: Connection) -> None:
+        """Leave the database in the state that
+        TestCaseWithResettedDatabase guarantees.  Without this, tests
+        running after the migration tests would find no tables at all,
+        since the database is only reset once per test run.
+        """
+        Base.metadata.create_all(bind=conn)
 
     def table_exists(self, table_name: str) -> bool:
         inspector = inspect(self.db.engine)

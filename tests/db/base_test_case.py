@@ -22,19 +22,13 @@ from workers_control.db.repositories import DatabaseGatewayImpl
 
 @database_required
 class TestCaseWithResettedDatabase(TestCase):
-    _is_db_resetted = False
 
     def setUp(self) -> None:
         super().setUp()
         self.dependencies: list[Module] = [DatabaseTestModule()]
         self.injector = Injector(self.dependencies)
         self.db = self.injector.get(Database)
-        self.reset_test_db_once_per_testrun()
-
-    def reset_test_db_once_per_testrun(self) -> None:
-        if not DatabaseTestCase._is_db_resetted:
-            reset_test_db()
-            DatabaseTestCase._is_db_resetted = True
+        reset_test_db_once_per_testrun()
 
 
 class DatabaseTestCase(TestCaseWithResettedDatabase):
@@ -97,6 +91,24 @@ class DatabaseTestCase(TestCaseWithResettedDatabase):
     worker_affiliation_generator = _lazy_property(
         data_generators.WorkerAffiliationGenerator
     )
+
+
+_is_db_resetted = False
+
+
+def reset_test_db_once_per_testrun() -> None:
+    """Reset the test database at most once per process.
+
+    Resetting is deliberately not repeated because for SQLite it unlinks
+    the database file, which would leave the engine of the `Database`
+    singleton bound to a deleted file.  Test cases that drop the schema
+    are therefore required to restore it themselves instead of relying
+    on another reset.
+    """
+    global _is_db_resetted
+    if not _is_db_resetted:
+        reset_test_db()
+        _is_db_resetted = True
 
 
 def reset_test_db() -> None:

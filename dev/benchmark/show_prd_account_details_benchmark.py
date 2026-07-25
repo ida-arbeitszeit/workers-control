@@ -15,7 +15,6 @@ class ShowPrdAccountDetailsBenchmark:
         self.injector = benchmark_injector
         reset_test_db()
         self.db = self.injector.get(Database)
-        self.db.engine.dispose()
 
         self.company_generator = self.injector.get(CompanyGenerator)
         self.plan_generator = self.injector.get(PlanGenerator)

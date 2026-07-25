@@ -1,6 +1,6 @@
 import importlib
 
-from flask import current_app
+from flask import Flask, current_app
 
 from workers_control.core.injector import Injector
 
@@ -11,7 +11,7 @@ def provide_email_service(injector: Injector) -> EmailPlugin:
     if plugin := current_app.extensions.get("woco_email_plugin"):
         return plugin
     plugin = _create_email_plugin_from_config(injector)
-    _store_email_plugin(plugin)
+    set_email_plugin(current_app, plugin)
     return plugin
 
 
@@ -25,5 +25,5 @@ def _create_email_plugin_from_config(injector: Injector) -> EmailPlugin:
     return plugin
 
 
-def _store_email_plugin(plugin: EmailPlugin) -> None:
-    current_app.extensions["woco_email_plugin"] = plugin
+def set_email_plugin(app: Flask, plugin: EmailPlugin) -> None:
+    app.extensions["woco_email_plugin"] = plugin

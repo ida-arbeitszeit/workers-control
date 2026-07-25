@@ -3,8 +3,10 @@ from typing import Any
 from flask import Flask
 
 from tests.db.dependency_injection import provide_test_database_uri
-from workers_control.core.injector import Binder, CallableProvider, Module
+from tests.mail_service import MockEmailService
+from workers_control.core.injector import Binder, CallableProvider, Injector, Module
 from workers_control.flask import create_app
+from workers_control.flask.mail_service import set_email_plugin
 
 
 class FlaskTestConfiguration(dict):
@@ -75,7 +77,37 @@ class FlaskTestingModule(Module):
         )
 
     @staticmethod
-    def provide_app(config: FlaskTestConfiguration) -> Flask:
-        return create_app(
-            dev_or_test_config=config, template_folder=config.template_folder
-        )
+    def provide_app(config: FlaskTestConfiguration, injector: Injector) -> Flask:
+        # A new Injector is built for every test, so the is_singleton flag
+        # above only spans a single test.  Building the app dominates the
+        # setup of a flask integration test and nearly all tests use the
+        # same configuration, so keep the apps for the whole test run.
+        # Sharing them is safe because an app holds no per-test state: the
+        # database session is looked up on the Database singleton whenever
+        # it is needed.
+        app = _get_cached_app(config)
+        if app is None:
+            # Take the snapshot before create_app, in case it modifies the
+            # configuration it is handed.
+            configuration_used = dict(config)
+            app = create_app(
+                dev_or_test_config=config, template_folder=config.template_folder
+            )
+            _cached_apps.append((configuration_used, app))
+        # The mail service is the one exception to the rule above: an app
+        # keeps the plugin it was first asked for.  Hand it the mail service
+        # of the current test, which is also what self.email_service yields,
+        # so that the app of the previous test does not send its emails
+        # through a mock that belongs to a test that is already over.
+        set_email_plugin(app, injector.get(MockEmailService))
+        return app
+
+
+def _get_cached_app(config: FlaskTestConfiguration) -> Flask | None:
+    for cached_config, cached_app in _cached_apps:
+        if cached_config == config:
+            return cached_app
+    return None
+
+
+_cached_apps: list[tuple[dict[str, Any], Flask]] = []

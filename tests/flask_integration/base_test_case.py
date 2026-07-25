@@ -8,21 +8,14 @@ from tests.db.base_test_case import DatabaseTestCase
 from tests.flask_integration.dependency_injection import FlaskTestingModule
 from tests.lazy_property import _lazy_property
 from tests.mail_service import MockEmailService
-from workers_control.core.datetime_service import DatetimeService
-from workers_control.core.injector import Injector, Module
-from workers_control.flask.dependency_injection import FlaskModule
+from workers_control.core.injector import Module
 from workers_control.flask.token import FlaskTokenService
 from workers_control.flask.url_index import GeneralUrlIndex
-from workers_control.web.email import MailService
-from workers_control.web.formatters.datetime_formatter import TimezoneConfiguration
 
 
 class FlaskTestCase(DatabaseTestCase):
     def setUp(self) -> None:
         super().setUp()
-        self.dependencies.extend([FlaskModule(), FlaskTestingModule()])
-        self.dependencies.extend(self.get_injection_modules())
-        self.injector = Injector(self.dependencies)
         self.app = self.injector.get(Flask)
         self.app_context = self.app.app_context()
         self.app_context.push()
@@ -36,13 +29,11 @@ class FlaskTestCase(DatabaseTestCase):
         # tests inheriting from this class can override this method in
         # order to change dependency injection behaviour (useful for the
         # flask configuration)
-        return []
+        return super().get_injection_modules() + [
+            FlaskTestingModule(),
+        ]
 
-    datetime_service = _lazy_property(DatetimeService)  # type: ignore[assignment]
-    email_service: MockEmailService = _lazy_property(MailService)  # type: ignore
-    timezone_configuration = _lazy_property(  # type: ignore[assignment]
-        TimezoneConfiguration
-    )
+    email_service = _lazy_property(MockEmailService)
     token_service = _lazy_property(FlaskTokenService)
     url_index = _lazy_property(GeneralUrlIndex)
 

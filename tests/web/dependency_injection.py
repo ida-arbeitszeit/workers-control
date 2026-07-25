@@ -1,5 +1,3 @@
-from tests.dependency_injection import TestingModule
-from tests.interactors.dependency_injection import InMemoryModule
 from tests.mail_service import MockEmailService
 from tests.web.email_configuration import FakeEmailConfiguration
 from tests.web.email_presenters.accountant_invitation_email_view import (
@@ -21,7 +19,6 @@ from workers_control.core.injector import (
     AliasProvider,
     Binder,
     CallableProvider,
-    Injector,
     Module,
 )
 from workers_control.web.colors import HexColors
@@ -67,7 +64,3 @@ class WebTestsModule(Module):
     @classmethod
     def provide_fake_request(self) -> FakeRequest:
         return FakeRequest()
-
-
-def get_dependency_injector() -> Injector:
-    return Injector(modules=[TestingModule(), InMemoryModule(), WebTestsModule()])

@@ -1,7 +1,6 @@
-from unittest import TestCase
 from uuid import UUID, uuid4
 
-from tests.data_generators import CompanyGenerator, CooperationGenerator, PlanGenerator
+from tests.interactors.base_test_case import BaseTestCase
 from workers_control.core.interactors import get_coop_summary
 from workers_control.core.interactors.end_cooperation import (
     EndCooperationInteractor,
@@ -9,23 +8,18 @@ from workers_control.core.interactors.end_cooperation import (
     EndCooperationResponse,
 )
 
-from .dependency_injection import get_dependency_injector
 
-
-class TestEndCooperation(TestCase):
+class TestEndCooperation(BaseTestCase):
     def setUp(self) -> None:
-        self.injector = get_dependency_injector()
+        super().setUp()
         self.end_cooperation = self.injector.get(EndCooperationInteractor)
-        self.coop_generator = self.injector.get(CooperationGenerator)
-        self.plan_generator = self.injector.get(PlanGenerator)
-        self.company_generator = self.injector.get(CompanyGenerator)
         self.requester = self.company_generator.create_company()
         self.get_coop_summary_interactor = self.injector.get(
             get_coop_summary.GetCoopSummaryInteractor
         )
 
     def test_error_is_raised_when_plan_does_not_exist(self) -> None:
-        cooperation = self.coop_generator.create_cooperation()
+        cooperation = self.cooperation_generator.create_cooperation()
         request = EndCooperationRequest(
             requester_id=self.requester,
             plan_id=uuid4(),
@@ -51,7 +45,7 @@ class TestEndCooperation(TestCase):
         )
 
     def test_error_is_raised_when_plan_has_no_cooperation(self) -> None:
-        cooperation = self.coop_generator.create_cooperation()
+        cooperation = self.cooperation_generator.create_cooperation()
         plan = self.plan_generator.create_plan(cooperation=None)
         request = EndCooperationRequest(
             requester_id=self.requester,
@@ -69,7 +63,7 @@ class TestEndCooperation(TestCase):
         self,
     ) -> None:
         plan = self.plan_generator.create_plan()
-        cooperation = self.coop_generator.create_cooperation(plans=[plan])
+        cooperation = self.cooperation_generator.create_cooperation(plans=[plan])
 
         request = EndCooperationRequest(
             requester_id=self.requester,
@@ -87,7 +81,7 @@ class TestEndCooperation(TestCase):
         self,
     ) -> None:
         plan = self.plan_generator.create_plan(planner=self.requester)
-        cooperation = self.coop_generator.create_cooperation(plans=[plan])
+        cooperation = self.cooperation_generator.create_cooperation(plans=[plan])
 
         request = EndCooperationRequest(
             requester_id=self.requester,
@@ -101,7 +95,7 @@ class TestEndCooperation(TestCase):
         self,
     ) -> None:
         plan = self.plan_generator.create_plan()
-        cooperation = self.coop_generator.create_cooperation(
+        cooperation = self.cooperation_generator.create_cooperation(
             plans=[plan], coordinator=self.requester
         )
 
@@ -117,7 +111,7 @@ class TestEndCooperation(TestCase):
         self,
     ) -> None:
         plan = self.plan_generator.create_plan(planner=self.requester)
-        cooperation = self.coop_generator.create_cooperation(plans=[plan])
+        cooperation = self.cooperation_generator.create_cooperation(plans=[plan])
         request = EndCooperationRequest(
             requester_id=self.requester,
             plan_id=plan,

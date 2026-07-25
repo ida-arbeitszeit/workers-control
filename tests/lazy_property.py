@@ -1,4 +1,7 @@
 from typing import Any, Generic, Optional, Type, TypeVar
+from unittest import TestCase
+
+from workers_control.core.injector import Injector
 
 T = TypeVar("T")
 
@@ -28,3 +31,16 @@ class _lazy_property(Generic[T]):
 
     def __set__(self, obj: Any, value: T) -> None:
         raise Exception("This attribute is read-only")
+
+
+class LazyPropertyTestCase(TestCase):
+
+    injector: Injector
+
+    def setUp(self) -> None:
+        super().setUp()
+        self._lazy_property_cache: dict[str, Any] = dict()
+
+    def tearDown(self) -> None:
+        self._lazy_property_cache = dict()
+        super().tearDown()

@@ -1,6 +1,4 @@
 from pathlib import Path
-from typing import Any
-from unittest import TestCase
 
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -13,21 +11,18 @@ from tests.db.dependency_injection import (
 )
 from tests.db.isolation import get_isolation_engine
 from tests.dependency_injection import TestingModule
-from tests.lazy_property import _lazy_property
+from tests.lazy_property import LazyPropertyTestCase, _lazy_property
 from tests.markers import database_required
-from tests.web.www.datetime_formatter import FakeTimezoneConfiguration
 from workers_control.core.injector import Injector, Module
 from workers_control.db.db import Base, Database
 from workers_control.db.repositories import DatabaseGatewayImpl
 
 
 @database_required
-class DatabaseTestCase(TestCase):
+class DatabaseTestCase(LazyPropertyTestCase):
     def setUp(self) -> None:
         super().setUp()
-        self._lazy_property_cache: dict[str, Any] = dict()
-        self.dependencies: list[Module] = [DatabaseTestModule(), TestingModule()]
-        self.injector = Injector(self.dependencies)
+        self.injector = Injector(self.get_injection_modules())
         self.db = self.injector.get(Database)
         reset_test_db_once_per_testrun()
 
@@ -45,14 +40,23 @@ class DatabaseTestCase(TestCase):
             join_transaction_mode="create_savepoint",
         )
         self.test_session = scoped_session(session_factory)
+        # Let the code under test reach the session of this test through the
+        # Database singleton, and put the singleton back afterwards.
+        self._session_before_test = self.db._session
         self.db._session = self.test_session
 
     def tearDown(self) -> None:
-        self._lazy_property_cache = dict()
         self.test_session.remove()
         self.transaction.rollback()
         self.connection.close()
+        self.db._session = self._session_before_test
         super().tearDown()
+
+    def get_injection_modules(self) -> list[Module]:
+        # Tests inheriting from this class can override this method in order
+        # to change dependency injection behaviour.  Modules listed later
+        # take precedence over earlier ones.
+        return [TestingModule(), DatabaseTestModule()]
 
     accountant_generator = _lazy_property(data_generators.AccountantGenerator)
     basic_service_generator = _lazy_property(data_generators.BasicServiceGenerator)
@@ -73,7 +77,6 @@ class DatabaseTestCase(TestCase):
     registered_hours_worked_generator = _lazy_property(
         data_generators.RegisteredHoursWorkedGenerator
     )
-    timezone_configuration = _lazy_property(FakeTimezoneConfiguration)
     transfer_generator = _lazy_property(data_generators.TransferGenerator)
     worker_affiliation_generator = _lazy_property(
         data_generators.WorkerAffiliationGenerator

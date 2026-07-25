@@ -2,7 +2,7 @@ import importlib
 
 from flask import Flask, current_app
 
-from workers_control.core.injector import Injector
+from workers_control.core.injector import ClassProvider, Injector
 
 from .interface import EmailPlugin
 
@@ -21,7 +21,7 @@ def _create_email_plugin_from_config(injector: Injector) -> EmailPlugin:
     module = importlib.import_module(module_name)
     plugin_class = getattr(module, class_name)
     assert issubclass(plugin_class, EmailPlugin)
-    plugin = injector.get(plugin_class)
+    plugin = ClassProvider(plugin_class).provide(injector.binder)
     return plugin
 
 

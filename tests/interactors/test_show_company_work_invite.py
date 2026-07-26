@@ -1,8 +1,7 @@
 from typing import Callable, cast
-from unittest import TestCase
 from uuid import uuid4
 
-from tests.data_generators import CompanyGenerator, MemberGenerator
+from tests.interactors.base_test_case import BaseTestCase
 from workers_control.core.interactors.invite_worker_to_company import (
     InviteWorkerToCompanyInteractor,
 )
@@ -12,12 +11,10 @@ from workers_control.core.interactors.show_company_work_invite_details import (
     ShowCompanyWorkInviteDetailsResponse,
 )
 
-from .dependency_injection import get_dependency_injector
 
-
-class TestNonExistingUserAndNonExistingInvite(TestCase):
+class TestNonExistingUserAndNonExistingInvite(BaseTestCase):
     def setUp(self) -> None:
-        self.injector = get_dependency_injector()
+        super().setUp()
         self.interactor = self.injector.get(ShowCompanyWorkInviteDetailsInteractor)
         self.request = ShowCompanyWorkInviteDetailsRequest(
             invite=uuid4(),
@@ -29,12 +26,10 @@ class TestNonExistingUserAndNonExistingInvite(TestCase):
         self.assertFalse(self.response.is_success)
 
 
-class TestExistingMemberWithNonMatchingInvite(TestCase):
+class TestExistingMemberWithNonMatchingInvite(BaseTestCase):
     def setUp(self) -> None:
-        self.injector = get_dependency_injector()
+        super().setUp()
         self.interactor = self.injector.get(ShowCompanyWorkInviteDetailsInteractor)
-        self.member_generator = self.injector.get(MemberGenerator)
-        self.company_generator = self.injector.get(CompanyGenerator)
         self.invite_worker_interactor = self.injector.get(
             InviteWorkerToCompanyInteractor
         )
@@ -59,11 +54,10 @@ class TestExistingMemberWithNonMatchingInvite(TestCase):
         self.assertFalse(self.response.is_success)
 
 
-class TestExistingMemberWithoutAnyInviteTest(TestCase):
+class TestExistingMemberWithoutAnyInviteTest(BaseTestCase):
     def setUp(self) -> None:
-        self.injector = get_dependency_injector()
+        super().setUp()
         self.interactor = self.injector.get(ShowCompanyWorkInviteDetailsInteractor)
-        self.member_generator = self.injector.get(MemberGenerator)
         self.invited_member = self.member_generator.create_member()
         request = ShowCompanyWorkInviteDetailsRequest(
             invite=uuid4(),
@@ -75,13 +69,11 @@ class TestExistingMemberWithoutAnyInviteTest(TestCase):
         self.assertFalse(self.response.is_success)
 
 
-class TestExistingMemberWithMatchingInvite(TestCase):
+class TestExistingMemberWithMatchingInvite(BaseTestCase):
     def setUp(self) -> None:
+        super().setUp()
         self.expected_company_name = "test company name 123"
-        self.injector = get_dependency_injector()
         self.interactor = self.injector.get(ShowCompanyWorkInviteDetailsInteractor)
-        self.member_generator = self.injector.get(MemberGenerator)
-        self.company_generator = self.injector.get(CompanyGenerator)
         self.invite_worker = self.injector.get(InviteWorkerToCompanyInteractor)
         self.member = self.member_generator.create_member()
         self.company = self.company_generator.create_company_record(

@@ -4,25 +4,18 @@ from uuid import UUID
 
 from flask import Flask
 
-from tests import data_generators
 from tests.db.base_test_case import DatabaseTestCase
 from tests.flask_integration.dependency_injection import FlaskTestingModule
 from tests.lazy_property import _lazy_property
 from tests.mail_service import MockEmailService
-from workers_control.core.injector import Injector, Module
-from workers_control.db.repositories import DatabaseGatewayImpl
-from workers_control.flask.dependency_injection import FlaskModule
+from workers_control.core.injector import Module
 from workers_control.flask.token import FlaskTokenService
 from workers_control.flask.url_index import GeneralUrlIndex
-from workers_control.web.email import MailService
 
 
 class FlaskTestCase(DatabaseTestCase):
     def setUp(self) -> None:
         super().setUp()
-        self.dependencies.extend([FlaskModule(), FlaskTestingModule()])
-        self.dependencies.extend(self.get_injection_modules())
-        self.injector = Injector(self.dependencies)
         self.app = self.injector.get(Flask)
         self.app_context = self.app.app_context()
         self.app_context.push()
@@ -36,31 +29,13 @@ class FlaskTestCase(DatabaseTestCase):
         # tests inheriting from this class can override this method in
         # order to change dependency injection behaviour (useful for the
         # flask configuration)
-        return []
+        return super().get_injection_modules() + [
+            FlaskTestingModule(),
+        ]
 
-    accountant_generator = _lazy_property(data_generators.AccountantGenerator)
-    basic_service_generator = _lazy_property(data_generators.BasicServiceGenerator)
-    company_generator = _lazy_property(data_generators.CompanyGenerator)
-    consumption_generator = _lazy_property(data_generators.ConsumptionGenerator)
-
-    cooperation_generator = _lazy_property(data_generators.CooperationGenerator)
-    coordination_transfer_request_generator = _lazy_property(
-        data_generators.CoordinationTransferRequestGenerator
-    )
-    database_gateway = _lazy_property(DatabaseGatewayImpl)
-    email_generator = _lazy_property(data_generators.EmailGenerator)
-    email_service: MockEmailService = _lazy_property(MailService)  # type: ignore
-    member_generator = _lazy_property(data_generators.MemberGenerator)
-    plan_generator = _lazy_property(data_generators.PlanGenerator)
-    registered_hours_worked_generator = _lazy_property(
-        data_generators.RegisteredHoursWorkedGenerator
-    )
+    email_service = _lazy_property(MockEmailService)
     token_service = _lazy_property(FlaskTokenService)
-    transfer_generator = _lazy_property(data_generators.TransferGenerator)
     url_index = _lazy_property(GeneralUrlIndex)
-    worker_affiliation_generator = _lazy_property(
-        data_generators.WorkerAffiliationGenerator
-    )
 
 
 class LogInUser(Enum):

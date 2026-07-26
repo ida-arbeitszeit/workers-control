@@ -1,83 +1,68 @@
 from datetime import timedelta
 from uuid import UUID
 
-from tests.data_generators import CooperationGenerator, PlanGenerator
-from tests.datetime_service import FakeDatetimeService, datetime_utc
+from tests.datetime_service import datetime_utc
+from tests.interactors.base_test_case import BaseTestCase
 from workers_control.core.interactors.list_all_cooperations import (
     ListAllCooperationsInteractor,
     ListAllCooperationsResponse,
 )
 
-from .dependency_injection import injection_test
 
+class ListAllCooperationsInteractorTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.interactor = self.injector.get(ListAllCooperationsInteractor)
 
-def coop_in_response(cooperation: UUID, response: ListAllCooperationsResponse) -> bool:
-    return any(cooperation == result.id for result in response.cooperations)
+    def coop_in_response(
+        self, cooperation_id: UUID, response: ListAllCooperationsResponse
+    ) -> bool:
+        return any([coop.id == cooperation_id for coop in response.cooperations])
 
+    def test_empty_list_is_returned_when_there_are_no_cooperations(
+        self,
+    ) -> None:
+        response = self.interactor.execute()
+        assert len(response.cooperations) == 0
 
-@injection_test
-def test_empty_list_is_returned_when_there_are_no_cooperations(
-    interactor: ListAllCooperationsInteractor,
-) -> None:
-    response = interactor.execute()
-    assert len(response.cooperations) == 0
+    def test_one_empty_cooperation_is_returned_if_there_is_one_coop_without_plans(
+        self,
+    ) -> None:
+        cooperation = self.cooperation_generator.create_cooperation()
+        response = self.interactor.execute()
+        assert len(response.cooperations) == 1
+        assert response.cooperations[0].plan_count == 0
+        assert self.coop_in_response(cooperation, response)
 
+    def test_one_returned_cooperation_shows_correct_info(self) -> None:
+        expected_cooperation_name = "Test Cooperation"
+        plan = self.plan_generator.create_plan()
+        cooperation = self.cooperation_generator.create_cooperation(
+            plans=[plan], name=expected_cooperation_name
+        )
+        response = self.interactor.execute()
+        assert len(response.cooperations) == 1
+        assert self.coop_in_response(cooperation, response)
+        assert response.cooperations[0].plan_count == 1
+        assert response.cooperations[0].id == cooperation
+        assert response.cooperations[0].name == expected_cooperation_name
 
-@injection_test
-def test_one_empty_cooperation_is_returned_if_there_is_one_coop_without_plans(
-    interactor: ListAllCooperationsInteractor,
-    cooperation_generator: CooperationGenerator,
-) -> None:
-    cooperation = cooperation_generator.create_cooperation()
-    response = interactor.execute()
-    assert len(response.cooperations) == 1
-    assert response.cooperations[0].plan_count == 0
-    assert coop_in_response(cooperation, response)
+    def test_one_cooperation_with_correct_plan_count_is_returned_if_there_is_one_coop_with_2_plans(
+        self,
+    ) -> None:
+        plan1 = self.plan_generator.create_plan()
+        plan2 = self.plan_generator.create_plan()
+        cooperation = self.cooperation_generator.create_cooperation(
+            plans=[plan1, plan2]
+        )
+        response = self.interactor.execute()
+        assert response.cooperations[0].plan_count == 2
+        assert self.coop_in_response(cooperation, response)
 
-
-@injection_test
-def test_one_returned_cooperation_shows_correct_info(
-    interactor: ListAllCooperationsInteractor,
-    cooperation_generator: CooperationGenerator,
-    plan_generator: PlanGenerator,
-) -> None:
-    expected_cooperation_name = "Test Cooperation"
-    plan = plan_generator.create_plan()
-    cooperation = cooperation_generator.create_cooperation(
-        plans=[plan], name=expected_cooperation_name
-    )
-    response = interactor.execute()
-    assert len(response.cooperations) == 1
-    assert coop_in_response(cooperation, response)
-    assert response.cooperations[0].plan_count == 1
-    assert response.cooperations[0].id == cooperation
-    assert response.cooperations[0].name == expected_cooperation_name
-
-
-@injection_test
-def test_one_cooperation_with_correct_plan_count_is_returned_if_there_is_one_coop_with_2_plans(
-    interactor: ListAllCooperationsInteractor,
-    cooperation_generator: CooperationGenerator,
-    plan_generator: PlanGenerator,
-) -> None:
-    plan1 = plan_generator.create_plan()
-    plan2 = plan_generator.create_plan()
-    cooperation = cooperation_generator.create_cooperation(plans=[plan1, plan2])
-    response = interactor.execute()
-    assert response.cooperations[0].plan_count == 2
-    assert coop_in_response(cooperation, response)
-
-
-@injection_test
-def test_that_expired_plans_are_not_included_in_plan_count(
-    interactor: ListAllCooperationsInteractor,
-    cooperation_generator: CooperationGenerator,
-    plan_generator: PlanGenerator,
-    datetime_service: FakeDatetimeService,
-) -> None:
-    datetime_service.freeze_time(datetime_utc(2000, 1, 1))
-    plan = plan_generator.create_plan(timeframe=1)
-    cooperation_generator.create_cooperation(plans=[plan])
-    datetime_service.advance_time(timedelta(days=2))
-    response = interactor.execute()
-    assert response.cooperations[0].plan_count == 0
+    def test_that_expired_plans_are_not_included_in_plan_count(self) -> None:
+        self.datetime_service.freeze_time(datetime_utc(2000, 1, 1))
+        plan = self.plan_generator.create_plan(timeframe=1)
+        self.cooperation_generator.create_cooperation(plans=[plan])
+        self.datetime_service.advance_time(timedelta(days=2))
+        response = self.interactor.execute()
+        assert response.cooperations[0].plan_count == 0

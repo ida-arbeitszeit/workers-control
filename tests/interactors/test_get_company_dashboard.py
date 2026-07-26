@@ -1,19 +1,15 @@
-from unittest import TestCase
 from uuid import uuid4
 
-from tests.data_generators import CompanyGenerator, MemberGenerator
-from tests.interactors.dependency_injection import get_dependency_injector
+from tests.interactors.base_test_case import BaseTestCase
 from workers_control.core.interactors.get_company_dashboard import (
     GetCompanyDashboardInteractor,
 )
 
 
-class GeneralInteractorTests(TestCase):
+class GeneralInteractorTests(BaseTestCase):
     def setUp(self) -> None:
-        self.injector = get_dependency_injector()
+        super().setUp()
         self.interactor = self.injector.get(GetCompanyDashboardInteractor)
-        self.company_generator = self.injector.get(CompanyGenerator)
-        self.member_generator = self.injector.get(MemberGenerator)
 
     def test_that_retrieving_dashboard_for_nonexisting_company_fails(self) -> None:
         with self.assertRaises(GetCompanyDashboardInteractor.Failure):

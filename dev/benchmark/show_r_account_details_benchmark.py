@@ -12,7 +12,6 @@ class ShowRAccountDetailsBenchmark:
         self.injector = benchmark_injector
         reset_test_db()
         self.db = self.injector.get(Database)
-        self.db.engine.dispose()
 
         company_generator = self.injector.get(CompanyGenerator)
         plan_generator = self.injector.get(PlanGenerator)

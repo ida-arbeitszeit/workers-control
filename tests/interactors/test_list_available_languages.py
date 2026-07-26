@@ -1,16 +1,13 @@
-from unittest import TestCase
-
+from tests.interactors.base_test_case import BaseTestCase
 from tests.interactors.repositories import FakeLanguageRepository
 from workers_control.core.interactors.list_available_languages import (
     ListAvailableLanguagesInteractor,
 )
 
-from .dependency_injection import get_dependency_injector
 
-
-class InteractorTests(TestCase):
+class InteractorTests(BaseTestCase):
     def setUp(self) -> None:
-        self.injector = get_dependency_injector()
+        super().setUp()
         self.interactor = self.injector.get(ListAvailableLanguagesInteractor)
         self.language_repository = self.injector.get(FakeLanguageRepository)
 

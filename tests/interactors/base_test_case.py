@@ -1,6 +1,3 @@
-from typing import Any, Dict
-from unittest import TestCase
-
 from tests.control_thresholds import ControlThresholdsTestImpl
 from tests.data_generators import (
     AccountantGenerator,
@@ -17,27 +14,23 @@ from tests.data_generators import (
     WorkerAffiliationGenerator,
 )
 from tests.datetime_service import FakeDatetimeService
+from tests.dependency_injection import TestingModule
 from tests.economic_scenarios import EconomicScenarios
 from tests.email_notifications import EmailSenderTestImpl
-from tests.lazy_property import _lazy_property
+from tests.lazy_property import LazyPropertyTestCase, _lazy_property
+from workers_control.core.injector import Injector
 from workers_control.core.repositories import DatabaseGateway
 
 from .balance_checker import BalanceChecker
-from .dependency_injection import get_dependency_injector
 from .price_checker import PriceChecker
 
 
-class BaseTestCase(TestCase):
+class BaseTestCase(LazyPropertyTestCase):
     "Interactor unit tests should inherit from this class."
 
     def setUp(self) -> None:
         super().setUp()
-        self._lazy_property_cache: Dict[str, Any] = dict()
-        self.injector = get_dependency_injector()
-
-    def tearDown(self) -> None:
-        self._lazy_property_cache = dict()
-        super().tearDown()
+        self.injector = Injector([TestingModule()])
 
     # It would be nice to have the following list sorted
     # alphabetically

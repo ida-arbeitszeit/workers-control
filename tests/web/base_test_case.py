@@ -1,6 +1,3 @@
-from typing import Any, Dict
-from unittest import TestCase
-
 from tests.data_generators import (
     AccountantGenerator,
     BasicServiceGenerator,
@@ -8,10 +5,11 @@ from tests.data_generators import (
     MemberGenerator,
 )
 from tests.datetime_service import FakeDatetimeService
-from tests.lazy_property import _lazy_property
+from tests.dependency_injection import TestingModule
+from tests.lazy_property import LazyPropertyTestCase, _lazy_property
 from tests.mail_service import MockEmailService
 from tests.token import FakeTokenService
-from tests.web.dependency_injection import get_dependency_injector
+from tests.web.dependency_injection import WebTestsModule
 from tests.web.email_configuration import FakeEmailConfiguration
 from tests.web.email_presenters.text_renderer import TextRendererImpl
 from tests.web.www.datetime_formatter import (
@@ -23,19 +21,15 @@ from tests.web.www.presenters.url_index import UrlIndexTestImpl
 from tests.web.www.request import FakeRequest
 from tests.web.www.session import FakeSession
 from tests.web.www.translator import FakeTranslator
+from workers_control.core.injector import Injector
 
 
-class BaseTestCase(TestCase):
+class BaseTestCase(LazyPropertyTestCase):
     "Web unit tests should inherit from this class."
 
     def setUp(self) -> None:
         super().setUp()
-        self._lazy_property_cache: Dict[str, Any] = dict()
-        self.injector = get_dependency_injector()
-
-    def tearDown(self) -> None:
-        self._lazy_property_cache = dict()
-        super().tearDown()
+        self.injector = Injector(modules=[TestingModule(), WebTestsModule()])
 
     # It would be nice to have the following list sorted
     # alphabetically

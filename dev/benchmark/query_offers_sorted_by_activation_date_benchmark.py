@@ -14,7 +14,6 @@ class QueryOffersSortedByActivationDateBenchmark:
         self.injector = benchmark_injector
         reset_test_db()
         self.db = self.injector.get(Database)
-        self.db.engine.dispose()
 
         plan_generator = self.injector.get(PlanGenerator)
         cooperation_generator = self.injector.get(CooperationGenerator)

@@ -1,9 +1,8 @@
 from decimal import Decimal
 from typing import Callable, Optional
-from unittest import TestCase
 from uuid import UUID, uuid4
 
-from tests.data_generators import CompanyGenerator, PlanGenerator
+from tests.interactors.base_test_case import BaseTestCase
 from workers_control.core.interactors import edit_draft
 from workers_control.core.interactors.get_draft_details import (
     DraftDetailsSuccess,
@@ -11,15 +10,11 @@ from workers_control.core.interactors.get_draft_details import (
 )
 from workers_control.core.records import ProductionCosts
 
-from .dependency_injection import get_dependency_injector
 
-
-class InteractorTests(TestCase):
+class InteractorTests(BaseTestCase):
     def setUp(self) -> None:
-        self.injector = get_dependency_injector()
+        super().setUp()
         self.interactor = self.injector.get(edit_draft.EditDraftInteractor)
-        self.plan_generator = self.injector.get(PlanGenerator)
-        self.company_generator = self.injector.get(CompanyGenerator)
         self.get_draft_details_interactor = self.injector.get(GetDraftDetailsInteractor)
 
     def test_cannot_edit_successfully_non_existing_draft(self) -> None:

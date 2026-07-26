@@ -14,7 +14,6 @@ class GetStatisticsBenchmark:
         self.injector = benchmark_injector
         reset_test_db()
         self.db = self.injector.get(Database)
-        self.db.engine.dispose()
 
         plan_generator = self.injector.get(PlanGenerator)
         self.get_statistics_interactor = self.injector.get(

@@ -65,7 +65,7 @@ from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
 
 
-class FlaskModule(Module):
+class FlaskProductionModule(Module):
     def configure(self, binder: Binder) -> None:
         super().configure(binder)
         binder.bind(
@@ -154,4 +154,4 @@ class with_injection:
 
 
 def create_dependency_injector() -> Injector:
-    return Injector([FlaskModule()])
+    return Injector([FlaskProductionModule()])

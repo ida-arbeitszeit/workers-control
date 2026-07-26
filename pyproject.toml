@@ -79,7 +79,6 @@ module = [
     "parameterized.*",
     "wtforms.*",
 ]
-allow_untyped_defs = true
 ignore_errors = true
 
 [tool.coverage.run]

@@ -1,9 +1,7 @@
 from pathlib import Path
-from typing import Any
-from unittest import TestCase
 
-from sqlalchemy import create_engine, event, text
-from sqlalchemy.orm import Session, SessionTransaction, scoped_session, sessionmaker
+from sqlalchemy import create_engine, text
+from sqlalchemy.orm import scoped_session, sessionmaker
 
 from tests import data_generators
 from tests.datetime_service import FakeDatetimeService
@@ -11,67 +9,54 @@ from tests.db.dependency_injection import (
     DatabaseTestModule,
     provide_test_database_uri,
 )
+from tests.db.isolation import get_isolation_engine
 from tests.dependency_injection import TestingModule
-from tests.lazy_property import _lazy_property
+from tests.lazy_property import LazyPropertyTestCase, _lazy_property
 from tests.markers import database_required
-from tests.web.www.datetime_formatter import FakeTimezoneConfiguration
 from workers_control.core.injector import Injector, Module
 from workers_control.db.db import Base, Database
 from workers_control.db.repositories import DatabaseGatewayImpl
 
 
 @database_required
-class TestCaseWithResettedDatabase(TestCase):
-    _is_db_resetted = False
-
+class DatabaseTestCase(LazyPropertyTestCase):
     def setUp(self) -> None:
         super().setUp()
-        self.dependencies: list[Module] = [DatabaseTestModule()]
-        self.injector = Injector(self.dependencies)
+        self.injector = Injector(self.get_injection_modules())
         self.db = self.injector.get(Database)
-        self.reset_test_db_once_per_testrun()
+        reset_test_db_once_per_testrun()
 
-    def reset_test_db_once_per_testrun(self) -> None:
-        if not DatabaseTestCase._is_db_resetted:
-            reset_test_db()
-            DatabaseTestCase._is_db_resetted = True
-
-
-class DatabaseTestCase(TestCaseWithResettedDatabase):
-    def setUp(self) -> None:
-        super().setUp()
-        self._lazy_property_cache: dict[str, Any] = dict()
-        self.dependencies.extend([TestingModule()])
-        self.injector = Injector(self.dependencies)
-        self.db = self.injector.get(Database)
-
-        # Set up connection-level transaction for test isolation
-        self.connection = self.db.engine.connect()
+        # Run every test inside a transaction that is rolled back in
+        # tearDown, see tests.db.isolation.
+        self.connection = get_isolation_engine().connect()
         self.transaction = self.connection.begin()
 
-        # expire_on_commit=False prevents objects from expiring after flush
-        session_factory = sessionmaker(bind=self.connection, expire_on_commit=False)
+        # expire_on_commit=False prevents objects from expiring after flush.
+        # create_savepoint lets code under test call commit() without
+        # committing the transaction of the test itself.
+        session_factory = sessionmaker(
+            bind=self.connection,
+            expire_on_commit=False,
+            join_transaction_mode="create_savepoint",
+        )
         self.test_session = scoped_session(session_factory)
-
-        # This allows code that calls commit() to work properly in tests
-        @event.listens_for(self.test_session, "after_transaction_end")
-        def restart_savepoint(
-            session: Session, transaction: SessionTransaction
-        ) -> None:
-            if transaction.nested and (
-                not transaction._parent or not transaction._parent.nested
-            ):
-                session.begin_nested()
-
-        self.test_session.begin_nested()
+        # Let the code under test reach the session of this test through the
+        # Database singleton, and put the singleton back afterwards.
+        self._session_before_test = self.db._session
         self.db._session = self.test_session
 
     def tearDown(self) -> None:
-        self._lazy_property_cache = dict()
         self.test_session.remove()
         self.transaction.rollback()
         self.connection.close()
+        self.db._session = self._session_before_test
         super().tearDown()
+
+    def get_injection_modules(self) -> list[Module]:
+        # Tests inheriting from this class can override this method in order
+        # to change dependency injection behaviour.  Modules listed later
+        # take precedence over earlier ones.
+        return [TestingModule(), DatabaseTestModule()]
 
     accountant_generator = _lazy_property(data_generators.AccountantGenerator)
     basic_service_generator = _lazy_property(data_generators.BasicServiceGenerator)
@@ -92,24 +77,59 @@ class DatabaseTestCase(TestCaseWithResettedDatabase):
     registered_hours_worked_generator = _lazy_property(
         data_generators.RegisteredHoursWorkedGenerator
     )
-    timezone_configuration = _lazy_property(FakeTimezoneConfiguration)
     transfer_generator = _lazy_property(data_generators.TransferGenerator)
     worker_affiliation_generator = _lazy_property(
         data_generators.WorkerAffiliationGenerator
     )
 
 
+_is_db_resetted = False
+
+
+def reset_test_db_once_per_testrun() -> None:
+    """Reset the test database at most once per process.
+
+    Resetting is deliberately not repeated because for SQLite it unlinks
+    the database file, which would leave the engine of the `Database`
+    singleton bound to a deleted file.  Test cases that drop the schema
+    are therefore required to restore it themselves instead of relying
+    on another reset.
+    """
+    global _is_db_resetted
+    if not _is_db_resetted:
+        reset_test_db()
+        _is_db_resetted = True
+
+
 def reset_test_db() -> None:
     engine = create_engine(provide_test_database_uri())
-    dialect = engine.dialect.name
-    if dialect == "postgresql":
-        with engine.begin() as conn:
-            conn.execute(text("DROP SCHEMA public CASCADE"))
-            conn.execute(text("CREATE SCHEMA public"))
-    elif dialect == "sqlite":
-        path_string = engine.url.database
-        assert path_string, "Expected a file path for SQLite database"
-        path = Path(path_string)
-        if path.exists():
-            path.unlink()
-    Base.metadata.create_all(bind=engine)
+    try:
+        dialect = engine.dialect.name
+        if dialect == "postgresql":
+            with engine.begin() as conn:
+                conn.execute(text("DROP SCHEMA public CASCADE"))
+                conn.execute(text("CREATE SCHEMA public"))
+        elif dialect == "sqlite":
+            path_string = engine.url.database
+            assert path_string, "Expected a file path for SQLite database"
+            path = Path(path_string)
+            if path.exists():
+                path.unlink()
+        Base.metadata.create_all(bind=engine)
+    finally:
+        engine.dispose()
+        _discard_pooled_connections()
+
+
+def _discard_pooled_connections() -> None:
+    """Drop the connections that were pooled before the database was reset.
+
+    For SQLite the reset unlinks the database file, so a pooled connection
+    would keep operating on a file that no longer exists.  Disposing a pool
+    does not invalidate its engine: the next use simply opens a fresh
+    connection.
+    """
+    database_engine = Database()._engine
+    if database_engine is not None:
+        database_engine.dispose()
+    get_isolation_engine().dispose()

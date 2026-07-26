@@ -5,8 +5,8 @@ from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
+from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_min_utc
-from tests.web.base_test_case import BaseTestCase
 from tests.web.www.translator import FakeTranslator
 from workers_control.core.interactors import show_r_account_details
 from workers_control.core.services.account_details import (

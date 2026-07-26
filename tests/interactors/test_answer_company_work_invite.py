@@ -10,7 +10,7 @@ from workers_control.core.interactors.invite_worker_to_company import (
     InviteWorkerToCompanyInteractor,
 )
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 from .repositories import MockDatabase
 
 

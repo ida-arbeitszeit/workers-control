@@ -9,7 +9,7 @@ from workers_control.core.repositories import DatabaseGateway
 from workers_control.core.services.account_details import TransferPartyType
 from workers_control.core.transfers import TransferType
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class InteractorTester(BaseTestCase):

@@ -1,6 +1,6 @@
 from parameterized import parameterized
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.web.www.forms import RequestEmailAddressChangeFormImpl as Form
 from workers_control.web.www.controllers.request_email_address_change_controller import (
     RequestEmailAddressChangeController,

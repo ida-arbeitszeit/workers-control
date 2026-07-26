@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.core.interactors.hide_plan import HidePlanResponse
 from workers_control.web.www.presenters.hide_plan_presenter import HidePlanPresenter
 

@@ -3,7 +3,7 @@ from uuid import UUID
 
 from parameterized import parameterized
 
-from tests.interactors.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.core.decimal import decimal_sum
 from workers_control.core.records import ProductionCosts, SocialAccounting
 from workers_control.core.services.payout_factor import PayoutFactorService

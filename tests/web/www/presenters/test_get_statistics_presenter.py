@@ -1,7 +1,7 @@
 from dataclasses import replace
 from decimal import Decimal
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.core.interactors.get_statistics import StatisticsResponse
 from workers_control.web.www.presenters.get_statistics_presenter import (
     GetStatisticsPresenter,

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.web.www.forms import RegisterFormImpl
 from workers_control.web.www.controllers.register_member_controller import (
     RegisterMemberController,

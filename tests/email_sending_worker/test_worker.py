@@ -3,8 +3,8 @@ from datetime import timedelta
 from typing import List, Optional, Tuple
 from uuid import UUID
 
+from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_utc
-from tests.interactors.base_test_case import BaseTestCase
 from tests.interactors.repositories import MockDatabase
 from workers_control.email_sending_worker.interface import EmailSenderPlugin
 from workers_control.email_sending_worker.worker import EmailWorker

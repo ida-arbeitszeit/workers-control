@@ -1,7 +1,7 @@
 from typing import Union
 from uuid import UUID, uuid4
 
-from tests.interactors.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.core.interactors import list_workers
 from workers_control.core.records import Member
 

@@ -5,7 +5,7 @@ from workers_control.core.interactors.resend_confirmation_mail import (
     ResendConfirmationMailInteractor as Interactor,
 )
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class MemberTests(BaseTestCase):

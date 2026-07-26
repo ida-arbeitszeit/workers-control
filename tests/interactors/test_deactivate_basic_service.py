@@ -9,7 +9,7 @@ from workers_control.core.interactors.list_basic_services_of_worker import (
     Request as ListRequest,
 )
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class InteractorTests(BaseTestCase):

@@ -13,7 +13,7 @@ from workers_control.core.interactors.get_coop_summary import (
 )
 from workers_control.core.records import ProductionCosts
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class GetCoopSummaryTests(BaseTestCase):

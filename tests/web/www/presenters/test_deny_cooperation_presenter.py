@@ -1,6 +1,6 @@
 from parameterized import parameterized
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.core.interactors.deny_cooperation import DenyCooperationResponse
 from workers_control.web.www.presenters.deny_cooperation_presenter import (
     DenyCooperationPresenter,

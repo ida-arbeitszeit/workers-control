@@ -3,7 +3,7 @@ from typing import Optional
 from workers_control.core.interactors.log_in_member import LogInMemberInteractor
 from workers_control.core.interactors.register_member import RegisterMemberInteractor
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class InteractorTests(BaseTestCase):

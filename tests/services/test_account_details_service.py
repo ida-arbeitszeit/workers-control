@@ -4,8 +4,8 @@ from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
+from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_utc
-from tests.interactors.base_test_case import BaseTestCase
 from workers_control.core.anonymization import ANONYMIZED_STR, ANONYMIZED_UUID
 from workers_control.core.records import SocialAccounting
 from workers_control.core.services.account_details import (

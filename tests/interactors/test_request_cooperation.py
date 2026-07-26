@@ -13,7 +13,7 @@ from workers_control.core.interactors.request_cooperation import (
     RequestCooperationResponse,
 )
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class RequestCooperationTests(BaseTestCase):

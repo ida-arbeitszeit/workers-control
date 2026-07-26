@@ -19,7 +19,7 @@ from workers_control.core.interactors.show_my_plans import (
 )
 from workers_control.core.records import ConsumptionType, ProductionCosts
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class InteractorTests(BaseTestCase):

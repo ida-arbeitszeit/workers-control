@@ -1,4 +1,4 @@
-from tests.interactors.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.core.interactors import get_member_dashboard
 from workers_control.core.interactors.get_member_dashboard import (
     GetMemberDashboardInteractor,

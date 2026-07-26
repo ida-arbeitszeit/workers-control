@@ -9,8 +9,8 @@ from workers_control.core.interactors import (
 from workers_control.core.records import SocialAccounting, Transfer
 from workers_control.core.transfers import TransferType
 
+from ..base_test_case import BaseTestCase
 from ..datetime_service import datetime_utc
-from .base_test_case import BaseTestCase
 
 
 class RegisterProductiveConsumptionOfBasicServiceTests(BaseTestCase):

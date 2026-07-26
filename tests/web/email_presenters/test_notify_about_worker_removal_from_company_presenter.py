@@ -1,7 +1,7 @@
 from html import escape
 from uuid import uuid4
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.core.email_notifications import WorkerRemovalNotification
 from workers_control.web.email.notify_about_worker_removal_from_company_presenter import (
     NotifyAboutWorkerRemovalPresenter,

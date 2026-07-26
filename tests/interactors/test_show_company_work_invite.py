@@ -1,7 +1,7 @@
 from typing import Callable, cast
 from uuid import uuid4
 
-from tests.interactors.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.core.interactors.invite_worker_to_company import (
     InviteWorkerToCompanyInteractor,
 )
@@ -16,11 +16,13 @@ class TestNonExistingUserAndNonExistingInvite(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.interactor = self.injector.get(ShowCompanyWorkInviteDetailsInteractor)
-        self.request = ShowCompanyWorkInviteDetailsRequest(
+        self.interactor_request = ShowCompanyWorkInviteDetailsRequest(
             invite=uuid4(),
             member=uuid4(),
         )
-        self.response = self.interactor.show_company_work_invite_details(self.request)
+        self.response = self.interactor.show_company_work_invite_details(
+            self.interactor_request
+        )
 
     def test_response_is_marked_as_unsuccessful(self) -> None:
         self.assertFalse(self.response.is_success)

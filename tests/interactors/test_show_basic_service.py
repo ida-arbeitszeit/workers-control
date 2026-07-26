@@ -8,7 +8,7 @@ from workers_control.core.interactors.show_basic_service import (
     ShowBasicServiceResponse,
 )
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class InteractorTests(BaseTestCase):

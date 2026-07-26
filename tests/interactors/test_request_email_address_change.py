@@ -3,7 +3,7 @@ from parameterized import parameterized
 from workers_control.core import email_notifications
 from workers_control.core.interactors import request_email_address_change as interactor
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 def create_interactor_request(

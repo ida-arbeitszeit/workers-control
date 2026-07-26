@@ -1,7 +1,7 @@
 from decimal import Decimal
 from uuid import UUID, uuid4
 
-from tests.interactors.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.core.interactors.get_private_consumption_details import (
     GetPrivateConsumptionDetailsInteractor,
 )

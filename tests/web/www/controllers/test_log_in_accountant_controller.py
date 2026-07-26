@@ -1,4 +1,4 @@
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.web.www.forms import LoginForm
 from workers_control.web.www.controllers.log_in_accountant_controller import (
     LogInAccountantController,

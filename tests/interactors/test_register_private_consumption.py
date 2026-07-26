@@ -16,7 +16,7 @@ from workers_control.core.interactors.register_private_consumption import (
 from workers_control.core.records import PrivateConsumption, ProductionCosts, Transfer
 from workers_control.core.transfers import TransferType
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class RegisterPrivateConsumptionBase(BaseTestCase):

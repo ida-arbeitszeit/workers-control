@@ -16,7 +16,7 @@ from workers_control.core.interactors.list_plans_with_pending_review import (
 )
 from workers_control.core.records import ProductionCosts
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class BaseInteractorTestCase(BaseTestCase):

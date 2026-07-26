@@ -1,4 +1,4 @@
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.web.www.controllers.list_registered_hours_worked_controller import (
     ListRegisteredHoursWorkedController,
 )

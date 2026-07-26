@@ -3,8 +3,8 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
+from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_utc
-from tests.web.base_test_case import BaseTestCase
 from tests.web.www.forms import ConfirmEmailAddressChangeFormImpl
 from workers_control.web.www.controllers.change_user_email_address_controller import (
     ChangeUserEmailAddressController,

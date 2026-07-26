@@ -1,7 +1,7 @@
 from typing import Optional
 from uuid import UUID, uuid4
 
-from tests.interactors.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.core.interactors.accept_coordination_transfer import (
     AcceptCoordinationTransferInteractor,
 )

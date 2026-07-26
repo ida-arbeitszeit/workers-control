@@ -1,6 +1,6 @@
 from typing import Optional
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.core import email_notifications
 from workers_control.web.email.cooperation_request_email_presenter import (
     CooperationRequestEmailPresenter,

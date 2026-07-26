@@ -5,7 +5,7 @@ from workers_control.core.interactors import get_user_account_details
 from workers_control.core.interactors.confirm_member import ConfirmMemberInteractor
 from workers_control.core.interactors.register_company import RegisterCompany
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class RegisterCompanyTests(BaseTestCase):

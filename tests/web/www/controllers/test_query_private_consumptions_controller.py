@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.core.interactors import query_private_consumptions as interactor
 from workers_control.web.www.controllers.query_private_consumptions_controller import (
     InvalidRequest,

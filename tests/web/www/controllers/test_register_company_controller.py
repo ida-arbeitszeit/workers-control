@@ -1,4 +1,4 @@
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.web.www.forms import RegisterFormImpl
 from workers_control.web.www.controllers.register_company_controller import (
     RegisterCompanyController,

@@ -3,7 +3,7 @@ from uuid import UUID, uuid4
 from workers_control.core.interactors.delete_draft import DeleteDraftInteractor
 from workers_control.core.interactors.get_draft_details import GetDraftDetailsInteractor
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class InteractorTests(BaseTestCase):

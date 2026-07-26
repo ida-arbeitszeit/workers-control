@@ -1,8 +1,8 @@
 from typing import Optional
 from uuid import UUID, uuid4
 
+from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_min_utc
-from tests.web.base_test_case import BaseTestCase
 from workers_control.core.interactors.list_coordinations_of_company import (
     CooperationInfo,
     ListCoordinationsOfCompanyResponse,

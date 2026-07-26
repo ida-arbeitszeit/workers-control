@@ -2,7 +2,7 @@ from uuid import uuid4
 
 import pytest
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.web.www.controllers import (
     user_account_details_controller as controller,
 )

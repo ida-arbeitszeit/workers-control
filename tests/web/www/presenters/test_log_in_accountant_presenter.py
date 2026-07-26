@@ -1,7 +1,7 @@
 from typing import Optional
 from uuid import UUID, uuid4
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.web.www.forms import LoginForm
 from workers_control.core.interactors.log_in_accountant import (
     LogInAccountantInteractor as Interactor,

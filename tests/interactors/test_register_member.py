@@ -4,7 +4,7 @@ from workers_control.core.interactors.confirm_company import ConfirmCompanyInter
 from workers_control.core.interactors.log_in_member import LogInMemberInteractor
 from workers_control.core.interactors.register_member import RegisterMemberInteractor
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 DEFAULT = dict(
     email="test@cp.org",

@@ -1,4 +1,4 @@
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.web.www.request import FakeRequest
 from workers_control.web.www.controllers.review_plan_controller import (
     ReviewDecision,

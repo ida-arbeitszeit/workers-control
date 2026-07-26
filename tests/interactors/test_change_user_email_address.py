@@ -8,7 +8,7 @@ from workers_control.core.interactors.change_user_email_address import (
     Request,
 )
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class ChangeUserEmailAddressTests(BaseTestCase):

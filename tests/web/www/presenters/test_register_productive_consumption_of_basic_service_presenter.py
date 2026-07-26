@@ -1,6 +1,6 @@
 from parameterized import parameterized
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.web.www.request import FakeRequest
 from workers_control.core.interactors.register_productive_consumption_of_basic_service import (
     RejectionReason,

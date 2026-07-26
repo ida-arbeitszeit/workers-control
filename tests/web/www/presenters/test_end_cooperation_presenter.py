@@ -1,7 +1,7 @@
 from typing import List
 from uuid import uuid4
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.web.www.request import FakeRequest
 from workers_control.core.interactors.end_cooperation import EndCooperationResponse
 from workers_control.web.www.presenters.end_cooperation_presenter import (

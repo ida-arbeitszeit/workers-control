@@ -2,7 +2,7 @@ from workers_control.core.interactors.confirm_company import (
     ConfirmCompanyInteractor as Interactor,
 )
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class InteractorTests(BaseTestCase):

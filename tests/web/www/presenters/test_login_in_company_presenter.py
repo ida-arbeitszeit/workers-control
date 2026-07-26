@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Optional
 from uuid import UUID, uuid4
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.web.www.forms import LoginForm
 from workers_control.core.interactors.log_in_company import LogInCompanyInteractor
 from workers_control.web.session import UserRole

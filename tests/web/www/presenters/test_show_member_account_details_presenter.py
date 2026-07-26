@@ -5,8 +5,8 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
+from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_utc
-from tests.web.base_test_case import BaseTestCase
 from workers_control.core.interactors.show_member_account_details import (
     ShowMemberAccountDetailsResponse,
 )

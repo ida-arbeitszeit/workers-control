@@ -3,8 +3,8 @@ from decimal import Decimal
 from typing import Optional
 from uuid import UUID, uuid4
 
+from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_utc
-from tests.web.base_test_case import BaseTestCase
 from workers_control.core.interactors.review_registered_consumptions import (
     RegisteredConsumption,
 )

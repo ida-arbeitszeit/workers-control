@@ -9,7 +9,7 @@ from workers_control.core.interactors.get_user_account_details import (
     Request as GetUserAccountDetailsRequest,
 )
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 def create_request(

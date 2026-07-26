@@ -1,8 +1,8 @@
 from datetime import timedelta
 from typing import Optional
 
+from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_utc
-from tests.web.base_test_case import BaseTestCase
 from workers_control.web.www.controllers.register_accountant_controller import (
     RegisterAccountantController,
 )

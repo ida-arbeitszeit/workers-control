@@ -1,8 +1,7 @@
 from decimal import Decimal
 from uuid import UUID, uuid4
 
-from tests.data_generators import ConsumptionGenerator
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.core.interactors.query_company_consumptions import (
     Consumption,
     ConsumptionKind,
@@ -19,7 +18,6 @@ class TestPresenter(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.query_consumptions = self.injector.get(QueryCompanyConsumptionsInteractor)
-        self.consumption_generator = self.injector.get(ConsumptionGenerator)
         self.presenter = self.injector.get(CompanyConsumptionsPresenter)
 
     def test_show_consumptions_from_company(self) -> None:

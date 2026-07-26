@@ -1,4 +1,4 @@
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.web.www.forms import ChangeUserNameFormImpl
 from workers_control.core.interactors import change_user_name as interactor
 from workers_control.web.www.presenters import change_user_name_presenter as presenter

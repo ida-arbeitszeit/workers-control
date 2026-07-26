@@ -1,7 +1,7 @@
 from typing import Optional
 from uuid import UUID, uuid4
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.web.www.forms import RegisterFormImpl
 from workers_control.core.interactors.register_company import RegisterCompany
 from workers_control.web.www.presenters.register_company_presenter import (

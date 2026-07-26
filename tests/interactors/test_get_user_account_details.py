@@ -10,7 +10,7 @@ from workers_control.core.interactors import (
     get_user_account_details,
 )
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class GetUserAccountDetailsTests(BaseTestCase):

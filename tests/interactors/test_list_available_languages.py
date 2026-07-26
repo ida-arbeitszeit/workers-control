@@ -1,4 +1,4 @@
-from tests.interactors.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.interactors.repositories import FakeLanguageRepository
 from workers_control.core.interactors.list_available_languages import (
     ListAvailableLanguagesInteractor,

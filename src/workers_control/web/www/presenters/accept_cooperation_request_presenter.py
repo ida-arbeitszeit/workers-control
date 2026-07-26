@@ -25,35 +25,33 @@ class AcceptCooperationRequestPresenter:
                 self.translator.gettext("Cooperation request has been accepted.")
             )
         else:
-            if (
-                response == AcceptCooperationResponse.RejectionReason.plan_not_found
-                or AcceptCooperationResponse.RejectionReason.cooperation_not_found
-            ):
-                self.notifier.display_warning(
-                    self.translator.gettext("Plan or cooperation not found.")
-                )
-            elif (
-                response == AcceptCooperationResponse.RejectionReason.plan_inactive
-                or AcceptCooperationResponse.RejectionReason.plan_has_cooperation
-                or AcceptCooperationResponse.RejectionReason.plan_is_public_service
-            ):
-                self.notifier.display_warning(
-                    self.translator.gettext("Something's wrong with that plan.")
-                )
-            elif (
-                response
-                == AcceptCooperationResponse.RejectionReason.cooperation_was_not_requested
-            ):
-                self.notifier.display_warning(
-                    self.translator.gettext("This cooperation request does not exist.")
-                )
-            elif (
-                response
-                == AcceptCooperationResponse.RejectionReason.requester_is_not_coordinator
-            ):
-                self.notifier.display_warning(
-                    self.translator.gettext(
-                        "You are not coordinator of this cooperation."
+            rejection_reason = AcceptCooperationResponse.RejectionReason
+            match response.rejection_reason:
+                case (
+                    rejection_reason.plan_not_found
+                    | rejection_reason.cooperation_not_found
+                ):
+                    self.notifier.display_warning(
+                        self.translator.gettext("Plan or cooperation not found.")
                     )
-                )
+                case (
+                    rejection_reason.plan_inactive
+                    | rejection_reason.plan_has_cooperation
+                    | rejection_reason.plan_is_public_service
+                ):
+                    self.notifier.display_warning(
+                        self.translator.gettext("Something's wrong with that plan.")
+                    )
+                case rejection_reason.cooperation_was_not_requested:
+                    self.notifier.display_warning(
+                        self.translator.gettext(
+                            "This cooperation request does not exist."
+                        )
+                    )
+                case rejection_reason.requester_is_not_coordinator:
+                    self.notifier.display_warning(
+                        self.translator.gettext(
+                            "You are not coordinator of this cooperation."
+                        )
+                    )
         return ViewModel(redirection_url=self.url_index.get_my_cooperations_url())

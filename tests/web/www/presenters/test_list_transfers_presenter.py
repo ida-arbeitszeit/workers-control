@@ -4,8 +4,8 @@ from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
+from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_utc
-from tests.web.base_test_case import BaseTestCase
 from workers_control.core.interactors import list_transfers
 from workers_control.core.transfers import TransferType
 from workers_control.web.pagination import DEFAULT_PAGE_SIZE

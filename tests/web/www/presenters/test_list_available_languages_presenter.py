@@ -1,4 +1,4 @@
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.web.www.language_service import FakeLanguageService
 from workers_control.core.interactors.list_available_languages import (
     ListAvailableLanguagesInteractor,

@@ -6,7 +6,7 @@ from workers_control.core.interactors.cancel_cooperation_solicitation import (
     CancelCooperationSolicitationRequest,
 )
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class InteractorTests(BaseTestCase):

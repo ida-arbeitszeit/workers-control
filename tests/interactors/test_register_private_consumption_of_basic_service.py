@@ -11,8 +11,8 @@ from workers_control.core.interactors.register_private_consumption_of_basic_serv
 from workers_control.core.records import SocialAccounting, Transfer
 from workers_control.core.transfers import TransferType
 
+from ..base_test_case import BaseTestCase
 from ..datetime_service import datetime_utc
-from .base_test_case import BaseTestCase
 
 
 class RegisterPrivateConsumptionOfBasicServiceTests(BaseTestCase):

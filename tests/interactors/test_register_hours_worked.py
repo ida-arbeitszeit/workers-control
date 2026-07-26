@@ -10,7 +10,7 @@ from workers_control.core.interactors.register_hours_worked import (
 from workers_control.core.records import ProductionCosts
 from workers_control.core.services.payout_factor import PayoutFactorService
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class RegisterHoursWorkedTests(BaseTestCase):

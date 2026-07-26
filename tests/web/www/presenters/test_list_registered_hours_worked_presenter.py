@@ -4,8 +4,8 @@ from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
+from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_utc
-from tests.web.base_test_case import BaseTestCase
 from workers_control.core.interactors import list_registered_hours_worked
 from workers_control.web.www.presenters import list_registered_hours_worked_presenter
 

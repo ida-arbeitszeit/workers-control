@@ -5,8 +5,8 @@ from uuid import UUID
 
 from parameterized import parameterized
 
+from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_utc
-from tests.interactors.base_test_case import BaseTestCase
 from workers_control.core.interactors.list_transfers import (
     AccountOwnerType,
     ListTransfersInteractor,

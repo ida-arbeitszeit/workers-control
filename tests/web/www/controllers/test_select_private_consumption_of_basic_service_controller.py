@@ -1,7 +1,7 @@
 from decimal import Decimal
 from uuid import uuid4
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.web.www.request import FakeRequest
 from workers_control.web.www.controllers.select_private_consumption_of_basic_service_controller import (
     SelectPrivateConsumptionOfBasicServiceController,

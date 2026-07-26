@@ -1,6 +1,6 @@
 from uuid import UUID, uuid4
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.core.interactors.get_plan_for_review import (
     GetPlanForReviewInteractor as Interactor,
 )

@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.core.interactors.list_active_plans_of_company import ListedPlan
 from workers_control.web.www.presenters.list_plans_presenter import (
     ListPlansPresenter,

@@ -4,7 +4,7 @@ from workers_control.core.interactors.get_plan_for_review import (
     GetPlanForReviewInteractor,
 )
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class GetPlanForReviewInteractorTests(BaseTestCase):

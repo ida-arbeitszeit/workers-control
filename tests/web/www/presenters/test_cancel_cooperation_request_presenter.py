@@ -1,6 +1,6 @@
 from parameterized import parameterized
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.web.www.presenters.cancel_cooperation_request_presenter import (
     CancelCooperationRequestPresenter,
 )

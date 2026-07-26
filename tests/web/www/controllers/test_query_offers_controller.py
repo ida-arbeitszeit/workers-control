@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Optional
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.web.www.request import FakeRequest
 from workers_control.core.interactors.query_offers import OfferFilter, OfferSorting
 from workers_control.web.www.controllers.query_offers_controller import (

@@ -1,4 +1,4 @@
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.web.www.forms import ChangeUserNameFormImpl as Form
 from workers_control.web.www.controllers.change_user_name_controller import (
     ChangeUserNameController,

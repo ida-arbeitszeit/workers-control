@@ -8,7 +8,7 @@ from workers_control.core.interactors.list_plans_with_pending_review import (
     ListPlansWithPendingReviewInteractor,
 )
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class InteractorTests(BaseTestCase):

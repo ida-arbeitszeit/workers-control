@@ -4,7 +4,7 @@ from workers_control.core.interactors.log_in_accountant import LogInAccountantIn
 from workers_control.core.interactors.log_in_company import LogInCompanyInteractor
 from workers_control.core.interactors.log_in_member import LogInMemberInteractor
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class ChangeUserPasswordTest(BaseTestCase):

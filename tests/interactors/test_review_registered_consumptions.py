@@ -1,8 +1,8 @@
 from decimal import Decimal
 from math import isclose
 
+from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_utc
-from tests.interactors.base_test_case import BaseTestCase
 from workers_control.core.interactors.review_registered_consumptions import (
     ReviewRegisteredConsumptionsInteractor as Interactor,
 )

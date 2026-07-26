@@ -1,8 +1,8 @@
 from datetime import timedelta
 from uuid import UUID
 
+from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_min_utc
-from tests.interactors.base_test_case import BaseTestCase
 from workers_control.core.interactors import show_a_account_details
 from workers_control.core.transfers import TransferType
 

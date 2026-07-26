@@ -3,7 +3,7 @@ from decimal import Decimal
 
 from parameterized import parameterized
 
-from tests.interactors.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.payout_factor import PayoutFactorConfigTestImpl
 from workers_control.core.interactors import show_payout_factor_details
 from workers_control.core.services.payout_factor import PayoutFactorService

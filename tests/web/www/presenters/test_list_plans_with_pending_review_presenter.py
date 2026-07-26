@@ -1,7 +1,7 @@
 from typing import Optional
 from uuid import UUID, uuid4
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.core.interactors.list_plans_with_pending_review import (
     ListPlansWithPendingReviewInteractor as Interactor,
 )

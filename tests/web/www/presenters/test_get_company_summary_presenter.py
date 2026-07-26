@@ -2,9 +2,8 @@ from dataclasses import replace
 from decimal import Decimal
 from uuid import uuid4
 
-from tests.control_thresholds import ControlThresholdsTestImpl
+from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_utc
-from tests.web.base_test_case import BaseTestCase
 from workers_control.core.interactors.get_company_summary import (
     AccountBalances,
     Expectations,
@@ -60,7 +59,6 @@ class GetCompanySummaryPresenterTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.presenter = self.injector.get(GetCompanySummarySuccessPresenter)
-        self.control_thresholds = self.injector.get(ControlThresholdsTestImpl)
         self.session.login_company(uuid4())
 
     def test_company_id_is_shown(self) -> None:
@@ -154,7 +152,6 @@ class PlansOfCompanyTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.presenter = self.injector.get(GetCompanySummarySuccessPresenter)
-        self.control_thresholds = self.injector.get(ControlThresholdsTestImpl)
         self.session.login_company(uuid4())
 
     def test_ids_of_plans_are_shown(self) -> None:

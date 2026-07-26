@@ -5,7 +5,7 @@ from workers_control.core.interactors import show_psf_account_details
 from workers_control.core.records import SocialAccounting
 from workers_control.core.transfers import TransferType
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class InteractorTestBase(BaseTestCase):

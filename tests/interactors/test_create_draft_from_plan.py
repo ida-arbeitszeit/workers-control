@@ -9,7 +9,7 @@ from workers_control.core import records
 from workers_control.core.interactors import create_draft_from_plan as interactor
 from workers_control.core.interactors import get_draft_details, show_my_plans
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class CreateDraftFromPlanTests(BaseTestCase):

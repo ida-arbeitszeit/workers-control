@@ -1,8 +1,8 @@
 from datetime import timedelta
 from decimal import Decimal
 
+from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_utc
-from tests.interactors.base_test_case import BaseTestCase
 from workers_control.core.interactors.query_private_consumptions import (
     ConsumptionType,
     QueryPrivateConsumptions,

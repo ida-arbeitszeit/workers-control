@@ -3,7 +3,7 @@ from uuid import UUID
 from workers_control.core.interactors.log_in_company import LogInCompanyInteractor
 from workers_control.core.interactors.register_company import RegisterCompany
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class CorrectCredentialsTests(BaseTestCase):

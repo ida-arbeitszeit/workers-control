@@ -1,7 +1,7 @@
 from typing import Callable
 
+from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_utc
-from tests.web.base_test_case import BaseTestCase
 from workers_control.web.email.accountant_invitation_presenter import (
     AccountantInvitationEmailPresenter,
     ViewModel,

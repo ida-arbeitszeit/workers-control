@@ -2,7 +2,7 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.web.www.request import FakeRequest
 from workers_control.core.interactors import create_draft_from_plan as interactor
 from workers_control.web.www.presenters.create_draft_from_plan_presenter import (

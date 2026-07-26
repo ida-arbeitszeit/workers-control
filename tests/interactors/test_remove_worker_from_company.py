@@ -2,7 +2,7 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from tests.interactors.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.core import email_notifications
 from workers_control.core.interactors import remove_worker_from_company
 

@@ -1,7 +1,7 @@
 from typing import Callable, Optional
 from uuid import UUID, uuid4
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.web.www.session import FakeSession
 from workers_control.core.interactors.register_accountant import (
     RegisterAccountantInteractor,

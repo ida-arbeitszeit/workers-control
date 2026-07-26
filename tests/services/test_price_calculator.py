@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from tests.interactors.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.core.records import ProductionCosts
 from workers_control.core.services.price_calculator import PriceCalculator
 

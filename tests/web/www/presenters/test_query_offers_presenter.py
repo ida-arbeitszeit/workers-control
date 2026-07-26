@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.web.www.presenters.data_generators import QueriedOfferGenerator
 from workers_control.web.pagination import PAGE_PARAMETER_NAME
 from workers_control.web.www.presenters.query_offers_presenter import (

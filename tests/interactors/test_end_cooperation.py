@@ -1,6 +1,6 @@
 from uuid import UUID, uuid4
 
-from tests.interactors.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.core.interactors import get_coop_summary
 from workers_control.core.interactors.end_cooperation import (
     EndCooperationInteractor,

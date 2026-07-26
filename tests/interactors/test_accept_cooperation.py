@@ -10,7 +10,7 @@ from workers_control.core.interactors.accept_cooperation import (
 from workers_control.core.interactors.get_plan_details import GetPlanDetailsInteractor
 from workers_control.core.records import ProductionCosts
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class AcceptCooperationTests(BaseTestCase):

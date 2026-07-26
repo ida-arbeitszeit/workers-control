@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from parameterized import parameterized
 
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.web.www.forms import RequestCoordinationTransferFormImpl
 from workers_control.web.www.controllers.request_coordination_transfer_controller import (
     RequestCoordinationTransferController,

@@ -1,4 +1,4 @@
-from tests.web.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from tests.web.www.forms import RequestEmailAddressChangeFormImpl
 from workers_control.core.interactors import request_email_address_change as interactor
 from workers_control.web.www.presenters import (

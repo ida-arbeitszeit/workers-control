@@ -4,7 +4,7 @@ from workers_control.core.interactors.list_my_cooperating_plans import (
     ListMyCooperatingPlansInteractor,
 )
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class InteractorTest(BaseTestCase):

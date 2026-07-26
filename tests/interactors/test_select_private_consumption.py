@@ -3,7 +3,7 @@ from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
-from tests.interactors.base_test_case import BaseTestCase
+from tests.base_test_case import BaseTestCase
 from workers_control.core.interactors import select_private_consumption
 
 

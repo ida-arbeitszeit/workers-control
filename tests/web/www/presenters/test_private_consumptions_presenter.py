@@ -2,8 +2,8 @@ from datetime import datetime
 from decimal import Decimal
 from uuid import UUID, uuid4
 
+from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_utc
-from tests.web.base_test_case import BaseTestCase
 from workers_control.core.interactors import query_private_consumptions as interactor
 from workers_control.web.www.presenters.private_consumptions_presenter import (
     PrivateConsumptionsPresenter,

@@ -10,7 +10,7 @@ from workers_control.core.interactors.create_plan_draft import (
 )
 from workers_control.core.records import ProductionCosts
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 REQUEST = Request(
     planner=uuid4(),

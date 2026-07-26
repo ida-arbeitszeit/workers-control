@@ -1,7 +1,7 @@
 from decimal import Decimal
 
+from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_utc
-from tests.interactors.base_test_case import BaseTestCase
 from workers_control.core import records
 from workers_control.core.records import ProductionCosts
 

@@ -1,7 +1,7 @@
 from datetime import timedelta
 
+from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_utc
-from tests.web.base_test_case import BaseTestCase
 from workers_control.web.www.controllers.confirm_member_controller import (
     ConfirmMemberController,
 )

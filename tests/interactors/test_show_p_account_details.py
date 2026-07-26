@@ -5,7 +5,7 @@ from tests.datetime_service import datetime_min_utc
 from workers_control.core.interactors import show_p_account_details
 from workers_control.core.transfers import TransferType
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class InteractorTestBase(BaseTestCase):

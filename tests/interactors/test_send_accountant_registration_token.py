@@ -3,7 +3,7 @@ from workers_control.core.interactors.send_accountant_registration_token import 
     SendAccountantRegistrationTokenInteractor,
 )
 
-from .base_test_case import BaseTestCase
+from ..base_test_case import BaseTestCase
 
 
 class InteractorTests(BaseTestCase):

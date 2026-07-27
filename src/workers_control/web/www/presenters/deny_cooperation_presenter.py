@@ -25,34 +25,31 @@ class DenyCooperationPresenter:
                 self.translator.gettext("Cooperation request has been denied.")
             )
         else:
-            if (
-                deny_cooperation_response
-                == DenyCooperationResponse.RejectionReason.plan_not_found
-                or DenyCooperationResponse.RejectionReason.cooperation_not_found
-            ):
-                self.notifier.display_warning(
-                    self.translator.gettext("Plan or cooperation not found.")
-                )
-            elif (
-                deny_cooperation_response
-                == DenyCooperationResponse.RejectionReason.cooperation_was_not_requested
-            ):
-                self.notifier.display_warning(
-                    self.translator.gettext("This cooperation request does not exist.")
-                )
-            elif (
-                deny_cooperation_response
-                == DenyCooperationResponse.RejectionReason.requester_is_not_coordinator
-            ):
-                self.notifier.display_warning(
-                    self.translator.gettext(
-                        "You are not coordinator of this cooperation."
+            rejection_reason = DenyCooperationResponse.RejectionReason
+            match deny_cooperation_response.rejection_reason:
+                case (
+                    rejection_reason.plan_not_found
+                    | rejection_reason.cooperation_not_found
+                ):
+                    self.notifier.display_warning(
+                        self.translator.gettext("Plan or cooperation not found.")
                     )
-                )
-            else:
-                # catchall for rejected responses where rejection
-                # reason cannot be handled by presenter.
-                self.notifier.display_warning(
-                    self.translator.gettext("Could not deny cooperation")
-                )
+                case rejection_reason.cooperation_was_not_requested:
+                    self.notifier.display_warning(
+                        self.translator.gettext(
+                            "This cooperation request does not exist."
+                        )
+                    )
+                case rejection_reason.requester_is_not_coordinator:
+                    self.notifier.display_warning(
+                        self.translator.gettext(
+                            "You are not coordinator of this cooperation."
+                        )
+                    )
+                case _:
+                    # catchall for rejected responses where rejection
+                    # reason cannot be handled by presenter.
+                    self.notifier.display_warning(
+                        self.translator.gettext("Could not deny cooperation")
+                    )
         return ViewModel(redirection_url=self.url_index.get_my_cooperations_url())

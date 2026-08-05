@@ -167,6 +167,33 @@ class ActivePlansTests(PresenterBase):
             else "–"
         )
 
+    @parameterized.expand(
+        [
+            ("UTC", datetime_utc(2020, 5, 1, 22, 30), "01.05.20"),
+            ("Asia/Tokyo", datetime_utc(2020, 5, 1, 22, 30), "02.05.20"),
+            ("Pacific/Honolulu", datetime_utc(2020, 5, 1, 0, 30), "30.04.20"),
+        ]
+    )
+    def test_that_dates_are_shown_in_the_timezone_of_the_current_user(
+        self,
+        configured_user_tz: str,
+        expiration_date: datetime,
+        expected_expiration_date: str,
+    ) -> None:
+        self.timezone_configuration.set_timezone_of_current_user(configured_user_tz)
+        response = self.create_interactor_response(
+            active_plans=[
+                self.create_plan_info(
+                    expiration_date=expiration_date,
+                )
+            ]
+        )
+        presentation = self.presenter.present(response)
+        assert (
+            presentation.active_plans.rows[0].expiration_date
+            == expected_expiration_date
+        )
+
     @parameterized.expand([(datetime_utc(2000, 1, 6),), (None,)])
     def test_that_relative_expiration_is_calculated_correctly_in_days_from_now(
         self, expiration_date: datetime | None

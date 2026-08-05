@@ -4,6 +4,7 @@ from datetime import datetime
 from uuid import UUID, uuid4
 
 from tests.base_test_case import BaseTestCase
+from tests.datetime_service import datetime_utc
 from workers_control.core.interactors.list_basic_services_of_worker import (
     ListedBasicService,
     Response,
@@ -49,7 +50,7 @@ class PresenterTests(BaseTestCase):
         assert view_model.services[0].id == str(expected_id)
 
     def test_created_on_is_formatted_via_datetime_formatter(self) -> None:
-        created_on = datetime(2026, 3, 22, 12, 0)
+        created_on = datetime_utc(2026, 3, 22, 12, 0)
         response = self._create_response_with_one_service(created_on=created_on)
         view_model = self.presenter.present(response)
         expected_formatted = self.datetime_formatter.format_datetime(
@@ -76,13 +77,13 @@ class PresenterTests(BaseTestCase):
                     id=first_id,
                     name="A",
                     description="d",
-                    created_on=datetime(2026, 1, 1, 0, 0),
+                    created_on=datetime_utc(2026, 1, 1, 0, 0),
                 ),
                 ListedBasicService(
                     id=second_id,
                     name="B",
                     description="d",
-                    created_on=datetime(2026, 1, 1, 0, 0),
+                    created_on=datetime_utc(2026, 1, 1, 0, 0),
                 ),
             ]
         )
@@ -99,7 +100,7 @@ class PresenterTests(BaseTestCase):
         if service_id is None:
             service_id = uuid4()
         if created_on is None:
-            created_on = datetime(2026, 1, 1, 0, 0)
+            created_on = datetime_utc(2026, 1, 1, 0, 0)
         return Response(
             basic_services=[
                 ListedBasicService(

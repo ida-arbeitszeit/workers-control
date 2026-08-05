@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from tests.base_test_case import BaseTestCase
+from tests.datetime_service import datetime_utc
 from workers_control.core.interactors.show_basic_service import (
     ShowBasicServiceResponse,
 )
@@ -53,7 +54,7 @@ class ShowBasicServicePresenterTests(BaseTestCase):
         assert view_model.description == expected_description
 
     def test_view_model_contains_formatted_created_on(self) -> None:
-        created_on = datetime(2026, 3, 22, 12, 0)
+        created_on = datetime_utc(2026, 3, 22, 12, 0)
         response = self._create_response(created_on=created_on)
         view_model = self.presenter.present(response)
         assert view_model is not None
@@ -72,7 +73,7 @@ class ShowBasicServicePresenterTests(BaseTestCase):
         created_on: datetime | None = None,
     ) -> ShowBasicServiceResponse:
         if created_on is None:
-            created_on = datetime(2026, 1, 1, 0, 0)
+            created_on = datetime_utc(2026, 1, 1, 0, 0)
         return ShowBasicServiceResponse(
             details=ShowBasicServiceResponse.Details(
                 provider_name=provider_name,

@@ -15,9 +15,8 @@ class FakeDatetimeFormatter:
         date: datetime,
         fmt: str | None = None,
     ) -> str:
+        assert date.tzinfo is not None
         user_timezone = self.timezone_config.get_timezone_of_current_user()
-        if date.tzinfo is None:
-            date = date.replace(tzinfo=user_timezone)
         date = date.astimezone(user_timezone)
         if fmt is None:
             fmt = "%d.%m.%Y %H:%M"

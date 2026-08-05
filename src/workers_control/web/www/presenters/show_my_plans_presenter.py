@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Optional
 
 from workers_control.core.datetime_service import DatetimeService
 from workers_control.core.interactors.show_my_plans import ShowMyPlansResponse
+from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
 from workers_control.web.notification import Notifier
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
@@ -111,6 +112,7 @@ class ShowMyPlansPresenter:
     url_index: UrlIndex
     translator: Translator
     datetime_service: DatetimeService
+    datetime_formatter: DatetimeFormatter
     notifier: Notifier
 
     def present(self, response: ShowMyPlansResponse) -> ShowMyPlansViewModel:
@@ -248,7 +250,11 @@ class ShowMyPlansPresenter:
         )
 
     def __format_date(self, date: Optional[datetime]) -> str:
-        return date.strftime("%d.%m.%y") if date else "–"
+        return (
+            self.datetime_formatter.format_datetime(date=date, fmt="%d.%m.%y")
+            if date
+            else "–"
+        )
 
     def __format_price(self, price_per_unit: Decimal) -> str:
         return f"{round(price_per_unit, 2)}"

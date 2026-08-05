@@ -7,7 +7,9 @@ class DatetimeFormatter(Protocol):
         self,
         date: datetime,
         fmt: str | None = ...,
-    ) -> str: ...
+    ) -> str:
+        """Format a datetime and convert to current user's timezone."""
+        ...
 
 
 class TimezoneConfiguration(Protocol):

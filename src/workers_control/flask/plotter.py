@@ -13,19 +13,38 @@ from workers_control.web.colors import HexColors
 from workers_control.web.formatters.datetime_formatter import TimezoneConfiguration
 from workers_control.web.translator import Translator
 
+DEFAULT_LINE_PLOT_SIZE: Tuple[int, int] = (10, 5)
 
+
+@dataclass
 class GeneralPlotter:
+    timezone_config: TimezoneConfiguration
+
     def create_line_plot(
-        self, x: List[datetime], y: List[Decimal], fig_size: Tuple[int, int] = (10, 5)
+        self,
+        x: List[datetime],
+        y: List[Decimal],
+        fig_size: Tuple[int, int] = DEFAULT_LINE_PLOT_SIZE,
     ) -> bytes:
+        fig = self._create_line_plot_figure(x=x, y=y, fig_size=fig_size)
+        return self._figure_to_bytes(fig)
+
+    def _create_line_plot_figure(
+        self,
+        x: List[datetime],
+        y: List[Decimal],
+        fig_size: Tuple[int, int] = DEFAULT_LINE_PLOT_SIZE,
+    ) -> Figure:
+        tz = self.timezone_config.get_timezone_of_current_user()
         fig = Figure()
         ax = fig.subplots()
         ax.axhline(linestyle="--", color="black")
         ax.plot(x, y)  # type: ignore[arg-type]
-        ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d"))
+        ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d", tz=tz))
+        ax.xaxis.set_major_locator(mdates.AutoDateLocator(tz=tz))
         fig.set_size_inches(fig_size[0], fig_size[1])
         fig.autofmt_xdate()
-        return self._figure_to_bytes(fig)
+        return fig
 
     def create_bar_plot(
         self,

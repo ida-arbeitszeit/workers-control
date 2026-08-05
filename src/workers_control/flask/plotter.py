@@ -1,6 +1,6 @@
 import io
 from dataclasses import dataclass
-from datetime import datetime, timedelta
+from datetime import datetime
 from decimal import Decimal
 from typing import List, Optional, Tuple, Union
 
@@ -58,6 +58,14 @@ class PayoutFactorDetailsPlotter:
     timezone_config: TimezoneConfiguration
 
     def plot(self, response: show_payout_factor_details.Response) -> bytes:
+        fig = self._create_figure(response)
+        buf = io.BytesIO()
+        fig.savefig(buf, format="png", bbox_inches="tight", pad_inches=0.5)
+        buf.seek(0)
+        return buf.getvalue()
+
+    def _create_figure(self, response: show_payout_factor_details.Response) -> Figure:
+        tz = self.timezone_config.get_timezone_of_current_user()
 
         plan_indices: list[int] = []
         start: list[datetime] = []
@@ -106,8 +114,7 @@ class PayoutFactorDetailsPlotter:
         ylabel = self.translator.gettext("Plans")
         ax.set_ylabel(ylabel)
 
-        tz = self.timezone_config.get_timezone_of_current_user()
-        ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d", tz=tz))
+        ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m", tz=tz))
         ax.xaxis.set_major_locator(mdates.AutoDateLocator(tz=tz))
         fig.autofmt_xdate()
         ax.invert_yaxis()
@@ -129,13 +136,8 @@ class PayoutFactorDetailsPlotter:
         ax.legend()
         fig.set_size_inches(14, (len(plan_indices) + 1) * 0.3 + 2)
 
-        margin = timedelta(days=response.window_size_in_days / 2)
         ax.set_xlim(
-            mdates.date2num(response.window_start - margin),
-            mdates.date2num(response.window_end + margin),
+            mdates.date2num(response.display_start),
+            mdates.date2num(response.display_end),
         )
-
-        buf = io.BytesIO()
-        fig.savefig(buf, format="png", bbox_inches="tight", pad_inches=0.5)
-        buf.seek(0)
-        return buf.getvalue()
+        return fig

@@ -1,11 +1,11 @@
 class ColorsTestImpl:
     def __init__(self) -> None:
         self.all_colors = {
-            "primary": "primary_color",
-            "info": "info_color",
-            "warning": "warning_color",
-            "danger": "danger_color",
-            "success": "success_color",
+            "primary": "#1f77b4",
+            "info": "#17becf",
+            "warning": "#ff7f0e",
+            "danger": "#d62728",
+            "success": "#2ca02c",
         }
 
     @property

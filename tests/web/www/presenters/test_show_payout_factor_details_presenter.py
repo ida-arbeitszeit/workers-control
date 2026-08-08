@@ -28,6 +28,8 @@ class PresenterBaseTestCase(BaseTestCase):
         window_size_in_days: int = 30,
         window_start: datetime | None = None,
         window_end: datetime | None = None,
+        display_start: datetime | None = None,
+        display_end: datetime | None = None,
         plans: list[PlanData] | None = None,
         basic_service_consumptions: list[BasicServiceConsumptionData] | None = None,
     ) -> Response:
@@ -37,6 +39,10 @@ class PresenterBaseTestCase(BaseTestCase):
             window_start = datetime_min_utc()
         if window_end is None:
             window_end = datetime_min_utc() + timedelta(days=window_size_in_days)
+        if display_start is None:
+            display_start = datetime_min_utc()
+        if display_end is None:
+            display_end = datetime_min_utc() + timedelta(days=2 * window_size_in_days)
         if plans is None:
             plans = []
         if basic_service_consumptions is None:
@@ -47,6 +53,8 @@ class PresenterBaseTestCase(BaseTestCase):
             window_size_in_days=window_size_in_days,
             window_start=window_start,
             window_end=window_end,
+            display_start=display_start,
+            display_end=display_end,
             plans=plans,
             basic_service_consumptions=basic_service_consumptions,
         )

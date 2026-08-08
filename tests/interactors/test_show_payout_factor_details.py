@@ -4,6 +4,7 @@ from decimal import Decimal
 from parameterized import parameterized
 
 from tests.base_test_case import BaseTestCase
+from tests.datetime_service import datetime_utc
 from tests.payout_factor import PayoutFactorConfigTestImpl
 from workers_control.core.interactors import show_payout_factor_details
 from workers_control.core.services.payout_factor import PayoutFactorService
@@ -62,6 +63,32 @@ class InteractorTests(BaseTestCase):
         expected_end = dt + timedelta(days=window_size / 2)
         assert response.window_end == expected_end
 
+    @parameterized.expand(
+        [(datetime_utc(2020, 5, 10), 4), (datetime_utc(2025, 1, 9), 20)]
+    )
+    def test_that_display_start_is_now_minus_window_size(
+        self,
+        dt: datetime,
+        window_size: int,
+    ) -> None:
+        self.datetime_service.freeze_time(dt)
+        self.payout_factor_config.set_window_length(window_size)
+        response = self.interactor.show_payout_factor_details()
+        assert response.display_start == dt - timedelta(days=window_size)
+
+    @parameterized.expand(
+        [(datetime_utc(2020, 5, 10), 4), (datetime_utc(2025, 1, 9), 20)]
+    )
+    def test_that_display_end_is_now_plus_window_size(
+        self,
+        dt: datetime,
+        window_size: int,
+    ) -> None:
+        self.datetime_service.freeze_time(dt)
+        self.payout_factor_config.set_window_length(window_size)
+        response = self.interactor.show_payout_factor_details()
+        assert response.display_end == dt + timedelta(days=window_size)
+
 
 class PlanDataTests(BaseTestCase):
     def setUp(self) -> None:
@@ -96,13 +123,13 @@ class PlanDataTests(BaseTestCase):
 
     @parameterized.expand(
         [
-            (datetime(2000, 1, 14), datetime(2000, 1, 15), 1, True),
-            (datetime(2000, 1, 14, 1), datetime(2000, 1, 15), 1, False),
-            (datetime(2000, 1, 13), datetime(2000, 1, 15), 2, True),
-            (datetime(2000, 1, 13, 1), datetime(2000, 1, 15), 2, False),
+            (datetime_utc(2000, 1, 14), datetime_utc(2000, 1, 15), 1, True),
+            (datetime_utc(2000, 1, 14, 1), datetime_utc(2000, 1, 15), 1, False),
+            (datetime_utc(2000, 1, 13), datetime_utc(2000, 1, 15), 2, True),
+            (datetime_utc(2000, 1, 13, 1), datetime_utc(2000, 1, 15), 2, False),
         ]
     )
-    def test_that_plans_that_have_expired_at_least_one_window_size_before_now_are_ignored(
+    def test_that_plans_that_have_expired_before_start_of_display_range_are_ignored(
         self,
         plan_expiration: datetime,
         now: datetime,
@@ -117,6 +144,18 @@ class PlanDataTests(BaseTestCase):
             assert len(self.interactor.show_payout_factor_details().plans) == 0
         else:
             assert len(self.interactor.show_payout_factor_details().plans) == 1
+
+    def test_that_plan_expiring_between_display_start_and_calculation_window_is_listed_with_zero_coverage(
+        self,
+    ) -> None:
+        # display range starts at 2000-02-05, calculation window at 2000-02-10
+        self.payout_factor_config.set_window_length(10)
+        self.datetime_service.freeze_time(datetime_utc(2000, 2, 7))
+        self.plan_generator.create_plan(timeframe=1)
+        self.datetime_service.freeze_time(datetime_utc(2000, 2, 15))
+        response = self.interactor.show_payout_factor_details()
+        assert len(response.plans) == 1
+        assert response.plans[0].coverage == Decimal(0)
 
     def test_that_plans_are_ordered_by_approval(self) -> None:
         approval_1 = datetime(1900, 1, 1)

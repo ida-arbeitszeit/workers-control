@@ -21,6 +21,8 @@ class Response:
     window_size_in_days: int
     window_start: datetime
     window_end: datetime
+    display_start: datetime
+    display_end: datetime
     plans: list[PlanData]
     basic_service_consumptions: list[BasicServiceConsumptionData]
 
@@ -54,7 +56,9 @@ class ShowPayoutFactorDetailsInteractor:
         window_size_in_days = self.payout_factor_config.get_window_length_in_days()
         window_start = now - timedelta(days=window_size_in_days / 2)
         window_end = now + timedelta(days=window_size_in_days / 2)
-        plan_records = self._get_plans_sorted(now, window_size_in_days)
+        display_start = now - timedelta(days=window_size_in_days)
+        display_end = now + timedelta(days=window_size_in_days)
+        plan_records = self._get_plans_sorted(display_start)
 
         plans = [
             self._create_plan_data(
@@ -74,17 +78,17 @@ class ShowPayoutFactorDetailsInteractor:
             window_size_in_days=window_size_in_days,
             window_start=window_start,
             window_end=window_end,
+            display_start=display_start,
+            display_end=display_end,
             plans=plans,
             basic_service_consumptions=basic_service_consumptions,
         )
 
-    def _get_plans_sorted(
-        self, now: datetime, window_size_in_days: int
-    ) -> list[records.Plan]:
+    def _get_plans_sorted(self, display_start: datetime) -> list[records.Plan]:
         relevant_plans = list(
             self.database_gateway.get_plans()
             .that_are_approved()
-            .that_will_expire_after(now - timedelta(days=window_size_in_days))
+            .that_will_expire_after(display_start)
         )
         plans_sorted = sorted(
             relevant_plans,

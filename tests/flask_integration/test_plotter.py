@@ -29,6 +29,9 @@ class PlotterTestCase(BaseTestCase):
     def get_tick_labels(self, axes: Axes) -> list[str]:
         return [tick.get_text() for tick in axes.get_xticklabels()]
 
+    def get_y_tick_labels(self, axes: Axes) -> list[str]:
+        return [tick.get_text() for tick in axes.get_yticklabels()]
+
     def get_ticks_in_user_timezone(self, axes: Axes) -> list[datetime]:
         tz = self.timezone_configuration.get_timezone_of_current_user()
         return [mdates.num2date(tick, tz=tz) for tick in axes.get_xticks()]
@@ -132,6 +135,18 @@ class PayoutFactorDetailsPlotterTests(PlotterTestCase):
         assert ticks
         for tick, label in zip(ticks, labels, strict=True):
             assert label == tick.strftime("%Y-%m")
+
+    def test_that_y_axis_is_labelled_with_plan_indices_only_and_ignores_basic_services(
+        self,
+    ) -> None:
+        figure = self.plotter._create_figure(
+            self.create_response(
+                plans=[self.create_plan(), self.create_plan()],
+                basic_service_consumptions=[self.create_basic_service_consumption()],
+            )
+        )
+        axes = self.render(figure)
+        assert self.get_y_tick_labels(axes) == ["0", "1"]
 
     def create_response(
         self,

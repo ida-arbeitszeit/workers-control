@@ -125,8 +125,7 @@ class PayoutFactorDetailsPlotter:
             label=bs_label,
             zorder=3,
         )
-        ax.set_yticks(plan_indices + [bs_row_y])
-        ax.set_yticklabels([str(i) for i in plan_indices] + [bs_label])
+        ax.set_yticks(plan_indices)
 
         title = self.translator.gettext("Payout Factor Calculation Window")
         ax.set_title(title)

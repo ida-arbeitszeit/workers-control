@@ -36,22 +36,6 @@
             </div>
         </div>
     </div>
-    <div class="grid">
-        <div class="cell has-text-centered">
-            <div class="box">
-                <h1 class="title">{{ view_model.payout_factor }}</h1>
-                <div class="subtitle">{{ gettext("FIC (Payout factor)") }}</div>
-                <a href="{{ view_model.payout_factor_details_url }}">{{ gettext("Go to details") }}</a>
-            </div>
-        </div>
-        <div class="cell has-text-centered">
-            <div class="box">
-                <h1 class="title">{{ view_model.psf_balance }}</h1>
-                <div class="subtitle">{{ gettext("Balance for Public Sector Fund (PSF)") }}</div>
-                <a href="{{ view_model.psf_account_url }}">{{ gettext("Go to details") }}</a>
-            </div>
-        </div>        
-    </div>
     <div class="fixed-grid has-2-cols has-1-cols-mobile">
         <div class="grid">
             <div class="cell box mb-0">
@@ -68,16 +52,35 @@
             </div>
         </div>
     </div>
-    <div class="fixed-grid has-3-cols has-1-cols-mobile">
+    <div class="fixed-grid has-2-cols has-1-cols-mobile has-text-centered">
         <div class="grid">
-            <div class="cell box is-col-span-2 mb-0">
-                <b>{{ gettext("Active productive plans") }}:</b> {{ view_model.active_plans_productive_count }} &#8212;
-                <b>{{ gettext("Active public plans") }}:</b> {{ view_model.active_plans_public_count }} &#8212;
-                <b>{{ gettext("Currently planned fixed means") }}:</b> {{ view_model.planned_means_hours }} &#8212;
-                <b>{{ gettext("Currently planned liquid means") }}:</b> {{ view_model.planned_resources_hours }} &#8212;
-                <b>{{ gettext("Currently planned labour") }}:</b> {{ view_model.planned_work_hours }}
+            <div class="cell box mb-0">
+                <h1 class="title">{{ view_model.productive_sector_labour_hours }}</h1>
+                <div class="subtitle">{{ gettext("Currently planned labour in productive sector") }}</div>
             </div>
-            <div class="cell box is-4 has-text-centered mb-0">
+            <div class="cell box mb-0">
+                <h1 class="title">{{ view_model.public_sector_labour_hours }}</h1>
+                <div class="subtitle">{{ gettext("Currently planned labour in public sector") }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="cell has-text-centered">
+            <div class="box">
+                <h1 class="title">{{ view_model.payout_factor }}</h1>
+                <div class="subtitle">{{ gettext("FIC (Payout factor)") }}</div>
+                <a href="{{ view_model.payout_factor_details_url }}">{{ gettext("Go to details") }}</a>
+            </div>
+        </div>
+        <div class="cell has-text-centered">
+            <div class="box">
+                <h1 class="title">{{ view_model.psf_balance }}</h1>
+                <div class="subtitle">{{ gettext("Balance for Public Sector Fund (PSF)") }}</div>
+                <a href="{{ view_model.psf_account_url }}">{{ gettext("Go to details") }}</a>
+            </div>
+        </div>
+        <div class="cell has-text-centered">
+            <div class="box">
                 <h1 class="title">{{ view_model.average_timeframe_days }}</h1>
                 <div class="subtitle">{{ gettext("Average plan duration") }}</div>
             </div>

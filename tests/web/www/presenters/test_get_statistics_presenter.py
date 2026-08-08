@@ -18,6 +18,7 @@ TESTING_RESPONSE_MODEL = StatisticsResponse(
     planned_work=Decimal("500.23"),
     planned_resources=Decimal("400.1"),
     planned_means=Decimal("215.23"),
+    public_sector_labour=Decimal("120.5"),
     payout_factor=Decimal("0.74516"),
     psf_balance=Decimal("8.76123"),
 )
@@ -28,39 +29,31 @@ class GetStatisticsPresenterTests(BaseTestCase):
         super().setUp()
         self.presenter = self.injector.get(GetStatisticsPresenter)
 
-    def test_planned_resources_hours_are_truncated_at_2_digits_after_comma(
+    def test_public_sector_labour_hours_are_truncated_at_2_digits_after_comma(
         self,
     ) -> None:
         response = replace(
             TESTING_RESPONSE_MODEL,
-            planned_resources=Decimal(400.13131313),
+            public_sector_labour=Decimal(120.56789),
         )
         view_model = self.presenter.present(response)
         self.assertEqual(
-            view_model.planned_resources_hours,
-            self.translator.gettext("%.2f hours") % Decimal("400.13"),
+            view_model.public_sector_labour_hours,
+            self.translator.gettext("%.2f hours") % Decimal("120.57"),
         )
 
-    def test_planned_work_hours_are_truncated_at_2_digits_after_comma(self) -> None:
+    def test_productive_sector_labour_is_planned_work_without_public_sector_labour(
+        self,
+    ) -> None:
         response = replace(
             TESTING_RESPONSE_MODEL,
-            planned_work=Decimal(523.12123123123),
+            planned_work=Decimal("500"),
+            public_sector_labour=Decimal("120.5"),
         )
         view_model = self.presenter.present(response)
         self.assertEqual(
-            view_model.planned_work_hours,
-            self.translator.gettext("%.2f hours") % Decimal("523.12"),
-        )
-
-    def test_planned_means_hours_are_truncated_at_2_digits_after_comma(self) -> None:
-        response = replace(
-            TESTING_RESPONSE_MODEL,
-            planned_means=Decimal(123.12315),
-        )
-        view_model = self.presenter.present(response)
-        self.assertEqual(
-            view_model.planned_means_hours,
-            self.translator.gettext("%s hours") % Decimal("123.12"),
+            view_model.productive_sector_labour_hours,
+            self.translator.gettext("%.2f hours") % Decimal("379.50"),
         )
 
     def test_registered_companies_count_is_displayed_correctly_as_number(self) -> None:
@@ -105,31 +98,6 @@ class GetStatisticsPresenterTests(BaseTestCase):
         self.assertEqual(
             view_model.active_plans_count,
             "7",
-        )
-
-    def test_active_plans_public_count_is_displayed_correctly_as_number(self) -> None:
-        response = replace(
-            TESTING_RESPONSE_MODEL,
-            active_plans_public_count=2,
-        )
-        view_model = self.presenter.present(response)
-        self.assertEqual(
-            view_model.active_plans_public_count,
-            "2",
-        )
-
-    def test_active_plans_productive_count_is_active_plans_without_public_ones(
-        self,
-    ) -> None:
-        response = replace(
-            TESTING_RESPONSE_MODEL,
-            active_plans_count=7,
-            active_plans_public_count=2,
-        )
-        view_model = self.presenter.present(response)
-        self.assertEqual(
-            view_model.active_plans_productive_count,
-            "5",
         )
 
     def test_active_basic_services_count_is_displayed_correctly_as_number(

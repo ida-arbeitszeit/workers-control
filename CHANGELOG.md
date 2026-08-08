@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.5] - 2026-08-08
+
+### Added
+
+- Two tiles on the global statistics page showing the labour hours currently planned in the public and in the productive sector. (#1530)
+
+### Changed
+
+- Label the x axis of the payout factor (FIC) details plot by month instead of by day. (#1526)
+- Add public and productive plans to the legend of the payout factor (FIC) details plot and remove the redundant basic services label, whose information the legend's star entry already conveys. (#1527, #1528)
+- Show whole numbers on the y axis of the global plans plot. (#1530)
+- Improve the descriptions on the global statistics page and remove a redundant text box. (#1529, #1530)
+- Update dependencies. (#1532)
+- Update translations. (#1531)
+
+### Removed
+
+- The redundant `requirements.txt`; the runtime dependencies are declared in `pyproject.toml`. (#1521)
+
+### Fixed
+
+- The accept- and deny-cooperation presenters always showed the same warning message, regardless of the actual outcome. (#1524)
+- Plots now label their time axis in the user's timezone instead of UTC, so a plot and the table next to it no longer show the same transfer on different days. Plan dates in the "My plans" view are shown in the user's timezone as well. (#1525, #1526)
+- The per-module mypy overrides used bare module names without a `.*` suffix and therefore never matched, leaving `disallow_untyped_defs` unenforced. The previously hidden missing annotations have been added. (#1521)
+
 ## [0.2.4] - 2026-07-21
 
 ### Changed

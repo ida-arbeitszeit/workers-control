@@ -118,6 +118,20 @@ class GetStatisticsPresenterTests(BaseTestCase):
             "2",
         )
 
+    def test_active_plans_productive_count_is_active_plans_without_public_ones(
+        self,
+    ) -> None:
+        response = replace(
+            TESTING_RESPONSE_MODEL,
+            active_plans_count=7,
+            active_plans_public_count=2,
+        )
+        view_model = self.presenter.present(response)
+        self.assertEqual(
+            view_model.active_plans_productive_count,
+            "5",
+        )
+
     def test_active_basic_services_count_is_displayed_correctly_as_number(
         self,
     ) -> None:

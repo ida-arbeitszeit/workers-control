@@ -42,7 +42,7 @@ def global_barplot_for_means_of_production(
         x_coordinates=[
             translator.pgettext("Text should be short", "Fixed means"),
             translator.pgettext("Text should be short", "Liquid means"),
-            translator.gettext("Work"),
+            translator.gettext("Labour"),
         ],
         height_of_bars=[
             planned_means,

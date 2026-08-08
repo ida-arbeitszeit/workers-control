@@ -14,6 +14,7 @@ class GetStatisticsViewModel:
     cooperations_count: str
     active_plans_count: str
     active_plans_public_count: str
+    active_plans_productive_count: str
     active_basic_services_count: str
     average_timeframe_days: str
     planned_work_hours: str
@@ -51,6 +52,10 @@ class GetStatisticsPresenter:
         planned_fixed_means = self.translator.gettext("%(num).2f hours") % dict(
             num=interactor_response.planned_means
         )
+        productive_plans_count = (
+            interactor_response.active_plans_count
+            - interactor_response.active_plans_public_count
+        )
         return GetStatisticsViewModel(
             planned_resources_hours=planned_liquid_means,
             planned_work_hours=planned_work,
@@ -64,6 +69,7 @@ class GetStatisticsPresenter:
             active_plans_public_count=str(
                 interactor_response.active_plans_public_count
             ),
+            active_plans_productive_count=str(productive_plans_count),
             active_basic_services_count=str(
                 interactor_response.active_basic_services_count
             ),
@@ -78,10 +84,7 @@ class GetStatisticsPresenter:
                 interactor_response.planned_work,
             ),
             barplot_plans_url=self.url_index.get_global_barplot_for_plans_url(
-                (
-                    interactor_response.active_plans_count
-                    - interactor_response.active_plans_public_count
-                ),
+                productive_plans_count,
                 interactor_response.active_plans_public_count,
             ),
         )

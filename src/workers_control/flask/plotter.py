@@ -7,6 +7,7 @@ from typing import List, Optional, Tuple, Union
 import matplotlib.dates as mdates
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
+from matplotlib.patches import Patch
 
 from workers_control.core.interactors import show_payout_factor_details
 from workers_control.web.colors import HexColors
@@ -86,6 +87,9 @@ class PayoutFactorDetailsPlotter:
     def _create_figure(self, response: show_payout_factor_details.Response) -> Figure:
         tz = self.timezone_config.get_timezone_of_current_user()
 
+        public_color = self.colors.warning
+        productive_color = self.colors.primary
+
         plan_indices: list[int] = []
         start: list[datetime] = []
         end: list[datetime] = []
@@ -95,10 +99,9 @@ class PayoutFactorDetailsPlotter:
             plan_indices.append(i)
             start.append(p.approval_date)
             end.append(p.expiration_date)
-            if p.is_public_service:
-                colors_list.append(self.colors.warning)
-            else:
-                colors_list.append(self.colors.primary)
+            colors_list.append(
+                public_color if p.is_public_service else productive_color
+            )
 
         plan_durations = [(e - s).days for s, e in zip(start, end)]
         bs_row_y = -1
@@ -151,7 +154,15 @@ class PayoutFactorDetailsPlotter:
             linewidth=1,
             label=self.translator.gettext("Now"),
         )
-        ax.legend()
+        plan_type_handles = [
+            Patch(color=public_color, label=self.translator.gettext("Public plans")),
+            Patch(
+                color=productive_color,
+                label=self.translator.gettext("Productive plans"),
+            ),
+        ]
+        handles, _ = ax.get_legend_handles_labels()
+        ax.legend(handles=plan_type_handles + handles)
         fig.set_size_inches(14, (len(plan_indices) + 1) * 0.3 + 2)
 
         ax.set_xlim(

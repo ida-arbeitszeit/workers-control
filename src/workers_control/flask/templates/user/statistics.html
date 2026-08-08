@@ -24,7 +24,7 @@
             </div>
             <div class="cell box mb-0">
                 <h1 class="title">{{ view_model.active_plans_count }}</h1>
-                <div class="subtitle">{{ gettext("Plans") }}</div>
+                <div class="subtitle">{{ gettext("Active plans") }}</div>
             </div>
             <div class="cell box mb-0">
                 <h1 class="title">{{ view_model.active_basic_services_count }}</h1>
@@ -48,22 +48,22 @@
             <div class="box">
                 <h1 class="title">{{ view_model.psf_balance }}</h1>
                 <div class="subtitle">{{ gettext("Balance for Public Sector Fund (PSF)") }}</div>
-                <a href="{{ view_model.psf_account_url }}">{{ gettext("Go to account details") }}</a>
+                <a href="{{ view_model.psf_account_url }}">{{ gettext("Go to details") }}</a>
             </div>
         </div>        
     </div>
     <div class="fixed-grid has-2-cols has-1-cols-mobile">
         <div class="grid">
             <div class="cell box mb-0">
-                <h1 class="title is-4 has-text-centered">{{ gettext("Plans") }}</h1>
+                <h1 class="title is-4 has-text-centered">{{ gettext("Active plans") }}</h1>
                 <div>
-                    <img src="{{ view_model.barplot_plans_url }}" alt="bar plot of public and productive plans">
+                    <img src="{{ view_model.barplot_plans_url }}" alt="bar plot of active productive and public plans">
                 </div>
             </div>
             <div class="cell box mb-0">
-                <h1 class="title is-4 has-text-centered">{{ gettext("Planned ressources") }}</h1>
+                <h1 class="title is-4 has-text-centered">{{ gettext("Planned resources of active plans") }}</h1>
                 <div>
-                    <img src="{{ view_model.barplot_means_of_production_url }}" alt="bar plot of means of production">
+                    <img src="{{ view_model.barplot_means_of_production_url }}" alt="bar plot of planned resources of active plans">
                 </div>
             </div>
         </div>
@@ -71,12 +71,11 @@
     <div class="fixed-grid has-3-cols has-1-cols-mobile">
         <div class="grid">
             <div class="cell box is-col-span-2 mb-0">
-                <b>{{ gettext("Active plans") }}:</b> {{ view_model.active_plans_count }} &#8212;
-                <b>{{ gettext("Public active plans") }}:</b> {{ view_model.active_plans_public_count }} &#8212;
-                <b>{{ gettext("Average plan duration") }}:</b> {{ view_model.average_timeframe_days }} &#8212;
+                <b>{{ gettext("Active productive plans") }}:</b> {{ view_model.active_plans_productive_count }} &#8212;
+                <b>{{ gettext("Active public plans") }}:</b> {{ view_model.active_plans_public_count }} &#8212;
                 <b>{{ gettext("Currently planned fixed means") }}:</b> {{ view_model.planned_means_hours }} &#8212;
                 <b>{{ gettext("Currently planned liquid means") }}:</b> {{ view_model.planned_resources_hours }} &#8212;
-                <b>{{ gettext("Currently planned work") }}:</b> {{ view_model.planned_work_hours }}
+                <b>{{ gettext("Currently planned labour") }}:</b> {{ view_model.planned_work_hours }}
             </div>
             <div class="cell box is-4 has-text-centered mb-0">
                 <h1 class="title">{{ view_model.average_timeframe_days }}</h1>

@@ -101,7 +101,7 @@ class GetPlanDetailsPresenter:
                 str(plan_details.resources_cost),
             ),
             labour_cost=(
-                self.translator.gettext("Costs for work"),
+                self.translator.gettext("Costs for labour"),
                 str(plan_details.labour_cost),
             ),
             type_of_plan=(

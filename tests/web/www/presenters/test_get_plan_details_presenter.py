@@ -176,7 +176,7 @@ class FormatPlanDetailsTests(BaseTestCase):
         self.assertTupleEqual(
             web_details.labour_cost,
             (
-                self.translator.gettext("Costs for work"),
+                self.translator.gettext("Costs for labour"),
                 str(self.plan_details.labour_cost),
             ),
         )

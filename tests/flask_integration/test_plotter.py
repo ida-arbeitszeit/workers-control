@@ -5,7 +5,9 @@ from uuid import uuid4
 import matplotlib.dates as mdates
 from matplotlib.axes import Axes
 from matplotlib.backends.backend_agg import FigureCanvasAgg
+from matplotlib.colors import to_rgba
 from matplotlib.figure import Figure
+from matplotlib.patches import Patch
 from parameterized import parameterized
 
 from tests.base_test_case import BaseTestCase
@@ -16,6 +18,7 @@ from workers_control.core.interactors.show_payout_factor_details import (
     Response,
 )
 from workers_control.flask.plotter import GeneralPlotter, PayoutFactorDetailsPlotter
+from workers_control.web.colors import HexColors
 
 PNG_MAGIC_BYTES = b"\x89PNG"
 
@@ -31,6 +34,11 @@ class PlotterTestCase(BaseTestCase):
 
     def get_y_tick_labels(self, axes: Axes) -> list[str]:
         return [tick.get_text() for tick in axes.get_yticklabels()]
+
+    def get_legend_labels(self, axes: Axes) -> list[str]:
+        legend = axes.get_legend()
+        assert legend
+        return [text.get_text() for text in legend.get_texts()]
 
     def get_ticks_in_user_timezone(self, axes: Axes) -> list[datetime]:
         tz = self.timezone_configuration.get_timezone_of_current_user()
@@ -94,6 +102,7 @@ class PayoutFactorDetailsPlotterTests(PlotterTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.plotter = self.injector.get(PayoutFactorDetailsPlotter)
+        self.colors = self.injector.get(HexColors)
 
     def test_that_plot_is_rendered_as_png(self) -> None:
         png = self.plotter.plot(
@@ -147,6 +156,57 @@ class PayoutFactorDetailsPlotterTests(PlotterTestCase):
         )
         axes = self.render(figure)
         assert self.get_y_tick_labels(axes) == ["0", "1"]
+
+    def test_that_legend_lists_both_plan_types(self) -> None:
+        figure = self.plotter._create_figure(
+            self.create_response(
+                plans=[
+                    self.create_plan(),
+                    self.create_plan(is_public_service=True),
+                ]
+            )
+        )
+        axes = self.render(figure)
+        labels = self.get_legend_labels(axes)
+        assert self.translator.gettext("Public plans") in labels
+        assert self.translator.gettext("Productive plans") in labels
+
+    def test_that_legend_lists_both_plan_types_even_without_any_plans(self) -> None:
+        figure = self.plotter._create_figure(self.create_response())
+        axes = self.render(figure)
+        labels = self.get_legend_labels(axes)
+        assert self.translator.gettext("Public plans") in labels
+        assert self.translator.gettext("Productive plans") in labels
+
+    @parameterized.expand(
+        [
+            ("Public plans", "warning"),
+            ("Productive plans", "primary"),
+        ]
+    )
+    def test_that_legend_entry_has_the_color_of_the_bars_it_describes(
+        self, label: str, color_name: str
+    ) -> None:
+        figure = self.plotter._create_figure(
+            self.create_response(
+                plans=[
+                    self.create_plan(),
+                    self.create_plan(is_public_service=True),
+                ]
+            )
+        )
+        axes = self.render(figure)
+        expected_color = getattr(self.colors, color_name)
+        legend_entry = self.translator.gettext(label)
+        assert self.get_legend_color(axes, legend_entry) == to_rgba(expected_color)
+
+    def get_legend_color(self, axes: Axes, label: str) -> tuple[float, ...]:
+        legend = axes.get_legend()
+        assert legend
+        handles = dict(zip(self.get_legend_labels(axes), legend.legend_handles))
+        handle = handles[label]
+        assert isinstance(handle, Patch)
+        return to_rgba(handle.get_facecolor())
 
     def create_response(
         self,

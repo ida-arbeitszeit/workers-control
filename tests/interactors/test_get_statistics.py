@@ -216,6 +216,58 @@ class CalculatePlannedWorkTests(StatisticsBaseTestCase):
         assert stats.planned_means == PLANNED_MEANS_PLAN_1 + PLANNED_MEANS_PLAN_2
 
 
+class CalculatePublicSectorLabourTests(StatisticsBaseTestCase):
+    def test_that_labour_is_zero_without_any_plans(self) -> None:
+        stats = self.interactor.get_statistics()
+        assert stats.public_sector_labour == Decimal(0)
+
+    def test_adding_up_labour_of_two_public_plans(self) -> None:
+        PLANNED_LABOUR_PLAN_1 = 3
+        self.plan_generator.create_plan(
+            is_public_service=True,
+            costs=production_costs(1, 1, PLANNED_LABOUR_PLAN_1),
+        )
+        PLANNED_LABOUR_PLAN_2 = 2
+        self.plan_generator.create_plan(
+            is_public_service=True,
+            costs=production_costs(1, 1, PLANNED_LABOUR_PLAN_2),
+        )
+        stats = self.interactor.get_statistics()
+        assert (
+            stats.public_sector_labour == PLANNED_LABOUR_PLAN_1 + PLANNED_LABOUR_PLAN_2
+        )
+
+    def test_that_means_and_resources_of_public_plans_are_ignored(self) -> None:
+        PLANNED_LABOUR = 3
+        self.plan_generator.create_plan(
+            is_public_service=True,
+            costs=production_costs(10, 20, PLANNED_LABOUR),
+        )
+        stats = self.interactor.get_statistics()
+        assert stats.public_sector_labour == PLANNED_LABOUR
+
+    def test_that_labour_of_productive_plans_is_ignored(self) -> None:
+        self.plan_generator.create_plan(
+            is_public_service=False,
+            costs=production_costs(1, 1, 3),
+        )
+        stats = self.interactor.get_statistics()
+        assert stats.public_sector_labour == Decimal(0)
+
+    def test_that_labour_of_expired_public_plans_is_ignored(self) -> None:
+        self.datetime_service.freeze_time(datetime_utc(2000, 1, 1))
+        self.plan_generator.create_plan(
+            is_public_service=True,
+            timeframe=1,
+            costs=production_costs(1, 1, 3),
+        )
+        self.datetime_service.advance_time(
+            timedelta(days=2),
+        )
+        stats = self.interactor.get_statistics()
+        assert stats.public_sector_labour == Decimal(0)
+
+
 class CalculatePayoutFactorTests(StatisticsBaseTestCase):
     def test_that_payout_factor_is_available_even_without_plans_in_economy(
         self,

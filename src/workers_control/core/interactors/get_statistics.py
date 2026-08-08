@@ -19,6 +19,7 @@ class StatisticsResponse:
     planned_work: Decimal
     planned_resources: Decimal
     planned_means: Decimal
+    public_sector_labour: Decimal
     payout_factor: Decimal
     psf_balance: Decimal
 
@@ -39,13 +40,15 @@ class GetStatisticsInteractor:
             .that_will_expire_after(now)
             .that_were_approved_before(now)
         )
+        active_public_plans = active_plans.that_are_public()
         planning_statistics = active_plans.get_statistics()
+        public_planning_statistics = active_public_plans.get_statistics()
         return StatisticsResponse(
             registered_companies_count=len(self.database.get_companies()),
             registered_members_count=len(self.database.get_members()),
             cooperations_count=len(self.database.get_cooperations()),
             active_plans_count=len(active_plans),
-            active_plans_public_count=len(active_plans.that_are_public()),
+            active_plans_public_count=len(active_public_plans),
             active_basic_services_count=len(
                 self.database.get_basic_services().that_are_active()
             ),
@@ -53,6 +56,7 @@ class GetStatisticsInteractor:
             planned_work=planning_statistics.total_planned_costs.labour_cost,
             planned_resources=planning_statistics.total_planned_costs.resource_cost,
             planned_means=planning_statistics.total_planned_costs.means_cost,
+            public_sector_labour=public_planning_statistics.total_planned_costs.labour_cost,
             payout_factor=fic,
             psf_balance=psf_balance,
         )

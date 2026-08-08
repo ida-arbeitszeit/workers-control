@@ -13,13 +13,10 @@ class GetStatisticsViewModel:
     registered_members_count: str
     cooperations_count: str
     active_plans_count: str
-    active_plans_public_count: str
-    active_plans_productive_count: str
     active_basic_services_count: str
     average_timeframe_days: str
-    planned_work_hours: str
-    planned_resources_hours: str
-    planned_means_hours: str
+    public_sector_labour_hours: str
+    productive_sector_labour_hours: str
     payout_factor: str
     payout_factor_details_url: str
     psf_balance: str
@@ -43,33 +40,26 @@ class GetStatisticsPresenter:
         average_timeframe = self.translator.gettext("%(num).2f days") % dict(
             num=interactor_response.avg_timeframe
         )
-        planned_work = self.translator.gettext("%(num).2f hours") % dict(
+        public_sector_labour = self.translator.gettext("%(num).2f hours") % dict(
+            num=interactor_response.public_sector_labour
+        )
+        productive_sector_labour = self.translator.gettext("%(num).2f hours") % dict(
             num=interactor_response.planned_work
-        )
-        planned_liquid_means = self.translator.gettext("%(num).2f hours") % dict(
-            num=interactor_response.planned_resources
-        )
-        planned_fixed_means = self.translator.gettext("%(num).2f hours") % dict(
-            num=interactor_response.planned_means
+            - interactor_response.public_sector_labour
         )
         productive_plans_count = (
             interactor_response.active_plans_count
             - interactor_response.active_plans_public_count
         )
         return GetStatisticsViewModel(
-            planned_resources_hours=planned_liquid_means,
-            planned_work_hours=planned_work,
-            planned_means_hours=planned_fixed_means,
+            public_sector_labour_hours=public_sector_labour,
+            productive_sector_labour_hours=productive_sector_labour,
             registered_companies_count=str(
                 interactor_response.registered_companies_count
             ),
             registered_members_count=str(interactor_response.registered_members_count),
             cooperations_count=str(interactor_response.cooperations_count),
             active_plans_count=str(interactor_response.active_plans_count),
-            active_plans_public_count=str(
-                interactor_response.active_plans_public_count
-            ),
-            active_plans_productive_count=str(productive_plans_count),
             active_basic_services_count=str(
                 interactor_response.active_basic_services_count
             ),

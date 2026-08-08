@@ -8,6 +8,7 @@ import matplotlib.dates as mdates
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib.patches import Patch
+from matplotlib.ticker import MaxNLocator
 
 from workers_control.core.interactors import show_payout_factor_details
 from workers_control.web.colors import HexColors
@@ -54,7 +55,27 @@ class GeneralPlotter:
         colors_of_bars: List[str],
         fig_size: Tuple[int, int],
         y_label: Optional[str],
+        integer_y_ticks: bool = False,
     ) -> bytes:
+        fig = self._create_bar_plot_figure(
+            x_coordinates=x_coordinates,
+            height_of_bars=height_of_bars,
+            colors_of_bars=colors_of_bars,
+            fig_size=fig_size,
+            y_label=y_label,
+            integer_y_ticks=integer_y_ticks,
+        )
+        return self._figure_to_bytes(fig)
+
+    def _create_bar_plot_figure(
+        self,
+        x_coordinates: List[Union[int, str]],
+        height_of_bars: List[Decimal],
+        colors_of_bars: List[str],
+        fig_size: Tuple[int, int],
+        y_label: Optional[str],
+        integer_y_ticks: bool = False,
+    ) -> Figure:
         fig = Figure()
         ax = fig.subplots()
         ax.bar(x_coordinates, height_of_bars, color=colors_of_bars)  # type: ignore[arg-type]
@@ -62,8 +83,10 @@ class GeneralPlotter:
         ax.spines["right"].set_visible(False)
         if y_label:
             ax.set_ylabel(y_label)
+        if integer_y_ticks:
+            ax.yaxis.set_major_locator(MaxNLocator(integer=True))
         fig.set_size_inches(fig_size[0], fig_size[1])
-        return self._figure_to_bytes(fig)
+        return fig
 
     def _figure_to_bytes(self, fig: Figure) -> bytes:
         output = io.BytesIO()

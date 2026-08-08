@@ -77,6 +77,7 @@ def global_barplot_for_plans(
         colors_of_bars=[colors.primary, colors.info],
         fig_size=(5, 4),
         y_label=translator.gettext("Amount"),
+        integer_y_ticks=True,
     )
     return Response(png, mimetype="image/png", direct_passthrough=True)
 

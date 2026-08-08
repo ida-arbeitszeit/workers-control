@@ -90,6 +90,41 @@ class GeneralPlotterTests(PlotterTestCase):
         for tick in ticks:
             assert (tick.hour, tick.minute) == (0, 0)
 
+    def test_that_bar_plot_is_rendered_as_png(self) -> None:
+        png = self.plotter.create_bar_plot(
+            x_coordinates=["a", "b"],
+            height_of_bars=[Decimal(1), Decimal(3)],
+            colors_of_bars=["red", "blue"],
+            fig_size=(5, 4),
+            y_label="Amount",
+        )
+        assert png.startswith(PNG_MAGIC_BYTES)
+
+    def test_that_bar_plot_y_axis_is_labelled_with_fractions_by_default(self) -> None:
+        axes = self.render(self.create_bar_plot_figure(integer_y_ticks=False))
+        assert any("." in label for label in self.get_y_tick_labels(axes))
+
+    def test_that_bar_plot_y_axis_is_labelled_with_whole_numbers_if_requested(
+        self,
+    ) -> None:
+        axes = self.render(self.create_bar_plot_figure(integer_y_ticks=True))
+        labels = self.get_y_tick_labels(axes)
+        assert labels
+        for label in labels:
+            assert label.lstrip("\N{MINUS SIGN}-").isdigit()
+
+    def create_bar_plot_figure(self, integer_y_ticks: bool) -> Figure:
+        # Two bars of height 1 and 3 make matplotlib pick fractional ticks
+        # unless integer ticks are requested.
+        return self.plotter._create_bar_plot_figure(
+            x_coordinates=["a", "b"],
+            height_of_bars=[Decimal(1), Decimal(3)],
+            colors_of_bars=["red", "blue"],
+            fig_size=(5, 4),
+            y_label="Amount",
+            integer_y_ticks=integer_y_ticks,
+        )
+
     def create_two_day_figure(self) -> Figure:
         # In Tokyo (UTC+9) both timestamps fall on the following day.
         return self.plotter._create_line_plot_figure(

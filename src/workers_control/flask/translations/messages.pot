@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-08 20:23+0200\n"
+"POT-Creation-Date: 2026-08-24 14:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -646,10 +646,10 @@ msgstr ""
 
 #: src/workers_control/flask/templates/company/create_collaboration.html:20
 msgid ""
-"A collaboration contains similar products.  The prices for all products in "
-"a collaboration are averaged to reduce price competition.  All producers "
-"still receive the credits on sale corresponding to how they planned "
-"production."
+"A collaboration contains similar products.  The prices for all products "
+"in a collaboration are averaged to reduce price competition.  All "
+"producers still receive the credits on sale corresponding to how they "
+"planned production."
 msgstr ""
 
 #: src/workers_control/flask/templates/company/create_collaboration.html:27
@@ -759,7 +759,7 @@ msgstr ""
 
 #: src/workers_control/flask/templates/company/dashboard.html:108
 #: src/workers_control/flask/templates/user/list_all_collaborations.html:12
-#: src/workers_control/web/www/presenters/list_all_collaborations_presenter.py:32
+#: src/workers_control/web/www/presenters/list_all_collaborations_presenter.py:33
 msgid "All collaborations"
 msgstr ""
 
@@ -861,28 +861,6 @@ msgstr ""
 msgid "Register hours worked"
 msgstr ""
 
-#: src/workers_control/flask/templates/company/my_consumptions.html:11
-#: src/workers_control/flask/templates/member/consumptions.html:13
-msgid "My past consumptions"
-msgstr ""
-
-#: src/workers_control/flask/templates/company/my_consumptions.html:16
-msgid "Here you can view your past consumptions."
-msgstr ""
-
-#: src/workers_control/flask/templates/company/my_consumptions.html:26
-#: src/workers_control/flask/templates/member/consumptions.html:30
-msgid "Offer description"
-msgstr ""
-
-#: src/workers_control/flask/templates/company/my_consumptions.html:27
-msgid "Kind"
-msgstr ""
-
-#: src/workers_control/flask/templates/company/my_consumptions.html:49
-msgid "You haven't consumed anything yet."
-msgstr ""
-
 #: src/workers_control/flask/templates/company/my_collaborations.html:11
 #: src/workers_control/web/www/presenters/create_collaboration_presenter.py:27
 #: src/workers_control/web/www/presenters/show_my_collaborations_presenter.py:98
@@ -972,6 +950,28 @@ msgstr ""
 
 #: src/workers_control/flask/templates/company/my_collaborations.html:201
 msgid "You don't have any collaborating plans."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_consumptions.html:11
+#: src/workers_control/flask/templates/member/consumptions.html:13
+msgid "My past consumptions"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_consumptions.html:16
+msgid "Here you can view your past consumptions."
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_consumptions.html:26
+#: src/workers_control/flask/templates/member/consumptions.html:30
+msgid "Offer description"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_consumptions.html:27
+msgid "Kind"
+msgstr ""
+
+#: src/workers_control/flask/templates/company/my_consumptions.html:49
+msgid "You haven't consumed anything yet."
 msgstr ""
 
 #: src/workers_control/flask/templates/company/my_plans.html:10
@@ -1212,8 +1212,8 @@ msgstr ""
 
 #: src/workers_control/flask/templates/company/request_collaboration.html:18
 msgid ""
-"The coordinator of the collaboration decides if they add your plan to the "
-"collaboration."
+"The coordinator of the collaboration decides if they add your plan to the"
+" collaboration."
 msgstr ""
 
 #: src/workers_control/flask/templates/company/request_collaboration.html:19
@@ -1668,6 +1668,31 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
+#: src/workers_control/flask/templates/user/collab_summary.html:33
+msgid "Current coordinator"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/collab_summary.html:42
+msgid "Transfer coordination"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/collab_summary.html:49
+#: src/workers_control/flask/templates/user/list_coordinations_of_collaboration.html:12
+msgid "History of coordinators"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/collab_summary.html:54
+msgid "Collaboration price"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/collab_summary.html:64
+msgid "Participating plans"
+msgstr ""
+
+#: src/workers_control/flask/templates/user/collab_summary.html:102
+msgid "Individual price"
+msgstr ""
+
 #: src/workers_control/flask/templates/user/company_account_a.html:21
 msgid "The account for work certificates"
 msgstr ""
@@ -1733,31 +1758,6 @@ msgstr ""
 
 #: src/workers_control/flask/templates/user/confirm_email_address_change.html:20
 msgid "No"
-msgstr ""
-
-#: src/workers_control/flask/templates/user/collab_summary.html:33
-msgid "Current coordinator"
-msgstr ""
-
-#: src/workers_control/flask/templates/user/collab_summary.html:42
-msgid "Transfer coordination"
-msgstr ""
-
-#: src/workers_control/flask/templates/user/collab_summary.html:49
-#: src/workers_control/flask/templates/user/list_coordinations_of_collaboration.html:12
-msgid "History of coordinators"
-msgstr ""
-
-#: src/workers_control/flask/templates/user/collab_summary.html:54
-msgid "Collaboration price"
-msgstr ""
-
-#: src/workers_control/flask/templates/user/collab_summary.html:64
-msgid "Participating plans"
-msgstr ""
-
-#: src/workers_control/flask/templates/user/collab_summary.html:102
-msgid "Individual price"
 msgstr ""
 
 #: src/workers_control/flask/templates/user/list_all_collaborations.html:35
@@ -2210,7 +2210,7 @@ msgid "Collaboration request has been accepted."
 msgstr ""
 
 #: src/workers_control/web/www/presenters/accept_collaboration_request_presenter.py:35
-#: src/workers_control/web/www/presenters/deny_collaboration_presenter.py:35
+#: src/workers_control/web/www/presenters/deny_collaboration_presenter.py:37
 msgid "Plan or collaboration not found."
 msgstr ""
 
@@ -2219,12 +2219,12 @@ msgid "Something's wrong with that plan."
 msgstr ""
 
 #: src/workers_control/web/www/presenters/accept_collaboration_request_presenter.py:48
-#: src/workers_control/web/www/presenters/deny_collaboration_presenter.py:40
+#: src/workers_control/web/www/presenters/deny_collaboration_presenter.py:42
 msgid "This collaboration request does not exist."
 msgstr ""
 
 #: src/workers_control/web/www/presenters/accept_collaboration_request_presenter.py:54
-#: src/workers_control/web/www/presenters/deny_collaboration_presenter.py:46
+#: src/workers_control/web/www/presenters/deny_collaboration_presenter.py:48
 msgid "You are not coordinator of this collaboration."
 msgstr ""
 
@@ -2349,11 +2349,11 @@ msgstr ""
 msgid "Plan draft %(product_name)s was deleted"
 msgstr ""
 
-#: src/workers_control/web/www/presenters/deny_collaboration_presenter.py:25
+#: src/workers_control/web/www/presenters/deny_collaboration_presenter.py:27
 msgid "Collaboration request has been denied."
 msgstr ""
 
-#: src/workers_control/web/www/presenters/deny_collaboration_presenter.py:53
+#: src/workers_control/web/www/presenters/deny_collaboration_presenter.py:55
 msgid "Could not deny collaboration"
 msgstr ""
 
@@ -2636,24 +2636,24 @@ msgstr ""
 msgid "Plan not found."
 msgstr ""
 
-#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:50
+#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:51
 #: src/workers_control/web/www/presenters/request_coordination_transfer_presenter.py:83
 msgid "Collaboration not found."
 msgstr ""
 
-#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:55
+#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:57
 msgid "Plan not active."
 msgstr ""
 
-#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:62
+#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:64
 msgid "Plan is already collaborating or requested a collaboration."
 msgstr ""
 
-#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:70
+#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:72
 msgid "Public plans cannot collaborate."
 msgstr ""
 
-#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:78
+#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:80
 msgid "Only the creator of a plan can request a collaboration."
 msgstr ""
 

@@ -22,12 +22,12 @@ class RequestCoordinationTransferPresenter:
     notifier: Notifier
     url_index: UrlIndex
 
-    def create_navbar_items(self, coop_id: UUID) -> list[NavbarItem]:
+    def create_navbar_items(self, collab_id: UUID) -> list[NavbarItem]:
         return [
             NavbarItem(
-                text=self.translator.gettext("Cooperation"),
-                url=self.url_index.get_coop_summary_url(
-                    coop_id=coop_id,
+                text=self.translator.gettext("Collaboration"),
+                url=self.url_index.get_collab_summary_url(
+                    collab_id=collab_id,
                 ),
             ),
             NavbarItem(
@@ -80,7 +80,7 @@ class RequestCoordinationTransferPresenter:
                 == Interactor.Response.RejectionReason.cooperation_not_found
             ):
                 self.notifier.display_warning(
-                    self.translator.gettext("Cooperation not found.")
+                    self.translator.gettext("Collaboration not found.")
                 )
                 return RequestCoordinationTransferViewModel(status_code=404)
             assert_never(interactor_response.rejection_reason)

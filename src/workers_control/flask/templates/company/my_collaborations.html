@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+{% from 'macros/navbar.html' import navbar %}
+
+{% block navbar_start %}
+{{ navbar(navbar_items) }}
+{% endblock %}
+
+{% block content %}
+<div class="section has-text-centered">
+  <h1 class="title">
+      {{ gettext("My collaborations") }}
+   </h1>  
+</div>
+
+<div class="section has-text-centered">
+    <div class="column is-offset-4 is-4">
+            <a href="{{ url_for('main_company.create_collaboration') }}">
+                <div class="box has-background-primary-light">
+                    <h1 class="title is-5"><span class="icon">{{ "hands-helping"|icon }}</span>
+                        {{ gettext("Create collaboration ") }}</h1>
+                    <div class="subtitle"></div>
+                </div>
+            </a>
+            <div class="pt-3"></div>
+            <a href="{{ url_for('main_company.request_collaboration') }}">
+                <div class="box has-background-primary-light">
+                    <h1 class="title is-5"><span class="icon">{{ "envelope"|icon }}</span>
+                        {{ gettext("Request collaboration") }}</h1>
+                    <div class="subtitle"></div>
+                </div>
+            </a>
+    </div>
+</div>
+<div class="section has-text-centered">
+    <h1 class="title is-4">
+        {{ gettext("Collaborations that I coordinate") }}
+    </h1>
+
+    <div class="column is-offset-4 is-4 has-text-left">
+    {% if list_of_coordinations.rows %}
+    {% for collab in list_of_coordinations.rows %}
+      <article class="media">
+        <div class="media-content">
+          <div class="content">
+            <p>
+              <strong class="is-size-5">
+                <a href="{{ collab.collab_summary_url }}">{{ collab.collab_name }}</a>
+              </strong>
+              <br>
+              <small><span>{{ gettext("Number of plans") }}</span>&nbsp;{{ collab.count_plans_in_collab }}</small>
+            </p>
+          </div>
+        </div>
+      </article>  
+    {% endfor %}
+    {% else %}
+    <p class="has-text-centered">{{ gettext("You do not coordinate any collaboration") }}</p>
+    {% endif %}
+    </div>
+</div>
+
+<div class="section has-text-centered">
+    <div class="content">
+        <h1 class="title is-4">
+            {{ gettext("Incoming collaboration request (by others)") }}
+        </h1>
+    </div>
+
+    <div class="column is-offset-4 is-4 has-text-left">
+    {% if list_of_inbound_collab_requests.rows %}
+    {% for req in list_of_inbound_collab_requests.rows %}
+        <article class="media">
+            <div class="media-content">
+                <div class="content">
+                    <p>
+                    <small>
+                        <span>{{ gettext("Company") }}:</span>&nbsp;
+                        <strong><a href="{{ req.planner_url }}">{{ req.planner_name }}</a></strong>
+                    </small>
+                    <br>
+                    <small>
+                        <span>{{ gettext("Plan") }}:</span>&nbsp;
+                        <strong><a href="{{ req.plan_url }}">{{ req.plan_name }}</a></strong>
+                    </small>
+                    <br>
+                    <small><span>{{ gettext("My collaboration") }}:</span>&nbsp;{{ req.collab_name }}</small>
+                    </p>
+                </div>
+            </div>
+            <div class="media-right">
+              <form action="/company/accept_collaboration_request" method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="plan_id" value="{{ req.plan_id }}">
+                <input type="hidden" name="collaboration_id" value="{{ req.collab_id }}">
+                <button class="button large-button is-primary"
+                        type="submit"
+                        title="{{ gettext('Accept') }}">
+                        {{ "check"|icon }}
+                </button>
+              </form>
+              <form action="/company/deny_collaboration_request" method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="plan_id" value="{{ req.plan_id }}">
+                <input type="hidden" name="collaboration_id" value="{{ req.collab_id }}">
+                <button class="button large-button is-danger"
+                        type="submit"
+                        title="{{ gettext('Decline') }}">
+                        {{ "times"|icon }}
+                </button>
+              </form>                
+            </div>
+        </article>  
+    
+    {% endfor %}
+    </div>
+    
+    {% else %}
+    <p class="has-text-centered">{{ gettext("You don't have open requests") }}</p>
+    {% endif %}
+
+</div>
+<div class="section has-text-centered">
+    <div class="content">
+        <h1 class="title is-4">
+            {{ gettext("Outgoing collaboration requests (own requests)") }}
+        </h1>
+    </div>
+
+    <div class="column is-offset-4 is-4 has-text-left">
+        {% if list_of_outbound_collab_requests.rows %}
+        {% for req in list_of_outbound_collab_requests.rows %}
+        <article class="media">
+            <div class="media-content">
+                <div class="content">
+                    <p>
+                    <small>
+                        <span>{{ gettext("Plan") }}:</span>&nbsp;
+                        <strong><a href="{{ req.plan_url }}">{{ req.plan_name }}</a></strong>
+                    </small>
+                    <br>
+                    <small><span>{{ gettext("Collaboration") }}:</span>&nbsp;{{ req.collab_name }}</small>
+                    </p>
+                </div>
+            </div>
+            <div class="media-right">
+                <form action="/company/cancel_collaboration_request" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="plan_id" value="{{ req.plan_id }}">
+                    <button class="button large-button is-danger"
+                            type="submit"
+                            title="{{ gettext('Cancel') }}">
+                        {{ "times"|icon }}
+                    </button>
+                </form>
+            </div>
+        </article>
+        {% endfor %}
+        {% else %}
+        <p class="has-text-centered">{{ gettext("You haven't requested any collaboration")}}</p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="section has-text-centered">
+    <div class="content">
+        <h1 class="title is-4">
+            {{ gettext("My collaborating plans") }}
+        </h1>
+    </div>
+
+    <div class="column is-offset-4 is-4 has-text-left">
+        {% if list_of_my_collaborating_plans.rows %}
+        {% for plan in list_of_my_collaborating_plans.rows %}
+        <article class="media">
+            <div class="media-content">
+                <div class="content">
+                    <p>
+                        <strong class="is-size-5">
+                            <a href="{{ plan.plan_url }}">{{ plan.plan_name }}</a>
+                        </strong>
+                        <br>
+                        <small>{{ gettext("Collaboration") }}: <strong><a href="{{ plan.collab_url }}">{{ plan.collab_name }}</a></strong></small>
+                    </p>
+                </div>
+            </div>
+            <div class="media-right">
+                <form action="{{ url_for('main_company.end_plan_collaboration') }}" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="plan_id" value="{{ plan.plan_id }}">
+                    <input type="hidden" name="collaboration_id" value="{{ plan.collab_id }}">
+                    <button class="button large-button is-danger"
+                            type="submit"
+                            title="{{ gettext('End collaboration') }}">
+                        {{ "times"|icon }}
+                    </button>
+                </form>
+            </div>
+        </article>
+        {% endfor %}
+        {% else %}
+        <p class="has-text-centered">{{ gettext("You don't have any collaborating plans.")}}</p>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}

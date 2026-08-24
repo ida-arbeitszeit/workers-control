@@ -124,15 +124,15 @@ class ChangeUserNameFormImpl:
 
 
 class RequestCoordinationTransferFormImpl:
-    def __init__(self, candidate: str, cooperation: str) -> None:
+    def __init__(self, candidate: str, collaboration: str) -> None:
         self._candidate_field = FormFieldImpl(value=candidate)
-        self._cooperation_field = FormFieldImpl(value=cooperation)
+        self._collaboration_field = FormFieldImpl(value=collaboration)
 
     def candidate_field(self) -> FormFieldImpl[str]:
         return self._candidate_field
 
-    def cooperation_field(self) -> FormFieldImpl[str]:
-        return self._cooperation_field
+    def collaboration_field(self) -> FormFieldImpl[str]:
+        return self._collaboration_field
 
 
 class ConfirmEmailAddressChangeFormImpl:

@@ -35,15 +35,15 @@ class GeneralUrlIndex:
     def get_work_invite_url(self, invite_id: UUID) -> str:
         return url_for("main_member.show_company_work_invite", invite_id=invite_id)
 
-    def get_my_cooperations_url(self) -> str:
-        return url_for("main_company.my_cooperations")
+    def get_my_collaborations_url(self) -> str:
+        return url_for("main_company.my_collaborations")
 
-    def get_coop_summary_url(self, coop_id: UUID) -> str:
-        return url_for("main_user.coop_summary", coop_id=coop_id)
+    def get_collab_summary_url(self, collab_id: UUID) -> str:
+        return url_for("main_user.collab_summary", collab_id=collab_id)
 
-    def get_list_of_coordinators_url(self, cooperation_id: UUID) -> str:
+    def get_list_of_coordinators_url(self, collaboration_id: UUID) -> str:
         return url_for(
-            "main_user.list_coordinators_of_cooperation", coop_id=cooperation_id
+            "main_user.list_coordinators_of_collaboration", collab_id=collaboration_id
         )
 
     def get_company_summary_url(self, company_id: UUID) -> str:
@@ -178,8 +178,8 @@ class GeneralUrlIndex:
     def get_registered_hours_worked_url(self) -> str:
         return url_for(endpoint="main_company.registered_hours_worked")
 
-    def get_request_coop_url(self) -> str:
-        return url_for("main_company.request_cooperation")
+    def get_request_collab_url(self) -> str:
+        return url_for("main_company.request_collaboration")
 
     def get_my_plans_url(self) -> str:
         return url_for("main_company.my_plans")
@@ -236,8 +236,10 @@ class GeneralUrlIndex:
     def get_hide_plan_url(self, plan_id: UUID) -> str:
         return url_for("main_company.hide_plan", plan_id=plan_id)
 
-    def get_request_coordination_transfer_url(self, coop_id: UUID) -> str:
-        return url_for("main_company.request_coordination_transfer", coop_id=coop_id)
+    def get_request_coordination_transfer_url(self, collab_id: UUID) -> str:
+        return url_for(
+            "main_company.request_coordination_transfer", collab_id=collab_id
+        )
 
     def get_show_coordination_transfer_request_url(self, transfer_request: UUID) -> str:
         return url_for(

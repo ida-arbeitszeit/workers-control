@@ -84,25 +84,25 @@ class QueryOffersPresenterTests(BaseTestCase):
         table_row = presentation.results.rows[0]
         self.assertEqual(table_row.provider_name, "Planner name")
 
-    def test_no_coop_is_shown_with_one_non_cooperating_plan(self) -> None:
+    def test_no_collab_is_shown_with_one_non_collaborating_plan(self) -> None:
         response = self.queried_offer_generator.get_response(
-            [self.queried_offer_generator.get_plan(is_cooperating=False)]
+            [self.queried_offer_generator.get_plan(is_collaborating=False)]
         )
         presentation = self.presenter.present(response)
         table_row = presentation.results.rows[0]
         self.assertEqual(
-            table_row.is_cooperating,
+            table_row.is_collaborating,
             False,
         )
 
-    def test_coop_is_shown_with_one_cooperating_plan(self) -> None:
+    def test_collab_is_shown_with_one_collaborating_plan(self) -> None:
         response = self.queried_offer_generator.get_response(
-            [self.queried_offer_generator.get_plan(is_cooperating=True)]
+            [self.queried_offer_generator.get_plan(is_collaborating=True)]
         )
         presentation = self.presenter.present(response)
         table_row = presentation.results.rows[0]
         self.assertEqual(
-            table_row.is_cooperating,
+            table_row.is_collaborating,
             True,
         )
 

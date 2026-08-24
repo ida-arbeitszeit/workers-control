@@ -13,15 +13,15 @@ from workers_control.flask.class_based_view import as_flask_view
 from workers_control.flask.types import Response
 from workers_control.flask.views.change_email_address_view import ChangeEmailAddressView
 from workers_control.flask.views.change_user_name_view import ChangeUserNameView
-from workers_control.flask.views.coop_summary_view import CoopSummaryView
+from workers_control.flask.views.collab_summary_view import CollabSummaryView
 from workers_control.flask.views.get_plan_details_view import GetPlanDetailsView
 from workers_control.flask.views.get_statistics_view import GetStatisticsView
 from workers_control.flask.views.http_error_view import http_404
-from workers_control.flask.views.list_all_cooperations_view import (
-    ListAllCooperationsView,
+from workers_control.flask.views.list_all_collaborations_view import (
+    ListAllCollaborationsView,
 )
-from workers_control.flask.views.list_coordinators_of_cooperation_view import (
-    ListCoordinationsOfCooperationView,
+from workers_control.flask.views.list_coordinators_of_collaboration_view import (
+    ListCoordinationsOfCollaborationView,
 )
 from workers_control.flask.views.list_transfers import ListTransfersView
 from workers_control.flask.views.query_companies import QueryCompaniesView
@@ -124,21 +124,21 @@ class query_companies(QueryCompaniesView): ...
 class statistics(GetStatisticsView): ...
 
 
-@AuthenticatedUserRoute("/cooperation_summary/<uuid:coop_id>")
+@AuthenticatedUserRoute("/collaboration_summary/<uuid:collab_id>")
 @as_flask_view()
-class coop_summary(CoopSummaryView): ...
+class collab_summary(CollabSummaryView): ...
 
 
 @AuthenticatedUserRoute(
-    "/cooperation_summary/<uuid:coop_id>/coordinators", methods=["GET"]
+    "/collaboration_summary/<uuid:collab_id>/coordinators", methods=["GET"]
 )
 @as_flask_view()
-class list_coordinators_of_cooperation(ListCoordinationsOfCooperationView): ...
+class list_coordinators_of_collaboration(ListCoordinationsOfCollaborationView): ...
 
 
-@AuthenticatedUserRoute("/list_all_cooperations")
+@AuthenticatedUserRoute("/list_all_collaborations")
 @as_flask_view()
-class list_all_cooperations(ListAllCooperationsView): ...
+class list_all_collaborations(ListAllCollaborationsView): ...
 
 
 @AuthenticatedUserRoute("/company/<uuid:company_id>/accounts")

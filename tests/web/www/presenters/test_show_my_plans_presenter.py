@@ -30,8 +30,8 @@ class PresenterBase(BaseTestCase):
         approval_date: datetime | None = None,
         expiration_date: datetime | None = None,
         rejection_date: datetime | None = None,
-        is_cooperating: bool = False,
-        cooperation: UUID | None = None,
+        is_collaborating: bool = False,
+        collaboration: UUID | None = None,
     ) -> PlanInfo:
         if plan_id is None:
             plan_id = uuid4()
@@ -44,8 +44,8 @@ class PresenterBase(BaseTestCase):
             approval_date=approval_date,
             expiration_date=expiration_date,
             rejection_date=rejection_date,
-            is_cooperating=is_cooperating,
-            cooperation=cooperation,
+            is_cooperating=is_collaborating,
+            cooperation=collaboration,
         )
 
     def create_interactor_response(
@@ -135,18 +135,18 @@ class ActivePlansTests(PresenterBase):
         assert row.is_public_service == IS_PUBLIC_SERVICE
 
     @parameterized.expand([(True,), (False,)])
-    def test_presenter_shows_correct_cooperating_status_of_active_plan(
-        self, is_cooperating: bool
+    def test_presenter_shows_correct_collaborating_status_of_active_plan(
+        self, is_collaborating: bool
     ) -> None:
         response = self.create_interactor_response(
             active_plans=[
                 self.create_plan_info(
-                    is_cooperating=is_cooperating,
+                    is_collaborating=is_collaborating,
                 )
             ]
         )
         presentation = self.presenter.present(response)
-        assert presentation.active_plans.rows[0].is_cooperating == is_cooperating
+        assert presentation.active_plans.rows[0].is_collaborating == is_collaborating
 
     @parameterized.expand([(datetime_utc(2020, 5, 1, 10, 30),), (None,)])
     def test_presenter_shows_correct_expiration_date_of_active_plan(

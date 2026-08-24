@@ -25,7 +25,7 @@ class QueriedOfferGenerator:
         self,
         plan_id: Optional[UUID] = None,
         company_id: Optional[UUID] = None,
-        is_cooperating: bool = False,
+        is_collaborating: bool = False,
         description: str = "For eating\nNext paragraph\rThird one",
         approval_date: Optional[datetime] = None,
         price_per_unit: Decimal = Decimal(5),
@@ -47,7 +47,7 @@ class QueriedOfferGenerator:
             is_basic_service=False,
             price_per_unit=price_per_unit,
             is_public_service=False,
-            is_cooperating=is_cooperating,
+            is_cooperating=is_collaborating,
             is_expired=is_expired,
         )
 
@@ -157,8 +157,8 @@ class PlanDetailsGenerator:
         is_public_service: bool = False,
         labour_cost_per_unit: Decimal = Decimal(0.875),
         price_per_unit: Decimal = Decimal(0.061),
-        is_cooperating: bool = False,
-        cooperation: Optional[UUID] = None,
+        is_collaborating: bool = False,
+        collaboration: Optional[UUID] = None,
         creation_date: datetime = datetime_utc(2023, 5, 1),
         approval_date: Optional[datetime] = None,
         expiration_date: Optional[datetime] = None,
@@ -167,9 +167,9 @@ class PlanDetailsGenerator:
             plan_id = uuid4()
         if planner_id is None:
             planner_id = uuid4()
-        if is_cooperating is None:
-            is_cooperating = False
-        assert isinstance(cooperation, UUID) or (cooperation is None)
+        if is_collaborating is None:
+            is_collaborating = False
+        assert isinstance(collaboration, UUID) or (collaboration is None)
         return PlanDetails(
             plan_id=plan_id,
             is_active=is_active,
@@ -187,8 +187,8 @@ class PlanDetailsGenerator:
             is_public_service=is_public_service,
             price_per_unit=price_per_unit,
             cost_per_unit=labour_cost_per_unit,
-            is_cooperating=is_cooperating,
-            cooperation=cooperation,
+            is_cooperating=is_collaborating,
+            cooperation=collaboration,
             creation_date=creation_date,
             approval_date=approval_date,
             expiration_date=expiration_date,

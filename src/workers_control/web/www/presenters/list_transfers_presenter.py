@@ -135,7 +135,7 @@ class ListTransfersPresenter:
             return self.url_index.get_company_summary_url(company_id=account_owner)
         elif owner_type == AccountOwnerType.cooperation:
             assert account_owner is not None
-            return self.url_index.get_coop_summary_url(coop_id=account_owner)
+            return self.url_index.get_collab_summary_url(collab_id=account_owner)
         return None
 
     def _format_value(self, value: Decimal) -> str:

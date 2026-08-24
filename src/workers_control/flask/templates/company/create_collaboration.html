@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% from 'macros/navbar.html' import navbar %}
+
+{% block navbar_start %}
+{{ navbar(navbar_items) }}
+{% endblock %}
+
+{% block content %}
+<div class="section has-text-centered">
+    <h1 class="title">
+        {{ gettext("Create Collaboration") }}
+    </h1>
+    <div class="columns is-centered">
+        <div class="column is-three-fifths">
+            <div class="box has-background-info-light has-text-info-dark">
+                <div class="icon">{{ "info-circle"|icon }}</div>
+                <p>
+                    {{ gettext("Here you can create a new collaboration.") }}
+                    <br><br>
+                    {{ gettext("A collaboration contains similar products.  The prices for all products in a collaboration are averaged to reduce price competition.  All producers still receive the credits on sale corresponding to how they planned production.") }}
+                </p>
+            </div>
+            <div class="content">
+                <form method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="field">
+                        <label class="label">{{ gettext("Collaboration name") }}</label>
+                        <div class="control">
+                            {{ form.name(class_="input is-large") }}
+                        </div>
+                    </div>
+                    <div class="block"></div>
+
+                    <div class="field">
+                        <label class="label">{{ gettext("Definition of the collaboration") }}</label>
+                        <div class="control">
+                            {{ form.definition(class_="textarea is-large") }}
+                        </div>
+                    </div>
+                    <div class="block"></div>
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-primary" name="create" value="create" type="submit">
+                                {{ gettext("Create collaboration") }}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

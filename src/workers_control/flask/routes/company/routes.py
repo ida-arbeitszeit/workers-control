@@ -1,22 +1,24 @@
 from workers_control.flask.class_based_view import as_flask_view
-from workers_control.flask.views.accept_cooperation_request_view import (
-    AcceptCooperationRequestView,
+from workers_control.flask.views.accept_collaboration_request_view import (
+    AcceptCollaborationRequestView,
 )
-from workers_control.flask.views.cancel_cooperation_request_view import (
-    CancelCooperationRequestView,
+from workers_control.flask.views.cancel_collaboration_request_view import (
+    CancelCollaborationRequestView,
 )
 from workers_control.flask.views.company_dashboard_view import CompanyDashboardView
-from workers_control.flask.views.create_cooperation_view import CreateCooperationView
+from workers_control.flask.views.create_collaboration_view import (
+    CreateCollaborationView,
+)
 from workers_control.flask.views.create_draft_from_plan_view import (
     CreateDraftFromPlanView,
 )
 from workers_control.flask.views.create_draft_view import CreateDraftView
 from workers_control.flask.views.delete_draft_view import DeleteDraftView
-from workers_control.flask.views.deny_cooperation_view import DenyCooperationView
+from workers_control.flask.views.deny_collaboration_view import DenyCollaborationView
 from workers_control.flask.views.draft_details_view import DraftDetailsView
-from workers_control.flask.views.end_cooperation_view import EndCooperationView
-from workers_control.flask.views.end_plan_cooperation_view import (
-    EndPlanCooperationView,
+from workers_control.flask.views.end_collaboration_view import EndCollaborationView
+from workers_control.flask.views.end_plan_collaboration_view import (
+    EndPlanCollaborationView,
 )
 from workers_control.flask.views.file_plan_with_accounting_view import (
     FilePlanWithAccountingView,
@@ -49,7 +51,9 @@ from workers_control.flask.views.register_productive_consumption_of_basic_servic
 from workers_control.flask.views.remove_worker_from_company_view import (
     RemoveWorkerFromCompanyView,
 )
-from workers_control.flask.views.request_cooperation_view import RequestCooperationView
+from workers_control.flask.views.request_collaboration_view import (
+    RequestCollaborationView,
+)
 from workers_control.flask.views.request_coordination_transfer_view import (
     RequestCoordinationTransferView,
 )
@@ -60,8 +64,8 @@ from workers_control.flask.views.revoke_plan_filing_view import RevokePlanFiling
 from workers_control.flask.views.show_coordination_transfer_request_view import (
     ShowCoordinationTransferRequestView,
 )
-from workers_control.flask.views.show_my_cooperations_view import (
-    ShowMyCooperationsView,
+from workers_control.flask.views.show_my_collaborations_view import (
+    ShowMyCollaborationsView,
 )
 from workers_control.flask.views.show_my_plans_view import ShowMyPlansView
 
@@ -148,7 +152,7 @@ class register_productive_consumption_of_basic_service(
 
 
 @CompanyRoute(
-    "/cooperation_summary/<uuid:coop_id>/request_coordination_transfer",
+    "/collaboration_summary/<uuid:collab_id>/request_coordination_transfer",
     methods=["GET", "POST"],
 )
 @as_flask_view()
@@ -163,34 +167,34 @@ class request_coordination_transfer(RequestCoordinationTransferView): ...
 class show_coordination_transfer_request(ShowCoordinationTransferRequestView): ...
 
 
-@CompanyRoute("/create_cooperation", methods=["GET", "POST"])
+@CompanyRoute("/create_collaboration", methods=["GET", "POST"])
 @as_flask_view()
-class create_cooperation(CreateCooperationView): ...
+class create_collaboration(CreateCollaborationView): ...
 
 
-@CompanyRoute("/request_cooperation", methods=["GET", "POST"])
+@CompanyRoute("/request_collaboration", methods=["GET", "POST"])
 @as_flask_view()
-class request_cooperation(RequestCooperationView): ...
+class request_collaboration(RequestCollaborationView): ...
 
 
-@CompanyRoute("/my_cooperations", methods=["GET"])
+@CompanyRoute("/my_collaborations", methods=["GET"])
 @as_flask_view()
-class my_cooperations(ShowMyCooperationsView): ...
+class my_collaborations(ShowMyCollaborationsView): ...
 
 
-@CompanyRoute("/accept_cooperation_request", methods=["POST"])
+@CompanyRoute("/accept_collaboration_request", methods=["POST"])
 @as_flask_view()
-class accept_cooperation_request(AcceptCooperationRequestView): ...
+class accept_collaboration_request(AcceptCollaborationRequestView): ...
 
 
-@CompanyRoute("/deny_cooperation_request", methods=["POST"])
+@CompanyRoute("/deny_collaboration_request", methods=["POST"])
 @as_flask_view()
-class deny_cooperation_request(DenyCooperationView): ...
+class deny_collaboration_request(DenyCollaborationView): ...
 
 
-@CompanyRoute("/cancel_cooperation_request", methods=["POST"])
+@CompanyRoute("/cancel_collaboration_request", methods=["POST"])
 @as_flask_view()
-class cancel_cooperation_request(CancelCooperationRequestView): ...
+class cancel_collaboration_request(CancelCollaborationRequestView): ...
 
 
 @CompanyRoute("/invite_worker_to_company", methods=["GET", "POST"])
@@ -208,14 +212,14 @@ class remove_worker_from_company(RemoveWorkerFromCompanyView): ...
 class list_pending_work_invites(ListPendingWorkInvitesView): ...
 
 
-@CompanyRoute("/end_cooperation", methods=["POST"])
+@CompanyRoute("/end_collaboration", methods=["POST"])
 @as_flask_view()
-class end_cooperation(EndCooperationView): ...
+class end_collaboration(EndCollaborationView): ...
 
 
-@CompanyRoute("/end_plan_cooperation", methods=["POST"])
+@CompanyRoute("/end_plan_collaboration", methods=["POST"])
 @as_flask_view()
-class end_plan_cooperation(EndPlanCooperationView): ...
+class end_plan_collaboration(EndPlanCollaborationView): ...
 
 
 @CompanyRoute("/review_registered_consumptions")

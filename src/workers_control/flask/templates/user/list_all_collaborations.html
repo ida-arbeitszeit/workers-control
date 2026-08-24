@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% from 'macros/navbar.html' import navbar %}
+
+{% block navbar_start %}
+{{ navbar(navbar_items) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="section has-text-centered">
+    <h1 class="title">
+        {{ gettext("All collaborations") }}
+    </h1>
+    {% if view_model.show_results %}
+    <div class="table-container">
+        <table class="table has-text-left mx-auto">
+            <thead>
+                <tr>
+                    <th>{{ gettext("Name") }}</th>
+                    <th>{{ gettext("Number of plans") }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for collab in view_model.collaborations %}
+                <tr>
+                    <td><a href="{{ collab.collab_summary_url }}">{{ collab.name }}</a>
+                    </td>
+                    <td>{{ collab.plan_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>{{ gettext("No collaborations found") }}</p>
+    {% endif %}
+</div>
+</div>
+{% endblock %}

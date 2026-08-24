@@ -32,18 +32,18 @@ class AuthenticatedCompanyTests(BaseTestCase):
         self.assertTrue(form.candidate_field().errors)
 
     @parameterized.expand([("invalid",), ("",), ("123",)])
-    def test_that_none_gets_returned_if_cooperation_field_in_form_is_invalid(
-        self, cooperation: str
+    def test_that_none_gets_returned_if_collaboration_field_in_form_is_invalid(
+        self, collaboration: str
     ) -> None:
-        form = self.get_fake_form(cooperation=cooperation)
+        form = self.get_fake_form(collaboration=collaboration)
         self.assertIsNone(self.controller.import_form_data(form))
 
-    def test_that_cooperation_field_has_error_attached_if_field_is_invalid(
+    def test_that_collaboration_field_has_error_attached_if_field_is_invalid(
         self,
     ) -> None:
-        form = self.get_fake_form(cooperation="invalid")
+        form = self.get_fake_form(collaboration="invalid")
         self.controller.import_form_data(form)
-        self.assertTrue(form.cooperation_field().errors)
+        self.assertTrue(form.collaboration_field().errors)
 
     def test_that_a_request_gets_returned_if_form_is_valid(self) -> None:
         form = self.get_fake_form()
@@ -56,14 +56,14 @@ class AuthenticatedCompanyTests(BaseTestCase):
         assert request
         self.assertEqual(request.candidate, candidate)
 
-    def test_that_request_has_cooperation_specified_in_form(
+    def test_that_request_has_collaboration_specified_in_form(
         self,
     ) -> None:
-        cooperation = uuid4()
-        form = self.get_fake_form(cooperation=str(cooperation))
+        collaboration = uuid4()
+        form = self.get_fake_form(collaboration=str(collaboration))
         request = self.controller.import_form_data(form)
         assert request
-        self.assertEqual(request.cooperation, cooperation)
+        self.assertEqual(request.cooperation, collaboration)
 
     def test_that_request_has_current_user_as_requester_in_request(self) -> None:
         form = self.get_fake_form()
@@ -72,12 +72,12 @@ class AuthenticatedCompanyTests(BaseTestCase):
         self.assertEqual(request.requester, self.company)
 
     def get_fake_form(
-        self, candidate: Optional[str] = None, cooperation: Optional[str] = None
+        self, candidate: Optional[str] = None, collaboration: Optional[str] = None
     ) -> RequestCoordinationTransferFormImpl:
         if candidate is None:
             candidate = str(uuid4())
-        if cooperation is None:
-            cooperation = str(uuid4())
+        if collaboration is None:
+            collaboration = str(uuid4())
         return RequestCoordinationTransferFormImpl(
-            candidate=candidate, cooperation=cooperation
+            candidate=candidate, collaboration=collaboration
         )

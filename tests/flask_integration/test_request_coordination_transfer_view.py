@@ -17,22 +17,22 @@ class RequestCoordinationTransferTests(ViewTestCase):
             (LogInUser.member, 302),
         ]
     )
-    def test_users_get_expected_status_codes_on_get_requests_when_cooperation_in_url_exists(
+    def test_users_get_expected_status_codes_on_get_requests_when_collaboration_in_url_exists(
         self, login: Optional[LogInUser], expected_code: int
     ) -> None:
-        cooperation = self.cooperation_generator.create_cooperation()
+        collaboration = self.cooperation_generator.create_cooperation()
         self.assert_response_has_expected_code(
-            url=f"company/cooperation_summary/{cooperation}/request_coordination_transfer",
+            url=f"company/collaboration_summary/{collaboration}/request_coordination_transfer",
             method="get",
             login=login,
             expected_code=expected_code,
         )
 
-    def test_company_gets_404_on_get_request_when_cooperation_in_url_does_not_exist(
+    def test_company_gets_404_on_get_request_when_collaboration_in_url_does_not_exist(
         self,
     ) -> None:
         self.assert_response_has_expected_code(
-            url="company/cooperation_summary/1/request_coordination_transfer",
+            url="company/collaboration_summary/1/request_coordination_transfer",
             method="get",
             expected_code=404,
             login=LogInUser.company,
@@ -42,11 +42,11 @@ class RequestCoordinationTransferTests(ViewTestCase):
         self,
     ) -> None:
         self.login_company()
-        cooperation = self.cooperation_generator.create_cooperation()
+        collaboration = self.cooperation_generator.create_cooperation()
         candidate = self.company_generator.create_company()
-        data = {"candidate": str(candidate), "cooperation": str(cooperation)}
+        data = {"candidate": str(candidate), "collaboration": str(collaboration)}
         response = self.client.post(
-            f"company/cooperation_summary/{cooperation}/request_coordination_transfer",
+            f"company/collaboration_summary/{collaboration}/request_coordination_transfer",
             data=data,
         )
         assert response.status_code == 403
@@ -55,12 +55,12 @@ class RequestCoordinationTransferTests(ViewTestCase):
         self,
     ) -> None:
         self.login_company()
-        cooperation = self.cooperation_generator.create_cooperation()
+        collaboration = self.cooperation_generator.create_cooperation()
         candidate = self.company_generator.create_company()
-        data = {"candidate": str(candidate), "cooperation": str(cooperation)}
+        data = {"candidate": str(candidate), "collaboration": str(collaboration)}
         with self.email_service.record_messages() as outbox:
             response = self.client.post(
-                f"company/cooperation_summary/{cooperation}/request_coordination_transfer",
+                f"company/collaboration_summary/{collaboration}/request_coordination_transfer",
                 data=data,
             )
             assert response.status_code == 403
@@ -70,15 +70,15 @@ class RequestCoordinationTransferTests(ViewTestCase):
         self,
     ) -> None:
         current_user = self.login_company()
-        cooperation = self.cooperation_generator.create_cooperation(
+        collaboration = self.cooperation_generator.create_cooperation(
             coordinator=current_user
         )
         candidate_mail = "candidate@mail.org"
         candidate = self.company_generator.create_company(email=candidate_mail)
-        data = {"candidate": str(candidate), "cooperation": str(cooperation)}
+        data = {"candidate": str(candidate), "collaboration": str(collaboration)}
         with self.email_service.record_messages() as outbox:
             response = self.client.post(
-                f"company/cooperation_summary/{cooperation}/request_coordination_transfer",
+                f"company/collaboration_summary/{collaboration}/request_coordination_transfer",
                 data=data,
             )
             assert response.status_code == 200
@@ -89,20 +89,20 @@ class RequestCoordinationTransferTests(ViewTestCase):
         self,
     ) -> None:
         current_user = self.login_company()
-        cooperation = self.cooperation_generator.create_cooperation(
+        collaboration = self.cooperation_generator.create_cooperation(
             coordinator=current_user
         )
         candidate_mail = "candidate@mail.org"
         candidate = self.company_generator.create_company(email=candidate_mail)
-        data = {"candidate": str(candidate), "cooperation": str(cooperation)}
+        data = {"candidate": str(candidate), "collaboration": str(collaboration)}
         response = self.client.post(
-            f"company/cooperation_summary/{cooperation}/request_coordination_transfer",
+            f"company/collaboration_summary/{collaboration}/request_coordination_transfer",
             data=data,
         )
         assert response.status_code == 200
 
         response = self.client.post(
-            f"company/cooperation_summary/{cooperation}/request_coordination_transfer",
+            f"company/collaboration_summary/{collaboration}/request_coordination_transfer",
             data=data,
         )
         assert response.status_code == 409

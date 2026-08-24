@@ -21,12 +21,12 @@ class RequestCoordinationTransferController:
         self, form: RequestCoordinationTransferForm
     ) -> Optional[Interactor.Request]:
         candidate = parse_formfield(form.candidate_field(), self.uuid_parser)
-        cooperation = parse_formfield(form.cooperation_field(), self.uuid_parser)
+        collaboration = parse_formfield(form.collaboration_field(), self.uuid_parser)
         current_user = self.session.get_current_user()
-        if not (candidate and cooperation and current_user):
+        if not (candidate and collaboration and current_user):
             return None
         return Interactor.Request(
             requester=current_user,
-            cooperation=cooperation.value,
+            cooperation=collaboration.value,
             candidate=candidate.value,
         )

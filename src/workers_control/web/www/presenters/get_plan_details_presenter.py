@@ -117,8 +117,8 @@ class GetPlanDetailsPresenter:
                 self._format_price(plan_details.price_per_unit),
                 plan_details.is_cooperating,
                 (
-                    self.url_index.get_coop_summary_url(
-                        coop_id=plan_details.cooperation
+                    self.url_index.get_collab_summary_url(
+                        collab_id=plan_details.cooperation
                     )
                     if plan_details.cooperation
                     else None

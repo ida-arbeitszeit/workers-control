@@ -24,7 +24,7 @@ class ResultTableRow:
     price_per_unit: str
     is_basic_service: bool
     is_public_service: bool
-    is_cooperating: bool
+    is_collaborating: bool
     is_expired: bool
     is_own_plan: bool
     is_own_basic_service: bool
@@ -124,7 +124,7 @@ class QueryOffersPresenter:
             price_per_unit="",
             is_basic_service=True,
             is_public_service=False,
-            is_cooperating=False,
+            is_collaborating=False,
             is_expired=False,
             is_own_plan=False,
             is_own_basic_service=is_own_basic_service,
@@ -164,7 +164,7 @@ class QueryOffersPresenter:
             price_per_unit=str(round(result.price_per_unit, 2)),
             is_basic_service=False,
             is_public_service=result.is_public_service,
-            is_cooperating=result.is_cooperating,
+            is_collaborating=result.is_cooperating,
             is_expired=result.is_expired,
             is_own_plan=is_own_plan,
             is_own_basic_service=False,

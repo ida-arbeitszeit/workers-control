@@ -63,7 +63,7 @@ class PresenterTests(BaseTestCase):
     def test_that_both_company_and_worker_name_are_safely_escaped_in_html_body(
         self,
     ) -> None:
-        dangerous_company_name = '<a href="dangerous site">coop</a>'
+        dangerous_company_name = '<a href="dangerous site">collab</a>'
         dangerous_worker_name = '<a href="dangerous site">candidate</a>'
         notification_data = WorkerRemovalNotification(
             worker_email="123",

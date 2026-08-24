@@ -38,7 +38,7 @@ class AcceptCoordinationTransferPresenter:
             assert interactor_response.cooperation_id
             self.notifier.display_info(
                 self.translator.gettext(
-                    "Successfully accepted the request. You are now coordinator of the cooperation."
+                    "Successfully accepted the request. You are now coordinator of the collaboration."
                 )
             )
             return ViewModel(

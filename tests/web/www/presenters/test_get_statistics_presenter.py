@@ -78,14 +78,14 @@ class GetStatisticsPresenterTests(BaseTestCase):
             "32",
         )
 
-    def test_coop_count_is_displayed_correctly_as_number(self) -> None:
+    def test_collab_count_is_displayed_correctly_as_number(self) -> None:
         response = replace(
             TESTING_RESPONSE_MODEL,
             cooperations_count=11,
         )
         view_model = self.presenter.present(response)
         self.assertEqual(
-            view_model.cooperations_count,
+            view_model.collaborations_count,
             "11",
         )
 

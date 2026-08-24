@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Rename "cooperation" to "collaboration" in the presentation layer.
+
 ## [0.2.5] - 2026-08-08
 
 ### Added

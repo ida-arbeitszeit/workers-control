@@ -82,7 +82,7 @@ class RequestCoordinationTransferPresenterTests(BaseTestCase):
         )
         self.assertEqual(response.status_code, 404)
 
-    def test_correct_notification_when_rejected_because_cooperation_was_not_found(
+    def test_correct_notification_when_rejected_because_collaboration_was_not_found(
         self,
     ) -> None:
         self.presenter.present_interactor_response(
@@ -92,10 +92,10 @@ class RequestCoordinationTransferPresenterTests(BaseTestCase):
         )
         self.assertEqual(
             self.notifier.warnings[0],
-            self.translator.gettext("Cooperation not found."),
+            self.translator.gettext("Collaboration not found."),
         )
 
-    def test_correct_status_code_when_rejected_because_cooperation_was_not_found(
+    def test_correct_status_code_when_rejected_because_collaboration_was_not_found(
         self,
     ) -> None:
         response = self.presenter.present_interactor_response(
@@ -199,14 +199,14 @@ class NavbarItemsTests(BaseTestCase):
 
     def test_first_navbar_item_has_correct_text(self) -> None:
         navbar_items = self.presenter.create_navbar_items(uuid4())
-        self.assertEqual(navbar_items[0].text, self.translator.gettext("Cooperation"))
+        self.assertEqual(navbar_items[0].text, self.translator.gettext("Collaboration"))
 
-    def test_first_navbar_item_has_link_to_cooperation(self) -> None:
-        cooperation_id = uuid4()
-        navbar_items = self.presenter.create_navbar_items(cooperation_id)
+    def test_first_navbar_item_has_link_to_collaboration(self) -> None:
+        collaboration_id = uuid4()
+        navbar_items = self.presenter.create_navbar_items(collaboration_id)
         self.assertEqual(
             navbar_items[0].url,
-            self.url_index.get_coop_summary_url(coop_id=cooperation_id),
+            self.url_index.get_collab_summary_url(collab_id=collaboration_id),
         )
 
     def test_second_navbar_item_has_correct_text(self) -> None:

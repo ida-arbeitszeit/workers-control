@@ -270,8 +270,8 @@ class ResultsTests(ListTransfersPresenterBase):
         view_model = self.presenter.present(uc_response)
         assert view_model.results.rows[0].creditor_name == expected_creditor_name
 
-    def test_that_debtor_name_is_cooperation_name(self) -> None:
-        expected_debtor_name = "Some cooperation name"
+    def test_that_debtor_name_is_collaboration_name(self) -> None:
+        expected_debtor_name = "Some collaboration name"
         uc_response = self.create_interactor_response(
             transfers=[
                 self.create_transfer_entry(
@@ -283,8 +283,8 @@ class ResultsTests(ListTransfersPresenterBase):
         view_model = self.presenter.present(uc_response)
         assert view_model.results.rows[0].debtor_name == expected_debtor_name
 
-    def test_that_creditor_name_is_cooperation_name(self) -> None:
-        expected_creditor_name = "Some cooperation name"
+    def test_that_creditor_name_is_collaboration_name(self) -> None:
+        expected_creditor_name = "Some collaboration name"
         uc_response = self.create_interactor_response(
             transfers=[
                 self.create_transfer_entry(
@@ -355,7 +355,7 @@ class ResultsTests(ListTransfersPresenterBase):
             0
         ].creditor_url == self.url_index.get_company_summary_url(company_id=creditor)
 
-    def test_that_debtor_url_is_cooperation_summary_url(self) -> None:
+    def test_that_debtor_url_is_collaboration_summary_url(self) -> None:
         debtor = uuid4()
         uc_response = self.create_interactor_response(
             transfers=[
@@ -368,9 +368,9 @@ class ResultsTests(ListTransfersPresenterBase):
         view_model = self.presenter.present(uc_response)
         assert view_model.results.rows[
             0
-        ].debtor_url == self.url_index.get_coop_summary_url(coop_id=debtor)
+        ].debtor_url == self.url_index.get_collab_summary_url(collab_id=debtor)
 
-    def test_that_creditor_url_is_cooperation_summary_url(self) -> None:
+    def test_that_creditor_url_is_collaboration_summary_url(self) -> None:
         creditor = uuid4()
         uc_response = self.create_interactor_response(
             transfers=[
@@ -383,7 +383,7 @@ class ResultsTests(ListTransfersPresenterBase):
         view_model = self.presenter.present(uc_response)
         assert view_model.results.rows[
             0
-        ].creditor_url == self.url_index.get_coop_summary_url(coop_id=creditor)
+        ].creditor_url == self.url_index.get_collab_summary_url(collab_id=creditor)
 
     @parameterized.expand(
         [

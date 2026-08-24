@@ -87,7 +87,7 @@ class RequestCoordinationTransferPresenterTests(BaseTestCase):
     ) -> None:
         self.presenter.present_interactor_response(
             self.get_rejected_transfer_request(
-                rejection_reason=Interactor.Response.RejectionReason.cooperation_not_found
+                rejection_reason=Interactor.Response.RejectionReason.collaboration_not_found
             )
         )
         self.assertEqual(
@@ -100,7 +100,7 @@ class RequestCoordinationTransferPresenterTests(BaseTestCase):
     ) -> None:
         response = self.presenter.present_interactor_response(
             self.get_rejected_transfer_request(
-                rejection_reason=Interactor.Response.RejectionReason.cooperation_not_found
+                rejection_reason=Interactor.Response.RejectionReason.collaboration_not_found
             )
         )
         self.assertEqual(response.status_code, 404)

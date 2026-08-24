@@ -10,7 +10,7 @@ from workers_control.web.www.presenters.get_statistics_presenter import (
 TESTING_RESPONSE_MODEL = StatisticsResponse(
     registered_companies_count=5,
     registered_members_count=30,
-    cooperations_count=10,
+    collaborations_count=10,
     active_plans_count=6,
     active_plans_public_count=2,
     active_basic_services_count=4,
@@ -81,7 +81,7 @@ class GetStatisticsPresenterTests(BaseTestCase):
     def test_collab_count_is_displayed_correctly_as_number(self) -> None:
         response = replace(
             TESTING_RESPONSE_MODEL,
-            cooperations_count=11,
+            collaborations_count=11,
         )
         view_model = self.presenter.present(response)
         self.assertEqual(

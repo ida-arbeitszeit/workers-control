@@ -47,7 +47,7 @@ class QueriedOfferGenerator:
             is_basic_service=False,
             price_per_unit=price_per_unit,
             is_public_service=False,
-            is_cooperating=is_collaborating,
+            is_collaborating=is_collaborating,
             is_expired=is_expired,
         )
 
@@ -187,8 +187,8 @@ class PlanDetailsGenerator:
             is_public_service=is_public_service,
             price_per_unit=price_per_unit,
             cost_per_unit=labour_cost_per_unit,
-            is_cooperating=is_collaborating,
-            cooperation=collaboration,
+            is_collaborating=is_collaborating,
+            collaboration=collaboration,
             creation_date=creation_date,
             approval_date=approval_date,
             expiration_date=expiration_date,

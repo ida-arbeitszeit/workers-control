@@ -3,9 +3,9 @@ from uuid import UUID
 
 import flask
 
-from workers_control.core.interactors.end_cooperation import (
-    EndCooperationInteractor,
-    EndCooperationRequest,
+from workers_control.core.interactors.end_collaboration import (
+    EndCollaborationInteractor,
+    EndCollaborationRequest,
 )
 from workers_control.db import commit_changes
 from workers_control.flask.flask_session import FlaskSession
@@ -17,7 +17,7 @@ from workers_control.web.www.presenters.end_plan_collaboration_presenter import 
 
 @dataclass
 class EndPlanCollaborationView:
-    interactor: EndCooperationInteractor
+    interactor: EndCollaborationInteractor
     presenter: EndPlanCollaborationPresenter
     flask_session: FlaskSession
 
@@ -29,10 +29,10 @@ class EndPlanCollaborationView:
         collaboration_id = UUID(form["collaboration_id"].strip())
         plan_id = UUID(form["plan_id"].strip())
         response = self.interactor.execute(
-            EndCooperationRequest(
+            EndCollaborationRequest(
                 requester_id=current_user,
                 plan_id=plan_id,
-                cooperation_id=collaboration_id,
+                collaboration_id=collaboration_id,
             )
         )
         view_model = self.presenter.render_response(response)

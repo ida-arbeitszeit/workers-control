@@ -58,7 +58,7 @@ class TransferPresenter:
                 return "user"
             case TransferPartyType.company:
                 return "industry"
-            case TransferPartyType.cooperation:
+            case TransferPartyType.collaboration:
                 return "hands-helping"
             case TransferPartyType.social_accounting:
                 return "users"
@@ -111,7 +111,7 @@ def description_from_transfer_type(
             )
         case TransferType.productive_consumption_of_basic_service:
             return translator.gettext("Productive consumption of basic service")
-        case TransferType.compensation_for_coop:
+        case TransferType.compensation_for_collab:
             return translator.gettext("Compensation for overproductive planning")
         case TransferType.compensation_for_company:
             return translator.gettext("Compensation for underproductive planning")

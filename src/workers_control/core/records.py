@@ -72,7 +72,7 @@ class AccountTypes(Enum):
     member = "member"
     accounting = "accounting"
     psf = "psf"
-    cooperation = "cooperation"
+    collaboration = "collaboration"
 
 
 @dataclass(frozen=True)
@@ -81,7 +81,7 @@ class Account:
 
 
 @dataclass
-class Cooperation:
+class Collaboration:
     id: UUID
     creation_date: datetime
     name: str
@@ -96,7 +96,7 @@ class Cooperation:
 class CoordinationTenure:
     id: UUID
     company: UUID
-    cooperation: UUID
+    collaboration: UUID
     start_date: datetime
 
 
@@ -178,7 +178,7 @@ class Plan:
     is_public_service: bool
     approval_date: Optional[datetime]
     rejection_date: Optional[datetime]
-    requested_cooperation: Optional[UUID]
+    requested_collaboration: Optional[UUID]
     hidden_by_user: bool
 
     @property
@@ -331,7 +331,7 @@ class ProductiveConsumptionOfBasicService:
     transfer_of_taxes: UUID
 
 
-AccountOwner = Union[Member, Company, SocialAccounting, Cooperation]
+AccountOwner = Union[Member, Company, SocialAccounting, Collaboration]
 
 
 @dataclass

@@ -10,21 +10,21 @@ from workers_control.core.repositories import DatabaseGateway
 
 
 @dataclass
-class ListMyCooperatingPlansInteractor:
+class ListMyCollaboratingPlansInteractor:
     @dataclass
     class Request:
         company: UUID
 
     @dataclass
-    class CooperatingPlan:
+    class CollaboratingPlan:
         plan_id: UUID
         plan_name: str
-        coop_id: UUID
-        coop_name: str
+        collab_id: UUID
+        collab_name: str
 
     @dataclass
     class Response:
-        cooperating_plans: List[ListMyCooperatingPlansInteractor.CooperatingPlan]
+        collaborating_plans: List[ListMyCollaboratingPlansInteractor.CollaboratingPlan]
 
     class Failure(Exception):
         pass
@@ -32,7 +32,7 @@ class ListMyCooperatingPlansInteractor:
     database_gateway: DatabaseGateway
     datetime_service: DatetimeService
 
-    def list_cooperations(self, request: Request) -> Response:
+    def list_collaborations(self, request: Request) -> Response:
         if not self.database_gateway.get_companies().with_id(request.company):
             raise self.Failure()
         now = self.datetime_service.now()
@@ -41,22 +41,22 @@ class ListMyCooperatingPlansInteractor:
             .that_will_expire_after(now)
             .that_were_approved_before(now)
             .planned_by(request.company)
-            .that_are_cooperating()
+            .that_are_collaborating()
         )
         return self.Response(
-            cooperating_plans=[
-                self._create_plan_object(plan, cooperation)
-                for plan, cooperation in plans.joined_with_cooperation()
-                if cooperation
+            collaborating_plans=[
+                self._create_plan_object(plan, collaboration)
+                for plan, collaboration in plans.joined_with_collaboration()
+                if collaboration
             ]
         )
 
     def _create_plan_object(
-        self, plan: records.Plan, cooperation: records.Cooperation
-    ) -> CooperatingPlan:
-        return self.CooperatingPlan(
+        self, plan: records.Plan, collaboration: records.Collaboration
+    ) -> CollaboratingPlan:
+        return self.CollaboratingPlan(
             plan_id=plan.id,
             plan_name=plan.prd_name,
-            coop_id=cooperation.id,
-            coop_name=cooperation.name,
+            collab_id=collaboration.id,
+            collab_name=collaboration.name,
         )

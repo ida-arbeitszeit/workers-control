@@ -5,12 +5,12 @@ from tests.base_test_case import BaseTestCase
 from workers_control.core.interactors.accept_coordination_transfer import (
     AcceptCoordinationTransferInteractor,
 )
-from workers_control.core.interactors.get_coop_summary import (
-    GetCoopSummaryInteractor,
-    GetCoopSummaryRequest,
+from workers_control.core.interactors.get_collab_summary import (
+    GetCollabSummaryInteractor,
+    GetCollabSummaryRequest,
 )
-from workers_control.core.interactors.list_coordinations_of_cooperation import (
-    ListCoordinationsOfCooperationInteractor,
+from workers_control.core.interactors.list_coordinations_of_collaboration import (
+    ListCoordinationsOfCollaborationInteractor,
 )
 from workers_control.core.interactors.request_coordination_transfer import (
     RequestCoordinationTransferInteractor,
@@ -22,9 +22,11 @@ class TestAcceptCoordinationTransferInteractor(BaseTestCase):
         super().setUp()
         self.interactor = self.injector.get(AcceptCoordinationTransferInteractor)
         self.list_coordinations_interactor = self.injector.get(
-            ListCoordinationsOfCooperationInteractor
+            ListCoordinationsOfCollaborationInteractor
         )
-        self.get_coop_summary_interactor = self.injector.get(GetCoopSummaryInteractor)
+        self.get_collab_summary_interactor = self.injector.get(
+            GetCollabSummaryInteractor
+        )
         self.request_transfer_interactor = self.injector.get(
             RequestCoordinationTransferInteractor
         )
@@ -72,24 +74,26 @@ class TestAcceptCoordinationTransferInteractor(BaseTestCase):
         response = self.interactor.accept_coordination_transfer(request)
         self.assertFalse(response.is_rejected)
 
-    def test_after_accepting_the_candidate_is_one_of_the_coordinators_of_cooperation(
+    def test_after_accepting_the_candidate_is_one_of_the_coordinators_of_collaboration(
         self,
     ) -> None:
         candidate = self.company_generator.create_company()
         request = self.create_interactor_request(candidate=candidate)
         response = self.interactor.accept_coordination_transfer(request=request)
-        assert response.cooperation_id
-        self.assertCompanyHasCoordinatedCooperation(candidate, response.cooperation_id)
+        assert response.collaboration_id
+        self.assertCompanyHasCoordinatedCollaboration(
+            candidate, response.collaboration_id
+        )
 
-    def test_after_accepting_the_candidate_is_current_coordinator_of_cooperation(
+    def test_after_accepting_the_candidate_is_current_coordinator_of_collaboration(
         self,
     ) -> None:
         candidate = self.company_generator.create_company()
         request = self.create_interactor_request(candidate=candidate)
         response = self.interactor.accept_coordination_transfer(request=request)
-        assert response.cooperation_id
-        self.assertCompanyIsCurrentCoordinatorOfCooperation(
-            candidate, response.cooperation_id
+        assert response.collaboration_id
+        self.assertCompanyIsCurrentCoordinatorOfCollaboration(
+            candidate, response.collaboration_id
         )
 
     def test_original_coordination_transfer_id_is_returned_if_interactor_succeeds(
@@ -128,7 +132,7 @@ class TestAcceptCoordinationTransferInteractor(BaseTestCase):
         if transfer_request_id is None:
             transfer_request_id = self.coordination_transfer_request_generator.create_coordination_transfer_request(
                 requester=coordinator,
-                cooperation=self.cooperation_generator.create_cooperation(
+                collaboration=self.collaboration_generator.create_collaboration(
                     coordinator=coordinator
                 ),
                 candidate=candidate,
@@ -138,13 +142,13 @@ class TestAcceptCoordinationTransferInteractor(BaseTestCase):
             accepting_company=accepting_company,
         )
 
-    def assertCompanyHasCoordinatedCooperation(
-        self, company: UUID, cooperation: UUID
+    def assertCompanyHasCoordinatedCollaboration(
+        self, company: UUID, collaboration: UUID
     ) -> None:
         list_coordinations_response = (
             self.list_coordinations_interactor.list_coordinations(
-                ListCoordinationsOfCooperationInteractor.Request(
-                    cooperation=cooperation
+                ListCoordinationsOfCollaborationInteractor.Request(
+                    collaboration=collaboration
                 )
             )
         )
@@ -152,11 +156,11 @@ class TestAcceptCoordinationTransferInteractor(BaseTestCase):
         coordinators = [c.coordinator_id for c in coordinations]
         self.assertIn(company, coordinators)
 
-    def assertCompanyIsCurrentCoordinatorOfCooperation(
-        self, company: UUID, cooperation: UUID
+    def assertCompanyIsCurrentCoordinatorOfCollaboration(
+        self, company: UUID, collaboration: UUID
     ) -> None:
-        get_coop_summary_response = self.get_coop_summary_interactor.execute(
-            GetCoopSummaryRequest(requester_id=uuid4(), coop_id=cooperation)
+        get_collab_summary_response = self.get_collab_summary_interactor.execute(
+            GetCollabSummaryRequest(requester_id=uuid4(), collab_id=collaboration)
         )
-        assert get_coop_summary_response
-        self.assertEqual(get_coop_summary_response.current_coordinator, company)
+        assert get_collab_summary_response
+        self.assertEqual(get_collab_summary_response.current_coordinator, company)

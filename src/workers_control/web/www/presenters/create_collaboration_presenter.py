@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from workers_control.core.interactors.create_cooperation import (
-    CreateCooperationResponse,
+from workers_control.core.interactors.create_collaboration import (
+    CreateCollaborationResponse,
 )
 
 from ...notification import Notifier
@@ -31,7 +31,7 @@ class CreateCollaborationPresenter:
         ]
 
     def present(
-        self, interactor_response: CreateCooperationResponse
+        self, interactor_response: CreateCollaborationResponse
     ) -> CreateCollaborationViewModel:
         if not interactor_response.is_rejected:
             self.user_notifier.display_info(
@@ -39,7 +39,7 @@ class CreateCollaborationPresenter:
             )
         elif (
             interactor_response.rejection_reason
-            == CreateCooperationResponse.RejectionReason.cooperation_with_name_exists
+            == CreateCollaborationResponse.RejectionReason.collaboration_with_name_exists
         ):
             self.user_notifier.display_warning(
                 self.translator.gettext(
@@ -48,7 +48,7 @@ class CreateCollaborationPresenter:
             )
         elif (
             interactor_response.rejection_reason
-            == CreateCooperationResponse.RejectionReason.coordinator_not_found
+            == CreateCollaborationResponse.RejectionReason.coordinator_not_found
         ):
             self.user_notifier.display_warning(
                 self.translator.gettext("Internal error: Coordinator not found.")

@@ -20,7 +20,7 @@ class AuthenticatedCompanyTests(ViewTestCase):
     def test_404_is_returned_when_plan_does_not_exist(
         self,
     ) -> None:
-        collaboration = self.cooperation_generator.create_cooperation()
+        collaboration = self.collaboration_generator.create_collaboration()
         data = {"plan_id": str(uuid4()), "collaboration_id": str(collaboration)}
         response = self.client.post(URL, data=data)
         assert response.status_code == 404
@@ -37,7 +37,7 @@ class AuthenticatedCompanyTests(ViewTestCase):
         self,
     ) -> None:
         plan = self.plan_generator.create_plan()
-        collaboration = self.cooperation_generator.create_cooperation(plans=[plan])
+        collaboration = self.collaboration_generator.create_collaboration(plans=[plan])
         data = {"plan_id": str(plan), "collaboration_id": str(collaboration)}
         response = self.client.post(URL, data=data)
         assert response.status_code == 404
@@ -46,7 +46,7 @@ class AuthenticatedCompanyTests(ViewTestCase):
         self,
     ) -> None:
         plan = self.plan_generator.create_plan(planner=self.company)
-        collaboration = self.cooperation_generator.create_cooperation(plans=[plan])
+        collaboration = self.collaboration_generator.create_collaboration(plans=[plan])
         data = {"plan_id": str(plan), "collaboration_id": str(collaboration)}
         response = self.client.post(URL, data=data)
         assert response.status_code == 302
@@ -55,7 +55,7 @@ class AuthenticatedCompanyTests(ViewTestCase):
         self,
     ) -> None:
         plan = self.plan_generator.create_plan()
-        collaboration = self.cooperation_generator.create_cooperation(
+        collaboration = self.collaboration_generator.create_collaboration(
             plans=[plan], coordinator=self.company
         )
         data = {"plan_id": str(plan), "collaboration_id": str(collaboration)}

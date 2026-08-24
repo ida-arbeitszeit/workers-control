@@ -2,7 +2,7 @@ from uuid import UUID, uuid4
 
 from tests.base_test_case import BaseTestCase
 from tests.web.www.request import FakeRequest
-from workers_control.core.interactors.end_cooperation import EndCooperationRequest
+from workers_control.core.interactors.end_collaboration import EndCollaborationRequest
 from workers_control.web.www.controllers.end_collaboration_controller import (
     EndCollaborationController,
 )
@@ -67,7 +67,7 @@ class EndCollaborationControllerTests(BaseTestCase):
         self.session.login_company(uuid4())
         interactor_request = self.controller.process_request_data(request)
         self.assertIsNotNone(interactor_request)
-        self.assertIsInstance(interactor_request, EndCooperationRequest)
+        self.assertIsInstance(interactor_request, EndCollaborationRequest)
 
     def test_a_interactor_request_with_correct_attributes_gets_returned(
         self,
@@ -82,5 +82,5 @@ class EndCollaborationControllerTests(BaseTestCase):
         interactor_request = self.controller.process_request_data(request)
         assert interactor_request
         self.assertEqual(interactor_request.plan_id, UUID(plan_id))
-        self.assertEqual(interactor_request.cooperation_id, UUID(collaboration_id))
+        self.assertEqual(interactor_request.collaboration_id, UUID(collaboration_id))
         self.assertEqual(interactor_request.requester_id, user_id)

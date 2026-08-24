@@ -13,8 +13,8 @@ from workers_control.core.anonymization import (
 )
 from workers_control.core.records import (
     AccountOwner,
+    Collaboration,
     Company,
-    Cooperation,
     Member,
     SocialAccounting,
 )
@@ -26,7 +26,7 @@ class TransferPartyType(enum.Enum):
     member = enum.auto()
     company = enum.auto()
     social_accounting = enum.auto()
-    cooperation = enum.auto()
+    collaboration = enum.auto()
 
 
 @dataclass
@@ -126,8 +126,8 @@ def _transfer_party_type_from_owner(account_owner: AccountOwner) -> TransferPart
             return TransferPartyType.member
         case Company():
             return TransferPartyType.company
-        case Cooperation():
-            return TransferPartyType.cooperation
+        case Collaboration():
+            return TransferPartyType.collaboration
         case SocialAccounting():
             return TransferPartyType.social_accounting
 

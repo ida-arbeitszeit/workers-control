@@ -8,7 +8,7 @@ Users
 
 There are three types of users:
 
-* **Companies** file plans for the products and services they offer. They may join cooperations with other companies producing the same product. Companies consume products from other companies' plans and basic services from members, and they register members' worked hours, which credits work certificates to those members.
+* **Companies** file plans for the products and services they offer. They may join collaborations with other companies producing the same product. Companies consume products from other companies' plans and basic services from members, and they register members' worked hours, which credits work certificates to those members.
 
 * **Members** are individual workers. They earn work certificates by working for a company or by offering basic services. They consume products from companies' plans and basic services from other members.
 
@@ -45,9 +45,9 @@ The app has seven account types. See :ref:`transfers-of-labour-time` for a list 
    * - psf
      - Social Accounting
      - Public Sector Fund — tracks hours credited to and debited from the public sector. Currently the app has a single Social Accounting instance with one psf account.
-   * - cooperation
-     - Cooperation
-     - Accumulates the deltas between cooperative price and individual product cost on each consumption of a cooperating plan (see :ref:`cooperations`).
+   * - collaboration
+     - Collaboration
+     - Accumulates the deltas between collaborative price and individual product cost on each consumption of a collaborating plan (see :ref:`collaborations`).
 
 
 Overview
@@ -84,7 +84,7 @@ Differences from plans:
 * Unlike plans, which may involve objectified labour (means of production, raw materials), a basic service represents purely living labour: a worker offers their personal time and skills directly to others.
 * No fixed duration and no planned quantity (no "X units per hour").
 * No approval by Social Accounting is required; a basic service is searchable immediately upon creation.
-* No cooperative price mechanism.
+* No collaborative price mechanism.
 
 
 Consumption
@@ -92,7 +92,7 @@ Consumption
 
 Workers Control distinguishes *productive consumption* (a company consumes for its production process) from *private consumption* (a member consumes for personal use). Either kind of consumption can target a planned product or a basic service. Companies cannot consume products from public plans.
 
-For each combination, the cost — the cooperative price where applicable — flows as follows:
+For each combination, the cost — the collaborative price where applicable — flows as follows:
 
 .. list-table::
    :widths: auto
@@ -143,24 +143,24 @@ The FIC ranges from 0 to 1:
 **Calculation window.** The window spans :math:`t` days, from :math:`t/2` in the past to :math:`t/2` in the future. Plans contribute weighted by overlap: a plan that lies entirely within the window contributes 100% of its planned costs; one that overlaps 50% contributes 50%; one fully outside contributes nothing. Consumed basic services are point-in-time events and contribute to :math:`L` in full if their consumption date falls within the window, and not at all otherwise.
 
 
-.. _cooperations:
+.. _collaborations:
 
-Cooperations
-------------
+Collaborations
+--------------
 
-Companies that produce the same product can attach their plans to a *cooperation*. Cooperations are how companies in an industry express the intention to overcome competition and align their production. The first step toward such alignment is a shared *cooperative price* — the average labour cost per product across all cooperating plans. This is what consumers pay regardless of which plan supplied their item:
+Companies that produce the same product can attach their plans to a *collaboration*. Collaborations are how companies in an industry express the intention to overcome competition and align their production. The first step toward such alignment is a shared *collaborative price* — the average labour cost per product across all collaborating plans. This is what consumers pay regardless of which plan supplied their item:
 
 .. math::
 
-  \text{cooperative price} = \frac{1}{n} \sum_{i=1}^{n} \frac{\text{cost}_i}{\text{pieces}_i}
+  \text{collaborative price} = \frac{1}{n} \sum_{i=1}^{n} \frac{\text{cost}_i}{\text{pieces}_i}
 
-where :math:`\text{cost}_i` and :math:`\text{pieces}_i` are the total planned cost and total pieces of the :math:`i`-th of the :math:`n` plans in the cooperation. The cooperative price thus approximates the socially necessary cost of the product.
+where :math:`\text{cost}_i` and :math:`\text{pieces}_i` are the total planned cost and total pieces of the :math:`i`-th of the :math:`n` plans in the collaboration. The collaborative price thus approximates the socially necessary cost of the product.
 
-**Productivity and compensation.** A plan that needs more labour per product than the average is *underproductive*; one that needs less is *overproductive*. When such a product is consumed, the consumer spends fewer or more certificates than the plan's individual cost. To track this, compensation transfers between the producing company and the cooperation account are recorded on each consumption (see :ref:`transfers-of-labour-time`).
+**Productivity and compensation.** A plan that needs more labour per product than the average is *underproductive*; one that needs less is *overproductive*. When such a product is consumed, the consumer spends fewer or more certificates than the plan's individual cost. To track this, compensation transfers between the producing company and the collaboration account are recorded on each consumption (see :ref:`transfers-of-labour-time`).
 
-**Coordinators.** A cooperation begins empty; any company can create one and automatically becomes its *coordinator*. Coordinators accept or deny incoming cooperation requests, remove plans from the cooperation, and can transfer the role to another company. The history of past coordinators is visible to all users.
+**Coordinators.** A collaboration begins empty; any company can create one and automatically becomes its *coordinator*. Coordinators accept or deny incoming collaboration requests, remove plans from the collaboration, and can transfer the role to another company. The history of past coordinators is visible to all users.
 
-The app provides only the technical front-end; the political processes by which coordinators are chosen happen outside it. Companies dissatisfied with a given coordination can always create a new cooperation.
+The app provides only the technical front-end; the political processes by which coordinators are chosen happen outside it. Companies dissatisfied with a given coordination can always create a new collaboration.
 
 
 .. _transfers-of-labour-time:
@@ -205,7 +205,7 @@ A transfer charges the *debit* account and credits the *credit* account. The tab
    * - private_consumption
      - member
      - prd
-     - On private consumption, the cost of the product (the cooperative price, if applicable) is subtracted from the consuming member's account and added to the PRD account of the producing company.
+     - On private consumption, the cost of the product (the collaborative price, if applicable) is subtracted from the consuming member's account and added to the PRD account of the producing company.
    * - private_consumption_of_basic_service
      - member
      - member
@@ -213,23 +213,23 @@ A transfer charges the *debit* account and credits the *credit* account. The tab
    * - productive_consumption_p
      - p
      - prd
-     - On productive consumption of fixed means of production, the cost of the product (the cooperative price, if applicable) is subtracted from the P account of the consuming company and added to the PRD account of the producing company.
+     - On productive consumption of fixed means of production, the cost of the product (the collaborative price, if applicable) is subtracted from the P account of the consuming company and added to the PRD account of the producing company.
    * - productive_consumption_r
      - r
      - prd
-     - On productive consumption of liquid means of production, the cost of the product (the cooperative price, if applicable) is subtracted from the R account of the consuming company and added to the PRD account of the producing company.
+     - On productive consumption of liquid means of production, the cost of the product (the collaborative price, if applicable) is subtracted from the R account of the consuming company and added to the PRD account of the producing company.
    * - productive_consumption_of_basic_service
      - r
      - member
      - On productive consumption of a basic service, the consumed hours are subtracted from the R account of the consuming company (basic services count as liquid means of production) and added to the account of the member providing the service.
-   * - compensation_for_coop
+   * - compensation_for_collab
      - prd
-     - cooperation
-     - On private or productive consumption, if the consumed plan was overproductive, the delta between cooperative price and individual product cost is subtracted from the PRD account of the planning company and added to the cooperation account.
+     - collaboration
+     - On private or productive consumption, if the consumed plan was overproductive, the delta between collaborative price and individual product cost is subtracted from the PRD account of the planning company and added to the collaboration account.
    * - compensation_for_company
-     - cooperation
+     - collaboration
      - prd
-     - On private or productive consumption, if the consumed plan was underproductive, the delta between cooperative price and individual product cost is subtracted from the cooperation account and added to the PRD account of the planning company.
+     - On private or productive consumption, if the consumed plan was underproductive, the delta between collaborative price and individual product cost is subtracted from the collaboration account and added to the PRD account of the planning company.
    * - work_certificates
      - a
      - member

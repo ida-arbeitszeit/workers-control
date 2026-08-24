@@ -63,7 +63,7 @@ class AuthenticatedCompanyTests(BaseTestCase):
         form = self.get_fake_form(collaboration=str(collaboration))
         request = self.controller.import_form_data(form)
         assert request
-        self.assertEqual(request.cooperation, collaboration)
+        self.assertEqual(request.collaboration, collaboration)
 
     def test_that_request_has_current_user_as_requester_in_request(self) -> None:
         form = self.get_fake_form()

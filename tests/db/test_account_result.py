@@ -118,13 +118,13 @@ class AccountResultTests(DatabaseTestCase):
             registered_on=datetime_utc(2000, 1, 1),
         )
 
-    def create_cooperation(
+    def create_collaboration(
         self,
         account: UUID,
-    ) -> records.Cooperation:
-        return self.database_gateway.create_cooperation(
+    ) -> records.Collaboration:
+        return self.database_gateway.create_collaboration(
             creation_timestamp=datetime_utc(2000, 1, 1),
-            name="test cooperation",
+            name="test collaboration",
             definition="some product definition",
             account=account,
         )

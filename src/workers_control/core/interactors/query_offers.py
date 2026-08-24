@@ -45,7 +45,7 @@ class QueriedOffer:
     is_basic_service: bool
     price_per_unit: Optional[Decimal] = None
     is_public_service: bool = False
-    is_cooperating: bool = False
+    is_collaborating: bool = False
     is_expired: bool = False
 
 
@@ -95,10 +95,10 @@ class QueryOffersInteractor:
         )
         total = len(plans)
         plans = self._apply_plan_sorting(plans, request.sorting_category)
-        joined = plans.joined_with_planner_and_cooperation()
+        joined = plans.joined_with_planner_and_collaboration()
         results = [
-            self._plan_to_offer(plan, planner, cooperation)
-            for plan, planner, cooperation in joined
+            self._plan_to_offer(plan, planner, collaboration)
+            for plan, planner, collaboration in joined
         ]
         return results, total
 
@@ -166,7 +166,7 @@ class QueryOffersInteractor:
         self,
         plan: records.Plan,
         planner: records.Company,
-        cooperation: Optional[records.Cooperation],
+        collaboration: Optional[records.Collaboration],
     ) -> QueriedOffer:
         price_per_unit = self.price_calculator.calculate_price(plan.id)
         assert plan.approval_date
@@ -180,7 +180,7 @@ class QueryOffersInteractor:
             is_basic_service=False,
             price_per_unit=price_per_unit,
             is_public_service=plan.is_public_service,
-            is_cooperating=bool(cooperation),
+            is_collaborating=bool(collaboration),
             is_expired=plan.is_expired_as_of(self.datetime_service.now()),
         )
 

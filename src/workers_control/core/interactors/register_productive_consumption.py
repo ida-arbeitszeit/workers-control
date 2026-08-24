@@ -166,13 +166,15 @@ class RegisterProductiveConsumptionInteractor:
         price_per_unit: Decimal,
         consumed_amount: int,
     ) -> UUID | None:
-        cooperation = self.database_gateway.get_cooperations().of_plan(plan_id).first()
-        if not cooperation:
+        collaboration = (
+            self.database_gateway.get_collaborations().of_plan(plan_id).first()
+        )
+        if not collaboration:
             return None
         return self.compensation_transfer_service.create_compensation_transfer(
             price_per_unit=price_per_unit,
             cost_per_unit=cost_per_unit,
             consumed_amount=consumed_amount,
             planner_product_account=planner_product_account,
-            cooperation_account=cooperation.account,
+            collaboration_account=collaboration.account,
         )

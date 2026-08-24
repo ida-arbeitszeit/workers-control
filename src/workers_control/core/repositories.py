@@ -64,7 +64,7 @@ class PlanResult(QueryResult[records.Plan], Protocol):
 
     def that_are_public(self) -> Self: ...
 
-    def that_are_cooperating(self) -> Self: ...
+    def that_are_collaborating(self) -> Self: ...
 
     def planned_by(self, *company: UUID) -> Self: ...
 
@@ -72,25 +72,25 @@ class PlanResult(QueryResult[records.Plan], Protocol):
 
     def without_completed_review(self) -> Self: ...
 
-    def with_open_cooperation_request(
-        self, *, cooperation: Optional[UUID] = ...
+    def with_open_collaboration_request(
+        self, *, collaboration: Optional[UUID] = ...
     ) -> Self: ...
 
-    def that_are_in_same_cooperation_as(self, plan: UUID) -> Self:
-        """Returns all plans that are part of the same cooperation as
+    def that_are_in_same_collaboration_as(self, plan: UUID) -> Self:
+        """Returns all plans that are part of the same collaboration as
         the plan specified by the UUID argument, including the plan
-        itself. If the plan is not part of any cooperation then the
+        itself. If the plan is not part of any collaboration then the
         result will be empty.
         """
 
-    def that_are_part_of_cooperation(self, *cooperation: UUID) -> Self:
-        """If no cooperations are specified, then the repository
-        should return plans that are part of any cooperation.
+    def that_are_part_of_collaboration(self, *collaboration: UUID) -> Self:
+        """If no collaborations are specified, then the repository
+        should return plans that are part of any collaboration.
         """
 
-    def that_request_cooperation_with_coordinator(self, *company: UUID) -> Self:
+    def that_request_collaboration_with_coordinator(self, *company: UUID) -> Self:
         """If no companies are specified then the repository should
-        return all plans that request cooperation with any
+        return all plans that request collaboration with any
         coordinator.
         """
 
@@ -104,17 +104,17 @@ class PlanResult(QueryResult[records.Plan], Protocol):
         only contain plans that are not hidden.
         """
 
-    def joined_with_planner_and_cooperation(self) -> QueryResult[
+    def joined_with_planner_and_collaboration(self) -> QueryResult[
         Tuple[
             records.Plan,
             records.Company,
-            Optional[records.Cooperation],
+            Optional[records.Collaboration],
         ]
     ]: ...
 
-    def joined_with_cooperation(
+    def joined_with_collaboration(
         self,
-    ) -> QueryResult[Tuple[records.Plan, Optional[records.Cooperation]]]: ...
+    ) -> QueryResult[Tuple[records.Plan, Optional[records.Collaboration]]]: ...
 
     def joined_with_provided_product_amount(
         self,
@@ -131,18 +131,18 @@ class PlanUpdate(DatabaseUpdate, Protocol):
     the DB and execute them all in one.
     """
 
-    def set_cooperation(self, cooperation: Optional[UUID]) -> Self:
-        """Set the associated cooperation of all matching plans to the
-        one specified via the cooperation argument. Specifying `None`
-        will unset the cooperation field. The return value counts all
+    def set_collaboration(self, collaboration: Optional[UUID]) -> Self:
+        """Set the associated collaboration of all matching plans to the
+        one specified via the collaboration argument. Specifying `None`
+        will unset the collaboration field. The return value counts all
         plans that were updated through this method.
         """
 
-    def set_requested_cooperation(self, cooperation: Optional[UUID]) -> Self:
-        """Set the `requested_cooperation` field of all matching plans
+    def set_requested_collaboration(self, collaboration: Optional[UUID]) -> Self:
+        """Set the `requested_collaboration` field of all matching plans
         to the specified value.  A value `None` means that these plans
         are marked as not requesting membership in any
-        cooperation. The return value counts all plans that were
+        collaboration. The return value counts all plans that were
         updated through this method.
         """
 
@@ -188,7 +188,7 @@ class PlanDraftUpdate(DatabaseUpdate, Protocol):
 class PlanApprovalResult(QueryResult[records.PlanApproval], Protocol): ...
 
 
-class CooperationResult(QueryResult[records.Cooperation], Protocol):
+class CollaborationResult(QueryResult[records.Collaboration], Protocol):
     def with_id(self, id_: UUID) -> Self: ...
 
     def with_name_ignoring_case(self, name: str) -> Self: ...
@@ -199,13 +199,13 @@ class CooperationResult(QueryResult[records.Cooperation], Protocol):
 
     def joined_with_current_coordinator(
         self,
-    ) -> QueryResult[Tuple[records.Cooperation, records.Company]]: ...
+    ) -> QueryResult[Tuple[records.Collaboration, records.Company]]: ...
 
 
 class CoordinationTenureResult(QueryResult[records.CoordinationTenure], Protocol):
     def with_id(self, id_: UUID) -> Self: ...
 
-    def of_cooperation(self, cooperation_id: UUID) -> Self: ...
+    def of_collaboration(self, collaboration_id: UUID) -> Self: ...
 
     def joined_with_coordinator(
         self,
@@ -221,10 +221,10 @@ class CoordinationTransferRequestResult(
 
     def requested_by(self, coordination_tenure: UUID) -> Self: ...
 
-    def joined_with_cooperation(
+    def joined_with_collaboration(
         self,
     ) -> QueryResult[
-        Tuple[records.CoordinationTransferRequest, records.Cooperation]
+        Tuple[records.CoordinationTransferRequest, records.Collaboration]
     ]: ...
 
 
@@ -361,7 +361,7 @@ class CompanyResult(QueryResult[records.Company], Protocol):
 
     def that_are_workplace_of_member(self, member: UUID) -> Self: ...
 
-    def that_is_coordinating_cooperation(self, cooperation: UUID) -> Self: ...
+    def that_is_coordinating_collaboration(self, collaboration: UUID) -> Self: ...
 
     def add_worker(self, member: UUID) -> int: ...
 
@@ -668,18 +668,18 @@ class DatabaseGateway(Protocol):
 
     def get_plans(self) -> PlanResult: ...
 
-    def create_cooperation(
+    def create_collaboration(
         self,
         creation_timestamp: datetime,
         name: str,
         definition: str,
         account: UUID,
-    ) -> records.Cooperation: ...
+    ) -> records.Collaboration: ...
 
-    def get_cooperations(self) -> CooperationResult: ...
+    def get_collaborations(self) -> CollaborationResult: ...
 
     def create_coordination_tenure(
-        self, company: UUID, cooperation: UUID, start_date: datetime
+        self, company: UUID, collaboration: UUID, start_date: datetime
     ) -> records.CoordinationTenure: ...
 
     def get_coordination_tenures(self) -> CoordinationTenureResult: ...

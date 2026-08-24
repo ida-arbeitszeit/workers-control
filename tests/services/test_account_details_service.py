@@ -36,11 +36,11 @@ class ServiceBase(BaseTestCase):
         social_accounting = self.injector.get(SocialAccounting)
         return social_accounting.account_psf
 
-    def create_cooperation_account(self) -> UUID:
-        self.cooperation_generator.create_cooperation()
-        cooperation = self.database_gateway.get_cooperations().first()
-        assert cooperation
-        return cooperation.account
+    def create_collaboration_account(self) -> UUID:
+        self.collaboration_generator.create_collaboration()
+        collaboration = self.database_gateway.get_collaborations().first()
+        assert collaboration
+        return collaboration.account
 
 
 class AccountTransfersTests(ServiceBase):
@@ -208,11 +208,11 @@ class TransferPartyTests(ServiceBase):
         assert transfers[0].transfer_party.type == TransferPartyType.social_accounting
 
     @parameterized.expand([(True,), (False,)])
-    def test_that_transfer_party_type_cooperation_is_shown_if_transfer_party_is_cooperation(
+    def test_that_transfer_party_type_collaboration_is_shown_if_transfer_party_is_collaboration(
         self, is_debit_transfer: bool
     ) -> None:
         requesting_account = self.create_company_product_account()
-        other_party_account = self.create_cooperation_account()
+        other_party_account = self.create_collaboration_account()
         if is_debit_transfer:
             self.transfer_generator.create_transfer(
                 debit_account=requesting_account, credit_account=other_party_account
@@ -222,7 +222,7 @@ class TransferPartyTests(ServiceBase):
                 debit_account=other_party_account, credit_account=requesting_account
             )
         transfers = self.service.get_account_transfers(requesting_account)
-        assert transfers[0].transfer_party.type == TransferPartyType.cooperation
+        assert transfers[0].transfer_party.type == TransferPartyType.collaboration
 
     @parameterized.expand([(True,), (False,)])
     def test_that_transfer_party_id_is_anonymized_if_transfer_party_is_member(
@@ -261,7 +261,7 @@ class TransferPartyTests(ServiceBase):
     @parameterized.expand(
         [
             (TransferPartyType.company,),
-            (TransferPartyType.cooperation,),
+            (TransferPartyType.collaboration,),
             (TransferPartyType.social_accounting,),
         ]
     )
@@ -274,8 +274,8 @@ class TransferPartyTests(ServiceBase):
             self.transfer_generator.create_transfer(
                 debit_account=requesting_account, credit_account=other_party_account
             )
-        elif transfer_party_type == TransferPartyType.cooperation:
-            other_party_account = self.create_cooperation_account()
+        elif transfer_party_type == TransferPartyType.collaboration:
+            other_party_account = self.create_collaboration_account()
             self.transfer_generator.create_transfer(
                 debit_account=requesting_account, credit_account=other_party_account
             )
@@ -290,7 +290,7 @@ class TransferPartyTests(ServiceBase):
     @parameterized.expand(
         [
             (TransferPartyType.company,),
-            (TransferPartyType.cooperation,),
+            (TransferPartyType.collaboration,),
             (TransferPartyType.social_accounting,),
         ]
     )
@@ -303,8 +303,8 @@ class TransferPartyTests(ServiceBase):
             self.transfer_generator.create_transfer(
                 debit_account=requesting_account, credit_account=other_party_account
             )
-        elif transfer_party_type == TransferPartyType.cooperation:
-            other_party_account = self.create_cooperation_account()
+        elif transfer_party_type == TransferPartyType.collaboration:
+            other_party_account = self.create_collaboration_account()
             self.transfer_generator.create_transfer(
                 debit_account=requesting_account, credit_account=other_party_account
             )
@@ -338,27 +338,29 @@ class TransferPartyTests(ServiceBase):
         transfers = self.service.get_account_transfers(requesting_account)
         assert transfers[0].transfer_party.id == company.id
 
-    def test_that_transfer_party_name_equals_cooperation_name(self) -> None:
-        self.cooperation_generator.create_cooperation(name="Some Cooperation Name")
-        cooperation = self.database_gateway.get_cooperations().first()
-        assert cooperation
+    def test_that_transfer_party_name_equals_collaboration_name(self) -> None:
+        self.collaboration_generator.create_collaboration(
+            name="Some Collaboration Name"
+        )
+        collaboration = self.database_gateway.get_collaborations().first()
+        assert collaboration
         requesting_account = self.create_member_account()
         self.transfer_generator.create_transfer(
-            debit_account=requesting_account, credit_account=cooperation.account
+            debit_account=requesting_account, credit_account=collaboration.account
         )
         transfers = self.service.get_account_transfers(requesting_account)
-        assert transfers[0].transfer_party.name == "Some Cooperation Name"
+        assert transfers[0].transfer_party.name == "Some Collaboration Name"
 
-    def test_that_transfer_party_id_equals_cooperation_id(self) -> None:
-        self.cooperation_generator.create_cooperation()
-        cooperation = self.database_gateway.get_cooperations().first()
-        assert cooperation
+    def test_that_transfer_party_id_equals_collaboration_id(self) -> None:
+        self.collaboration_generator.create_collaboration()
+        collaboration = self.database_gateway.get_collaborations().first()
+        assert collaboration
         requesting_account = self.create_member_account()
         self.transfer_generator.create_transfer(
-            debit_account=requesting_account, credit_account=cooperation.account
+            debit_account=requesting_account, credit_account=collaboration.account
         )
         transfers = self.service.get_account_transfers(requesting_account)
-        assert transfers[0].transfer_party.id == cooperation.id
+        assert transfers[0].transfer_party.id == collaboration.id
 
     def test_that_transfer_party_name_equals_social_accounting_name(self) -> None:
         social_accounting = self.injector.get(SocialAccounting)

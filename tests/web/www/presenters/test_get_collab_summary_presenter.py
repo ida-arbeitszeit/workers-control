@@ -6,9 +6,9 @@ from uuid import uuid4
 from parameterized import parameterized
 
 from tests.base_test_case import BaseTestCase
-from workers_control.core.interactors.get_coop_summary import (
+from workers_control.core.interactors.get_collab_summary import (
     AssociatedPlan,
-    GetCoopSummaryResponse,
+    GetCollabSummaryResponse,
 )
 from workers_control.web.www.presenters.get_collab_summary_presenter import (
     GetCollabSummarySuccessPresenter,
@@ -62,7 +62,7 @@ class GetCollabSummarySuccessPresenterTests(BaseTestCase):
         self.assertEqual(
             view_model.transfer_coordination_url,
             self.url_index.get_request_coordination_transfer_url(
-                collab_id=collab_summary.coop_id,
+                collab_id=collab_summary.collab_id,
             ),
         )
 
@@ -103,7 +103,7 @@ class GetCollabSummarySuccessPresenterTests(BaseTestCase):
         self.assertEqual(
             view_model.list_of_coordinators_url,
             self.url_index.get_list_of_coordinators_url(
-                collaboration_id=collab_summary.coop_id,
+                collaboration_id=collab_summary.collab_id,
             ),
         )
 
@@ -119,7 +119,7 @@ class GetCollabSummarySuccessPresenterTests(BaseTestCase):
 
     def test_collab_price_is_displayed_as_a_dash_if_collab_price_is_none(self) -> None:
         collab_summary = self.get_collab_summary()
-        collab_summary = replace(collab_summary, coop_price=None)
+        collab_summary = replace(collab_summary, collab_price=None)
         view_model = self.presenter.present(collab_summary)
         self.assertEqual(
             view_model.collab_price,
@@ -229,7 +229,7 @@ class GetCollabSummarySuccessPresenterTests(BaseTestCase):
         collab_definition: Optional[str] = None,
         coordinator_name: Optional[str] = None,
         collab_price: Optional[Decimal] = None,
-    ) -> GetCoopSummaryResponse:
+    ) -> GetCollabSummaryResponse:
         if plans is None:
             plans = [self.get_associated_plan()]
         if requester_is_coordinator is None:
@@ -240,14 +240,14 @@ class GetCollabSummarySuccessPresenterTests(BaseTestCase):
             coordinator_name = "coordinator name"
         if collab_price is None:
             collab_price = Decimal(50.005)
-        return GetCoopSummaryResponse(
+        return GetCollabSummaryResponse(
             requester_is_coordinator=requester_is_coordinator,
-            coop_id=uuid4(),
-            coop_name="collab name",
-            coop_definition=collab_definition,
+            collab_id=uuid4(),
+            collab_name="collab name",
+            collab_definition=collab_definition,
             current_coordinator=uuid4(),
             current_coordinator_name=coordinator_name,
-            coop_price=collab_price,
+            collab_price=collab_price,
             plans=plans,
         )
 

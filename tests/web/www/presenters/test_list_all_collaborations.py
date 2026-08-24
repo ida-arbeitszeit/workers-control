@@ -2,9 +2,9 @@ from typing import Optional
 from uuid import UUID, uuid4
 
 from tests.base_test_case import BaseTestCase
-from workers_control.core.interactors.list_all_cooperations import (
-    ListAllCooperationsResponse,
-    ListedCooperation,
+from workers_control.core.interactors.list_all_collaborations import (
+    ListAllCollaborationsResponse,
+    ListedCollaboration,
 )
 from workers_control.web.www.presenters.list_all_collaborations_presenter import (
     ListAllCollaborationsPresenter,
@@ -20,7 +20,7 @@ class ListMessagesPresenterTests(BaseTestCase):
     def test_view_model_contains_no_collaboration_and_does_not_show_result_when_non_were_provided(
         self,
     ) -> None:
-        response = ListAllCooperationsResponse(cooperations=[])
+        response = ListAllCollaborationsResponse(collaborations=[])
         view_model = self.presenter.present(response)
         self.assertFalse(view_model.show_results)
         self.assertFalse(view_model.collaborations)
@@ -57,12 +57,12 @@ class ListMessagesPresenterTests(BaseTestCase):
         collab_id: Optional[UUID] = None,
         name: str = "collab name",
         plan_count: int = 3,
-    ) -> ListAllCooperationsResponse:
+    ) -> ListAllCollaborationsResponse:
         if collab_id is None:
             collab_id = uuid4()
-        return ListAllCooperationsResponse(
-            cooperations=[
-                ListedCooperation(
+        return ListAllCollaborationsResponse(
+            collaborations=[
+                ListedCollaboration(
                     id=collab_id,
                     name=name,
                     plan_count=plan_count,

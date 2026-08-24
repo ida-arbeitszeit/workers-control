@@ -141,6 +141,6 @@ class AcceptCoordinationTransferPresenterTests(BaseTestCase):
     ) -> AcceptCoordinationTransferInteractor.Response:
         return AcceptCoordinationTransferInteractor.Response(
             rejection_reason=rejection_reason,
-            cooperation_id=collaboration_id,
+            collaboration_id=collaboration_id,
             transfer_request_id=transfer_request_id,
         )

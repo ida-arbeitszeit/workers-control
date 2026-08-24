@@ -275,7 +275,7 @@ class ResultsTests(ListTransfersPresenterBase):
         uc_response = self.create_interactor_response(
             transfers=[
                 self.create_transfer_entry(
-                    debtor_type=list_transfers.AccountOwnerType.cooperation,
+                    debtor_type=list_transfers.AccountOwnerType.collaboration,
                     debtor_name=expected_debtor_name,
                 )
             ]
@@ -288,7 +288,7 @@ class ResultsTests(ListTransfersPresenterBase):
         uc_response = self.create_interactor_response(
             transfers=[
                 self.create_transfer_entry(
-                    creditor_type=list_transfers.AccountOwnerType.cooperation,
+                    creditor_type=list_transfers.AccountOwnerType.collaboration,
                     creditor_name=expected_creditor_name,
                 )
             ]
@@ -360,7 +360,7 @@ class ResultsTests(ListTransfersPresenterBase):
         uc_response = self.create_interactor_response(
             transfers=[
                 self.create_transfer_entry(
-                    debtor_type=list_transfers.AccountOwnerType.cooperation,
+                    debtor_type=list_transfers.AccountOwnerType.collaboration,
                     debtor=debtor,
                 )
             ]
@@ -375,7 +375,7 @@ class ResultsTests(ListTransfersPresenterBase):
         uc_response = self.create_interactor_response(
             transfers=[
                 self.create_transfer_entry(
-                    creditor_type=list_transfers.AccountOwnerType.cooperation,
+                    creditor_type=list_transfers.AccountOwnerType.collaboration,
                     creditor=creditor,
                 )
             ]

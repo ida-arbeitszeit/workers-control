@@ -25,8 +25,8 @@ class PlanInfo:
     approval_date: Optional[datetime]
     expiration_date: Optional[datetime]
     rejection_date: Optional[datetime]
-    is_cooperating: bool
-    cooperation: Optional[UUID]
+    is_collaborating: bool
+    collaboration: Optional[UUID]
 
 
 @dataclass
@@ -52,7 +52,7 @@ class ShowMyPlansInteractor:
             .planned_by(request.company_id)
             .ordered_by_creation_date(ascending=False)
             .that_are_not_hidden()
-            .joined_with_cooperation()
+            .joined_with_collaboration()
         )
         drafts = list(
             map(
@@ -63,8 +63,8 @@ class ShowMyPlansInteractor:
         drafts.sort(key=lambda x: x.plan_creation_date, reverse=True)
         count_all_plans = len(all_plans_of_company) + len(drafts)
         non_active_plans = [
-            self._create_plan_info_from_plan(plan, cooperation)
-            for plan, cooperation in all_plans_of_company
+            self._create_plan_info_from_plan(plan, collaboration)
+            for plan, collaboration in all_plans_of_company
             if (
                 not plan.is_approved
                 and not plan.is_rejected
@@ -73,8 +73,8 @@ class ShowMyPlansInteractor:
             )
         ]
         active_plans = [
-            self._create_plan_info_from_plan(plan, cooperation)
-            for plan, cooperation in all_plans_of_company
+            self._create_plan_info_from_plan(plan, collaboration)
+            for plan, collaboration in all_plans_of_company
             if (
                 plan.is_approved
                 and plan.is_active_as_of(now)
@@ -82,13 +82,13 @@ class ShowMyPlansInteractor:
             )
         ]
         expired_plans = [
-            self._create_plan_info_from_plan(plan, cooperation)
-            for plan, cooperation in all_plans_of_company
+            self._create_plan_info_from_plan(plan, collaboration)
+            for plan, collaboration in all_plans_of_company
             if plan.is_expired_as_of(now)
         ]
         rejected_plans = [
-            self._create_plan_info_from_plan(plan, cooperation)
-            for plan, cooperation in all_plans_of_company
+            self._create_plan_info_from_plan(plan, collaboration)
+            for plan, collaboration in all_plans_of_company
             if plan.is_rejected
         ]
         return ShowMyPlansResponse(
@@ -101,7 +101,7 @@ class ShowMyPlansInteractor:
         )
 
     def _create_plan_info_from_plan(
-        self, plan: records.Plan, cooperation: Optional[records.Cooperation]
+        self, plan: records.Plan, collaboration: Optional[records.Collaboration]
     ) -> PlanInfo:
         price_per_unit = self.price_calculator.calculate_price(plan.id)
         return PlanInfo(
@@ -112,8 +112,8 @@ class ShowMyPlansInteractor:
             plan_creation_date=plan.plan_creation_date,
             approval_date=plan.approval_date,
             expiration_date=plan.expiration_date,
-            is_cooperating=bool(cooperation),
-            cooperation=cooperation.id if cooperation else None,
+            is_collaborating=bool(collaboration),
+            collaboration=collaboration.id if collaboration else None,
             rejection_date=plan.rejection_date,
         )
 
@@ -126,7 +126,7 @@ class ShowMyPlansInteractor:
             plan_creation_date=draft.creation_date,
             approval_date=None,
             expiration_date=None,
-            is_cooperating=False,
-            cooperation=None,
+            is_collaborating=False,
+            collaboration=None,
             rejection_date=None,
         )

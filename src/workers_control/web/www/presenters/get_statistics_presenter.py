@@ -58,7 +58,7 @@ class GetStatisticsPresenter:
                 interactor_response.registered_companies_count
             ),
             registered_members_count=str(interactor_response.registered_members_count),
-            collaborations_count=str(interactor_response.cooperations_count),
+            collaborations_count=str(interactor_response.collaborations_count),
             active_plans_count=str(interactor_response.active_plans_count),
             active_basic_services_count=str(
                 interactor_response.active_basic_services_count

@@ -20,7 +20,7 @@ class RequestCoordinationTransferTests(ViewTestCase):
     def test_users_get_expected_status_codes_on_get_requests_when_collaboration_in_url_exists(
         self, login: Optional[LogInUser], expected_code: int
     ) -> None:
-        collaboration = self.cooperation_generator.create_cooperation()
+        collaboration = self.collaboration_generator.create_collaboration()
         self.assert_response_has_expected_code(
             url=f"company/collaboration_summary/{collaboration}/request_coordination_transfer",
             method="get",
@@ -42,7 +42,7 @@ class RequestCoordinationTransferTests(ViewTestCase):
         self,
     ) -> None:
         self.login_company()
-        collaboration = self.cooperation_generator.create_cooperation()
+        collaboration = self.collaboration_generator.create_collaboration()
         candidate = self.company_generator.create_company()
         data = {"candidate": str(candidate), "collaboration": str(collaboration)}
         response = self.client.post(
@@ -55,7 +55,7 @@ class RequestCoordinationTransferTests(ViewTestCase):
         self,
     ) -> None:
         self.login_company()
-        collaboration = self.cooperation_generator.create_cooperation()
+        collaboration = self.collaboration_generator.create_collaboration()
         candidate = self.company_generator.create_company()
         data = {"candidate": str(candidate), "collaboration": str(collaboration)}
         with self.email_service.record_messages() as outbox:
@@ -70,7 +70,7 @@ class RequestCoordinationTransferTests(ViewTestCase):
         self,
     ) -> None:
         current_user = self.login_company()
-        collaboration = self.cooperation_generator.create_cooperation(
+        collaboration = self.collaboration_generator.create_collaboration(
             coordinator=current_user
         )
         candidate_mail = "candidate@mail.org"
@@ -89,7 +89,7 @@ class RequestCoordinationTransferTests(ViewTestCase):
         self,
     ) -> None:
         current_user = self.login_company()
-        collaboration = self.cooperation_generator.create_cooperation(
+        collaboration = self.collaboration_generator.create_collaboration(
             coordinator=current_user
         )
         candidate_mail = "candidate@mail.org"

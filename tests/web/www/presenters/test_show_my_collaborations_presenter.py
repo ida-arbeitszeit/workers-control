@@ -4,15 +4,15 @@ from uuid import UUID, uuid4
 from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_min_utc
 from workers_control.core.interactors.list_coordinations_of_company import (
-    CooperationInfo,
+    CollaborationInfo,
     ListCoordinationsOfCompanyResponse,
 )
-from workers_control.core.interactors.list_my_cooperating_plans import (
-    ListMyCooperatingPlansInteractor,
+from workers_control.core.interactors.list_my_collaborating_plans import (
+    ListMyCollaboratingPlansInteractor,
 )
-from workers_control.core.interactors.show_company_cooperations import (
-    InboundCoopRequest,
-    OutboundCoopRequest,
+from workers_control.core.interactors.show_company_collaborations import (
+    InboundCollabRequest,
+    OutboundCollabRequest,
     Response,
 )
 from workers_control.web.www.presenters.show_my_collaborations_presenter import (
@@ -21,12 +21,12 @@ from workers_control.web.www.presenters.show_my_collaborations_presenter import 
 
 LIST_COORDINATIONS_RESPONSE_LEN_1 = ListCoordinationsOfCompanyResponse(
     coordinations=[
-        CooperationInfo(
+        CollaborationInfo(
             id=uuid4(),
             creation_date=datetime_min_utc(),
             name="collab name",
             definition="first paragraph\nsecond paragraph",
-            count_plans_in_coop=3,
+            count_plans_in_collab=3,
         )
     ]
 )
@@ -34,18 +34,18 @@ LIST_COORDINATIONS_RESPONSE_LEN_1 = ListCoordinationsOfCompanyResponse(
 
 def get_collab_plans_response_length_1(
     plan_id: Optional[UUID] = None, collab_id: Optional[UUID] = None
-) -> ListMyCooperatingPlansInteractor.Response:
+) -> ListMyCollaboratingPlansInteractor.Response:
     if plan_id is None:
         plan_id = uuid4()
     if collab_id is None:
         collab_id = uuid4()
-    return ListMyCooperatingPlansInteractor.Response(
-        cooperating_plans=[
-            ListMyCooperatingPlansInteractor.CooperatingPlan(
+    return ListMyCollaboratingPlansInteractor.Response(
+        collaborating_plans=[
+            ListMyCollaboratingPlansInteractor.CollaboratingPlan(
                 plan_id=plan_id,
                 plan_name="test plan name",
-                coop_id=collab_id,
-                coop_name="test collab name",
+                collab_id=collab_id,
+                collab_name="test collab name",
             )
         ]
     )
@@ -60,22 +60,22 @@ class ShowMyCollaborationsPresenterTests(BaseTestCase):
         presentation = self.presenter.present(
             list_coord_response=LIST_COORDINATIONS_RESPONSE_LEN_1,
             show_company_collaborations_response=Response(
-                inbound_cooperation_requests=[
-                    InboundCoopRequest(
-                        coop_id=uuid4(),
-                        coop_name="collab name",
+                inbound_collaboration_requests=[
+                    InboundCollabRequest(
+                        collab_id=uuid4(),
+                        collab_name="collab name",
                         plan_id=uuid4(),
                         plan_name="plan name",
                         planner_name="planner name",
                         planner_id=uuid4(),
                     )
                 ],
-                outbound_cooperation_requests=[
-                    OutboundCoopRequest(
+                outbound_collaboration_requests=[
+                    OutboundCollabRequest(
                         plan_id=uuid4(),
                         plan_name="plan name",
-                        coop_id=uuid4(),
-                        coop_name="collab name",
+                        collab_id=uuid4(),
+                        collab_name="collab name",
                     )
                 ],
             ),
@@ -105,7 +105,9 @@ class ShowMyCollaborationsPresenterTests(BaseTestCase):
         )
         self.assertEqual(
             presentation.list_of_coordinations.rows[0].count_plans_in_collab,
-            str(LIST_COORDINATIONS_RESPONSE_LEN_1.coordinations[0].count_plans_in_coop),
+            str(
+                LIST_COORDINATIONS_RESPONSE_LEN_1.coordinations[0].count_plans_in_collab
+            ),
         )
 
 
@@ -119,17 +121,17 @@ class InboundTest(BaseTestCase):
         self.view_model = self.presenter.present(
             list_coord_response=LIST_COORDINATIONS_RESPONSE_LEN_1,
             show_company_collaborations_response=Response(
-                inbound_cooperation_requests=[
-                    InboundCoopRequest(
-                        coop_id=self.COLLAB_ID,
-                        coop_name="collab name",
+                inbound_collaboration_requests=[
+                    InboundCollabRequest(
+                        collab_id=self.COLLAB_ID,
+                        collab_name="collab name",
                         plan_id=self.PLAN_ID,
                         plan_name="plan name",
                         planner_name="planner name",
                         planner_id=self.PLANNER_ID,
                     )
                 ],
-                outbound_cooperation_requests=[],
+                outbound_collaboration_requests=[],
             ),
             list_my_collaborating_plans_response=get_collab_plans_response_length_1(),
         )
@@ -183,15 +185,15 @@ class OutboundTest(BaseTestCase):
         self.view_model = self.presenter.present(
             list_coord_response=LIST_COORDINATIONS_RESPONSE_LEN_1,
             show_company_collaborations_response=Response(
-                outbound_cooperation_requests=[
-                    OutboundCoopRequest(
+                outbound_collaboration_requests=[
+                    OutboundCollabRequest(
                         plan_id=self.PLAN_ID,
                         plan_name="plan name",
-                        coop_id=self.COLLAB_ID,
-                        coop_name="collab name",
+                        collab_id=self.COLLAB_ID,
+                        collab_name="collab name",
                     )
                 ],
-                inbound_cooperation_requests=[],
+                inbound_collaboration_requests=[],
             ),
             list_my_collaborating_plans_response=get_collab_plans_response_length_1(),
         )
@@ -234,8 +236,8 @@ class CollaboratingPlansTest(BaseTestCase):
         self.view_model = self.presenter.present(
             list_coord_response=LIST_COORDINATIONS_RESPONSE_LEN_1,
             show_company_collaborations_response=Response(
-                outbound_cooperation_requests=[],
-                inbound_cooperation_requests=[],
+                outbound_collaboration_requests=[],
+                inbound_collaboration_requests=[],
             ),
             list_my_collaborating_plans_response=get_collab_plans_response_length_1(
                 plan_id=self.PLAN_ID, collab_id=self.COLLAB_ID

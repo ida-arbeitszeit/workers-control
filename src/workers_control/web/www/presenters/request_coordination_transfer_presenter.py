@@ -77,7 +77,7 @@ class RequestCoordinationTransferPresenter:
                 return RequestCoordinationTransferViewModel(status_code=409)
             elif (
                 interactor_response.rejection_reason
-                == Interactor.Response.RejectionReason.cooperation_not_found
+                == Interactor.Response.RejectionReason.collaboration_not_found
             ):
                 self.notifier.display_warning(
                     self.translator.gettext("Collaboration not found.")

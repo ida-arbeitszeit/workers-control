@@ -1,14 +1,14 @@
 from typing import Optional
 
 from tests.base_test_case import BaseTestCase
-from workers_control.core.interactors.request_cooperation import (
-    RequestCooperationResponse,
+from workers_control.core.interactors.request_collaboration import (
+    RequestCollaborationResponse,
 )
 from workers_control.web.www.presenters.request_collaboration_presenter import (
     RequestCollaborationPresenter,
 )
 
-RejectionReason = RequestCooperationResponse.RejectionReason
+RejectionReason = RequestCollaborationResponse.RejectionReason
 
 
 class RequestCollaborationPresenterTests(BaseTestCase):
@@ -46,7 +46,7 @@ class RequestCollaborationPresenterTests(BaseTestCase):
     def test_correct_notification_when_rejected_because_collab_not_found(self) -> None:
         presentation = self.presenter.present(
             self.get_rejected_request(
-                rejection_reason=RejectionReason.cooperation_not_found
+                rejection_reason=RejectionReason.collaboration_not_found
             )
         )
         self.assertEqual(
@@ -67,7 +67,7 @@ class RequestCollaborationPresenterTests(BaseTestCase):
     ) -> None:
         presentation = self.presenter.present(
             self.get_rejected_request(
-                rejection_reason=RejectionReason.plan_has_cooperation
+                rejection_reason=RejectionReason.plan_has_collaboration
             )
         )
         self.assertEqual(
@@ -82,7 +82,7 @@ class RequestCollaborationPresenterTests(BaseTestCase):
     ) -> None:
         presentation = self.presenter.present(
             self.get_rejected_request(
-                rejection_reason=RejectionReason.plan_is_already_requesting_cooperation
+                rejection_reason=RejectionReason.plan_is_already_requesting_collaboration
             )
         )
         self.assertEqual(
@@ -121,9 +121,9 @@ class RequestCollaborationPresenterTests(BaseTestCase):
         )
 
     def get_rejected_request(
-        self, rejection_reason: RequestCooperationResponse.RejectionReason
-    ) -> RequestCooperationResponse:
-        return RequestCooperationResponse(
+        self, rejection_reason: RequestCollaborationResponse.RejectionReason
+    ) -> RequestCollaborationResponse:
+        return RequestCollaborationResponse(
             coordinator_name=None,
             coordinator_email=None,
             rejection_reason=rejection_reason,
@@ -133,12 +133,12 @@ class RequestCollaborationPresenterTests(BaseTestCase):
         self,
         coordinator_mail: Optional[str] = None,
         coordinator_name: Optional[str] = None,
-    ) -> RequestCooperationResponse:
+    ) -> RequestCollaborationResponse:
         if coordinator_mail is None:
             coordinator_mail = "company@comp.any"
         if coordinator_name is None:
             coordinator_name = "company xy"
-        return RequestCooperationResponse(
+        return RequestCollaborationResponse(
             coordinator_name=coordinator_name,
             coordinator_email=coordinator_mail,
             rejection_reason=None,

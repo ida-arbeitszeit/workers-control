@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from workers_control.core.interactors.end_cooperation import EndCooperationResponse
+from workers_control.core.interactors.end_collaboration import EndCollaborationResponse
 from workers_control.web.notification import Notifier
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
@@ -17,7 +17,7 @@ class EndPlanCollaborationPresenter:
     notifier: Notifier
     url_index: UrlIndex
 
-    def render_response(self, response: EndCooperationResponse) -> ViewModel:
+    def render_response(self, response: EndCollaborationResponse) -> ViewModel:
         if not response.is_rejected:
             self.notifier.display_info(
                 self.translator.gettext("Collaboration has been terminated.")

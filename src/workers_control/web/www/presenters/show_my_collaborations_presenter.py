@@ -2,15 +2,15 @@ from dataclasses import asdict, dataclass
 from typing import Any, Dict, List
 
 from workers_control.core.interactors.list_coordinations_of_company import (
-    CooperationInfo,
+    CollaborationInfo,
     ListCoordinationsOfCompanyResponse,
 )
-from workers_control.core.interactors.list_my_cooperating_plans import (
-    ListMyCooperatingPlansInteractor,
+from workers_control.core.interactors.list_my_collaborating_plans import (
+    ListMyCollaboratingPlansInteractor,
 )
-from workers_control.core.interactors.show_company_cooperations import (
-    InboundCoopRequest,
-    OutboundCoopRequest,
+from workers_control.core.interactors.show_company_collaborations import (
+    InboundCollabRequest,
+    OutboundCollabRequest,
     Response,
 )
 from workers_control.web.translator import Translator
@@ -102,7 +102,7 @@ class ShowMyCollaborationsPresenter:
         *,
         list_coord_response: ListCoordinationsOfCompanyResponse,
         show_company_collaborations_response: Response,
-        list_my_collaborating_plans_response: ListMyCooperatingPlansInteractor.Response,
+        list_my_collaborating_plans_response: ListMyCollaboratingPlansInteractor.Response,
     ) -> ShowMyCollaborationsViewModel:
         list_of_coordinations = ListOfCoordinationsTable(
             rows=[
@@ -113,20 +113,20 @@ class ShowMyCollaborationsPresenter:
         list_of_inbound_collab_requests = ListOfInboundCollaborationRequestsTable(
             rows=[
                 self._display_inbound_collab_requests(plan)
-                for plan in show_company_collaborations_response.inbound_cooperation_requests
+                for plan in show_company_collaborations_response.inbound_collaboration_requests
             ]
         )
 
         list_of_outbound_collab_requests = ListOfOutboundCollaborationRequestsTable(
             rows=[
                 self._display_outbound_collab_requests(plan)
-                for plan in show_company_collaborations_response.outbound_cooperation_requests
+                for plan in show_company_collaborations_response.outbound_collaboration_requests
             ]
         )
         list_of_my_collaborating_plans = ListOfMyCollaboratingPlans(
             rows=[
                 self._display_my_collaborating_plans(plan)
-                for plan in list_my_collaborating_plans_response.cooperating_plans
+                for plan in list_my_collaborating_plans_response.collaborating_plans
             ]
         )
         return ShowMyCollaborationsViewModel(
@@ -137,25 +137,25 @@ class ShowMyCollaborationsPresenter:
         )
 
     def _display_coordination_table_row(
-        self, collab: CooperationInfo
+        self, collab: CollaborationInfo
     ) -> ListOfCoordinationsRow:
         return ListOfCoordinationsRow(
             collab_id=str(collab.id),
             collab_creation_date=str(collab.creation_date),
             collab_name=collab.name,
             collab_definition=collab.definition.splitlines(),
-            count_plans_in_collab=str(collab.count_plans_in_coop),
+            count_plans_in_collab=str(collab.count_plans_in_collab),
             collab_summary_url=self.url_index.get_collab_summary_url(
                 collab_id=collab.id
             ),
         )
 
     def _display_inbound_collab_requests(
-        self, plan: InboundCoopRequest
+        self, plan: InboundCollabRequest
     ) -> ListOfInboundCollaborationRequestsRow:
         return ListOfInboundCollaborationRequestsRow(
-            collab_id=str(plan.coop_id),
-            collab_name=plan.coop_name,
+            collab_id=str(plan.collab_id),
+            collab_name=plan.collab_name,
             plan_id=str(plan.plan_id),
             plan_name=plan.plan_name,
             plan_url=self.url_index.get_plan_details_url(plan_id=plan.plan_id),
@@ -166,24 +166,24 @@ class ShowMyCollaborationsPresenter:
         )
 
     def _display_outbound_collab_requests(
-        self, plan: OutboundCoopRequest
+        self, plan: OutboundCollabRequest
     ) -> ListOfOutboundCollaborationRequestsRow:
         return ListOfOutboundCollaborationRequestsRow(
             plan_id=str(plan.plan_id),
             plan_name=plan.plan_name,
             plan_url=self.url_index.get_plan_details_url(plan_id=plan.plan_id),
-            collab_id=str(plan.coop_id),
-            collab_name=plan.coop_name,
+            collab_id=str(plan.collab_id),
+            collab_name=plan.collab_name,
         )
 
     def _display_my_collaborating_plans(
-        self, plan: ListMyCooperatingPlansInteractor.CooperatingPlan
+        self, plan: ListMyCollaboratingPlansInteractor.CollaboratingPlan
     ) -> CollaboratingPlan:
         return CollaboratingPlan(
             plan_id=str(plan.plan_id),
             plan_name=plan.plan_name,
             plan_url=self.url_index.get_plan_details_url(plan_id=plan.plan_id),
-            collab_id=str(plan.coop_id),
-            collab_name=plan.coop_name,
-            collab_url=self.url_index.get_collab_summary_url(collab_id=plan.coop_id),
+            collab_id=str(plan.collab_id),
+            collab_name=plan.collab_name,
+            collab_url=self.url_index.get_collab_summary_url(collab_id=plan.collab_id),
         )

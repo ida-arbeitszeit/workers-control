@@ -31,64 +31,64 @@ class GetTransferRequestDetailsTests(BaseTestCase):
     ) -> None:
         requester = self.company_generator.create_company()
         coordinator = requester
-        cooperation = self.cooperation_generator.create_cooperation(
+        collaboration = self.collaboration_generator.create_collaboration(
             coordinator=coordinator
         )
         expected_date = datetime_utc(2020, 1, 4)
         self.datetime_service.freeze_time(expected_date)
         response = self.interactor.get_details(
-            self.interactor_request(requester=requester, cooperation=cooperation)
+            self.interactor_request(requester=requester, collaboration=collaboration)
         )
         assert response
         self.assertEqual(expected_date, response.request_date)
 
-    def test_interactor_returns_cooperation_id_of_the_cooperation_that_belongs_to_request(
+    def test_interactor_returns_collaboration_id_of_the_collaboration_that_belongs_to_request(
         self,
     ) -> None:
         requester = self.company_generator.create_company()
         coordinator = requester
-        cooperation = self.cooperation_generator.create_cooperation(
+        collaboration = self.collaboration_generator.create_collaboration(
             coordinator=coordinator
         )
         response = self.interactor.get_details(
             self.interactor_request(
                 requester=requester,
-                cooperation=cooperation,
+                collaboration=collaboration,
             )
         )
         assert response
-        self.assertEqual(cooperation, response.cooperation_id)
+        self.assertEqual(collaboration, response.collaboration_id)
 
-    def test_interactor_returns_cooperation_name_of_the_cooperation_that_belongs_to_request(
+    def test_interactor_returns_collaboration_name_of_the_collaboration_that_belongs_to_request(
         self,
     ) -> None:
-        expected_name = "Test Cooperation"
+        expected_name = "Test Collaboration"
 
         requester = self.company_generator.create_company()
         coordinator = requester
-        cooperation = self.cooperation_generator.create_cooperation(
+        collaboration = self.collaboration_generator.create_collaboration(
             coordinator=coordinator, name=expected_name
         )
         response = self.interactor.get_details(
             self.interactor_request(
                 requester=requester,
-                cooperation=cooperation,
+                collaboration=collaboration,
             )
         )
         assert response
-        self.assertEqual(expected_name, response.cooperation_name)
+        self.assertEqual(expected_name, response.collaboration_name)
 
     def test_interactor_returns_the_id_of_the_candidate(self) -> None:
         requester = self.company_generator.create_company()
         coordinator = requester
-        cooperation = self.cooperation_generator.create_cooperation(
+        collaboration = self.collaboration_generator.create_collaboration(
             coordinator=coordinator
         )
         candidate = self.company_generator.create_company()
         response = self.interactor.get_details(
             self.interactor_request(
                 requester=requester,
-                cooperation=cooperation,
+                collaboration=collaboration,
                 candidate=candidate,
             )
         )
@@ -100,14 +100,14 @@ class GetTransferRequestDetailsTests(BaseTestCase):
 
         requester = self.company_generator.create_company()
         coordinator = requester
-        cooperation = self.cooperation_generator.create_cooperation(
+        collaboration = self.collaboration_generator.create_collaboration(
             coordinator=coordinator
         )
         candidate = self.company_generator.create_company(name=expected_name)
         response = self.interactor.get_details(
             self.interactor_request(
                 requester=requester,
-                cooperation=cooperation,
+                collaboration=collaboration,
                 candidate=candidate,
             )
         )
@@ -117,11 +117,11 @@ class GetTransferRequestDetailsTests(BaseTestCase):
     def test_request_is_shown_as_pending_if_it_has_not_been_accepted_yet(self) -> None:
         requester = self.company_generator.create_company()
         coordinator = requester
-        cooperation = self.cooperation_generator.create_cooperation(
+        collaboration = self.collaboration_generator.create_collaboration(
             coordinator=coordinator
         )
         response = self.interactor.get_details(
-            self.interactor_request(requester=requester, cooperation=cooperation)
+            self.interactor_request(requester=requester, collaboration=collaboration)
         )
         assert response
         self.assertTrue(response.request_is_pending)
@@ -129,13 +129,13 @@ class GetTransferRequestDetailsTests(BaseTestCase):
     def test_request_is_shown_as_not_pending_if_it_has_been_accepted(self) -> None:
         requester = self.company_generator.create_company()
         coordinator = requester
-        cooperation = self.cooperation_generator.create_cooperation(
+        collaboration = self.collaboration_generator.create_collaboration(
             coordinator=coordinator
         )
         candidate = self.company_generator.create_company()
         transfer_request = self.coordination_transfer_request_generator.create_coordination_transfer_request(
             requester=requester,
-            cooperation=cooperation,
+            collaboration=collaboration,
             candidate=candidate,
         )
         self.accept_transfer_interactor.accept_coordination_transfer(
@@ -153,14 +153,14 @@ class GetTransferRequestDetailsTests(BaseTestCase):
     def interactor_request(
         self,
         requester: UUID,
-        cooperation: UUID,
+        collaboration: UUID,
         candidate: Optional[UUID] = None,
     ) -> Interactor.Request:
         if candidate is None:
             candidate = self.company_generator.create_company()
         transfer_request = self.coordination_transfer_request_generator.create_coordination_transfer_request(
             requester=requester,
-            cooperation=cooperation,
+            collaboration=collaboration,
             candidate=candidate,
         )
         return Interactor.Request(coordination_transfer_request=transfer_request)

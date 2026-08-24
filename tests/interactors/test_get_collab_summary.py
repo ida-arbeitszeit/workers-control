@@ -6,33 +6,35 @@ from uuid import uuid4
 from pytest import approx
 
 from tests.datetime_service import datetime_utc
-from workers_control.core.interactors.get_coop_summary import (
-    GetCoopSummaryInteractor,
-    GetCoopSummaryRequest,
-    GetCoopSummaryResponse,
+from workers_control.core.interactors.get_collab_summary import (
+    GetCollabSummaryInteractor,
+    GetCollabSummaryRequest,
+    GetCollabSummaryResponse,
 )
 from workers_control.core.records import ProductionCosts
 
 from ..base_test_case import BaseTestCase
 
 
-class GetCoopSummaryTests(BaseTestCase):
+class GetCollabSummaryTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
-        self.get_coop_summary = self.injector.get(GetCoopSummaryInteractor)
+        self.get_collab_summary = self.injector.get(GetCollabSummaryInteractor)
 
-    def test_that_none_is_returned_when_cooperation_does_not_exist(self) -> None:
+    def test_that_none_is_returned_when_collaboration_does_not_exist(self) -> None:
         requester = self.company_generator.create_company_record()
-        summary = self.get_coop_summary.execute(
-            GetCoopSummaryRequest(requester.id, uuid4())
+        summary = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(requester.id, uuid4())
         )
         assert summary is None
 
     def test_that_requester_is_correctly_defined_as_equal_to_coordinator(self) -> None:
         requester = self.company_generator.create_company_record()
-        coop = self.cooperation_generator.create_cooperation(coordinator=requester)
-        summary = self.get_coop_summary.execute(
-            GetCoopSummaryRequest(requester.id, coop)
+        collab = self.collaboration_generator.create_collaboration(
+            coordinator=requester
+        )
+        summary = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(requester.id, collab)
         )
         self.assert_success(summary, lambda s: s.requester_is_coordinator == True)
 
@@ -40,9 +42,9 @@ class GetCoopSummaryTests(BaseTestCase):
         self,
     ) -> None:
         requester = self.company_generator.create_company_record()
-        coop = self.cooperation_generator.create_cooperation()
-        summary = self.get_coop_summary.execute(
-            GetCoopSummaryRequest(requester.id, coop)
+        collab = self.collaboration_generator.create_collaboration()
+        summary = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(requester.id, collab)
         )
         self.assert_success(summary, lambda s: s.requester_is_coordinator == False)
 
@@ -50,9 +52,9 @@ class GetCoopSummaryTests(BaseTestCase):
         requester = self.company_generator.create_company_record()
         plan1 = self.plan_generator.create_plan()
         plan2 = self.plan_generator.create_plan()
-        coop = self.cooperation_generator.create_cooperation(plans=[plan1, plan2])
-        summary = self.get_coop_summary.execute(
-            GetCoopSummaryRequest(requester.id, coop)
+        collab = self.collaboration_generator.create_collaboration(plans=[plan1, plan2])
+        summary = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(requester.id, collab)
         )
         self.assert_success(summary, lambda s: len(s.plans) == 2)
 
@@ -60,29 +62,29 @@ class GetCoopSummaryTests(BaseTestCase):
         requester = self.company_generator.create_company_record()
         plan1 = self.plan_generator.create_plan()
         plan2 = self.plan_generator.create_plan()
-        coop = self.cooperation_generator.create_cooperation(
+        collab = self.collaboration_generator.create_collaboration(
             plans=[plan1, plan2], coordinator=requester.id
         )
-        summary = self.get_coop_summary.execute(
-            GetCoopSummaryRequest(requester.id, coop)
+        summary = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(requester.id, collab)
         )
         self.assert_success(summary, lambda s: s.current_coordinator == requester.id)
 
-    def test_that_correct_coordinator_id_is_shown_when_several_cooperations_exist(
+    def test_that_correct_coordinator_id_is_shown_when_several_collaborations_exist(
         self,
     ) -> None:
         requester = self.company_generator.create_company_record()
         plan1 = self.plan_generator.create_plan()
         plan2 = self.plan_generator.create_plan()
 
-        self.cooperation_generator.create_cooperation()
-        coop = self.cooperation_generator.create_cooperation(
+        self.collaboration_generator.create_collaboration()
+        collab = self.collaboration_generator.create_collaboration(
             plans=[plan1, plan2], coordinator=requester.id
         )
-        self.cooperation_generator.create_cooperation()
+        self.collaboration_generator.create_collaboration()
 
-        summary = self.get_coop_summary.execute(
-            GetCoopSummaryRequest(requester.id, coop)
+        summary = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(requester.id, collab)
         )
         self.assert_success(summary, lambda s: s.current_coordinator == requester.id)
 
@@ -92,29 +94,35 @@ class GetCoopSummaryTests(BaseTestCase):
             name=expected_coordinator_name
         )
         requester = self.company_generator.create_company_record()
-        coop = self.cooperation_generator.create_cooperation(coordinator=coordinator)
-        summary = self.get_coop_summary.execute(
-            GetCoopSummaryRequest(requester.id, coop)
+        collab = self.collaboration_generator.create_collaboration(
+            coordinator=coordinator
+        )
+        summary = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(requester.id, collab)
         )
         self.assert_success(
             summary, lambda s: s.current_coordinator_name == expected_coordinator_name
         )
 
-    def test_that_inactive_plans_do_not_show_up_in_cooperation_summary(self) -> None:
+    def test_that_inactive_plans_do_not_show_up_in_collaboration_summary(self) -> None:
         requester = self.company_generator.create_company()
         self.datetime_service.freeze_time(datetime_utc(2000, 1, 1))
         plan = self.plan_generator.create_plan(timeframe=1)
-        coop = self.cooperation_generator.create_cooperation(plans=[plan])
+        collab = self.collaboration_generator.create_collaboration(plans=[plan])
         self.datetime_service.advance_time(timedelta(days=2))
-        summary = self.get_coop_summary.execute(GetCoopSummaryRequest(requester, coop))
+        summary = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(requester, collab)
+        )
         self.assert_success(summary, lambda s: len(s.plans) == 0)
 
-    def test_that_coop_price_is_none_if_there_are_no_plans_associated(self) -> None:
-        coop = self.cooperation_generator.create_cooperation(plans=None)
-        summary = self.get_coop_summary.execute(GetCoopSummaryRequest(uuid4(), coop))
-        self.assert_success(summary, lambda s: s.coop_price is None)
+    def test_that_collab_price_is_none_if_there_are_no_plans_associated(self) -> None:
+        collab = self.collaboration_generator.create_collaboration(plans=None)
+        summary = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(uuid4(), collab)
+        )
+        self.assert_success(summary, lambda s: s.collab_price is None)
 
-    def test_that_coop_price_equals_individual_price_when_there_is_one_plan_in_a_cooperation(
+    def test_that_collab_price_equals_individual_price_when_there_is_one_plan_in_a_collaboration(
         self,
     ) -> None:
         expected_price = approx(Decimal(2))
@@ -122,11 +130,13 @@ class GetCoopSummaryTests(BaseTestCase):
             costs=ProductionCosts(Decimal(10), Decimal(5), Decimal(5)),
             amount=10,
         )
-        coop = self.cooperation_generator.create_cooperation(plans=[plan])
-        summary = self.get_coop_summary.execute(GetCoopSummaryRequest(uuid4(), coop))
-        self.assert_success(summary, lambda s: s.coop_price == expected_price)
+        collab = self.collaboration_generator.create_collaboration(plans=[plan])
+        summary = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(uuid4(), collab)
+        )
+        self.assert_success(summary, lambda s: s.collab_price == expected_price)
 
-    def test_that_correct_coop_price_is_calculated_when_there_are_two_plans_in_a_cooperation(
+    def test_that_correct_collab_price_is_calculated_when_there_are_two_plans_in_a_collaboration(
         self,
     ) -> None:
         expected_price = approx(Decimal("0.75"))
@@ -138,14 +148,16 @@ class GetCoopSummaryTests(BaseTestCase):
             costs=ProductionCosts(Decimal(4), Decimal(4), Decimal(2)),
             amount=10,
         )
-        coop = self.cooperation_generator.create_cooperation(plans=[plan1, plan2])
-        summary = self.get_coop_summary.execute(GetCoopSummaryRequest(uuid4(), coop))
-        self.assert_success(summary, lambda s: s.coop_price == expected_price)
+        collab = self.collaboration_generator.create_collaboration(plans=[plan1, plan2])
+        summary = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(uuid4(), collab)
+        )
+        self.assert_success(summary, lambda s: s.collab_price == expected_price)
 
     def assert_success(
         self,
-        response: Optional[GetCoopSummaryResponse],
-        assertion: Callable[[GetCoopSummaryResponse], bool],
+        response: Optional[GetCollabSummaryResponse],
+        assertion: Callable[[GetCollabSummaryResponse], bool],
     ) -> None:
         assert response
         assert assertion(response)
@@ -154,30 +166,36 @@ class GetCoopSummaryTests(BaseTestCase):
 class AssociatedPlansTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
-        self.get_coop_summary = self.injector.get(GetCoopSummaryInteractor)
+        self.get_collab_summary = self.injector.get(GetCollabSummaryInteractor)
 
-    def test_that_summary_of_a_cooperation_with_two_plans_shows_two_associated_plans(
+    def test_that_summary_of_a_collaboration_with_two_plans_shows_two_associated_plans(
         self,
     ) -> None:
         plan1 = self.plan_generator.create_plan()
         plan2 = self.plan_generator.create_plan()
-        coop = self.cooperation_generator.create_cooperation(plans=[plan1, plan2])
-        response = self.get_coop_summary.execute(GetCoopSummaryRequest(uuid4(), coop))
+        collab = self.collaboration_generator.create_collaboration(plans=[plan1, plan2])
+        response = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(uuid4(), collab)
+        )
         assert response
         assert len(response.plans) == 2
 
     def test_that_associated_plan_in_a_summary_has_correct_plan_id(self) -> None:
         plan = self.plan_generator.create_plan()
-        coop = self.cooperation_generator.create_cooperation(plans=[plan])
-        response = self.get_coop_summary.execute(GetCoopSummaryRequest(uuid4(), coop))
+        collab = self.collaboration_generator.create_collaboration(plans=[plan])
+        response = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(uuid4(), collab)
+        )
         assert response
         assert response.plans[0].plan_id == plan
 
     def test_that_associated_plan_in_a_summary_has_correct_plan_name(self) -> None:
         expected_prd_name = "A product name"
         plan = self.plan_generator.create_plan(product_name=expected_prd_name)
-        coop = self.cooperation_generator.create_cooperation(plans=[plan])
-        response = self.get_coop_summary.execute(GetCoopSummaryRequest(uuid4(), coop))
+        collab = self.collaboration_generator.create_collaboration(plans=[plan])
+        response = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(uuid4(), collab)
+        )
         assert response
         assert response.plans[0].plan_name == expected_prd_name
 
@@ -189,8 +207,10 @@ class AssociatedPlansTests(BaseTestCase):
             costs=ProductionCosts(Decimal(2), Decimal(2), Decimal(1)),
             amount=10,
         )
-        coop = self.cooperation_generator.create_cooperation(plans=[plan])
-        response = self.get_coop_summary.execute(GetCoopSummaryRequest(uuid4(), coop))
+        collab = self.collaboration_generator.create_collaboration(plans=[plan])
+        response = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(uuid4(), collab)
+        )
         assert response
         assert response.plans[0].plan_individual_price == expected_price
 
@@ -206,48 +226,54 @@ class AssociatedPlansTests(BaseTestCase):
             costs=ProductionCosts(Decimal(4), Decimal(4), Decimal(2)),
             amount=10,
         )
-        coop = self.cooperation_generator.create_cooperation(plans=[plan])
-        response = self.get_coop_summary.execute(GetCoopSummaryRequest(uuid4(), coop))
+        collab = self.collaboration_generator.create_collaboration(plans=[plan])
+        response = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(uuid4(), collab)
+        )
         assert response
         assert response.plans[0].plan_individual_price == expected_price
 
     def test_that_associated_plan_in_a_summary_has_correct_planner_id(self) -> None:
         expected_planner = self.company_generator.create_company()
         plan = self.plan_generator.create_plan(planner=expected_planner)
-        coop = self.cooperation_generator.create_cooperation(plans=[plan])
-        response = self.get_coop_summary.execute(GetCoopSummaryRequest(uuid4(), coop))
+        collab = self.collaboration_generator.create_collaboration(plans=[plan])
+        response = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(uuid4(), collab)
+        )
         assert response
         assert response.plans[0].planner_id == expected_planner
 
     def test_that_associated_plan_in_a_summary_has_correct_planner_name(self) -> None:
-        expected_planner_name = "The Cooperating Coop"
+        expected_planner_name = "The Collaborating Collab"
         planner = self.company_generator.create_company(name=expected_planner_name)
         plan = self.plan_generator.create_plan(planner=planner)
-        coop = self.cooperation_generator.create_cooperation(plans=[plan])
-        response = self.get_coop_summary.execute(GetCoopSummaryRequest(uuid4(), coop))
+        collab = self.collaboration_generator.create_collaboration(plans=[plan])
+        response = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(uuid4(), collab)
+        )
         assert response
         assert response.plans[0].planner_name == expected_planner_name
 
-    def test_that_associated_plan_shows_that_planner_is_also_requester_of_coop_summary(
+    def test_that_associated_plan_shows_that_planner_is_also_requester_of_collab_summary(
         self,
     ) -> None:
         expected_planner = self.company_generator.create_company()
         plan = self.plan_generator.create_plan(planner=expected_planner)
-        coop = self.cooperation_generator.create_cooperation(plans=[plan])
-        response = self.get_coop_summary.execute(
-            GetCoopSummaryRequest(requester_id=expected_planner, coop_id=coop)
+        collab = self.collaboration_generator.create_collaboration(plans=[plan])
+        response = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(requester_id=expected_planner, collab_id=collab)
         )
         assert response
         assert response.plans[0].requester_is_planner == True
 
-    def test_that_associated_plan_shows_that_planner_is_not_requester_of_coop_summary(
+    def test_that_associated_plan_shows_that_planner_is_not_requester_of_collab_summary(
         self,
     ) -> None:
         expected_planner = self.company_generator.create_company()
         plan = self.plan_generator.create_plan(planner=expected_planner)
-        coop = self.cooperation_generator.create_cooperation(plans=[plan])
-        response = self.get_coop_summary.execute(
-            GetCoopSummaryRequest(requester_id=uuid4(), coop_id=coop)
+        collab = self.collaboration_generator.create_collaboration(plans=[plan])
+        response = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(requester_id=uuid4(), collab_id=collab)
         )
         assert response
         assert response.plans[0].requester_is_planner == False

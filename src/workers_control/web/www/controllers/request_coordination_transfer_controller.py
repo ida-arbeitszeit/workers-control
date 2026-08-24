@@ -27,6 +27,6 @@ class RequestCoordinationTransferController:
             return None
         return Interactor.Request(
             requester=current_user,
-            cooperation=collaboration.value,
+            collaboration=collaboration.value,
             candidate=candidate.value,
         )

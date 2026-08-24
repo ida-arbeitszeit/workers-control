@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from typing import Protocol, Union
 from uuid import UUID
 
-from workers_control.core.interactors.request_cooperation import (
-    RequestCooperationRequest,
+from workers_control.core.interactors.request_collaboration import (
+    RequestCollaborationRequest,
 )
 from workers_control.web.malformed_input_data import MalformedInputData
 from workers_control.web.session import Session
@@ -23,7 +23,7 @@ class RequestCollaborationController:
 
     def import_form_data(
         self, form: RequestCollaborationForm
-    ) -> Union[RequestCooperationRequest, MalformedInputData, None]:
+    ) -> Union[RequestCollaborationRequest, MalformedInputData, None]:
         current_user = self.session.get_current_user()
         if current_user is None:
             return None
@@ -40,8 +40,8 @@ class RequestCollaborationController:
                 "collaboration_id",
                 self.translator.gettext("Invalid collaboration ID."),
             )
-        return RequestCooperationRequest(
+        return RequestCollaborationRequest(
             requester_id=current_user,
             plan_id=plan_uuid,
-            cooperation_id=collaboration_uuid,
+            collaboration_id=collaboration_uuid,
         )

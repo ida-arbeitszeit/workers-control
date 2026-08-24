@@ -44,8 +44,8 @@ class PresenterBase(BaseTestCase):
             approval_date=approval_date,
             expiration_date=expiration_date,
             rejection_date=rejection_date,
-            is_cooperating=is_collaborating,
-            cooperation=collaboration,
+            is_collaborating=is_collaborating,
+            collaboration=collaboration,
         )
 
     def create_interactor_response(

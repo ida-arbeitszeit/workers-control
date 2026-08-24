@@ -36,9 +36,9 @@ class GetCoordinationTransferRequestDetailsPresenter:
                 fmt="%d.%m.%Y %H:%M",
             ),
             collaboration_url=self.url_index.get_collab_summary_url(
-                collab_id=response.cooperation_id
+                collab_id=response.collaboration_id
             ),
-            collaboration_name=response.cooperation_name,
+            collaboration_name=response.collaboration_name,
             candidate_url=self.url_index.get_company_summary_url(
                 company_id=response.candidate_id
             ),

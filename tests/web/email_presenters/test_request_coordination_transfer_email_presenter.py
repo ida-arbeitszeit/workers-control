@@ -92,6 +92,6 @@ class RequestCoordinationTransferEmailPresenterTests(BaseTestCase):
         return email_notifications.CoordinationTransferRequest(
             candidate_email=candidate_mail,
             candidate_name=candidate_name,
-            cooperation_name=collaboration_name,
+            collaboration_name=collaboration_name,
             transfer_request=transfer_request,
         )

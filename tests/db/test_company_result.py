@@ -283,23 +283,25 @@ class JoinedWithEmailTests(DatabaseTestCase):
         assert record
 
 
-class ThatIsCoordinatingCooperationTests(DatabaseTestCase):
+class ThatIsCoordinatingCollaborationTests(DatabaseTestCase):
     def test_that_unrelated_company_is_not_included(self) -> None:
         company = self.company_generator.create_company()
-        cooperation = self.cooperation_generator.create_cooperation()
+        collaboration = self.collaboration_generator.create_collaboration()
         assert (
             not self.database_gateway.get_companies()
             .with_id(company)
-            .that_is_coordinating_cooperation(cooperation)
+            .that_is_coordinating_collaboration(collaboration)
         )
 
     def test_that_coordinator_is_included(self) -> None:
         company = self.company_generator.create_company()
-        cooperation = self.cooperation_generator.create_cooperation(coordinator=company)
+        collaboration = self.collaboration_generator.create_collaboration(
+            coordinator=company
+        )
         assert (
             self.database_gateway.get_companies()
             .with_id(company)
-            .that_is_coordinating_cooperation(cooperation)
+            .that_is_coordinating_collaboration(collaboration)
         )
 
 

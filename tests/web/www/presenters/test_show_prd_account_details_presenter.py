@@ -111,7 +111,7 @@ class ShowPRDAccountDetailsPresenterTests(BaseTestCase):
         self,
     ) -> None:
         transfer = self._get_transfer_info(
-            transfer_type=TransferType.compensation_for_coop,
+            transfer_type=TransferType.compensation_for_collab,
         )
         response = self._interactor_response(transfers=[transfer])
         view_model = self.presenter.present(response)
@@ -208,7 +208,7 @@ class ShowPRDAccountDetailsPresenterTests(BaseTestCase):
         [
             (TransferPartyType.member, "user"),
             (TransferPartyType.company, "industry"),
-            (TransferPartyType.cooperation, "hands-helping"),
+            (TransferPartyType.collaboration, "hands-helping"),
         ]
     )
     def test_that_correct_icon_is_shown_per_transfer_party_type(

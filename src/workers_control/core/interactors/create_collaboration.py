@@ -9,20 +9,20 @@ from workers_control.core.repositories import DatabaseGateway
 
 
 @dataclass
-class CreateCooperationRequest:
+class CreateCollaborationRequest:
     coordinator_id: UUID
     name: str
     definition: str
 
 
 @dataclass
-class CreateCooperationResponse:
+class CreateCollaborationResponse:
     class RejectionReason(Exception, Enum):
         coordinator_not_found = auto()
-        cooperation_with_name_exists = auto()
+        collaboration_with_name_exists = auto()
 
     rejection_reason: Optional[RejectionReason]
-    cooperation_id: Optional[UUID]
+    collaboration_id: Optional[UUID]
 
     @property
     def is_rejected(self) -> bool:
@@ -30,19 +30,21 @@ class CreateCooperationResponse:
 
 
 @dataclass
-class CreateCooperationInteractor:
+class CreateCollaborationInteractor:
     datetime_service: DatetimeService
     database_gateway: DatabaseGateway
 
-    def execute(self, request: CreateCooperationRequest) -> CreateCooperationResponse:
+    def execute(
+        self, request: CreateCollaborationRequest
+    ) -> CreateCollaborationResponse:
         try:
             coordinator = self._validate_request(request)
-        except CreateCooperationResponse.RejectionReason as reason:
-            return CreateCooperationResponse(
-                rejection_reason=reason, cooperation_id=None
+        except CreateCollaborationResponse.RejectionReason as reason:
+            return CreateCollaborationResponse(
+                rejection_reason=reason, collaboration_id=None
             )
         account = self.database_gateway.create_account()
-        cooperation = self.database_gateway.create_cooperation(
+        collaboration = self.database_gateway.create_collaboration(
             self.datetime_service.now(),
             request.name,
             request.definition,
@@ -50,26 +52,26 @@ class CreateCooperationInteractor:
         )
         self.database_gateway.create_coordination_tenure(
             company=coordinator.id,
-            cooperation=cooperation.id,
+            collaboration=collaboration.id,
             start_date=self.datetime_service.now(),
         )
-        return CreateCooperationResponse(
-            rejection_reason=None, cooperation_id=cooperation.id
+        return CreateCollaborationResponse(
+            rejection_reason=None, collaboration_id=collaboration.id
         )
 
-    def _validate_request(self, request: CreateCooperationRequest) -> Company:
+    def _validate_request(self, request: CreateCollaborationRequest) -> Company:
         coordinator = (
             self.database_gateway.get_companies()
             .with_id(request.coordinator_id)
             .first()
         )
-        coops_with_requested_name = (
-            self.database_gateway.get_cooperations().with_name_ignoring_case(
+        collabs_with_requested_name = (
+            self.database_gateway.get_collaborations().with_name_ignoring_case(
                 request.name
             )
         )
         if coordinator is None:
-            raise CreateCooperationResponse.RejectionReason.coordinator_not_found
-        if coops_with_requested_name:
-            raise CreateCooperationResponse.RejectionReason.cooperation_with_name_exists
+            raise CreateCollaborationResponse.RejectionReason.coordinator_not_found
+        if collabs_with_requested_name:
+            raise CreateCollaborationResponse.RejectionReason.collaboration_with_name_exists
         return coordinator

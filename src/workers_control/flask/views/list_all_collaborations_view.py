@@ -2,8 +2,8 @@ from dataclasses import dataclass
 
 from flask import render_template
 
-from workers_control.core.interactors.list_all_cooperations import (
-    ListAllCooperationsInteractor,
+from workers_control.core.interactors.list_all_collaborations import (
+    ListAllCollaborationsInteractor,
 )
 from workers_control.flask.types import Response
 from workers_control.web.www.presenters.list_all_collaborations_presenter import (
@@ -13,7 +13,7 @@ from workers_control.web.www.presenters.list_all_collaborations_presenter import
 
 @dataclass
 class ListAllCollaborationsView:
-    interactor: ListAllCooperationsInteractor
+    interactor: ListAllCollaborationsInteractor
     presenter: ListAllCollaborationsPresenter
 
     def GET(self) -> Response:

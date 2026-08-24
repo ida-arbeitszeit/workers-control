@@ -5,23 +5,23 @@ from workers_control.core.repositories import DatabaseGateway
 
 
 @dataclass
-class CancelCooperationSolicitationRequest:
+class CancelCollaborationSolicitationRequest:
     requester_id: UUID
     plan_id: UUID
 
 
 @dataclass
-class CancelCooperationSolicitationInteractor:
+class CancelCollaborationSolicitationInteractor:
     database_gateway: DatabaseGateway
 
-    def execute(self, request: CancelCooperationSolicitationRequest) -> bool:
+    def execute(self, request: CancelCollaborationSolicitationRequest) -> bool:
         plans_changed_count = (
             self.database_gateway.get_plans()
             .with_id(request.plan_id)
             .planned_by(request.requester_id)
-            .that_request_cooperation_with_coordinator()
+            .that_request_collaboration_with_coordinator()
             .update()
-            .set_requested_cooperation(None)
+            .set_requested_collaboration(None)
             .perform()
         )
         return bool(plans_changed_count)

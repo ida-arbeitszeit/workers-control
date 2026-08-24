@@ -22,7 +22,7 @@ class CompensationTransferService:
         cost_per_unit: Decimal,
         consumed_amount: int,
         planner_product_account: UUID,
-        cooperation_account: UUID,
+        collaboration_account: UUID,
     ) -> UUID | None:
         difference = price_per_unit - cost_per_unit
         if not difference:
@@ -32,31 +32,31 @@ class CompensationTransferService:
             return self._compensate_company(
                 consumed_amount=consumed_amount,
                 difference=abs(difference),
-                cooperation_account=cooperation_account,
+                collaboration_account=collaboration_account,
                 planner_product_account=planner_product_account,
             )
         else:
             """Plan is overproductive."""
-            return self._compensate_cooperation(
+            return self._compensate_collaboration(
                 consumed_amount=consumed_amount,
                 difference=abs(difference),
-                cooperation_account=cooperation_account,
+                collaboration_account=collaboration_account,
                 planner_product_account=planner_product_account,
             )
 
-    def _compensate_cooperation(
+    def _compensate_collaboration(
         self,
         consumed_amount: int,
         difference: Decimal,
-        cooperation_account: UUID,
+        collaboration_account: UUID,
         planner_product_account: UUID,
     ) -> UUID:
         transfer = self.database_gateway.create_transfer(
             date=self.datetime_service.now(),
             debit_account=planner_product_account,
-            credit_account=cooperation_account,
+            credit_account=collaboration_account,
             value=difference * consumed_amount,
-            type=TransferType.compensation_for_coop,
+            type=TransferType.compensation_for_collab,
         )
         return transfer.id
 
@@ -64,12 +64,12 @@ class CompensationTransferService:
         self,
         consumed_amount: int,
         difference: Decimal,
-        cooperation_account: UUID,
+        collaboration_account: UUID,
         planner_product_account: UUID,
     ) -> UUID:
         transfer = self.database_gateway.create_transfer(
             date=self.datetime_service.now(),
-            debit_account=cooperation_account,
+            debit_account=collaboration_account,
             credit_account=planner_product_account,
             value=difference * consumed_amount,
             type=TransferType.compensation_for_company,

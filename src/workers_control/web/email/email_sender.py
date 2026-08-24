@@ -63,7 +63,7 @@ class EmailSender:
             )
         elif isinstance(message, interface.WorkerRemovalNotification):
             self.notify_about_worker_removal_presenter.notify(message_data=message)
-        elif isinstance(message, interface.CooperationRequestEmail):
+        elif isinstance(message, interface.CollaborationRequestEmail):
             self.request_collaboration_presenter.present(message)
         elif isinstance(message, interface.EmailChangeWarning):
             self.email_change_warning_view.render_email_change_warning(message)

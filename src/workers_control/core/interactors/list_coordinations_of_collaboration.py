@@ -15,23 +15,23 @@ class CoordinationInfo:
 
 
 @dataclass
-class ListCoordinationsOfCooperationInteractor:
+class ListCoordinationsOfCollaborationInteractor:
     database_gateway: DatabaseGateway
 
     @dataclass
     class Request:
-        cooperation: UUID
+        collaboration: UUID
 
     @dataclass
     class Response:
         coordinations: list[CoordinationInfo]
-        cooperation_id: UUID
-        cooperation_name: str
+        collaboration_id: UUID
+        collaboration_name: str
 
     def list_coordinations(self, request: Request) -> Response:
         tenures_and_coordinators = list(
             self.database_gateway.get_coordination_tenures()
-            .of_cooperation(request.cooperation)
+            .of_collaboration(request.collaboration)
             .ordered_by_start_date(ascending=False)
             .joined_with_coordinator()
         )
@@ -47,16 +47,16 @@ class ListCoordinationsOfCooperationInteractor:
                 )
             )
             end_timestamp = tenure.start_date
-        assert coordinations  # there cannot be a cooperation without at least one coordination_tenure
-        cooperation = (
-            self.database_gateway.get_cooperations()
-            .with_id(request.cooperation)
+        assert coordinations  # there cannot be a collaboration without at least one coordination_tenure
+        collaboration = (
+            self.database_gateway.get_collaborations()
+            .with_id(request.collaboration)
             .first()
         )
-        assert cooperation
+        assert collaboration
 
         return self.Response(
             coordinations=coordinations,
-            cooperation_id=request.cooperation,
-            cooperation_name=cooperation.name,
+            collaboration_id=request.collaboration,
+            collaboration_name=collaboration.name,
         )

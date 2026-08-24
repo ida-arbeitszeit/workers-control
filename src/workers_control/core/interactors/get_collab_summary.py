@@ -10,9 +10,9 @@ from workers_control.core.services.price_calculator import PriceCalculator
 
 
 @dataclass
-class GetCoopSummaryRequest:
+class GetCollabSummaryRequest:
     requester_id: UUID
-    coop_id: UUID
+    collab_id: UUID
 
 
 @dataclass
@@ -26,50 +26,50 @@ class AssociatedPlan:
 
 
 @dataclass
-class GetCoopSummaryResponse:
+class GetCollabSummaryResponse:
     requester_is_coordinator: bool
-    coop_id: UUID
-    coop_name: str
-    coop_definition: str
+    collab_id: UUID
+    collab_name: str
+    collab_definition: str
     current_coordinator: UUID
     current_coordinator_name: str
-    coop_price: Optional[Decimal]
+    collab_price: Optional[Decimal]
     plans: List[AssociatedPlan]
 
 
 @dataclass
-class GetCoopSummaryInteractor:
+class GetCollabSummaryInteractor:
     database_gateway: DatabaseGateway
     price_calculator: PriceCalculator
     datetime_service: DatetimeService
 
     def execute(
-        self, request: GetCoopSummaryRequest
-    ) -> Optional[GetCoopSummaryResponse]:
-        coop_and_coordinator = (
-            self.database_gateway.get_cooperations()
-            .with_id(request.coop_id)
+        self, request: GetCollabSummaryRequest
+    ) -> Optional[GetCollabSummaryResponse]:
+        collab_and_coordinator = (
+            self.database_gateway.get_collaborations()
+            .with_id(request.collab_id)
             .joined_with_current_coordinator()
             .first()
         )
-        if coop_and_coordinator is None:
+        if collab_and_coordinator is None:
             return None
-        coop, coordinator = coop_and_coordinator
+        collab, coordinator = collab_and_coordinator
         now = self.datetime_service.now()
         plan_result = (
             self.database_gateway.get_plans()
-            .that_are_part_of_cooperation(request.coop_id)
+            .that_are_part_of_collaboration(request.collab_id)
             .that_will_expire_after(now)
         )
         plans = list(plan_result)
-        return GetCoopSummaryResponse(
+        return GetCollabSummaryResponse(
             requester_is_coordinator=coordinator.id == request.requester_id,
-            coop_id=coop.id,
-            coop_name=coop.name,
-            coop_definition=coop.definition,
+            collab_id=collab.id,
+            collab_name=collab.name,
+            collab_definition=collab.definition,
             current_coordinator=coordinator.id,
             current_coordinator_name=coordinator.name,
-            coop_price=self._get_cooperative_price(plans),
+            collab_price=self._get_collaborative_price(plans),
             plans=self._get_associated_plans(plans, request.requester_id),
         )
 
@@ -78,7 +78,7 @@ class GetCoopSummaryInteractor:
         assert planner
         return planner.name
 
-    def _get_cooperative_price(self, plans: list[Plan]) -> Optional[Decimal]:
+    def _get_collaborative_price(self, plans: list[Plan]) -> Optional[Decimal]:
         if not plans:
             return None
         return self.price_calculator.calculate_price(plans[0].id)

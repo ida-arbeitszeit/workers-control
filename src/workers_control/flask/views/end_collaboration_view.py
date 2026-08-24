@@ -2,7 +2,9 @@ from dataclasses import dataclass
 
 from flask import redirect
 
-from workers_control.core.interactors.end_cooperation import EndCooperationInteractor
+from workers_control.core.interactors.end_collaboration import (
+    EndCollaborationInteractor,
+)
 from workers_control.db import commit_changes
 from workers_control.flask import types
 from workers_control.flask.flask_request import FlaskRequest
@@ -17,7 +19,7 @@ from workers_control.web.www.presenters.end_collaboration_presenter import (
 
 @dataclass
 class EndCollaborationView:
-    interactor: EndCooperationInteractor
+    interactor: EndCollaborationInteractor
     controller: EndCollaborationController
     presenter: EndCollaborationPresenter
 

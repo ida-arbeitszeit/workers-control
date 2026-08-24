@@ -3,9 +3,9 @@ from dataclasses import dataclass
 from flask import Response as FlaskResponse
 from flask import redirect, render_template, request, url_for
 
-from workers_control.core.interactors.create_cooperation import (
-    CreateCooperationInteractor,
-    CreateCooperationRequest,
+from workers_control.core.interactors.create_collaboration import (
+    CreateCollaborationInteractor,
+    CreateCollaborationRequest,
 )
 from workers_control.db import commit_changes
 from workers_control.flask.flask_session import FlaskSession
@@ -18,7 +18,7 @@ from workers_control.web.www.presenters.create_collaboration_presenter import (
 
 @dataclass
 class CreateCollaborationView:
-    interactor: CreateCooperationInteractor
+    interactor: CreateCollaborationInteractor
     presenter: CreateCollaborationPresenter
     session: FlaskSession
 
@@ -36,7 +36,7 @@ class CreateCollaborationView:
         assert name
         assert definition
         assert user
-        interactor_request = CreateCooperationRequest(user, name, definition)
+        interactor_request = CreateCollaborationRequest(user, name, definition)
         interactor_response = self.interactor.execute(interactor_request)
         self.presenter.present(interactor_response)
         if interactor_response.is_rejected:

@@ -64,7 +64,7 @@ class NameChangeConfirmation:
 
 
 @dataclass
-class CooperationRequestEmail:
+class CollaborationRequestEmail:
     coordinator_email_address: str
     coordinator_name: str
 
@@ -73,7 +73,7 @@ class CooperationRequestEmail:
 class CoordinationTransferRequest:
     candidate_email: str
     candidate_name: str
-    cooperation_name: str
+    collaboration_name: str
     transfer_request: UUID
 
 
@@ -103,7 +103,7 @@ Message: TypeAlias = Union[
     AccountantInvitation,
     AccountantNotificationAboutNewPlan,
     CompanyRegistration,
-    CooperationRequestEmail,
+    CollaborationRequestEmail,
     CoordinationTransferRequest,
     EmailChangeWarning,
     EmailChangeConfirmation,

@@ -117,8 +117,8 @@ class GetDetailsPresenterTests(BaseTestCase):
             request_is_pending = True
         return Interactor.Response(
             request_date=request_date,
-            cooperation_id=collaboration_id,
-            cooperation_name=collaboration_name,
+            collaboration_id=collaboration_id,
+            collaboration_name=collaboration_name,
             candidate_id=candidate_id,
             candidate_name=candidate_name,
             request_is_pending=request_is_pending,

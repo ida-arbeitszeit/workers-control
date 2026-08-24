@@ -2,8 +2,8 @@ from dataclasses import dataclass, replace
 from uuid import UUID, uuid4
 
 from tests.base_test_case import BaseTestCase
-from workers_control.core.interactors.request_cooperation import (
-    RequestCooperationRequest,
+from workers_control.core.interactors.request_collaboration import (
+    RequestCollaborationRequest,
 )
 from workers_control.web.malformed_input_data import MalformedInputData
 from workers_control.web.www.controllers.request_collaboration_controller import (
@@ -46,7 +46,7 @@ class RequestCollaborationControllerTests(BaseTestCase):
         self.session.login_company(expected_user_id)
         interactor_request = self.controller.import_form_data(form=fake_form)
         assert interactor_request is not None
-        assert isinstance(interactor_request, RequestCooperationRequest)
+        assert isinstance(interactor_request, RequestCollaborationRequest)
         self.assertEqual(interactor_request.requester_id, expected_user_id)
 
     def test_returns_malformed_data_instance_if_plan_id_cannot_be_converted_to_uuid(
@@ -82,8 +82,8 @@ class RequestCollaborationControllerTests(BaseTestCase):
         self.session.login_company(uuid4())
         interactor_request = self.controller.import_form_data(form=fake_form)
         assert interactor_request is not None
-        assert isinstance(interactor_request, RequestCooperationRequest)
+        assert isinstance(interactor_request, RequestCollaborationRequest)
         self.assertEqual(interactor_request.plan_id, UUID(fake_form.plan_id))
         self.assertEqual(
-            interactor_request.cooperation_id, UUID(fake_form.collaboration_id)
+            interactor_request.collaboration_id, UUID(fake_form.collaboration_id)
         )

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from uuid import UUID
 
-from workers_control.core.interactors.end_cooperation import EndCooperationResponse
+from workers_control.core.interactors.end_collaboration import EndCollaborationResponse
 from workers_control.web.notification import Notifier
 from workers_control.web.request import Request
 from workers_control.web.translator import Translator
@@ -20,7 +20,7 @@ class EndCollaborationPresenter:
     translator: Translator
 
     def present(
-        self, response: EndCooperationResponse, *, web_request: Request
+        self, response: EndCollaborationResponse, *, web_request: Request
     ) -> ViewModel:
         if response.is_rejected:
             self.notifier.display_warning(

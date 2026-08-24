@@ -3,9 +3,9 @@ from uuid import UUID, uuid4
 
 from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_utc
-from workers_control.core.interactors.list_coordinations_of_cooperation import (
+from workers_control.core.interactors.list_coordinations_of_collaboration import (
     CoordinationInfo,
-    ListCoordinationsOfCooperationInteractor,
+    ListCoordinationsOfCollaborationInteractor,
 )
 from workers_control.web.www.presenters.list_coordinations_of_collaboration_presenter import (
     ListCoordinationsOfCollaborationPresenter,
@@ -93,7 +93,7 @@ class ListCoordinationsPresenterTests(BaseTestCase):
         )
 
     def test_presenter_shows_correct_end_time_if_coordination_has_none(self) -> None:
-        response = ListCoordinationsOfCooperationInteractor.Response(
+        response = ListCoordinationsOfCollaborationInteractor.Response(
             coordinations=[
                 CoordinationInfo(
                     coordinator_id=uuid4(),
@@ -102,8 +102,8 @@ class ListCoordinationsPresenterTests(BaseTestCase):
                     end_time=None,
                 )
             ],
-            cooperation_id=uuid4(),
-            cooperation_name="Some collab test name",
+            collaboration_id=uuid4(),
+            collaboration_name="Some collab test name",
         )
         view_model = self.presenter.list_coordinations_of_collaboration(response)
         self.assertEqual(view_model.coordinations[0].end_time, "-")
@@ -133,7 +133,7 @@ class ListCoordinationsPresenterTests(BaseTestCase):
         self.assertEqual(
             view_model.navbar_items[0].url,
             self.url_index.get_collab_summary_url(
-                collab_id=response.cooperation_id,
+                collab_id=response.collaboration_id,
             ),
         )
         self.assertEqual(
@@ -150,11 +150,11 @@ class ListCoordinationsPresenterTests(BaseTestCase):
 
     def get_interactor_response_with_zero_coordinations(
         self,
-    ) -> ListCoordinationsOfCooperationInteractor.Response:
-        return ListCoordinationsOfCooperationInteractor.Response(
+    ) -> ListCoordinationsOfCollaborationInteractor.Response:
+        return ListCoordinationsOfCollaborationInteractor.Response(
             coordinations=[],
-            cooperation_id=uuid4(),
-            cooperation_name="Some collab test name",
+            collaboration_id=uuid4(),
+            collaboration_name="Some collab test name",
         )
 
     def get_interactor_response_with_one_coordination(
@@ -165,8 +165,8 @@ class ListCoordinationsPresenterTests(BaseTestCase):
         end_time: datetime = datetime_utc(2022, 3, 10, 13, 0),
         collaboration_id: UUID = uuid4(),
         collaboration_name: str = "Some collab test name",
-    ) -> ListCoordinationsOfCooperationInteractor.Response:
-        return ListCoordinationsOfCooperationInteractor.Response(
+    ) -> ListCoordinationsOfCollaborationInteractor.Response:
+        return ListCoordinationsOfCollaborationInteractor.Response(
             coordinations=[
                 CoordinationInfo(
                     coordinator_id=coordinator_id,
@@ -175,6 +175,6 @@ class ListCoordinationsPresenterTests(BaseTestCase):
                     end_time=end_time,
                 )
             ],
-            cooperation_id=collaboration_id,
-            cooperation_name=collaboration_name,
+            collaboration_id=collaboration_id,
+            collaboration_name=collaboration_name,
         )

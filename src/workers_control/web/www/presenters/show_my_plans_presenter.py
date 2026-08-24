@@ -153,7 +153,7 @@ class ShowMyPlansPresenter:
                     expiration_relative=self._format_days_until_expiration(
                         plan.expiration_date
                     ),
-                    is_collaborating=plan.is_cooperating,
+                    is_collaborating=plan.is_collaborating,
                     is_public_service=plan.is_public_service,
                 )
                 for plan in response.active_plans

@@ -2,9 +2,9 @@ from tests.control_thresholds import ControlThresholdsTestImpl
 from tests.data_generators import (
     AccountantGenerator,
     BasicServiceGenerator,
+    CollaborationGenerator,
     CompanyGenerator,
     ConsumptionGenerator,
-    CooperationGenerator,
     CoordinationTenureGenerator,
     CoordinationTransferRequestGenerator,
     MemberGenerator,
@@ -53,7 +53,7 @@ class BaseTestCase(LazyPropertyTestCase):
     company_generator = _lazy_property(CompanyGenerator)
     consumption_generator = _lazy_property(ConsumptionGenerator)
     control_thresholds = _lazy_property(ControlThresholdsTestImpl)
-    cooperation_generator = _lazy_property(CooperationGenerator)
+    collaboration_generator = _lazy_property(CollaborationGenerator)
     coordination_tenure_generator = _lazy_property(CoordinationTenureGenerator)
     coordination_transfer_request_generator = _lazy_property(
         CoordinationTransferRequestGenerator

@@ -14,7 +14,7 @@ class AuthenticatedCompanyTests(ViewTestCase):
         self,
     ) -> None:
         plan = self.plan_generator.create_plan(planner=self.company)
-        collaboration = self.cooperation_generator.create_cooperation(plans=[plan])
+        collaboration = self.collaboration_generator.create_collaboration(plans=[plan])
         response = self.client.post(
             URL,
             data={"plan_id": str(plan), "collaboration_id": str(collaboration)},

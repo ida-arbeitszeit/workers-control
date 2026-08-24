@@ -21,7 +21,7 @@ class RequestCoordinationTransferInteractor:
     @dataclass
     class Request:
         requester: UUID
-        cooperation: UUID
+        collaboration: UUID
         candidate: UUID
 
     @dataclass
@@ -31,7 +31,7 @@ class RequestCoordinationTransferInteractor:
             requester_is_not_coordinator = auto()
             candidate_is_current_coordinator = auto()
             coordination_tenure_has_pending_transfer_request = auto()
-            cooperation_not_found = auto()
+            collaboration_not_found = auto()
 
         rejection_reason: Optional[RejectionReason]
         transfer_request: Optional[UUID]
@@ -55,17 +55,17 @@ class RequestCoordinationTransferInteractor:
             candidate=request.candidate,
             request_date=self.datetime_service.now(),
         )
-        cooperation = (
-            self.database_gateway.get_cooperations()
-            .with_id(coordination_tenure.cooperation)
+        collaboration = (
+            self.database_gateway.get_collaborations()
+            .with_id(coordination_tenure.collaboration)
             .first()
         )
-        assert cooperation
+        assert collaboration
         self.email_sender.send_email(
             CoordinationTransferRequest(
                 candidate_name=candidate.name,
                 candidate_email=candidate_email.address,
-                cooperation_name=cooperation.name,
+                collaboration_name=collaboration.name,
                 transfer_request=transfer_request.id,
             )
         )
@@ -89,12 +89,12 @@ class RequestCoordinationTransferInteractor:
 
         coordination_tenures_and_coordinators = list(
             self.database_gateway.get_coordination_tenures()
-            .of_cooperation(request.cooperation)
+            .of_collaboration(request.collaboration)
             .ordered_by_start_date(ascending=False)
             .joined_with_coordinator()
         )
         if not coordination_tenures_and_coordinators:
-            raise self.Response.RejectionReason.cooperation_not_found
+            raise self.Response.RejectionReason.collaboration_not_found
 
         latest_coordination_tenure_and_coordinator = (
             coordination_tenures_and_coordinators[0]

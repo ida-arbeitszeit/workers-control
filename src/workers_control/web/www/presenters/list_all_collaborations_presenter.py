@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from typing import List
 
-from workers_control.core.interactors.list_all_cooperations import (
-    ListAllCooperationsResponse,
+from workers_control.core.interactors.list_all_collaborations import (
+    ListAllCollaborationsResponse,
 )
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
@@ -34,7 +34,7 @@ class ListAllCollaborationsPresenter:
         ]
 
     def present(
-        self, response: ListAllCooperationsResponse
+        self, response: ListAllCollaborationsResponse
     ) -> ListAllCollaborationsViewModel:
         collaborations = [
             ListedCollaboration(
@@ -45,7 +45,7 @@ class ListAllCollaborationsPresenter:
                     collab_id=collab.id
                 ),
             )
-            for collab in response.cooperations
+            for collab in response.collaborations
         ]
         return ListAllCollaborationsViewModel(
             collaborations=collaborations, show_results=bool(collaborations)

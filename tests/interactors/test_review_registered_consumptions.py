@@ -186,7 +186,7 @@ class PrivateConsumptionDetailsTests(BaseTestCase):
         )
         assert response.consumptions[0].labour_hours_consumed == Decimal(12)
 
-    def test_labour_hours_consumed_is_shown_that_equals_the_cooperation_price_of_the_product_when_plan_is_cooperating(
+    def test_labour_hours_consumed_is_shown_that_equals_the_collaboration_price_of_the_product_when_plan_is_collaborating(
         self,
     ) -> None:
         plan1 = self.plan_generator.create_plan(
@@ -199,7 +199,7 @@ class PrivateConsumptionDetailsTests(BaseTestCase):
             costs=ProductionCosts(Decimal(4), Decimal(4), Decimal(4)),
             amount=1,
         )
-        self.cooperation_generator.create_cooperation(plans=[plan1, plan2])
+        self.collaboration_generator.create_collaboration(plans=[plan1, plan2])
 
         self.consumption_generator.create_private_consumption(plan=plan1)
         response = self.interactor.review_registered_consumptions(
@@ -316,7 +316,7 @@ class ProductiveConsumptionDetailsTests(BaseTestCase):
         )
         assert response.consumptions[0].labour_hours_consumed == Decimal(12)
 
-    def test_labour_hours_consumed_is_shown_that_equals_the_cooperation_price_of_the_product_when_plan_is_cooperating(
+    def test_labour_hours_consumed_is_shown_that_equals_the_collaboration_price_of_the_product_when_plan_is_collaborating(
         self,
     ) -> None:
         plan1 = self.plan_generator.create_plan(
@@ -329,7 +329,7 @@ class ProductiveConsumptionDetailsTests(BaseTestCase):
             costs=ProductionCosts(Decimal(4), Decimal(4), Decimal(4)),
             amount=1,
         )
-        self.cooperation_generator.create_cooperation(plans=[plan1, plan2])
+        self.collaboration_generator.create_collaboration(plans=[plan1, plan2])
 
         self.consumption_generator.create_fixed_means_consumption(plan=plan1)
         response = self.interactor.review_registered_consumptions(

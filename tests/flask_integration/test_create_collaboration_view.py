@@ -45,7 +45,7 @@ class AuthenticatedCompanyTests(ViewTestCase):
 
     def test_returns_400_when_posting_already_existing_collab_name(self) -> None:
         name_of_existing_collab = "Existing Collaboration"
-        self.cooperation_generator.create_cooperation(name=name_of_existing_collab)
+        self.collaboration_generator.create_collaboration(name=name_of_existing_collab)
         self.assert_response_has_expected_code(
             method="post",
             url=self.url,

@@ -123,7 +123,7 @@ class ListTransfersPresenter:
             return name
         elif owner_type == AccountOwnerType.social_accounting:
             return self.translator.gettext("Social Accounting")
-        elif owner_type == AccountOwnerType.cooperation:
+        elif owner_type == AccountOwnerType.collaboration:
             assert name is not None
             return name
 
@@ -133,7 +133,7 @@ class ListTransfersPresenter:
         if owner_type == AccountOwnerType.company:
             assert account_owner is not None
             return self.url_index.get_company_summary_url(company_id=account_owner)
-        elif owner_type == AccountOwnerType.cooperation:
+        elif owner_type == AccountOwnerType.collaboration:
             assert account_owner is not None
             return self.url_index.get_collab_summary_url(collab_id=account_owner)
         return None

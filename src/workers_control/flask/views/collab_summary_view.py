@@ -3,9 +3,9 @@ from uuid import UUID
 
 from flask import render_template
 
-from workers_control.core.interactors.get_coop_summary import (
-    GetCoopSummaryInteractor,
-    GetCoopSummaryRequest,
+from workers_control.core.interactors.get_collab_summary import (
+    GetCollabSummaryInteractor,
+    GetCollabSummaryRequest,
 )
 from workers_control.flask.flask_session import FlaskSession
 from workers_control.flask.types import Response
@@ -17,7 +17,7 @@ from workers_control.web.www.presenters.get_collab_summary_presenter import (
 
 @dataclass
 class CollabSummaryView:
-    get_collab_summary: GetCoopSummaryInteractor
+    get_collab_summary: GetCollabSummaryInteractor
     presenter: GetCollabSummarySuccessPresenter
     flask_session: FlaskSession
 
@@ -25,7 +25,7 @@ class CollabSummaryView:
         current_user = self.flask_session.get_current_user()
         assert current_user
         interactor_response = self.get_collab_summary.execute(
-            GetCoopSummaryRequest(current_user, collab_id)
+            GetCollabSummaryRequest(current_user, collab_id)
         )
         if interactor_response:
             view_model = self.presenter.present(interactor_response)

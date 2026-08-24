@@ -2,7 +2,7 @@ import random
 from decimal import Decimal
 
 from dev.benchmark.dependency_injection import benchmark_injector
-from tests.data_generators import CooperationGenerator, PlanGenerator
+from tests.data_generators import CollaborationGenerator, PlanGenerator
 from tests.db.base_test_case import reset_test_db
 from workers_control.core.interactors import query_offers
 from workers_control.core.records import ProductionCosts
@@ -16,7 +16,7 @@ class QueryOffersSortedByActivationDateBenchmark:
         self.db = self.injector.get(Database)
 
         plan_generator = self.injector.get(PlanGenerator)
-        cooperation_generator = self.injector.get(CooperationGenerator)
+        collaboration_generator = self.injector.get(CollaborationGenerator)
         self.query_offers = self.injector.get(query_offers.QueryOffersInteractor)
         random.seed()
         for _ in range(500):
@@ -28,10 +28,10 @@ class QueryOffersSortedByActivationDateBenchmark:
                 is_public_service=False, costs=self.random_production_costs()
             )
         for _ in range(100):
-            cooperation = cooperation_generator.create_cooperation()
+            collaboration = collaboration_generator.create_collaboration()
             for _ in range(5):
                 plan_generator.create_plan(
-                    cooperation=cooperation, costs=self.random_production_costs()
+                    collaboration=collaboration, costs=self.random_production_costs()
                 )
         self.request = query_offers.QueryOffersRequest(
             query_string=None,

@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from workers_control.core.interactors.list_coordinations_of_cooperation import (
-    ListCoordinationsOfCooperationInteractor as Interactor,
+from workers_control.core.interactors.list_coordinations_of_collaboration import (
+    ListCoordinationsOfCollaborationInteractor as Interactor,
 )
 from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
 from workers_control.web.translator import Translator
@@ -37,9 +37,9 @@ class ListCoordinationsOfCollaborationPresenter:
     ) -> ListCoordinationsOfCollaborationPresenter.ViewModel:
         return self.ViewModel(
             collaboration_url=self.url_index.get_collab_summary_url(
-                collab_id=response.cooperation_id,
+                collab_id=response.collaboration_id,
             ),
-            collaboration_name=response.cooperation_name,
+            collaboration_name=response.collaboration_name,
             has_coordinations=len(response.coordinations) > 0,
             coordinations=[
                 self.CoordinationInfo(
@@ -66,7 +66,7 @@ class ListCoordinationsOfCollaborationPresenter:
                 NavbarItem(
                     text=self.translator.gettext("Collaboration"),
                     url=self.url_index.get_collab_summary_url(
-                        collab_id=response.cooperation_id,
+                        collab_id=response.collaboration_id,
                     ),
                 ),
                 NavbarItem(

@@ -38,12 +38,12 @@ class CollaborationRequestEmailPresenterTests(BaseTestCase):
         self,
         coordinator_mail: Optional[str] = None,
         coordinator_name: Optional[str] = None,
-    ) -> email_notifications.CooperationRequestEmail:
+    ) -> email_notifications.CollaborationRequestEmail:
         if coordinator_mail is None:
             coordinator_mail = "company@comp.any"
         if coordinator_name is None:
             coordinator_name = "company xy"
-        return email_notifications.CooperationRequestEmail(
+        return email_notifications.CollaborationRequestEmail(
             coordinator_name=coordinator_name,
             coordinator_email_address=coordinator_mail,
         )

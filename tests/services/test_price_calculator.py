@@ -41,7 +41,7 @@ class PriceCalculatorTests(BaseTestCase):
             (Decimal(0), 2),
         ]
     )
-    def test_price_equals_cost_per_unit_if_productive_plan_is_not_cooperating(
+    def test_price_equals_cost_per_unit_if_productive_plan_is_not_collaborating(
         self,
         costs: Decimal,
         units: int,
@@ -50,12 +50,12 @@ class PriceCalculatorTests(BaseTestCase):
             costs=ProductionCosts(costs / 3, costs / 3, costs / 3),
             amount=units,
             is_public_service=False,
-            cooperation=None,
+            collaboration=None,
         )
         price = self.service.calculate_price(plan)
         assert price == (costs / units if units else Decimal(0))
 
-    def test_that_price_is_zero_when_all_plans_in_cooperation_produce_zero_units(
+    def test_that_price_is_zero_when_all_plans_in_collaboration_produce_zero_units(
         self,
     ) -> None:
         plan_1 = self.plan_generator.create_plan(
@@ -66,7 +66,7 @@ class PriceCalculatorTests(BaseTestCase):
             costs=ProductionCosts(Decimal(1), Decimal(1), Decimal(1)),
             amount=0,
         )
-        self.cooperation_generator.create_cooperation(
+        self.collaboration_generator.create_collaboration(
             plans=[plan_1, plan_2],
         )
         price1 = self.service.calculate_price(plan_1)
@@ -79,7 +79,7 @@ class PriceCalculatorTests(BaseTestCase):
             (Decimal(20),),
         ]
     )
-    def test_that_price_of_plan_that_is_sole_cooperation_member_equals_its_own_costs(
+    def test_that_price_of_plan_that_is_sole_collaboration_member_equals_its_own_costs(
         self,
         costs: Decimal,
     ) -> None:
@@ -87,7 +87,7 @@ class PriceCalculatorTests(BaseTestCase):
             costs=ProductionCosts(costs, Decimal(0), Decimal(0)),
             amount=1,
         )
-        self.cooperation_generator.create_cooperation(plans=[plan])
+        self.collaboration_generator.create_collaboration(plans=[plan])
         price = self.service.calculate_price(plan)
         assert price == costs
 
@@ -97,7 +97,7 @@ class PriceCalculatorTests(BaseTestCase):
             (Decimal(20), Decimal(30)),
         ]
     )
-    def test_that_cooperative_price_for_two_companies_is_average_of_costs(
+    def test_that_collaborative_price_for_two_companies_is_average_of_costs(
         self,
         costs_1: Decimal,
         costs_2: Decimal,
@@ -111,7 +111,7 @@ class PriceCalculatorTests(BaseTestCase):
             costs=ProductionCosts(costs_2, Decimal(0), Decimal(0)),
             amount=1,
         )
-        self.cooperation_generator.create_cooperation(
+        self.collaboration_generator.create_collaboration(
             plans=[plan_1, plan_2],
         )
         price1 = self.service.calculate_price(plan_1)
@@ -124,7 +124,7 @@ class PriceCalculatorTests(BaseTestCase):
             (Decimal(20), Decimal(30), Decimal(40)),
         ]
     )
-    def test_that_cooperative_price_for_three_companies_is_average_of_costs(
+    def test_that_collaborative_price_for_three_companies_is_average_of_costs(
         self,
         costs_1: Decimal,
         costs_2: Decimal,
@@ -143,12 +143,12 @@ class PriceCalculatorTests(BaseTestCase):
             costs=ProductionCosts(costs_3, Decimal(0), Decimal(0)),
             amount=1,
         )
-        self.cooperation_generator.create_cooperation(
+        self.collaboration_generator.create_collaboration(
             plans=[plan_1, plan_2, plan_3],
         )
-        price1 = self.service._calculate_cooperative_price(plan_1)
-        price2 = self.service._calculate_cooperative_price(plan_2)
-        price3 = self.service._calculate_cooperative_price(plan_3)
+        price1 = self.service._calculate_collaborative_price(plan_1)
+        price2 = self.service._calculate_collaborative_price(plan_2)
+        price3 = self.service._calculate_collaborative_price(plan_3)
         assert price1 == price2 == price3 == expected_price
 
     @parameterized.expand(
@@ -158,7 +158,7 @@ class PriceCalculatorTests(BaseTestCase):
             (Decimal(1), 1, Decimal(3), 72),
         ]
     )
-    def test_that_cooperative_price_for_two_companies_is_average_of_costs_independent_of_duration(
+    def test_that_collaborative_price_for_two_companies_is_average_of_costs_independent_of_duration(
         self,
         costs_1: Decimal,
         duration_1: int,
@@ -176,9 +176,9 @@ class PriceCalculatorTests(BaseTestCase):
             amount=1,
             timeframe=duration_2,
         )
-        self.cooperation_generator.create_cooperation(
+        self.collaboration_generator.create_collaboration(
             plans=[plan_1, plan_2],
         )
-        price1 = self.service._calculate_cooperative_price(plan_1)
-        price2 = self.service._calculate_cooperative_price(plan_2)
+        price1 = self.service._calculate_collaborative_price(plan_1)
+        price2 = self.service._calculate_collaborative_price(plan_2)
         assert price1 == price2 == expected_price

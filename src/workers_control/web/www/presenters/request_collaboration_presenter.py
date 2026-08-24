@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from typing import List
 
-from workers_control.core.interactors.request_cooperation import (
-    RequestCooperationResponse,
+from workers_control.core.interactors.request_collaboration import (
+    RequestCollaborationResponse,
 )
 from workers_control.web.translator import Translator
 from workers_control.web.www.navbar import NavbarItem
@@ -24,13 +24,13 @@ class RequestCollaborationPresenter:
         ]
 
     def present(
-        self, interactor_response: RequestCooperationResponse
+        self, interactor_response: RequestCollaborationResponse
     ) -> RequestCollaborationViewModel:
         view_model = self._create_view_model(interactor_response)
         return view_model
 
     def _create_view_model(
-        self, interactor_response: RequestCooperationResponse
+        self, interactor_response: RequestCollaborationResponse
     ) -> RequestCollaborationViewModel:
         notifications = []
         if not interactor_response.is_rejected:
@@ -40,24 +40,24 @@ class RequestCollaborationPresenter:
             is_error = True
             if (
                 interactor_response.rejection_reason
-                == RequestCooperationResponse.RejectionReason.plan_not_found
+                == RequestCollaborationResponse.RejectionReason.plan_not_found
             ):
                 notifications.append(self.translator.gettext("Plan not found."))
             elif (
                 interactor_response.rejection_reason
-                == RequestCooperationResponse.RejectionReason.cooperation_not_found
+                == RequestCollaborationResponse.RejectionReason.collaboration_not_found
             ):
                 notifications.append(
                     self.translator.gettext("Collaboration not found.")
                 )
             elif (
                 interactor_response.rejection_reason
-                == RequestCooperationResponse.RejectionReason.plan_inactive
+                == RequestCollaborationResponse.RejectionReason.plan_inactive
             ):
                 notifications.append(self.translator.gettext("Plan not active."))
             elif interactor_response.rejection_reason in (
-                RequestCooperationResponse.RejectionReason.plan_has_cooperation,
-                RequestCooperationResponse.RejectionReason.plan_is_already_requesting_cooperation,
+                RequestCollaborationResponse.RejectionReason.plan_has_collaboration,
+                RequestCollaborationResponse.RejectionReason.plan_is_already_requesting_collaboration,
             ):
                 notifications.append(
                     self.translator.gettext(
@@ -66,14 +66,14 @@ class RequestCollaborationPresenter:
                 )
             elif (
                 interactor_response.rejection_reason
-                == RequestCooperationResponse.RejectionReason.plan_is_public_service
+                == RequestCollaborationResponse.RejectionReason.plan_is_public_service
             ):
                 notifications.append(
                     self.translator.gettext("Public plans cannot collaborate.")
                 )
             elif (
                 interactor_response.rejection_reason
-                == RequestCooperationResponse.RejectionReason.requester_is_not_planner
+                == RequestCollaborationResponse.RejectionReason.requester_is_not_planner
             ):
                 notifications.append(
                     self.translator.gettext(

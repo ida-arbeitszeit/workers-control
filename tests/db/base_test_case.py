@@ -62,7 +62,7 @@ class DatabaseTestCase(LazyPropertyTestCase):
     basic_service_generator = _lazy_property(data_generators.BasicServiceGenerator)
     company_generator = _lazy_property(data_generators.CompanyGenerator)
     consumption_generator = _lazy_property(data_generators.ConsumptionGenerator)
-    cooperation_generator = _lazy_property(data_generators.CooperationGenerator)
+    collaboration_generator = _lazy_property(data_generators.CollaborationGenerator)
     coordination_tenure_generator = _lazy_property(
         data_generators.CoordinationTenureGenerator
     )

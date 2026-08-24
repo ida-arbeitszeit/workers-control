@@ -186,8 +186,8 @@ class Plan(Base):
     description: Mapped[str] = mapped_column(String(5000))
     timeframe: Mapped[Decimal]
     is_public_service: Mapped[bool] = mapped_column(default=False)
-    requested_cooperation: Mapped[UUID | None] = mapped_column(
-        Uuid, ForeignKey("cooperation.id")
+    requested_collaboration: Mapped[UUID | None] = mapped_column(
+        Uuid, ForeignKey("collaboration.id")
     )
     hidden_by_user: Mapped[bool] = mapped_column(default=False)
 
@@ -199,11 +199,11 @@ class Plan(Base):
     )
 
 
-class PlanCooperation(Base):
-    __tablename__ = "plan_cooperation"
+class PlanCollaboration(Base):
+    __tablename__ = "plan_collaboration"
 
     plan: Mapped[UUID] = mapped_column(Uuid, ForeignKey("plan.id"), primary_key=True)
-    cooperation: Mapped[UUID] = mapped_column(Uuid, ForeignKey("cooperation.id"))
+    collaboration: Mapped[UUID] = mapped_column(Uuid, ForeignKey("collaboration.id"))
 
 
 class PlanRejection(Base):
@@ -341,8 +341,8 @@ class CompanyWorkInvite(Base):
     member: Mapped[UUID] = mapped_column(Uuid, ForeignKey("member.id"))
 
 
-class Cooperation(Base):
-    __tablename__ = "cooperation"
+class Collaboration(Base):
+    __tablename__ = "collaboration"
 
     id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
     creation_date: Mapped[datetime] = mapped_column(TZDateTime)
@@ -356,7 +356,7 @@ class CoordinationTenure(Base):
 
     id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
     company: Mapped[UUID] = mapped_column(Uuid, ForeignKey("company.id"))
-    cooperation: Mapped[UUID] = mapped_column(Uuid, ForeignKey("cooperation.id"))
+    collaboration: Mapped[UUID] = mapped_column(Uuid, ForeignKey("collaboration.id"))
     start_date: Mapped[datetime] = mapped_column(TZDateTime)
 
 

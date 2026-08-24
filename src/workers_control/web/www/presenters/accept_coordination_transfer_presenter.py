@@ -35,7 +35,7 @@ class AcceptCoordinationTransferPresenter:
                 redirect_url=None,
             )
         else:
-            assert interactor_response.cooperation_id
+            assert interactor_response.collaboration_id
             self.notifier.display_info(
                 self.translator.gettext(
                     "Successfully accepted the request. You are now coordinator of the collaboration."

@@ -3,9 +3,9 @@ from uuid import UUID
 
 import flask
 
-from workers_control.core.interactors.accept_cooperation import (
-    AcceptCooperationInteractor,
-    AcceptCooperationRequest,
+from workers_control.core.interactors.accept_collaboration import (
+    AcceptCollaborationInteractor,
+    AcceptCollaborationRequest,
 )
 from workers_control.db import commit_changes
 from workers_control.flask.flask_session import FlaskSession
@@ -17,7 +17,7 @@ from workers_control.web.www.presenters.accept_collaboration_request_presenter i
 
 @dataclass
 class AcceptCollaborationRequestView:
-    interactor: AcceptCooperationInteractor
+    interactor: AcceptCollaborationInteractor
     presenter: AcceptCollaborationRequestPresenter
     flask_session: FlaskSession
 
@@ -28,10 +28,10 @@ class AcceptCollaborationRequestView:
         assert current_user
         collaboration_id = UUID(form["collaboration_id"].strip())
         plan_id = UUID(form["plan_id"].strip())
-        uc_request = AcceptCooperationRequest(
+        uc_request = AcceptCollaborationRequest(
             requester_id=current_user,
             plan_id=plan_id,
-            cooperation_id=collaboration_id,
+            collaboration_id=collaboration_id,
         )
         uc_response = self.interactor.execute(uc_request)
         view_model = self.presenter.render_response(uc_response)

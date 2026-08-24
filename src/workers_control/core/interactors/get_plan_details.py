@@ -29,8 +29,8 @@ class PlanDetails:
     is_public_service: bool
     price_per_unit: Decimal
     cost_per_unit: Decimal
-    is_cooperating: bool
-    cooperation: Optional[UUID]
+    is_collaborating: bool
+    collaboration: Optional[UUID]
     creation_date: datetime
     approval_date: Optional[datetime]
     expiration_date: Optional[datetime]
@@ -52,15 +52,15 @@ class GetPlanDetailsInteractor:
 
     def get_plan_details(self, request: Request) -> Optional[Response]:
         now = self.datetime_service.now()
-        plan_and_cooperation = (
+        plan_and_collaboration = (
             self.database_gateway.get_plans()
             .with_id(request.plan_id)
-            .joined_with_cooperation()
+            .joined_with_collaboration()
             .first()
         )
-        if not plan_and_cooperation:
+        if not plan_and_collaboration:
             return None
-        plan, cooperation = plan_and_cooperation
+        plan, collaboration = plan_and_collaboration
         price_per_unit = self.price_calculator.calculate_price(plan.id)
         planner = self.database_gateway.get_companies().with_id(plan.planner).first()
         assert planner
@@ -82,8 +82,8 @@ class GetPlanDetailsInteractor:
                 is_public_service=plan.is_public_service,
                 price_per_unit=price_per_unit,
                 cost_per_unit=plan.cost_per_unit(),
-                is_cooperating=bool(cooperation),
-                cooperation=cooperation.id if cooperation else None,
+                is_collaborating=bool(collaboration),
+                collaboration=collaboration.id if collaboration else None,
                 creation_date=plan.plan_creation_date,
                 approval_date=plan.approval_date,
                 expiration_date=plan.expiration_date,

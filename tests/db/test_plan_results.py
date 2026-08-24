@@ -355,102 +355,104 @@ class GetAllPlans(DatabaseTestCase):
             for plan in self.database_gateway.get_plans().without_completed_review()
         ]
 
-    def test_that_plans_with_open_cooperation_request_can_be_filtered(self) -> None:
-        coop = self.cooperation_generator.create_cooperation()
-        requesting_plan = self.plan_generator.create_plan(requested_cooperation=coop)
+    def test_that_plans_with_open_collaboration_request_can_be_filtered(self) -> None:
+        collab = self.collaboration_generator.create_collaboration()
+        requesting_plan = self.plan_generator.create_plan(
+            requested_collaboration=collab
+        )
         non_requesting_plan = self.plan_generator.create_plan()
-        results = self.database_gateway.get_plans().with_open_cooperation_request()
+        results = self.database_gateway.get_plans().with_open_collaboration_request()
         assert requesting_plan in [plan.id for plan in results]
         assert non_requesting_plan not in [plan.id for plan in results]
 
-    def test_that_plans_with_open_cooperation_request_at_specific_coop_can_be_filtered(
+    def test_that_plans_with_open_collaboration_request_at_specific_collab_can_be_filtered(
         self,
     ) -> None:
-        coop = self.cooperation_generator.create_cooperation()
-        other_coop = self.cooperation_generator.create_cooperation()
-        plan_requesting_at_coop = self.plan_generator.create_plan(
-            requested_cooperation=coop
+        collab = self.collaboration_generator.create_collaboration()
+        other_collab = self.collaboration_generator.create_collaboration()
+        plan_requesting_at_collab = self.plan_generator.create_plan(
+            requested_collaboration=collab
         )
-        plan_requesting_at_other_coop = self.plan_generator.create_plan(
-            requested_cooperation=other_coop
+        plan_requesting_at_other_collab = self.plan_generator.create_plan(
+            requested_collaboration=other_collab
         )
-        results = self.database_gateway.get_plans().with_open_cooperation_request(
-            cooperation=coop
+        results = self.database_gateway.get_plans().with_open_collaboration_request(
+            collaboration=collab
         )
-        assert plan_requesting_at_coop in [plan.id for plan in results]
-        assert plan_requesting_at_other_coop not in [plan.id for plan in results]
+        assert plan_requesting_at_collab in [plan.id for plan in results]
+        assert plan_requesting_at_other_collab not in [plan.id for plan in results]
 
-    def test_can_filter_for_cooperating_plans(self) -> None:
-        coop = self.cooperation_generator.create_cooperation()
-        cooperating_plan = self.plan_generator.create_plan(cooperation=coop)
-        non_cooperating_plan = self.plan_generator.create_plan(cooperation=None)
-        results = self.database_gateway.get_plans().that_are_cooperating()
-        assert cooperating_plan in [plan.id for plan in results]
-        assert non_cooperating_plan not in [plan.id for plan in results]
+    def test_can_filter_for_collaborating_plans(self) -> None:
+        collab = self.collaboration_generator.create_collaboration()
+        collaborating_plan = self.plan_generator.create_plan(collaboration=collab)
+        non_collaborating_plan = self.plan_generator.create_plan(collaboration=None)
+        results = self.database_gateway.get_plans().that_are_collaborating()
+        assert collaborating_plan in [plan.id for plan in results]
+        assert non_collaborating_plan not in [plan.id for plan in results]
 
-    def test_can_filter_plans_that_are_part_of_any_cooperation(self) -> None:
-        cooperation = self.cooperation_generator.create_cooperation()
-        self.plan_generator.create_plan(cooperation=cooperation)
-        plans = self.database_gateway.get_plans().that_are_part_of_cooperation()
+    def test_can_filter_plans_that_are_part_of_any_collaboration(self) -> None:
+        collaboration = self.collaboration_generator.create_collaboration()
+        self.plan_generator.create_plan(collaboration=collaboration)
+        plans = self.database_gateway.get_plans().that_are_part_of_collaboration()
         assert plans
 
-    def test_can_filter_plans_from_multiple_cooperations(self) -> None:
-        cooperation1 = self.cooperation_generator.create_cooperation()
-        cooperation2 = self.cooperation_generator.create_cooperation()
-        self.plan_generator.create_plan(cooperation=cooperation1)
-        self.plan_generator.create_plan(cooperation=cooperation2)
-        plans = self.database_gateway.get_plans().that_are_part_of_cooperation(
-            cooperation1, cooperation2
+    def test_can_filter_plans_from_multiple_collaborations(self) -> None:
+        collaboration1 = self.collaboration_generator.create_collaboration()
+        collaboration2 = self.collaboration_generator.create_collaboration()
+        self.plan_generator.create_plan(collaboration=collaboration1)
+        self.plan_generator.create_plan(collaboration=collaboration2)
+        plans = self.database_gateway.get_plans().that_are_part_of_collaboration(
+            collaboration1, collaboration2
         )
         assert len(plans) == 2
 
-    def test_correct_plans_in_cooperation_returned(self) -> None:
-        coop = self.cooperation_generator.create_cooperation()
-        plan1 = self.plan_generator.create_plan(cooperation=coop)
-        plan2 = self.plan_generator.create_plan(cooperation=coop)
-        plan3 = self.plan_generator.create_plan(requested_cooperation=None)
-        plans = self.database_gateway.get_plans().that_are_part_of_cooperation(coop)
+    def test_correct_plans_in_collaboration_returned(self) -> None:
+        collab = self.collaboration_generator.create_collaboration()
+        plan1 = self.plan_generator.create_plan(collaboration=collab)
+        plan2 = self.plan_generator.create_plan(collaboration=collab)
+        plan3 = self.plan_generator.create_plan(requested_collaboration=None)
+        plans = self.database_gateway.get_plans().that_are_part_of_collaboration(collab)
         assert len(plans) == 2
         assert plans.with_id(plan1)
         assert plans.with_id(plan2)
         assert not plans.with_id(plan3)
 
-    def test_nothing_returned_when_no_plans_in_cooperation(self) -> None:
-        coop = self.cooperation_generator.create_cooperation()
-        self.plan_generator.create_plan(requested_cooperation=None)
-        plans = self.database_gateway.get_plans().that_are_part_of_cooperation(coop)
+    def test_nothing_returned_when_no_plans_in_collaboration(self) -> None:
+        collab = self.collaboration_generator.create_collaboration()
+        self.plan_generator.create_plan(requested_collaboration=None)
+        plans = self.database_gateway.get_plans().that_are_part_of_collaboration(collab)
         assert len(plans) == 0
 
-    def test_possible_to_add_and_to_remove_plan_to_cooperation(self) -> None:
-        expected_cooperation = self.cooperation_generator.create_cooperation()
+    def test_possible_to_add_and_to_remove_plan_to_collaboration(self) -> None:
+        expected_collaboration = self.collaboration_generator.create_collaboration()
         plan = self.plan_generator.create_plan()
 
-        self.database_gateway.get_plans().with_id(plan).update().set_cooperation(
-            expected_cooperation
+        self.database_gateway.get_plans().with_id(plan).update().set_collaboration(
+            expected_collaboration
         ).perform()
         result = (
             self.database_gateway.get_plans()
             .with_id(plan)
-            .joined_with_cooperation()
+            .joined_with_collaboration()
             .first()
         )
         assert result
-        _, cooperation = result
-        assert cooperation
-        assert cooperation.id == expected_cooperation
+        _, collaboration = result
+        assert collaboration
+        assert collaboration.id == expected_collaboration
 
-        self.database_gateway.get_plans().with_id(plan).update().set_cooperation(
+        self.database_gateway.get_plans().with_id(plan).update().set_collaboration(
             None
         ).perform()
         result = (
             self.database_gateway.get_plans()
             .with_id(plan)
-            .joined_with_cooperation()
+            .joined_with_collaboration()
             .first()
         )
         assert result
-        _, cooperation = result
-        assert not cooperation
+        _, collaboration = result
+        assert not collaboration
 
     def test_that_create_plan_rejection_sets_the_rejection_date_on_the_plan(
         self,
@@ -464,69 +466,69 @@ class GetAllPlans(DatabaseTestCase):
         assert all(plan.rejection_date == expected_rejection_date for plan in plans)
 
 
-class ThatAreInSameCooperationAsTests(DatabaseTestCase):
-    def test_that_noncooperating_plan_is_not_considered_to_be_in_its_own_cooperation(
+class ThatAreInSameCollaborationAsTests(DatabaseTestCase):
+    def test_that_noncollaborating_plan_is_not_considered_to_be_in_its_own_collaboration(
         self,
     ) -> None:
-        plan = self.plan_generator.create_plan(cooperation=None)
-        cooperating_plans = (
-            self.database_gateway.get_plans().that_are_in_same_cooperation_as(plan)
+        plan = self.plan_generator.create_plan(collaboration=None)
+        collaborating_plans = (
+            self.database_gateway.get_plans().that_are_in_same_collaboration_as(plan)
         )
-        assert not cooperating_plans
+        assert not collaborating_plans
 
-    def test_plan_in_single_cooperation_is_considered_to_be_in_its_own_cooperation(
+    def test_plan_in_single_collaboration_is_considered_to_be_in_its_own_collaboration(
         self,
     ) -> None:
-        coop = self.cooperation_generator.create_cooperation()
-        plan = self.plan_generator.create_plan(cooperation=coop)
-        cooperating_plans = (
-            self.database_gateway.get_plans().that_are_in_same_cooperation_as(plan)
+        collab = self.collaboration_generator.create_collaboration()
+        plan = self.plan_generator.create_plan(collaboration=collab)
+        collaborating_plans = (
+            self.database_gateway.get_plans().that_are_in_same_collaboration_as(plan)
         )
-        assert len(cooperating_plans) == 1
-        assert plan in [p.id for p in cooperating_plans]
+        assert len(collaborating_plans) == 1
+        assert plan in [p.id for p in collaborating_plans]
 
-    def test_that_a_plan_in_same_cooperation_is_returned_together_with_the_plan(
+    def test_that_a_plan_in_same_collaboration_is_returned_together_with_the_plan(
         self,
     ) -> None:
-        coop = self.cooperation_generator.create_cooperation()
-        plan1 = self.plan_generator.create_plan(cooperation=coop)
-        plan2 = self.plan_generator.create_plan(cooperation=coop)
-        cooperating_plans = (
-            self.database_gateway.get_plans().that_are_in_same_cooperation_as(plan1)
+        collab = self.collaboration_generator.create_collaboration()
+        plan1 = self.plan_generator.create_plan(collaboration=collab)
+        plan2 = self.plan_generator.create_plan(collaboration=collab)
+        collaborating_plans = (
+            self.database_gateway.get_plans().that_are_in_same_collaboration_as(plan1)
         )
-        assert len(cooperating_plans) == 2
-        assert plan1 in [p.id for p in cooperating_plans]
-        assert plan2 in [p.id for p in cooperating_plans]
+        assert len(collaborating_plans) == 2
+        assert plan1 in [p.id for p in collaborating_plans]
+        assert plan2 in [p.id for p in collaborating_plans]
 
-    def test_that_plan_without_cooperation_is_excluded(
+    def test_that_plan_without_collaboration_is_excluded(
         self,
     ) -> None:
-        coop = self.cooperation_generator.create_cooperation()
-        plan1 = self.plan_generator.create_plan(cooperation=coop)
-        plan2 = self.plan_generator.create_plan(cooperation=coop)
-        self.plan_generator.create_plan(cooperation=None)
-        cooperating_plans = (
-            self.database_gateway.get_plans().that_are_in_same_cooperation_as(plan1)
+        collab = self.collaboration_generator.create_collaboration()
+        plan1 = self.plan_generator.create_plan(collaboration=collab)
+        plan2 = self.plan_generator.create_plan(collaboration=collab)
+        self.plan_generator.create_plan(collaboration=None)
+        collaborating_plans = (
+            self.database_gateway.get_plans().that_are_in_same_collaboration_as(plan1)
         )
-        assert len(cooperating_plans) == 2
-        assert plan1 in [p.id for p in cooperating_plans]
-        assert plan2 in [p.id for p in cooperating_plans]
+        assert len(collaborating_plans) == 2
+        assert plan1 in [p.id for p in collaborating_plans]
+        assert plan2 in [p.id for p in collaborating_plans]
 
-    def test_that_plan_in_another_cooperation_is_excluded_when_filtering_for_cooperating_plans(
+    def test_that_plan_in_another_collaboration_is_excluded_when_filtering_for_collaborating_plans(
         self,
     ) -> None:
-        coop = self.cooperation_generator.create_cooperation()
-        plan1 = self.plan_generator.create_plan(cooperation=coop)
-        plan2 = self.plan_generator.create_plan(cooperation=coop)
-        other_coop = self.cooperation_generator.create_cooperation()
-        other_plan = self.plan_generator.create_plan(cooperation=other_coop)
-        cooperating_plans = (
-            self.database_gateway.get_plans().that_are_in_same_cooperation_as(plan1)
+        collab = self.collaboration_generator.create_collaboration()
+        plan1 = self.plan_generator.create_plan(collaboration=collab)
+        plan2 = self.plan_generator.create_plan(collaboration=collab)
+        other_collab = self.collaboration_generator.create_collaboration()
+        other_plan = self.plan_generator.create_plan(collaboration=other_collab)
+        collaborating_plans = (
+            self.database_gateway.get_plans().that_are_in_same_collaboration_as(plan1)
         )
-        assert len(cooperating_plans) == 2
-        assert plan1 in [p.id for p in cooperating_plans]
-        assert plan2 in [p.id for p in cooperating_plans]
-        assert other_plan not in [p.id for p in cooperating_plans]
+        assert len(collaborating_plans) == 2
+        assert plan1 in [p.id for p in collaborating_plans]
+        assert plan2 in [p.id for p in collaborating_plans]
+        assert other_plan not in [p.id for p in collaborating_plans]
 
 
 class GetStatisticsTests(DatabaseTestCase):
@@ -700,90 +702,108 @@ class ThatAreNotHiddenTests(DatabaseTestCase):
         assert not self.database_gateway.get_plans().that_are_not_hidden()
 
 
-class JoinedWithPlannerAndCooperationTests(DatabaseTestCase):
+class JoinedWithPlannerAndCollaborationTests(DatabaseTestCase):
     def test_that_one_result_is_yieled_when_one_plan_exists(self) -> None:
         self.plan_generator.create_plan()
         assert (
-            len(self.database_gateway.get_plans().joined_with_planner_and_cooperation())
+            len(
+                self.database_gateway.get_plans().joined_with_planner_and_collaboration()
+            )
             == 1
         )
 
     def test_that_planner_id_is_returned_in_result(self) -> None:
         company = self.company_generator.create_company()
         self.plan_generator.create_plan(planner=company)
-        result = self.database_gateway.get_plans().joined_with_planner_and_cooperation()
+        result = (
+            self.database_gateway.get_plans().joined_with_planner_and_collaboration()
+        )
         assert result
-        plan, planner, coop = list(result)[0]
+        plan, planner, collab = list(result)[0]
         assert planner.id == company
 
-    def test_that_no_cooperation_is_returned_when_plan_is_not_part_of_cooperation(
+    def test_that_no_collaboration_is_returned_when_plan_is_not_part_of_collaboration(
         self,
     ) -> None:
-        self.plan_generator.create_plan(cooperation=None)
-        result = self.database_gateway.get_plans().joined_with_planner_and_cooperation()
+        self.plan_generator.create_plan(collaboration=None)
+        result = (
+            self.database_gateway.get_plans().joined_with_planner_and_collaboration()
+        )
         assert result
-        plan, planner, coop = list(result)[0]
-        assert not coop
+        plan, planner, collab = list(result)[0]
+        assert not collab
 
-    def test_that_cooperation_is_returned_when_plan_is_part_of_cooperation(
+    def test_that_collaboration_is_returned_when_plan_is_part_of_collaboration(
         self,
     ) -> None:
-        cooperation = self.cooperation_generator.create_cooperation()
-        self.plan_generator.create_plan(cooperation=cooperation)
-        result = self.database_gateway.get_plans().joined_with_planner_and_cooperation()
+        collaboration = self.collaboration_generator.create_collaboration()
+        self.plan_generator.create_plan(collaboration=collaboration)
+        result = (
+            self.database_gateway.get_plans().joined_with_planner_and_collaboration()
+        )
         assert result
-        plan, planner, coop = list(result)[0]
-        assert coop
-        assert coop.id == cooperation
+        plan, planner, collab = list(result)[0]
+        assert collab
+        assert collab.id == collaboration
 
-    def test_that_cooperation_name_is_returned_when_plan_is_part_of_cooperation(
+    def test_that_collaboration_name_is_returned_when_plan_is_part_of_collaboration(
         self,
     ) -> None:
-        NAME = f"coop {uuid4()}"
-        cooperation = self.cooperation_generator.create_cooperation(name=NAME)
-        self.plan_generator.create_plan(cooperation=cooperation)
-        result = self.database_gateway.get_plans().joined_with_planner_and_cooperation()
+        NAME = f"collab {uuid4()}"
+        collaboration = self.collaboration_generator.create_collaboration(name=NAME)
+        self.plan_generator.create_plan(collaboration=collaboration)
+        result = (
+            self.database_gateway.get_plans().joined_with_planner_and_collaboration()
+        )
         assert result
-        plan, planner, coop = list(result)[0]
-        assert coop
-        assert coop.name == NAME
+        plan, planner, collab = list(result)[0]
+        assert collab
+        assert collab.name == NAME
 
-    def test_that_two_results_are_yieled_when_two_cooperating_plans_exist_in_same_cooperation(
+    def test_that_two_results_are_yieled_when_two_collaborating_plans_exist_in_same_collaboration(
         self,
     ) -> None:
-        cooperation = self.cooperation_generator.create_cooperation()
-        self.plan_generator.create_plan(cooperation=cooperation)
-        self.plan_generator.create_plan(cooperation=cooperation)
+        collaboration = self.collaboration_generator.create_collaboration()
+        self.plan_generator.create_plan(collaboration=collaboration)
+        self.plan_generator.create_plan(collaboration=collaboration)
         assert (
-            len(self.database_gateway.get_plans().joined_with_planner_and_cooperation())
+            len(
+                self.database_gateway.get_plans().joined_with_planner_and_collaboration()
+            )
             == 2
         )
 
-    def test_that_two_results_are_yieled_when_two_cooperating_plans_exist_in_different_cooperations(
+    def test_that_two_results_are_yieled_when_two_collaborating_plans_exist_in_different_collaborations(
         self,
     ) -> None:
-        cooperation1 = self.cooperation_generator.create_cooperation()
-        cooperation2 = self.cooperation_generator.create_cooperation()
-        self.plan_generator.create_plan(cooperation=cooperation1)
-        self.plan_generator.create_plan(cooperation=cooperation2)
+        collaboration1 = self.collaboration_generator.create_collaboration()
+        collaboration2 = self.collaboration_generator.create_collaboration()
+        self.plan_generator.create_plan(collaboration=collaboration1)
+        self.plan_generator.create_plan(collaboration=collaboration2)
         assert (
-            len(self.database_gateway.get_plans().joined_with_planner_and_cooperation())
+            len(
+                self.database_gateway.get_plans().joined_with_planner_and_collaboration()
+            )
             == 2
         )
 
-    def test_that_correct_cooperation_names_are_yieled_of_two_different_cooperations(
+    def test_that_correct_collaboration_names_are_yieled_of_two_different_collaborations(
         self,
     ) -> None:
-        cooperation1 = self.cooperation_generator.create_cooperation(name="coop1")
-        cooperation2 = self.cooperation_generator.create_cooperation(name="coop2")
-        self.plan_generator.create_plan(cooperation=cooperation1)
-        self.plan_generator.create_plan(cooperation=cooperation2)
+        collaboration1 = self.collaboration_generator.create_collaboration(
+            name="collab1"
+        )
+        collaboration2 = self.collaboration_generator.create_collaboration(
+            name="collab2"
+        )
+        self.plan_generator.create_plan(collaboration=collaboration1)
+        self.plan_generator.create_plan(collaboration=collaboration2)
         results = list(
-            self.database_gateway.get_plans().joined_with_planner_and_cooperation()
+            self.database_gateway.get_plans().joined_with_planner_and_collaboration()
         )
-        for plan, planner, coop in results:
-            assert coop
-            ["coop1", "coop2"].remove(coop.name)
+        for plan, planner, collab in results:
+            assert collab
+            ["collab1", "collab2"].remove(collab.name)
 
     def test_that_it_is_possible_to_order_by_planner_name_and_join(self) -> None:
         self.plan_generator.create_plan()
@@ -791,33 +811,33 @@ class JoinedWithPlannerAndCooperationTests(DatabaseTestCase):
         results = (
             self.database_gateway.get_plans()
             .ordered_by_planner_name()
-            .joined_with_planner_and_cooperation()
+            .joined_with_planner_and_collaboration()
         )
         results.first()
 
 
-class JoinedWithCooperationTests(DatabaseTestCase):
+class JoinedWithCollaborationTests(DatabaseTestCase):
     def test_that_no_results_are_returned_if_no_plans_exist(self) -> None:
-        assert not self.database_gateway.get_plans().joined_with_cooperation()
+        assert not self.database_gateway.get_plans().joined_with_collaboration()
 
     def test_that_there_is_one_result_with_one_plan(self) -> None:
         self.plan_generator.create_plan()
-        assert len(self.database_gateway.get_plans().joined_with_cooperation()) == 1
+        assert len(self.database_gateway.get_plans().joined_with_collaboration()) == 1
 
-    def test_that_cooperation_is_none_when_plan_is_not_part_of_cooperation(
+    def test_that_collaboration_is_none_when_plan_is_not_part_of_collaboration(
         self,
     ) -> None:
-        self.plan_generator.create_plan(cooperation=None)
-        result = self.database_gateway.get_plans().joined_with_cooperation().first()
+        self.plan_generator.create_plan(collaboration=None)
+        result = self.database_gateway.get_plans().joined_with_collaboration().first()
         assert result
         assert not result[1]
 
-    def test_that_cooperation_is_not_none_when_plan_is_cooperating(
+    def test_that_collaboration_is_not_none_when_plan_is_collaborating(
         self,
     ) -> None:
-        cooperation = self.cooperation_generator.create_cooperation()
-        self.plan_generator.create_plan(cooperation=cooperation)
-        result = self.database_gateway.get_plans().joined_with_cooperation().first()
+        collaboration = self.collaboration_generator.create_collaboration()
+        self.plan_generator.create_plan(collaboration=collaboration)
+        result = self.database_gateway.get_plans().joined_with_collaboration().first()
         assert result
         assert result[1]
 
@@ -896,27 +916,31 @@ class JoinedWithProvidedProductAmountTests(DatabaseTestCase):
         assert queried_amount == expected_amount
 
 
-class ThatRequestCooperationWithCoordinatorTests(DatabaseTestCase):
-    def test_possible_to_set_and_unset_requested_cooperation_attribute(self) -> None:
-        cooperation = self.cooperation_generator.create_cooperation()
+class ThatRequestCollaborationWithCoordinatorTests(DatabaseTestCase):
+    def test_possible_to_set_and_unset_requested_collaboration_attribute(self) -> None:
+        collaboration = self.collaboration_generator.create_collaboration()
         plan = self.plan_generator.create_plan()
         plan_result = self.database_gateway.get_plans().with_id(plan)
-        plan_result.update().set_requested_cooperation(cooperation).perform()
-        assert plan_result.that_request_cooperation_with_coordinator()
-        plan_result.update().set_requested_cooperation(None).perform()
-        assert not plan_result.that_request_cooperation_with_coordinator()
+        plan_result.update().set_requested_collaboration(collaboration).perform()
+        assert plan_result.that_request_collaboration_with_coordinator()
+        plan_result.update().set_requested_collaboration(None).perform()
+        assert not plan_result.that_request_collaboration_with_coordinator()
 
     def test_correct_inbound_requests_are_returned(self) -> None:
         coordinator = self.company_generator.create_company()
-        coop = self.cooperation_generator.create_cooperation(coordinator=coordinator)
-        requesting_plan1 = self.plan_generator.create_plan(requested_cooperation=coop)
-        requesting_plan2 = self.plan_generator.create_plan(requested_cooperation=coop)
-        other_coop = self.cooperation_generator.create_cooperation()
-        self.plan_generator.create_plan(requested_cooperation=other_coop)
-        inbound_requests = (
-            self.database_gateway.get_plans().that_request_cooperation_with_coordinator(
-                coordinator
-            )
+        collab = self.collaboration_generator.create_collaboration(
+            coordinator=coordinator
+        )
+        requesting_plan1 = self.plan_generator.create_plan(
+            requested_collaboration=collab
+        )
+        requesting_plan2 = self.plan_generator.create_plan(
+            requested_collaboration=collab
+        )
+        other_collab = self.collaboration_generator.create_collaboration()
+        self.plan_generator.create_plan(requested_collaboration=other_collab)
+        inbound_requests = self.database_gateway.get_plans().that_request_collaboration_with_coordinator(
+            coordinator
         )
         assert len(inbound_requests) == 2
         assert requesting_plan1 in map(lambda p: p.id, inbound_requests)
@@ -926,17 +950,17 @@ class ThatRequestCooperationWithCoordinatorTests(DatabaseTestCase):
         self.datetime_service.freeze_time(datetime_utc(2000, 1, 1))
         original_coordinator = self.company_generator.create_company()
         new_coordinator = self.company_generator.create_company()
-        cooperation = self.cooperation_generator.create_cooperation(
+        collaboration = self.collaboration_generator.create_collaboration(
             coordinator=original_coordinator
         )
         self.datetime_service.advance_time(timedelta(days=1))
         self.database_gateway.create_coordination_tenure(
             company=new_coordinator,
-            cooperation=cooperation,
+            collaboration=collaboration,
             start_date=self.datetime_service.now(),
         )
         self.datetime_service.advance_time(timedelta(days=1))
-        self.plan_generator.create_plan(requested_cooperation=cooperation)
-        assert not self.database_gateway.get_plans().that_request_cooperation_with_coordinator(
+        self.plan_generator.create_plan(requested_collaboration=collaboration)
+        assert not self.database_gateway.get_plans().that_request_collaboration_with_coordinator(
             original_coordinator
         )

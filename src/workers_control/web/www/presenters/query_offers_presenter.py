@@ -164,7 +164,7 @@ class QueryOffersPresenter:
             price_per_unit=str(round(result.price_per_unit, 2)),
             is_basic_service=False,
             is_public_service=result.is_public_service,
-            is_collaborating=result.is_cooperating,
+            is_collaborating=result.is_collaborating,
             is_expired=result.is_expired,
             is_own_plan=is_own_plan,
             is_own_basic_service=False,

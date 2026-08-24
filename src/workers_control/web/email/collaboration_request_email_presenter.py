@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from html import escape
 
-from workers_control.core.email_notifications import CooperationRequestEmail
+from workers_control.core.email_notifications import CollaborationRequestEmail
 from workers_control.web.email import EmailConfiguration, MailService
 from workers_control.web.translator import Translator
 
@@ -12,7 +12,7 @@ class CollaborationRequestEmailPresenter:
     mail_service: MailService
     email_configuration: EmailConfiguration
 
-    def present(self, email: CooperationRequestEmail) -> None:
+    def present(self, email: CollaborationRequestEmail) -> None:
         self.mail_service.send_message(
             subject=self.translator.gettext("A company requests collaboration"),
             recipients=[email.coordinator_email_address],

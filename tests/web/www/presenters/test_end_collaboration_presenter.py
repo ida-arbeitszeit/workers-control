@@ -3,19 +3,19 @@ from uuid import uuid4
 
 from tests.base_test_case import BaseTestCase
 from tests.web.www.request import FakeRequest
-from workers_control.core.interactors.end_cooperation import EndCooperationResponse
+from workers_control.core.interactors.end_collaboration import EndCollaborationResponse
 from workers_control.web.www.presenters.end_collaboration_presenter import (
     EndCollaborationPresenter,
 )
 
-SUCCESSFUL_RESPONSE = EndCooperationResponse(rejection_reason=None)
+SUCCESSFUL_RESPONSE = EndCollaborationResponse(rejection_reason=None)
 
-REJECTED_RESPONSE_PLAN_NOT_FOUND = EndCooperationResponse(
-    rejection_reason=EndCooperationResponse.RejectionReason.plan_not_found,
+REJECTED_RESPONSE_PLAN_NOT_FOUND = EndCollaborationResponse(
+    rejection_reason=EndCollaborationResponse.RejectionReason.plan_not_found,
 )
 
-REJECTED_RESPONSE_COLLABORATION_NOT_FOUND = EndCooperationResponse(
-    rejection_reason=EndCooperationResponse.RejectionReason.cooperation_not_found,
+REJECTED_RESPONSE_COLLABORATION_NOT_FOUND = EndCollaborationResponse(
+    rejection_reason=EndCollaborationResponse.RejectionReason.collaboration_not_found,
 )
 
 

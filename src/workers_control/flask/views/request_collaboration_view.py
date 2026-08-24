@@ -5,8 +5,8 @@ from flask import Response, render_template, request
 from workers_control.core.interactors.list_active_plans_of_company import (
     ListActivePlansOfCompanyInteractor,
 )
-from workers_control.core.interactors.request_cooperation import (
-    RequestCooperationInteractor,
+from workers_control.core.interactors.request_collaboration import (
+    RequestCollaborationInteractor,
 )
 from workers_control.db import commit_changes
 from workers_control.flask.flask_session import FlaskSession
@@ -31,7 +31,7 @@ TEMPLATE_NAME = "company/request_collaboration.html"
 class RequestCollaborationView:
     list_plans: ListActivePlansOfCompanyInteractor
     list_plans_presenter: ListPlansPresenter
-    request_collaboration: RequestCooperationInteractor
+    request_collaboration: RequestCollaborationInteractor
     controller: RequestCollaborationController
     presenter: RequestCollaborationPresenter
     flask_session: FlaskSession

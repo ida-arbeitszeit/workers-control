@@ -26,12 +26,12 @@ class ShowTransferRequestBaseTest(ViewTestCase):
         requester: Optional[UUID] = None,
     ) -> UUID:
         coordinator = self.company_generator.create_company()
-        collaboration = self.cooperation_generator.create_cooperation(
+        collaboration = self.collaboration_generator.create_collaboration(
             coordinator=coordinator
         )
         requester = requester or coordinator
         transfer_request = self.coordination_transfer_request_generator.create_coordination_transfer_request(
-            requester=requester, cooperation=collaboration, candidate=candidate
+            requester=requester, collaboration=collaboration, candidate=candidate
         )
         return transfer_request
 

@@ -17,7 +17,7 @@ class CoordinationTenureResultTests(DatabaseTestCase):
     ) -> None:
         self.database_gateway.create_coordination_tenure(
             company=self.company_generator.create_company(),
-            cooperation=self.cooperation_generator.create_cooperation(),
+            collaboration=self.collaboration_generator.create_collaboration(),
             start_date=datetime_utc(2000, 1, 1),
         )
         coordination_tenures = self.database_gateway.get_coordination_tenures()
@@ -27,15 +27,15 @@ class CoordinationTenureResultTests(DatabaseTestCase):
         self,
     ) -> None:
         expected_company = self.company_generator.create_company()
-        expected_cooperation = self.cooperation_generator.create_cooperation()
+        expected_collaboration = self.collaboration_generator.create_collaboration()
         expected_start_date = datetime_utc(2345, 1, 12)
         coordination_tenure = self.database_gateway.create_coordination_tenure(
             company=expected_company,
-            cooperation=expected_cooperation,
+            collaboration=expected_collaboration,
             start_date=expected_start_date,
         )
         assert coordination_tenure.company == expected_company
-        assert coordination_tenure.cooperation == expected_cooperation
+        assert coordination_tenure.collaboration == expected_collaboration
         assert coordination_tenure.start_date == expected_start_date
 
     def test_that_freshly_created_coordination_tenure_can_be_queried_by_id(
@@ -73,35 +73,35 @@ class CoordinationTenureResultTests(DatabaseTestCase):
     def create_coordination_tenure(self) -> CoordinationTenure:
         return self.database_gateway.create_coordination_tenure(
             company=self.company_generator.create_company(),
-            cooperation=self.cooperation_generator.create_cooperation(),
+            collaboration=self.collaboration_generator.create_collaboration(),
             start_date=self.datetime_service.now(),
         )
 
 
-class CoordinationsOfCooperationTests(DatabaseTestCase):
-    def test_results_filtered_by_cooperation_dont_include_coordinations_of_other_cooperation(
+class CoordinationsOfCollaborationTests(DatabaseTestCase):
+    def test_results_filtered_by_collaboration_dont_include_coordinations_of_other_collaboration(
         self,
     ) -> None:
-        cooperation = self.cooperation_generator.create_cooperation()
-        other_cooperation = self.cooperation_generator.create_cooperation()
-        coordination_tenure = self.create_coordination_tenure(cooperation)
-        other_coordination_tenure = self.create_coordination_tenure(other_cooperation)
+        collaboration = self.collaboration_generator.create_collaboration()
+        other_collaboration = self.collaboration_generator.create_collaboration()
+        coordination_tenure = self.create_coordination_tenure(collaboration)
+        other_coordination_tenure = self.create_coordination_tenure(other_collaboration)
         coordination_tenures = self.database_gateway.get_coordination_tenures()
         assert coordination_tenure in list(
-            coordination_tenures.of_cooperation(cooperation)
+            coordination_tenures.of_collaboration(collaboration)
         )
         assert other_coordination_tenure not in list(
-            coordination_tenures.of_cooperation(cooperation)
+            coordination_tenures.of_collaboration(collaboration)
         )
 
     def create_coordination_tenure(
-        self, cooperation: Optional[UUID] = None
+        self, collaboration: Optional[UUID] = None
     ) -> CoordinationTenure:
-        if cooperation is None:
-            cooperation = self.cooperation_generator.create_cooperation()
+        if collaboration is None:
+            collaboration = self.collaboration_generator.create_collaboration()
         return self.database_gateway.create_coordination_tenure(
             company=self.company_generator.create_company(),
-            cooperation=cooperation,
+            collaboration=collaboration,
             start_date=datetime_utc(2000, 1, 1),
         )
 
@@ -113,7 +113,7 @@ class JoinedWithCoordinatorTests(DatabaseTestCase):
         expected_coordinator = self.company_generator.create_company()
         coordination_tenure = self.database_gateway.create_coordination_tenure(
             company=expected_coordinator,
-            cooperation=self.cooperation_generator.create_cooperation(),
+            collaboration=self.collaboration_generator.create_collaboration(),
             start_date=datetime_utc(2000, 1, 1),
         )
         self.assertTrue(

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from decimal import Decimal
 from typing import List, Optional
 
-from workers_control.core.interactors.get_coop_summary import GetCoopSummaryResponse
+from workers_control.core.interactors.get_collab_summary import GetCollabSummaryResponse
 
 from ...translator import Translator
 from ...url_index import UrlIndex
@@ -43,14 +43,14 @@ class GetCollabSummarySuccessPresenter:
     def create_navbar_items(self) -> list[NavbarItem]:
         return [NavbarItem(text=self.translator.gettext("Collaboration"), url=None)]
 
-    def present(self, response: GetCoopSummaryResponse) -> GetCollabSummaryViewModel:
+    def present(self, response: GetCollabSummaryResponse) -> GetCollabSummaryViewModel:
         return GetCollabSummaryViewModel(
-            collab_id=str(response.coop_id),
-            collab_name=response.coop_name,
-            collab_definition=response.coop_definition.splitlines(),
+            collab_id=str(response.collab_id),
+            collab_name=response.collab_name,
+            collab_definition=response.collab_definition.splitlines(),
             transfer_coordination_url=(
                 self.url_index.get_request_coordination_transfer_url(
-                    collab_id=response.coop_id
+                    collab_id=response.collab_id
                 )
                 if response.requester_is_coordinator
                 else None
@@ -61,12 +61,12 @@ class GetCollabSummarySuccessPresenter:
                 company_id=response.current_coordinator,
             ),
             list_of_coordinators_url=self.url_index.get_list_of_coordinators_url(
-                collaboration_id=response.coop_id,
+                collaboration_id=response.collab_id,
             ),
             collab_price=(
                 "-"
-                if response.coop_price is None
-                else self.__format_price(response.coop_price)
+                if response.collab_price is None
+                else self.__format_price(response.collab_price)
             ),
             plans=[
                 AssociatedPlan(

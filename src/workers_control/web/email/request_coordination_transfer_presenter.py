@@ -25,7 +25,7 @@ class RequestCoordinationTransferEmailPresenter:
             )
             % dict(
                 candidate=escape(email.candidate_name),
-                collaboration=escape(email.cooperation_name),
+                collaboration=escape(email.collaboration_name),
                 url=self.url_index.get_show_coordination_transfer_request_url(
                     email.transfer_request
                 ),

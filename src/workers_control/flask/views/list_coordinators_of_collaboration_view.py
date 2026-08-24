@@ -3,8 +3,8 @@ from uuid import UUID
 
 from flask import render_template
 
-from workers_control.core.interactors.list_coordinations_of_cooperation import (
-    ListCoordinationsOfCooperationInteractor,
+from workers_control.core.interactors.list_coordinations_of_collaboration import (
+    ListCoordinationsOfCollaborationInteractor,
 )
 from workers_control.flask.types import Response
 from workers_control.web.www.presenters.list_coordinations_of_collaboration_presenter import (
@@ -14,13 +14,15 @@ from workers_control.web.www.presenters.list_coordinations_of_collaboration_pres
 
 @dataclass
 class ListCoordinationsOfCollaborationView:
-    list_coordinations_of_collaboration: ListCoordinationsOfCooperationInteractor
+    list_coordinations_of_collaboration: ListCoordinationsOfCollaborationInteractor
     presenter: ListCoordinationsOfCollaborationPresenter
 
     def GET(self, collab_id: UUID) -> Response:
         interactor_response = (
             self.list_coordinations_of_collaboration.list_coordinations(
-                ListCoordinationsOfCooperationInteractor.Request(cooperation=collab_id)
+                ListCoordinationsOfCollaborationInteractor.Request(
+                    collaboration=collab_id
+                )
             )
         )
         view_model = self.presenter.list_coordinations_of_collaboration(

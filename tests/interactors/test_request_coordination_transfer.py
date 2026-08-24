@@ -57,7 +57,7 @@ class RequestCoordinationTransferTests(BaseTestCase):
             RequestCoordinationTransferInteractor.Response.RejectionReason.requester_is_not_coordinator,
         )
 
-    def test_requesting_transfer_fails_if_candidate_is_current_coordinator_of_cooperation(
+    def test_requesting_transfer_fails_if_candidate_is_current_coordinator_of_collaboration(
         self,
     ) -> None:
         response = self.interactor.request_transfer(
@@ -75,14 +75,18 @@ class RequestCoordinationTransferTests(BaseTestCase):
         self,
     ) -> None:
         requester = self.company_generator.create_company()
-        cooperation = self.cooperation_generator.create_cooperation(
+        collaboration = self.collaboration_generator.create_collaboration(
             coordinator=requester
         )
         self.interactor.request_transfer(
-            self.get_interactor_request(requester=requester, cooperation=cooperation)
+            self.get_interactor_request(
+                requester=requester, collaboration=collaboration
+            )
         )
         response = self.interactor.request_transfer(
-            self.get_interactor_request(requester=requester, cooperation=cooperation)
+            self.get_interactor_request(
+                requester=requester, collaboration=collaboration
+            )
         )
         self.assertTrue(response.is_rejected)
         self.assertEqual(
@@ -90,14 +94,14 @@ class RequestCoordinationTransferTests(BaseTestCase):
             RequestCoordinationTransferInteractor.Response.RejectionReason.coordination_tenure_has_pending_transfer_request,
         )
 
-    def test_requesting_transfer_fails_if_cooperation_does_not_exist(self) -> None:
+    def test_requesting_transfer_fails_if_collaboration_does_not_exist(self) -> None:
         response = self.interactor.request_transfer(
-            self.get_interactor_request(cooperation=uuid4())
+            self.get_interactor_request(collaboration=uuid4())
         )
         self.assertTrue(response.is_rejected)
         self.assertEqual(
             response.rejection_reason,
-            RequestCoordinationTransferInteractor.Response.RejectionReason.cooperation_not_found,
+            RequestCoordinationTransferInteractor.Response.RejectionReason.collaboration_not_found,
         )
 
     def test_that_a_notification_gets_sent_after_successfull_transfer_request(
@@ -107,30 +111,30 @@ class RequestCoordinationTransferTests(BaseTestCase):
         self.assertTrue(self.delivered_notifications())
 
     def test_that_delivered_notification_contains_candidate_name(self) -> None:
-        expected_name = "Candidate For Coordination Coop."
+        expected_name = "Candidate For Coordination Collab."
         candidate = self.company_generator.create_company(name=expected_name)
         self.successfully_request_a_transfer(candidate=candidate)
         notification = self.get_latest_notification_delivered()
         self.assertEqual(notification.candidate_name, expected_name)
 
     def test_that_delivered_notification_contains_candidate_email(self) -> None:
-        expected_mail = "candidate_for_coordination@coop.org"
+        expected_mail = "candidate_for_coordination@collab.org"
         candidate = self.company_generator.create_company(email=expected_mail)
         self.successfully_request_a_transfer(candidate=candidate)
         notification = self.get_latest_notification_delivered()
         self.assertEqual(notification.candidate_email, expected_mail)
 
-    def test_that_delivered_notification_contains_cooperation_name(self) -> None:
-        expected_name = "Cooperation Coop."
+    def test_that_delivered_notification_contains_collaboration_name(self) -> None:
+        expected_name = "Collaboration Collab."
         coordinator = self.company_generator.create_company()
-        cooperation = self.cooperation_generator.create_cooperation(
+        collaboration = self.collaboration_generator.create_collaboration(
             name=expected_name, coordinator=coordinator
         )
         self.successfully_request_a_transfer(
-            current_user=coordinator, cooperation=cooperation
+            current_user=coordinator, collaboration=collaboration
         )
         notification = self.get_latest_notification_delivered()
-        self.assertEqual(notification.cooperation_name, expected_name)
+        self.assertEqual(notification.collaboration_name, expected_name)
 
     def test_that_delivered_notification_contains_request_transfer_id(self) -> None:
         expected_transfer_request = self.successfully_request_a_transfer()
@@ -140,20 +144,20 @@ class RequestCoordinationTransferTests(BaseTestCase):
     def get_interactor_request(
         self,
         requester: Optional[UUID] = None,
-        cooperation: Optional[UUID] = None,
+        collaboration: Optional[UUID] = None,
         candidate: Optional[UUID] = None,
         requester_is_coordinator: bool = False,
         candidate_is_coordinator: bool = False,
     ) -> RequestCoordinationTransferInteractor.Request:
         if requester is None:
             requester = self.company_generator.create_company()
-        if cooperation is None:
+        if collaboration is None:
             coordinator = (
                 requester
                 if requester_is_coordinator
                 else self.company_generator.create_company()
             )
-            cooperation = self.cooperation_generator.create_cooperation(
+            collaboration = self.collaboration_generator.create_collaboration(
                 coordinator=coordinator
             )
         if candidate is None:
@@ -163,24 +167,24 @@ class RequestCoordinationTransferTests(BaseTestCase):
                 else self.company_generator.create_company()
             )
         return RequestCoordinationTransferInteractor.Request(
-            requester=requester, cooperation=cooperation, candidate=candidate
+            requester=requester, collaboration=collaboration, candidate=candidate
         )
 
     def successfully_request_a_transfer(
         self,
         current_user: Optional[UUID] = None,
-        cooperation: Optional[UUID] = None,
+        collaboration: Optional[UUID] = None,
         candidate: Optional[UUID] = None,
     ) -> UUID:
         if current_user is None:
             current_user = self.company_generator.create_company()
-        if cooperation is None:
-            cooperation = self.cooperation_generator.create_cooperation(
+        if collaboration is None:
+            collaboration = self.collaboration_generator.create_collaboration(
                 coordinator=current_user
             )
         response = self.interactor.request_transfer(
             request=self.get_interactor_request(
-                requester=current_user, cooperation=cooperation, candidate=candidate
+                requester=current_user, collaboration=collaboration, candidate=candidate
             )
         )
         self.assertFalse(response.is_rejected)

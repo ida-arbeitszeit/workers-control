@@ -2,25 +2,25 @@ from typing import List
 from uuid import uuid4
 
 from tests.base_test_case import BaseTestCase
-from workers_control.core.interactors.create_cooperation import (
-    CreateCooperationResponse,
+from workers_control.core.interactors.create_collaboration import (
+    CreateCollaborationResponse,
 )
 from workers_control.web.www.presenters.create_collaboration_presenter import (
     CreateCollaborationPresenter,
 )
 
-SUCCESSFUL_CREATE_RESPONSE = CreateCooperationResponse(
-    rejection_reason=None, cooperation_id=uuid4()
+SUCCESSFUL_CREATE_RESPONSE = CreateCollaborationResponse(
+    rejection_reason=None, collaboration_id=uuid4()
 )
 
-REJECTED_RESPONSE_NAME_EXISTS = CreateCooperationResponse(
-    rejection_reason=CreateCooperationResponse.RejectionReason.cooperation_with_name_exists,
-    cooperation_id=None,
+REJECTED_RESPONSE_NAME_EXISTS = CreateCollaborationResponse(
+    rejection_reason=CreateCollaborationResponse.RejectionReason.collaboration_with_name_exists,
+    collaboration_id=None,
 )
 
-REJECTED_RESPONSE_COORDINATOR_NOT_FOUND = CreateCooperationResponse(
-    rejection_reason=CreateCooperationResponse.RejectionReason.coordinator_not_found,
-    cooperation_id=None,
+REJECTED_RESPONSE_COORDINATOR_NOT_FOUND = CreateCollaborationResponse(
+    rejection_reason=CreateCollaborationResponse.RejectionReason.coordinator_not_found,
+    collaboration_id=None,
 )
 
 

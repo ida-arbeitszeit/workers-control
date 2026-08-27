@@ -14,6 +14,7 @@ def main() -> None:
     run_check_command(["flake8"])
     run_check_command(["mypy"])
     run_check_command(["isort", "--check"] + autoformatted_paths)
+    run_check_command(["make", "clean", "html"])
     run_check_command(["python", "docs/generate_docs.py"])
     run_check_command(
         ["git", "diff", "--exit-code", "--", "docs/config_options_GENERATED.rst"]

@@ -15,12 +15,12 @@ from tests.datetime_service import FakeDatetimeService
 from workers_control.core import records
 from workers_control.core.interactors import (
     confirm_member,
-    get_coop_summary,
+    get_collab_summary,
     register_productive_consumption_of_basic_service,
 )
-from workers_control.core.interactors.accept_cooperation import (
-    AcceptCooperationInteractor,
-    AcceptCooperationRequest,
+from workers_control.core.interactors.accept_collaboration import (
+    AcceptCollaborationInteractor,
+    AcceptCollaborationRequest,
 )
 from workers_control.core.interactors.answer_company_work_invite import (
     AnswerCompanyWorkInviteInteractor,
@@ -32,9 +32,9 @@ from workers_control.core.interactors.create_basic_service import (
     CreateBasicServiceInteractor,
     CreateBasicServiceRequest,
 )
-from workers_control.core.interactors.create_cooperation import (
-    CreateCooperationInteractor,
-    CreateCooperationRequest,
+from workers_control.core.interactors.create_collaboration import (
+    CreateCollaborationInteractor,
+    CreateCollaborationRequest,
 )
 from workers_control.core.interactors.create_plan_draft import CreatePlanDraft, Request
 from workers_control.core.interactors.deactivate_basic_service import (
@@ -75,9 +75,9 @@ from workers_control.core.interactors.register_productive_consumption import (
     RegisterProductiveConsumptionResponse,
 )
 from workers_control.core.interactors.reject_plan import RejectPlanInteractor
-from workers_control.core.interactors.request_cooperation import (
-    RequestCooperationInteractor,
-    RequestCooperationRequest,
+from workers_control.core.interactors.request_collaboration import (
+    RequestCollaborationInteractor,
+    RequestCollaborationRequest,
 )
 from workers_control.core.interactors.request_coordination_transfer import (
     RequestCoordinationTransferInteractor,
@@ -189,13 +189,13 @@ class EmailGenerator:
 class PlanGenerator:
     company_generator: CompanyGenerator
     database_gateway: DatabaseGateway
-    request_cooperation: RequestCooperationInteractor
-    accept_cooperation: AcceptCooperationInteractor
+    request_collaboration: RequestCollaborationInteractor
+    accept_collaboration: AcceptCollaborationInteractor
     create_plan_draft_interactor: CreatePlanDraft
     file_plan_with_accounting: FilePlanWithAccounting
     approve_plan_interactor: ApprovePlanInteractor
     hide_plan: HidePlanInteractor
-    get_coop_summary_interactor: get_coop_summary.GetCoopSummaryInteractor
+    get_collab_summary_interactor: get_collab_summary.GetCollabSummaryInteractor
     reject_plan_interactor: RejectPlanInteractor
 
     def create_plan(
@@ -210,14 +210,14 @@ class PlanGenerator:
         product_name: str = "Produkt A",
         production_unit: str = "500 Gramm",
         timeframe: Optional[int] = None,
-        requested_cooperation: Optional[UUID] = None,
-        cooperation: Optional[UUID] = None,
+        requested_collaboration: Optional[UUID] = None,
+        collaboration: Optional[UUID] = None,
         hidden_by_user: bool = False,
         rejected: bool = False,
     ) -> UUID:
         assert not (
-            requested_cooperation and cooperation
-        ), "You cannot request a new cooperation for a plan that already belongs to one."
+            requested_collaboration and collaboration
+        ), "You cannot request a new collaboration for a plan that already belongs to one."
         if planner is None:
             planner = self.company_generator.create_company()
         draft = self.draft_plan(
@@ -250,73 +250,75 @@ class PlanGenerator:
                 RejectPlanInteractor.Request(plan=file_plan_response.plan_id)
             )
             assert rejected_response.is_plan_rejected
-        if requested_cooperation:
-            self._request_cooperation(
+        if requested_collaboration:
+            self._request_collaboration(
                 planner=planner,
                 plan=file_plan_response.plan_id,
-                cooperation=requested_cooperation,
+                collaboration=requested_collaboration,
             )
-        if cooperation:
-            self._add_plan_to_cooperation(
+        if collaboration:
+            self._add_plan_to_collaboration(
                 planner=planner,
                 plan_id=file_plan_response.plan_id,
-                cooperation=cooperation,
+                collaboration=collaboration,
             )
         if hidden_by_user:
             self.hide_plan.execute(plan_id=file_plan_response.plan_id)
         return file_plan_response.plan_id
 
-    def _add_plan_to_cooperation(
+    def _add_plan_to_collaboration(
         self,
         planner: UUID,
         plan_id: UUID,
-        cooperation: UUID,
+        collaboration: UUID,
     ) -> None:
-        self._request_cooperation(
+        self._request_collaboration(
             planner=planner,
             plan=plan_id,
-            cooperation=cooperation,
+            collaboration=collaboration,
         )
-        coordinator = self._get_cooperation_coordinator(cooperation, planner)
-        self._accept_cooperation(
+        coordinator = self._get_collaboration_coordinator(collaboration, planner)
+        self._accept_collaboration(
             coordinator=coordinator,
             plan=plan_id,
-            cooperation=cooperation,
+            collaboration=collaboration,
         )
 
-    def _request_cooperation(
+    def _request_collaboration(
         self,
         planner: UUID,
         plan: UUID,
-        cooperation: UUID,
+        collaboration: UUID,
     ) -> None:
-        request = RequestCooperationRequest(
-            requester_id=planner, plan_id=plan, cooperation_id=cooperation
+        request = RequestCollaborationRequest(
+            requester_id=planner, plan_id=plan, collaboration_id=collaboration
         )
-        response = self.request_cooperation.execute(request)
+        response = self.request_collaboration.execute(request)
         if response.is_rejected:
             assert response.rejection_reason
             raise response.rejection_reason
 
-    def _accept_cooperation(
+    def _accept_collaboration(
         self,
         coordinator: UUID,
         plan: UUID,
-        cooperation: UUID,
+        collaboration: UUID,
     ) -> None:
-        request = AcceptCooperationRequest(
-            requester_id=coordinator, plan_id=plan, cooperation_id=cooperation
+        request = AcceptCollaborationRequest(
+            requester_id=coordinator, plan_id=plan, collaboration_id=collaboration
         )
-        response = self.accept_cooperation.execute(request)
+        response = self.accept_collaboration.execute(request)
         if response.is_rejected:
             assert response.rejection_reason
             raise response.rejection_reason
 
-    def _get_cooperation_coordinator(self, cooperation: UUID, planner: UUID) -> UUID:
-        request = get_coop_summary.GetCoopSummaryRequest(
-            requester_id=planner, coop_id=cooperation
+    def _get_collaboration_coordinator(
+        self, collaboration: UUID, planner: UUID
+    ) -> UUID:
+        request = get_collab_summary.GetCollabSummaryRequest(
+            requester_id=planner, collab_id=collaboration
         )
-        response = self.get_coop_summary_interactor.execute(request)
+        response = self.get_collab_summary_interactor.execute(request)
         assert response
         return response.current_coordinator
 
@@ -531,15 +533,15 @@ class TransferGenerator:
 
 
 @dataclass
-class CooperationGenerator:
+class CollaborationGenerator:
     datetime_service: FakeDatetimeService
     company_generator: CompanyGenerator
     database_gateway: DatabaseGateway
-    create_cooperation_interactor: CreateCooperationInteractor
-    request_cooperation_interactor: RequestCooperationInteractor
-    accept_cooperation_interactor: AcceptCooperationInteractor
+    create_collaboration_interactor: CreateCollaborationInteractor
+    request_collaboration_interactor: RequestCollaborationInteractor
+    accept_collaboration_interactor: AcceptCollaborationInteractor
 
-    def create_cooperation(
+    def create_collaboration(
         self,
         name: Optional[str] = None,
         coordinator: Optional[Union[records.Company, UUID]] = None,
@@ -551,49 +553,49 @@ class CooperationGenerator:
             coordinator = self.company_generator.create_company_record()
         if isinstance(coordinator, records.Company):
             coordinator = coordinator.id
-        uc_request = CreateCooperationRequest(
+        uc_request = CreateCollaborationRequest(
             coordinator_id=coordinator, name=name, definition="test info"
         )
-        uc_response = self.create_cooperation_interactor.execute(uc_request)
+        uc_response = self.create_collaboration_interactor.execute(uc_request)
         assert not uc_response.is_rejected
-        cooperation_id = uc_response.cooperation_id
-        assert cooperation_id
+        collaboration_id = uc_response.collaboration_id
+        assert collaboration_id
         if plans is not None:
             for plan in plans:
                 planner = self._get_planner(plan)
-                self._add_plan_to_cooperation(
+                self._add_plan_to_collaboration(
                     planner=planner,
                     plan=plan,
-                    cooperation=cooperation_id,
+                    collaboration=collaboration_id,
                     coordinator=coordinator,
                 )
-        cooperation_record = (
-            self.database_gateway.get_cooperations().with_id(cooperation_id).first()
+        collaboration_record = (
+            self.database_gateway.get_collaborations().with_id(collaboration_id).first()
         )
-        assert cooperation_record
-        return cooperation_record.id
+        assert collaboration_record
+        return collaboration_record.id
 
     def _get_planner(self, plan: UUID) -> UUID:
         plan_record = self.database_gateway.get_plans().with_id(plan).first()
         assert plan_record
         return plan_record.planner
 
-    def _add_plan_to_cooperation(
+    def _add_plan_to_collaboration(
         self,
         planner: UUID,
         plan: UUID,
-        cooperation: UUID,
+        collaboration: UUID,
         coordinator: UUID,
     ) -> None:
-        request = RequestCooperationRequest(
-            requester_id=planner, plan_id=plan, cooperation_id=cooperation
+        request = RequestCollaborationRequest(
+            requester_id=planner, plan_id=plan, collaboration_id=collaboration
         )
-        request_response = self.request_cooperation_interactor.execute(request)
+        request_response = self.request_collaboration_interactor.execute(request)
         if request_response.is_rejected:
             assert request_response.rejection_reason
             raise request_response.rejection_reason
-        accept_response = self.accept_cooperation_interactor.execute(
-            AcceptCooperationRequest(coordinator, plan, cooperation)
+        accept_response = self.accept_collaboration_interactor.execute(
+            AcceptCollaborationRequest(coordinator, plan, collaboration)
         )
         if accept_response.is_rejected:
             assert accept_response.rejection_reason
@@ -605,36 +607,38 @@ class CoordinationTenureGenerator:
     datetime_service: FakeDatetimeService
     company_generator: CompanyGenerator
     database_gateway: DatabaseGateway
-    create_cooperation_interactor: CreateCooperationInteractor
+    create_collaboration_interactor: CreateCollaborationInteractor
 
     def create_coordination_tenure(
-        self, cooperation: Optional[UUID] = None, coordinator: Optional[UUID] = None
+        self, collaboration: Optional[UUID] = None, coordinator: Optional[UUID] = None
     ) -> UUID:
         if coordinator is None:
             coordinator = self.company_generator.create_company()
-        if cooperation is None:
-            cooperation = self._create_coop(coordinator=coordinator)
-        tenure = self._create_tenure(cooperation=cooperation, coordinator=coordinator)
+        if collaboration is None:
+            collaboration = self._create_collab(coordinator=coordinator)
+        tenure = self._create_tenure(
+            collaboration=collaboration, coordinator=coordinator
+        )
         return tenure
 
-    def _create_coop(self, coordinator: UUID) -> UUID:
-        uc_request = CreateCooperationRequest(
+    def _create_collab(self, coordinator: UUID) -> UUID:
+        uc_request = CreateCollaborationRequest(
             coordinator_id=coordinator, name=f"name_{uuid4()}", definition="test info"
         )
-        uc_response = self.create_cooperation_interactor.execute(uc_request)
-        assert uc_response.cooperation_id
-        cooperation = (
-            self.database_gateway.get_cooperations()
-            .with_id(uc_response.cooperation_id)
+        uc_response = self.create_collaboration_interactor.execute(uc_request)
+        assert uc_response.collaboration_id
+        collaboration = (
+            self.database_gateway.get_collaborations()
+            .with_id(uc_response.collaboration_id)
             .first()
         )
-        assert cooperation
-        return cooperation.id
+        assert collaboration
+        return collaboration.id
 
-    def _create_tenure(self, cooperation: UUID, coordinator: UUID) -> UUID:
+    def _create_tenure(self, collaboration: UUID, coordinator: UUID) -> UUID:
         tenure = self.database_gateway.create_coordination_tenure(
             company=coordinator,
-            cooperation=cooperation,
+            collaboration=collaboration,
             start_date=self.datetime_service.now(),
         )
         return tenure.id
@@ -642,26 +646,26 @@ class CoordinationTenureGenerator:
 
 @dataclass
 class CoordinationTransferRequestGenerator:
-    cooperation_generator: CooperationGenerator
+    collaboration_generator: CollaborationGenerator
     company_generator: CompanyGenerator
     request_transfer_interactor: RequestCoordinationTransferInteractor
 
     def create_coordination_transfer_request(
         self,
         requester: Optional[UUID] = None,
-        cooperation: Optional[UUID] = None,
+        collaboration: Optional[UUID] = None,
         candidate: Optional[UUID] = None,
     ) -> UUID:
         if requester is None:
             requester = self.company_generator.create_company()
-        if cooperation is None:
-            cooperation = self.cooperation_generator.create_cooperation()
+        if collaboration is None:
+            collaboration = self.collaboration_generator.create_collaboration()
         if candidate is None:
             candidate = self.company_generator.create_company()
         request_response = self.request_transfer_interactor.request_transfer(
             RequestCoordinationTransferInteractor.Request(
                 requester=requester,
-                cooperation=cooperation,
+                collaboration=collaboration,
                 candidate=candidate,
             )
         )

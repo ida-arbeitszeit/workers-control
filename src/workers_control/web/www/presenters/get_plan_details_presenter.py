@@ -115,12 +115,12 @@ class GetPlanDetailsPresenter:
             price_per_unit=(
                 self.translator.gettext("Price (hours/unit)"),
                 self._format_price(plan_details.price_per_unit),
-                plan_details.is_cooperating,
+                plan_details.is_collaborating,
                 (
-                    self.url_index.get_coop_summary_url(
-                        coop_id=plan_details.cooperation
+                    self.url_index.get_collab_summary_url(
+                        collab_id=plan_details.collaboration
                     )
-                    if plan_details.cooperation
+                    if plan_details.collaboration
                     else None
                 ),
             ),

@@ -11,7 +11,7 @@ from workers_control.web.www.navbar import NavbarItem
 class GetStatisticsViewModel:
     registered_companies_count: str
     registered_members_count: str
-    cooperations_count: str
+    collaborations_count: str
     active_plans_count: str
     active_basic_services_count: str
     average_timeframe_days: str
@@ -58,7 +58,7 @@ class GetStatisticsPresenter:
                 interactor_response.registered_companies_count
             ),
             registered_members_count=str(interactor_response.registered_members_count),
-            cooperations_count=str(interactor_response.cooperations_count),
+            collaborations_count=str(interactor_response.collaborations_count),
             active_plans_count=str(interactor_response.active_plans_count),
             active_basic_services_count=str(
                 interactor_response.active_basic_services_count

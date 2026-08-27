@@ -28,7 +28,7 @@ class RequestCoordinationTransferEmailPresenterTests(BaseTestCase):
         self.assertEqual(
             self.email_service.sent_mails[0].subject,
             self.translator.gettext(
-                "You are asked to be the coordinator of a cooperation"
+                "You are asked to be the coordinator of a collaboration"
             ),
         )
 
@@ -49,24 +49,24 @@ class RequestCoordinationTransferEmailPresenterTests(BaseTestCase):
         self.presenter.present(self.create_email(candidate_name=candidate_name))
         self.assertIn(candidate_name, self.email_service.sent_mails[0].html)
 
-    def test_that_cooperation_name_appears_in_mail_body(self) -> None:
-        cooperation_name = "some coop name"
-        self.presenter.present(self.create_email(cooperation_name=cooperation_name))
-        self.assertIn(cooperation_name, self.email_service.sent_mails[0].html)
+    def test_that_collaboration_name_appears_in_mail_body(self) -> None:
+        collaboration_name = "some collab name"
+        self.presenter.present(self.create_email(collaboration_name=collaboration_name))
+        self.assertIn(collaboration_name, self.email_service.sent_mails[0].html)
 
-    def test_that_both_candidate_and_cooperation_name_are_safely_escaped_in_html_body(
+    def test_that_both_candidate_and_collaboration_name_are_safely_escaped_in_html_body(
         self,
     ) -> None:
-        dangerous_cooperation_name = '<a href="dangerous site">coop</a>'
+        dangerous_collaboration_name = '<a href="dangerous site">collab</a>'
         dangerous_candidate_name = '<a href="dangerous site">candidate</a>'
         self.presenter.present(
             self.create_email(
-                cooperation_name=dangerous_cooperation_name,
+                collaboration_name=dangerous_collaboration_name,
                 candidate_name=dangerous_candidate_name,
             )
         )
         self.assertIn(
-            escape(dangerous_cooperation_name), self.email_service.sent_mails[0].html
+            escape(dangerous_collaboration_name), self.email_service.sent_mails[0].html
         )
         self.assertIn(
             escape(dangerous_candidate_name), self.email_service.sent_mails[0].html
@@ -84,7 +84,7 @@ class RequestCoordinationTransferEmailPresenterTests(BaseTestCase):
         self,
         candidate_mail: str = "candidate@comp.any",
         candidate_name: str = "candidate xy",
-        cooperation_name: str = "cooperation name",
+        collaboration_name: str = "collaboration name",
         transfer_request: Optional[UUID] = None,
     ) -> email_notifications.CoordinationTransferRequest:
         if transfer_request is None:
@@ -92,6 +92,6 @@ class RequestCoordinationTransferEmailPresenterTests(BaseTestCase):
         return email_notifications.CoordinationTransferRequest(
             candidate_email=candidate_mail,
             candidate_name=candidate_name,
-            cooperation_name=cooperation_name,
+            collaboration_name=collaboration_name,
             transfer_request=transfer_request,
         )

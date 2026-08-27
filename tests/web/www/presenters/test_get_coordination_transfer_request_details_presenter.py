@@ -27,26 +27,26 @@ class GetDetailsPresenterTests(BaseTestCase):
             date=date, fmt="%d.%m.%Y %H:%M"
         )
 
-    def test_that_correct_cooperation_summary_url_is_displayed(
+    def test_that_correct_collaboration_summary_url_is_displayed(
         self,
     ) -> None:
         user_role = self.session.get_user_role()
         assert user_role
-        cooperation_id = uuid4()
-        response = self.get_interactor_response(cooperation_id=cooperation_id)
-        expected_cooperation_url = self.url_index.get_coop_summary_url(
-            coop_id=cooperation_id
+        collaboration_id = uuid4()
+        response = self.get_interactor_response(collaboration_id=collaboration_id)
+        expected_collaboration_url = self.url_index.get_collab_summary_url(
+            collab_id=collaboration_id
         )
         view_model = self.presenter.present(response)
-        self.assertEqual(view_model.cooperation_url, expected_cooperation_url)
+        self.assertEqual(view_model.collaboration_url, expected_collaboration_url)
 
-    def test_that_cooperation_name_is_displayed_in_view_model(self) -> None:
-        expected_cooperation_name = "Test Cooperation"
+    def test_that_collaboration_name_is_displayed_in_view_model(self) -> None:
+        expected_collaboration_name = "Test Collaboration"
         response = self.get_interactor_response(
-            cooperation_name=expected_cooperation_name
+            collaboration_name=expected_collaboration_name
         )
         view_model = self.presenter.present(response)
-        self.assertEqual(view_model.cooperation_name, expected_cooperation_name)
+        self.assertEqual(view_model.collaboration_name, expected_collaboration_name)
 
     def test_that_correct_company_summary_url_of_candidate_is_displayed(
         self,
@@ -107,8 +107,8 @@ class GetDetailsPresenterTests(BaseTestCase):
     def get_interactor_response(
         self,
         request_date: datetime = datetime_utc(2021, 1, 1),
-        cooperation_id: UUID = uuid4(),
-        cooperation_name: str = "Test Cooperation",
+        collaboration_id: UUID = uuid4(),
+        collaboration_name: str = "Test Collaboration",
         candidate_id: UUID = uuid4(),
         candidate_name: str = "Candidate Name",
         request_is_pending: Optional[bool] = None,
@@ -117,8 +117,8 @@ class GetDetailsPresenterTests(BaseTestCase):
             request_is_pending = True
         return Interactor.Response(
             request_date=request_date,
-            cooperation_id=cooperation_id,
-            cooperation_name=cooperation_name,
+            collaboration_id=collaboration_id,
+            collaboration_name=collaboration_name,
             candidate_id=candidate_id,
             candidate_name=candidate_name,
             request_is_pending=request_is_pending,

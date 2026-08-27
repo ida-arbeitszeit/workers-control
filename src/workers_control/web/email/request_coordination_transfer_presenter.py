@@ -17,15 +17,15 @@ class RequestCoordinationTransferEmailPresenter:
     def present(self, email: CoordinationTransferRequest) -> None:
         self.mail_service.send_message(
             subject=self.translator.gettext(
-                "You are asked to be the coordinator of a cooperation"
+                "You are asked to be the coordinator of a collaboration"
             ),
             recipients=[email.candidate_email],
             html=self.translator.gettext(
-                "Hello %(candidate)s,<br>Your are asked to be the coordinator of the cooperation '%(cooperation)s'. Please follow this link to check the request in the Workers Control app: <a href='%(url)s'>LINK</a>."
+                "Hello %(candidate)s,<br>Your are asked to be the coordinator of the collaboration '%(collaboration)s'. Please follow this link to check the request in the Workers Control app: <a href='%(url)s'>LINK</a>."
             )
             % dict(
                 candidate=escape(email.candidate_name),
-                cooperation=escape(email.cooperation_name),
+                collaboration=escape(email.collaboration_name),
                 url=self.url_index.get_show_coordination_transfer_request_url(
                     email.transfer_request
                 ),

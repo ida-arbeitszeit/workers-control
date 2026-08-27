@@ -21,7 +21,7 @@ class AccountOwnerType(Enum):
     member = "member"
     company = "company"
     social_accounting = "social_accounting"
-    cooperation = "cooperation"
+    collaboration = "collaboration"
 
 
 @dataclass
@@ -105,7 +105,7 @@ class ListTransfersInteractor:
         elif isinstance(account_owner, SocialAccounting):
             return AccountOwnerType.social_accounting
         else:
-            return AccountOwnerType.cooperation
+            return AccountOwnerType.collaboration
 
 
 def _limit_results(

@@ -214,9 +214,11 @@ class FormatPlanDetailsTests(BaseTestCase):
     def test_price_per_unit_is_displayed_correctly_as_tuple_of_strings_and_bool(
         self,
     ) -> None:
-        COOP_ID = uuid4()
+        COLLAB_ID = uuid4()
         plan_details = self.plan_details_generator.create_plan_details(
-            cooperation=COOP_ID, is_cooperating=True, price_per_unit=Decimal("0.061")
+            collaboration=COLLAB_ID,
+            is_collaborating=True,
+            price_per_unit=Decimal("0.061"),
         )
         web_details = self.format_details(plan_details)
         self.assertTupleEqual(
@@ -225,7 +227,7 @@ class FormatPlanDetailsTests(BaseTestCase):
                 self.translator.gettext("Price (hours/unit)"),
                 "0.06",
                 True,
-                self.url_index.get_coop_summary_url(coop_id=COOP_ID),
+                self.url_index.get_collab_summary_url(collab_id=COLLAB_ID),
             ),
         )
 

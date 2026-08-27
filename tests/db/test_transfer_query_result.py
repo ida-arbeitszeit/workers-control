@@ -215,20 +215,20 @@ class JoinedWithDebtorTests(DatabaseTestCase):
         assert transfer_with_debtor
         assert transfer_with_debtor[1] == social_accounting
 
-    def test_that_joined_with_debtor_yields_cooperation(
+    def test_that_joined_with_debtor_yields_collaboration(
         self,
     ) -> None:
-        cooperation_id = self.cooperation_generator.create_cooperation()
-        cooperation = (
-            self.database_gateway.get_cooperations().with_id(cooperation_id).first()
+        collaboration_id = self.collaboration_generator.create_collaboration()
+        collaboration = (
+            self.database_gateway.get_collaborations().with_id(collaboration_id).first()
         )
-        assert cooperation
-        self.transfer_generator.create_transfer(debit_account=cooperation.account)
+        assert collaboration
+        self.transfer_generator.create_transfer(debit_account=collaboration.account)
         transfer_with_debtor = (
             self.database_gateway.get_transfers().joined_with_debtor().first()
         )
         assert transfer_with_debtor
-        assert transfer_with_debtor[1] == cooperation
+        assert transfer_with_debtor[1] == collaboration
 
 
 class JoinedWithCreditorTests(DatabaseTestCase):
@@ -282,20 +282,20 @@ class JoinedWithCreditorTests(DatabaseTestCase):
         assert transfer_with_creditor
         assert transfer_with_creditor[1] == social_accounting
 
-    def test_that_joined_with_creditor_yields_cooperation(
+    def test_that_joined_with_creditor_yields_collaboration(
         self,
     ) -> None:
-        cooperation_id = self.cooperation_generator.create_cooperation()
-        cooperation = (
-            self.database_gateway.get_cooperations().with_id(cooperation_id).first()
+        collaboration_id = self.collaboration_generator.create_collaboration()
+        collaboration = (
+            self.database_gateway.get_collaborations().with_id(collaboration_id).first()
         )
-        assert cooperation
-        self.transfer_generator.create_transfer(credit_account=cooperation.account)
+        assert collaboration
+        self.transfer_generator.create_transfer(credit_account=collaboration.account)
         transfer_with_creditor = (
             self.database_gateway.get_transfers().joined_with_creditor().first()
         )
         assert transfer_with_creditor
-        assert transfer_with_creditor[1] == cooperation
+        assert transfer_with_creditor[1] == collaboration
 
 
 class OrderedByDateTests(DatabaseTestCase):
@@ -408,17 +408,17 @@ class JoinedWithDebtorAndCreditorTests(DatabaseTestCase):
         assert transfer_with_debtor_and_creditor[1] == member
         assert transfer_with_debtor_and_creditor[2] == social_accounting
 
-    def test_that_join_yields_member_and_cooperation(self) -> None:
+    def test_that_join_yields_member_and_collaboration(self) -> None:
         member_id = self.member_generator.create_member()
         member = self.database_gateway.get_members().with_id(member_id).first()
         assert member
-        cooperation_id = self.cooperation_generator.create_cooperation()
-        cooperation = (
-            self.database_gateway.get_cooperations().with_id(cooperation_id).first()
+        collaboration_id = self.collaboration_generator.create_collaboration()
+        collaboration = (
+            self.database_gateway.get_collaborations().with_id(collaboration_id).first()
         )
-        assert cooperation
+        assert collaboration
         self.transfer_generator.create_transfer(
-            debit_account=member.account, credit_account=cooperation.account
+            debit_account=member.account, credit_account=collaboration.account
         )
         transfer_with_debtor_and_creditor = (
             self.database_gateway.get_transfers()
@@ -427,7 +427,7 @@ class JoinedWithDebtorAndCreditorTests(DatabaseTestCase):
         )
         assert transfer_with_debtor_and_creditor
         assert transfer_with_debtor_and_creditor[1] == member
-        assert transfer_with_debtor_and_creditor[2] == cooperation
+        assert transfer_with_debtor_and_creditor[2] == collaboration
 
     def test_that_join_yields_company_and_same_company(self) -> None:
         company_id = self.company_generator.create_company()
@@ -502,14 +502,14 @@ class JoinedWithDebtorAndCreditorTests(DatabaseTestCase):
         assert transfer_with_debtor_and_creditor[1] == social_accounting
         assert transfer_with_debtor_and_creditor[2] == social_accounting
 
-    def test_that_join_yields_cooperation_and_same_cooperation(self) -> None:
-        cooperation_id = self.cooperation_generator.create_cooperation()
-        cooperation = (
-            self.database_gateway.get_cooperations().with_id(cooperation_id).first()
+    def test_that_join_yields_collaboration_and_same_collaboration(self) -> None:
+        collaboration_id = self.collaboration_generator.create_collaboration()
+        collaboration = (
+            self.database_gateway.get_collaborations().with_id(collaboration_id).first()
         )
-        assert cooperation
+        assert collaboration
         self.transfer_generator.create_transfer(
-            debit_account=cooperation.account, credit_account=cooperation.account
+            debit_account=collaboration.account, credit_account=collaboration.account
         )
         transfer_with_debtor_and_creditor = (
             self.database_gateway.get_transfers()
@@ -517,25 +517,25 @@ class JoinedWithDebtorAndCreditorTests(DatabaseTestCase):
             .first()
         )
         assert transfer_with_debtor_and_creditor
-        assert transfer_with_debtor_and_creditor[1] == cooperation
-        assert transfer_with_debtor_and_creditor[2] == cooperation
+        assert transfer_with_debtor_and_creditor[1] == collaboration
+        assert transfer_with_debtor_and_creditor[2] == collaboration
 
-    def test_that_join_yields_cooperation_and_different_cooperation(self) -> None:
-        cooperation_id = self.cooperation_generator.create_cooperation()
-        cooperation = (
-            self.database_gateway.get_cooperations().with_id(cooperation_id).first()
+    def test_that_join_yields_collaboration_and_different_collaboration(self) -> None:
+        collaboration_id = self.collaboration_generator.create_collaboration()
+        collaboration = (
+            self.database_gateway.get_collaborations().with_id(collaboration_id).first()
         )
-        assert cooperation
-        different_cooperation_id = self.cooperation_generator.create_cooperation()
-        different_cooperation = (
-            self.database_gateway.get_cooperations()
-            .with_id(different_cooperation_id)
+        assert collaboration
+        different_collaboration_id = self.collaboration_generator.create_collaboration()
+        different_collaboration = (
+            self.database_gateway.get_collaborations()
+            .with_id(different_collaboration_id)
             .first()
         )
-        assert different_cooperation
+        assert different_collaboration
         self.transfer_generator.create_transfer(
-            debit_account=cooperation.account,
-            credit_account=different_cooperation.account,
+            debit_account=collaboration.account,
+            credit_account=different_collaboration.account,
         )
         transfer_with_debtor_and_creditor = (
             self.database_gateway.get_transfers()
@@ -543,5 +543,5 @@ class JoinedWithDebtorAndCreditorTests(DatabaseTestCase):
             .first()
         )
         assert transfer_with_debtor_and_creditor
-        assert transfer_with_debtor_and_creditor[1] == cooperation
-        assert transfer_with_debtor_and_creditor[2] == different_cooperation
+        assert transfer_with_debtor_and_creditor[1] == collaboration
+        assert transfer_with_debtor_and_creditor[2] == different_collaboration

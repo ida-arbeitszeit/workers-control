@@ -13,17 +13,17 @@ class ListCoordinationsOfCompanyRequest:
 
 
 @dataclass
-class CooperationInfo:
+class CollaborationInfo:
     id: UUID
     creation_date: datetime
     name: str
     definition: str
-    count_plans_in_coop: int
+    count_plans_in_collab: int
 
 
 @dataclass
 class ListCoordinationsOfCompanyResponse:
-    coordinations: List[CooperationInfo]
+    coordinations: List[CollaborationInfo]
 
 
 @dataclass
@@ -37,21 +37,21 @@ class ListCoordinationsOfCompanyInteractor:
         if not self.database_gateway.get_companies().with_id(request.company):
             return ListCoordinationsOfCompanyResponse(coordinations=[])
         now = self.datetime_service.now()
-        cooperations = [
-            CooperationInfo(
-                id=coop.id,
-                creation_date=coop.creation_date,
-                name=coop.name,
-                definition=coop.definition,
-                count_plans_in_coop=len(
+        collaborations = [
+            CollaborationInfo(
+                id=collab.id,
+                creation_date=collab.creation_date,
+                name=collab.name,
+                definition=collab.definition,
+                count_plans_in_collab=len(
                     self.database_gateway.get_plans()
-                    .that_are_part_of_cooperation(coop.id)
+                    .that_are_part_of_collaboration(collab.id)
                     .that_will_expire_after(now)
                 ),
             )
-            for coop in self.database_gateway.get_cooperations().coordinated_by_company(
+            for collab in self.database_gateway.get_collaborations().coordinated_by_company(
                 request.company
             )
         ]
 
-        return ListCoordinationsOfCompanyResponse(coordinations=cooperations)
+        return ListCoordinationsOfCompanyResponse(coordinations=collaborations)

@@ -234,7 +234,7 @@ class CompanySearchForm(Form):
         return self.data["select"]
 
 
-class CreateCooperationForm(Form):
+class CreateCollaborationForm(Form):
     name = StringField(
         render_kw={"placeholder": trans.lazy_gettext("Name")},
         validators=[validators.InputRequired()],
@@ -268,15 +268,15 @@ class CreateBasicServiceForm(Form):
         return self.data["description"]
 
 
-class RequestCooperationForm(Form):
+class RequestCollaborationForm(Form):
     plan_id = StringField()
-    cooperation_id = StringField()
+    collaboration_id = StringField()
 
     def get_plan_id_string(self) -> str:
         return self.data["plan_id"]
 
-    def get_cooperation_id_string(self) -> str:
-        return self.data["cooperation_id"]
+    def get_collaboration_id_string(self) -> str:
+        return self.data["collaboration_id"]
 
 
 class RegisterProductiveConsumptionForm(Form):
@@ -325,13 +325,13 @@ class AnswerCompanyWorkInviteForm(Form):
 
 class RequestCoordinationTransferForm(Form):
     candidate = StringField()
-    cooperation = StringField()
+    collaboration = StringField()
 
     def candidate_field(self) -> WtFormField[str]:
         return WtFormField(self.candidate)
 
-    def cooperation_field(self) -> WtFormField[str]:
-        return WtFormField(self.cooperation)
+    def collaboration_field(self) -> WtFormField[str]:
+        return WtFormField(self.collaboration)
 
 
 class RequestEmailAddressChangeForm(Form):

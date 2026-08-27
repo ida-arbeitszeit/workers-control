@@ -62,7 +62,7 @@ class ProductiveConsumptionResultTests(DatabaseTestCase):
     def test_that_transfer_of_compensation_exists_after_consumption_of_underproductive_plan(
         self,
     ) -> None:
-        plans = self.create_cooperating_plans_with(
+        plans = self.create_collaborating_plans_with(
             costs_per_unit=[Decimal(50), Decimal(100)]
         )
         self.consumption_generator.create_resource_consumption_by_company(
@@ -248,11 +248,11 @@ class ProductiveConsumptionResultTests(DatabaseTestCase):
             for _, _, _, consumer in self.database_gateway.get_productive_consumptions().joined_with_transfer_and_plan_and_consumer()
         ] == [consumer]
 
-    def create_cooperating_plans_with(
+    def create_collaborating_plans_with(
         self, *, costs_per_unit: list[Decimal]
     ) -> list[UUID]:
         plans = [self.create_plan_with(cost_per_unit=cost) for cost in costs_per_unit]
-        self.cooperation_generator.create_cooperation(
+        self.collaboration_generator.create_collaboration(
             plans=plans,
         )
         return plans

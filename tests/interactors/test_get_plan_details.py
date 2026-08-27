@@ -124,18 +124,20 @@ class InteractorTests(BaseTestCase):
         plan = self.plan_generator.create_plan(is_public_service=True)
         self.assertTrue(self.get_details(plan).is_public_service)
 
-    def test_that_no_cooperation_is_shown_when_plan_is_not_cooperating(self) -> None:
-        plan = self.plan_generator.create_plan(cooperation=None)
+    def test_that_no_collaboration_is_shown_when_plan_is_not_collaborating(
+        self,
+    ) -> None:
+        plan = self.plan_generator.create_plan(collaboration=None)
         details = self.get_details(plan)
-        self.assertFalse(details.is_cooperating)
-        self.assertIsNone(details.cooperation)
+        self.assertFalse(details.is_collaborating)
+        self.assertIsNone(details.collaboration)
 
-    def test_that_correct_cooperation_is_shown(self) -> None:
-        coop = self.cooperation_generator.create_cooperation()
-        plan = self.plan_generator.create_plan(cooperation=coop)
+    def test_that_correct_collaboration_is_shown(self) -> None:
+        collab = self.collaboration_generator.create_collaboration()
+        plan = self.plan_generator.create_plan(collaboration=collab)
         details = self.get_details(plan)
-        self.assertTrue(details.is_cooperating)
-        self.assertEqual(details.cooperation, coop)
+        self.assertTrue(details.is_collaborating)
+        self.assertEqual(details.collaboration, collab)
 
     def test_that_zero_active_days_is_shown_if_plan_is_not_active_yet(self) -> None:
         plan = self.plan_generator.create_plan(approved=False)
@@ -217,7 +219,7 @@ class InteractorTests(BaseTestCase):
             ),  # avg(15.5, 5) = 10.25
         ]
     )
-    def test_that_two_productive_plans_with_different_timeframes_return_correct_coop_price(
+    def test_that_two_productive_plans_with_different_timeframes_return_correct_collab_price(
         self,
         costs_plan1: Decimal,
         amount_plan1: int,
@@ -225,17 +227,17 @@ class InteractorTests(BaseTestCase):
         costs_plan2: Decimal,
         amount_plan2: int,
         timeframe_plan2: int,
-        expected_coop_price: Decimal,
+        expected_collab_price: Decimal,
     ) -> None:
-        cooperation = self.cooperation_generator.create_cooperation()
+        collaboration = self.collaboration_generator.create_collaboration()
         self.plan_generator.create_plan(
-            cooperation=cooperation,
+            collaboration=collaboration,
             costs=ProductionCosts(costs_plan1, Decimal(0), Decimal(0)),
             amount=amount_plan1,
             timeframe=timeframe_plan1,
         )
         plan = self.plan_generator.create_plan(
-            cooperation=cooperation,
+            collaboration=collaboration,
             costs=ProductionCosts(costs_plan2, Decimal(0), Decimal(0)),
             amount=amount_plan2,
             timeframe=timeframe_plan2,
@@ -244,38 +246,38 @@ class InteractorTests(BaseTestCase):
             GetPlanDetailsInteractor.Request(plan_id=plan)
         )
         assert response
-        self.assertEqual(response.plan_details.price_per_unit, expected_coop_price)
+        self.assertEqual(response.plan_details.price_per_unit, expected_collab_price)
 
-    def test_that_cooperative_prices_are_calculated_by_averaging_plan_prices(
+    def test_that_collaborative_prices_are_calculated_by_averaging_plan_prices(
         self,
     ) -> None:
         @dataclass
         class TestExample:
             plan_a_costs: Decimal
             plan_b_costs: Decimal
-            expected_cooperative_costs: Decimal
+            expected_collaborative_costs: Decimal
 
         examples = [
             TestExample(
                 plan_a_costs=Decimal(5),
                 plan_b_costs=Decimal(15),
-                expected_cooperative_costs=Decimal(10),
+                expected_collaborative_costs=Decimal(10),
             ),
             TestExample(
                 plan_a_costs=Decimal(3),
                 plan_b_costs=Decimal(5),
-                expected_cooperative_costs=Decimal(4),
+                expected_collaborative_costs=Decimal(4),
             ),
         ]
         for example in examples:
-            coop = self.cooperation_generator.create_cooperation()
+            collab = self.collaboration_generator.create_collaboration()
             self.plan_generator.create_plan(
-                cooperation=coop,
+                collaboration=collab,
                 costs=self.create_production_costs(total_costs=example.plan_a_costs),
                 amount=1,
             )
             plan = self.plan_generator.create_plan(
-                cooperation=coop,
+                collaboration=collab,
                 costs=self.create_production_costs(total_costs=example.plan_b_costs),
                 amount=1,
             )
@@ -284,7 +286,7 @@ class InteractorTests(BaseTestCase):
             )
             assert response
             assert response.plan_details.price_per_unit == approx(
-                example.expected_cooperative_costs
+                example.expected_collaborative_costs
             )
 
     def test_that_indiviual_price_is_calculated_properly(self) -> None:

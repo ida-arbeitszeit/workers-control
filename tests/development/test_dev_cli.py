@@ -94,15 +94,15 @@ class DataGenerationCliTester(DatabaseTestCase):
         )
         assert result.exit_code == 0
 
-    def test_generate_cooperation(self) -> None:
+    def test_generate_collaboration(self) -> None:
         coordinator = self.company_generator.create_company()
         plan = self.plan_generator.create_plan()
         result = self.runner.invoke(
             self.generate,
             [
-                "cooperation",
+                "collaboration",
                 "--name",
-                "Test Cooperation",
+                "Test Collaboration",
                 "--coordinator",
                 str(coordinator),
                 "--plans",

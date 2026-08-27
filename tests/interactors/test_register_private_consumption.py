@@ -26,11 +26,11 @@ class RegisterPrivateConsumptionBase(BaseTestCase):
             RegisterPrivateConsumption
         )
 
-    def create_cooperating_plans_with(
+    def create_collaborating_plans_with(
         self, *, costs_per_unit: list[Decimal]
     ) -> list[UUID]:
         plans = [self.create_plan_with(cost_per_unit=cost) for cost in costs_per_unit]
-        self.cooperation_generator.create_cooperation(
+        self.collaboration_generator.create_collaboration(
             plans=plans,
         )
         return plans
@@ -59,7 +59,7 @@ class RegisterPrivateConsumptionBase(BaseTestCase):
         transfers = self.database_gateway.get_transfers()
         return list(
             filter(
-                lambda t: t.type == TransferType.compensation_for_coop
+                lambda t: t.type == TransferType.compensation_for_collab
                 or t.type == TransferType.compensation_for_company,
                 transfers,
             )
@@ -189,7 +189,7 @@ class RegisterPrivateConsumptionTests(RegisterPrivateConsumptionBase):
                 labour_cost=Decimal(0),
             ),
             amount=1,
-            cooperation=None,
+            collaboration=None,
         )
         assert self.balance_checker.get_member_account_balance(self.consumer) == 0
         self.control_thresholds.set_allowed_overdraw_of_member_account(allowed_overdraw)
@@ -390,17 +390,17 @@ class ConsumptionTransferTests(RegisterPrivateConsumptionBase):
         assert len(transfers) == 1
         assert transfers[0].value == amount * price_per_unit
 
-    def test_that_value_of_consumption_transfer_is_amount_times_coop_price_per_unit(
+    def test_that_value_of_consumption_transfer_is_amount_times_collab_price_per_unit(
         self,
     ) -> None:
         AMOUNT = 4
-        cooperating_plans = self.create_cooperating_plans_with(
+        collaborating_plans = self.create_collaborating_plans_with(
             costs_per_unit=[Decimal(5), Decimal(10), Decimal(15)]
-        )  # -> coop price per unit = 10
+        )  # -> collab price per unit = 10
         self.consumption_generator.create_private_consumption(
-            plan=cooperating_plans[
+            plan=collaborating_plans[
                 0
-            ],  # first plan has individual price of 5 and coop price of 10
+            ],  # first plan has individual price of 5 and collab price of 10
             amount=AMOUNT,
         )
         transfers = self.get_private_consumption_transfers()
@@ -419,7 +419,7 @@ class ConsumptionTransferTests(RegisterPrivateConsumptionBase):
 
 
 class CompensationTransferTests(RegisterPrivateConsumptionBase):
-    def test_no_compensation_transfer_created_when_consumed_plan_is_not_cooperating(
+    def test_no_compensation_transfer_created_when_consumed_plan_is_not_collaborating(
         self,
     ) -> None:
         plan = self.plan_generator.create_plan()
@@ -427,15 +427,15 @@ class CompensationTransferTests(RegisterPrivateConsumptionBase):
         transfers = self.get_compensation_transfers()
         assert not transfers
 
-    def test_no_compensation_transfer_created_after_consumption_of_cooperative_product_without_productivity_differences(
+    def test_no_compensation_transfer_created_after_consumption_of_collaborative_product_without_productivity_differences(
         self,
     ) -> None:
         COSTS_PER_UNIT = Decimal(3)
-        cooperating_plans = self.create_cooperating_plans_with(
+        collaborating_plans = self.create_collaborating_plans_with(
             costs_per_unit=[COSTS_PER_UNIT, COSTS_PER_UNIT]
         )
         self.consumption_generator.create_private_consumption(
-            plan=cooperating_plans[0],
+            plan=collaborating_plans[0],
         )
         transfers = self.get_compensation_transfers()
         assert not transfers
@@ -443,11 +443,11 @@ class CompensationTransferTests(RegisterPrivateConsumptionBase):
     def test_no_compensation_transfer_created_when_consumed_plan_has_average_productivity(
         self,
     ) -> None:
-        cooperating_plans = self.create_cooperating_plans_with(
+        collaborating_plans = self.create_collaborating_plans_with(
             costs_per_unit=[Decimal(5), Decimal(10), Decimal(15)]
         )
         self.consumption_generator.create_private_consumption(
-            plan=cooperating_plans[1],  # second plan has average productivity
+            plan=collaborating_plans[1],  # second plan has average productivity
         )
         transfers = self.get_compensation_transfers()
         assert not transfers
@@ -459,41 +459,41 @@ class CompensationTransferTests(RegisterPrivateConsumptionBase):
             (3,),
         ]
     )
-    def test_one_compensation_transfer_created_for_each_consumption_of_cooperative_product_with_productivity_differences(
+    def test_one_compensation_transfer_created_for_each_consumption_of_collaborative_product_with_productivity_differences(
         self,
         number_of_consumptions: int,
     ) -> None:
-        cooperating_plans = self.create_cooperating_plans_with(
+        collaborating_plans = self.create_collaborating_plans_with(
             costs_per_unit=[Decimal(3), Decimal(10)]
         )
         for _ in range(number_of_consumptions):
             self.consumption_generator.create_private_consumption(
-                plan=cooperating_plans[0],
+                plan=collaborating_plans[0],
             )
         transfers = self.get_compensation_transfers()
         assert len(transfers) == number_of_consumptions
 
-    def test_that_compensation_for_cooperation_transfer_created_if_overproductive_plan_is_consumed(
+    def test_that_compensation_for_collaboration_transfer_created_if_overproductive_plan_is_consumed(
         self,
     ) -> None:
-        cooperating_plans = self.create_cooperating_plans_with(
+        collaborating_plans = self.create_collaborating_plans_with(
             costs_per_unit=[Decimal(3), Decimal(10)]
         )
         self.consumption_generator.create_private_consumption(
-            plan=cooperating_plans[0],  # first plan is overproductive
+            plan=collaborating_plans[0],  # first plan is overproductive
         )
         transfers = self.get_compensation_transfers()
         assert len(transfers) == 1
-        assert transfers[0].type == TransferType.compensation_for_coop
+        assert transfers[0].type == TransferType.compensation_for_collab
 
     def test_that_compensation_for_company_created_if_underproductive_plan_is_consumed(
         self,
     ) -> None:
-        cooperating_plans = self.create_cooperating_plans_with(
+        collaborating_plans = self.create_collaborating_plans_with(
             costs_per_unit=[Decimal(3), Decimal(10)]
         )
         self.consumption_generator.create_private_consumption(
-            plan=cooperating_plans[1],  # second plan is underproductive
+            plan=collaborating_plans[1],  # second plan is underproductive
         )
         transfers = self.get_compensation_transfers()
         assert len(transfers) == 1
@@ -547,7 +547,7 @@ class PrivateConsumptionRecordTests(RegisterPrivateConsumptionBase):
             (True,),
         ]
     )
-    def test_that_private_consumption_record_only_references_a_compensation_transfer_if_cooperation_has_productivity_differences(
+    def test_that_private_consumption_record_only_references_a_compensation_transfer_if_collaboration_has_productivity_differences(
         self,
         has_productivity_differences: bool = True,
     ) -> None:
@@ -556,11 +556,11 @@ class PrivateConsumptionRecordTests(RegisterPrivateConsumptionBase):
             if has_productivity_differences
             else [Decimal(3), Decimal(3)]
         )
-        cooperating_plans = self.create_cooperating_plans_with(
+        collaborating_plans = self.create_collaborating_plans_with(
             costs_per_unit=costs_per_unit
         )
         self.consumption_generator.create_private_consumption(
-            plan=cooperating_plans[0],
+            plan=collaborating_plans[0],
         )
         compensation_transfers = self.get_compensation_transfers()
         records = self.get_private_consumption_records()

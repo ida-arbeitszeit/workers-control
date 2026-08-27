@@ -21,7 +21,7 @@ class GeneralInteractorTests(BaseTestCase):
         self.assertIsInstance(response, GetCompanyDashboardInteractor.Response)
 
     def test_that_dashboard_shows_company_name(self) -> None:
-        expected_name = "test coop name"
+        expected_name = "test collab name"
         company = self.company_generator.create_company_record(name=expected_name)
         response = self.interactor.get_dashboard(company.id)
         self.assertEqual(response.company_info.name, expected_name)

@@ -2,7 +2,7 @@ from parameterized import parameterized
 
 from tests.base_test_case import BaseTestCase
 from workers_control.core.email_notifications import (
-    CooperationRequestEmail,
+    CollaborationRequestEmail,
     EmailChangeConfirmation,
     Message,
 )
@@ -17,7 +17,7 @@ class EmailSenderImplTests(BaseTestCase):
     @parameterized.expand(
         [
             (
-                CooperationRequestEmail(
+                CollaborationRequestEmail(
                     coordinator_email_address="test@test.test",
                     coordinator_name="test name",
                 ),

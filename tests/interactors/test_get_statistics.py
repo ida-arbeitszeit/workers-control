@@ -62,7 +62,7 @@ class CountMembersTests(StatisticsBaseTestCase):
         assert stats.registered_members_count == num_members
 
 
-class CountCooperationsTests(StatisticsBaseTestCase):
+class CountCollaborationsTests(StatisticsBaseTestCase):
     @parameterized.expand(
         [
             (0,),
@@ -70,14 +70,14 @@ class CountCooperationsTests(StatisticsBaseTestCase):
             (2,),
         ]
     )
-    def test_that_number_of_cooperations_is_counted(
+    def test_that_number_of_collaborations_is_counted(
         self,
-        num_cooperations: int,
+        num_collaborations: int,
     ) -> None:
-        for _ in range(num_cooperations):
-            self.cooperation_generator.create_cooperation()
+        for _ in range(num_collaborations):
+            self.collaboration_generator.create_collaboration()
         stats = self.interactor.get_statistics()
-        assert stats.cooperations_count == num_cooperations
+        assert stats.collaborations_count == num_collaborations
 
 
 class CountActivePlansTests(StatisticsBaseTestCase):

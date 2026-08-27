@@ -279,23 +279,23 @@ class InteractorTests(BaseTestCase):
         response = self.interactor.execute(self.make_request())
         assert response.results[0].price_per_unit == 0
 
-    def test_that_two_cooperating_plans_have_the_same_price(self) -> None:
-        cooperation = self.cooperation_generator.create_cooperation()
-        self.plan_generator.create_plan(cooperation=cooperation, amount=1000)
-        self.plan_generator.create_plan(cooperation=cooperation, amount=1)
+    def test_that_two_collaborating_plans_have_the_same_price(self) -> None:
+        collaboration = self.collaboration_generator.create_collaboration()
+        self.plan_generator.create_plan(collaboration=collaboration, amount=1000)
+        self.plan_generator.create_plan(collaboration=collaboration, amount=1)
         response = self.interactor.execute(self.make_request())
         assert response.results[0].price_per_unit == response.results[1].price_per_unit
 
-    def test_that_price_of_cooperating_plans_is_correct(
+    def test_that_price_of_collaborating_plans_is_correct(
         self,
     ) -> None:
-        cooperation = self.cooperation_generator.create_cooperation()
+        collaboration = self.collaboration_generator.create_collaboration()
         plan1 = self.plan_generator.create_plan(
-            cooperation=cooperation,
+            collaboration=collaboration,
             amount=1000,
         )
         plan2 = self.plan_generator.create_plan(
-            cooperation=cooperation,
+            collaboration=collaboration,
             amount=1,
         )
         response = self.interactor.execute(self.make_request())

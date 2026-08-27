@@ -1,0 +1,42 @@
+from parameterized import parameterized
+
+from tests.base_test_case import BaseTestCase
+from workers_control.core.interactors.end_collaboration import EndCollaborationResponse
+from workers_control.web.www.presenters.end_plan_collaboration_presenter import (
+    EndPlanCollaborationPresenter,
+)
+
+
+class EndPlanCollaborationPresenterTests(BaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.presenter = self.injector.get(EndPlanCollaborationPresenter)
+
+    def test_successful_response_shows_info_notification(self) -> None:
+        self.presenter.render_response(EndCollaborationResponse(rejection_reason=None))
+        assert not self.notifier.warnings
+        assert self.notifier.infos == [
+            self.translator.gettext("Collaboration has been terminated.")
+        ]
+
+    def test_rejected_response_shows_warning_notification(self) -> None:
+        self.presenter.render_response(
+            EndCollaborationResponse(
+                rejection_reason=EndCollaborationResponse.RejectionReason.plan_not_found
+            )
+        )
+        assert not self.notifier.infos
+        assert self.notifier.warnings == [
+            self.translator.gettext("Collaboration could not be terminated.")
+        ]
+
+    @parameterized.expand(
+        [(reason,) for reason in EndCollaborationResponse.RejectionReason] + [(None,)]
+    )
+    def test_user_gets_redirected_to_my_collaborations_view(
+        self, rejection_reason: EndCollaborationResponse.RejectionReason | None
+    ) -> None:
+        response = self.presenter.render_response(
+            EndCollaborationResponse(rejection_reason=rejection_reason)
+        )
+        assert response.redirection_url == self.url_index.get_my_collaborations_url()

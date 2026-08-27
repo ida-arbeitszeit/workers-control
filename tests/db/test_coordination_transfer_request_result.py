@@ -126,61 +126,61 @@ class RequestedByCoordinationTenureTests(DatabaseTestCase):
         )
 
 
-class JoinedWithCooperationTests(DatabaseTestCase):
-    def test_that_joining_with_cooperation_returns_the_cooperation_from_which_the_request_has_been_issued(
+class JoinedWithCollaborationTests(DatabaseTestCase):
+    def test_that_joining_with_collaboration_returns_the_collaboration_from_which_the_request_has_been_issued(
         self,
     ) -> None:
-        expected_cooperation = self.cooperation_generator.create_cooperation()
+        expected_collaboration = self.collaboration_generator.create_collaboration()
         coordination_tenure = (
             self.coordination_tenure_generator.create_coordination_tenure(
-                cooperation=expected_cooperation,
+                collaboration=expected_collaboration,
             )
         )
         self.create_coordination_transfer_request(
             requesting_coordination_tenure=coordination_tenure,
         )
         results = (
-            self.database_gateway.get_coordination_transfer_requests().joined_with_cooperation()
+            self.database_gateway.get_coordination_transfer_requests().joined_with_collaboration()
         )
         assert len(results) == 1
-        transfer_request_and_cooperation = results.first()
-        assert transfer_request_and_cooperation
-        assert transfer_request_and_cooperation[1].id == expected_cooperation
+        transfer_request_and_collaboration = results.first()
+        assert transfer_request_and_collaboration
+        assert transfer_request_and_collaboration[1].id == expected_collaboration
 
-    def test_that_joining_with_cooperation_does_not_return_another_existing_cooperation(
+    def test_that_joining_with_collaboration_does_not_return_another_existing_collaboration(
         self,
     ) -> None:
-        expected_cooperation = self.cooperation_generator.create_cooperation()
-        other_cooperation = self.cooperation_generator.create_cooperation()
+        expected_collaboration = self.collaboration_generator.create_collaboration()
+        other_collaboration = self.collaboration_generator.create_collaboration()
         coordination_tenure = (
             self.coordination_tenure_generator.create_coordination_tenure(
-                cooperation=expected_cooperation,
+                collaboration=expected_collaboration,
             )
         )
         self.create_coordination_transfer_request(
             requesting_coordination_tenure=coordination_tenure,
         )
         results = (
-            self.database_gateway.get_coordination_transfer_requests().joined_with_cooperation()
+            self.database_gateway.get_coordination_transfer_requests().joined_with_collaboration()
         )
         assert len(results) == 1
-        transfer_request_and_cooperation = results.first()
-        assert transfer_request_and_cooperation
-        assert transfer_request_and_cooperation[1].id != other_cooperation
+        transfer_request_and_collaboration = results.first()
+        assert transfer_request_and_collaboration
+        assert transfer_request_and_collaboration[1].id != other_collaboration
 
-    def test_correct_cooperation_gets_retrieved_when_from_two_cooperations_transfer_requests_have_been_issued(
+    def test_correct_collaboration_gets_retrieved_when_from_two_collaborations_transfer_requests_have_been_issued(
         self,
     ) -> None:
-        expected_cooperation = self.cooperation_generator.create_cooperation()
-        other_cooperation = self.cooperation_generator.create_cooperation()
+        expected_collaboration = self.collaboration_generator.create_collaboration()
+        other_collaboration = self.collaboration_generator.create_collaboration()
         coordination_tenure = (
             self.coordination_tenure_generator.create_coordination_tenure(
-                cooperation=expected_cooperation,
+                collaboration=expected_collaboration,
             )
         )
         other_coordination_tenure = (
             self.coordination_tenure_generator.create_coordination_tenure(
-                cooperation=other_cooperation,
+                collaboration=other_collaboration,
             )
         )
         expected_transfer_request = self.create_coordination_transfer_request(
@@ -190,14 +190,14 @@ class JoinedWithCooperationTests(DatabaseTestCase):
             requesting_coordination_tenure=other_coordination_tenure,
         )
         results = (
-            self.database_gateway.get_coordination_transfer_requests().joined_with_cooperation()
+            self.database_gateway.get_coordination_transfer_requests().joined_with_collaboration()
         )
         assert len(results) == 2
-        for transfer_request, cooperation in results:
+        for transfer_request, collaboration in results:
             if transfer_request.id == expected_transfer_request.id:
-                assert cooperation.id == expected_cooperation
+                assert collaboration.id == expected_collaboration
             else:
-                assert cooperation.id == other_cooperation
+                assert collaboration.id == other_collaboration
 
     def create_coordination_transfer_request(
         self, requesting_coordination_tenure: UUID

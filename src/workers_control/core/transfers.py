@@ -18,7 +18,7 @@ class TransferType(Enum):
     productive_consumption_p = "productive_consumption_p"
     productive_consumption_r = "productive_consumption_r"
     productive_consumption_of_basic_service = "productive_consumption_of_basic_service"
-    compensation_for_coop = "compensation_for_coop"
+    compensation_for_collab = "compensation_for_collab"
     compensation_for_company = "compensation_for_company"
     work_certificates = "work_certificates"
     taxes = "taxes"

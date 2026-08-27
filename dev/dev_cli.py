@@ -4,9 +4,9 @@ from uuid import UUID
 import click
 
 from tests.data_generators import (
+    CollaborationGenerator,
     CompanyGenerator,
     ConsumptionGenerator,
-    CooperationGenerator,
     MemberGenerator,
     PlanGenerator,
     WorkerAffiliationGenerator,
@@ -276,42 +276,42 @@ def create_generate_cli_group(injector: Injector) -> click.Group:
         )
         click.echo("Productive consumption created.")
 
-    @generate.command("cooperation")
+    @generate.command("collaboration")
     @click.option(
         "--name",
         "-n",
-        help="Name of the cooperation to be created.",
+        help="Name of the collaboration to be created.",
         type=str,
-        default="Test Cooperation",
+        default="Test Collaboration",
         show_default=True,
     )
     @click.option(
         "--coordinator",
         "-c",
-        help="ID of the company who is the coordinator of the cooperation. If not given, a company will be created.",
+        help="ID of the company who is the coordinator of the collaboration. If not given, a company will be created.",
         type=UUID,
     )
     @click.option(
         "--plans",
         "-p",
-        help="ID of plan to be included in the cooperation. Can be repeated to include multiple plans.",
+        help="ID of plan to be included in the collaboration. Can be repeated to include multiple plans.",
         multiple=True,
         type=UUID,
     )
     @commit_changes
-    def generate_cooperation(
+    def generate_collaboration(
         name: str,
         coordinator: UUID | None,
         plans: tuple[UUID],
     ) -> None:
-        """Create a cooperation."""
-        data_generator = injector.get(CooperationGenerator)
-        cooperation_id = data_generator.create_cooperation(
+        """Create a collaboration."""
+        data_generator = injector.get(CollaborationGenerator)
+        collaboration_id = data_generator.create_collaboration(
             name=name,
             plans=list(plans) if plans else None,
             coordinator=coordinator if coordinator else None,
         )
-        click.echo(f"Cooperation with ID {cooperation_id} created.")
+        click.echo(f"Collaboration with ID {collaboration_id} created.")
 
     @generate.command("worker-company-affiliation")
     @click.argument("company", type=UUID, nargs=1)

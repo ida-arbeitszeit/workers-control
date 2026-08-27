@@ -157,16 +157,16 @@ class TestBalanceChanges(InteractorBase):
             planner
         ).prd_account == Decimal("0")
 
-    def test_balance_of_seller_increased_correctly_when_plan_is_in_cooperation(
+    def test_balance_of_seller_increased_correctly_when_plan_is_in_collaboration(
         self,
     ) -> None:
-        coop = self.cooperation_generator.create_cooperation()
+        collab = self.collaboration_generator.create_collaboration()
         sender = self.company_generator.create_company()
         planner = self.company_generator.create_company()
         plan = self.plan_generator.create_plan(
-            amount=50, cooperation=coop, planner=planner
+            amount=50, collaboration=collab, planner=planner
         )
-        self.plan_generator.create_plan(amount=200, cooperation=coop)
+        self.plan_generator.create_plan(amount=200, collaboration=collab)
         consumption_type = ConsumptionType.raw_materials
         pieces = 5
         balance_before_transfer = self.balance_checker.get_company_account_balances(
@@ -180,14 +180,14 @@ class TestBalanceChanges(InteractorBase):
             == balance_before_transfer + self.price_checker.get_cost_per_unit(plan) * 5
         )
 
-    def test_that_unit_cost_for_cooperating_plans_only_considers_non_expired_plans(
+    def test_that_unit_cost_for_collaborating_plans_only_considers_non_expired_plans(
         self,
     ) -> None:
         self.datetime_service.freeze_time(datetime_utc(2010, 1, 1))
-        coop = self.cooperation_generator.create_cooperation()
+        collab = self.collaboration_generator.create_collaboration()
         sender = self.company_generator.create_company()
         self.plan_generator.create_plan(
-            cooperation=coop,
+            collaboration=collab,
             timeframe=1,
             amount=1,
             costs=ProductionCosts(
@@ -196,7 +196,7 @@ class TestBalanceChanges(InteractorBase):
         )
         plan = self.plan_generator.create_plan(
             amount=1,
-            cooperation=coop,
+            collaboration=collab,
             timeframe=10,
             costs=ProductionCosts(
                 labour_cost=Decimal(1), means_cost=Decimal(0), resource_cost=Decimal(0)
@@ -244,7 +244,7 @@ class TestConsumptionTransfers(InteractorBase):
             transfers_of_consumption_p[0].type == TransferType.productive_consumption_p
         )
 
-    def test_correct_value_of_means_of_production_consumption_created_if_plan_is_cooperating(
+    def test_correct_value_of_means_of_production_consumption_created_if_plan_is_collaborating(
         self,
     ) -> None:
         AMOUNT = 5
@@ -262,7 +262,7 @@ class TestConsumptionTransfers(InteractorBase):
                 resource_cost=Decimal(4),
             )
         )
-        self.cooperation_generator.create_cooperation(plans=[plan_1, plan_2])
+        self.collaboration_generator.create_collaboration(plans=[plan_1, plan_2])
         self.consumption_generator.create_fixed_means_consumption(
             plan=plan_1,
             amount=AMOUNT,
@@ -302,7 +302,7 @@ class TestConsumptionTransfers(InteractorBase):
             transfers_of_consumption_r[0].type == TransferType.productive_consumption_r
         )
 
-    def test_correct_value_of_raw_materials_consumption_created_if_plan_is_cooperating(
+    def test_correct_value_of_raw_materials_consumption_created_if_plan_is_collaborating(
         self,
     ) -> None:
         AMOUNT = 5
@@ -320,7 +320,7 @@ class TestConsumptionTransfers(InteractorBase):
                 resource_cost=Decimal(4),
             )
         )
-        self.cooperation_generator.create_cooperation(plans=[plan_1, plan_2])
+        self.collaboration_generator.create_collaboration(plans=[plan_1, plan_2])
         self.consumption_generator.create_resource_consumption_by_company(
             plan=plan_1, amount=AMOUNT
         )
@@ -348,7 +348,7 @@ class TestConsumptionTransfers(InteractorBase):
 
 
 class TestCompensationTransfers(InteractorBase):
-    def test_no_compensation_transfer_created_when_consumed_plan_is_not_cooperating(
+    def test_no_compensation_transfer_created_when_consumed_plan_is_not_collaborating(
         self,
     ) -> None:
         plan = self.plan_generator.create_plan()
@@ -356,15 +356,15 @@ class TestCompensationTransfers(InteractorBase):
         transfers = self.get_compensation_transfers()
         assert not transfers
 
-    def test_no_compensation_transfer_created_after_consumption_of_cooperative_product_without_productivity_differences(
+    def test_no_compensation_transfer_created_after_consumption_of_collaborative_product_without_productivity_differences(
         self,
     ) -> None:
         COSTS_PER_UNIT = Decimal(3)
-        cooperating_plans = self.create_cooperating_plans_with(
+        collaborating_plans = self.create_collaborating_plans_with(
             costs_per_unit=[COSTS_PER_UNIT, COSTS_PER_UNIT]
         )
         self.consumption_generator.create_fixed_means_consumption(
-            plan=cooperating_plans[0],
+            plan=collaborating_plans[0],
         )
         transfers = self.get_compensation_transfers()
         assert not transfers
@@ -372,11 +372,11 @@ class TestCompensationTransfers(InteractorBase):
     def test_no_compensation_transfer_created_when_consumed_plan_has_average_productivity(
         self,
     ) -> None:
-        cooperating_plans = self.create_cooperating_plans_with(
+        collaborating_plans = self.create_collaborating_plans_with(
             costs_per_unit=[Decimal(5), Decimal(10), Decimal(15)]
         )
         self.consumption_generator.create_fixed_means_consumption(
-            plan=cooperating_plans[1],  # second plan has average productivity
+            plan=collaborating_plans[1],  # second plan has average productivity
         )
         transfers = self.get_compensation_transfers()
         assert not transfers
@@ -388,51 +388,51 @@ class TestCompensationTransfers(InteractorBase):
             (3,),
         ]
     )
-    def test_one_compensation_transfer_created_for_each_consumption_of_cooperative_product_with_productivity_differences(
+    def test_one_compensation_transfer_created_for_each_consumption_of_collaborative_product_with_productivity_differences(
         self,
         number_of_consumptions: int,
     ) -> None:
-        cooperating_plans = self.create_cooperating_plans_with(
+        collaborating_plans = self.create_collaborating_plans_with(
             costs_per_unit=[Decimal(3), Decimal(10)]
         )
         for _ in range(number_of_consumptions):
             self.consumption_generator.create_fixed_means_consumption(
-                plan=cooperating_plans[0],
+                plan=collaborating_plans[0],
             )
         transfers = self.get_compensation_transfers()
         assert len(transfers) == number_of_consumptions
 
-    def test_that_compensation_for_cooperation_transfer_created_if_overproductive_plan_is_consumed(
+    def test_that_compensation_for_collaboration_transfer_created_if_overproductive_plan_is_consumed(
         self,
     ) -> None:
-        cooperating_plans = self.create_cooperating_plans_with(
+        collaborating_plans = self.create_collaborating_plans_with(
             costs_per_unit=[Decimal(3), Decimal(10)]
         )
         self.consumption_generator.create_fixed_means_consumption(
-            plan=cooperating_plans[0],  # first plan is overproductive
+            plan=collaborating_plans[0],  # first plan is overproductive
         )
         transfers = self.get_compensation_transfers()
         assert len(transfers) == 1
-        assert transfers[0].type == TransferType.compensation_for_coop
+        assert transfers[0].type == TransferType.compensation_for_collab
 
     def test_that_compensation_for_company_created_if_underproductive_plan_is_consumed(
         self,
     ) -> None:
-        cooperating_plans = self.create_cooperating_plans_with(
+        collaborating_plans = self.create_collaborating_plans_with(
             costs_per_unit=[Decimal(3), Decimal(10)]
         )
         self.consumption_generator.create_fixed_means_consumption(
-            plan=cooperating_plans[1],  # second plan is underproductive
+            plan=collaborating_plans[1],  # second plan is underproductive
         )
         transfers = self.get_compensation_transfers()
         assert len(transfers) == 1
         assert transfers[0].type == TransferType.compensation_for_company
 
-    def create_cooperating_plans_with(
+    def create_collaborating_plans_with(
         self, *, costs_per_unit: list[Decimal]
     ) -> list[UUID]:
         plans = [self.create_plan_with(cost_per_unit=cost) for cost in costs_per_unit]
-        self.cooperation_generator.create_cooperation(
+        self.collaboration_generator.create_collaboration(
             plans=plans,
         )
         return plans
@@ -452,7 +452,7 @@ class TestCompensationTransfers(InteractorBase):
         transfers = self.database_gateway.get_transfers()
         return list(
             filter(
-                lambda t: t.type == TransferType.compensation_for_coop
+                lambda t: t.type == TransferType.compensation_for_collab
                 or t.type == TransferType.compensation_for_company,
                 transfers,
             )
@@ -546,7 +546,7 @@ class TestConsumptionRecords(InteractorBase):
             == consumption_transfers[0].id
         )
 
-    def test_that_consumption_record_for_fixed_means_has_no_transfer_of_compensation_if_plan_is_not_cooperating(
+    def test_that_consumption_record_for_fixed_means_has_no_transfer_of_compensation_if_plan_is_not_collaborating(
         self,
     ) -> None:
         self.consumption_generator.create_fixed_means_consumption()
@@ -554,7 +554,7 @@ class TestConsumptionRecords(InteractorBase):
         assert len(consumptions) == 1
         assert consumptions[0].transfer_of_compensation is None
 
-    def test_that_consumption_record_for_raw_materials_has_no_transfer_of_compensation_if_plan_is_not_cooperating(
+    def test_that_consumption_record_for_raw_materials_has_no_transfer_of_compensation_if_plan_is_not_collaborating(
         self,
     ) -> None:
         self.consumption_generator.create_resource_consumption_by_company()
@@ -562,7 +562,7 @@ class TestConsumptionRecords(InteractorBase):
         assert len(consumptions) == 1
         assert consumptions[0].transfer_of_compensation is None
 
-    def test_that_consumption_record_for_fixed_means_has_correct_transfer_of_compensation_if_plan_is_cooperating_and_underproductive(
+    def test_that_consumption_record_for_fixed_means_has_correct_transfer_of_compensation_if_plan_is_collaborating_and_underproductive(
         self,
     ) -> None:
         plan_1 = self.plan_generator.create_plan(
@@ -579,7 +579,7 @@ class TestConsumptionRecords(InteractorBase):
                 resource_cost=Decimal(4),
             )
         )
-        self.cooperation_generator.create_cooperation(plans=[plan_1, plan_2])
+        self.collaboration_generator.create_collaboration(plans=[plan_1, plan_2])
         self.consumption_generator.create_fixed_means_consumption(
             plan=plan_2,  # plan_2 is underproductive
         )
@@ -592,7 +592,7 @@ class TestConsumptionRecords(InteractorBase):
         assert len(compensation_transfers) == 1
         assert consumptions[0].transfer_of_compensation == compensation_transfers[0].id
 
-    def test_that_consumption_record_for_raw_materials_has_correct_transfer_of_compensation_if_plan_is_cooperating_and_underproductive(
+    def test_that_consumption_record_for_raw_materials_has_correct_transfer_of_compensation_if_plan_is_collaborating_and_underproductive(
         self,
     ) -> None:
         plan_1 = self.plan_generator.create_plan(
@@ -609,7 +609,7 @@ class TestConsumptionRecords(InteractorBase):
                 resource_cost=Decimal(4),
             )
         )
-        self.cooperation_generator.create_cooperation(plans=[plan_1, plan_2])
+        self.collaboration_generator.create_collaboration(plans=[plan_1, plan_2])
         self.consumption_generator.create_resource_consumption_by_company(
             plan=plan_2,  # plan_2 is underproductive
         )

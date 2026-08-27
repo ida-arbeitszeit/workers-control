@@ -407,12 +407,12 @@ class CompensationTests(BaseTestCase):
             show_prd_account_details.ShowPRDAccountDetailsInteractor
         )
 
-    def _get_cooperation_account(self) -> UUID:
-        cooperation = self.cooperation_generator.create_cooperation()
+    def _get_collaboration_account(self) -> UUID:
+        collaboration = self.collaboration_generator.create_collaboration()
         db = self.injector.get(DatabaseGateway)
-        cooperation_record = db.get_cooperations().with_id(cooperation).first()
-        assert cooperation_record
-        return cooperation_record.account
+        collaboration_record = db.get_collaborations().with_id(collaboration).first()
+        assert collaboration_record
+        return collaboration_record.account
 
 
 class CompensationForCompanyTests(CompensationTests):
@@ -457,10 +457,10 @@ class CompensationForCompanyTests(CompensationTests):
         assert len(response.transfers) == 1
         assert response.transfers[0].date == EXPECTED_DATE
 
-    def test_that_otrher_party_is_cooperation(self) -> None:
+    def test_that_otrher_party_is_collaboration(self) -> None:
         planner = self.company_generator.create_company_record()
         self.transfer_generator.create_transfer(
-            debit_account=self._get_cooperation_account(),
+            debit_account=self._get_collaboration_account(),
             credit_account=planner.product_account,
             type=TransferType.compensation_for_company,
         )
@@ -468,21 +468,23 @@ class CompensationForCompanyTests(CompensationTests):
             show_prd_account_details.Request(company_id=planner.id)
         )
         assert len(response.transfers) == 1
-        assert response.transfers[0].transfer_party.type, TransferPartyType.cooperation
+        assert response.transfers[
+            0
+        ].transfer_party.type, TransferPartyType.collaboration
 
 
-class CompensationForCoopTests(CompensationTests):
-    def test_that_compensation_for_coop_transfer_is_shown(self) -> None:
+class CompensationForCollabTests(CompensationTests):
+    def test_that_compensation_for_collab_transfer_is_shown(self) -> None:
         planner = self.company_generator.create_company_record()
         self.transfer_generator.create_transfer(
             debit_account=planner.product_account,
-            type=TransferType.compensation_for_coop,
+            type=TransferType.compensation_for_collab,
         )
         response = self.interactor.show_details(
             show_prd_account_details.Request(company_id=planner.id)
         )
         assert any(
-            t.type == TransferType.compensation_for_coop for t in response.transfers
+            t.type == TransferType.compensation_for_collab for t in response.transfers
         )
 
     def test_that_negative_value_from_transfer_is_shown(self) -> None:
@@ -490,7 +492,7 @@ class CompensationForCoopTests(CompensationTests):
         planner = self.company_generator.create_company_record()
         self.transfer_generator.create_transfer(
             debit_account=planner.product_account,
-            type=TransferType.compensation_for_coop,
+            type=TransferType.compensation_for_collab,
             value=TRANSFER_VALUE,
         )
         response = self.interactor.show_details(
@@ -504,7 +506,7 @@ class CompensationForCoopTests(CompensationTests):
         planner = self.company_generator.create_company_record()
         self.transfer_generator.create_transfer(
             debit_account=planner.product_account,
-            type=TransferType.compensation_for_coop,
+            type=TransferType.compensation_for_collab,
             date=EXPECTED_DATE,
         )
         response = self.interactor.show_details(
@@ -513,15 +515,17 @@ class CompensationForCoopTests(CompensationTests):
         assert len(response.transfers) == 1
         assert response.transfers[0].date == EXPECTED_DATE
 
-    def test_that_other_party_is_cooperation(self) -> None:
+    def test_that_other_party_is_collaboration(self) -> None:
         planner = self.company_generator.create_company_record()
         self.transfer_generator.create_transfer(
             debit_account=planner.product_account,
-            credit_account=self._get_cooperation_account(),
-            type=TransferType.compensation_for_coop,
+            credit_account=self._get_collaboration_account(),
+            type=TransferType.compensation_for_collab,
         )
         response = self.interactor.show_details(
             show_prd_account_details.Request(company_id=planner.id)
         )
         assert len(response.transfers) == 1
-        assert response.transfers[0].transfer_party.type, TransferPartyType.cooperation
+        assert response.transfers[
+            0
+        ].transfer_party.type, TransferPartyType.collaboration

@@ -125,57 +125,57 @@ class GeneralUrlIndexTests(ViewTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
-    def test_coop_summary_url_for_existing_coop_leads_to_functional_url_for_companies(
+    def test_collab_summary_url_for_existing_collab_leads_to_functional_url_for_companies(
         self,
     ) -> None:
         self.login_company()
-        coop = self.cooperation_generator.create_cooperation()
-        url = self.url_index.get_coop_summary_url(coop)
+        collab = self.collaboration_generator.create_collaboration()
+        url = self.url_index.get_collab_summary_url(collab)
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
-    def test_coop_summary_url_for_existing_coop_leads_to_functional_url_for_member(
+    def test_collab_summary_url_for_existing_collab_leads_to_functional_url_for_member(
         self,
     ) -> None:
         self.login_member()
-        coop = self.cooperation_generator.create_cooperation()
-        url = self.url_index.get_coop_summary_url(coop)
+        collab = self.collaboration_generator.create_collaboration()
+        url = self.url_index.get_collab_summary_url(collab)
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
-    def test_coop_summary_url_for_existing_coop_leads_to_functional_url_for_accountant(
+    def test_collab_summary_url_for_existing_collab_leads_to_functional_url_for_accountant(
         self,
     ) -> None:
         self.login_accountant()
-        coop = self.cooperation_generator.create_cooperation()
-        url = self.url_index.get_coop_summary_url(coop)
+        collab = self.collaboration_generator.create_collaboration()
+        url = self.url_index.get_collab_summary_url(collab)
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
-    def test_list_coordinations_url_for_existing_coop_leads_to_functional_url_for_companies(
+    def test_list_coordinations_url_for_existing_collab_leads_to_functional_url_for_companies(
         self,
     ) -> None:
         self.login_company()
-        coop = self.cooperation_generator.create_cooperation()
-        url = self.url_index.get_list_of_coordinators_url(coop)
+        collab = self.collaboration_generator.create_collaboration()
+        url = self.url_index.get_list_of_coordinators_url(collab)
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
-    def test_list_coordinations_url_for_existing_coop_leads_to_functional_url_for_member(
+    def test_list_coordinations_url_for_existing_collab_leads_to_functional_url_for_member(
         self,
     ) -> None:
         self.login_member()
-        coop = self.cooperation_generator.create_cooperation()
-        url = self.url_index.get_list_of_coordinators_url(coop)
+        collab = self.collaboration_generator.create_collaboration()
+        url = self.url_index.get_list_of_coordinators_url(collab)
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
-    def test_list_coordinations_url_for_existing_coop_leads_to_functional_url_for_accountant(
+    def test_list_coordinations_url_for_existing_collab_leads_to_functional_url_for_accountant(
         self,
     ) -> None:
         self.login_accountant()
-        coop = self.cooperation_generator.create_cooperation()
-        url = self.url_index.get_list_of_coordinators_url(coop)
+        collab = self.collaboration_generator.create_collaboration()
+        url = self.url_index.get_list_of_coordinators_url(collab)
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
@@ -291,11 +291,11 @@ class GeneralUrlIndexTests(ViewTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
-    def test_request_coop_url_leads_to_functional_url(
+    def test_request_collab_url_leads_to_functional_url(
         self,
     ) -> None:
         self.login_company()
-        url = self.url_index.get_request_coop_url()
+        url = self.url_index.get_request_collab_url()
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
@@ -371,12 +371,12 @@ class GeneralUrlIndexTests(ViewTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
 
-    def test_request_coordination_transfer_url_for_existing_coop_leads_to_functional_url(
+    def test_request_coordination_transfer_url_for_existing_collab_leads_to_functional_url(
         self,
     ) -> None:
         self.login_company()
-        coop = self.cooperation_generator.create_cooperation()
-        url = self.url_index.get_request_coordination_transfer_url(coop)
+        collab = self.collaboration_generator.create_collaboration()
+        url = self.url_index.get_request_coordination_transfer_url(collab)
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
@@ -384,11 +384,11 @@ class GeneralUrlIndexTests(ViewTestCase):
         self,
     ) -> None:
         current_user = self.login_company()
-        coop_id = self.cooperation_generator.create_cooperation(
+        collab_id = self.collaboration_generator.create_collaboration(
             coordinator=current_user
         )
         transfer_request_id = self.coordination_transfer_request_generator.create_coordination_transfer_request(
-            requester=current_user, cooperation=coop_id
+            requester=current_user, collaboration=collab_id
         )
         url = self.url_index.get_show_coordination_transfer_request_url(
             transfer_request_id
@@ -401,9 +401,11 @@ class GeneralUrlIndexTests(ViewTestCase):
     ) -> None:
         candidate = self.login_company()
         coordinator = self.company_generator.create_company()
-        coop_id = self.cooperation_generator.create_cooperation(coordinator=coordinator)
+        collab_id = self.collaboration_generator.create_collaboration(
+            coordinator=coordinator
+        )
         transfer_request_id = self.coordination_transfer_request_generator.create_coordination_transfer_request(
-            requester=coordinator, cooperation=coop_id, candidate=candidate
+            requester=coordinator, collaboration=collab_id, candidate=candidate
         )
         url = self.url_index.get_show_coordination_transfer_request_url(
             transfer_request_id

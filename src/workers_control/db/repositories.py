@@ -178,11 +178,11 @@ class PlanQueryResult(SqlQueryResult[records.Plan]):
             lambda query: query.filter(models.Plan.is_public_service == True)
         )
 
-    def that_are_cooperating(self) -> Self:
-        plan_cooperation = aliased(models.PlanCooperation)
+    def that_are_collaborating(self) -> Self:
+        plan_collaboration = aliased(models.PlanCollaboration)
         return self._with_modified_query(
             lambda query: query.join(
-                plan_cooperation, plan_cooperation.plan == models.Plan.id
+                plan_collaboration, plan_collaboration.plan == models.Plan.id
             )
         )
 
@@ -208,55 +208,55 @@ class PlanQueryResult(SqlQueryResult[records.Plan]):
             )
         )
 
-    def with_open_cooperation_request(
-        self, *, cooperation: Optional[UUID] = None
+    def with_open_collaboration_request(
+        self, *, collaboration: Optional[UUID] = None
     ) -> Self:
         return self._with_modified_query(
             lambda query: query.filter(
-                models.Plan.requested_cooperation == cooperation
-                if cooperation
-                else models.Plan.requested_cooperation != None
+                models.Plan.requested_collaboration == collaboration
+                if collaboration
+                else models.Plan.requested_collaboration != None
             )
         )
 
-    def that_are_in_same_cooperation_as(self, plan: UUID) -> Self:
-        plan_cooperation = aliased(models.PlanCooperation)
+    def that_are_in_same_collaboration_as(self, plan: UUID) -> Self:
+        plan_collaboration = aliased(models.PlanCollaboration)
 
-        cooperation_subquery = (
-            self.db.session.query(models.PlanCooperation.cooperation)
-            .filter(models.PlanCooperation.plan == plan)
+        collaboration_subquery = (
+            self.db.session.query(models.PlanCollaboration.collaboration)
+            .filter(models.PlanCollaboration.plan == plan)
             .scalar_subquery()
         )
 
         return self._with_modified_query(
             lambda query: query.join(
-                plan_cooperation, plan_cooperation.plan == models.Plan.id
-            ).filter(plan_cooperation.cooperation.in_(cooperation_subquery))
+                plan_collaboration, plan_collaboration.plan == models.Plan.id
+            ).filter(plan_collaboration.collaboration.in_(collaboration_subquery))
         )
 
-    def that_are_part_of_cooperation(self, *cooperation: UUID) -> Self:
-        cooperations = list(cooperation)
-        plan_cooperation = aliased(models.PlanCooperation)
-        if not cooperation:
+    def that_are_part_of_collaboration(self, *collaboration: UUID) -> Self:
+        collaborations = list(collaboration)
+        plan_collaboration = aliased(models.PlanCollaboration)
+        if not collaboration:
             return self._with_modified_query(
                 lambda query: query.join(
-                    plan_cooperation, plan_cooperation.plan == models.Plan.id
+                    plan_collaboration, plan_collaboration.plan == models.Plan.id
                 )
             )
         else:
             return self._with_modified_query(
                 lambda query: query.join(
-                    plan_cooperation, plan_cooperation.plan == models.Plan.id
-                ).filter(plan_cooperation.cooperation.in_(cooperations))
+                    plan_collaboration, plan_collaboration.plan == models.Plan.id
+                ).filter(plan_collaboration.collaboration.in_(collaborations))
             )
 
-    def that_request_cooperation_with_coordinator(self, *company: UUID) -> Self:
+    def that_request_collaboration_with_coordinator(self, *company: UUID) -> Self:
         companies = list(company)
 
-        cooperation = aliased(models.Cooperation)
+        collaboration = aliased(models.Collaboration)
         most_recent_tenure_holder = (
             self.db.session.query(models.CoordinationTenure)
-            .filter(models.CoordinationTenure.cooperation == cooperation.id)
+            .filter(models.CoordinationTenure.collaboration == collaboration.id)
             .order_by(models.CoordinationTenure.start_date.desc())
             .with_entities(models.CoordinationTenure.company)
             .limit(1)
@@ -265,13 +265,13 @@ class PlanQueryResult(SqlQueryResult[records.Plan]):
         if companies:
             return self._with_modified_query(
                 lambda query: query.join(
-                    cooperation,
-                    models.Plan.requested_cooperation == cooperation.id,
+                    collaboration,
+                    models.Plan.requested_collaboration == collaboration.id,
                 ).filter(most_recent_tenure_holder.in_(companies))
             )
         else:
             return self._with_modified_query(
-                lambda query: query.filter(models.Plan.requested_cooperation != None)
+                lambda query: query.filter(models.Plan.requested_collaboration != None)
             )
 
     def get_statistics(self) -> records.PlanningStatistics:
@@ -306,42 +306,42 @@ class PlanQueryResult(SqlQueryResult[records.Plan]):
             lambda query: query.filter(models.Plan.hidden_by_user == False)
         )
 
-    def joined_with_planner_and_cooperation(self) -> SqlQueryResult[
+    def joined_with_planner_and_collaboration(self) -> SqlQueryResult[
         Tuple[
             records.Plan,
             records.Company,
-            Optional[records.Cooperation],
+            Optional[records.Collaboration],
         ]
     ]:
         def mapper(orm: Any) -> Tuple[
             records.Plan,
             records.Company,
-            Optional[records.Cooperation],
+            Optional[records.Collaboration],
         ]:
             return (
                 DatabaseGatewayImpl.plan_from_orm(orm[0]),
                 DatabaseGatewayImpl.company_from_orm(orm[1]),
-                DatabaseGatewayImpl.cooperation_from_orm(orm[2]) if orm[2] else None,
+                DatabaseGatewayImpl.collaboration_from_orm(orm[2]) if orm[2] else None,
             )
 
         planner = aliased(models.Company)
-        cooperation = aliased(models.Cooperation)
-        plan_cooperation = aliased(models.PlanCooperation)
+        collaboration = aliased(models.Collaboration)
+        plan_collaboration = aliased(models.PlanCollaboration)
 
         query = (
             self.query.join(planner, planner.id == models.Plan.planner)
             .outerjoin(
-                plan_cooperation,
-                plan_cooperation.plan == models.Plan.id,
+                plan_collaboration,
+                plan_collaboration.plan == models.Plan.id,
             )
             .outerjoin(
-                cooperation,
-                cooperation.id == plan_cooperation.cooperation,
+                collaboration,
+                collaboration.id == plan_collaboration.collaboration,
             )
             .with_entities(
                 models.Plan,
                 planner,
-                cooperation,
+                collaboration,
             )
         )
 
@@ -351,27 +351,29 @@ class PlanQueryResult(SqlQueryResult[records.Plan]):
             query=query,
         )
 
-    def joined_with_cooperation(
+    def joined_with_collaboration(
         self,
-    ) -> SqlQueryResult[tuple[records.Plan, Optional[records.Cooperation]]]:
-        def mapper(orm: Any) -> tuple[records.Plan, Optional[records.Cooperation]]:
+    ) -> SqlQueryResult[tuple[records.Plan, Optional[records.Collaboration]]]:
+        def mapper(orm: Any) -> tuple[records.Plan, Optional[records.Collaboration]]:
             return (
                 DatabaseGatewayImpl.plan_from_orm(orm[0]),
-                DatabaseGatewayImpl.cooperation_from_orm(orm[1]) if orm[1] else None,
+                DatabaseGatewayImpl.collaboration_from_orm(orm[1]) if orm[1] else None,
             )
 
-        plan_cooperation = aliased(models.PlanCooperation)
-        cooperation = aliased(models.Cooperation)
+        plan_collaboration = aliased(models.PlanCollaboration)
+        collaboration = aliased(models.Collaboration)
         query = (
             self.query.join(
-                plan_cooperation, plan_cooperation.plan == models.Plan.id, isouter=True
-            )
-            .join(
-                cooperation,
-                cooperation.id == plan_cooperation.cooperation,
+                plan_collaboration,
+                plan_collaboration.plan == models.Plan.id,
                 isouter=True,
             )
-            .with_entities(models.Plan, cooperation)
+            .join(
+                collaboration,
+                collaboration.id == plan_collaboration.collaboration,
+                isouter=True,
+            )
+            .with_entities(models.Plan, collaboration)
         )
 
         return SqlQueryResult(
@@ -425,11 +427,11 @@ class PlanUpdate:
     query: Query
     db: Database
     plan_update_values: Dict[str, Any] = field(default_factory=dict)
-    cooperation_update: SetCooperation | None = None
+    collaboration_update: SetCollaboration | None = None
 
     @dataclass
-    class SetCooperation:
-        cooperation: Optional[UUID]
+    class SetCollaboration:
+        collaboration: Optional[UUID]
 
     def perform(self) -> int:
         sql_statement: Update | Delete | Insert
@@ -447,35 +449,36 @@ class PlanUpdate:
             )
             result = self.db.session.execute(sql_statement)
             row_count = cast(CursorResult, result).rowcount
-        if self.cooperation_update:
-            match self.cooperation_update:
-                case self.SetCooperation(cooperation=None):
-                    sql_statement = delete(models.PlanCooperation).where(
-                        models.PlanCooperation.plan.in_(
+        if self.collaboration_update:
+            match self.collaboration_update:
+                case self.SetCollaboration(collaboration=None):
+                    sql_statement = delete(models.PlanCollaboration).where(
+                        models.PlanCollaboration.plan.in_(
                             self.query.with_entities(models.Plan.id).scalar_subquery()
                         )
                     )
-                case self.SetCooperation(cooperation=coop_id):
+                case self.SetCollaboration(collaboration=collab_id):
                     values = [
-                        dict(plan=plan.id, cooperation=coop_id) for plan in self.query
+                        dict(plan=plan.id, collaboration=collab_id)
+                        for plan in self.query
                     ]
                     dialect = self.db.engine.dialect.name
                     if dialect == "postgresql":
                         sql_statement = (
-                            postgresql.insert(models.PlanCooperation)
+                            postgresql.insert(models.PlanCollaboration)
                             .values(values)
                             .on_conflict_do_update(
-                                constraint="plan_cooperation_pkey",
-                                set_=dict(cooperation=coop_id),
+                                constraint="plan_collaboration_pkey",
+                                set_=dict(collaboration=collab_id),
                             )
                         )
                     elif dialect == "sqlite":
                         sql_statement = (
-                            sqlite.insert(models.PlanCooperation)
+                            sqlite.insert(models.PlanCollaboration)
                             .values(values)
                             .on_conflict_do_update(
-                                index_elements=[models.PlanCooperation.plan],
-                                set_=dict(cooperation=coop_id),
+                                index_elements=[models.PlanCollaboration.plan],
+                                set_=dict(collaboration=collab_id),
                             )
                         )
                     else:
@@ -487,18 +490,18 @@ class PlanUpdate:
         self.db.session.flush()
         return row_count
 
-    def set_cooperation(self, cooperation: Optional[UUID]) -> Self:
+    def set_collaboration(self, collaboration: Optional[UUID]) -> Self:
         return replace(
             self,
-            cooperation_update=self.SetCooperation(cooperation),
+            collaboration_update=self.SetCollaboration(collaboration),
         )
 
-    def set_requested_cooperation(self, cooperation: Optional[UUID]) -> Self:
+    def set_requested_collaboration(self, collaboration: Optional[UUID]) -> Self:
         return replace(
             self,
             plan_update_values=dict(
                 self.plan_update_values,
-                requested_cooperation=cooperation,
+                requested_collaboration=collaboration,
             ),
         )
 
@@ -709,11 +712,11 @@ class CompanyQueryResult(SqlQueryResult[records.Company]):
             )
         )
 
-    def that_is_coordinating_cooperation(self, cooperation: UUID) -> Self:
-        coop = aliased(models.Cooperation)
+    def that_is_coordinating_collaboration(self, collaboration: UUID) -> Self:
+        collab = aliased(models.Collaboration)
         most_recent_tenure_holder = (
             self.db.session.query(models.CoordinationTenure)
-            .filter(models.CoordinationTenure.cooperation == coop.id)
+            .filter(models.CoordinationTenure.collaboration == collab.id)
             .order_by(models.CoordinationTenure.start_date.desc())
             .with_entities(models.CoordinationTenure.company)
             .limit(1)
@@ -721,8 +724,8 @@ class CompanyQueryResult(SqlQueryResult[records.Company]):
         )
         return self._with_modified_query(
             lambda query: query.join(
-                coop, most_recent_tenure_holder == models.Company.id
-            ).filter(coop.id == cooperation)
+                collab, most_recent_tenure_holder == models.Company.id
+            ).filter(collab.id == collaboration)
         )
 
     def add_worker(self, member: UUID) -> int:
@@ -893,7 +896,7 @@ class AccountOwnerAliases:
         self.member = aliased(models.Member)
         self.company = aliased(models.Company)
         self.social_accounting = aliased(models.SocialAccounting)
-        self.cooperation = aliased(models.Cooperation)
+        self.collaboration = aliased(models.Collaboration)
 
 
 class TransferQueryResult(SqlQueryResult[records.Transfer]):
@@ -924,7 +927,7 @@ class TransferQueryResult(SqlQueryResult[records.Transfer]):
         member = aliased(models.Member)
         company = aliased(models.Company)
         social_accounting = aliased(models.SocialAccounting)
-        cooperation = aliased(models.Cooperation)
+        collaboration = aliased(models.Collaboration)
         query = (
             self.query.join(
                 member, member.account == models.Transfer.debit_account, isouter=True
@@ -945,12 +948,12 @@ class TransferQueryResult(SqlQueryResult[records.Transfer]):
                 isouter=True,
             )
             .join(
-                cooperation,
-                cooperation.account == models.Transfer.debit_account,
+                collaboration,
+                collaboration.account == models.Transfer.debit_account,
                 isouter=True,
             )
             .with_entities(
-                models.Transfer, member, company, social_accounting, cooperation
+                models.Transfer, member, company, social_accounting, collaboration
             )
         )
         return SqlQueryResult(
@@ -965,7 +968,7 @@ class TransferQueryResult(SqlQueryResult[records.Transfer]):
         member = aliased(models.Member)
         company = aliased(models.Company)
         social_accounting = aliased(models.SocialAccounting)
-        cooperation = aliased(models.Cooperation)
+        collaboration = aliased(models.Collaboration)
         query = (
             self.query.join(
                 member, member.account == models.Transfer.credit_account, isouter=True
@@ -986,12 +989,12 @@ class TransferQueryResult(SqlQueryResult[records.Transfer]):
                 isouter=True,
             )
             .join(
-                cooperation,
-                cooperation.account == models.Transfer.credit_account,
+                collaboration,
+                collaboration.account == models.Transfer.credit_account,
                 isouter=True,
             )
             .with_entities(
-                models.Transfer, member, company, social_accounting, cooperation
+                models.Transfer, member, company, social_accounting, collaboration
             )
         )
         return SqlQueryResult(
@@ -1004,7 +1007,7 @@ class TransferQueryResult(SqlQueryResult[records.Transfer]):
     def map_transfer_and_account_owner(
         cls, orm: Any
     ) -> Tuple[records.Transfer, records.AccountOwner]:
-        transfer, member, company, social_accounting, cooperation = orm
+        transfer, member, company, social_accounting, collaboration = orm
         account_owner: records.AccountOwner
         if member:
             account_owner = DatabaseGatewayImpl.member_from_orm(member)
@@ -1015,7 +1018,7 @@ class TransferQueryResult(SqlQueryResult[records.Transfer]):
                 social_accounting
             )
         else:
-            account_owner = DatabaseGatewayImpl.cooperation_from_orm(cooperation)
+            account_owner = DatabaseGatewayImpl.collaboration_from_orm(collaboration)
         return DatabaseGatewayImpl.transfer_from_orm(transfer), account_owner
 
     def joined_with_debtor_and_creditor(
@@ -1051,8 +1054,8 @@ class TransferQueryResult(SqlQueryResult[records.Transfer]):
                 isouter=True,
             )
             .join(
-                debtor_aliases.cooperation,
-                debtor_aliases.cooperation.account == models.Transfer.debit_account,
+                debtor_aliases.collaboration,
+                debtor_aliases.collaboration.account == models.Transfer.debit_account,
                 isouter=True,
             )
             # Join creditor side
@@ -1082,8 +1085,9 @@ class TransferQueryResult(SqlQueryResult[records.Transfer]):
                 isouter=True,
             )
             .join(
-                creditor_aliases.cooperation,
-                creditor_aliases.cooperation.account == models.Transfer.credit_account,
+                creditor_aliases.collaboration,
+                creditor_aliases.collaboration.account
+                == models.Transfer.credit_account,
                 isouter=True,
             )
             .with_entities(
@@ -1091,11 +1095,11 @@ class TransferQueryResult(SqlQueryResult[records.Transfer]):
                 debtor_aliases.member,
                 debtor_aliases.company,
                 debtor_aliases.social_accounting,
-                debtor_aliases.cooperation,
+                debtor_aliases.collaboration,
                 creditor_aliases.member,
                 creditor_aliases.company,
                 creditor_aliases.social_accounting,
-                creditor_aliases.cooperation,
+                creditor_aliases.collaboration,
             )
         )
         return SqlQueryResult(
@@ -1116,21 +1120,24 @@ class TransferQueryResult(SqlQueryResult[records.Transfer]):
             debtor_member,
             debtor_company,
             debtor_social_accounting,
-            debtor_cooperation,
+            debtor_collaboration,
             creditor_member,
             creditor_company,
             creditor_social_accounting,
-            creditor_cooperation,
+            creditor_collaboration,
         ) = orm
 
         debtor_owner = cls._determine_account_owner(
-            debtor_member, debtor_company, debtor_social_accounting, debtor_cooperation
+            debtor_member,
+            debtor_company,
+            debtor_social_accounting,
+            debtor_collaboration,
         )
         creditor_owner = cls._determine_account_owner(
             creditor_member,
             creditor_company,
             creditor_social_accounting,
-            creditor_cooperation,
+            creditor_collaboration,
         )
 
         return (
@@ -1145,7 +1152,7 @@ class TransferQueryResult(SqlQueryResult[records.Transfer]):
         member: Optional[Member],
         company: Optional[Company],
         social_accounting: Optional[SocialAccounting],
-        cooperation: Optional[models.Cooperation],
+        collaboration: Optional[models.Collaboration],
     ) -> records.AccountOwner:
         if member:
             return DatabaseGatewayImpl.member_from_orm(member)
@@ -1154,8 +1161,8 @@ class TransferQueryResult(SqlQueryResult[records.Transfer]):
         elif social_accounting:
             return AccountingRepository.social_accounting_from_orm(social_accounting)
         else:
-            assert cooperation
-            return DatabaseGatewayImpl.cooperation_from_orm(cooperation)
+            assert collaboration
+            return DatabaseGatewayImpl.collaboration_from_orm(collaboration)
 
     def ordered_by_date(
         self, *, ascending: bool = True
@@ -1767,23 +1774,23 @@ class ProductiveConsumptionOfBasicServiceResult(
         )
 
 
-class CooperationResult(SqlQueryResult[records.Cooperation]):
+class CollaborationResult(SqlQueryResult[records.Collaboration]):
     def with_id(self, id_: UUID) -> Self:
         return self._with_modified_query(
-            lambda query: query.filter(models.Cooperation.id == id_)
+            lambda query: query.filter(models.Collaboration.id == id_)
         )
 
     def with_name_ignoring_case(self, name: str) -> Self:
         return self._with_modified_query(
             lambda query: query.filter(
-                func.lower(models.Cooperation.name) == func.lower(name)
+                func.lower(models.Collaboration.name) == func.lower(name)
             )
         )
 
     def coordinated_by_company(self, company_id: UUID) -> Self:
         most_recent_tenure_holder = (
             self.db.session.query(models.CoordinationTenure)
-            .filter(models.CoordinationTenure.cooperation == models.Cooperation.id)
+            .filter(models.CoordinationTenure.collaboration == models.Collaboration.id)
             .order_by(models.CoordinationTenure.start_date.desc())
             .with_entities(models.CoordinationTenure.company)
             .limit(1)
@@ -1793,30 +1800,30 @@ class CooperationResult(SqlQueryResult[records.Cooperation]):
         return self._with_modified_query(lambda _: query)
 
     def of_plan(self, plan_id: UUID) -> Self:
-        plan_cooperation = aliased(models.PlanCooperation)
+        plan_collaboration = aliased(models.PlanCollaboration)
         return self._with_modified_query(
             lambda query: query.join(
-                plan_cooperation,
-                plan_cooperation.cooperation == models.Cooperation.id,
-            ).filter(plan_cooperation.plan == plan_id)
+                plan_collaboration,
+                plan_collaboration.collaboration == models.Collaboration.id,
+            ).filter(plan_collaboration.plan == plan_id)
         )
 
     def joined_with_current_coordinator(
         self,
-    ) -> SqlQueryResult[Tuple[records.Cooperation, records.Company]]:
+    ) -> SqlQueryResult[Tuple[records.Collaboration, records.Company]]:
         def mapper(
             orm: Any,
-        ) -> Tuple[records.Cooperation, records.Company]:
-            cooperation_orm, company_orm = orm
+        ) -> Tuple[records.Collaboration, records.Company]:
+            collaboration_orm, company_orm = orm
             return (
-                DatabaseGatewayImpl.cooperation_from_orm(cooperation_orm),
+                DatabaseGatewayImpl.collaboration_from_orm(collaboration_orm),
                 DatabaseGatewayImpl.company_from_orm(company_orm),
             )
 
         company = aliased(models.Company)
         most_recent_tenure_holder = (
             self.db.session.query(models.CoordinationTenure)
-            .filter(models.CoordinationTenure.cooperation == models.Cooperation.id)
+            .filter(models.CoordinationTenure.collaboration == models.Collaboration.id)
             .order_by(models.CoordinationTenure.start_date.desc())
             .with_entities(models.CoordinationTenure.company)
             .limit(1)
@@ -1825,7 +1832,7 @@ class CooperationResult(SqlQueryResult[records.Cooperation]):
 
         query = self.query.join(
             company, most_recent_tenure_holder == company.id
-        ).with_entities(models.Cooperation, company)
+        ).with_entities(models.Collaboration, company)
 
         return SqlQueryResult(
             db=self.db,
@@ -1840,10 +1847,10 @@ class CoordinationTenureResult(SqlQueryResult[records.CoordinationTenure]):
             lambda query: query.filter(models.CoordinationTenure.id == id_)
         )
 
-    def of_cooperation(self, cooperation_id: UUID) -> Self:
+    def of_collaboration(self, collaboration_id: UUID) -> Self:
         return self._with_modified_query(
             lambda query: query.filter(
-                models.CoordinationTenure.cooperation == cooperation_id
+                models.CoordinationTenure.collaboration == collaboration_id
             )
         )
 
@@ -1895,21 +1902,21 @@ class CoordinationTransferRequestResult(
             )
         )
 
-    def joined_with_cooperation(
+    def joined_with_collaboration(
         self,
     ) -> SqlQueryResult[
-        Tuple[records.CoordinationTransferRequest, records.Cooperation]
+        Tuple[records.CoordinationTransferRequest, records.Collaboration]
     ]:
         def mapper(
             orm: Any,
-        ) -> Tuple[records.CoordinationTransferRequest, records.Cooperation]:
-            request_orm, cooperation_orm = orm
+        ) -> Tuple[records.CoordinationTransferRequest, records.Collaboration]:
+            request_orm, collaboration_orm = orm
             return (
                 DatabaseGatewayImpl.coordination_transfer_request_from_orm(request_orm),
-                DatabaseGatewayImpl.cooperation_from_orm(cooperation_orm),
+                DatabaseGatewayImpl.collaboration_from_orm(collaboration_orm),
             )
 
-        cooperation = aliased(models.Cooperation)
+        collaboration = aliased(models.Collaboration)
         coordination_tenure = aliased(models.CoordinationTenure)
         query = (
             self.query.join(
@@ -1917,8 +1924,8 @@ class CoordinationTransferRequestResult(
                 coordination_tenure.id
                 == models.CoordinationTransferRequest.requesting_coordination_tenure,
             )
-            .join(cooperation, cooperation.id == coordination_tenure.cooperation)
-            .with_entities(models.CoordinationTransferRequest, cooperation)
+            .join(collaboration, collaboration.id == coordination_tenure.collaboration)
+            .with_entities(models.CoordinationTransferRequest, collaboration)
         )
 
         return SqlQueryResult(
@@ -2803,39 +2810,39 @@ class DatabaseGatewayImpl:
             is_public_service=plan.is_public_service,
             approval_date=plan.approval.date if plan.approval else None,
             rejection_date=plan.rejection.date if plan.rejection else None,
-            requested_cooperation=(
-                plan.requested_cooperation if plan.requested_cooperation else None
+            requested_collaboration=(
+                plan.requested_collaboration if plan.requested_collaboration else None
             ),
             hidden_by_user=plan.hidden_by_user,
         )
 
-    def create_cooperation(
+    def create_collaboration(
         self,
         creation_timestamp: datetime,
         name: str,
         definition: str,
         account: UUID,
-    ) -> records.Cooperation:
-        cooperation = models.Cooperation(
+    ) -> records.Collaboration:
+        collaboration = models.Collaboration(
             creation_date=creation_timestamp,
             name=name,
             definition=definition,
             account=account,
         )
-        self.db.session.add(cooperation)
+        self.db.session.add(collaboration)
         self.db.session.flush()
-        return self.cooperation_from_orm(cooperation)
+        return self.collaboration_from_orm(collaboration)
 
-    def get_cooperations(self) -> CooperationResult:
-        return CooperationResult(
-            mapper=self.cooperation_from_orm,
-            query=self.db.session.query(models.Cooperation),
+    def get_collaborations(self) -> CollaborationResult:
+        return CollaborationResult(
+            mapper=self.collaboration_from_orm,
+            query=self.db.session.query(models.Collaboration),
             db=self.db,
         )
 
     @classmethod
-    def cooperation_from_orm(cls, orm: models.Cooperation) -> records.Cooperation:
-        return records.Cooperation(
+    def collaboration_from_orm(cls, orm: models.Collaboration) -> records.Collaboration:
+        return records.Collaboration(
             id=orm.id,
             creation_date=orm.creation_date,
             name=orm.name,
@@ -2844,10 +2851,10 @@ class DatabaseGatewayImpl:
         )
 
     def create_coordination_tenure(
-        self, company: UUID, cooperation: UUID, start_date: datetime
+        self, company: UUID, collaboration: UUID, start_date: datetime
     ) -> records.CoordinationTenure:
         coordination = models.CoordinationTenure(
-            company=company, cooperation=cooperation, start_date=start_date
+            company=company, collaboration=collaboration, start_date=start_date
         )
         self.db.session.add(coordination)
         self.db.session.flush()
@@ -2867,7 +2874,7 @@ class DatabaseGatewayImpl:
         return records.CoordinationTenure(
             id=orm.id,
             company=orm.company,
-            cooperation=orm.cooperation,
+            collaboration=orm.collaboration,
             start_date=orm.start_date,
         )
 
@@ -2936,7 +2943,7 @@ class DatabaseGatewayImpl:
             "productive_consumption_p",
             "productive_consumption_r",
             "productive_consumption_of_basic_service",
-            "compensation_for_coop",
+            "compensation_for_collab",
             "compensation_for_company",
             "work_certificates",
             "taxes",

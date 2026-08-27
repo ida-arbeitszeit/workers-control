@@ -24,16 +24,16 @@ class RequestCoordinationTransferView:
     controller: RequestCoordinationTransferController
     interactor: RequestCoordinationTransferInteractor
 
-    def GET(self, coop_id: UUID) -> types.Response:
+    def GET(self, collab_id: UUID) -> types.Response:
         form = RequestCoordinationTransferForm()
-        form.cooperation_field().set_value(str(coop_id))
-        navbar_items = self.presenter.create_navbar_items(coop_id=coop_id)
+        form.collaboration_field().set_value(str(collab_id))
+        navbar_items = self.presenter.create_navbar_items(collab_id=collab_id)
         return self._create_response(navbar_items=navbar_items, form=form, status=200)
 
     @commit_changes
-    def POST(self, coop_id: UUID) -> types.Response:
+    def POST(self, collab_id: UUID) -> types.Response:
         form = RequestCoordinationTransferForm(request.form)
-        navbar_items = self.presenter.create_navbar_items(coop_id=coop_id)
+        navbar_items = self.presenter.create_navbar_items(collab_id=collab_id)
         if not form.validate():
             return self._create_response(
                 navbar_items=navbar_items, form=form, status=400

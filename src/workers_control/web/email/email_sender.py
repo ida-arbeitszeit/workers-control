@@ -10,8 +10,8 @@ from workers_control.web.email.request_coordination_transfer_presenter import (
 )
 
 from .accountant_invitation_presenter import AccountantInvitationEmailPresenter
+from .collaboration_request_email_presenter import CollaborationRequestEmailPresenter
 from .company_notifier import CompanyNotifier
-from .cooperation_request_email_presenter import CooperationRequestEmailPresenter
 from .email_change_confirmation_presenter import EmailChangeConfirmationPresenter
 from .invite_worker_presenter import InviteWorkerPresenterImpl
 from .name_change_confirmation_presenter import NameChangeConfirmationPresenter
@@ -29,7 +29,7 @@ class EmailSender:
     accountant_invitation_presenter: AccountantInvitationEmailPresenter
     invite_worker_presenter: InviteWorkerPresenterImpl
     notify_about_worker_removal_presenter: NotifyAboutWorkerRemovalPresenter
-    request_cooperation_presenter: CooperationRequestEmailPresenter
+    request_collaboration_presenter: CollaborationRequestEmailPresenter
     email_change_confirmation_presenter: EmailChangeConfirmationPresenter
     email_change_warning_view: EmailChangeWarningView
     request_coordination_transfer_email_presenter: (
@@ -63,8 +63,8 @@ class EmailSender:
             )
         elif isinstance(message, interface.WorkerRemovalNotification):
             self.notify_about_worker_removal_presenter.notify(message_data=message)
-        elif isinstance(message, interface.CooperationRequestEmail):
-            self.request_cooperation_presenter.present(message)
+        elif isinstance(message, interface.CollaborationRequestEmail):
+            self.request_collaboration_presenter.present(message)
         elif isinstance(message, interface.EmailChangeWarning):
             self.email_change_warning_view.render_email_change_warning(message)
         elif isinstance(message, interface.EmailChangeConfirmation):

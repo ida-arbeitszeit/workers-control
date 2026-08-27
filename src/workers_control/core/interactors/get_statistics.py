@@ -11,7 +11,7 @@ from workers_control.core.services.psf_balance import PublicSectorFundService
 class StatisticsResponse:
     registered_companies_count: int
     registered_members_count: int
-    cooperations_count: int
+    collaborations_count: int
     active_plans_count: int
     active_plans_public_count: int
     active_basic_services_count: int
@@ -46,7 +46,7 @@ class GetStatisticsInteractor:
         return StatisticsResponse(
             registered_companies_count=len(self.database.get_companies()),
             registered_members_count=len(self.database.get_members()),
-            cooperations_count=len(self.database.get_cooperations()),
+            collaborations_count=len(self.database.get_collaborations()),
             active_plans_count=len(active_plans),
             active_plans_public_count=len(active_public_plans),
             active_basic_services_count=len(

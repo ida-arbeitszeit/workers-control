@@ -29,9 +29,9 @@ from workers_control.core.records import (
     Account,
     Accountant,
     BasicService,
+    Collaboration,
     Company,
     CompanyWorkInvite,
-    Cooperation,
     CoordinationTenure,
     CoordinationTransferRequest,
     Member,
@@ -183,11 +183,11 @@ class PlanResult(QueryResultImpl[Plan]):
     def that_are_public(self) -> Self:
         return self._filter_elements(lambda plan: plan.is_public_service)
 
-    def that_are_cooperating(self) -> Self:
-        def cooperation_of(plan: records.Plan) -> Optional[UUID]:
-            return self.database.relationships.cooperation_to_plan.get_one(plan.id)
+    def that_are_collaborating(self) -> Self:
+        def collaboration_of(plan: records.Plan) -> Optional[UUID]:
+            return self.database.relationships.collaboration_to_plan.get_one(plan.id)
 
-        return self._filter_elements(lambda plan: cooperation_of(plan) is not None)
+        return self._filter_elements(lambda plan: collaboration_of(plan) is not None)
 
     def planned_by(self, *company: UUID) -> Self:
         return self._filter_elements(lambda plan: plan.planner in company)
@@ -200,61 +200,61 @@ class PlanResult(QueryResultImpl[Plan]):
             lambda plan: plan.approval_date is None and plan.rejection_date is None
         )
 
-    def with_open_cooperation_request(
-        self, *, cooperation: Optional[UUID] = None
+    def with_open_collaboration_request(
+        self, *, collaboration: Optional[UUID] = None
     ) -> Self:
         return self._filter_elements(
             lambda plan: (
-                plan.requested_cooperation == cooperation
-                if cooperation
-                else plan.requested_cooperation is not None
+                plan.requested_collaboration == collaboration
+                if collaboration
+                else plan.requested_collaboration is not None
             )
         )
 
-    def that_are_in_same_cooperation_as(self, plan: UUID) -> Self:
+    def that_are_in_same_collaboration_as(self, plan: UUID) -> Self:
         def items_generator() -> Iterator[records.Plan]:
             plan_record = self.database.plans.get(plan)
             if not plan_record:
                 return
-            cooperation_id = self.database.relationships.cooperation_to_plan.get_one(
-                plan
+            collaboration_id = (
+                self.database.relationships.collaboration_to_plan.get_one(plan)
             )
-            if cooperation_id is None:
+            if collaboration_id is None:
                 return
             else:
                 for candidate in self.items():
-                    candidate_cooperation = (
-                        self.database.relationships.cooperation_to_plan.get_one(
+                    candidate_collaboration = (
+                        self.database.relationships.collaboration_to_plan.get_one(
                             candidate.id
                         )
                     )
-                    if candidate_cooperation == cooperation_id:
+                    if candidate_collaboration == collaboration_id:
                         yield candidate
 
         return self.from_iterable(items_generator)
 
-    def that_are_part_of_cooperation(self, *cooperation: UUID) -> Self:
-        def cooperation_of(plan: records.Plan) -> Optional[UUID]:
-            return self.database.relationships.cooperation_to_plan.get_one(plan.id)
+    def that_are_part_of_collaboration(self, *collaboration: UUID) -> Self:
+        def collaboration_of(plan: records.Plan) -> Optional[UUID]:
+            return self.database.relationships.collaboration_to_plan.get_one(plan.id)
 
         return self._filter_elements(
-            (lambda plan: cooperation_of(plan) in cooperation)
-            if cooperation
-            else (lambda plan: cooperation_of(plan) is not None)
+            (lambda plan: collaboration_of(plan) in collaboration)
+            if collaboration
+            else (lambda plan: collaboration_of(plan) is not None)
         )
 
-    def that_request_cooperation_with_coordinator(self, *company: UUID) -> Self:
+    def that_request_collaboration_with_coordinator(self, *company: UUID) -> Self:
         def new_items() -> Iterator[Plan]:
-            cooperations: Set[UUID] = {
-                coop.id
-                for coop, coordinator in self.database.get_cooperations().joined_with_current_coordinator()
+            collaborations: Set[UUID] = {
+                collab.id
+                for collab, coordinator in self.database.get_collaborations().joined_with_current_coordinator()
                 if coordinator.id in company
             }
             return filter(
                 lambda plan: (
-                    plan.requested_cooperation in cooperations
+                    plan.requested_collaboration in collaborations
                     if company
-                    else plan.requested_cooperation is not None
+                    else plan.requested_collaboration is not None
                 ),
                 self.items(),
             )
@@ -284,48 +284,48 @@ class PlanResult(QueryResultImpl[Plan]):
     def that_are_not_hidden(self) -> Self:
         return self._filter_elements(lambda plan: not plan.hidden_by_user)
 
-    def joined_with_planner_and_cooperation(self) -> QueryResultImpl[
+    def joined_with_planner_and_collaboration(self) -> QueryResultImpl[
         Tuple[
             records.Plan,
             records.Company,
-            Optional[records.Cooperation],
+            Optional[records.Collaboration],
         ]
     ]:
         def items() -> Iterable[
             Tuple[
                 records.Plan,
                 records.Company,
-                Optional[Cooperation],
+                Optional[Collaboration],
             ]
         ]:
             for plan in self.items():
-                cooperation_id = (
-                    self.database.relationships.cooperation_to_plan.get_one(plan.id)
+                collaboration_id = (
+                    self.database.relationships.collaboration_to_plan.get_one(plan.id)
                 )
-                cooperation = (
-                    self.database.cooperations[cooperation_id]
-                    if cooperation_id
+                collaboration = (
+                    self.database.collaborations[collaboration_id]
+                    if collaboration_id
                     else None
                 )
-                yield plan, self.database.companies[plan.planner], cooperation
+                yield plan, self.database.companies[plan.planner], collaboration
 
         return QueryResultImpl(
             database=self.database,
             items=items,
         )
 
-    def joined_with_cooperation(
+    def joined_with_collaboration(
         self,
-    ) -> QueryResultImpl[Tuple[records.Plan, Optional[records.Cooperation]]]:
+    ) -> QueryResultImpl[Tuple[records.Plan, Optional[records.Collaboration]]]:
         def items() -> (
-            Generator[tuple[records.Plan, Optional[records.Cooperation]], None, None]
+            Generator[tuple[records.Plan, Optional[records.Collaboration]], None, None]
         ):
             for p in self.items():
-                cooperation_id = (
-                    self.database.relationships.cooperation_to_plan.get_one(p.id)
+                collaboration_id = (
+                    self.database.relationships.collaboration_to_plan.get_one(p.id)
                 )
-                if cooperation_id:
-                    yield p, self.database.cooperations[cooperation_id]
+                if collaboration_id:
+                    yield p, self.database.collaborations[collaboration_id]
                 else:
                     yield p, None
 
@@ -382,31 +382,33 @@ class PlanUpdate:
     update_functions: List[Callable[[Plan], None]]
     records: MockDatabase
 
-    def set_cooperation(self, cooperation: Optional[UUID]) -> Self:
+    def set_collaboration(self, collaboration: Optional[UUID]) -> Self:
         def update(plan: Plan) -> None:
-            if cooperation:
-                assert cooperation in self.records.cooperations
-                cooperation_plans = (
-                    self.records.relationships.cooperation_to_plan.get_many(cooperation)
+            if collaboration:
+                assert collaboration in self.records.collaborations
+                collaboration_plans = (
+                    self.records.relationships.collaboration_to_plan.get_many(
+                        collaboration
+                    )
                 )
-                if plan.id not in cooperation_plans:
-                    self.records.relationships.cooperation_to_plan.relate(
-                        cooperation, plan.id
+                if plan.id not in collaboration_plans:
+                    self.records.relationships.collaboration_to_plan.relate(
+                        collaboration, plan.id
                     )
             else:
-                current_coop = self.records.relationships.cooperation_to_plan.get_one(
-                    plan.id
+                current_collab = (
+                    self.records.relationships.collaboration_to_plan.get_one(plan.id)
                 )
-                if current_coop:
-                    self.records.relationships.cooperation_to_plan.dissociate(
-                        current_coop, plan.id
+                if current_collab:
+                    self.records.relationships.collaboration_to_plan.dissociate(
+                        current_collab, plan.id
                     )
 
         return self._add_update(update)
 
-    def set_requested_cooperation(self, cooperation: Optional[UUID]) -> Self:
+    def set_requested_collaboration(self, collaboration: Optional[UUID]) -> Self:
         def update(plan: Plan) -> None:
-            plan.requested_cooperation = cooperation
+            plan.requested_collaboration = collaboration
 
         return self._add_update(update)
 
@@ -577,51 +579,53 @@ class PlanDraftUpdate:
 class PlanApprovalResult(QueryResultImpl[PlanApproval]): ...
 
 
-class CooperationResult(QueryResultImpl[Cooperation]):
+class CollaborationResult(QueryResultImpl[Collaboration]):
     def with_id(self, id_: UUID) -> Self:
-        return self._filter_elements(lambda coop: coop.id == id_)
+        return self._filter_elements(lambda collab: collab.id == id_)
 
     def with_name_ignoring_case(self, name: str) -> Self:
-        return self._filter_elements(lambda coop: coop.name.lower() == name.lower())
+        return self._filter_elements(lambda collab: collab.name.lower() == name.lower())
 
     def coordinated_by_company(self, company_id: UUID) -> Self:
-        def items() -> Iterable[records.Cooperation]:
-            for cooperation in self.items():
+        def items() -> Iterable[records.Collaboration]:
+            for collaboration in self.items():
                 tenures = [
                     self.database.coordination_tenures[id_]
-                    for id_ in self.database.indices.coordination_tenure_by_cooperation.get(
-                        cooperation.id
+                    for id_ in self.database.indices.coordination_tenure_by_collaboration.get(
+                        collaboration.id
                     )
                 ]
                 tenures.sort(key=lambda t: t.start_date, reverse=True)
                 if tenures and tenures[0].company == company_id:
-                    yield cooperation
+                    yield collaboration
 
         return self.from_iterable(items)
 
     def of_plan(self, plan_id: UUID) -> Self:
-        def cooperation_of(plan_id: UUID) -> Optional[UUID]:
-            cooperation = self.database.relationships.cooperation_to_plan.get_one(
+        def collaboration_of(plan_id: UUID) -> Optional[UUID]:
+            collaboration = self.database.relationships.collaboration_to_plan.get_one(
                 plan_id
             )
-            return cooperation
+            return collaboration
 
-        return self._filter_elements(lambda coop: coop.id == cooperation_of(plan_id))
+        return self._filter_elements(
+            lambda collab: collab.id == collaboration_of(plan_id)
+        )
 
     def joined_with_current_coordinator(
         self,
-    ) -> QueryResultImpl[Tuple[Cooperation, Company]]:
-        def items() -> Iterable[Tuple[records.Cooperation, Company]]:
-            for cooperation in self.items():
+    ) -> QueryResultImpl[Tuple[Collaboration, Company]]:
+        def items() -> Iterable[Tuple[records.Collaboration, Company]]:
+            for collaboration in self.items():
                 tenures = [
                     self.database.coordination_tenures[id_]
-                    for id_ in self.database.indices.coordination_tenure_by_cooperation.get(
-                        cooperation.id
+                    for id_ in self.database.indices.coordination_tenure_by_collaboration.get(
+                        collaboration.id
                     )
                 ]
                 tenures.sort(key=lambda t: t.start_date, reverse=True)
                 if tenures:
-                    yield cooperation, self.database.companies[tenures[0].company]
+                    yield collaboration, self.database.companies[tenures[0].company]
 
         return QueryResultImpl(
             items=items,
@@ -633,8 +637,10 @@ class CoordinationTenureResult(QueryResultImpl[CoordinationTenure]):
     def with_id(self, id_: UUID) -> Self:
         return self._filter_elements(lambda model: model.id == id_)
 
-    def of_cooperation(self, cooperation_id: UUID) -> Self:
-        return self._filter_elements(lambda model: model.cooperation == cooperation_id)
+    def of_collaboration(self, collaboration_id: UUID) -> Self:
+        return self._filter_elements(
+            lambda model: model.collaboration == collaboration_id
+        )
 
     def joined_with_coordinator(
         self,
@@ -665,16 +671,18 @@ class CoordinationTransferRequestResult(QueryResultImpl[CoordinationTransferRequ
             == coordination_tenure
         )
 
-    def joined_with_cooperation(
+    def joined_with_collaboration(
         self,
-    ) -> QueryResultImpl[Tuple[CoordinationTransferRequest, Cooperation]]:
-        def items() -> Iterable[Tuple[CoordinationTransferRequest, Cooperation]]:
+    ) -> QueryResultImpl[Tuple[CoordinationTransferRequest, Collaboration]]:
+        def items() -> Iterable[Tuple[CoordinationTransferRequest, Collaboration]]:
             for transfer_request in self.items():
                 requesting_tenure = self.database.coordination_tenures[
                     transfer_request.requesting_coordination_tenure
                 ]
-                cooperation = self.database.cooperations[requesting_tenure.cooperation]
-                yield transfer_request, cooperation
+                collaboration = self.database.collaborations[
+                    requesting_tenure.collaboration
+                ]
+                yield transfer_request, collaboration
 
         return QueryResultImpl(
             items=items,
@@ -777,13 +785,13 @@ class CompanyResult(QueryResultImpl[Company]):
 
         return self.from_iterable(items=items)
 
-    def that_is_coordinating_cooperation(self, cooperation: UUID) -> Self:
+    def that_is_coordinating_collaboration(self, collaboration: UUID) -> Self:
         def items() -> Iterable[records.Company]:
             tenures = sorted(
                 [
                     self.database.coordination_tenures[t]
-                    for t in self.database.indices.coordination_tenure_by_cooperation.get(
-                        cooperation
+                    for t in self.database.indices.coordination_tenure_by_collaboration.get(
+                        collaboration
                     )
                 ],
                 key=lambda t: t.start_date,
@@ -957,11 +965,11 @@ class TransferResult(QueryResultImpl[records.Transfer]):
             if companies := self.database.indices.company_by_account.get(account_id):
                 (company_id,) = companies
                 return self.database.companies[company_id]
-            if cooperations := self.database.indices.cooperation_by_account.get(
+            if collaborations := self.database.indices.collaboration_by_account.get(
                 account_id
             ):
-                (cooperation_id,) = cooperations
-                return self.database.cooperations[cooperation_id]
+                (collaboration_id,) = collaborations
+                return self.database.collaborations[collaboration_id]
             return self.database.social_accounting
 
         def items() -> Iterable[Tuple[records.Transfer, records.AccountOwner]]:
@@ -983,11 +991,11 @@ class TransferResult(QueryResultImpl[records.Transfer]):
             if companies := self.database.indices.company_by_account.get(account_id):
                 (company_id,) = companies
                 return self.database.companies[company_id]
-            if cooperations := self.database.indices.cooperation_by_account.get(
+            if collaborations := self.database.indices.collaboration_by_account.get(
                 account_id
             ):
-                (cooperation_id,) = cooperations
-                return self.database.cooperations[cooperation_id]
+                (collaboration_id,) = collaborations
+                return self.database.collaborations[collaboration_id]
             return self.database.social_accounting
 
         def items() -> Iterable[Tuple[records.Transfer, records.AccountOwner]]:
@@ -1011,11 +1019,11 @@ class TransferResult(QueryResultImpl[records.Transfer]):
             if companies := self.database.indices.company_by_account.get(account_id):
                 (company_id,) = companies
                 return self.database.companies[company_id]
-            if cooperations := self.database.indices.cooperation_by_account.get(
+            if collaborations := self.database.indices.collaboration_by_account.get(
                 account_id
             ):
-                (cooperation_id,) = cooperations
-                return self.database.cooperations[cooperation_id]
+                (collaboration_id,) = collaborations
+                return self.database.collaborations[collaboration_id]
             return self.database.social_accounting
 
         def items() -> (
@@ -2030,7 +2038,7 @@ class MockDatabase:
             id=uuid4(),
             account_psf=self.create_account().id,
         )
-        self.cooperations: Dict[UUID, Cooperation] = dict()
+        self.collaborations: Dict[UUID, Collaboration] = dict()
         self.coordination_tenures: Dict[UUID, records.CoordinationTenure] = dict()
         self.coordination_transfer_requests: Dict[
             UUID, records.CoordinationTransferRequest
@@ -2191,49 +2199,51 @@ class MockDatabase:
             is_public_service=is_public_service,
             approval_date=None,
             rejection_date=None,
-            requested_cooperation=None,
+            requested_collaboration=None,
             hidden_by_user=False,
         )
         self.plans[plan.id] = plan
         return plan
 
-    def create_cooperation(
+    def create_collaboration(
         self,
         creation_timestamp: datetime,
         name: str,
         definition: str,
         account: UUID,
-    ) -> Cooperation:
-        cooperation_id = uuid4()
-        cooperation = Cooperation(
-            id=cooperation_id,
+    ) -> Collaboration:
+        collaboration_id = uuid4()
+        collaboration = Collaboration(
+            id=collaboration_id,
             creation_date=creation_timestamp,
             name=name,
             definition=definition,
             account=account,
         )
-        self.cooperations[cooperation_id] = cooperation
-        self.indices.cooperation_by_account.add(cooperation.account, cooperation.id)
-        return cooperation
+        self.collaborations[collaboration_id] = collaboration
+        self.indices.collaboration_by_account.add(
+            collaboration.account, collaboration.id
+        )
+        return collaboration
 
-    def get_cooperations(self) -> CooperationResult:
-        return CooperationResult(
-            items=lambda: self.cooperations.values(),
+    def get_collaborations(self) -> CollaborationResult:
+        return CollaborationResult(
+            items=lambda: self.collaborations.values(),
             database=self,
         )
 
     def create_coordination_tenure(
-        self, company: UUID, cooperation: UUID, start_date: datetime
+        self, company: UUID, collaboration: UUID, start_date: datetime
     ) -> records.CoordinationTenure:
         tenure_id = uuid4()
         tenure = records.CoordinationTenure(
             id=tenure_id,
             company=company,
-            cooperation=cooperation,
+            collaboration=collaboration,
             start_date=start_date,
         )
         self.coordination_tenures[tenure_id] = tenure
-        self.indices.coordination_tenure_by_cooperation.add(cooperation, tenure_id)
+        self.indices.coordination_tenure_by_collaboration.add(collaboration, tenure_id)
         return tenure
 
     def get_coordination_tenures(self) -> CoordinationTenureResult:
@@ -2693,15 +2703,17 @@ class Relationships:
     account_credentials_to_accountant: OneToOne[UUID, UUID] = field(
         default_factory=OneToOne
     )
-    cooperation_to_plan: OneToMany[UUID, UUID] = field(default_factory=OneToMany)
+    collaboration_to_plan: OneToMany[UUID, UUID] = field(default_factory=OneToMany)
 
 
 @dataclass
 class Indices:
     member_by_account: Index[UUID, UUID] = field(default_factory=Index)
     company_by_account: Index[UUID, UUID] = field(default_factory=Index)
-    cooperation_by_account: Index[UUID, UUID] = field(default_factory=Index)
-    coordination_tenure_by_cooperation: Index[UUID, UUID] = field(default_factory=Index)
+    collaboration_by_account: Index[UUID, UUID] = field(default_factory=Index)
+    coordination_tenure_by_collaboration: Index[UUID, UUID] = field(
+        default_factory=Index
+    )
     account_credentials_by_email_address_lowercased: Index[str, UUID] = field(
         default_factory=Index
     )

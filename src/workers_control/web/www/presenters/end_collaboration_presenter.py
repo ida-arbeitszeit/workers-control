@@ -1,0 +1,42 @@
+from dataclasses import dataclass
+from uuid import UUID
+
+from workers_control.core.interactors.end_collaboration import EndCollaborationResponse
+from workers_control.web.notification import Notifier
+from workers_control.web.request import Request
+from workers_control.web.translator import Translator
+from workers_control.web.url_index import UrlIndex
+
+
+@dataclass
+class EndCollaborationPresenter:
+    @dataclass
+    class ViewModel:
+        show_404: bool
+        redirect_url: str
+
+    notifier: Notifier
+    url_index: UrlIndex
+    translator: Translator
+
+    def present(
+        self, response: EndCollaborationResponse, *, web_request: Request
+    ) -> ViewModel:
+        if response.is_rejected:
+            self.notifier.display_warning(
+                self.translator.gettext("Collaboration could not be terminated.")
+            )
+            return self.ViewModel(show_404=True, redirect_url="")
+        self.notifier.display_info(
+            self.translator.gettext("Collaboration has been terminated.")
+        )
+        redirect_url = self._get_redirect_url(web_request)
+        return self.ViewModel(show_404=False, redirect_url=redirect_url)
+
+    def _get_redirect_url(self, request: Request) -> str:
+        query_string = request.query_string()
+        collaboration_id = query_string.get_last_value(
+            "collaboration_id"
+        ) or request.get_form("collaboration_id")
+        assert collaboration_id
+        return self.url_index.get_collab_summary_url(collab_id=UUID(collaboration_id))

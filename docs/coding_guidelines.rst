@@ -587,10 +587,10 @@ are linked ancestors::
   def create_navbar_items(self) -> list[NavbarItem]:
       return [
           NavbarItem(
-              text=self.translator.gettext("My cooperations"),
-              url=self.url_index.get_my_cooperations_url(),
+              text=self.translator.gettext("My collaborations"),
+              url=self.url_index.get_my_collaborations_url(),
           ),
-          NavbarItem(text=self.translator.gettext("Create cooperation"), url=None),
+          NavbarItem(text=self.translator.gettext("Create collaboration"), url=None),
       ]
 
 The request handler passes the result to ``render_template``

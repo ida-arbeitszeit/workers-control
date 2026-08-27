@@ -196,7 +196,7 @@ class InteractorTests(BaseTestCase):
 
     def test_that_correct_supplier_name_is_shown(self) -> None:
         consumer = self.company_generator.create_company_record()
-        supplier_name = "supplier coop"
+        supplier_name = "supplier collab"
         supplier = self.company_generator.create_company_record(name=supplier_name)
         offered_plan = self.plan_generator.create_plan(planner=supplier.id)
         self.consumption_generator.create_resource_consumption_by_company(

@@ -21,7 +21,7 @@ class _AccountOwnerType(Enum):
     member = auto()
     company = auto()
     social_accounting = auto()
-    cooperation = auto()
+    collaboration = auto()
 
 
 class TransferTestBase(BaseTestCase):
@@ -54,9 +54,9 @@ class TransferTestBase(BaseTestCase):
             self.transfer_generator.create_transfer(
                 debit_account=self._get_social_accounting_account()
             )
-        elif account_owner_type == _AccountOwnerType.cooperation:
+        elif account_owner_type == _AccountOwnerType.collaboration:
             self.transfer_generator.create_transfer(
-                debit_account=self._get_cooperation_account(cooperation_name=name)
+                debit_account=self._get_collaboration_account(collaboration_name=name)
             )
 
     def create_transfer_to(
@@ -74,9 +74,9 @@ class TransferTestBase(BaseTestCase):
             self.transfer_generator.create_transfer(
                 credit_account=self._get_social_accounting_account()
             )
-        elif account_owner_type == _AccountOwnerType.cooperation:
+        elif account_owner_type == _AccountOwnerType.collaboration:
             self.transfer_generator.create_transfer(
-                credit_account=self._get_cooperation_account(cooperation_name=name)
+                credit_account=self._get_collaboration_account(collaboration_name=name)
             )
 
     def _get_member_account(self, member_name: str) -> UUID:
@@ -96,15 +96,15 @@ class TransferTestBase(BaseTestCase):
         account = social_accounting.account_psf
         return account
 
-    def _get_cooperation_account(self, cooperation_name: str) -> UUID:
-        cooperation_id = self.cooperation_generator.create_cooperation(
-            name=cooperation_name
+    def _get_collaboration_account(self, collaboration_name: str) -> UUID:
+        collaboration_id = self.collaboration_generator.create_collaboration(
+            name=collaboration_name
         )
-        cooperation = (
-            self.database_gateway.get_cooperations().with_id(cooperation_id).first()
+        collaboration = (
+            self.database_gateway.get_collaborations().with_id(collaboration_id).first()
         )
-        assert cooperation
-        return cooperation.account
+        assert collaboration
+        return collaboration.account
 
 
 class ListTransfersTests(TransferTestBase):
@@ -335,14 +335,14 @@ class AccountIdTests(TransferTestBase):
         assert len(response.transfers) == 1
         assert response.transfers[0].credit_account is not None
 
-    def test_that_debit_account_is_not_none_if_debtor_is_cooperation(self) -> None:
-        self.create_transfer_from(_AccountOwnerType.cooperation)
+    def test_that_debit_account_is_not_none_if_debtor_is_collaboration(self) -> None:
+        self.create_transfer_from(_AccountOwnerType.collaboration)
         response = self.list_transfers()
         assert len(response.transfers) == 1
         assert response.transfers[0].debit_account is not None
 
-    def test_that_credit_account_is_not_none_if_creditor_is_cooperation(self) -> None:
-        self.create_transfer_to(_AccountOwnerType.cooperation)
+    def test_that_credit_account_is_not_none_if_creditor_is_collaboration(self) -> None:
+        self.create_transfer_to(_AccountOwnerType.collaboration)
         response = self.list_transfers()
         assert len(response.transfers) == 1
         assert response.transfers[0].credit_account is not None
@@ -387,14 +387,14 @@ class AccountOwnerIdTests(TransferTestBase):
         assert len(response.transfers) == 1
         assert response.transfers[0].creditor is not None
 
-    def test_that_debtor_id_is_not_none_if_debtor_is_cooperation(self) -> None:
-        self.create_transfer_from(_AccountOwnerType.cooperation)
+    def test_that_debtor_id_is_not_none_if_debtor_is_collaboration(self) -> None:
+        self.create_transfer_from(_AccountOwnerType.collaboration)
         response = self.list_transfers()
         assert len(response.transfers) == 1
         assert response.transfers[0].debtor is not None
 
-    def test_that_creditor_id_is_not_none_if_creditor_is_cooperation(self) -> None:
-        self.create_transfer_to(_AccountOwnerType.cooperation)
+    def test_that_creditor_id_is_not_none_if_creditor_is_collaboration(self) -> None:
+        self.create_transfer_to(_AccountOwnerType.collaboration)
         response = self.list_transfers()
         assert len(response.transfers) == 1
         assert response.transfers[0].creditor is not None
@@ -439,16 +439,16 @@ class AccountOwnerNameTests(TransferTestBase):
         assert len(response.transfers) == 1
         assert response.transfers[0].creditor_name == expected_name
 
-    def test_that_debtor_name_is_correct_name_of_cooperation(self) -> None:
-        expected_name = "Some test cooperation name"
-        self.create_transfer_from(_AccountOwnerType.cooperation, name=expected_name)
+    def test_that_debtor_name_is_correct_name_of_collaboration(self) -> None:
+        expected_name = "Some test collaboration name"
+        self.create_transfer_from(_AccountOwnerType.collaboration, name=expected_name)
         response = self.list_transfers()
         assert len(response.transfers) == 1
         assert response.transfers[0].debtor_name == expected_name
 
-    def test_that_creditor_name_is_correct_name_of_cooperation(self) -> None:
-        expected_name = "Some test cooperation name"
-        self.create_transfer_to(_AccountOwnerType.cooperation, name=expected_name)
+    def test_that_creditor_name_is_correct_name_of_collaboration(self) -> None:
+        expected_name = "Some test collaboration name"
+        self.create_transfer_to(_AccountOwnerType.collaboration, name=expected_name)
         response = self.list_transfers()
         assert len(response.transfers) == 1
         assert response.transfers[0].creditor_name == expected_name
@@ -471,13 +471,13 @@ class AccountOwnerTypeTests(TransferTestBase):
         assert len(response.transfers) == 1
         assert response.transfers[0].debtor_type == AccountOwnerType.company
 
-    def test_that_correct_account_owner_type_is_returned_if_debtor_is_cooperation(
+    def test_that_correct_account_owner_type_is_returned_if_debtor_is_collaboration(
         self,
     ) -> None:
-        self.create_transfer_from(_AccountOwnerType.cooperation)
+        self.create_transfer_from(_AccountOwnerType.collaboration)
         response = self.list_transfers()
         assert len(response.transfers) == 1
-        assert response.transfers[0].debtor_type == AccountOwnerType.cooperation
+        assert response.transfers[0].debtor_type == AccountOwnerType.collaboration
 
     def test_that_correct_account_owner_type_is_returned_if_debtor_is_social_accounting(
         self,

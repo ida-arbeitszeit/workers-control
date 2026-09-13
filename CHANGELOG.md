@@ -5,12 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.2.6] - 2026-09-13
 
 ### Changed
 
 - Rename "cooperation" to "collaboration" throughout the app: the user interface,
-  the URLs, the code and the database schema.
+  the URLs, the code and the database schema. (#1535)
+- Treat Sphinx warnings as errors and build the documentation as part of `run-checks`. (#1536)
+- Update GitHub Actions. (#1534)
+- Update dependencies. (#1538)
+
+### Fixed
+
+- The Read the Docs build had been failing since `requirements.txt` was removed, because `docs/requirements.txt` still referenced it. (#1537)
 
 ## [0.2.5] - 2026-08-08
 

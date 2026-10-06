@@ -31,13 +31,8 @@ This process is largely automated by the command ``python -m dev.update_dependen
 
 Then developers using pip can upgrade by running ``pip install -r requirements-dev.txt``.
 
-The few packages where we deliberately keep an *older* version than nixpkgs provides
-(currently ``flask-login`` and ``flask-babel``) are recorded, together with the reason,
-in ``VersionDowngrader.LOWER_PYPI_VERSIONS``
-(``dev/update_dependencies/update_constraints.py``). Their custom nix expressions live at
-``dev/nix/pythonPackages/flask-babel.nix`` and ``flask-login.nix`` (wired up in
-``dev/nix/pythonPackages.nix``). These are refreshed automatically by the command above,
-so you normally do not edit them by hand.
+The few packages where we deliberately keep an *older* version than nixpkgs provides are recorded, together with the reason,
+in ``VersionDowngrader.LOWER_PYPI_VERSIONS`` (``dev/update_dependencies/update_constraints.py``).
 
 
 Change Dependencies

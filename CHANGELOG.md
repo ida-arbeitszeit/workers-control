@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.7] - 2026-10-06
+
+### Changed
+
+- Replace the ida logo with the Workers Control logo in the favicon and show the logo on the start page. (#1540)
+
+### Fixed
+
+- `requirements-dev.txt` did not apply the pins from `constraints.txt`, because pip ignores a `-c` option that shares a line with a requirement. (#1541)
+
 ## [0.2.6] - 2026-09-13
 
 ### Changed

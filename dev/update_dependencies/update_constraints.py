@@ -142,6 +142,10 @@ class VersionDowngrader:
             "4.0.0",
             "Flask_Babel in nixpkgs is 4.1.0 while in PyPi it is still 4.0.0.",
         ),
+        "docutils": (
+            "0.22.4",
+            "Sphinx 9.1.0 on PyPI requires docutils<0.23, nixpkgs drops that upper bound.",
+        ),
     }
 
     def pypi_version_number_is_lower_than_nixpkgs(self, package_name: str) -> bool:

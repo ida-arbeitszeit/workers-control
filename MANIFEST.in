@@ -1,5 +1,5 @@
 recursive-include src/workers_control/flask/templates *.html
-recursive-include src/workers_control/flask/static *.js *.css favicon.ico favicon.svg
+recursive-include src/workers_control/flask/static *.js *.css favicon.ico favicon.svg logo.svg
 recursive-include src/workers_control/flask/translations *.po *.mo *.pot
 include src/workers_control/flask/logging_config.json
 recursive-include src/workers_control/db/migrations *.mako *.py *.ini

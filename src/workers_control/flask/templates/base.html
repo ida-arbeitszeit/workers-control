@@ -23,9 +23,9 @@
 
 <body>
   {% set user_type = session.get('user_type') %}
-  {% if user_type in ['company', 'member', 'accountant'] %}
+  {% if user_type in ['company', 'member', 'accountant'] and current_user_name is not none %}
     {% set brand_url = url_for('main_user.account_details') %}
-    {% set brand_label = current_user.name|truncate(20, True) %}
+    {% set brand_label = current_user_name|truncate(20, True) %}
     {% set is_anonymous = false %}
     {% if user_type == 'company' %}
       {% set brand_icon = 'industry' %}

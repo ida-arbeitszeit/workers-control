@@ -8,7 +8,7 @@ from dev.update_dependencies import generate_type_stubs
 
 from ..command import LoggingSubprocessRunner, Shell, Subprocess, SubprocessRunner
 from ..nix import NixFlake
-from . import update_bulma, update_constraints, update_python_packages
+from . import update_bulma, update_constraints
 
 
 def main() -> None:
@@ -17,7 +17,6 @@ def main() -> None:
     development_shell = flake.shell()
     update_flake(shell)
     update_bulma.main()
-    update_python_packages.main(shell)
     update_constraints.main(development_shell)
     generate_type_stubs.main(development_shell)
     format_code.main(shell)

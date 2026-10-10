@@ -5,13 +5,13 @@ from flask_talisman import Talisman
 from jinja2 import StrictUndefined
 
 from workers_control.db.db import Database
-from workers_control.flask.babel import initialize_babel
 from workers_control.flask.config.checks import ConfigValidator
 from workers_control.flask.config.loader import load_configuration
 from workers_control.flask.config.options import CONFIG_OPTIONS
 from workers_control.flask.database import run_db_migrations
 from workers_control.flask.extensions import csrf_protect
 from workers_control.flask.filters import icon_filter
+from workers_control.flask.i18n import initialize_i18n
 from workers_control.flask.profiling import initialize_flask_profiler  # type: ignore
 
 
@@ -47,7 +47,7 @@ def create_app(
 
     # init flask extensions
     csrf_protect.init_app(app)
-    initialize_babel(app)
+    initialize_i18n(app)
 
     @app.teardown_appcontext
     def shutdown_session(exception: BaseException | None = None) -> None:

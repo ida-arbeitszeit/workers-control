@@ -105,11 +105,11 @@ class ViewTestCase(FlaskTestCase):
         )
         assert response.status_code < 400
 
-    def login_accountant(self) -> UUID:
+    def login_accountant(self, name: str | None = None) -> UUID:
         email = self.email_generator.get_random_email()
         password = "password123"
         accountant = self.accountant_generator.create_accountant(
-            email_address=email, password=password
+            email_address=email, password=password, name=name
         )
         response = self.client.post(
             "/accountant/login",

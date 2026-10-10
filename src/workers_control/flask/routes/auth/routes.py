@@ -7,7 +7,6 @@ from flask import (
     session,
     url_for,
 )
-from flask_login import login_required
 
 from workers_control.core.interactors.confirm_company import ConfirmCompanyInteractor
 from workers_control.core.interactors.confirm_member import ConfirmMemberInteractor
@@ -15,6 +14,7 @@ from workers_control.db import commit_changes
 from workers_control.flask.class_based_view import as_flask_view
 from workers_control.flask.dependency_injection import with_injection
 from workers_control.flask.flask_session import FlaskSession
+from workers_control.flask.login_required import login_required
 from workers_control.flask.types import Response
 from workers_control.flask.views.log_in_accountant_view import LogInAccountantView
 from workers_control.flask.views.log_in_company_view import LogInCompanyView

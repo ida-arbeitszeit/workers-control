@@ -22,8 +22,8 @@ This process is largely automated by the command ``python -m dev.update_dependen
 (nix must be installed). Running it performs, in order:
 
 #. ``nix flake update`` — refresh ``flake.lock``.
-#. Refresh the custom nix pins for ``flask-babel`` and ``flask-login``
-   (``dev/nix/pythonPackages/*.json``).
+#. Refresh the custom nix pin for ``flask-babel``
+   (``dev/nix/pythonPackages/flask-babel.json``).
 #. Refresh the vendored ``bulma.css``.
 #. Regenerate ``constraints.txt`` (the pip-consumable pin file) from the resolved
    nix Python environment.

@@ -31,7 +31,6 @@ class FlaskDevConfiguration:
     PREFERRED_URL_SCHEME = "http"
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = "Lax"
-    REMEMBER_COOKIE_HTTPONLY = True
 
     MAIL_SERVER = os.environ.get("MAIL_SERVER", "localhost")
     MAIL_PORT = os.environ.get("MAIL_PORT", "0")

@@ -42,6 +42,23 @@ class CompanyDashboardPresenterTests(CompanyDashboardBaseTestCase):
         )
         self.assertEqual(view_model.company_name, "company test name")
 
+    def test_presenter_shows_correct_company_summary_url(
+        self,
+    ) -> None:
+        expected_company_id = uuid4()
+        view_model = self.presenter.present(
+            self.get_interactor_response(
+                company_info=Interactor.Response.CompanyInfo(
+                    id=expected_company_id,
+                    name="company test name",
+                )
+            )
+        )
+        self.assertEqual(
+            view_model.company_summary_url,
+            self.url_index.get_company_summary_url(company_id=expected_company_id),
+        )
+
 
 class CompanyDashboardTileTests(CompanyDashboardBaseTestCase):
     def test_accounts_tile_has_correct_title(self) -> None:

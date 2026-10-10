@@ -21,6 +21,7 @@ class GetCompanyDashboardPresenter:
     @dataclass
     class ViewModel:
         company_name: str
+        company_summary_url: str
         accounts_tile: GetCompanyDashboardPresenter.Tile
 
     url_index: UrlIndex
@@ -31,6 +32,9 @@ class GetCompanyDashboardPresenter:
     ) -> ViewModel:
         return self.ViewModel(
             company_name=interactor_response.company_info.name,
+            company_summary_url=self.url_index.get_company_summary_url(
+                company_id=interactor_response.company_info.id
+            ),
             accounts_tile=self._create_accounts_tile(interactor_response),
         )
 

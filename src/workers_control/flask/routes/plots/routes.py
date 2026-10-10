@@ -2,7 +2,6 @@ from decimal import Decimal
 from uuid import UUID
 
 from flask import Blueprint, Response, request
-from flask_login import login_required
 
 from workers_control.core.interactors import (
     show_a_account_details,
@@ -17,6 +16,7 @@ from workers_control.core.interactors.show_prd_account_details import (
 )
 from workers_control.flask import plotter
 from workers_control.flask.dependency_injection import with_injection
+from workers_control.flask.login_required import login_required
 from workers_control.web.colors import HexColors
 from workers_control.web.translator import Translator
 from workers_control.web.www.controllers.show_a_account_details_controller import (

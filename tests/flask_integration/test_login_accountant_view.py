@@ -39,3 +39,26 @@ class LoginTests(ViewTestCase):
             ),
         )
         self.assertEqual(response.status_code, 401)
+
+
+class LoggedInUserTests(ViewTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.url = "/accountant/login"
+
+    def test_logged_in_accountant_gets_redirected_to_dashboard(self) -> None:
+        self.login_accountant()
+        response = self.client.get(self.url)
+        assert response.status_code == 302
+        assert response.location == "/accountant/dashboard"
+
+    def test_logged_in_member_sees_login_form(self) -> None:
+        self.login_member()
+        response = self.client.get(self.url)
+        assert response.status_code == 200
+
+    def test_logged_in_member_gets_logged_out(self) -> None:
+        self.login_member()
+        self.client.get(self.url)
+        response = self.client.get("/member/dashboard")
+        assert response.status_code == 302

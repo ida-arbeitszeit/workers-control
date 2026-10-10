@@ -1,3 +1,4 @@
+babel
 black
 build
 flake8

@@ -907,9 +907,8 @@ Therefore, a new ``Injector`` is created for each request
 Translations
 ------------
 
-We use `Flask-Babel <https://python-babel.github.io/flask-babel/>`_
-for translation. All user-facing strings must be marked for translation so
-that they can be localized.
+We use gettext message catalogs for translation. All user-facing strings
+must be marked for translation so that they can be localized.
 
 In Python files, use one of those functions::
 

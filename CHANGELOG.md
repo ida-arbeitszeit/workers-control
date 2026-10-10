@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Remove the dependency on Flask-Login, which has not been released since 2023.
   The logged-in user is now stored directly in Flask's session cookie.
+- Remove the dependency on Flask-Babel, which has not been released since 2023.
+  Translations are now loaded with Python's built-in `gettext` module.
+- The `invite-accountant` CLI command sends the invitation in English instead of always in German.
+  Another configured language can be selected with `--language`, e.g. `--language de`.
 
 ### Fixed
 

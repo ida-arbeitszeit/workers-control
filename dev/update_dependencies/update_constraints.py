@@ -134,10 +134,6 @@ class VersionStringCleaner:
 
 class VersionDowngrader:
     LOWER_PYPI_VERSIONS = {
-        "Flask-Login": (
-            "0.6.3",
-            "Flask-Login in nixpkgs is a 0.7 prerelease which is not available on PyPI currently.",
-        ),
         "flask-babel": (
             "4.0.0",
             "Flask_Babel in nixpkgs is 4.1.0 while in PyPi it is still 4.0.0.",

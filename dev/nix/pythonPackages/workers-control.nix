@@ -11,7 +11,6 @@
   flask-babel,
   flask-profiler,
   flask-talisman,
-  flask-login,
   flask-wtf,
   matplotlib,
   parameterized,
@@ -52,7 +51,6 @@ buildPythonPackage {
     flask
     flask-babel
     flask-talisman
-    flask-login
     flask-wtf
     matplotlib
   ];

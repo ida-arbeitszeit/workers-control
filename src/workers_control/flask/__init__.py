@@ -1,7 +1,6 @@
 from typing import Any
-from uuid import UUID
 
-from flask import Flask, session
+from flask import Flask
 from flask_talisman import Talisman
 from jinja2 import StrictUndefined
 
@@ -11,9 +10,8 @@ from workers_control.flask.config.checks import ConfigValidator
 from workers_control.flask.config.loader import load_configuration
 from workers_control.flask.config.options import CONFIG_OPTIONS
 from workers_control.flask.database import run_db_migrations
-from workers_control.flask.extensions import csrf_protect, login_manager
+from workers_control.flask.extensions import csrf_protect
 from workers_control.flask.filters import icon_filter
-from workers_control.flask.flask_session import FlaskLoginUser
 from workers_control.flask.profiling import initialize_flask_profiler  # type: ignore
 
 
@@ -38,10 +36,6 @@ def create_app(
     db.configure(uri=app.config["SQLALCHEMY_DATABASE_URI"])
     run_db_migrations(app.config, db)
 
-    # Where to redirect the user when he attempts to access a login_required
-    # view without being logged in.
-    login_manager.login_view = "auth.start"
-
     if app.config["DEBUG"]:
         app.jinja_env.undefined = StrictUndefined
     else:
@@ -53,7 +47,6 @@ def create_app(
 
     # init flask extensions
     csrf_protect.init_app(app)
-    login_manager.init_app(app)
     initialize_babel(app)
 
     @app.teardown_appcontext
@@ -80,30 +73,6 @@ def create_app(
             add_help_option=False,
         )(run_alembic)
         app.cli.command("send-emails")(send_emails)
-
-        from workers_control.db.models import Accountant, Company, Member
-
-        @login_manager.user_loader
-        def load_user(
-            user_id: str,
-        ) -> FlaskLoginUser | None:
-            """
-            This callback is used to reload the user object from the user ID
-            stored in the session.
-            """
-            if "user_type" in session:
-                uuid = UUID(user_id)
-                user_type = session["user_type"]
-                if user_type == "member":
-                    member_orm = db.session.query(Member).get(uuid)
-                    return FlaskLoginUser(member_orm) if member_orm else None
-                elif user_type == "company":
-                    company_orm = db.session.query(Company).get(uuid)
-                    return FlaskLoginUser(company_orm) if company_orm else None
-                elif user_type == "accountant":
-                    accountant_orm = db.session.query(Accountant).get(uuid)
-                    return FlaskLoginUser(accountant_orm) if accountant_orm else None
-            return None
 
         # register blueprints
         from .context_processors import add_template_variables

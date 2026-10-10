@@ -1,10 +1,9 @@
-from typing import Any, Optional
+from typing import Optional
 from urllib.parse import urljoin, urlparse
 from uuid import UUID
 
 from flask import request, session
 
-from workers_control.db import models
 from workers_control.web.session import UserRole
 
 
@@ -14,33 +13,6 @@ def is_safe_url(target: str, host_url: str) -> bool:
     return test_url.scheme in ("http", "https") and (
         test_url.netloc == "" or test_url.netloc == ref_url.netloc
     )
-
-
-class FlaskLoginUser:
-    """Adapter that wraps a User for Flask-Login."""
-
-    def __init__(
-        self, orm_user: models.Member | models.Company | models.Accountant
-    ) -> None:
-        self.orm_user = orm_user
-
-    def get_id(self) -> str:
-        return str(self.orm_user.id)
-
-    @property
-    def is_authenticated(self) -> bool:
-        return True
-
-    @property
-    def is_active(self) -> bool:
-        return True
-
-    @property
-    def is_anonymous(self) -> bool:
-        return False
-
-    def __getattr__(self, name: str) -> Any:
-        return getattr(self.orm_user, name)
 
 
 class FlaskSession:

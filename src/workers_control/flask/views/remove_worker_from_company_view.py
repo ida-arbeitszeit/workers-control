@@ -8,7 +8,6 @@ from workers_control.core.interactors.remove_worker_from_company import (
     RemoveWorkerFromCompanyInteractor,
 )
 from workers_control.db import commit_changes
-from workers_control.db.db import Database
 from workers_control.flask.flask_request import FlaskRequest
 from workers_control.flask.flask_session import FlaskSession
 from workers_control.flask.types import Response
@@ -44,7 +43,7 @@ class RemoveWorkerFromCompanyView:
     @commit_changes
     def POST(self) -> Response:
         web_request = FlaskRequest()
-        session = FlaskSession(Database())
+        session = FlaskSession()
         interactor_request = self.remove_worker_controller.create_interactor_request(
             web_request=web_request, session=session
         )

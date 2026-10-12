@@ -76,6 +76,8 @@ with the accountant's email address::
     flask --app workers_control.flask.wsgi:app invite-accountant example@mail.de
 
 This sends an email with a registration link to the given address.
+The email is written in English unless you choose another of the configured
+``LANGUAGES`` with ``--language``, e.g. ``--language de``.
 
 
 Email sending worker

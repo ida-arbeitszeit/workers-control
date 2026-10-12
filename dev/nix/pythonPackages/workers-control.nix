@@ -8,7 +8,6 @@
   psycopg2,
   email-validator,
   flask,
-  flask-babel,
   flask-profiler,
   flask-talisman,
   flask-wtf,
@@ -49,7 +48,6 @@ buildPythonPackage {
     alembic
     email-validator
     flask
-    flask-babel
     flask-talisman
     flask-wtf
     matplotlib

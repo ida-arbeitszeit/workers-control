@@ -22,8 +22,6 @@ This process is largely automated by the command ``python -m dev.update_dependen
 (nix must be installed). Running it performs, in order:
 
 #. ``nix flake update`` — refresh ``flake.lock``.
-#. Refresh the custom nix pin for ``flask-babel``
-   (``dev/nix/pythonPackages/flask-babel.json``).
 #. Refresh the vendored ``bulma.css``.
 #. Regenerate ``constraints.txt`` (the pip-consumable pin file) from the resolved
    nix Python environment.
@@ -96,8 +94,9 @@ Automated publishing uses `PyPI Trusted Publishing
 Translations
 ------------
 
-We use `Flask-Babel <https://python-babel.github.io/flask-babel/>`_
-for translation. The translation files reside in
+We use gettext message catalogs for translation. The app loads them with
+Python's :py:mod:`gettext` module, and `Babel <https://babel.pocoo.org/>`_
+maintains and compiles them. The translation files reside in
 :py:mod:`workers_control.flask.translations`. You find there a ``.pot`` file
 as well as language-specific ``.po`` files.
 

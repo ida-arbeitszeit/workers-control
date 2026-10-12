@@ -2,7 +2,6 @@ import subprocess
 
 import click
 from flask import current_app
-from flask_babel import force_locale
 
 from workers_control.core.datetime_service import DatetimeService
 from workers_control.core.injector import Injector
@@ -14,17 +13,32 @@ from workers_control.db import commit_changes
 from workers_control.db.db import Database
 from workers_control.email_sending_worker.worker import EmailWorker
 from workers_control.flask.dependency_injection import with_injection
+from workers_control.flask.i18n import force_locale
 from workers_control.flask.mail_sender import provide_email_sender
 
 
 @click.argument("email_address")
+@click.option(
+    "--language",
+    default="en",
+    show_default=True,
+    help="Language of the invitation email.",
+)
 @commit_changes
 @with_injection()
 def invite_accountant(
-    email_address: str, interactor: SendAccountantRegistrationTokenInteractor
+    email_address: str,
+    language: str,
+    interactor: SendAccountantRegistrationTokenInteractor,
 ) -> None:
     """Invite an accountant by sending a registration token to the given email address."""
-    with force_locale("de"):  # type: ignore
+    available_languages = current_app.config["LANGUAGES"]
+    if language not in available_languages:
+        raise click.BadParameter(
+            f"Must be one of: {', '.join(available_languages)}.",
+            param_hint="'--language'",
+        )
+    with force_locale(language):
         response = interactor.send_accountant_registration_token(
             SendAccountantRegistrationTokenInteractor.Request(email=email_address)
         )

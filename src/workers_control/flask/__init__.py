@@ -37,10 +37,9 @@ def create_app(
 
     if app.config["DEBUG"]:
         app.jinja_env.undefined = StrictUndefined
-    else:
-        initialize_http_security(app)
 
     # init flask extensions
+    initialize_http_security(app)
     csrf_protect.init_app(app)
     initialize_i18n(app)
 

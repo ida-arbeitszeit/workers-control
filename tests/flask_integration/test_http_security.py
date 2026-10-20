@@ -75,7 +75,7 @@ class SecurityHeadersTests(ProductionTestCase):
         response = self.client.get(URL, base_url=HTTPS_BASE_URL)
         assert (
             response.headers["Content-Security-Policy"]
-            == "default-src 'self' 'unsafe-inline'"
+            == "default-src 'self'; frame-ancestors 'self'"
         )
 
     def test_page_may_only_be_framed_by_own_origin(self) -> None:
@@ -124,6 +124,16 @@ class DebugModeTests(ViewTestCase):
         response = self.client.get(URL)
         assert response.status_code == 200
 
-    def test_no_security_headers_are_set(self) -> None:
+    def test_content_security_policy_is_set(self) -> None:
         response = self.client.get(URL)
-        assert "Content-Security-Policy" not in response.headers
+        assert (
+            response.headers["Content-Security-Policy"]
+            == "default-src 'self'; frame-ancestors 'self'"
+        )
+
+    def test_no_hsts_header_on_https_request(self) -> None:
+        response = self.client.get(URL, base_url=HTTPS_BASE_URL)
+        assert "Strict-Transport-Security" not in response.headers
+
+    def test_session_cookie_is_not_restricted_to_https(self) -> None:
+        assert not self.app.config["SESSION_COOKIE_SECURE"]

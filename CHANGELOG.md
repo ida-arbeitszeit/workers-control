@@ -25,6 +25,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - "Remember login?" had no effect: users were logged out whenever they closed their browser.
   A remembered login now lasts 31 days after the last visit.
 
+### Security
+
+- The Content Security Policy no longer allows inline scripts and styles,
+  and forbids embedding the app in frames on other sites.
+
 ## [0.2.7] - 2026-10-06
 
 ### Changed

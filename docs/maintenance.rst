@@ -51,10 +51,6 @@ two places:
 - ``requirements-dev.txt``
 - ``dev/nix/devShell.nix`` → ``packages = [ ... ]``
 
-Optional extras (e.g. profiling) go in ``pyproject.toml`` →
-``[project.optional-dependencies]`` and in the matching ``passthru.optional-dependencies``
-in ``dev/nix/pythonPackages/workers-control.nix``.
-
 Run ``python -m dev.update_dependencies`` afterwards to pin the versions across both
 environments.
 

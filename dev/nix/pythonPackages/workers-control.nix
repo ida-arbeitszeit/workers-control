@@ -8,7 +8,6 @@
   psycopg2,
   email-validator,
   flask,
-  flask-profiler,
   flask-wtf,
   matplotlib,
   parameterized,
@@ -54,9 +53,6 @@ buildPythonPackage {
     mkdir -p $doc/share/doc/workers-control
     python -m sphinx -a $src/docs $doc/share/doc/workers-control
   '';
-  passthru.optional-dependencies = {
-    profiling = [ flask-profiler ];
-  };
   checkPhase = ''
     runHook preCheck
 

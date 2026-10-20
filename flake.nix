@@ -4,7 +4,6 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixos-26-05.url = "github:NixOS/nixpkgs/nixos-26.05";
     flake-utils.url = "github:numtide/flake-utils";
-    flask-profiler.url = "github:seppeljordan/flask-profiler";
   };
 
   outputs =
@@ -12,7 +11,6 @@
       self,
       nixpkgs,
       flake-utils,
-      flask-profiler,
       nixos-26-05,
     }:
     let
@@ -71,13 +69,9 @@
       );
       systemIndependent = {
         overlays = {
-          default =
-            let
-              ourOverlay = final: prev: {
-                pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [ (import dev/nix/pythonPackages.nix) ];
-              };
-            in
-            nixpkgs.lib.composeExtensions ourOverlay flask-profiler.overlays.default;
+          default = final: prev: {
+            pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [ (import dev/nix/pythonPackages.nix) ];
+          };
         };
       };
     in

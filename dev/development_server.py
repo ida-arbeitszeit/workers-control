@@ -42,11 +42,6 @@ class FlaskDevConfiguration:
     MAIL_SENDER_PLUGIN = "dev.email:DebugMailSender"
     MAIL_ENCRYPTION_TYPE = "tls"
 
-    FLASK_PROFILER = {
-        "enabled": True,
-        "endpointRoot": "profiling",
-    }
-
     ALLOWED_OVERDRAW_MEMBER = os.environ.get("ALLOWED_OVERDRAW_MEMBER", "unlimited")
     ACCEPTABLE_RELATIVE_ACCOUNT_DEVIATION = os.environ.get(
         "ACCEPTABLE_RELATIVE_ACCOUNT_DEVIATION", "33"

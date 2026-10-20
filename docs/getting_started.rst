@@ -206,14 +206,6 @@ the command:
   coverage run -m pytest && coverage html
 
 
-Profiling
----------
-
-This project uses ``flask_profiler`` to provided a very basic
-graphical user interface for response times. You can access this interface
-at ``/profiling`` in the development server.
-
-
 Documentation
 -------------
 

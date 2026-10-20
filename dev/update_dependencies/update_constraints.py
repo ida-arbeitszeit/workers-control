@@ -158,9 +158,6 @@ class VersionDowngrader:
 class PackageFilter:
     PACKAGE_BLACKLIST = {
         "workers-control",
-        # Since we use a custom flask-profiler package we need to exclude it
-        # from constraints.txt.
-        "flask_profiler",
     }
 
     def is_package_to_be_included_in_requirements(self, package_name: str) -> bool:

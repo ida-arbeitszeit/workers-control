@@ -9,7 +9,6 @@ LOGGER = getLogger(__name__)
 
 TARGET_PACKAGES = [
     "flask_profiler",
-    "flask_talisman",
     "flask_wtf",
     "parameterized",
     "wtforms",

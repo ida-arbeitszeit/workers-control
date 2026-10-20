@@ -9,7 +9,6 @@
   email-validator,
   flask,
   flask-profiler,
-  flask-talisman,
   flask-wtf,
   matplotlib,
   parameterized,
@@ -48,7 +47,6 @@ buildPythonPackage {
     alembic
     email-validator
     flask
-    flask-talisman
     flask-wtf
     matplotlib
   ];

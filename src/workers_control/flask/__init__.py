@@ -1,7 +1,6 @@
 from typing import Any
 
 from flask import Flask
-from flask_talisman import Talisman
 from jinja2 import StrictUndefined
 
 from workers_control.db.db import Database
@@ -11,6 +10,7 @@ from workers_control.flask.config.options import CONFIG_OPTIONS
 from workers_control.flask.database import run_db_migrations
 from workers_control.flask.extensions import csrf_protect
 from workers_control.flask.filters import icon_filter
+from workers_control.flask.http_security import initialize_http_security
 from workers_control.flask.i18n import initialize_i18n
 from workers_control.flask.profiling import initialize_flask_profiler  # type: ignore
 
@@ -39,11 +39,7 @@ def create_app(
     if app.config["DEBUG"]:
         app.jinja_env.undefined = StrictUndefined
     else:
-        # Init Flask-Talisman
-        csp = {"default-src": ["'self'", "'unsafe-inline'"]}
-        Talisman(
-            app, content_security_policy=csp, force_https=app.config["FORCE_HTTPS"]
-        )
+        initialize_http_security(app)
 
     # init flask extensions
     csrf_protect.init_app(app)

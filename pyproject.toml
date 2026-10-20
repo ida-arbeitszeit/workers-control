@@ -26,9 +26,6 @@ dependencies = [
     "matplotlib>=3.10.9, <=3.11.1" # different versions in stable/unstable nixpkgs
 ]
 
-[project.optional-dependencies]
-profiling = ["flask_profiler"]
-
 [project.urls]
 Source = "https://github.com/ida-arbeitszeit/workers-control"
 Documentation = "https://workers-control.readthedocs.io/"

@@ -1,3 +1,0 @@
-from urllib.parse import ParseResult as ParseResult
-
-def get_url_with_query(route: str, url_query: dict[str, str]) -> ParseResult: ...

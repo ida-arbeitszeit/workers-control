@@ -19,11 +19,6 @@
             "handlers": ["wsgi"],
             "propagate": false
         },
-        "flask_profiler": {
-            "level": "INFO",
-            "handlers": ["wsgi"],
-            "propagate": false
-        },
         "sqlalchemy.engine": {
             "level": "WARNING",
             "handlers": ["wsgi"],

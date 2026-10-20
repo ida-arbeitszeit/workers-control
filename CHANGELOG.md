@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Translations are now loaded with Python's built-in `gettext` module.
 - Remove the dependency on Flask-Talisman, which has not been released since 2023.
   The app now redirects to HTTPS and sets its security headers itself.
+- Remove the dependency on flask-profiler, whose fork is no longer maintained.
+  The development server no longer shows response times at `/profiling`.
 - The `invite-accountant` CLI command sends the invitation in English instead of always in German.
   Another configured language can be selected with `--language`, e.g. `--language de`.
 

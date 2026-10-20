@@ -18,10 +18,6 @@ AUTO_MIGRATE = os.getenv("AUTO_MIGRATE", False)
 FORCE_HTTPS = True
 PREFERRED_URL_SCHEME = "https"
 
-FLASK_PROFILER = {
-    "enabled": False,
-}
-
 ALEMBIC_CONFIG = str(
     Path(__file__).resolve().parent.parent.parent / "db" / "migrations" / "alembic.ini"
 )

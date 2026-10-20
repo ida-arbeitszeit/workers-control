@@ -12,7 +12,6 @@ from workers_control.flask.extensions import csrf_protect
 from workers_control.flask.filters import icon_filter
 from workers_control.flask.http_security import initialize_http_security
 from workers_control.flask.i18n import initialize_i18n
-from workers_control.flask.profiling import initialize_flask_profiler  # type: ignore
 
 
 def create_app(
@@ -92,9 +91,5 @@ def create_app(
         app.register_blueprint(user_routes.blueprint, url_prefix="/user")
         app.register_blueprint(healthcheck_routes.blueprint.healthcheck_blueprint)
         app.context_processor(add_template_variables)
-
-        # The profiler needs to be initialized last because all the
-        # routes to monitor need to present in the app at that point
-        initialize_flask_profiler(app)
 
         return app

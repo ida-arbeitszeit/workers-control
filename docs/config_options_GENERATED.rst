@@ -23,6 +23,8 @@
 
    This option controls whether the application will allow unsecure HTTP trafic or force a redirect to an HTTPS address.
 
+   If enabled, the application also sends the Strict-Transport-Security header and restricts the session cookie to HTTPS. Disable it only if the application has to be reachable over plain HTTP, e.g. on a local network without TLS.
+
    Example: ``FORCE_HTTPS = False``
 
    Default: ``True``

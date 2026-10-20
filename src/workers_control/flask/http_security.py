@@ -6,15 +6,13 @@ ONE_YEAR_IN_SECONDS = 365 * 24 * 60 * 60
 
 
 def initialize_http_security(app: Flask) -> None:
-    app.after_request(_set_security_headers)
-    if app.config["DEBUG"]:
-        return
-    app.config["SESSION_COOKIE_SECURE"] = True
     app.config["SESSION_COOKIE_HTTPONLY"] = True
     app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+    app.after_request(_set_security_headers)
     if app.config["FORCE_HTTPS"]:
+        app.config["SESSION_COOKIE_SECURE"] = True
         app.before_request(_redirect_to_https)
-    app.after_request(_set_strict_transport_security_header)
+        app.after_request(_set_strict_transport_security_header)
 
 
 def _is_https() -> bool:

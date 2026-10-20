@@ -45,7 +45,7 @@ class FlaskTestConfiguration(dict):
                 "ALLOWED_OVERDRAW_MEMBER": "unlimited",
                 "ACCEPTABLE_RELATIVE_ACCOUNT_DEVIATION": 33,
                 "PAYOUT_FACTOR_CALCULATION_WINDOW": 180,
-                "FORCE_HTTPS": True,
+                "FORCE_HTTPS": False,
             }
         )
 

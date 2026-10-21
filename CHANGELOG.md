@@ -5,33 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.2.8] - 2026-10-21
 
 ### Changed
 
 - Remove the dependency on Flask-Login, which has not been released since 2023.
-  The logged-in user is now stored directly in Flask's session cookie.
+  The logged-in user is now stored directly in Flask's session cookie. (#1543)
 - Remove the dependency on Flask-Babel, which has not been released since 2023.
-  Translations are now loaded with Python's built-in `gettext` module.
+  Translations are now loaded with Python's built-in `gettext` module. (#1544)
 - Remove the dependency on Flask-Talisman, which has not been released since 2023.
-  The app now redirects to HTTPS and sets its security headers itself.
+  The app now redirects to HTTPS and sets its security headers itself. (#1545)
 - Remove the dependency on flask-profiler, whose fork is no longer maintained.
-  The development server no longer shows response times at `/profiling`.
+  The development server no longer shows response times at `/profiling`. (#1546)
 - The `invite-accountant` CLI command sends the invitation in English instead of always in German.
-  Another configured language can be selected with `--language`, e.g. `--language de`.
+  Another configured language can be selected with `--language`, e.g. `--language de`. (#1544)
 
 ### Fixed
 
 - "Remember login?" had no effect: users were logged out whenever they closed their browser.
-  A remembered login now lasts 31 days after the last visit.
+  A remembered login now lasts 31 days after the last visit. (#1543)
+- The message asking users to log in before viewing a page was always shown in English. (#1543)
 - Logging in failed on instances served over plain HTTP with `FORCE_HTTPS = False`,
   because the session cookie was always restricted to HTTPS. `FORCE_HTTPS` now controls
-  the HTTPS redirect, the session cookie's `Secure` flag and the Strict-Transport-Security header together.
+  the HTTPS redirect, the session cookie's `Secure` flag and the Strict-Transport-Security header together. (#1547)
 
 ### Security
 
 - The Content Security Policy no longer allows inline scripts and styles,
-  and forbids embedding the app in frames on other sites.
+  and forbids embedding the app in frames on other sites. (#1547)
 
 ## [0.2.7] - 2026-10-06
 

@@ -1,10 +1,10 @@
 {% macro copy_toggle(value) %}
-<label data-type="copy-toggle" style="cursor: pointer;">
+<label data-type="copy-toggle" class="is-clickable">
     <input
         type="button"
         alt="Copy to clipboard"
         value="{{ value }}"
-        style="display: none;"
+        class="is-hidden"
     >
     <span class="icon" aria="hidden">
         {{ "copy"|icon }}

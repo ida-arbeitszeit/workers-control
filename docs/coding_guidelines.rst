@@ -768,6 +768,24 @@ More info, concerning the ``icon`` filter implementation, can be found in
 :py:func:`workers_control.flask.filters.icon_filter`.
 
 
+Content Security Policy
+-----------------------
+
+The app's Content Security Policy forbids inline JavaScript and CSS. Templates
+must therefore not contain ``<script>`` or ``<style>`` blocks, event handler
+attributes like ``onclick``, or ``style`` attributes; the browser would ignore
+them.
+
+- Put JavaScript into ``static/main.js``. Mark the elements it acts on with a
+  ``data-type`` attribute and attach handlers with ``addEventListener``.
+- Style elements with Bulma's helper classes (e.g. ``is-hidden``,
+  ``is-clickable``) or with rules in ``static/main.css``.
+
+The policy is also enforced in debug mode, so violations show up in the
+browser console during development. In addition, every Flask integration test
+fails if a page it renders contains inline code.
+
+
 App Configuration
 ------------------
 

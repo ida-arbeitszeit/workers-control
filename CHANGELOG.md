@@ -24,6 +24,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - "Remember login?" had no effect: users were logged out whenever they closed their browser.
   A remembered login now lasts 31 days after the last visit.
+- Logging in failed on instances served over plain HTTP with `FORCE_HTTPS = False`,
+  because the session cookie was always restricted to HTTPS. `FORCE_HTTPS` now controls
+  the HTTPS redirect, the session cookie's `Secure` flag and the Strict-Transport-Security header together.
+
+### Security
+
+- The Content Security Policy no longer allows inline scripts and styles,
+  and forbids embedding the app in frames on other sites.
 
 ## [0.2.7] - 2026-10-06
 

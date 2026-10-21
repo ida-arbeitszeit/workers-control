@@ -48,6 +48,12 @@ function togglePasswordVisibility(clickedElement) {
   }
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[data-type="password-toggle"]').forEach((toggle) => {
+    toggle.addEventListener('click', () => togglePasswordVisibility(toggle));
+  });
+});
+
 // close notification box
 document.addEventListener('DOMContentLoaded', () => {
   (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {

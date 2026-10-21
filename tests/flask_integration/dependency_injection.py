@@ -3,6 +3,7 @@ from typing import Any
 from flask import Flask
 
 from tests.db.dependency_injection import provide_test_database_uri
+from tests.flask_integration.inline_code import assert_no_inline_code
 from tests.mail_service import MockEmailService
 from workers_control.core.injector import Binder, CallableProvider, Injector, Module
 from workers_control.flask import create_app
@@ -44,7 +45,7 @@ class FlaskTestConfiguration(dict):
                 "ALLOWED_OVERDRAW_MEMBER": "unlimited",
                 "ACCEPTABLE_RELATIVE_ACCOUNT_DEVIATION": 33,
                 "PAYOUT_FACTOR_CALCULATION_WINDOW": 180,
-                "FORCE_HTTPS": True,
+                "FORCE_HTTPS": False,
             }
         )
 
@@ -93,6 +94,7 @@ class FlaskTestingModule(Module):
             app = create_app(
                 dev_or_test_config=config, template_folder=config.template_folder
             )
+            app.after_request(assert_no_inline_code)
             _cached_apps.append((configuration_used, app))
         # The mail service is the one exception to the rule above: an app
         # keeps the plugin it was first asked for.  Hand it the mail service

@@ -6,4 +6,7 @@ __all__ = ["RecaptchaField"]
 class RecaptchaField(Field):
     widget: Incomplete
     recaptcha_error: Incomplete
-    def __init__(self, label: str = "", validators=None, **kwargs) -> None: ...
+    nonce: Incomplete
+    def __init__(
+        self, label: str = "", validators=None, nonce=None, **kwargs
+    ) -> None: ...

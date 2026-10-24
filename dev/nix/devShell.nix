@@ -20,6 +20,7 @@ mkShell (
         gunicorn
         isort
         mypy
+        packaging
         pip
         psycopg2
         twine

@@ -7,52 +7,36 @@ Maintenance
 Update Dependencies
 -------------------
 
-As described earlier in this documentation, we support two different development environments:
+Nixpkgs resolves the dependencies for both development environments, the nix shell
+and the pip venv. Run ``python -m dev.update_dependencies`` (requires nix). It
 
-- nix shell with nix package manager
-- venv with pip package manager
+#. updates ``flake.lock`` and the vendored ``bulma.css``,
+#. writes the versions of the nixos-unstable shell to ``constraints.txt``,
+#. sets the minimum versions in ``pyproject.toml`` to the versions of the nixos-stable shell,
+#. regenerates the type stubs and formats the code.
 
-We try to keep the installed packages in both environments as identical as possible. Since
-nixpkgs usually provides older versions than pip, this means that we let nixpkgs handle dependency
-resolution and are satisfied with the older versions from nixpkgs in both environments.
-If, exceptionally, nixpkgs has a newer version, we use the older version from pip in both environments,
-i.e. we have to maintain custom nix expressions for the affected packages.
+Developers using pip then run ``pip install -r requirements-dev.txt``.
 
-This process is largely automated by the command ``python -m dev.update_dependencies``
-(nix must be installed). Running it performs, in order:
+``pyproject.toml`` has no upper bounds, so that new releases of a dependency don't require
+a new release of the app. The tested range reaches from the nixos-stable versions
+(``*-nixpkgs-stable`` flake checks) to the versions in ``constraints.txt``.
 
-#. ``nix flake update`` — refresh ``flake.lock``.
-#. Refresh the vendored ``bulma.css``.
-#. Regenerate ``constraints.txt`` (the pip-consumable pin file) from the resolved
-   nix Python environment.
-#. Regenerate the type stubs and auto-format the code.
-
-Then developers using pip can upgrade by running ``pip install -r requirements-dev.txt``.
-
-The few packages where we deliberately keep an *older* version than nixpkgs provides are recorded, together with the reason,
-in ``VersionDowngrader.LOWER_PYPI_VERSIONS`` (``dev/update_dependencies/update_constraints.py``).
+If pip can't install a version from nixpkgs (e.g. it isn't on PyPI yet), add the package with
+its PyPI version and the reason to ``VersionDowngrader.LOWER_PYPI_VERSIONS``
+(``dev/update_dependencies/update_constraints.py``).
 
 
 Change Dependencies
 -------------------
 
-To add or remove a *direct* dependency, edit the relevant files **without specifying
-a version number** (versions are pinned afterwards by the update command). Which files
-you touch depends on whether the dependency is needed at runtime or only for development.
+Add or remove a direct dependency without a version number, then run
+``python -m dev.update_dependencies``:
 
-A **runtime dependency** (needed by the app in production) is declared in two places:
-
-- ``pyproject.toml`` → ``[project].dependencies``
-- ``dev/nix/pythonPackages/workers-control.nix`` → ``dependencies = [ ... ]``
-
-A **development-only dependency** (linter, test, build or docs tool) is declared in
-two places:
-
-- ``requirements-dev.txt``
-- ``dev/nix/devShell.nix`` → ``packages = [ ... ]``
-
-Run ``python -m dev.update_dependencies`` afterwards to pin the versions across both
-environments.
+- **Runtime** (needed to run the app, including every package imported in ``src/``):
+  ``[project].dependencies`` in ``pyproject.toml`` and ``dependencies`` in
+  ``dev/nix/pythonPackages/workers-control.nix``.
+- **Development only** (everything else, e.g. linters, test, build and docs tools):
+  ``requirements-dev.txt`` and ``packages`` in ``dev/nix/devShell.nix``.
 
 
 Releases
@@ -63,7 +47,6 @@ Maintainers regularly release new versions of the app. Procedure:
 #. Increment the version number of our app in ``pyproject.toml``
    (follow https://semver.org/spec/v2.0.0.html).
 #. Add a new entry to ``CHANGELOG.md`` (follow https://keepachangelog.com/en/1.1.0/).
-#. Copy the constraints from ``constraints.txt`` into the dependencies in ``pyproject.toml``.
 #. Create a Pull Request with label "release". This will trigger integration tests against
    the `deployment repo <https://github.com/ida-arbeitszeit/workers-control-deployment>`_.
    On failure, fix current branch or deployment repo.

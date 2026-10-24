@@ -35,7 +35,7 @@
         {
           devShells = rec {
             default = nixos-unstable;
-            nixos-26-05 = pkgs-26-05.callPackage dev/nix/devShell.nix { includeGlibcLocales = !isMacOs; };
+            nixos-stable = pkgs-26-05.callPackage dev/nix/devShell.nix { includeGlibcLocales = !isMacOs; };
             nixos-unstable = pkgs.callPackage dev/nix/devShell.nix {
               includeGlibcLocales = !isMacOs;
             };

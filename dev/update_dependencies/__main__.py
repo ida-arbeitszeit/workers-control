@@ -8,16 +8,18 @@ from dev.update_dependencies import generate_type_stubs
 
 from ..command import LoggingSubprocessRunner, Shell, Subprocess, SubprocessRunner
 from ..nix import NixFlake
-from . import update_bulma, update_constraints
+from . import update_bulma, update_constraints, update_minimum_versions
 
 
 def main() -> None:
     shell = LoggingSubprocessRunner(Shell())
     flake = NixFlake(path=Path(".").resolve(), subprocess_runner=shell)
     development_shell = flake.shell()
+    stable_development_shell = flake.shell("nixos-stable")
     update_flake(shell)
     update_bulma.main()
     update_constraints.main(development_shell)
+    update_minimum_versions.main(stable_development_shell)
     generate_type_stubs.main(development_shell)
     format_code.main(shell)
 

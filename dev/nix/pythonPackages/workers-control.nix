@@ -5,16 +5,23 @@
   # python packages
   alembic,
   babel,
+  click,
   psycopg2,
   email-validator,
   flask,
   flask-wtf,
+  itsdangerous,
+  jinja2,
+  markupsafe,
   matplotlib,
   parameterized,
   pytest,
   setuptools,
   sphinx,
   sphinx-rtd-theme,
+  sqlalchemy,
+  werkzeug,
+  wtforms,
 }:
 let
   pyproject = builtins.fromTOML (builtins.readFile ../../../pyproject.toml);
@@ -44,10 +51,17 @@ buildPythonPackage {
   ];
   dependencies = [
     alembic
+    click
     email-validator
     flask
     flask-wtf
+    itsdangerous
+    jinja2
+    markupsafe
     matplotlib
+    sqlalchemy
+    werkzeug
+    wtforms
   ];
   buildDocsPhase = ''
     mkdir -p $doc/share/doc/workers-control

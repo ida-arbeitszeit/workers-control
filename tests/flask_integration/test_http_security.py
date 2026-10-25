@@ -1,8 +1,11 @@
+from parameterized import parameterized
+
 from tests.flask_integration.base_test_case import ViewTestCase
 from tests.flask_integration.dependency_injection import FlaskTestConfiguration
 from workers_control.core.injector import Binder, CallableProvider, Module
 
 URL = "/health"
+FORM_URL = "/login-member"
 
 
 class HttpSecurityTestCase(ViewTestCase):
@@ -123,3 +126,47 @@ class SessionCookieTests(HttpSecurityTestCase):
 
     def test_session_cookie_is_not_sent_with_cross_site_subrequests(self) -> None:
         assert self.app.config["SESSION_COOKIE_SAMESITE"] == "Lax"
+
+
+class CrossOriginRequestTests(HttpSecurityTestCase):
+    force_https = False
+
+    @parameterized.expand([("same-origin",), ("none",)])
+    def test_post_reported_as_same_origin_or_user_initiated_is_allowed(
+        self, fetch_site: str
+    ) -> None:
+        response = self.client.post(FORM_URL, headers={"Sec-Fetch-Site": fetch_site})
+        assert response.status_code == 200
+
+    @parameterized.expand([("same-site",), ("cross-site",)])
+    def test_post_reported_as_cross_origin_is_rejected(self, fetch_site: str) -> None:
+        response = self.client.post(FORM_URL, headers={"Sec-Fetch-Site": fetch_site})
+        assert response.status_code == 403
+
+    def test_sec_fetch_site_header_takes_precedence_over_origin_header(self) -> None:
+        response = self.client.post(
+            FORM_URL,
+            headers={"Sec-Fetch-Site": "cross-site", "Origin": self.own_origin("http")},
+        )
+        assert response.status_code == 403
+
+    def test_post_without_sec_fetch_site_from_own_origin_is_allowed(self) -> None:
+        response = self.client.post(
+            FORM_URL, headers={"Origin": self.own_origin("http")}
+        )
+        assert response.status_code == 200
+
+    @parameterized.expand([("http://evil.example",), ("null",)])
+    def test_post_without_sec_fetch_site_from_other_origin_is_rejected(
+        self, origin: str
+    ) -> None:
+        response = self.client.post(FORM_URL, headers={"Origin": origin})
+        assert response.status_code == 403
+
+    def test_post_without_sec_fetch_site_and_origin_is_allowed(self) -> None:
+        response = self.client.post(FORM_URL)
+        assert response.status_code == 200
+
+    def test_get_from_other_site_is_allowed(self) -> None:
+        response = self.client.get(URL, headers={"Sec-Fetch-Site": "cross-site"})
+        assert response.status_code == 200

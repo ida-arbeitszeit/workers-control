@@ -4,7 +4,6 @@
 <div class="section has-text-centered">
   <h1 class="title">{{ gettext('Change name') }}</h1>
   <form method="post">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <div class="field">
       {{ form.new_name.label(class="label") }}
       <div class="control">

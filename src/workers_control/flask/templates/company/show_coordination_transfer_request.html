@@ -32,7 +32,6 @@
         </div>
         {% if request_details.current_user_is_candidate and request_details.request_is_pending %}
         <form method="post">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <div class="label">{{ gettext("You are the candidate. Do you accept?") }}</div>
             <button class="button is-primary">{{ gettext("Accept coordination transfer") }}</button>
         </form>

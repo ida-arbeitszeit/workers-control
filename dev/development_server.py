@@ -50,7 +50,6 @@ class FlaskDevConfiguration:
 
     SECURITY_PASSWORD_SALT = "dev password salt"
     SECRET_KEY = os.environ.get("DEV_SECRET_KEY", "dev secret key")
-    WTF_CSRF_ENABLED = False
     WOCO_PASSWORD_HASHER = "tests.password_hasher:PasswordHasherImpl"
 
     SQLALCHEMY_DATABASE_URI = os.environ["WOCO_DEV_DB"]

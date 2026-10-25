@@ -118,7 +118,6 @@
           <td>{{ plan.type_of_plan }}</td>
           <td>{{ plan.plan_creation_date }}</td>
           <td><form method="post" action="{{ plan.revoke_plan_filing_url }}">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <button class="button is-ghost" type="submit" title="{{ gettext('Revoke plan filing') }}">
             {{ "times"|icon }}
           </button>
@@ -160,21 +159,18 @@
         <div class="media-right">
           <div class="content pt-1">
             <form method="post" action="{{ draft.file_plan_url }}">
-              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
               <button class="button is-ghost" type="submit" title="{{ gettext('File plan') }}">
                 {{ "envelope"|icon }}
               </button>
             </form>
             &nbsp;
             <form method="post" action="{{ draft.draft_delete_url }}">
-              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
               <button class="button is-ghost" type="submit" title="{{ gettext('Delete plan') }}">
                 {{ "trash"|icon }}
               </button>
             </form>
             &nbsp;
             <form method="get" action="{{ draft.edit_plan_url }}">
-              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
               <button class="button is-ghost" type="submit" title="{{ gettext('Edit plan') }}">
                 {{ "edit"|icon }}
               </button>
@@ -211,7 +207,6 @@
         <div class="media-right">
           <div class="content pt-1">
             <form method="post" action="{{ plan.renew_plan_url }}">
-              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
               <button class="button is-ghost" type="submit" title="{{ gettext('Renew plan') }}">
                 {{ "redo"|icon }}
               </button>

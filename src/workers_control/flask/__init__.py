@@ -8,7 +8,6 @@ from workers_control.flask.config.checks import ConfigValidator
 from workers_control.flask.config.loader import load_configuration
 from workers_control.flask.config.options import CONFIG_OPTIONS
 from workers_control.flask.database import run_db_migrations
-from workers_control.flask.extensions import csrf_protect
 from workers_control.flask.filters import icon_filter
 from workers_control.flask.http_security import initialize_http_security
 from workers_control.flask.i18n import initialize_i18n
@@ -38,9 +37,7 @@ def create_app(
     if app.config["DEBUG"]:
         app.jinja_env.undefined = StrictUndefined
 
-    # init flask extensions
     initialize_http_security(app)
-    csrf_protect.init_app(app)
     initialize_i18n(app)
 
     @app.teardown_appcontext

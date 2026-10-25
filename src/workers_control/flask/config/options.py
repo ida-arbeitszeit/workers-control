@@ -100,7 +100,7 @@ CONFIG_OPTIONS = [
         name="SECRET_KEY",
         converts_to_types=(str,),
         description_paragraphs=[
-            "A long, random secret value used by the application to cryptographically sign user sessions, CSRF tokens, and security-relevant tokens such as password-reset and email-confirmation links. Setting this option is obligatory. Keep it secret; if it leaks, rotate it."
+            "A long, random secret value used by the application to cryptographically sign user sessions and security-relevant tokens such as password-reset and email-confirmation links. Setting this option is obligatory. Keep it secret; if it leaks, rotate it."
         ],
         default=None,
     ),

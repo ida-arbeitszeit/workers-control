@@ -15,7 +15,6 @@
             </h1>
             {% if workers_list is defined and workers_list|length %}
             <form method="post">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <div class="field">
                     <div class="control">
                         <input class="input" type="number" step="0.01" placeholder="{{ gettext('Amount') }}"

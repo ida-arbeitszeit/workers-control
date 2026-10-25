@@ -9,7 +9,6 @@
   psycopg2,
   email-validator,
   flask,
-  flask-wtf,
   itsdangerous,
   jinja2,
   markupsafe,
@@ -54,7 +53,6 @@ buildPythonPackage {
     click
     email-validator
     flask
-    flask-wtf
     itsdangerous
     jinja2
     markupsafe

@@ -8,7 +8,6 @@ LOGGER = getLogger(__name__)
 
 
 TARGET_PACKAGES = [
-    "flask_wtf",
     "parameterized",
     "wtforms",
 ]

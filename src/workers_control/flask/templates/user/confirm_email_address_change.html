@@ -15,7 +15,6 @@
         ) }}
     </div>
     <form method="post">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <button class="button" type="submit" name="is_accepted" value="true">{{ gettext("Yes") }}</button>
         <button class="button" type="submit" name="is_accepted" value="false">{{ gettext("No") }}</button>
     </form>

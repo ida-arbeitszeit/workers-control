@@ -80,7 +80,6 @@
                     <div>
                         {% if plan.show_end_collab_button %}
                          <form action="{{ url_for('main_company.end_collaboration') }}" method="post">
-                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="plan_id" value="{{ plan.plan_id }}">
                             <input type="hidden" name="collaboration_id" value="{{ view_model.collab_id }}">
                             <button class="button is-small is-danger" type="submit">

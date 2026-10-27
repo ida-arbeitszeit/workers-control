@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- Remove the dependency on Flask-WTF, of which the app only used the CSRF protection.
+  The app now rejects form submissions from other sites based on the `Sec-Fetch-Site` and `Origin`
+  headers that browsers send, so forms no longer carry a CSRF token.
+  A reverse proxy in front of the app must pass on the browser's `Host` header.
+
+### Fixed
+
+- Submitting a form that had been open for more than an hour failed with "400 Bad Request",
+  because its CSRF token had expired.
+
 ## [0.2.9] - 2026-10-24
 
 ### Changed

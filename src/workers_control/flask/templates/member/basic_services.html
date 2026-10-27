@@ -42,7 +42,6 @@
           <td>{{ service.created_on }}</td>
           <td>
             <form method="post" action="{{ service.delete_url }}">
-              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
               <button class="button is-ghost" type="submit" title="{{ gettext('Delete basic service') }}">
                 {{ "trash"|icon }}
               </button>

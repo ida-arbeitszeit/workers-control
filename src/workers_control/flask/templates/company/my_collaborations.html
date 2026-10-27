@@ -89,7 +89,6 @@
             </div>
             <div class="media-right">
               <form action="/company/accept_collaboration_request" method="post">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="plan_id" value="{{ req.plan_id }}">
                 <input type="hidden" name="collaboration_id" value="{{ req.collab_id }}">
                 <button class="button large-button is-primary"
@@ -99,7 +98,6 @@
                 </button>
               </form>
               <form action="/company/deny_collaboration_request" method="post">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="plan_id" value="{{ req.plan_id }}">
                 <input type="hidden" name="collaboration_id" value="{{ req.collab_id }}">
                 <button class="button large-button is-danger"
@@ -144,7 +142,6 @@
             </div>
             <div class="media-right">
                 <form action="/company/cancel_collaboration_request" method="post">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="plan_id" value="{{ req.plan_id }}">
                     <button class="button large-button is-danger"
                             type="submit"
@@ -185,7 +182,6 @@
             </div>
             <div class="media-right">
                 <form action="{{ url_for('main_company.end_plan_collaboration') }}" method="post">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="plan_id" value="{{ plan.plan_id }}">
                     <input type="hidden" name="collaboration_id" value="{{ plan.collab_id }}">
                     <button class="button large-button is-danger"

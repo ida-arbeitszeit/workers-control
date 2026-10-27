@@ -29,7 +29,6 @@
                         <td>{{ pending_invite.member_name }}</td>
                         <td>
                             <form method="post">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="worker_id" value="{{ pending_invite.member_id }}">
                                 <button class="button is-primary" type="submit">{{ gettext('Resend Invite') }}</button>
                             </form>

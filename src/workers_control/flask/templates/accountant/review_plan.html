@@ -15,7 +15,6 @@
 <section class="section">
   <div class="column is-4 is-offset-4 has-text-left">
     <form method="post" action="{{ view_model.review_form_action_url }}">
-      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <div class="field">
         <label class="radio">
           <input type="radio" name="decision" value="approve" required>

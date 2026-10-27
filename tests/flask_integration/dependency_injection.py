@@ -24,7 +24,6 @@ class FlaskTestConfiguration(dict):
                 "SQLALCHEMY_DATABASE_URI": provide_test_database_uri(),
                 "SQLALCHEMY_TRACK_MODIFICATIONS": False,
                 "SECRET_KEY": "dev secret key",
-                "WTF_CSRF_ENABLED": False,
                 "SERVER_NAME": "test.name",
                 "DEBUG": True,
                 "SECURITY_PASSWORD_SALT": "test password salt",

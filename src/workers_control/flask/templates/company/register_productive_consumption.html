@@ -24,7 +24,6 @@
             {% endfor %}
             {% if view_model.valid_plan_selected is defined and view_model.valid_plan_selected %}
             <form method="post">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             {% else %}
             <form method="get">
             {% endif %}

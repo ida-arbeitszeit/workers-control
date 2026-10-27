@@ -44,7 +44,6 @@
             <div class="content">
                 {% if list_plans_view_model is defined and list_plans_view_model.show_plan_listing %}
                 <form method="post">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <div class="field has-addons has-addons-centered">
                         <div class="control has-icons-left">
                             <div class="select has-icons-left">

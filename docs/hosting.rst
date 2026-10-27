@@ -37,6 +37,11 @@ Configuration of the web server
 For the app to work properly, the web server needs to be configured
 with environment variables and a Python configuration file.
 
+A reverse proxy in front of the app must pass on the ``Host`` header
+sent by the browser (for nginx's ``proxy_pass``:
+``proxy_set_header Host $host;``). Otherwise the app may reject form
+submissions as cross-origin requests.
+
 
 Environment variables
 .....................

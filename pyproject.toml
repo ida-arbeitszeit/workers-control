@@ -23,7 +23,6 @@ dependencies = [
     "click>=8.3.1",
     "email-validator>=2.3.0",
     "flask>=3.1.2",
-    "flask-wtf>=1.2.2",
     "itsdangerous>=2.2.0",
     "jinja2>=3.1.6",
     "markupsafe>=3.0.3",
@@ -73,7 +72,6 @@ disallow_untyped_defs = true
 
 [[tool.mypy.overrides]]
 module = [
-    "flask_wtf.*",
     "parameterized.*",
     "wtforms.*",
 ]

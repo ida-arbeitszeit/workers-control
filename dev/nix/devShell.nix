@@ -17,13 +17,11 @@ mkShell (
         build
         coverage
         flake8
-        gunicorn
         isort
         mypy
         packaging
         pip
         psycopg2
-        twine
         types-setuptools
       ])
       ++ [

@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   The app now rejects form submissions from other sites based on the `Sec-Fetch-Site` and `Origin`
   headers that browsers send, so forms no longer carry a CSRF token.
   A reverse proxy in front of the app must pass on the browser's `Host` header.
+- Remove gunicorn and twine from the development dependencies.
+  Nothing used gunicorn anymore, and the PyPI publishing workflow installs twine itself.
 
 ### Fixed
 

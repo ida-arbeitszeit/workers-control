@@ -57,6 +57,8 @@ class FlaskSessionTests(ViewTestCase):
         assert response.status_code == 302
 
     def cookie_has_expiration_date(self) -> bool:
-        cookie = self.client.get_cookie("session", domain="test.name")
+        cookie = self.client.get_cookie(
+            "session", domain=self.app.config["SERVER_NAME"]
+        )
         assert cookie
         return cookie.expires is not None

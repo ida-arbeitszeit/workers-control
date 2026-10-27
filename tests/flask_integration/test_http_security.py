@@ -3,7 +3,6 @@ from tests.flask_integration.dependency_injection import FlaskTestConfiguration
 from workers_control.core.injector import Binder, CallableProvider, Module
 
 URL = "/health"
-HTTPS_BASE_URL = "https://test.name"
 
 
 class HttpSecurityTestCase(ViewTestCase):
@@ -29,6 +28,9 @@ class HttpSecurityTestCase(ViewTestCase):
         modules.append(_Module())
         return modules
 
+    def own_origin(self, scheme: str) -> str:
+        return f"{scheme}://{self.app.config['SERVER_NAME']}"
+
 
 class ForceHttpsTests(HttpSecurityTestCase):
     force_https = True
@@ -36,14 +38,14 @@ class ForceHttpsTests(HttpSecurityTestCase):
     def test_http_request_is_redirected_to_https(self) -> None:
         response = self.client.get(URL)
         assert response.status_code == 302
-        assert response.location == "https://test.name/health"
+        assert response.location == self.own_origin("https") + URL
 
     def test_query_string_is_kept_when_redirecting_to_https(self) -> None:
         response = self.client.get(URL, query_string={"a": "b"})
-        assert response.location == "https://test.name/health?a=b"
+        assert response.location == self.own_origin("https") + URL + "?a=b"
 
     def test_https_request_is_not_redirected(self) -> None:
-        response = self.client.get(URL, base_url=HTTPS_BASE_URL)
+        response = self.client.get(URL, base_url=self.own_origin("https"))
         assert response.status_code == 200
 
     def test_request_forwarded_from_https_proxy_is_not_redirected(self) -> None:
@@ -55,7 +57,7 @@ class ForceHttpsTests(HttpSecurityTestCase):
         assert response.status_code == 302
 
     def test_hsts_header_is_set_on_https_request(self) -> None:
-        response = self.client.get(URL, base_url=HTTPS_BASE_URL)
+        response = self.client.get(URL, base_url=self.own_origin("https"))
         assert (
             response.headers["Strict-Transport-Security"]
             == "max-age=31536000; includeSubDomains"
@@ -79,7 +81,7 @@ class NoForceHttpsTests(HttpSecurityTestCase):
         assert response.status_code == 200
 
     def test_no_hsts_header_on_https_request(self) -> None:
-        response = self.client.get(URL, base_url=HTTPS_BASE_URL)
+        response = self.client.get(URL, base_url=self.own_origin("https"))
         assert "Strict-Transport-Security" not in response.headers
 
     def test_session_cookie_is_not_restricted_to_https(self) -> None:

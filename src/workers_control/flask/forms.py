@@ -13,6 +13,8 @@ from wtforms import (
     validators,
 )
 
+from workers_control.core.email import is_possibly_an_email_address
+
 from .translator import FlaskTranslator
 
 T = TypeVar("T")
@@ -91,14 +93,7 @@ class OfferSearchForm(Form):
 
 
 class RegisterForm(Form):
-    email = StringField(
-        trans.lazy_gettext("Email"),
-        validators=[
-            validators.Email(
-                message=trans.lazy_gettext("Proper email address required")
-            )
-        ],
-    )
+    email = StringField(trans.lazy_gettext("Email"))
     name = StringField(
         trans.lazy_gettext("Name"),
         validators=[
@@ -120,6 +115,12 @@ class RegisterForm(Form):
         ],
     )
     repeat_password = PasswordField(trans.lazy_gettext("Repeat Password"))
+
+    def validate_email(form: Self, field: StringField) -> None:
+        if not is_possibly_an_email_address(field.data or ""):
+            raise ValidationError(
+                message=str(trans.lazy_gettext("Proper email address required"))
+            )
 
     @property
     def email_field(self) -> WtFormField[str]:

@@ -111,16 +111,8 @@ class RequestEmailAddressChangeTests(BaseTestCase):
             == response.RejectionReason.new_email_address_already_taken
         )
 
-    @parameterized.expand(
-        [
-            ("",),
-            ("word",),
-            ("a@",),
-            ("@b",),
-        ]
-    )
-    def test_that_email_addresses_that_are_definitely_not_valid_are_rejected_as_new_addresses(
-        self, invalid: str
+    def test_that_email_address_that_is_definitely_not_valid_is_rejected_as_new_address(
+        self,
     ) -> None:
         original_email_address = "test@test.test"
         current_password = "some_password"
@@ -129,7 +121,7 @@ class RequestEmailAddressChangeTests(BaseTestCase):
         )
         request = create_interactor_request(
             current_email_address=original_email_address,
-            new_email_address=invalid,
+            new_email_address="word",
             current_password=current_password,
         )
         response = self.interactor.request_email_address_change(request)

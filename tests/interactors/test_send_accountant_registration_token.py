@@ -1,5 +1,6 @@
 from workers_control.core import email_notifications
 from workers_control.core.interactors.send_accountant_registration_token import (
+    RejectionReason,
     SendAccountantRegistrationTokenInteractor,
 )
 
@@ -17,7 +18,7 @@ class InteractorTests(BaseTestCase):
         member_email = "test@test.test"
         self.member_generator.create_member(email=member_email)
         response = self.send_invitation(member_email)
-        assert response.has_been_sent
+        assert response.is_success
         self.delivered_notifications()
 
     def test_can_send_registration_token_to_email_that_is_already_registered_as_company(
@@ -27,8 +28,16 @@ class InteractorTests(BaseTestCase):
         self.company_generator.create_company_record(email=company_email)
         response = self.send_invitation(company_email)
 
-        assert response.has_been_sent
+        assert response.is_success
         self.delivered_notifications()
+
+    def test_cannot_send_registration_token_to_invalid_email(self) -> None:
+        invalid_email = "invalid@email@address"
+        pre_interactor_invitation_count = len(self.delivered_notifications())
+        response = self.send_invitation(invalid_email)
+        assert not response.is_success
+        assert response.rejection_reason == RejectionReason.invalid_email_address
+        assert len(self.delivered_notifications()) == pre_interactor_invitation_count
 
     def test_cannot_send_registration_token_to_email_that_is_already_registered_as_accountant(
         self,
@@ -37,13 +46,14 @@ class InteractorTests(BaseTestCase):
         self.accountant_generator.create_accountant(email_address=accountant_email)
         pre_interactor_invitation_count = len(self.delivered_notifications())
         response = self.send_invitation(accountant_email)
-        assert not response.has_been_sent
+        assert not response.is_success
+        assert response.rejection_reason == RejectionReason.user_exists_already
         assert len(self.delivered_notifications()) == pre_interactor_invitation_count
 
     def test_that_invitation_is_presented_for_correct_email_address(self) -> None:
         expected_email = "test@mail.test"
         response = self.send_invitation(expected_email)
-        assert response.has_been_sent
+        assert response.is_success
         self.assertEqual(
             self.latest_delivered_notification().email_address, expected_email
         )
@@ -53,10 +63,10 @@ class InteractorTests(BaseTestCase):
     ) -> None:
         email = "test@test.test"
         response = self.send_invitation(email)
-        assert response.has_been_sent
+        assert response.is_success
         initial_count = len(self.delivered_notifications())
         response = self.send_invitation(email)
-        assert response.has_been_sent
+        assert response.is_success
         assert len(self.delivered_notifications()) == initial_count + 1
 
     def send_invitation(

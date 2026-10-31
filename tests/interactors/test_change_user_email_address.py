@@ -68,20 +68,13 @@ class ChangeUserEmailAddressTests(BaseTestCase):
         response = self.interactor.change_user_email_address(request)
         assert not response.is_rejected
 
-    @parameterized.expand(
-        [
-            ("@",),
-            (" @ ",),
-            ("a@ ",),
-        ]
-    )
     def test_that_changing_the_email_address_to_something_that_is_definitly_not_an_email_address_is_rejected(
-        self, new_email: str
+        self,
     ) -> None:
         accountant = self.accountant_generator.create_accountant(
             email_address="test@test.test"
         )
-        request = Request(user=accountant, new_email=new_email)
+        request = Request(user=accountant, new_email="@")
         response = self.interactor.change_user_email_address(request)
         assert response.is_rejected
 

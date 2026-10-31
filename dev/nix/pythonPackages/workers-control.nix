@@ -7,7 +7,6 @@
   babel,
   click,
   psycopg2,
-  email-validator,
   flask,
   itsdangerous,
   jinja2,
@@ -51,7 +50,6 @@ buildPythonPackage {
   dependencies = [
     alembic
     click
-    email-validator
     flask
     itsdangerous
     jinja2

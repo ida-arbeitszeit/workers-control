@@ -15,11 +15,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   A reverse proxy in front of the app must pass on the browser's `Host` header.
 - Remove gunicorn and twine from the development dependencies.
   Nothing used gunicorn anymore, and the PyPI publishing workflow installs twine itself.
+- Remove the dependency on email-validator.
 
 ### Fixed
 
 - Submitting a form that had been open for more than an hour failed with "400 Bad Request",
   because its CSRF token had expired.
+- Changing the email address no longer accepts text such as `a<b@example.org>` or
+  `a@example.org,b@example.org`, for which emails went to other recipients than the stored address.
 
 ## [0.2.9] - 2026-10-24
 

@@ -701,7 +701,7 @@ class AccountantGenerator:
                 )
             )
         )
-        assert send_response.has_been_sent, "Invitation token could not be sent."
+        assert send_response.is_success, "Invitation token could not be sent."
         response = self.register_accountant_interactor.register_accountant(
             request=RegisterAccountantInteractor.Request(
                 name=name,

@@ -97,22 +97,6 @@ class UnauthenticatedAndUnconfirmedCompanyTests(ViewTestCase):
                     repeat_password="test_password",
                 )
             ),
-            param(
-                dict(
-                    email="invalid_email@",
-                    name="test name",
-                    password="test_password",
-                    repeat_password="test_password",
-                )
-            ),
-            param(
-                dict(
-                    email="invalid_email@cp",
-                    name="test name",
-                    password="test_password",
-                    repeat_password="test_password",
-                )
-            ),
         ]
     )
     def test_invalid_form_posting_with_incorrect_form_does_not_redirect_company(

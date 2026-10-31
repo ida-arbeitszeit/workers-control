@@ -6,7 +6,6 @@ from workers_control.core.email_notifications import AccountantInvitation, Email
 from workers_control.core.repositories import DatabaseGateway
 
 
-@dataclass
 class RejectionReason(enum.Enum):
     invalid_email_address = enum.auto()
     user_exists_already = enum.auto()

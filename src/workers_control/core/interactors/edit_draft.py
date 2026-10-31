@@ -24,7 +24,6 @@ class Request:
 
 @dataclass
 class Response:
-    @dataclass
     class RejectionReason(enum.Enum):
         NOT_FOUND = enum.auto()
         UNAUTHORIZED = enum.auto()

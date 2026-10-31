@@ -6,6 +6,7 @@ from flask import current_app
 from workers_control.core.datetime_service import DatetimeService
 from workers_control.core.injector import Injector
 from workers_control.core.interactors.send_accountant_registration_token import (
+    RejectionReason,
     SendAccountantRegistrationTokenInteractor,
 )
 from workers_control.core.repositories import DatabaseGateway
@@ -42,14 +43,20 @@ def invite_accountant(
         response = interactor.send_accountant_registration_token(
             SendAccountantRegistrationTokenInteractor.Request(email=email_address)
         )
-    if response.has_been_sent:
+    if response.is_success:
         click.echo(
             f"An invitation has been sent to {email_address} to register as an accountant."
         )
     else:
-        click.echo(
-            f"An accountant with the email address {email_address} already exists. No invitation has been sent."
-        )
+        match response.rejection_reason:
+            case RejectionReason.invalid_email_address:
+                click.echo(
+                    f"Invalid email address: {email_address}. No invitation has been sent."
+                )
+            case RejectionReason.user_exists_already:
+                click.echo(
+                    f"An accountant with that email address {email_address} already exists. No invitation has been sent."
+                )
 
 
 @click.argument("args", nargs=-1)

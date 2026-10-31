@@ -5,24 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.2.10] - 2026-10-31
 
 ### Changed
 
 - Remove the dependency on Flask-WTF, of which the app only used the CSRF protection.
   The app now rejects form submissions from other sites based on the `Sec-Fetch-Site` and `Origin`
   headers that browsers send, so forms no longer carry a CSRF token.
-  A reverse proxy in front of the app must pass on the browser's `Host` header.
+  A reverse proxy in front of the app must pass on the browser's `Host` header. (#1552)
 - Remove gunicorn and twine from the development dependencies.
-  Nothing used gunicorn anymore, and the PyPI publishing workflow installs twine itself.
-- Remove the dependency on email-validator.
+  Nothing used gunicorn anymore, and the PyPI publishing workflow installs twine itself. (#1553)
+- Remove the dependency on email-validator. (#1554)
+- The `invite-accountant` CLI command rejects invalid email addresses. (#1554)
 
 ### Fixed
 
 - Submitting a form that had been open for more than an hour failed with "400 Bad Request",
-  because its CSRF token had expired.
+  because its CSRF token had expired. (#1552)
 - Changing the email address no longer accepts text such as `a<b@example.org>` or
-  `a@example.org,b@example.org`, for which emails went to other recipients than the stored address.
+  `a@example.org,b@example.org`, for which emails went to other recipients than the stored address. (#1554)
 
 ## [0.2.9] - 2026-10-24
 

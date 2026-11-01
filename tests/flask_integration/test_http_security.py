@@ -98,7 +98,7 @@ class SecurityHeadersTests(HttpSecurityTestCase):
         response = self.client.get(URL)
         assert (
             response.headers["Content-Security-Policy"]
-            == "default-src 'self'; frame-ancestors 'self'"
+            == "default-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'self'"
         )
 
     def test_page_may_only_be_framed_by_own_origin(self) -> None:

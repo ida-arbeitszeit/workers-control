@@ -17,7 +17,7 @@ class CreateCollaborationRequest:
 
 @dataclass
 class CreateCollaborationResponse:
-    class RejectionReason(Exception, Enum):
+    class RejectionReason(Enum):
         coordinator_not_found = auto()
         collaboration_with_name_exists = auto()
 
@@ -37,11 +37,10 @@ class CreateCollaborationInteractor:
     def execute(
         self, request: CreateCollaborationRequest
     ) -> CreateCollaborationResponse:
-        try:
-            coordinator = self._validate_request(request)
-        except CreateCollaborationResponse.RejectionReason as reason:
+        coordinator = self._validate_request(request)
+        if isinstance(coordinator, CreateCollaborationResponse.RejectionReason):
             return CreateCollaborationResponse(
-                rejection_reason=reason, collaboration_id=None
+                rejection_reason=coordinator, collaboration_id=None
             )
         account = self.database_gateway.create_account()
         collaboration = self.database_gateway.create_collaboration(
@@ -59,7 +58,9 @@ class CreateCollaborationInteractor:
             rejection_reason=None, collaboration_id=collaboration.id
         )
 
-    def _validate_request(self, request: CreateCollaborationRequest) -> Company:
+    def _validate_request(
+        self, request: CreateCollaborationRequest
+    ) -> Company | CreateCollaborationResponse.RejectionReason:
         coordinator = (
             self.database_gateway.get_companies()
             .with_id(request.coordinator_id)
@@ -71,7 +72,9 @@ class CreateCollaborationInteractor:
             )
         )
         if coordinator is None:
-            raise CreateCollaborationResponse.RejectionReason.coordinator_not_found
+            return CreateCollaborationResponse.RejectionReason.coordinator_not_found
         if collabs_with_requested_name:
-            raise CreateCollaborationResponse.RejectionReason.collaboration_with_name_exists
+            return (
+                CreateCollaborationResponse.RejectionReason.collaboration_with_name_exists
+            )
         return coordinator

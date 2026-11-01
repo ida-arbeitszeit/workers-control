@@ -15,7 +15,7 @@ class EndCollaborationRequest:
 
 @dataclass
 class EndCollaborationResponse:
-    class RejectionReason(Exception, Enum):
+    class RejectionReason(Enum):
         plan_not_found = auto()
         collaboration_not_found = auto()
         plan_has_no_collaboration = auto()
@@ -33,9 +33,7 @@ class EndCollaborationInteractor:
     database_gateway: DatabaseGateway
 
     def execute(self, request: EndCollaborationRequest) -> EndCollaborationResponse:
-        try:
-            self._validate_request(request)
-        except EndCollaborationResponse.RejectionReason as reason:
+        if reason := self._validate_request(request):
             return EndCollaborationResponse(rejection_reason=reason)
         assert (
             self.database_gateway.get_plans()
@@ -46,7 +44,9 @@ class EndCollaborationInteractor:
         )
         return EndCollaborationResponse(rejection_reason=None)
 
-    def _validate_request(self, request: EndCollaborationRequest) -> None:
+    def _validate_request(
+        self, request: EndCollaborationRequest
+    ) -> Optional[EndCollaborationResponse.RejectionReason]:
         plan_and_collaboration = (
             self.database_gateway.get_plans()
             .with_id(request.plan_id)
@@ -60,14 +60,15 @@ class EndCollaborationInteractor:
             .first()
         )
         if not collaboration_and_coordinator:
-            raise EndCollaborationResponse.RejectionReason.collaboration_not_found
+            return EndCollaborationResponse.RejectionReason.collaboration_not_found
         if plan_and_collaboration is None:
-            raise EndCollaborationResponse.RejectionReason.plan_not_found
+            return EndCollaborationResponse.RejectionReason.plan_not_found
         plan, current_collaboration = plan_and_collaboration
         if not current_collaboration:
-            raise EndCollaborationResponse.RejectionReason.plan_has_no_collaboration
+            return EndCollaborationResponse.RejectionReason.plan_has_no_collaboration
         coordinator = collaboration_and_coordinator[1]
         if (request.requester_id != coordinator.id) and (
             request.requester_id != plan.planner
         ):
-            raise EndCollaborationResponse.RejectionReason.requester_is_not_authorized
+            return EndCollaborationResponse.RejectionReason.requester_is_not_authorized
+        return None

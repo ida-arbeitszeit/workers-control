@@ -21,7 +21,7 @@ class RegisterCompany:
 
     @dataclass
     class Response:
-        class RejectionReason(Exception, Enum):
+        class RejectionReason(Enum):
             company_already_exists = auto()
             user_password_is_invalid = auto()
 
@@ -39,13 +39,6 @@ class RegisterCompany:
         password: str
 
     def register_company(self, request: Request) -> Response:
-        try:
-            company_id = self._register_company(request)
-        except self.Response.RejectionReason as reason:
-            return self.Response(rejection_reason=reason, company_id=None)
-        return self.Response(rejection_reason=None, company_id=company_id)
-
-    def _register_company(self, request: Request) -> UUID:
         company: Optional[records.Company]
         record = (
             self.database.get_account_credentials()
@@ -70,11 +63,17 @@ class RegisterCompany:
         else:
             credentials, email, company = record
             if company:
-                raise self.Response.RejectionReason.company_already_exists
+                return self.Response(
+                    rejection_reason=self.Response.RejectionReason.company_already_exists,
+                    company_id=None,
+                )
             if not self.password_hasher.is_password_matching_hash(
                 password=request.password, password_hash=credentials.password_hash
             ):
-                raise self.Response.RejectionReason.user_password_is_invalid
+                return self.Response(
+                    rejection_reason=self.Response.RejectionReason.user_password_is_invalid,
+                    company_id=None,
+                )
             means_account = self.database.create_account()
             resources_account = self.database.create_account()
             labour_account = self.database.create_account()
@@ -89,7 +88,7 @@ class RegisterCompany:
             products_account=products_account,
             registered_on=registered_on,
         )
-        return company.id
+        return self.Response(rejection_reason=None, company_id=company.id)
 
     def _create_confirmation_mail(self, email_address: str) -> None:
         self.email_sender.send_email(CompanyRegistration(email_address=email_address))

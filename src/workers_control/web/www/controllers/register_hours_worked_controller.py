@@ -13,7 +13,7 @@ from workers_control.web.session import Session
 
 @dataclass
 class ControllerRejection:
-    class RejectionReason(Exception, Enum):
+    class RejectionReason(Enum):
         invalid_input = auto()
         negative_amount = auto()
 

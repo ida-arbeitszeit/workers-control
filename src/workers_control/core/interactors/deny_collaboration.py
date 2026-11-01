@@ -16,7 +16,7 @@ class DenyCollaborationRequest:
 
 @dataclass
 class DenyCollaborationResponse:
-    class RejectionReason(Exception, Enum):
+    class RejectionReason(Enum):
         plan_not_found = auto()
         collaboration_not_found = auto()
         collaboration_was_not_requested = auto()
@@ -36,9 +36,7 @@ class DenyCollaborationInteractor:
     datetime_service: DatetimeService
 
     def execute(self, request: DenyCollaborationRequest) -> DenyCollaborationResponse:
-        try:
-            self._validate_request(request)
-        except DenyCollaborationResponse.RejectionReason as reason:
+        if reason := self._validate_request(request):
             return DenyCollaborationResponse(rejection_reason=reason)
 
         self.database_gateway.get_plans().with_id(
@@ -46,7 +44,9 @@ class DenyCollaborationInteractor:
         ).update().set_requested_collaboration(None).perform()
         return DenyCollaborationResponse(rejection_reason=None)
 
-    def _validate_request(self, request: DenyCollaborationRequest) -> None:
+    def _validate_request(
+        self, request: DenyCollaborationRequest
+    ) -> Optional[DenyCollaborationResponse.RejectionReason]:
         plan = self.database_gateway.get_plans().with_id(request.plan_id).first()
         now = self.datetime_service.now()
         collaboration_and_coordinator = (
@@ -56,13 +56,18 @@ class DenyCollaborationInteractor:
             .first()
         )
         if not collaboration_and_coordinator:
-            raise DenyCollaborationResponse.RejectionReason.collaboration_not_found
+            return DenyCollaborationResponse.RejectionReason.collaboration_not_found
         collaboration, coordinator = collaboration_and_coordinator
         if plan is None:
-            raise DenyCollaborationResponse.RejectionReason.plan_not_found
+            return DenyCollaborationResponse.RejectionReason.plan_not_found
         if not plan.is_active_as_of(now):
-            raise DenyCollaborationResponse.RejectionReason.plan_is_inactive
+            return DenyCollaborationResponse.RejectionReason.plan_is_inactive
         if plan.requested_collaboration != collaboration.id:
-            raise DenyCollaborationResponse.RejectionReason.collaboration_was_not_requested
+            return (
+                DenyCollaborationResponse.RejectionReason.collaboration_was_not_requested
+            )
         if request.requester_id != coordinator.id:
-            raise DenyCollaborationResponse.RejectionReason.requester_is_not_coordinator
+            return (
+                DenyCollaborationResponse.RejectionReason.requester_is_not_coordinator
+            )
+        return None

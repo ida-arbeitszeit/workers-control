@@ -26,7 +26,7 @@ class RegisterProductiveConsumptionRequest:
 
 @dataclass
 class RegisterProductiveConsumptionResponse:
-    class RejectionReason(Exception, Enum):
+    class RejectionReason(Enum):
         plan_not_found = auto()
         invalid_consumption_type = auto()
         cannot_consume_public_service = auto()
@@ -51,10 +51,12 @@ class RegisterProductiveConsumptionInteractor:
     def execute(
         self, request: RegisterProductiveConsumptionRequest
     ) -> RegisterProductiveConsumptionResponse:
-        try:
-            plan, consumer, consumption_type = self._validate_request(request)
-        except RegisterProductiveConsumptionResponse.RejectionReason as reason:
-            return RegisterProductiveConsumptionResponse(rejection_reason=reason)
+        validation = self._validate_request(request)
+        if isinstance(
+            validation, RegisterProductiveConsumptionResponse.RejectionReason
+        ):
+            return RegisterProductiveConsumptionResponse(rejection_reason=validation)
+        plan, consumer, consumption_type = validation
         self._perform_registration_process(
             consumer=consumer,
             plan=plan,
@@ -65,32 +67,51 @@ class RegisterProductiveConsumptionInteractor:
 
     def _validate_request(
         self, request: RegisterProductiveConsumptionRequest
-    ) -> Tuple[Plan, Company, ConsumptionType]:
+    ) -> (
+        Tuple[Plan, Company, ConsumptionType]
+        | RegisterProductiveConsumptionResponse.RejectionReason
+    ):
         plan = self._validate_plan(request)
-        return (
-            plan,
-            self._validate_consumer_is_not_planner(request, plan),
-            self._validate_consumption_type(request),
-        )
+        if isinstance(plan, RegisterProductiveConsumptionResponse.RejectionReason):
+            return plan
+        consumer = self._validate_consumer_is_not_planner(request, plan)
+        if isinstance(consumer, RegisterProductiveConsumptionResponse.RejectionReason):
+            return consumer
+        consumption_type = self._validate_consumption_type(request)
+        if isinstance(
+            consumption_type, RegisterProductiveConsumptionResponse.RejectionReason
+        ):
+            return consumption_type
+        return plan, consumer, consumption_type
 
-    def _validate_plan(self, request: RegisterProductiveConsumptionRequest) -> Plan:
+    def _validate_plan(
+        self, request: RegisterProductiveConsumptionRequest
+    ) -> Plan | RegisterProductiveConsumptionResponse.RejectionReason:
         now = self.datetime_service.now()
         plan = self.database_gateway.get_plans().with_id(request.plan).first()
         if plan is None:
-            raise RegisterProductiveConsumptionResponse.RejectionReason.plan_not_found
+            return RegisterProductiveConsumptionResponse.RejectionReason.plan_not_found
         if plan.is_rejected:
-            raise RegisterProductiveConsumptionResponse.RejectionReason.plan_is_rejected
+            return (
+                RegisterProductiveConsumptionResponse.RejectionReason.plan_is_rejected
+            )
         if not plan.is_active_as_of(now):
-            raise RegisterProductiveConsumptionResponse.RejectionReason.plan_is_not_active
+            return (
+                RegisterProductiveConsumptionResponse.RejectionReason.plan_is_not_active
+            )
         if plan.is_public_service:
-            raise RegisterProductiveConsumptionResponse.RejectionReason.cannot_consume_public_service
+            return (
+                RegisterProductiveConsumptionResponse.RejectionReason.cannot_consume_public_service
+            )
         return plan
 
     def _validate_consumer_is_not_planner(
         self, request: RegisterProductiveConsumptionRequest, plan: Plan
-    ) -> Company:
+    ) -> Company | RegisterProductiveConsumptionResponse.RejectionReason:
         if plan.planner == request.consumer:
-            raise RegisterProductiveConsumptionResponse.RejectionReason.consumer_is_planner
+            return (
+                RegisterProductiveConsumptionResponse.RejectionReason.consumer_is_planner
+            )
         consumer = (
             self.database_gateway.get_companies().with_id(request.consumer).first()
         )
@@ -99,12 +120,14 @@ class RegisterProductiveConsumptionInteractor:
 
     def _validate_consumption_type(
         self, request: RegisterProductiveConsumptionRequest
-    ) -> ConsumptionType:
+    ) -> ConsumptionType | RegisterProductiveConsumptionResponse.RejectionReason:
         if request.consumption_type not in (
             ConsumptionType.means_of_prod,
             ConsumptionType.raw_materials,
         ):
-            raise RegisterProductiveConsumptionResponse.RejectionReason.invalid_consumption_type
+            return (
+                RegisterProductiveConsumptionResponse.RejectionReason.invalid_consumption_type
+            )
         return request.consumption_type
 
     def _perform_registration_process(

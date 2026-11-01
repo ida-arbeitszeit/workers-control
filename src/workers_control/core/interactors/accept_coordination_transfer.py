@@ -20,7 +20,7 @@ class AcceptCoordinationTransferInteractor:
 
     @dataclass
     class Response:
-        class RejectionReason(Exception, Enum):
+        class RejectionReason(Enum):
             transfer_request_not_found = auto()
             transfer_request_closed = auto()
             accepting_company_is_not_candidate = auto()
@@ -34,14 +34,14 @@ class AcceptCoordinationTransferInteractor:
             return self.rejection_reason is not None
 
     def accept_coordination_transfer(self, request: Request) -> Response:
-        try:
-            transfer_request, collaboration = self._validate_request(request)
-        except self.Response.RejectionReason as reason:
+        validation = self._validate_request(request)
+        if isinstance(validation, self.Response.RejectionReason):
             return self.Response(
-                rejection_reason=reason,
+                rejection_reason=validation,
                 collaboration_id=None,
                 transfer_request_id=request.transfer_request_id,
             )
+        transfer_request, collaboration = validation
         collaboration_id = self._create_new_coordination_tenure(
             transfer_request, collaboration
         )
@@ -53,7 +53,7 @@ class AcceptCoordinationTransferInteractor:
 
     def _validate_request(
         self, request: Request
-    ) -> tuple[CoordinationTransferRequest, Collaboration]:
+    ) -> tuple[CoordinationTransferRequest, Collaboration] | Response.RejectionReason:
         result = (
             self.database_gateway.get_coordination_transfer_requests()
             .with_id(request.transfer_request_id)
@@ -61,14 +61,14 @@ class AcceptCoordinationTransferInteractor:
             .first()
         )
         if result is None:
-            raise self.Response.RejectionReason.transfer_request_not_found
+            return self.Response.RejectionReason.transfer_request_not_found
         transfer_request, collaboration = result
         if transfer_request.candidate != request.accepting_company:
-            raise self.Response.RejectionReason.accepting_company_is_not_candidate
+            return self.Response.RejectionReason.accepting_company_is_not_candidate
         if self._collaboration_has_a_coordination_tenure_starting_after_transfer_request(
             collaboration=collaboration, transfer_request=transfer_request
         ):
-            raise self.Response.RejectionReason.transfer_request_closed
+            return self.Response.RejectionReason.transfer_request_closed
         return transfer_request, collaboration
 
     def _create_new_coordination_tenure(

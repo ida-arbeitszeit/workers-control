@@ -20,37 +20,35 @@ class RequestEmailAddressChangeInteractor:
     password_hasher: PasswordHasher
 
     def request_email_address_change(self, request: Request) -> Response:
-        try:
-            self._validate_request(request)
-        except Response.RejectionReason as reason:
+        if reason := self._validate_request(request):
             return Response(rejection_reason=reason)
-        else:
-            self.email_sender.send_email(
-                EmailChangeWarning(old_email_address=request.current_email_address)
+        self.email_sender.send_email(
+            EmailChangeWarning(old_email_address=request.current_email_address)
+        )
+        self.email_sender.send_email(
+            EmailChangeConfirmation(
+                old_email_address=request.current_email_address,
+                new_email_address=request.new_email_address,
             )
-            self.email_sender.send_email(
-                EmailChangeConfirmation(
-                    old_email_address=request.current_email_address,
-                    new_email_address=request.new_email_address,
-                )
-            )
-            return Response(rejection_reason=None)
+        )
+        return Response(rejection_reason=None)
 
-    def _validate_request(self, request: Request) -> None:
+    def _validate_request(self, request: Request) -> Response.RejectionReason | None:
         if not is_possibly_an_email_address(request.new_email_address):
-            raise Response.RejectionReason.invalid_email_address
+            return Response.RejectionReason.invalid_email_address
         elif not bool(
             self.database.get_email_addresses().with_address(
                 request.current_email_address
             )
         ):
-            raise Response.RejectionReason.current_email_address_does_not_exist
+            return Response.RejectionReason.current_email_address_does_not_exist
         elif bool(
             self.database.get_email_addresses().with_address(request.new_email_address)
         ):
-            raise Response.RejectionReason.new_email_address_already_taken
+            return Response.RejectionReason.new_email_address_already_taken
         elif not self._is_password_matching(request):
-            raise Response.RejectionReason.incorrect_password
+            return Response.RejectionReason.incorrect_password
+        return None
 
     def _is_password_matching(self, request: Request) -> bool:
         credentials = (
@@ -74,7 +72,7 @@ class Request:
 
 @dataclass
 class Response:
-    class RejectionReason(Exception, enum.Enum):
+    class RejectionReason(enum.Enum):
         invalid_email_address = enum.auto()
         current_email_address_does_not_exist = enum.auto()
         new_email_address_already_taken = enum.auto()

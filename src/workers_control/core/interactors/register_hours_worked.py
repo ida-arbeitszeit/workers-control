@@ -19,7 +19,7 @@ class RegisterHoursWorkedRequest:
 
 @dataclass
 class RegisterHoursWorkedResponse:
-    class RejectionReason(Exception, Enum):
+    class RejectionReason(Enum):
         worker_not_at_company = auto()
         hours_worked_must_be_positive = auto()
 

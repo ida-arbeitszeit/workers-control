@@ -20,7 +20,7 @@ class Request:
     planner: UUID
 
 
-class RejectionReason(Exception, Enum):
+class RejectionReason(Enum):
     negative_plan_input = auto()
     planner_does_not_exist = auto()
 

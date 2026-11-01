@@ -19,7 +19,7 @@ class RevokePlanFilingInteractor:
 
     @dataclass
     class Response:
-        class RejectionReason(Exception, Enum):
+        class RejectionReason(Enum):
             requester_not_found = auto()
             plan_not_found = auto()
             requester_is_not_planner = auto()

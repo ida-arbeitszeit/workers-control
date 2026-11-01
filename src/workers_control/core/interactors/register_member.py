@@ -21,7 +21,7 @@ class RegisterMemberInteractor:
 
     @dataclass
     class Response:
-        class RejectionReason(Exception, Enum):
+        class RejectionReason(Enum):
             member_already_exists = auto()
             company_with_different_password_exists = auto()
 
@@ -40,14 +40,6 @@ class RegisterMemberInteractor:
         password: str
 
     def register_member(self, request: Request) -> Response:
-        try:
-            return self._register_member(request)
-        except RegisterMemberInteractor.Response.RejectionReason as reason:
-            return RegisterMemberInteractor.Response(
-                rejection_reason=reason, user_id=None, is_confirmation_required=False
-            )
-
-    def _register_member(self, request: Request) -> Response:
         credentials: records.AccountCredentials
         email_address: records.EmailAddress
         member: Optional[records.Member]
@@ -69,12 +61,20 @@ class RegisterMemberInteractor:
         else:
             credentials, email_address, member = record
             if member:
-                raise self.Response.RejectionReason.member_already_exists
+                return self.Response(
+                    rejection_reason=self.Response.RejectionReason.member_already_exists,
+                    user_id=None,
+                    is_confirmation_required=False,
+                )
             if not self.password_hasher.is_password_matching_hash(
                 password=request.password,
                 password_hash=credentials.password_hash,
             ):
-                raise self.Response.RejectionReason.company_with_different_password_exists
+                return self.Response(
+                    rejection_reason=self.Response.RejectionReason.company_with_different_password_exists,
+                    user_id=None,
+                    is_confirmation_required=False,
+                )
         member_account = self.database.create_account()
         member = self.database.create_member(
             account_credentials=credentials.id,

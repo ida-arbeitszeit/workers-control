@@ -26,7 +26,7 @@ class RequestCoordinationTransferInteractor:
 
     @dataclass
     class Response:
-        class RejectionReason(Exception, Enum):
+        class RejectionReason(Enum):
             candidate_is_not_a_company = auto()
             requester_is_not_coordinator = auto()
             candidate_is_current_coordinator = auto()
@@ -41,15 +41,10 @@ class RequestCoordinationTransferInteractor:
             return self.rejection_reason is not None
 
     def request_transfer(self, request: Request) -> Response:
-        try:
-            candidate, candidate_email, coordination_tenure = self._validate_request(
-                request
-            )
-        except self.Response.RejectionReason as reason:
-            return self.Response(
-                rejection_reason=reason,
-                transfer_request=None,
-            )
+        validation = self._validate_request(request)
+        if isinstance(validation, self.Response.RejectionReason):
+            return self.Response(rejection_reason=validation, transfer_request=None)
+        candidate, candidate_email, coordination_tenure = validation
         transfer_request = self.database_gateway.create_coordination_transfer_request(
             requesting_coordination_tenure=coordination_tenure.id,
             candidate=request.candidate,
@@ -76,7 +71,7 @@ class RequestCoordinationTransferInteractor:
 
     def _validate_request(
         self, request: Request
-    ) -> tuple[Company, EmailAddress, CoordinationTenure]:
+    ) -> tuple[Company, EmailAddress, CoordinationTenure] | Response.RejectionReason:
         candidate_record = (
             self.database_gateway.get_companies()
             .with_id(request.candidate)
@@ -84,7 +79,7 @@ class RequestCoordinationTransferInteractor:
             .first()
         )
         if not candidate_record:
-            raise self.Response.RejectionReason.candidate_is_not_a_company
+            return self.Response.RejectionReason.candidate_is_not_a_company
         candidate, candidate_email = candidate_record
 
         coordination_tenures_and_coordinators = list(
@@ -94,7 +89,7 @@ class RequestCoordinationTransferInteractor:
             .joined_with_coordinator()
         )
         if not coordination_tenures_and_coordinators:
-            raise self.Response.RejectionReason.collaboration_not_found
+            return self.Response.RejectionReason.collaboration_not_found
 
         latest_coordination_tenure_and_coordinator = (
             coordination_tenures_and_coordinators[0]
@@ -102,13 +97,15 @@ class RequestCoordinationTransferInteractor:
 
         coordination_tenure, coordinator = latest_coordination_tenure_and_coordinator
         if coordinator.id != request.requester:
-            raise self.Response.RejectionReason.requester_is_not_coordinator
+            return self.Response.RejectionReason.requester_is_not_coordinator
         if coordination_tenure.company == candidate.id:
-            raise self.Response.RejectionReason.candidate_is_current_coordinator
+            return self.Response.RejectionReason.candidate_is_current_coordinator
         if self._there_is_a_pending_transfer_request_by_coordination_tenure(
             coordination_tenure
         ):
-            raise self.Response.RejectionReason.coordination_tenure_has_pending_transfer_request
+            return (
+                self.Response.RejectionReason.coordination_tenure_has_pending_transfer_request
+            )
         return candidate, candidate_email, coordination_tenure
 
     def _there_is_a_pending_transfer_request_by_coordination_tenure(

@@ -13,7 +13,7 @@ from workers_control.core.services.payout_factor import PayoutFactorService
 from workers_control.core.transfers import TransferType
 
 
-class RejectionReason(Exception, Enum):
+class RejectionReason(Enum):
     basic_service_not_found = auto()
 
 
@@ -41,19 +41,13 @@ class RegisterProductiveConsumptionOfBasicServiceInteractor:
     social_accounting: SocialAccounting
 
     def execute(self, request: Request) -> Response:
-        try:
-            return self._perform_registration(request)
-        except RejectionReason as reason:
-            return Response(rejection_reason=reason)
-
-    def _perform_registration(self, request: Request) -> Response:
         basic_service = (
             self.database_gateway.get_basic_services()
             .with_id(request.basic_service)
             .first()
         )
         if not basic_service:
-            raise RejectionReason.basic_service_not_found
+            return Response(rejection_reason=RejectionReason.basic_service_not_found)
         consumer = (
             self.database_gateway.get_companies().with_id(request.consumer).first()
         )

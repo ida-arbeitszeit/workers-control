@@ -315,7 +315,7 @@ class ConsumptionTransferTests(RegisterPrivateConsumptionBase):
         plan = self.plan_generator.create_plan()
         assert self.balance_checker.get_member_account_balance(consumer) == 0
         self.control_thresholds.set_allowed_overdraw_of_member_account(0)
-        with self.assertRaises(RejectionReason):
+        with self.assertRaises(RuntimeError):
             self.consumption_generator.create_private_consumption(
                 consumer=consumer,
                 plan=plan,

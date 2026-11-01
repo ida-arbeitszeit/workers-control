@@ -17,7 +17,7 @@ from workers_control.core.services.price_calculator import PriceCalculator
 from workers_control.core.transfers import TransferType
 
 
-class RejectionReason(Exception, Enum):
+class RejectionReason(Enum):
     plan_inactive = auto()
     plan_not_found = auto()
     insufficient_balance = auto()
@@ -51,22 +51,23 @@ class RegisterPrivateConsumption:
     def register_private_consumption(
         self, request: RegisterPrivateConsumptionRequest
     ) -> RegisterPrivateConsumptionResponse:
-        try:
-            return self._perform_registration_process(request)
-        except RejectionReason as reason:
-            return RegisterPrivateConsumptionResponse(rejection_reason=reason)
-
-    def _perform_registration_process(
-        self, request: RegisterPrivateConsumptionRequest
-    ) -> RegisterPrivateConsumptionResponse:
-        plan, planner = self._get_plan_and_planner(request)
+        plan_and_planner = self._get_plan_and_planner(request)
+        if isinstance(plan_and_planner, RejectionReason):
+            return RegisterPrivateConsumptionResponse(rejection_reason=plan_and_planner)
+        plan, planner = plan_and_planner
         consumer = self._get_consumer(request)
+        if isinstance(consumer, RejectionReason):
+            return RegisterPrivateConsumptionResponse(rejection_reason=consumer)
         price_per_unit = self.price_calculator.calculate_price(plan.id)
         consumption_transfer = self._create_private_consumption_transfer(
             debit_account=consumer.account,
             credit_account=planner.product_account,
             value=price_per_unit * request.amount,
         )
+        if isinstance(consumption_transfer, RejectionReason):
+            return RegisterPrivateConsumptionResponse(
+                rejection_reason=consumption_transfer
+            )
         compensation_transfer = self._get_compensation_transfer_if_any(
             plan_id=plan.id,
             planner_product_account=planner.product_account,
@@ -84,16 +85,20 @@ class RegisterPrivateConsumption:
 
     def _get_plan_and_planner(
         self, request: RegisterPrivateConsumptionRequest
-    ) -> tuple[Plan, Company]:
+    ) -> tuple[Plan, Company] | RejectionReason:
         plan = self._get_active_plan(request)
+        if isinstance(plan, RejectionReason):
+            return plan
         planner = self.database_gateway.get_companies().with_id(plan.planner).first()
         assert planner  # Each plan has a planner.
         return plan, planner
 
-    def _get_consumer(self, request: RegisterPrivateConsumptionRequest) -> Member:
+    def _get_consumer(
+        self, request: RegisterPrivateConsumptionRequest
+    ) -> Member | RejectionReason:
         consumer = self.database_gateway.get_members().with_id(request.consumer).first()
         if consumer is None:
-            raise RejectionReason.consumer_does_not_exist
+            return RejectionReason.consumer_does_not_exist
         return consumer
 
     def _create_private_consumption_transfer(
@@ -101,9 +106,9 @@ class RegisterPrivateConsumption:
         debit_account: UUID,
         credit_account: UUID,
         value: Decimal,
-    ) -> Transfer:
+    ) -> Transfer | RejectionReason:
         if not self._is_account_balance_sufficient(value, debit_account):
-            raise RejectionReason.insufficient_balance
+            return RejectionReason.insufficient_balance
         transfer = self.database_gateway.create_transfer(
             date=self.datetime_service.now(),
             debit_account=debit_account,
@@ -142,13 +147,15 @@ class RegisterPrivateConsumption:
         else:
             return None
 
-    def _get_active_plan(self, request: RegisterPrivateConsumptionRequest) -> Plan:
+    def _get_active_plan(
+        self, request: RegisterPrivateConsumptionRequest
+    ) -> Plan | RejectionReason:
         now = self.datetime_service.now()
         plan = self.database_gateway.get_plans().with_id(request.plan).first()
         if plan is None:
-            raise RejectionReason.plan_not_found
+            return RejectionReason.plan_not_found
         if not plan.is_active_as_of(now):
-            raise RejectionReason.plan_inactive
+            return RejectionReason.plan_inactive
         return plan
 
     def _get_compensation_transfer_if_any(

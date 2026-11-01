@@ -16,7 +16,7 @@ class AcceptCollaborationRequest:
 
 @dataclass
 class AcceptCollaborationResponse:
-    class RejectionReason(Exception, Enum):
+    class RejectionReason(Enum):
         plan_not_found = auto()
         collaboration_not_found = auto()
         plan_inactive = auto()
@@ -40,9 +40,7 @@ class AcceptCollaborationInteractor:
     def execute(
         self, request: AcceptCollaborationRequest
     ) -> AcceptCollaborationResponse:
-        try:
-            self._validate_request(request)
-        except AcceptCollaborationResponse.RejectionReason as reason:
+        if reason := self._validate_request(request):
             return AcceptCollaborationResponse(rejection_reason=reason)
         plan = self.database_gateway.get_plans().with_id(request.plan_id)
         plan.update().set_collaboration(
@@ -50,7 +48,9 @@ class AcceptCollaborationInteractor:
         ).set_requested_collaboration(None).perform()
         return AcceptCollaborationResponse(rejection_reason=None)
 
-    def _validate_request(self, request: AcceptCollaborationRequest) -> None:
+    def _validate_request(
+        self, request: AcceptCollaborationRequest
+    ) -> Optional[AcceptCollaborationResponse.RejectionReason]:
         plan_and_collaboration = (
             self.database_gateway.get_plans()
             .with_id(request.plan_id)
@@ -65,18 +65,23 @@ class AcceptCollaborationInteractor:
         )
         now = self.datetime_service.now()
         if collaboration_and_coordinator is None:
-            raise AcceptCollaborationResponse.RejectionReason.collaboration_not_found
+            return AcceptCollaborationResponse.RejectionReason.collaboration_not_found
         collaboration, coordinator = collaboration_and_coordinator
         if plan_and_collaboration is None:
-            raise AcceptCollaborationResponse.RejectionReason.plan_not_found
+            return AcceptCollaborationResponse.RejectionReason.plan_not_found
         plan, current_collaboration = plan_and_collaboration
         if not plan.is_active_as_of(now):
-            raise AcceptCollaborationResponse.RejectionReason.plan_inactive
+            return AcceptCollaborationResponse.RejectionReason.plan_inactive
         if current_collaboration:
-            raise AcceptCollaborationResponse.RejectionReason.plan_has_collaboration
+            return AcceptCollaborationResponse.RejectionReason.plan_has_collaboration
         if plan.is_public_service:
-            raise AcceptCollaborationResponse.RejectionReason.plan_is_public_service
+            return AcceptCollaborationResponse.RejectionReason.plan_is_public_service
         if plan.requested_collaboration != collaboration.id:
-            raise AcceptCollaborationResponse.RejectionReason.collaboration_was_not_requested
+            return (
+                AcceptCollaborationResponse.RejectionReason.collaboration_was_not_requested
+            )
         if request.requester_id != coordinator.id:
-            raise AcceptCollaborationResponse.RejectionReason.requester_is_not_coordinator
+            return (
+                AcceptCollaborationResponse.RejectionReason.requester_is_not_coordinator
+            )
+        return None

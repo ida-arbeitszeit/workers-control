@@ -18,7 +18,7 @@ class CreateBasicServiceRequest:
 
 @dataclass
 class CreateBasicServiceResponse:
-    class RejectionReason(Exception, Enum):
+    class RejectionReason(Enum):
         member_not_found = auto()
 
     rejection_reason: Optional[RejectionReason]
@@ -35,19 +35,12 @@ class CreateBasicServiceInteractor:
     database_gateway: DatabaseGateway
 
     def execute(self, request: CreateBasicServiceRequest) -> CreateBasicServiceResponse:
-        try:
-            return self._create_basic_service(request)
-        except CreateBasicServiceResponse.RejectionReason as reason:
-            return CreateBasicServiceResponse(
-                rejection_reason=reason, basic_service_id=None
-            )
-
-    def _create_basic_service(
-        self, request: CreateBasicServiceRequest
-    ) -> CreateBasicServiceResponse:
         member = self.database_gateway.get_members().with_id(request.member_id).first()
         if member is None:
-            raise CreateBasicServiceResponse.RejectionReason.member_not_found
+            return CreateBasicServiceResponse(
+                rejection_reason=CreateBasicServiceResponse.RejectionReason.member_not_found,
+                basic_service_id=None,
+            )
         basic_service = self.database_gateway.create_basic_service(
             name=request.name,
             description=request.description,

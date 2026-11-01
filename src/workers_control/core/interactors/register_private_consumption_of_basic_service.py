@@ -14,7 +14,7 @@ from workers_control.core.services.payout_factor import PayoutFactorService
 from workers_control.core.transfers import TransferType
 
 
-class RejectionReason(Exception, Enum):
+class RejectionReason(Enum):
     basic_service_not_found = auto()
     consumer_does_not_exist = auto()
     insufficient_balance = auto()
@@ -48,34 +48,32 @@ class RegisterPrivateConsumptionOfBasicServiceInteractor:
     def execute(
         self, request: RegisterPrivateConsumptionOfBasicServiceRequest
     ) -> RegisterPrivateConsumptionOfBasicServiceResponse:
-        try:
-            return self._perform_registration(request)
-        except RejectionReason as reason:
-            return RegisterPrivateConsumptionOfBasicServiceResponse(
-                rejection_reason=reason
-            )
-
-    def _perform_registration(
-        self, request: RegisterPrivateConsumptionOfBasicServiceRequest
-    ) -> RegisterPrivateConsumptionOfBasicServiceResponse:
         basic_service = (
             self.database_gateway.get_basic_services()
             .with_id(request.basic_service)
             .first()
         )
         if basic_service is None:
-            raise RejectionReason.basic_service_not_found
+            return RegisterPrivateConsumptionOfBasicServiceResponse(
+                rejection_reason=RejectionReason.basic_service_not_found
+            )
         consumer = self.database_gateway.get_members().with_id(request.consumer).first()
         if consumer is None:
-            raise RejectionReason.consumer_does_not_exist
+            return RegisterPrivateConsumptionOfBasicServiceResponse(
+                rejection_reason=RejectionReason.consumer_does_not_exist
+            )
         if consumer.id == basic_service.provider:
-            raise RejectionReason.consumer_is_provider
+            return RegisterPrivateConsumptionOfBasicServiceResponse(
+                rejection_reason=RejectionReason.consumer_is_provider
+            )
         provider = (
             self.database_gateway.get_members().with_id(basic_service.provider).first()
         )
         assert provider
         if not self._is_account_balance_sufficient(request.amount, consumer.account):
-            raise RejectionReason.insufficient_balance
+            return RegisterPrivateConsumptionOfBasicServiceResponse(
+                rejection_reason=RejectionReason.insufficient_balance
+            )
         now = self.datetime_service.now()
         fic = self.payout_factor_service.calculate_current_payout_factor()
         transfer_of_consumption = self.database_gateway.create_transfer(

@@ -15,7 +15,7 @@ class AnswerCompanyWorkInviteRequest:
 
 @dataclass
 class AnswerCompanyWorkInviteResponse:
-    class Failure(Exception, Enum):
+    class Failure(Enum):
         invite_not_found = auto()
         member_was_not_invited = auto()
 

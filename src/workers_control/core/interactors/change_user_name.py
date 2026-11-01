@@ -23,7 +23,7 @@ class Request:
 
 @dataclass
 class Response:
-    class RejectionReason(Exception, enum.Enum):
+    class RejectionReason(enum.Enum):
         invalid_name = enum.auto()
         user_not_found = enum.auto()
         incorrect_password = enum.auto()

@@ -296,7 +296,7 @@ class PlanGenerator:
         response = self.request_collaboration.execute(request)
         if response.is_rejected:
             assert response.rejection_reason
-            raise response.rejection_reason
+            raise RuntimeError(response.rejection_reason)
 
     def _accept_collaboration(
         self,
@@ -310,7 +310,7 @@ class PlanGenerator:
         response = self.accept_collaboration.execute(request)
         if response.is_rejected:
             assert response.rejection_reason
-            raise response.rejection_reason
+            raise RuntimeError(response.rejection_reason)
 
     def _get_collaboration_coordinator(
         self, collaboration: UUID, planner: UUID
@@ -430,7 +430,7 @@ class ConsumptionGenerator:
         response = self.register_productive_consumption.execute(request)
         if response.is_rejected:
             assert response.rejection_reason
-            raise response.rejection_reason
+            raise RuntimeError(response.rejection_reason)
         return response
 
     def create_private_consumption(
@@ -455,7 +455,7 @@ class ConsumptionGenerator:
         )
         if not response.is_accepted:
             assert response.rejection_reason
-            raise response.rejection_reason
+            raise RuntimeError(response.rejection_reason)
         return response
 
     def create_private_consumption_of_basic_service(
@@ -474,7 +474,7 @@ class ConsumptionGenerator:
         response = self.register_basic_service_interactor.execute(request)
         if not response.is_accepted:
             assert response.rejection_reason
-            raise response.rejection_reason
+            raise RuntimeError(response.rejection_reason)
         return response
 
     def create_productive_consumption_of_basic_service(
@@ -493,7 +493,7 @@ class ConsumptionGenerator:
         response = self.register_productive_basic_service_interactor.execute(request)
         if not response.is_accepted:
             assert response.rejection_reason
-            raise response.rejection_reason
+            raise RuntimeError(response.rejection_reason)
         return response
 
 
@@ -593,13 +593,13 @@ class CollaborationGenerator:
         request_response = self.request_collaboration_interactor.execute(request)
         if request_response.is_rejected:
             assert request_response.rejection_reason
-            raise request_response.rejection_reason
+            raise RuntimeError(request_response.rejection_reason)
         accept_response = self.accept_collaboration_interactor.execute(
             AcceptCollaborationRequest(coordinator, plan, collaboration)
         )
         if accept_response.is_rejected:
             assert accept_response.rejection_reason
-            raise accept_response.rejection_reason
+            raise RuntimeError(accept_response.rejection_reason)
 
 
 @dataclass

@@ -21,7 +21,7 @@ class RequestCollaborationRequest:
 
 @dataclass
 class RequestCollaborationResponse:
-    class RejectionReason(Exception, Enum):
+    class RejectionReason(Enum):
         plan_not_found = auto()
         collaboration_not_found = auto()
         plan_inactive = auto()
@@ -48,12 +48,14 @@ class RequestCollaborationInteractor:
     def execute(
         self, request: RequestCollaborationRequest
     ) -> RequestCollaborationResponse:
-        try:
-            coordinator, email = self._validate_request(request)
-        except RequestCollaborationResponse.RejectionReason as reason:
+        validation = self._validate_request(request)
+        if isinstance(validation, RequestCollaborationResponse.RejectionReason):
             return RequestCollaborationResponse(
-                coordinator_name=None, coordinator_email=None, rejection_reason=reason
+                coordinator_name=None,
+                coordinator_email=None,
+                rejection_reason=validation,
             )
+        coordinator, email = validation
         self.email_sender.send_email(
             CollaborationRequestEmail(
                 coordinator_email_address=email.address,
@@ -71,7 +73,7 @@ class RequestCollaborationInteractor:
 
     def _validate_request(
         self, request: RequestCollaborationRequest
-    ) -> Tuple[Company, EmailAddress]:
+    ) -> Tuple[Company, EmailAddress] | RequestCollaborationResponse.RejectionReason:
         now = self.datetime_service.now()
         plan_and_current_collaboration = (
             self.database_gateway.get_plans()
@@ -86,18 +88,20 @@ class RequestCollaborationInteractor:
             .first()
         )
         if collaboration_and_coordinator is None:
-            raise RequestCollaborationResponse.RejectionReason.collaboration_not_found
+            return RequestCollaborationResponse.RejectionReason.collaboration_not_found
         if plan_and_current_collaboration is None:
-            raise RequestCollaborationResponse.RejectionReason.plan_not_found
+            return RequestCollaborationResponse.RejectionReason.plan_not_found
         plan, current_collaboration = plan_and_current_collaboration
         if not plan.is_active_as_of(now):
-            raise RequestCollaborationResponse.RejectionReason.plan_inactive
+            return RequestCollaborationResponse.RejectionReason.plan_inactive
         if current_collaboration:
-            raise RequestCollaborationResponse.RejectionReason.plan_has_collaboration
+            return RequestCollaborationResponse.RejectionReason.plan_has_collaboration
         if plan.requested_collaboration:
-            raise RequestCollaborationResponse.RejectionReason.plan_is_already_requesting_collaboration
+            return (
+                RequestCollaborationResponse.RejectionReason.plan_is_already_requesting_collaboration
+            )
         if plan.is_public_service:
-            raise RequestCollaborationResponse.RejectionReason.plan_is_public_service
+            return RequestCollaborationResponse.RejectionReason.plan_is_public_service
         if request.requester_id != plan.planner:
-            raise RequestCollaborationResponse.RejectionReason.requester_is_not_planner
+            return RequestCollaborationResponse.RejectionReason.requester_is_not_planner
         return collaboration_and_coordinator

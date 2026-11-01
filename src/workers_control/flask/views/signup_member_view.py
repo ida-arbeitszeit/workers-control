@@ -34,14 +34,14 @@ class SignupMemberView:
 
     @commit_changes
     def POST(self) -> Response:
-        register_form = RegisterForm(request.form)
-        if register_form.validate():
-            return self._handle_valid_post_request(register_form=register_form)
-        elif self.flask_session.is_current_user_authenticated():
+        if self.flask_session.is_current_user_authenticated():
             if self.flask_session.is_logged_in_as_member():
                 return redirect(url_for("main_member.dashboard"))
             else:
                 self.flask_session.logout()
+        register_form = RegisterForm(request.form)
+        if register_form.validate():
+            return self._handle_valid_post_request(register_form=register_form)
         return flask.Response(
             render_template("auth/signup_member.html", form=register_form), 400
         )
@@ -55,4 +55,6 @@ class SignupMemberView:
         if view_model.redirect_to:
             return redirect(view_model.redirect_to)
         else:
-            return render_template("auth/signup_member.html", form=register_form)
+            return flask.Response(
+                render_template("auth/signup_member.html", form=register_form), 400
+            )

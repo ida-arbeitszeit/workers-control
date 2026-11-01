@@ -11,7 +11,7 @@ class CorrectCredentialsTests(BaseTestCase):
         super().setUp()
         self.interactor = self.injector.get(LogInCompanyInteractor)
         self.register_interactor = self.injector.get(RegisterCompany)
-        self.email = "test user email"
+        self.email = "test@test.test"
         self.password = "test user password"
         self.company = self.create_company(email=self.email, password=self.password)
 

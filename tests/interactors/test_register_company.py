@@ -30,6 +30,16 @@ class RegisterCompanyTests(BaseTestCase):
         response = self.interactor.register_company(self._create_request())
         self.assertFalse(response.is_rejected)
 
+    def test_that_correct_error_is_raised_when_email_is_obviously_invalid(self) -> None:
+        response = self.interactor.register_company(
+            self._create_request(email="invalid_email")
+        )
+        assert response.is_rejected
+        assert (
+            response.rejection_reason
+            == RegisterCompany.Response.RejectionReason.invalid_email
+        )
+
     def test_that_correct_error_is_raised_when_user_with_mail_exists(self) -> None:
         self.company_generator.create_company_record(email="test@cp.org")
         response = self.interactor.register_company(

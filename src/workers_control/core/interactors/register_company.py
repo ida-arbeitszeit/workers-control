@@ -7,6 +7,7 @@ from uuid import UUID
 
 from workers_control.core import records
 from workers_control.core.datetime_service import DatetimeService
+from workers_control.core.email import is_possibly_an_email_address
 from workers_control.core.email_notifications import CompanyRegistration, EmailSender
 from workers_control.core.password_hasher import PasswordHasher
 from workers_control.core.repositories import DatabaseGateway
@@ -22,6 +23,7 @@ class RegisterCompany:
     @dataclass
     class Response:
         class RejectionReason(Enum):
+            invalid_email = auto()
             company_already_exists = auto()
             user_password_is_invalid = auto()
 
@@ -39,6 +41,11 @@ class RegisterCompany:
         password: str
 
     def register_company(self, request: Request) -> Response:
+        if not is_possibly_an_email_address(request.email):
+            return self.Response(
+                rejection_reason=self.Response.RejectionReason.invalid_email,
+                company_id=None,
+            )
         company: Optional[records.Company]
         record = (
             self.database.get_account_credentials()
@@ -61,7 +68,7 @@ class RegisterCompany:
             )
             self._create_confirmation_mail(request.email)
         else:
-            credentials, email, company = record
+            credentials, _, company = record
             if company:
                 return self.Response(
                     rejection_reason=self.Response.RejectionReason.company_already_exists,

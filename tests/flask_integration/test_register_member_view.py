@@ -5,6 +5,15 @@ from parameterized import param, parameterized
 from .base_test_case import LogInUser, ViewTestCase
 
 
+def create_signup_form(email: str) -> dict[str, str]:
+    return dict(
+        email=email,
+        name="test name",
+        password="test_password",
+        repeat_password="test_password",
+    )
+
+
 class UserAccessTests(ViewTestCase):
     def setUp(self) -> None:
         super().setUp()
@@ -61,6 +70,42 @@ class UserTypeChangesTests(ViewTestCase):
         with self.client.session_transaction() as session:
             self.assertEqual(session["user_type"], "member")
         self.client.get(self.url)
+        with self.client.session_transaction() as session:
+            self.assertEqual(session["user_type"], "member")
+
+
+class LoggedInUserPostTests(ViewTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self.url = "/signup-member"
+
+    @parameterized.expand([("new@cp.org",), ("invalid_email",)])
+    def test_that_logged_in_member_is_redirected_to_dashboard(self, email: str) -> None:
+        self.login_member()
+        response = self.client.post(self.url, data=create_signup_form(email))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.location, "/member/dashboard")
+
+    def test_that_logged_in_member_cannot_register_another_member(self) -> None:
+        email = "new@cp.org"
+        self.login_member()
+        self.client.post(self.url, data=create_signup_form(email))
+        assert not self.database_gateway.get_members().with_email_address(email)
+
+    @parameterized.expand([(LogInUser.company,), (LogInUser.accountant,)])
+    def test_that_other_logged_in_users_are_logged_out_when_email_is_invalid(
+        self, login: LogInUser
+    ) -> None:
+        self.login_user(login)
+        response = self.client.post(self.url, data=create_signup_form("invalid_email"))
+        self.assertEqual(response.status_code, 400)
+        with self.client.session_transaction() as session:
+            self.assertIsNone(session["user_type"])
+
+    def test_that_logged_in_company_can_register_as_member(self) -> None:
+        self.login_company()
+        response = self.client.post(self.url, data=create_signup_form("new@cp.org"))
+        self.assertEqual(response.location, "/unconfirmed-member")
         with self.client.session_transaction() as session:
             self.assertEqual(session["user_type"], "member")
 
@@ -130,6 +175,13 @@ class UnauthenticatedAndUnconfirmedMemberTests(ViewTestCase):
             param(
                 dict(
                     email="invalid_email",
+                    name="test name",
+                    password="test_password",
+                    repeat_password="test_password",
+                )
+            ),
+            param(
+                dict(
                     name="test name",
                     password="test_password",
                     repeat_password="test_password",

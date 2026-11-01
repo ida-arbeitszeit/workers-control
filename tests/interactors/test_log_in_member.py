@@ -18,7 +18,7 @@ class InteractorTests(BaseTestCase):
         self.assertFalse(response.is_logged_in)
 
     def test_that_with_correct_credentials_can_log_in(self) -> None:
-        email = "test user email"
+        email = "test@test.test"
         password = "test user password"
         self.create_member(email=email, password=password)
         request = self.get_request(email=email, password=password)
@@ -50,7 +50,7 @@ class InteractorTests(BaseTestCase):
         )
 
     def test_with_invalid_password_return_correct_rejection_reason(self) -> None:
-        email = "test user email"
+        email = "test@test.test"
         self.create_member(email=email, password="correct password")
         request = self.get_request(email=email, password="incorrect password")
         response = self.interactor.log_in_member(request)
@@ -60,7 +60,7 @@ class InteractorTests(BaseTestCase):
         )
 
     def test_with_successful_login_give_no_rejection_reason(self) -> None:
-        email = "test user email"
+        email = "test@test.test"
         password = "test user password"
         self.create_member(email=email, password=password)
         request = self.get_request(email=email, password=password)

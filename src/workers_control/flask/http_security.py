@@ -3,7 +3,9 @@ from urllib.parse import urlparse
 from flask import Flask, Response, abort, redirect, request
 from werkzeug.wrappers import Response as WerkzeugResponse
 
-CONTENT_SECURITY_POLICY = "default-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'self'"
+CONTENT_SECURITY_POLICY = (
+    "default-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'self'"
+)
 ONE_YEAR_IN_SECONDS = 365 * 24 * 60 * 60
 SAFE_METHODS = ("GET", "HEAD", "OPTIONS")
 

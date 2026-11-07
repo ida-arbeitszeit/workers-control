@@ -23,22 +23,27 @@ class RegisterMemberPresenter:
         self, response: RegisterMemberInteractor.Response, form: RegisterForm
     ) -> RegisterMemberViewModel:
         if response.is_rejected:
-            if (
-                response.rejection_reason
-                == RegisterMemberInteractor.Response.RejectionReason.member_already_exists
-            ):
-                form.email_field.attach_error(
-                    self.translator.gettext("This email address is already registered.")
-                )
-            if (
-                response.rejection_reason
-                == RegisterMemberInteractor.Response.RejectionReason.company_with_different_password_exists
-            ):
-                form.email_field.attach_error(
-                    self.translator.gettext(
-                        "A company with the same email address already exists but the provided password does not match."
+            match response.rejection_reason:
+                case RegisterMemberInteractor.Response.RejectionReason.invalid_email:
+                    form.email_field.attach_error(
+                        self.translator.gettext("Proper email address required")
                     )
-                )
+                case (
+                    RegisterMemberInteractor.Response.RejectionReason.member_already_exists
+                ):
+                    form.email_field.attach_error(
+                        self.translator.gettext(
+                            "This email address is already registered."
+                        )
+                    )
+                case (
+                    RegisterMemberInteractor.Response.RejectionReason.company_with_different_password_exists
+                ):
+                    form.email_field.attach_error(
+                        self.translator.gettext(
+                            "A company with the same email address already exists but the provided password does not match."
+                        )
+                    )
             return RegisterMemberViewModel(redirect_to=None)
         else:
             assert response.user_id

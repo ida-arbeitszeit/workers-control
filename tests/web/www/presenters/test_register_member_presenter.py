@@ -19,6 +19,17 @@ class PresenterTests(BaseTestCase):
         self.presenter.present_member_registration(response, form)
         assert not form.errors()
 
+    def test_that_error_message_is_rendered_correctly_when_email_is_invalid(
+        self,
+    ) -> None:
+        form = RegisterFormImpl.create()
+        response = self.create_failure_response(
+            reason=RegisterMemberInteractor.Response.RejectionReason.invalid_email
+        )
+        self.presenter.present_member_registration(response, form)
+        error = form.errors()[0]
+        assert error == self.translator.gettext("Proper email address required")
+
     def test_that_error_message_is_rendered_correctly_when_email_already_exists(
         self,
     ) -> None:

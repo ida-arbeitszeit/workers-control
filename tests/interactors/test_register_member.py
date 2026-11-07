@@ -67,6 +67,17 @@ class RegisterMemberTests(BaseTestCase):
         assert info_response.user_info.email_address == DEFAULT["email"]
         assert info_response.user_info.name == DEFAULT["name"]
 
+    def test_that_correct_error_is_raised_when_email_is_obviously_invalid(self) -> None:
+        request = RegisterMemberInteractor.Request(
+            email="invalid_email", name="some name", password="123"
+        )
+        response = self.interactor.register_member(request)
+        assert response.is_rejected
+        assert (
+            response.rejection_reason
+            == RegisterMemberInteractor.Response.RejectionReason.invalid_email
+        )
+
     def test_that_correct_error_is_raised_when_user_with_mail_exists(self) -> None:
         self.member_generator.create_member(email="test@cp.org")
         request = RegisterMemberInteractor.Request(**DEFAULT)

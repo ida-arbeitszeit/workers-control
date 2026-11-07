@@ -17,6 +17,16 @@ class PresenterTests(BaseTestCase):
         self.presenter = self.injector.get(RegisterCompanyPresenter)
         self.form = RegisterFormImpl.create()
 
+    def test_that_correct_error_message_is_displayed_when_email_is_invalid(
+        self,
+    ) -> None:
+        response = self.create_response(rejection_reason=RejectionReason.invalid_email)
+        self.presenter.present_company_registration(response, self.form)
+        self.assertEqual(
+            self.form.email_field.errors[0],
+            self.translator.gettext("Proper email address required"),
+        )
+
     def test_that_correct_error_message_is_displayed_when_email_is_already_registered(
         self,
     ) -> None:

@@ -30,5 +30,17 @@ class FindInlineCodeTests(TestCase):
         html = '<a href="javascript:alert(1)">x</a>'
         assert find_inline_code(html) == ['<a href="javascript:alert(1)">']
 
+    def test_base_element_is_found(self) -> None:
+        html = '<base href="https://example.com/">'
+        assert find_inline_code(html) == ['<base href="https://example.com/">']
+
+    def test_object_element_is_found(self) -> None:
+        html = '<object data="/file.pdf"></object>'
+        assert find_inline_code(html) == ['<object data="/file.pdf">']
+
+    def test_embed_element_is_found(self) -> None:
+        html = '<embed src="/file.swf">'
+        assert find_inline_code(html) == ['<embed src="/file.swf">']
+
     def test_javascript_text_in_other_attributes_is_allowed(self) -> None:
         assert not find_inline_code('<input value="javascript: a book">')

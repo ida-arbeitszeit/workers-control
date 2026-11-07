@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Rejected requests no longer stay in memory until the server process restarts. Each one kept request data, so memory use grew with every rejection.
+- Harden CSP. The CSP headers emitted by the app no longer allow
+  <base>, <object> and <embed> elements. Forms are only allowed to
+  post to the original app URI.
 
 ## [0.2.10] - 2026-10-31
 

@@ -14,12 +14,22 @@ class RegisterMemberControllerTests(BaseTestCase):
         super().setUp()
         self.controller = self.injector.get(RegisterMemberController)
 
+    def test_that_no_request_is_created_when_form_is_invalid(self) -> None:
+        form = make_fake_form(email="invalid_email")
+        assert self.controller.create_request(form) is None
+
+    def test_that_errors_are_attached_to_form_when_form_is_invalid(self) -> None:
+        form = make_fake_form(email="invalid_email")
+        self.controller.create_request(form)
+        assert form.errors()
+
     def test_that_strings_are_taken_as_literal_strings_in_request(
         self,
     ) -> None:
         request = self.controller.create_request(
             make_fake_form(email="user@cp.org", name="test_name", password="very_safe"),
         )
+        assert request
         self.assertEqual(request.email, "user@cp.org")
         self.assertEqual(request.name, "test_name")
         self.assertEqual(request.password, "very_safe")

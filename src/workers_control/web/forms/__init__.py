@@ -84,6 +84,9 @@ class RegisterForm(Protocol):
     def password_field(self) -> FormField[str]: ...
 
     @property
+    def repeat_password_field(self) -> FormField[str]: ...
+
+    @property
     def name_field(self) -> FormField[str]: ...
 
 

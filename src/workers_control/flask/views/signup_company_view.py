@@ -40,20 +40,18 @@ class SignupCompanyView:
             else:
                 self.flask_session.logout()
         register_form = RegisterForm(request.form)
-        if register_form.validate():
-            return self._handle_valid_post_request(register_form)
-        return flask.Response(
-            render_template("auth/signup_company.html", form=register_form), 400
-        )
-
-    def _handle_valid_post_request(self, register_form: RegisterForm) -> Response:
         interactor_request = self.controller.create_request(register_form)
+        if interactor_request is None:
+            return self._render_form_with_errors(register_form)
         response = self.register_company.register_company(interactor_request)
         view_model = self.presenter.present_company_registration(
             response=response, form=register_form
         )
         if view_model.is_success_view:
             return redirect(url_for("auth.unconfirmed_company"))
+        return self._render_form_with_errors(register_form)
+
+    def _render_form_with_errors(self, register_form: RegisterForm) -> Response:
         return flask.Response(
             render_template("auth/signup_company.html", form=register_form), 400
         )

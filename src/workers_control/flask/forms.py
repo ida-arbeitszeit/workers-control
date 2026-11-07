@@ -13,8 +13,6 @@ from wtforms import (
     validators,
 )
 
-from workers_control.core.email import is_possibly_an_email_address
-
 from .translator import FlaskTranslator
 
 T = TypeVar("T")
@@ -28,7 +26,8 @@ class WtFormField(Generic[T]):
         return self._field.data
 
     def attach_error(self, message: str) -> None:
-        self._field.errors.append(message)
+        # wtforms keeps errors as a tuple until validate() has run.
+        self._field.errors = [*self._field.errors, message]
 
     def set_value(self, value: T) -> None:
         self._field.data = value
@@ -93,34 +92,10 @@ class OfferSearchForm(Form):
 
 
 class RegisterForm(Form):
-    email = StringField(trans.lazy_gettext("Email"))
-    name = StringField(
-        trans.lazy_gettext("Name"),
-        validators=[
-            validators.InputRequired(message=trans.lazy_gettext("Name is required"))
-        ],
-    )
-    password = PasswordField(
-        trans.lazy_gettext("Password"),
-        validators=[
-            validators.Length(
-                min=8,
-                message=trans.lazy_gettext(
-                    "The password must be at least 8 characters in length"
-                ),
-            ),
-            validators.EqualTo(
-                "repeat_password", message=trans.lazy_gettext("Passwords must match")
-            ),
-        ],
-    )
-    repeat_password = PasswordField(trans.lazy_gettext("Repeat Password"))
-
-    def validate_email(form: Self, field: StringField) -> None:
-        if not is_possibly_an_email_address(field.data or ""):
-            raise ValidationError(
-                message=str(trans.lazy_gettext("Proper email address required"))
-            )
+    email = StringField(trans.lazy_gettext("Email"), default="")
+    name = StringField(trans.lazy_gettext("Name"), default="")
+    password = PasswordField(trans.lazy_gettext("Password"), default="")
+    repeat_password = PasswordField(trans.lazy_gettext("Repeat Password"), default="")
 
     @property
     def email_field(self) -> WtFormField[str]:
@@ -129,6 +104,10 @@ class RegisterForm(Form):
     @property
     def password_field(self) -> WtFormField[str]:
         return WtFormField(self.password)
+
+    @property
+    def repeat_password_field(self) -> WtFormField[str]:
+        return WtFormField(self.repeat_password)
 
     @property
     def name_field(self) -> WtFormField[str]:

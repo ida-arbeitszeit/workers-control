@@ -73,6 +73,7 @@ class FormFieldImpl(Generic[T]):
 class RegisterFormImpl:
     email_field: FormFieldImpl[str]
     password_field: FormFieldImpl[str]
+    repeat_password_field: FormFieldImpl[str]
     name_field: FormFieldImpl[str]
 
     @classmethod
@@ -81,10 +82,14 @@ class RegisterFormImpl:
         email: str = "test@test.test",
         password: str = "testpassword",
         name: str = "testname",
+        repeat_password: Optional[str] = None,
     ) -> RegisterFormImpl:
         return cls(
             email_field=FormFieldImpl(value=email),
             password_field=FormFieldImpl(value=password),
+            repeat_password_field=FormFieldImpl(
+                value=password if repeat_password is None else repeat_password
+            ),
             name_field=FormFieldImpl(value=name),
         )
 
@@ -93,6 +98,7 @@ class RegisterFormImpl:
         return (
             self.email_field.errors
             + self.password_field.errors
+            + self.repeat_password_field.errors
             + self.name_field.errors
         )
 

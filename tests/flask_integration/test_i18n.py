@@ -1,7 +1,7 @@
 from flask import render_template_string
 from werkzeug.datastructures import MultiDict
 
-from workers_control.flask.forms import LoginForm, RegisterForm
+from workers_control.flask.forms import LoginForm, ResetPasswordForm
 from workers_control.flask.i18n import force_locale
 from workers_control.flask.translator import FlaskTranslator
 
@@ -106,7 +106,7 @@ class TranslationTests(FlaskTestCase):
 
     def test_lazy_validation_message_with_formatting_is_translated(self) -> None:
         with self.app.test_request_context(), force_locale("de"):
-            form = RegisterForm(MultiDict({"password": "short"}))
+            form = ResetPasswordForm(MultiDict({"password": "short"}))
             form.validate()
             error = str(form.password.errors[0])
         assert error == "Das Passwort muss mindestens 8 Zeichen lang sein"

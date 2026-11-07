@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from datetime import timedelta
-from typing import List, Optional, Set, Tuple
+from typing import Callable, List, Optional, Set, Tuple
 from uuid import UUID
 
 from tests.base_test_case import BaseTestCase
@@ -15,6 +15,7 @@ class CapturingMailService(EmailSenderPlugin):
     sent: List[Tuple[str, list[str], str, str]] = field(default_factory=list)
     fail_with: Optional[Exception] = None
     failing_recipients: Set[str] = field(default_factory=set)
+    on_send: Optional[Callable[[], None]] = None
 
     def send_message(
         self, subject: str, recipient: list[str], html: str, sender: str
@@ -24,6 +25,8 @@ class CapturingMailService(EmailSenderPlugin):
         if self.failing_recipients.intersection(recipient):
             raise RuntimeError("recipient refused")
         self.sent.append((subject, recipient, html, sender))
+        if self.on_send is not None:
+            self.on_send()
 
 
 class EmailWorkerTests(BaseTestCase):
@@ -31,6 +34,7 @@ class EmailWorkerTests(BaseTestCase):
         super().setUp()
         self.mail_service = CapturingMailService()
         self.commits = 0
+        self.rollbacks = 0
         self.database = self.injector.get(MockDatabase)
         self.datetime_service.freeze_time(datetime_utc(2026, 1, 1, 12, 0))
         self.worker = EmailWorker(
@@ -38,11 +42,18 @@ class EmailWorkerTests(BaseTestCase):
             database_gateway=self.database_gateway,
             datetime_service=self.datetime_service,
             commit=self._commit,
+            rollback=self._rollback,
             batch_size=5,
         )
 
     def _commit(self) -> None:
         self.commits += 1
+
+    def _rollback(self) -> None:
+        self.rollbacks += 1
+
+    def _failing_commit(self) -> None:
+        raise RuntimeError("database boom")
 
     def _create_email(self, recipient: str = "to@example.org") -> UUID:
         record = self.database_gateway.create_email(
@@ -135,6 +146,25 @@ class EmailWorkerTests(BaseTestCase):
         self.assertEqual(sent, 1)
         self.assertEqual(self.mail_service.sent[0][1], ["new@example.org"])
 
+    def test_stopping_the_worker_during_a_batch_skips_the_remaining_emails(
+        self,
+    ) -> None:
+        self._create_email(recipient="first@example.org")
+        self.datetime_service.advance_time(timedelta(seconds=1))
+        self._create_email(recipient="second@example.org")
+        self.mail_service.on_send = self.worker.stop
+        sent = self.worker.run_once()
+        self.assertEqual(sent, 1)
+        self.assertEqual(self.mail_service.sent[0][1], ["first@example.org"])
+        self.assertEqual(len(self.mail_service.sent), 1)
+
+    def test_emails_sent_before_stopping_the_worker_are_committed(self) -> None:
+        self._create_email(recipient="first@example.org")
+        self._create_email(recipient="second@example.org")
+        self.mail_service.on_send = self.worker.stop
+        self.worker.run_once()
+        self.assertEqual(self.commits, 1)
+
     def test_recipient_string_is_split_into_list_for_smtp(self) -> None:
         self._create_email(recipient="a@example.org,b@example.org")
         self.worker.run_once()
@@ -150,3 +180,21 @@ class EmailWorkerTests(BaseTestCase):
     def test_commit_is_not_called_when_no_emails_to_process(self) -> None:
         self.worker.run_once()
         self.assertEqual(self.commits, 0)
+
+    def test_rollback_is_called_and_error_is_reraised_when_commit_fails(self) -> None:
+        self._create_email()
+        self.worker.commit = self._failing_commit
+        with self.assertRaisesRegex(RuntimeError, "database boom"):
+            self.worker.run_once()
+        self.assertEqual(self.rollbacks, 1)
+
+    def test_rollback_is_not_called_after_a_successful_batch(self) -> None:
+        self._create_email()
+        self.worker.run_once()
+        self.assertEqual(self.rollbacks, 0)
+
+    def test_rollback_is_not_called_when_sending_an_email_fails(self) -> None:
+        self._create_email()
+        self.mail_service.fail_with = RuntimeError("smtp boom")
+        self.worker.run_once()
+        self.assertEqual(self.rollbacks, 0)

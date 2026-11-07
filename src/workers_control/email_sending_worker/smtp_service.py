@@ -15,6 +15,7 @@ class SmtpMailServerConfig:
     encryption_type: str
     username: str | None = None
     password: str | None = None
+    timeout: float = 30.0
 
 
 @dataclass
@@ -47,9 +48,9 @@ class SmtpMailService(EmailSenderPlugin):
         connection: SMTP | SMTP_SSL
 
         if encryption_type == "ssl":
-            connection = SMTP_SSL(server, port=port or 465)
+            connection = SMTP_SSL(server, port=port or 465, timeout=self.config.timeout)
         else:
-            connection = SMTP(server, port=port or 587)
+            connection = SMTP(server, port=port or 587, timeout=self.config.timeout)
             connection.starttls()
 
         connection.ehlo()

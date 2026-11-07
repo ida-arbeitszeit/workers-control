@@ -85,5 +85,6 @@ def send_emails(
         database_gateway=database_gateway,
         datetime_service=datetime_service,
         commit=db.session.commit,
+        rollback=db.session.rollback,
     )
     worker.run()

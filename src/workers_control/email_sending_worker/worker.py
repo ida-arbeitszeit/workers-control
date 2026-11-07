@@ -29,6 +29,7 @@ class EmailWorker:
     database_gateway: DatabaseGateway
     datetime_service: DatetimeService
     commit: Callable[[], None]
+    rollback: Callable[[], None]
     batch_size: int = DEFAULT_BATCH_SIZE
     poll_interval_seconds: float = DEFAULT_POLL_INTERVAL_SECONDS
     _running: bool = field(default=True, init=False, repr=False)
@@ -38,6 +39,13 @@ class EmailWorker:
 
         Returns the number of emails that were sent successfully in this batch.
         """
+        try:
+            return self._process_batch()
+        except Exception:
+            self.rollback()
+            raise
+
+    def _process_batch(self) -> int:
         emails = list(
             self.database_gateway.get_emails()
             .that_have_not_been_sent()
@@ -48,6 +56,8 @@ class EmailWorker:
             return 0
         sent = 0
         for email in emails:
+            if not self._running:
+                break
             row = self.database_gateway.get_emails().with_id(email.id)
             try:
                 self.mail_service.send_message(

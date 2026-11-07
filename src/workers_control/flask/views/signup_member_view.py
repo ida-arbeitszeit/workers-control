@@ -40,21 +40,18 @@ class SignupMemberView:
             else:
                 self.flask_session.logout()
         register_form = RegisterForm(request.form)
-        if register_form.validate():
-            return self._handle_valid_post_request(register_form=register_form)
-        return flask.Response(
-            render_template("auth/signup_member.html", form=register_form), 400
-        )
-
-    def _handle_valid_post_request(self, register_form: RegisterForm) -> Response:
         interactor_request = self.controller.create_request(register_form)
+        if interactor_request is None:
+            return self._render_form_with_errors(register_form)
         response = self.register_member.register_member(interactor_request)
         view_model = self.register_member_presenter.present_member_registration(
             response, register_form
         )
         if view_model.redirect_to:
             return redirect(view_model.redirect_to)
-        else:
-            return flask.Response(
-                render_template("auth/signup_member.html", form=register_form), 400
-            )
+        return self._render_form_with_errors(register_form)
+
+    def _render_form_with_errors(self, register_form: RegisterForm) -> Response:
+        return flask.Response(
+            render_template("auth/signup_member.html", form=register_form), 400
+        )

@@ -10,11 +10,21 @@ class RegisterCompanyControllerTests(BaseTestCase):
         super().setUp()
         self.controller = self.injector.get(RegisterCompanyController)
 
+    def test_that_no_request_is_created_when_form_is_invalid(self) -> None:
+        form = RegisterFormImpl.create(email="invalid_email")
+        assert self.controller.create_request(form) is None
+
+    def test_that_errors_are_attached_to_form_when_form_is_invalid(self) -> None:
+        form = RegisterFormImpl.create(email="invalid_email")
+        self.controller.create_request(form)
+        assert form.errors()
+
     def test_that_valid_email_from_form_is_used_in_interactor_request(self) -> None:
         expected_emails = ["test@cp.org", "other@cp.org"]
         for expected_email in expected_emails:
             form = RegisterFormImpl.create(email=expected_email)
             request = self.controller.create_request(form)
+            assert request
             assert request.email == expected_email
 
     def test_that_name_from_form_is_used_in_interactor_request(self) -> None:
@@ -22,11 +32,13 @@ class RegisterCompanyControllerTests(BaseTestCase):
         for expected_name in expected_names:
             form = RegisterFormImpl.create(name=expected_name)
             request = self.controller.create_request(form)
+            assert request
             assert request.name == expected_name
 
     def test_that_password_from_form_is_use_in_interactor_request(self) -> None:
-        expected_passwords = ["admin", "password"]
+        expected_passwords = ["admin123", "password"]
         for expected_password in expected_passwords:
             form = RegisterFormImpl.create(password=expected_password)
             request = self.controller.create_request(form)
+            assert request
             assert request.password == expected_password

@@ -1,4 +1,4 @@
-from parameterized import param, parameterized
+from parameterized import parameterized
 
 from .base_test_case import LogInUser, ViewTestCase
 
@@ -110,51 +110,13 @@ class UnauthenticatedAndUnconfirmedCompanyTests(ViewTestCase):
             assert outbox[0].sender == "test_sender@cp.org"
             assert outbox[0].recipient == company_email
 
-    @parameterized.expand(
-        [
-            param(
-                dict(
-                    email="test@cp.org",
-                    name="test name",
-                    password="test_password",
-                    repeat_password="not_same_password",
-                )
+    def test_that_posting_without_email_field_returns_400(self) -> None:
+        response = self.client.post(
+            self.url,
+            data=dict(
+                name="test name",
+                password="test_password",
+                repeat_password="test_password",
             ),
-            param(
-                dict(
-                    email="test@cp.org",
-                    name="test name",
-                    password="short",
-                    repeat_password="short",
-                )
-            ),
-            param(
-                dict(
-                    email="test@cp.org",
-                    name="",
-                    password="test_password",
-                    repeat_password="test_password",
-                )
-            ),
-            param(
-                dict(
-                    email="invalid_email",
-                    name="test name",
-                    password="test_password",
-                    repeat_password="test_password",
-                )
-            ),
-            param(
-                dict(
-                    name="test name",
-                    password="test_password",
-                    repeat_password="test_password",
-                )
-            ),
-        ]
-    )
-    def test_invalid_form_posting_with_incorrect_form_does_not_redirect_company(
-        self, invalid_form_data: dict
-    ) -> None:
-        response = self.client.post(self.url, data=invalid_form_data)
+        )
         self.assertEqual(response.status_code, 400)

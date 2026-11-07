@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from datetime import timedelta
-from typing import List, Optional, Tuple
+from typing import List, Optional, Set, Tuple
 from uuid import UUID
 
 from tests.base_test_case import BaseTestCase
@@ -14,12 +14,15 @@ from workers_control.email_sending_worker.worker import EmailWorker
 class CapturingMailService(EmailSenderPlugin):
     sent: List[Tuple[str, list[str], str, str]] = field(default_factory=list)
     fail_with: Optional[Exception] = None
+    failing_recipients: Set[str] = field(default_factory=set)
 
     def send_message(
         self, subject: str, recipient: list[str], html: str, sender: str
     ) -> None:
         if self.fail_with is not None:
             raise self.fail_with
+        if self.failing_recipients.intersection(recipient):
+            raise RuntimeError("recipient refused")
         self.sent.append((subject, recipient, html, sender))
 
 
@@ -105,6 +108,32 @@ class EmailWorkerTests(BaseTestCase):
             recipients_sent_in_order,
             [["first@example.org"], ["second@example.org"]],
         )
+
+    def test_failed_emails_are_retried_in_creation_order(self) -> None:
+        self._create_email(recipient="first@example.org")
+        self.datetime_service.advance_time(timedelta(seconds=1))
+        self._create_email(recipient="second@example.org")
+        self.mail_service.fail_with = RuntimeError("smtp boom")
+        self.worker.run_once()
+        self.mail_service.fail_with = None
+        self.worker.run_once()
+        recipients_sent_in_order = [args[1] for args in self.mail_service.sent]
+        self.assertEqual(
+            recipients_sent_in_order,
+            [["first@example.org"], ["second@example.org"]],
+        )
+
+    def test_emails_that_keep_failing_do_not_block_a_new_email(self) -> None:
+        for i in range(self.worker.batch_size):
+            recipient = f"failing{i}@example.org"
+            self.mail_service.failing_recipients.add(recipient)
+            self._create_email(recipient=recipient)
+        self.worker.run_once()
+        self.datetime_service.advance_time(timedelta(seconds=1))
+        self._create_email(recipient="new@example.org")
+        sent = self.worker.run_once()
+        self.assertEqual(sent, 1)
+        self.assertEqual(self.mail_service.sent[0][1], ["new@example.org"])
 
     def test_recipient_string_is_split_into_list_for_smtp(self) -> None:
         self._create_email(recipient="a@example.org,b@example.org")

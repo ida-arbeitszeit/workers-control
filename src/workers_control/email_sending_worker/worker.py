@@ -41,7 +41,7 @@ class EmailWorker:
         emails = list(
             self.database_gateway.get_emails()
             .that_have_not_been_sent()
-            .ordered_by_creation_date()
+            .ordered_by_retry_count_and_creation_date()
             .limit(self.batch_size)
         )
         if not emails:
@@ -57,9 +57,7 @@ class EmailWorker:
                     sender=email.sender,
                 )
             except Exception as exc:
-                logger.warning(
-                    "Failed to send email %s: %s", email.id, exc, exc_info=True
-                )
+                logger.warning("Failed to send email %s: %s", email.id, exc)
                 row.update().set_last_error(str(exc)).increment_retry_count().perform()
             else:
                 row.update().set_sent_at(self.datetime_service.now()).perform()

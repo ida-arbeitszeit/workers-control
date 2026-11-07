@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Harden CSP. The CSP headers emitted by the app no longer allow
   <base>, <object> and <embed> elements. Forms are only allowed to
   post to the original app URI.
+- Emails that could not be delivered could stop all later emails from being sent.
+  The email worker now sends new emails before those that have failed.
 
 ## [0.2.10] - 2026-10-31
 

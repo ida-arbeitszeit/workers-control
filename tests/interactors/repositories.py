@@ -1959,8 +1959,13 @@ class EmailResult(QueryResultImpl[records.Email]):
             lambda email: self.database.email_outbox_status[email.id].sent_at is None
         )
 
-    def ordered_by_creation_date(self, ascending: bool = True) -> Self:
-        return self.sorted_by(key=lambda email: email.created_at, reverse=not ascending)
+    def ordered_by_retry_count_and_creation_date(self) -> Self:
+        return self.sorted_by(
+            key=lambda email: (
+                self.database.email_outbox_status[email.id].retry_count,
+                email.created_at,
+            )
+        )
 
     def update(self) -> EmailUpdate:
         return EmailUpdate(

@@ -85,6 +85,7 @@ omit = [
 ]
 
 [tool.coverage.report]
+include_namespace_packages = true
 exclude_also = [
     # Don't complain about missing debug-only code:
     "def __repr__",

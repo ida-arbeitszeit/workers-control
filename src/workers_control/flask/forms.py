@@ -196,16 +196,16 @@ class CreateCollaborationForm(Form):
         render_kw={"placeholder": trans.lazy_gettext("Name")},
         validators=[validators.InputRequired()],
     )
-    definition = TextAreaField(
-        render_kw={"placeholder": trans.lazy_gettext("Definition")},
+    description = TextAreaField(
+        render_kw={"placeholder": trans.lazy_gettext("Description")},
         validators=[validators.InputRequired()],
     )
 
     def get_name_string(self) -> str:
         return self.data["name"]
 
-    def get_definition_string(self) -> str:
-        return self.data["definition"]
+    def get_description_string(self) -> str:
+        return self.data["description"]
 
 
 class CreateBasicServiceForm(Form):

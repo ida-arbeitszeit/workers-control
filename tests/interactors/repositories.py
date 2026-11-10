@@ -2214,7 +2214,7 @@ class MockDatabase:
         self,
         creation_timestamp: datetime,
         name: str,
-        definition: str,
+        description: str,
         account: UUID,
     ) -> Collaboration:
         collaboration_id = uuid4()
@@ -2222,7 +2222,7 @@ class MockDatabase:
             id=collaboration_id,
             creation_date=creation_timestamp,
             name=name,
-            definition=definition,
+            description=description,
             account=account,
         )
         self.collaborations[collaboration_id] = collaboration

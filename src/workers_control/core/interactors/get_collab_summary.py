@@ -30,7 +30,7 @@ class GetCollabSummaryResponse:
     requester_is_coordinator: bool
     collab_id: UUID
     collab_name: str
-    collab_definition: str
+    collab_description: str
     current_coordinator: UUID
     current_coordinator_name: str
     collab_price: Optional[Decimal]
@@ -66,7 +66,7 @@ class GetCollabSummaryInteractor:
             requester_is_coordinator=coordinator.id == request.requester_id,
             collab_id=collab.id,
             collab_name=collab.name,
-            collab_definition=collab.definition,
+            collab_description=collab.description,
             current_coordinator=coordinator.id,
             current_coordinator_name=coordinator.name,
             collab_price=self._get_collaborative_price(plans),

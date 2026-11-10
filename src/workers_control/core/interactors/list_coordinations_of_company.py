@@ -17,7 +17,7 @@ class CollaborationInfo:
     id: UUID
     creation_date: datetime
     name: str
-    definition: str
+    description: str
     count_plans_in_collab: int
 
 
@@ -42,7 +42,7 @@ class ListCoordinationsOfCompanyInteractor:
                 id=collab.id,
                 creation_date=collab.creation_date,
                 name=collab.name,
-                definition=collab.definition,
+                description=collab.description,
                 count_plans_in_collab=len(
                     self.database_gateway.get_plans()
                     .that_are_part_of_collaboration(collab.id)

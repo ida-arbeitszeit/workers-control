@@ -27,7 +27,7 @@ class CreateCollaborationPresenter:
                 text=self.translator.gettext("My collaborations"),
                 url=self.url_index.get_my_collaborations_url(),
             ),
-            NavbarItem(text=self.translator.gettext("Create Collaboration"), url=None),
+            NavbarItem(text=self.translator.gettext("Create collaboration"), url=None),
         ]
 
     def present(

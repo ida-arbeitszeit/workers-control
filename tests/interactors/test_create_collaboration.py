@@ -16,7 +16,7 @@ class InteractorTests(BaseTestCase):
 
     def test_creation_rejected_when_coordinator_does_not_exist(self) -> None:
         request = CreateCollaborationRequest(
-            coordinator_id=uuid4(), name="test name", definition="some info"
+            coordinator_id=uuid4(), name="test name", description="some info"
         )
         response = self.create_collaboration.execute(request)
         assert response.is_rejected
@@ -29,7 +29,7 @@ class InteractorTests(BaseTestCase):
         self.collaboration_generator.create_collaboration(name="existing name")
         coordinator = self.company_generator.create_company()
         request = CreateCollaborationRequest(
-            coordinator_id=coordinator, name="existing name", definition="some info"
+            coordinator_id=coordinator, name="existing name", description="some info"
         )
         response = self.create_collaboration.execute(request)
         assert response.is_rejected
@@ -44,7 +44,7 @@ class InteractorTests(BaseTestCase):
         self.collaboration_generator.create_collaboration(name="ExisTing NaMe")
         coordinator = self.company_generator.create_company()
         request = CreateCollaborationRequest(
-            coordinator_id=coordinator, name="existing name", definition="some info"
+            coordinator_id=coordinator, name="existing name", description="some info"
         )
         response = self.create_collaboration.execute(request)
         assert response.is_rejected
@@ -56,7 +56,7 @@ class InteractorTests(BaseTestCase):
     def test_creation_is_successfull(self) -> None:
         coordinator = self.company_generator.create_company()
         request = CreateCollaborationRequest(
-            coordinator_id=coordinator, name="test name", definition="some info"
+            coordinator_id=coordinator, name="test name", description="some info"
         )
         response = self.create_collaboration.execute(request)
         assert response

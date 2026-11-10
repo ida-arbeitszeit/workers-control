@@ -25,7 +25,7 @@ LIST_COORDINATIONS_RESPONSE_LEN_1 = ListCoordinationsOfCompanyResponse(
             id=uuid4(),
             creation_date=datetime_min_utc(),
             name="collab name",
-            definition="first paragraph\nsecond paragraph",
+            description="first paragraph\nsecond paragraph",
             count_plans_in_collab=3,
         )
     ]
@@ -100,7 +100,7 @@ class ShowMyCollaborationsPresenterTests(BaseTestCase):
             LIST_COORDINATIONS_RESPONSE_LEN_1.coordinations[0].name,
         )
         self.assertEqual(
-            presentation.list_of_coordinations.rows[0].collab_definition,
+            presentation.list_of_coordinations.rows[0].collab_description,
             ["first paragraph", "second paragraph"],
         )
         self.assertEqual(

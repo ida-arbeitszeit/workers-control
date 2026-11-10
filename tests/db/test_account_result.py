@@ -125,7 +125,7 @@ class AccountResultTests(DatabaseTestCase):
         return self.database_gateway.create_collaboration(
             creation_timestamp=datetime_utc(2000, 1, 1),
             name="test collaboration",
-            definition="some product definition",
+            description="some product description",
             account=account,
         )
 

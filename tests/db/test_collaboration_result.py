@@ -14,7 +14,7 @@ class CollaborationResultTests(DatabaseTestCase):
     def test_that_there_is_at_least_one_collaboration_after_creating_one(self) -> None:
         self.database_gateway.create_collaboration(
             name="",
-            definition="",
+            description="",
             creation_timestamp=datetime_utc(2000, 1, 1),
             account=self.database_gateway.create_account().id,
         )
@@ -23,17 +23,17 @@ class CollaborationResultTests(DatabaseTestCase):
 
     def test_that_created_collaboration_has_correct_properties_assigned(self) -> None:
         expected_name = "expected_name"
-        expected_definition = "expected definition"
+        expected_description = "expected description"
         expected_creation_timestamp = datetime_utc(2345, 1, 12)
         expected_account = self.database_gateway.create_account().id
         collaboration = self.database_gateway.create_collaboration(
             name=expected_name,
-            definition=expected_definition,
+            description=expected_description,
             creation_timestamp=expected_creation_timestamp,
             account=expected_account,
         )
         assert collaboration.name == expected_name
-        assert collaboration.definition == expected_definition
+        assert collaboration.description == expected_description
         assert collaboration.creation_date == expected_creation_timestamp
         assert collaboration.account == expected_account
 
@@ -77,7 +77,7 @@ class CollaborationResultTests(DatabaseTestCase):
     def create_collaboration(self, name: str = "test name") -> Collaboration:
         return self.database_gateway.create_collaboration(
             name=name,
-            definition="",
+            description="",
             creation_timestamp=datetime_utc(2000, 1, 1),
             account=self.database_gateway.create_account().id,
         )

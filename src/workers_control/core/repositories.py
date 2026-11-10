@@ -672,7 +672,7 @@ class DatabaseGateway(Protocol):
         self,
         creation_timestamp: datetime,
         name: str,
-        definition: str,
+        description: str,
         account: UUID,
     ) -> records.Collaboration: ...
 

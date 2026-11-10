@@ -347,7 +347,7 @@ class Collaboration(Base):
     id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
     creation_date: Mapped[datetime] = mapped_column(TZDateTime)
     name: Mapped[str] = mapped_column(String(100))
-    definition: Mapped[str] = mapped_column(String(5000))
+    description: Mapped[str] = mapped_column(String(5000))
     account: Mapped[UUID] = mapped_column(Uuid, ForeignKey("account.id"))
 
 

@@ -120,3 +120,41 @@ class UnauthenticatedAndUnconfirmedCompanyTests(ViewTestCase):
             ),
         )
         self.assertEqual(response.status_code, 400)
+
+    def test_that_entered_email_and_name_are_shown_but_password_is_not_when_signup_fails(
+        self,
+    ) -> None:
+        response = self.client.post(
+            self.url,
+            data=dict(
+                email="test@cp.org",
+                name="entered name",
+                password="test_password",
+                repeat_password="other_password",
+            ),
+        )
+        self.assertEqual(response.status_code, 400)
+        html = response.get_data(as_text=True)
+        assert 'value="test@cp.org"' in html
+        assert 'value="entered name"' in html
+        assert "test_password" not in html
+        assert "other_password" not in html
+
+    def test_that_error_messages_of_all_invalid_fields_are_shown_when_signup_fails(
+        self,
+    ) -> None:
+        response = self.client.post(
+            self.url,
+            data=dict(
+                email="invalid_email",
+                name="",
+                password="short",
+                repeat_password="other",
+            ),
+        )
+        self.assertEqual(response.status_code, 400)
+        html = response.get_data(as_text=True)
+        assert "Proper email address required" in html
+        assert "Name is required" in html
+        assert "The password must be at least 8 characters in length" in html
+        assert "Passwords must match" in html

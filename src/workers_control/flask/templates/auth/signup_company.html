@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from 'macros/form_field_error.html' import display_form_field_errors %}
 
 {% block content %}
 <div class="section is-medium">
@@ -6,31 +7,48 @@
         <div class="column is-4 is-offset-4">
             <div class="box has-text-centered">
                 <h3 class="title">{{ gettext("Sign up company") }}</h3>
-                {% for field_name, field_errors in form.errors|dictsort if field_errors %}
-                {% for error in field_errors %}
-                <div class="notification is-danger">{{ error }}</div>
-                {% endfor %}
-                {% endfor %}
                 <form method="POST" action="{{ url_for('.signup_company') }}">
                     <div class="field">
                         <div class="control has-icons-left">
-                            {{ form.email(class_="input is-large", placeholder=gettext('Email')) }}
+                            <input
+                                class="input is-large"
+                                id="email"
+                                name="email"
+                                placeholder="{{ gettext('Email') }}"
+                                type="text"
+                                value="{{ form.email_value }}"
+                            >
                             <span class="icon is-small is-left">
                                 {{ "at"|icon }}
                             </span>
                         </div>
+                        {{ display_form_field_errors(form.email_errors) }}
                     </div>
                     <div class="field">
                         <div class="control has-icons-left">
-                            {{ form.name(class_="input is-large", placeholder=gettext("Company name")) }}
+                            <input
+                                class="input is-large"
+                                id="name"
+                                name="name"
+                                placeholder="{{ gettext('Company name') }}"
+                                type="text"
+                                value="{{ form.name_value }}"
+                            >
                             <span class="icon is-small is-left">
                                 {{ 'industry'|icon }}
                             </span>
                         </div>
+                        {{ display_form_field_errors(form.name_errors) }}
                     </div>
                     <div class="field">
                         <div class="control has-icons-left has-icons-right">
-                            {{ form.password(class_="input is-large", placeholder=gettext("Password")) }}
+                            <input
+                                class="input is-large"
+                                id="password"
+                                name="password"
+                                placeholder="{{ gettext('Password') }}"
+                                type="password"
+                            >
                             <span class="icon is-small is-left">
                                 {{ "key"|icon }}
                             </span>
@@ -41,10 +59,17 @@
                                 {{ "eye-slashed"|icon }}
                             </span>
                         </div>
+                        {{ display_form_field_errors(form.password_errors) }}
                     </div>
                     <div class="field">
                         <div class="control has-icons-left has-icons-right">
-                            {{ form.repeat_password(class_="input is-large", placeholder=gettext("Repeat Password")) }}
+                            <input
+                                class="input is-large"
+                                id="repeat_password"
+                                name="repeat_password"
+                                placeholder="{{ gettext('Repeat Password') }}"
+                                type="password"
+                            >
                             <span class="icon is-small is-left">
                                 {{ "key"|icon }}
                             </span>
@@ -55,6 +80,7 @@
                                 {{ "eye-slashed"|icon }}
                             </span>
                         </div>
+                        {{ display_form_field_errors(form.repeat_password_errors) }}
                     </div>
                     <button class="button is-block is-primary is-large is-fullwidth">{{ gettext("Sign Up") }}</button>
                 </form>

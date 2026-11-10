@@ -76,18 +76,14 @@ class RegisterProductiveConsumptionForm(Protocol):
     def type_of_consumption_field(self) -> FormField[str]: ...
 
 
-class RegisterForm(Protocol):
-    @property
-    def email_field(self) -> FormField[str]: ...
-
-    @property
-    def password_field(self) -> FormField[str]: ...
-
-    @property
-    def repeat_password_field(self) -> FormField[str]: ...
-
-    @property
-    def name_field(self) -> FormField[str]: ...
+@dataclass(kw_only=True)
+class RegisterForm:
+    email_value: str
+    name_value: str
+    email_errors: list[str] = field(default_factory=list)
+    name_errors: list[str] = field(default_factory=list)
+    password_errors: list[str] = field(default_factory=list)
+    repeat_password_errors: list[str] = field(default_factory=list)
 
 
 class RequestCoordinationTransferForm(Protocol):

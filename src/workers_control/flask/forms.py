@@ -91,29 +91,6 @@ class OfferSearchForm(Form):
         return self.data["include_basic_services"]
 
 
-class RegisterForm(Form):
-    email = StringField(trans.lazy_gettext("Email"), default="")
-    name = StringField(trans.lazy_gettext("Name"), default="")
-    password = PasswordField(trans.lazy_gettext("Password"), default="")
-    repeat_password = PasswordField(trans.lazy_gettext("Repeat Password"), default="")
-
-    @property
-    def email_field(self) -> WtFormField[str]:
-        return WtFormField(self.email)
-
-    @property
-    def password_field(self) -> WtFormField[str]:
-        return WtFormField(self.password)
-
-    @property
-    def repeat_password_field(self) -> WtFormField[str]:
-        return WtFormField(self.repeat_password)
-
-    @property
-    def name_field(self) -> WtFormField[str]:
-        return WtFormField(self.name)
-
-
 class RegisterAccountantForm(Form):
     extracted_token: str
     email = StringField(

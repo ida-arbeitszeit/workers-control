@@ -2,7 +2,9 @@ from dataclasses import dataclass
 
 from workers_control.core.interactors.register_member import RegisterMemberInteractor
 from workers_control.web.forms import RegisterForm
+from workers_control.web.request import Request
 from workers_control.web.www.controllers.register_form_validator import (
+    RegisterFormData,
     RegisterFormValidator,
 )
 
@@ -12,12 +14,12 @@ class RegisterMemberController:
     validator: RegisterFormValidator
 
     def create_request(
-        self, form: RegisterForm
-    ) -> RegisterMemberInteractor.Request | None:
-        if not self.validator.validate(form):
-            return None
-        return RegisterMemberInteractor.Request(
-            email=form.email_field.get_value(),
-            name=form.name_field.get_value(),
-            password=form.password_field.get_value(),
-        )
+        self, request: Request
+    ) -> RegisterMemberInteractor.Request | RegisterForm:
+        match self.validator.validate(request):
+            case RegisterForm() as form:
+                return form
+            case RegisterFormData(email=email, name=name, password=password):
+                return RegisterMemberInteractor.Request(
+                    email=email, name=name, password=password
+                )

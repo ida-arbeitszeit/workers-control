@@ -8,22 +8,20 @@
 {% block content %}
 <div class="section has-text-centered">
     <h1 class="title">
-        {{ gettext("Create Collaboration") }}
+        {{ gettext("Create collaboration") }}
     </h1>
     <div class="columns is-centered">
         <div class="column is-three-fifths">
             <div class="box has-background-info-light has-text-info-dark">
                 <div class="icon">{{ "info-circle"|icon }}</div>
                 <p>
-                    {{ gettext("Here you can create a new collaboration.") }}
-                    <br><br>
-                    {{ gettext("A collaboration contains similar products.  The prices for all products in a collaboration are averaged to reduce price competition.  All producers still receive the credits on sale corresponding to how they planned production.") }}
+                    {{ gettext("A collaboration stands for one product. Companies that produce this product can add their plans to it. Consumers pay the same price no matter which company produced the product. This price is averaged across all plans in the collaboration.") }}
                 </p>
             </div>
             <div class="content">
                 <form method="post">
                     <div class="field">
-                        <label class="label">{{ gettext("Collaboration name") }}</label>
+                        <label class="label">{{ gettext("Product name") }}</label>
                         <div class="control">
                             {{ form.name(class_="input is-large") }}
                         </div>
@@ -31,7 +29,7 @@
                     <div class="block"></div>
 
                     <div class="field">
-                        <label class="label">{{ gettext("Definition of the collaboration") }}</label>
+                        <label class="label">{{ gettext("Product description") }}</label>
                         <div class="control">
                             {{ form.definition(class_="textarea is-large") }}
                         </div>

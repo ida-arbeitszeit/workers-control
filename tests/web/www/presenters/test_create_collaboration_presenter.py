@@ -91,5 +91,5 @@ class NavbarItemsTests(BaseTestCase):
         self.assertEqual(len(items), 2)
         self.assertEqual(items[0].text, self.translator.gettext("My collaborations"))
         self.assertEqual(items[0].url, self.url_index.get_my_collaborations_url())
-        self.assertEqual(items[1].text, self.translator.gettext("Create Collaboration"))
+        self.assertEqual(items[1].text, self.translator.gettext("Create collaboration"))
         self.assertIsNone(items[1].url)

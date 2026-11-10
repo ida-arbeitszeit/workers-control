@@ -197,7 +197,7 @@ class CreateCollaborationForm(Form):
         validators=[validators.InputRequired()],
     )
     definition = TextAreaField(
-        render_kw={"placeholder": trans.lazy_gettext("Definition")},
+        render_kw={"placeholder": trans.lazy_gettext("Description")},
         validators=[validators.InputRequired()],
     )
 

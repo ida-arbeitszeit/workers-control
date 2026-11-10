@@ -650,11 +650,11 @@ msgstr "Ver plan"
 #: src/workers_control/flask/templates/company/create_collaboration.html:11
 #: src/workers_control/web/www/presenters/create_collaboration_presenter.py:30
 msgid "Create Collaboration"
-msgstr "Crear collaberación"
+msgstr "Crear colaboración"
 
 #: src/workers_control/flask/templates/company/create_collaboration.html:18
 msgid "Here you can create a new collaboration."
-msgstr "Aquí puedes crear una nueva collaberación."
+msgstr "Aquí puedes crear una nueva colaboración."
 
 #: src/workers_control/flask/templates/company/create_collaboration.html:20
 msgid ""
@@ -663,22 +663,22 @@ msgid ""
 "still receive the credits on sale corresponding to how they planned "
 "production."
 msgstr ""
-"Una collaberación contiene productos similares. Los precios de todos los "
-"productos en una collaberación se promedian para reducir la competencia de "
+"Una colaboración contiene productos similares. Los precios de todos los "
+"productos en una colaboración se promedian para reducir la competencia de "
 "precios. Todos los productores siguen recibiendo los créditos por la venta "
 "correspondientes a cómo planificaron la producción."
 
 #: src/workers_control/flask/templates/company/create_collaboration.html:27
 msgid "Collaboration name"
-msgstr "Nombre de la collaberación"
+msgstr "Nombre de la colaboración"
 
 #: src/workers_control/flask/templates/company/create_collaboration.html:35
 msgid "Definition of the collaboration"
-msgstr "Definición de la collaberación"
+msgstr "Definición de la colaboración"
 
 #: src/workers_control/flask/templates/company/create_collaboration.html:44
 msgid "Create collaboration"
-msgstr "Crear collaberación"
+msgstr "Crear colaboración"
 
 #: src/workers_control/flask/templates/company/create_draft.html:13
 #: src/workers_control/web/www/presenters/create_draft_presenter.py:38
@@ -730,11 +730,11 @@ msgstr "Miembros de tu colectivo"
 #: src/workers_control/flask/templates/company/dashboard.html:48
 #: src/workers_control/flask/templates/user/statistics.html:35
 msgid "Collaborations"
-msgstr "Collaberaciones"
+msgstr "Colaboraciones"
 
 #: src/workers_control/flask/templates/company/dashboard.html:50
 msgid "Your collaborations"
-msgstr "Tus collaberaciones"
+msgstr "Tus colaboraciones"
 
 #: src/workers_control/flask/templates/company/dashboard.html:56
 msgid "Consumptions"
@@ -777,7 +777,7 @@ msgstr "Todas las transferencias"
 #: src/workers_control/flask/templates/user/list_all_collaborations.html:12
 #: src/workers_control/web/www/presenters/list_all_collaborations_presenter.py:33
 msgid "All collaborations"
-msgstr "Todas las collaberaciones"
+msgstr "Todas las colaboraciones"
 
 #: src/workers_control/flask/templates/company/dashboard.html:116
 #: src/workers_control/flask/templates/member/dashboard.html:103
@@ -881,22 +881,22 @@ msgstr "Registrar horas trabajadas"
 #: src/workers_control/web/www/presenters/create_collaboration_presenter.py:27
 #: src/workers_control/web/www/presenters/show_my_collaborations_presenter.py:98
 msgid "My collaborations"
-msgstr "Mis collaberaciones"
+msgstr "Mis colaboraciones"
 
 #: src/workers_control/flask/templates/company/my_collaborations.html:20
 msgid "Create collaboration "
-msgstr "Crear collaberación"
+msgstr "Crear colaboración"
 
 #: src/workers_control/flask/templates/company/my_collaborations.html:28
 #: src/workers_control/flask/templates/company/request_collaboration.html:11
 #: src/workers_control/flask/templates/company/request_collaboration.html:72
 #: src/workers_control/web/www/presenters/request_collaboration_presenter.py:23
 msgid "Request collaboration"
-msgstr "Solicitar collaberación"
+msgstr "Solicitar colaboración"
 
 #: src/workers_control/flask/templates/company/my_collaborations.html:36
 msgid "Collaborations that I coordinate"
-msgstr "Collaberaciones que coordino"
+msgstr "Colaboraciones que coordino"
 
 #: src/workers_control/flask/templates/company/my_collaborations.html:50
 #: src/workers_control/flask/templates/user/list_all_collaborations.html:20
@@ -905,11 +905,11 @@ msgstr "Número de planes"
 
 #: src/workers_control/flask/templates/company/my_collaborations.html:57
 msgid "You do not coordinate any collaboration"
-msgstr "No coordinas ninguna collaberación"
+msgstr "No coordinas ninguna colaboración"
 
 #: src/workers_control/flask/templates/company/my_collaborations.html:65
 msgid "Incoming collaboration request (by others)"
-msgstr "Solicitud de collaberación entrante (de otros)"
+msgstr "Solicitud de colaboración entrante (de otros)"
 
 #: src/workers_control/flask/templates/company/my_collaborations.html:82
 #: src/workers_control/flask/templates/company/my_collaborations.html:137
@@ -920,7 +920,7 @@ msgstr "Plan"
 
 #: src/workers_control/flask/templates/company/my_collaborations.html:86
 msgid "My collaboration"
-msgstr "Mi collaberación"
+msgstr "Mi colaboración"
 
 #: src/workers_control/flask/templates/company/my_collaborations.html:97
 #: src/workers_control/flask/templates/member/show_company_work_invite_details.html:10
@@ -937,7 +937,7 @@ msgstr "No tienes solicitudes abiertas"
 
 #: src/workers_control/flask/templates/company/my_collaborations.html:125
 msgid "Outgoing collaboration requests (own requests)"
-msgstr "Solicitudes de collaberación salientes (propias)"
+msgstr "Solicitudes de colaboración salientes (propias)"
 
 #: src/workers_control/flask/templates/company/my_collaborations.html:141
 #: src/workers_control/flask/templates/company/my_collaborations.html:182
@@ -949,24 +949,24 @@ msgstr "Solicitudes de collaberación salientes (propias)"
 #: src/workers_control/web/www/presenters/list_coordinations_of_collaboration_presenter.py:67
 #: src/workers_control/web/www/presenters/request_coordination_transfer_presenter.py:28
 msgid "Collaboration"
-msgstr "Collaberación"
+msgstr "Colaboración"
 
 #: src/workers_control/flask/templates/company/my_collaborations.html:159
 msgid "You haven't requested any collaboration"
-msgstr "No has solicitado ninguna collaberación"
+msgstr "No has solicitado ninguna colaboración"
 
 #: src/workers_control/flask/templates/company/my_collaborations.html:167
 msgid "My collaborating plans"
-msgstr "Mis planes collaborativos"
+msgstr "Mis planes colaborativos"
 
 #: src/workers_control/flask/templates/company/my_collaborations.html:193
 #: src/workers_control/flask/templates/user/collab_summary.html:90
 msgid "End collaboration"
-msgstr "Finalizar collaberación"
+msgstr "Finalizar colaboración"
 
 #: src/workers_control/flask/templates/company/my_collaborations.html:201
 msgid "You don't have any collaborating plans."
-msgstr "No tienes ningún plan collaborativo."
+msgstr "No tienes ningún plan colaborativo."
 
 #: src/workers_control/flask/templates/company/my_consumptions.html:11
 #: src/workers_control/flask/templates/member/consumptions.html:13
@@ -1022,7 +1022,7 @@ msgstr "Fecha de caducidad"
 #: src/workers_control/flask/templates/company/my_plans.html:38
 #: src/workers_control/flask/templates/user/query_offers.html:86
 msgid "Collaborating plan"
-msgstr "Plan collaborativo"
+msgstr "Plan colaborativo"
 
 #: src/workers_control/flask/templates/company/my_plans.html:41
 #: src/workers_control/flask/templates/company/my_plans.html:80
@@ -1228,20 +1228,20 @@ msgstr ""
 
 #: src/workers_control/flask/templates/company/request_collaboration.html:17
 msgid "Here you can request a collaboration."
-msgstr "Aquí puedes solicitar una collaberación."
+msgstr "Aquí puedes solicitar una colaboración."
 
 #: src/workers_control/flask/templates/company/request_collaboration.html:18
 msgid ""
 "The coordinator of the collaboration decides if they add your plan to the "
 "collaboration."
 msgstr ""
-"El coordinador de la collaberación decide si añade tu plan a la "
-"collaberación."
+"El coordinador de la colaboración decide si añade tu plan a la "
+"colaboración."
 
 #: src/workers_control/flask/templates/company/request_collaboration.html:19
 msgid "All plans in a collaboration should offer the same or a similar product."
 msgstr ""
-"Todos los planes en una collaberación deben ofrecer el mismo o un producto "
+"Todos los planes en una colaboración deben ofrecer el mismo o un producto "
 "similar."
 
 #: src/workers_control/flask/templates/company/request_collaboration.html:52
@@ -1250,7 +1250,7 @@ msgstr "Mi plan..."
 
 #: src/workers_control/flask/templates/company/request_collaboration.html:66
 msgid "Collaboration ID"
-msgstr "ID de la collaberación"
+msgstr "ID de la colaboración"
 
 #: src/workers_control/flask/templates/company/request_collaboration.html:78
 msgid "No plans yet."
@@ -1745,7 +1745,7 @@ msgstr "Historial de coordinadores"
 
 #: src/workers_control/flask/templates/user/collab_summary.html:54
 msgid "Collaboration price"
-msgstr "Precio collaborativo"
+msgstr "Precio colaborativo"
 
 #: src/workers_control/flask/templates/user/collab_summary.html:64
 msgid "Participating plans"
@@ -1828,7 +1828,7 @@ msgstr "No"
 
 #: src/workers_control/flask/templates/user/list_all_collaborations.html:35
 msgid "No collaborations found"
-msgstr "No se encontraron collaberaciones"
+msgstr "No se encontraron colaboraciones"
 
 #: src/workers_control/flask/templates/user/list_coordinations_of_collaboration.html:37
 msgid "Start of coordination"
@@ -2095,7 +2095,7 @@ msgstr "Invitación a la aplicación Workers Control"
 
 #: src/workers_control/web/email/collaboration_request_email_presenter.py:17
 msgid "A company requests collaboration"
-msgstr "Una empresa solicita collaberación"
+msgstr "Una empresa solicita colaboración"
 
 #: src/workers_control/web/email/collaboration_request_email_presenter.py:20
 #, python-format
@@ -2104,7 +2104,7 @@ msgid ""
 "that you are coordinating. Please check the request in the Workers Control "
 "app."
 msgstr ""
-"Hola %(coordinator)s,<br>Una empresa quiere ser parte de una collaberación "
+"Hola %(coordinator)s,<br>Una empresa quiere ser parte de una colaboración "
 "que estás coordinando. Por favor, revisa la solicitud en la aplicación "
 "Workers Control."
 
@@ -2144,7 +2144,7 @@ msgstr "Confirmación de la cuenta"
 
 #: src/workers_control/web/email/request_coordination_transfer_presenter.py:20
 msgid "You are asked to be the coordinator of a collaboration"
-msgstr "Se te pide que seas el coordinador de una collaberación"
+msgstr "Se te pide que seas el coordinador de una colaboración"
 
 #: src/workers_control/web/email/request_coordination_transfer_presenter.py:24
 #, python-format
@@ -2154,7 +2154,7 @@ msgid ""
 "request in the Workers Control app: <a href='%(url)s'>LINK</a>."
 msgstr ""
 "Hola %(candidate)s,<br>Se te pide que seas el coordinador de la "
-"collaberación '%(collaboration)s'. Por favor, sigue este enlace para "
+"colaboración '%(collaboration)s'. Por favor, sigue este enlace para "
 "revisar la solicitud en la aplicación Workers Control: <a "
 "href='%(url)s'>ENLACE</a>."
 
@@ -2281,7 +2281,7 @@ msgstr "ID de plan no válido."
 
 #: src/workers_control/web/www/controllers/request_collaboration_controller.py:41
 msgid "Invalid collaboration ID."
-msgstr "ID de collaberación no válido."
+msgstr "ID de colaboración no válido."
 
 #: src/workers_control/web/www/controllers/review_plan_controller.py:28
 msgid "Please choose whether to approve or reject the plan."
@@ -2313,12 +2313,12 @@ msgstr "El tipo de consumo proporcionado no es válido."
 
 #: src/workers_control/web/www/presenters/accept_collaboration_request_presenter.py:25
 msgid "Collaboration request has been accepted."
-msgstr "Solicitud de collaberación aceptada."
+msgstr "Solicitud de colaboración aceptada."
 
 #: src/workers_control/web/www/presenters/accept_collaboration_request_presenter.py:35
 #: src/workers_control/web/www/presenters/deny_collaboration_presenter.py:37
 msgid "Plan or collaboration not found."
-msgstr "Plan o collaberación no encontrada."
+msgstr "Plan o colaboración no encontrada."
 
 #: src/workers_control/web/www/presenters/accept_collaboration_request_presenter.py:43
 msgid "Something's wrong with that plan."
@@ -2327,18 +2327,18 @@ msgstr "Algo está mal con ese plan."
 #: src/workers_control/web/www/presenters/accept_collaboration_request_presenter.py:48
 #: src/workers_control/web/www/presenters/deny_collaboration_presenter.py:42
 msgid "This collaboration request does not exist."
-msgstr "Esta solicitud de collaberación no existe."
+msgstr "Esta solicitud de colaboración no existe."
 
 #: src/workers_control/web/www/presenters/accept_collaboration_request_presenter.py:54
 #: src/workers_control/web/www/presenters/deny_collaboration_presenter.py:48
 msgid "You are not coordinator of this collaboration."
-msgstr "No eres el coordinador de esta collaberación."
+msgstr "No eres el coordinador de esta colaboración."
 
 #: src/workers_control/web/www/presenters/accept_coordination_transfer_presenter.py:41
 msgid ""
 "Successfully accepted the request. You are now coordinator of the "
 "collaboration."
-msgstr "Solicitud aceptada con éxito. Ahora eres el coordinador de la collaberación."
+msgstr "Solicitud aceptada con éxito. Ahora eres el coordinador de la colaboración."
 
 #: src/workers_control/web/www/presenters/accept_coordination_transfer_presenter.py:59
 msgid "Transfer request not found."
@@ -2376,7 +2376,7 @@ msgstr "La aprobación del plan falló"
 
 #: src/workers_control/web/www/presenters/cancel_collaboration_request_presenter.py:22
 msgid "Collaboration request has been canceled."
-msgstr "Solicitud de collaberación cancelada."
+msgstr "Solicitud de colaboración cancelada."
 
 #: src/workers_control/web/www/presenters/cancel_collaboration_request_presenter.py:26
 msgid "Error: Not possible to cancel request."
@@ -2426,11 +2426,11 @@ msgstr "Error al crear el servicio básico: Miembro no encontrado."
 
 #: src/workers_control/web/www/presenters/create_collaboration_presenter.py:38
 msgid "Successfully created collaboration."
-msgstr "Collaberación creada con éxito."
+msgstr "Colaboración creada con éxito."
 
 #: src/workers_control/web/www/presenters/create_collaboration_presenter.py:46
 msgid "There is already a collaboration with the same name."
-msgstr "Ya hay una collaberación con el mismo nombre."
+msgstr "Ya hay una colaboración con el mismo nombre."
 
 #: src/workers_control/web/www/presenters/create_collaboration_presenter.py:54
 msgid "Internal error: Coordinator not found."
@@ -2459,11 +2459,11 @@ msgstr "Borrador de plan %(product_name)s fue eliminado"
 
 #: src/workers_control/web/www/presenters/deny_collaboration_presenter.py:27
 msgid "Collaboration request has been denied."
-msgstr "Solicitud de collaberación denegada."
+msgstr "Solicitud de colaboración denegada."
 
 #: src/workers_control/web/www/presenters/deny_collaboration_presenter.py:55
 msgid "Could not deny collaboration"
-msgstr "No se pudo denegar la collaberación"
+msgstr "No se pudo denegar la colaboración"
 
 #: src/workers_control/web/www/presenters/edit_draft_presenter.py:25
 msgid "The draft you are trying to edit does not exist."
@@ -2476,12 +2476,12 @@ msgstr "No estás autorizado/a para editar este borrador."
 #: src/workers_control/web/www/presenters/end_collaboration_presenter.py:27
 #: src/workers_control/web/www/presenters/end_plan_collaboration_presenter.py:27
 msgid "Collaboration could not be terminated."
-msgstr "La collaberación no pudo ser finalizada."
+msgstr "La colaboración no pudo ser finalizada."
 
 #: src/workers_control/web/www/presenters/end_collaboration_presenter.py:31
 #: src/workers_control/web/www/presenters/end_plan_collaboration_presenter.py:23
 msgid "Collaboration has been terminated."
-msgstr "La collaberación ha sido finalizada."
+msgstr "La colaboración ha sido finalizada."
 
 #: src/workers_control/web/www/presenters/file_plan_with_accounting_presenter.py:26
 msgid "Successfully filed plan with social accounting"
@@ -2759,7 +2759,7 @@ msgstr "Plan no encontrado."
 #: src/workers_control/web/www/presenters/request_collaboration_presenter.py:51
 #: src/workers_control/web/www/presenters/request_coordination_transfer_presenter.py:83
 msgid "Collaboration not found."
-msgstr "Collaberación no encontrada."
+msgstr "Colaboración no encontrada."
 
 #: src/workers_control/web/www/presenters/request_collaboration_presenter.py:57
 msgid "Plan not active."
@@ -2767,15 +2767,15 @@ msgstr "Plan no activo."
 
 #: src/workers_control/web/www/presenters/request_collaboration_presenter.py:64
 msgid "Plan is already collaborating or requested a collaboration."
-msgstr "El plan ya está collaberando o ha solicitado una collaberación."
+msgstr "El plan ya está colaborando o ha solicitado una colaboración."
 
 #: src/workers_control/web/www/presenters/request_collaboration_presenter.py:72
 msgid "Public plans cannot collaborate."
-msgstr "Los planes públicos no pueden collaberar."
+msgstr "Los planes públicos no pueden colaborar."
 
 #: src/workers_control/web/www/presenters/request_collaboration_presenter.py:80
 msgid "Only the creator of a plan can request a collaboration."
-msgstr "Solo el creador de un plan puede solicitar una collaberación."
+msgstr "Solo el creador de un plan puede solicitar una colaboración."
 
 #: src/workers_control/web/www/presenters/request_coordination_transfer_presenter.py:34
 msgid "Request Coordination Transfer"
@@ -3085,7 +3085,7 @@ msgstr "Contribución al sector público"
 #~ msgstr "Venta"
 
 #~ msgid "Collaboration compensation"
-#~ msgstr "Compensación de collaberación"
+#~ msgstr "Compensación de colaboración"
 
 #~ msgid "Planned fixed means of production (public service)"
 #~ msgstr "Medios de producción fijos planificados (servicio público)"
@@ -3184,13 +3184,13 @@ msgstr "Contribución al sector público"
 #~ msgstr "Acciones"
 
 #~ msgid "End collaboration:"
-#~ msgstr "Finalizar collaberación:"
+#~ msgstr "Finalizar colaboración:"
 
 #~ msgid "End"
 #~ msgstr "Fin"
 
 #~ msgid "Join a collaboration"
-#~ msgstr "Unirse a una collaberación"
+#~ msgstr "Unirse a una colaboración"
 
 #~ msgid "Join"
 #~ msgstr "Unirse"

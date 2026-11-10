@@ -2820,13 +2820,13 @@ class DatabaseGatewayImpl:
         self,
         creation_timestamp: datetime,
         name: str,
-        definition: str,
+        description: str,
         account: UUID,
     ) -> records.Collaboration:
         collaboration = models.Collaboration(
             creation_date=creation_timestamp,
             name=name,
-            definition=definition,
+            description=description,
             account=account,
         )
         self.db.session.add(collaboration)
@@ -2846,7 +2846,7 @@ class DatabaseGatewayImpl:
             id=orm.id,
             creation_date=orm.creation_date,
             name=orm.name,
-            definition=orm.definition,
+            description=orm.description,
             account=orm.account,
         )
 

@@ -40,7 +40,7 @@ class AuthenticatedCompanyTests(ViewTestCase):
             url=self.url,
             login=LogInUser.company,
             expected_code=302,
-            data={"name": "New Collaboration", "definition": "Collab definition"},
+            data={"name": "New Collaboration", "description": "Collab description"},
         )
 
     def test_returns_400_when_posting_already_existing_collab_name(self) -> None:
@@ -53,6 +53,6 @@ class AuthenticatedCompanyTests(ViewTestCase):
             expected_code=400,
             data={
                 "name": name_of_existing_collab,
-                "definition": "Collab definition",
+                "description": "Collab description",
             },
         )

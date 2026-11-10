@@ -31,12 +31,12 @@ class CreateCollaborationView:
     def POST(self) -> Response:
         form = CreateCollaborationForm(request.form)
         name = form.get_name_string()
-        definition = form.get_definition_string()
+        description = form.get_description_string()
         user = self.session.get_current_user()
         assert name
-        assert definition
+        assert description
         assert user
-        interactor_request = CreateCollaborationRequest(user, name, definition)
+        interactor_request = CreateCollaborationRequest(user, name, description)
         interactor_response = self.interactor.execute(interactor_request)
         self.presenter.present(interactor_response)
         if interactor_response.is_rejected:

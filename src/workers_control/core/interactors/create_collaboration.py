@@ -12,7 +12,7 @@ from workers_control.core.repositories import DatabaseGateway
 class CreateCollaborationRequest:
     coordinator_id: UUID
     name: str
-    definition: str
+    description: str
 
 
 @dataclass
@@ -46,7 +46,7 @@ class CreateCollaborationInteractor:
         collaboration = self.database_gateway.create_collaboration(
             self.datetime_service.now(),
             request.name,
-            request.definition,
+            request.description,
             account.id,
         )
         self.database_gateway.create_coordination_tenure(

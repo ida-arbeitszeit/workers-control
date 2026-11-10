@@ -554,7 +554,7 @@ class CollaborationGenerator:
         if isinstance(coordinator, records.Company):
             coordinator = coordinator.id
         uc_request = CreateCollaborationRequest(
-            coordinator_id=coordinator, name=name, definition="test info"
+            coordinator_id=coordinator, name=name, description="test info"
         )
         uc_response = self.create_collaboration_interactor.execute(uc_request)
         assert not uc_response.is_rejected
@@ -623,7 +623,7 @@ class CoordinationTenureGenerator:
 
     def _create_collab(self, coordinator: UUID) -> UUID:
         uc_request = CreateCollaborationRequest(
-            coordinator_id=coordinator, name=f"name_{uuid4()}", definition="test info"
+            coordinator_id=coordinator, name=f"name_{uuid4()}", description="test info"
         )
         uc_response = self.create_collaboration_interactor.execute(uc_request)
         assert uc_response.collaboration_id

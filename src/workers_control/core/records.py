@@ -85,7 +85,7 @@ class Collaboration:
     id: UUID
     creation_date: datetime
     name: str
-    definition: str
+    description: str
     account: UUID
 
     def get_name(self) -> str:

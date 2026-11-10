@@ -24,7 +24,7 @@ class AssociatedPlan:
 class GetCollabSummaryViewModel:
     collab_id: str
     collab_name: str
-    collab_definition: List[str]
+    collab_description: List[str]
     transfer_coordination_url: Optional[str]
     current_coordinator_id: str
     current_coordinator_name: str
@@ -47,7 +47,7 @@ class GetCollabSummarySuccessPresenter:
         return GetCollabSummaryViewModel(
             collab_id=str(response.collab_id),
             collab_name=response.collab_name,
-            collab_definition=response.collab_definition.splitlines(),
+            collab_description=response.collab_description.splitlines(),
             transfer_coordination_url=(
                 self.url_index.get_request_coordination_transfer_url(
                     collab_id=response.collab_id

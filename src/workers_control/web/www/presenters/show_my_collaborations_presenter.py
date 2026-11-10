@@ -23,7 +23,7 @@ class ListOfCoordinationsRow:
     collab_id: str
     collab_creation_date: str
     collab_name: str
-    collab_definition: List[str]
+    collab_description: List[str]
     count_plans_in_collab: str
     collab_summary_url: str
 
@@ -143,7 +143,7 @@ class ShowMyCollaborationsPresenter:
             collab_id=str(collab.id),
             collab_creation_date=str(collab.creation_date),
             collab_name=collab.name,
-            collab_definition=collab.definition.splitlines(),
+            collab_description=collab.description.splitlines(),
             count_plans_in_collab=str(collab.count_plans_in_collab),
             collab_summary_url=self.url_index.get_collab_summary_url(
                 collab_id=collab.id

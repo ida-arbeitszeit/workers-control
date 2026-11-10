@@ -2543,13 +2543,13 @@ class EmailResult(SqlQueryResult[records.Email]):
             lambda query: query.filter(models.EmailOutbox.sent_at.is_(None))
         )
 
-    def ordered_by_creation_date(self, ascending: bool = True) -> Self:
-        ordering = (
-            models.EmailOutbox.created_at.asc()
-            if ascending
-            else models.EmailOutbox.created_at.desc()
+    def ordered_by_retry_count_and_creation_date(self) -> Self:
+        return self._with_modified_query(
+            lambda query: query.order_by(
+                models.EmailOutbox.retry_count.asc(),
+                models.EmailOutbox.created_at.asc(),
+            )
         )
-        return self._with_modified_query(lambda query: query.order_by(ordering))
 
     def update(self) -> EmailUpdate:
         return EmailUpdate(query=self.query, db=self.db)

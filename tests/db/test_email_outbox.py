@@ -54,31 +54,34 @@ class GetEmailsTests(DatabaseTestCase):
         unsent = list(
             self.database_gateway.get_emails()
             .that_have_not_been_sent()
-            .ordered_by_creation_date()
+            .ordered_by_retry_count_and_creation_date()
         )
         self.assertEqual(len(unsent), 1)
         self.assertEqual(unsent[0].recipient, "pending@test.org")
 
-    def test_ordered_by_creation_date_ascending_returns_oldest_first(self) -> None:
+    def test_ordering_returns_oldest_first_when_retry_counts_are_equal(self) -> None:
         self._create_email("first@test.org")
         self.datetime_service.advance_time(timedelta(seconds=1))
         self._create_email("second@test.org")
         ordered = list(
-            self.database_gateway.get_emails().ordered_by_creation_date(ascending=True)
+            self.database_gateway.get_emails().ordered_by_retry_count_and_creation_date()
         )
         self.assertEqual(
             [e.recipient for e in ordered], ["first@test.org", "second@test.org"]
         )
 
-    def test_ordered_by_creation_date_descending_returns_newest_first(self) -> None:
-        self._create_email("first@test.org")
+    def test_ordering_returns_emails_with_fewer_retries_first(self) -> None:
+        older_id = self._create_email("older@test.org")
         self.datetime_service.advance_time(timedelta(seconds=1))
-        self._create_email("second@test.org")
+        self._create_email("newer@test.org")
+        self.database_gateway.get_emails().with_id(
+            older_id
+        ).update().increment_retry_count().perform()
         ordered = list(
-            self.database_gateway.get_emails().ordered_by_creation_date(ascending=False)
+            self.database_gateway.get_emails().ordered_by_retry_count_and_creation_date()
         )
         self.assertEqual(
-            [e.recipient for e in ordered], ["second@test.org", "first@test.org"]
+            [e.recipient for e in ordered], ["newer@test.org", "older@test.org"]
         )
 
 

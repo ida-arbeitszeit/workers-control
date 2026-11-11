@@ -454,6 +454,41 @@ class GetAllPlans(DatabaseTestCase):
         _, collaboration = result
         assert not collaboration
 
+    def test_that_plan_can_be_moved_to_another_collaboration(self) -> None:
+        old_collaboration = self.collaboration_generator.create_collaboration()
+        new_collaboration = self.collaboration_generator.create_collaboration()
+        plan = self.plan_generator.create_plan(collaboration=old_collaboration)
+        self.database_gateway.get_plans().with_id(plan).update().set_collaboration(
+            new_collaboration
+        ).perform()
+        plans = self.database_gateway.get_plans()
+        assert plans.that_are_part_of_collaboration(new_collaboration).with_id(plan)
+        assert not plans.that_are_part_of_collaboration(old_collaboration)
+
+    def test_that_plans_selected_by_their_collaboration_can_be_moved_to_another_one(
+        self,
+    ) -> None:
+        old_collaboration = self.collaboration_generator.create_collaboration()
+        new_collaboration = self.collaboration_generator.create_collaboration()
+        self.plan_generator.create_plan(collaboration=old_collaboration)
+        self.plan_generator.create_plan(collaboration=old_collaboration)
+        self.database_gateway.get_plans().that_are_part_of_collaboration(
+            old_collaboration
+        ).update().set_collaboration(new_collaboration).perform()
+        plans = self.database_gateway.get_plans()
+        assert len(plans.that_are_part_of_collaboration(new_collaboration)) == 2
+
+    def test_that_setting_collaboration_of_no_plans_updates_nothing(self) -> None:
+        collaboration = self.collaboration_generator.create_collaboration()
+        row_count = (
+            self.database_gateway.get_plans()
+            .with_id(uuid4())
+            .update()
+            .set_collaboration(collaboration)
+            .perform()
+        )
+        assert row_count == 0
+
     def test_that_create_plan_rejection_sets_the_rejection_date_on_the_plan(
         self,
     ) -> None:

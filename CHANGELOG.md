@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   The email worker now sends new emails before those that have failed.
 - The email worker no longer gets stuck after a database error or when the SMTP server stops responding.
   SMTP connections now time out after 30 seconds.
+- On PostgreSQL, accepting a collaboration request failed with a database error.
 
 ## [0.2.10] - 2026-10-31
 

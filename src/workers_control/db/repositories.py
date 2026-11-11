@@ -17,12 +17,20 @@ from typing import (
 )
 from uuid import UUID, uuid4
 
-from sqlalchemy import Delete, Insert, String, Update
-from sqlalchemy.dialects import postgresql, sqlite
+from sqlalchemy import String
+from sqlalchemy.dialects import postgresql
 from sqlalchemy.engine import CursorResult
 from sqlalchemy.orm import InstrumentedAttribute, aliased, scoped_session
 from sqlalchemy.orm.query import Query
-from sqlalchemy.sql.expression import ColumnElement, and_, delete, func, or_, update
+from sqlalchemy.sql.expression import (
+    ColumnElement,
+    and_,
+    delete,
+    func,
+    insert,
+    or_,
+    update,
+)
 from sqlalchemy.sql.functions import concat
 
 from workers_control.core import records
@@ -434,7 +442,6 @@ class PlanUpdate:
         collaboration: Optional[UUID]
 
     def perform(self) -> int:
-        sql_statement: Update | Delete | Insert
         row_count = 0
         if self.plan_update_values:
             sql_statement = (
@@ -450,42 +457,24 @@ class PlanUpdate:
             result = self.db.session.execute(sql_statement)
             row_count = cast(CursorResult, result).rowcount
         if self.collaboration_update:
-            match self.collaboration_update:
-                case self.SetCollaboration(collaboration=None):
-                    sql_statement = delete(models.PlanCollaboration).where(
-                        models.PlanCollaboration.plan.in_(
-                            self.query.with_entities(models.Plan.id).scalar_subquery()
-                        )
+            plan_ids = [
+                plan_id for (plan_id,) in self.query.with_entities(models.Plan.id)
+            ]
+            result = self.db.session.execute(
+                delete(models.PlanCollaboration).where(
+                    models.PlanCollaboration.plan.in_(plan_ids)
+                )
+            )
+            collab_id = self.collaboration_update.collaboration
+            if collab_id is not None and plan_ids:
+                result = self.db.session.execute(
+                    insert(models.PlanCollaboration).values(
+                        [
+                            dict(plan=plan_id, collaboration=collab_id)
+                            for plan_id in plan_ids
+                        ]
                     )
-                case self.SetCollaboration(collaboration=collab_id):
-                    values = [
-                        dict(plan=plan.id, collaboration=collab_id)
-                        for plan in self.query
-                    ]
-                    dialect = self.db.engine.dialect.name
-                    if dialect == "postgresql":
-                        sql_statement = (
-                            postgresql.insert(models.PlanCollaboration)
-                            .values(values)
-                            .on_conflict_do_update(
-                                constraint="plan_collaboration_pkey",
-                                set_=dict(collaboration=collab_id),
-                            )
-                        )
-                    elif dialect == "sqlite":
-                        sql_statement = (
-                            sqlite.insert(models.PlanCollaboration)
-                            .values(values)
-                            .on_conflict_do_update(
-                                index_elements=[models.PlanCollaboration.plan],
-                                set_=dict(collaboration=collab_id),
-                            )
-                        )
-                    else:
-                        raise NotImplementedError(
-                            f"Upsert not implemented for dialect {dialect}"
-                        )
-            result = self.db.session.execute(sql_statement)
+                )
             row_count = max(row_count, cast(CursorResult, result).rowcount)
         self.db.session.flush()
         return row_count

@@ -41,13 +41,24 @@ class LoggedInCompanyTests(ViewTestCase):
         )
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
-        self.assertIn(product_name[:10], response.get_data(as_text=True))
-        self.assertIn(str(plan)[:6], response.get_data(as_text=True))
+        self.assertIn(product_name[:10], response.text)
+        self.assertIn(str(plan)[:6], response.text)
 
     def test_get_request_shows_message_if_company_has_no_plans(self) -> None:
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
-        self.assertIn("No plans yet.", response.get_data(as_text=True))
+        self.assertIn("No plans yet.", response.text)
+
+    def test_get_request_shows_a_form_if_company_has_a_plan(self) -> None:
+        self.plan_generator.create_plan(planner=self.company)
+        response = self.client.get(self.url)
+        assert response.status_code == 200
+        assert '<form method="post">' in response.text
+
+    def test_get_request_shows_no_form_if_company_has_no_plan(self) -> None:
+        response = self.client.get(self.url)
+        assert response.status_code == 200
+        assert '<form method="post">' not in response.text
 
     def test_posting_without_data_results_in_400(self) -> None:
         response = self.client.post(self.url)
@@ -76,7 +87,7 @@ class LoggedInCompanyTests(ViewTestCase):
             self.url, data=dict(plan_id=str(uuid4()), collaboration_id="no uuid")
         )
         self.assertEqual(response.status_code, 400)
-        self.assertIn("Invalid collaboration ID.", response.get_data(as_text=True))
+        self.assertIn("Invalid collaboration ID.", response.text)
 
     def test_error_message_shows_up_when_posting_malformed_plan_id_data(
         self,
@@ -85,12 +96,32 @@ class LoggedInCompanyTests(ViewTestCase):
             self.url, data=dict(plan_id="no uuid", collaboration_id=str(uuid4()))
         )
         self.assertEqual(response.status_code, 400)
-        self.assertIn("Invalid plan ID.", response.get_data(as_text=True))
+        self.assertIn("Invalid plan ID.", response.text)
 
-    def test_posting_valid_data_results_in_200(
+    def test_form_appears_after_posting_malformed_data_if_company_has_a_plan(
+        self,
+    ) -> None:
+        self.plan_generator.create_plan(planner=self.company)
+        response = self.client.post(
+            self.url, data=dict(plan_id="no uuid", collaboration_id="no uuid")
+        )
+        assert '<form method="post">' in response.text
+
+    def test_posting_wellformed_but_rejected_data_results_in_400(
         self,
     ) -> None:
         response = self.client.post(
             self.url, data=dict(plan_id=str(uuid4()), collaboration_id=str(uuid4()))
         )
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 400)
+
+    def test_posting_valid_data_results_in_a_redirection(self) -> None:
+        pw, email = ("123", "test@test.de")
+        planner = self.company_generator.create_company(password=pw, email=email)
+        plan = self.plan_generator.create_plan(planner=planner)
+        collab = self.collaboration_generator.create_collaboration()
+        self.login_company(password=pw, email=email)
+        response = self.client.post(
+            self.url, data=dict(plan_id=plan, collaboration_id=collab)
+        )
+        assert response.status_code == 302

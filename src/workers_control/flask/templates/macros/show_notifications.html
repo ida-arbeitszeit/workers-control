@@ -2,16 +2,14 @@
 
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
-{% for category, message in messages %}
 <div class="notification_box">
-  <div class="block has-text-centered">
-    <div class="notification {{ category }}">
-      <button class="delete is-medium"></button>
-      {{ message }}
-    </div>
+  {% for category, message in messages %}
+  <div class="notification {{ category }} has-text-centered">
+    <button class="delete is-medium"></button>
+    {{ message }}
   </div>
+  {% endfor %}
 </div>
-{% endfor %}
 {% endif %}
 {% endwith %}
 

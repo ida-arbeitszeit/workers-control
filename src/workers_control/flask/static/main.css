@@ -18,15 +18,9 @@
 
 /* notification box */
 .notification_box {
-  position: fixed;
-  left: 25%;
-  right: 25%;
+  position: sticky;
+  top: 0;
+  z-index: 10;
   width: 50%;
-  animation: hide_notification 5s linear 2s 1 forwards;
-}
-
-@keyframes hide_notification {
-  to {
-      opacity: 0;
-  }
+  margin: 0 auto 1.5rem;
 }

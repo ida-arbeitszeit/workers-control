@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The email worker no longer gets stuck after a database error or when the SMTP server stops responding.
   SMTP connections now time out after 30 seconds.
 - On PostgreSQL, accepting a collaboration request failed with a database error.
+- Notifications for users do not overlap app content anymore.
 
 ## [0.2.10] - 2026-10-31
 

@@ -60,7 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const $notification = $delete.parentNode;
 
     $delete.addEventListener('click', () => {
-      $notification.parentNode.removeChild($notification);
+      const $box = $notification.closest('.notification_box');
+      $notification.remove();
+      if ($box && !$box.querySelector('.notification')) {
+        $box.remove();
+      }
     });
   });
 });

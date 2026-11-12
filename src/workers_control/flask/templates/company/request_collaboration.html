@@ -21,10 +21,9 @@
     <div class="columns is-centered">
         <div class="column"></div>
         <div class="column is-8 has-text-centered">
-            {% if view_model and view_model.notification %}
+            {% if view_model and view_model.error_notification %}
             <div class="box">
-                <div {% if view_model.redirect_url %}class="notification is-primary" {% else
-                    %}class="notification is-danger" {% endif %}>{{ view_model.notification }}</div>
+                <div class="notification is-danger">{{ view_model.error_notification }}</div>
             </div>
             {% endif %}
 

@@ -24,10 +24,17 @@ class RequestCollaborationPresenterTests(BaseTestCase):
         view_model = self.presenter.present(self.get_successful_request())
         assert view_model.redirect_url == self.url_index.get_my_collaborations_url()
 
-    def test_show_correct_notificiation_if_request_was_successful(self) -> None:
+    def test_do_not_show_error_notificiation_if_request_was_successful(self) -> None:
         view_model = self.presenter.present(self.get_successful_request())
-        expected = self.translator.gettext("Request has been sent.")
-        self.assertEqual(view_model.notification, expected)
+        assert view_model.error_notification is None
+
+    def test_show_info_notification_if_request_was_successful(self) -> None:
+        self.presenter.present(self.get_successful_request())
+        assert len(self.notifier.infos) == 1
+        assert self.notifier.infos[0] == self.translator.gettext(
+            "Request has been sent."
+        )
+        assert not self.notifier.warnings
 
     def test_that_no_mail_was_sent_after_successful_request(self) -> None:
         self.presenter.present(self.get_successful_request())
@@ -44,7 +51,7 @@ class RequestCollaborationPresenterTests(BaseTestCase):
             self.get_rejected_request(rejection_reason=RejectionReason.plan_not_found)
         )
         self.assertEqual(
-            presentation.notification, self.translator.gettext("Plan not found.")
+            presentation.error_notification, self.translator.gettext("Plan not found.")
         )
 
     def test_correct_notification_when_rejected_because_collab_not_found(self) -> None:
@@ -54,7 +61,7 @@ class RequestCollaborationPresenterTests(BaseTestCase):
             )
         )
         self.assertEqual(
-            presentation.notification,
+            presentation.error_notification,
             self.translator.gettext("Collaboration not found."),
         )
 
@@ -63,7 +70,7 @@ class RequestCollaborationPresenterTests(BaseTestCase):
             self.get_rejected_request(rejection_reason=RejectionReason.plan_inactive)
         )
         self.assertEqual(
-            presentation.notification, self.translator.gettext("Plan not active.")
+            presentation.error_notification, self.translator.gettext("Plan not active.")
         )
 
     def test_correct_notification_when_rejected_because_plan_has_collaboration(
@@ -75,7 +82,7 @@ class RequestCollaborationPresenterTests(BaseTestCase):
             )
         )
         self.assertEqual(
-            presentation.notification,
+            presentation.error_notification,
             self.translator.gettext(
                 "Plan is already collaborating or requested a collaboration."
             ),
@@ -90,7 +97,7 @@ class RequestCollaborationPresenterTests(BaseTestCase):
             )
         )
         self.assertEqual(
-            presentation.notification,
+            presentation.error_notification,
             self.translator.gettext(
                 "Plan is already collaborating or requested a collaboration."
             ),
@@ -105,7 +112,7 @@ class RequestCollaborationPresenterTests(BaseTestCase):
             )
         )
         self.assertEqual(
-            presentation.notification,
+            presentation.error_notification,
             self.translator.gettext("Public plans cannot collaborate."),
         )
 
@@ -118,7 +125,7 @@ class RequestCollaborationPresenterTests(BaseTestCase):
             )
         )
         self.assertEqual(
-            presentation.notification,
+            presentation.error_notification,
             self.translator.gettext(
                 "Only the creator of a plan can request a collaboration."
             ),

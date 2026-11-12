@@ -1,8 +1,10 @@
 from dataclasses import dataclass
+from typing import assert_never
 
 from workers_control.core.interactors.request_collaboration import (
     RequestCollaborationResponse,
 )
+from workers_control.web.notification import Notifier
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
 from workers_control.web.www.navbar import NavbarItem
@@ -10,7 +12,7 @@ from workers_control.web.www.navbar import NavbarItem
 
 @dataclass
 class RequestCollaborationViewModel:
-    notification: str
+    error_notification: str | None
     redirect_url: str | None
 
 
@@ -18,6 +20,7 @@ class RequestCollaborationViewModel:
 class RequestCollaborationPresenter:
     translator: Translator
     url_index: UrlIndex
+    notifier: Notifier
 
     def create_navbar_items(self) -> list[NavbarItem]:
         return [
@@ -34,13 +37,14 @@ class RequestCollaborationPresenter:
         if interactor_response.is_rejected:
             assert interactor_response.rejection_reason
             return RequestCollaborationViewModel(
-                notification=self._create_rejection_notification(
+                error_notification=self._create_rejection_notification(
                     interactor_response.rejection_reason
                 ),
                 redirect_url=None,
             )
+        self.notifier.display_info(self.translator.gettext("Request has been sent."))
         return RequestCollaborationViewModel(
-            notification=self.translator.gettext("Request has been sent."),
+            error_notification=None,
             redirect_url=self.url_index.get_my_collaborations_url(),
         )
 
@@ -68,4 +72,4 @@ class RequestCollaborationPresenter:
                     "Only the creator of a plan can request a collaboration."
                 )
             case _:
-                return self.translator.gettext("An error occurred.")
+                assert_never(rejection_reason)

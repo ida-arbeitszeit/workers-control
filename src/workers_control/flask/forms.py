@@ -225,17 +225,6 @@ class CreateBasicServiceForm(Form):
         return self.data["description"]
 
 
-class RequestCollaborationForm(Form):
-    plan_id = StringField()
-    collaboration_id = StringField()
-
-    def get_plan_id_string(self) -> str:
-        return self.data["plan_id"]
-
-    def get_collaboration_id_string(self) -> str:
-        return self.data["collaboration_id"]
-
-
 class RegisterProductiveConsumptionForm(Form):
     plan_id = StringField(
         render_kw={"placeholder": trans.lazy_gettext("Plan ID")},

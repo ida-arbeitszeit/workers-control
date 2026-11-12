@@ -1,19 +1,13 @@
 from dataclasses import dataclass
-from typing import Protocol, Union
 from uuid import UUID
 
 from workers_control.core.interactors.request_collaboration import (
     RequestCollaborationRequest,
 )
-from workers_control.web.malformed_input_data import MalformedInputData
+from workers_control.web.forms import RequestCollaborationForm
+from workers_control.web.request import Request
 from workers_control.web.session import Session
 from workers_control.web.translator import Translator
-
-
-class RequestCollaborationForm(Protocol):
-    def get_plan_id_string(self) -> str: ...
-
-    def get_collaboration_id_string(self) -> str: ...
 
 
 @dataclass
@@ -22,26 +16,33 @@ class RequestCollaborationController:
     translator: Translator
 
     def import_form_data(
-        self, form: RequestCollaborationForm
-    ) -> Union[RequestCollaborationRequest, MalformedInputData, None]:
+        self, request: Request
+    ) -> RequestCollaborationRequest | RequestCollaborationForm | None:
         current_user = self.session.get_current_user()
         if current_user is None:
             return None
-        try:
-            plan_uuid = UUID(form.get_plan_id_string())
-        except (ValueError, TypeError):
-            return MalformedInputData(
-                "plan_id", self.translator.gettext("Invalid plan ID.")
+        form = RequestCollaborationForm(
+            plan_id_value=request.get_form("plan_id") or "",
+            collaboration_id_value=request.get_form("collaboration_id") or "",
+        )
+        plan_id = self._parse_uuid(form.plan_id_value)
+        if plan_id is None:
+            form.plan_id_errors.append(self.translator.gettext("Invalid plan ID."))
+        collaboration_id = self._parse_uuid(form.collaboration_id_value)
+        if collaboration_id is None:
+            form.collaboration_id_errors.append(
+                self.translator.gettext("Invalid collaboration ID.")
             )
-        try:
-            collaboration_uuid = UUID(form.get_collaboration_id_string())
-        except ValueError:
-            return MalformedInputData(
-                "collaboration_id",
-                self.translator.gettext("Invalid collaboration ID."),
-            )
+        if plan_id is None or collaboration_id is None:
+            return form
         return RequestCollaborationRequest(
             requester_id=current_user,
-            plan_id=plan_uuid,
-            collaboration_id=collaboration_uuid,
+            plan_id=plan_id,
+            collaboration_id=collaboration_id,
         )
+
+    def _parse_uuid(self, value: str) -> UUID | None:
+        try:
+            return UUID(value.strip())
+        except ValueError:
+            return None

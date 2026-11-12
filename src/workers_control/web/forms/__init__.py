@@ -135,3 +135,4 @@ class RequestCollaborationForm:
     collaboration_id_value: str
     plan_id_errors: list[str] = field(default_factory=list)
     collaboration_id_errors: list[str] = field(default_factory=list)
+    general_errors: list[str] = field(default_factory=list)

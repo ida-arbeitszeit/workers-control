@@ -22,12 +22,6 @@
     <div class="columns is-centered">
         <div class="column"></div>
         <div class="column is-8 has-text-centered">
-            {% if view_model and view_model.error_notification %}
-            <div class="box">
-                <div class="notification is-danger">{{ view_model.error_notification }}</div>
-            </div>
-            {% endif %}
-
             {% if list_plans_view_model and list_plans_view_model.show_plan_listing %}
             <form method="post">
                 <div class="field has-addons has-addons-centered">
@@ -64,6 +58,7 @@
             {% endif %}
             {{ display_form_field_errors(form.plan_id_errors) }}
             {{ display_form_field_errors(form.collaboration_id_errors) }}
+            {{ display_form_field_errors(form.general_errors) }}
         </div>
         <div class="column"></div>
     </div>

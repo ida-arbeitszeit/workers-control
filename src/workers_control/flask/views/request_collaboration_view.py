@@ -24,8 +24,8 @@ from workers_control.web.www.presenters.list_plans_presenter import (
 )
 from workers_control.web.www.presenters.request_collaboration_presenter import (
     RequestCollaborationPresenter,
-    RequestCollaborationViewModel,
 )
+from workers_control.web.www.response import Redirect
 
 
 @dataclass
@@ -52,17 +52,14 @@ class RequestCollaborationView:
             case RequestCollaborationRequest() as interactor_request:
                 pass
         interactor_response = self.request_collaboration.execute(interactor_request)
-        view_model = self.presenter.present(interactor_response)
-        if view_model.redirect_url:
-            return redirect(view_model.redirect_url)
-        return self._render_template(
-            form=RequestCollaborationForm(
-                plan_id_value=str(interactor_request.plan_id),
-                collaboration_id_value=str(interactor_request.collaboration_id),
-            ),
-            view_model=view_model,
-            status=400,
-        )
+        match self.presenter.present(interactor_response, FlaskRequest()):
+            case Redirect(url=url):
+                return redirect(url)
+            case RequestCollaborationForm() as form:
+                return self._render_template(
+                    form=form,
+                    status=400,
+                )
 
     def _get_list_plans_view_model(self) -> ListPlansViewModel:
         current_user = self.flask_session.get_current_user()
@@ -74,14 +71,12 @@ class RequestCollaborationView:
     def _render_template(
         self,
         form: RequestCollaborationForm,
-        view_model: RequestCollaborationViewModel | None = None,
         status: int = 200,
     ) -> types.Response:
         return Response(
             render_template(
                 "company/request_collaboration.html",
                 form=form,
-                view_model=view_model,
                 list_plans_view_model=self._get_list_plans_view_model(),
                 navbar_items=self.presenter.create_navbar_items(),
             ),

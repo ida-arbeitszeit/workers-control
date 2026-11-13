@@ -263,6 +263,15 @@ msgstr "Öffentliche Pläne"
 msgid "Productive plans"
 msgstr "Produktive Pläne"
 
+#: src/workers_control/flask/routes/auth/routes.py:94
+#: src/workers_control/flask/routes/auth/routes.py:148
+msgid "The confirmation link is invalid or has expired."
+msgstr "Der Bestätigungslink ist ungültig oder ist abgelaufen."
+
+#: src/workers_control/flask/routes/auth/routes.py:146
+msgid "The account has been confirmed. Thank you!"
+msgstr "Das Konto wurde bestätigt. Danke!"
+
 #: src/workers_control/flask/routes/plots/routes.py:43
 msgctxt "Text should be short"
 msgid "Fixed means"

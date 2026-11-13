@@ -29,12 +29,6 @@ class UserAccessTests(ViewTestCase):
         )
 
 
-class NavigationTests(ViewTestCase):
-    def test_that_start_page_does_not_show_back_button(self) -> None:
-        response = self.client.get("/")
-        assert '<a class="button" href="/">' not in response.text
-
-
 class LogoTests(ViewTestCase):
     def test_that_getting_logo_route_yields_200(self) -> None:
         response = self.client.get("/static/logo.svg")

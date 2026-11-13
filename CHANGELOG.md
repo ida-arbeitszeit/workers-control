@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- The navigation bar is now a compact header that needs no burger menu on mobile devices. Navigation items are now icon buttons.
+
 ### Fixed
 
 - Rejected requests no longer stay in memory until the server process restarts. Each one kept request data, so memory use grew with every rejection.

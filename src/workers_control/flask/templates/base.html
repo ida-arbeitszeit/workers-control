@@ -24,33 +24,25 @@
 <body>
   {% set user_type = session.get('user_type') %}
   {% if user_type in ['company', 'member', 'accountant'] and current_user_name is not none %}
-    {% set brand_url = url_for('main_user.account_details') %}
-    {% set brand_label = current_user_name|truncate(20, True) %}
-    {% set is_anonymous = false %}
+    {% set home_label = gettext("Dashboard") %}
+    {% set account_url = url_for('main_user.account_details') %}
     {% if user_type == 'company' %}
-      {% set brand_icon = 'industry' %}
-      {% set dashboard_url = url_for('main_company.dashboard') %}
+      {% set home_url = url_for('main_company.dashboard') %}
     {% elif user_type == 'member' %}
-      {% set brand_icon = 'user' %}
-      {% set dashboard_url = url_for('main_member.dashboard') %}
+      {% set home_url = url_for('main_member.dashboard') %}
     {% else %}
-      {% set brand_icon = 'book' %}
-      {% set dashboard_url = url_for('main_accountant.dashboard') %}
+      {% set home_url = url_for('main_accountant.dashboard') %}
     {% endif %}
   {% else %}
-    {% set brand_url = url_for('auth.start') %}
-    {% set brand_label = 'Workers Control' %}
-    {% set brand_icon = none %}
-    {% set dashboard_url = none %}
-    {% set is_anonymous = true %}
+    {% set home_url = url_for('auth.start') %}
+    {% set home_label = 'Workers Control' %}
+    {% set account_url = none %}
   {% endif %}
 
   {% call navigation(
-        brand_url=brand_url,
-        brand_label=brand_label,
-        brand_icon=brand_icon,
-        dashboard_url=dashboard_url,
-        is_anonymous=is_anonymous) %}
+        home_url=home_url,
+        home_label=home_label,
+        account_url=account_url) %}
   {% block navbar_start %}
   {% endblock navbar_start %}
   {% endcall %}

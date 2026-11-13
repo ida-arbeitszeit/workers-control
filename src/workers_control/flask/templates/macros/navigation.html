@@ -1,63 +1,38 @@
 {% from 'macros/language_selection.html' import language_selection with context %}
 
-{% macro navigation(brand_url, brand_label, brand_icon=none, dashboard_url=none, is_anonymous=false) %}
+{% macro navigation(home_url, home_label, account_url=none) %}
+{% set breadcrumb_items = caller() %}
 
-<nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a href="{{ brand_url }}" class="navbar-item has-background-primary">
-      {% if brand_icon is not none %}
-      <span class="icon">{{ brand_icon|icon }}</span>&nbsp;
-      {% endif %}
-      {{ brand_label }}
+<header class="site-header">
+  <a href="{{ home_url }}" class="site-header-home" aria-label="{{ home_label }}" title="{{ home_label }}">
+    <img src="{{ url_for('static', filename='favicon.svg') }}" alt="" width="40" height="40">
+  </a>
+
+  {% if breadcrumb_items|trim %}
+  <nav class="breadcrumb has-succeeds-separator site-header-breadcrumb mb-0" aria-label="{{ gettext('Breadcrumb') }}">
+    <ul>
+      {{ breadcrumb_items }}
+    </ul>
+  </nav>
+  {% endif %}
+
+  <div class="site-header-actions">
+    {{ language_selection() }}
+    <a class="button is-white" href="{{ url_for('auth.help') }}"
+      aria-label="{{ gettext('Help') }}" title="{{ gettext('Help') }}">
+      <span class="icon">{{ "circle-question"|icon }}</span>
     </a>
-
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
-      data-target="navbarOnTop">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
+    {% if account_url is not none %}
+    <a class="button is-white" href="{{ account_url }}"
+      aria-label="{{ gettext('User account') }}" title="{{ gettext('User account') }}">
+      <span class="icon">{{ "circle-user"|icon }}</span>
     </a>
+    <a class="button is-white" href="{{ url_for('auth.logout') }}"
+      aria-label="{{ gettext('Sign out') }}" title="{{ gettext('Sign out') }}">
+      <span class="icon">{{ "sign-out"|icon }}</span>
+    </a>
+    {% endif %}
   </div>
-
-  <div id="navbarOnTop" class="navbar-menu">
-    <div class="navbar-start">
-      {% if dashboard_url is not none %}
-      <a href="{{ dashboard_url }}" class="navbar-item">
-        {{ gettext("Dashboard") }}
-      </a>
-      {% endif %}
-      {{ caller() }}
-    </div>
-
-    <div class="navbar-end">
-      {{ language_selection() }}
-      {% if is_anonymous %}
-      <div class="navbar-item">
-        <a class="button is-primary" href="{{ url_for('auth.help') }}">
-          {{ gettext('Help') }}
-        </a>
-      </div>
-      {% if request.endpoint != 'auth.start' %}
-      <div class="navbar-item">
-        <a class="button" href="{{ url_for('auth.start') }}">
-          {{ gettext('Back') }}
-        </a>
-      </div>
-      {% endif %}
-      {% else %}
-      <div class="navbar-item">
-        <a class="button" href="{{ url_for('auth.logout') }}">
-          {{ gettext('Sign out') }}
-        </a>
-      </div>
-      <div class="navbar-item">
-        <a class="button" href="{{ url_for('auth.help') }}">
-          {{ gettext('Help') }}
-        </a>
-      </div>
-      {% endif %}
-    </div>
-  </div>
-</nav>
+</header>
 
 {% endmacro %}

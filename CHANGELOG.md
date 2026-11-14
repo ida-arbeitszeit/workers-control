@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - The navigation bar is now a compact header that needs no burger menu on mobile devices. Navigation items are now icon buttons.
+- On the overview and account pages of another company, the breadcrumbs now read "All companies › company name",
+  so they lead back to the company list and to that company's overview.
 
 ### Fixed
 

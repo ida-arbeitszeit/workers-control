@@ -41,6 +41,13 @@ class InteractorTester(BaseTestCase):
         )
         assert response.company_id == company
 
+    def test_company_name_is_returned(self) -> None:
+        company = self.company_generator.create_company(name="Bakery")
+        response = self.interactor.show_details(
+            self.create_interactor_request(company_id=company)
+        )
+        assert response.company_name == "Bakery"
+
     def test_that_no_info_is_generated_after_company_consuming_p(self) -> None:
         consumer = self.company_generator.create_company()
         self.consumption_generator.create_fixed_means_consumption(consumer=consumer)

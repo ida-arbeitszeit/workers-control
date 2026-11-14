@@ -19,6 +19,7 @@ class Request:
 @dataclass
 class Response:
     company_id: UUID
+    company_name: str
     transfers: list[AccountTransfer]
     account_balance: Decimal
     plot: PlotDetails
@@ -39,6 +40,7 @@ class ShowPRDAccountDetailsInteractor:
         account_balance = self.account_details_service.get_account_balance(account)
         return Response(
             company_id=request.company_id,
+            company_name=company.name,
             transfers=sorted(transfers, key=lambda t: t.date, reverse=True),
             account_balance=account_balance,
             plot=construct_plot_data(transfers),

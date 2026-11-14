@@ -1,9 +1,13 @@
 from dataclasses import replace
 from decimal import Decimal
-from uuid import uuid4
+from typing import Callable
+from uuid import UUID, uuid4
+
+from parameterized import parameterized
 
 from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_utc
+from tests.web.www.session import FakeSession
 from workers_control.core.interactors.get_company_summary import (
     AccountBalances,
     Expectations,
@@ -11,6 +15,7 @@ from workers_control.core.interactors.get_company_summary import (
     PlanDetails,
     Supplier,
 )
+from workers_control.web.www.navbar import NavbarItem
 from workers_control.web.www.presenters.get_company_summary_presenter import (
     Deviation,
     GetCompanySummarySuccessPresenter,
@@ -314,8 +319,35 @@ class NavbarItemsTests(BaseTestCase):
         super().setUp()
         self.presenter = self.injector.get(GetCompanySummarySuccessPresenter)
 
-    def test_navbar_shows_company_overview_as_current_page(self) -> None:
-        items = self.presenter.create_navbar_items()
-        self.assertEqual(len(items), 1)
-        self.assertEqual(items[0].text, self.translator.gettext("Company overview"))
-        self.assertIsNone(items[0].url)
+    def test_company_viewing_own_summary_sees_company_overview_as_current_page(
+        self,
+    ) -> None:
+        self.session.login_company(RESPONSE_WITH_2_PLANS.id)
+        view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
+        self.assertEqual(
+            view_model.navbar_items,
+            [NavbarItem(text=self.translator.gettext("Company overview"), url=None)],
+        )
+
+    @parameterized.expand(
+        [
+            (FakeSession.login_company,),
+            (FakeSession.login_member,),
+            (FakeSession.login_accountant,),
+        ]
+    )
+    def test_other_users_see_all_companies_as_parent_page_and_company_name(
+        self, log_in: Callable[[FakeSession, UUID], None]
+    ) -> None:
+        log_in(self.session, uuid4())
+        view_model = self.presenter.present(RESPONSE_WITH_2_PLANS)
+        self.assertEqual(
+            view_model.navbar_items,
+            [
+                NavbarItem(
+                    text=self.translator.gettext("All companies"),
+                    url=self.url_index.get_query_companies_url(),
+                ),
+                NavbarItem(text=RESPONSE_WITH_2_PLANS.name, url=None),
+            ],
+        )

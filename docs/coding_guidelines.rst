@@ -573,37 +573,44 @@ handler for this path must accept a ``member_id`` argument of type
 Navigation and breadcrumbs
 --------------------------
 
-The main navigation bar is rendered once by ``base.html``; you
-usually do not touch that shell. In addition to the main navigation,
-the app has breadcrumbs that shows the user where they are in the app
-and simplifies navigation.
+The main navigation bar with links to user account, language switch, etc.,
+is rendered once by ``base.html``; you
+usually do not touch that shell. 
 
-Breadcrumbs are built for each page in the presenter by exposing a
-``create_navbar_items`` method returning
+In addition to the main navigation,
+the app has breadcrumbs that shows the user where they are in the app
+and simplifies navigation. Breadcrumbs show where a page lives
+in the app, not the path the user took to get there.
+The location of a page may depend on the data shown and on the logged-in user.
+
+Breadcrumbs are built for each page in the presenter as a list of
 :py:class:`workers_control.web.www.navbar.NavbarItem` objects. A
 ``NavbarItem`` with ``url=None`` is the current page; items with an ``url``
-are linked ancestors::
+are linked ancestors.
 
-  def create_navbar_items(self) -> list[NavbarItem]:
-      return [
-          NavbarItem(
-              text=self.translator.gettext("My collaborations"),
-              url=self.url_index.get_my_collaborations_url(),
+If the page has a presenter view model, the breadcrumb should be a
+``navbar_items`` field of that view model::
+
+  navbar_items=[
+      NavbarItem(
+          text=self.translator.gettext("Collaboration"),
+          url=self.url_index.get_collab_summary_url(
+              collab_id=response.collaboration_id
           ),
-          NavbarItem(text=self.translator.gettext("Create collaboration"), url=None),
-      ]
+      ),
+      NavbarItem(text=self.translator.gettext("Coordinators"), url=None),
+  ],
 
-The request handler passes the result to ``render_template``
-and the template renders it with the ``navbar`` macro::
+The breadcrumb lives in the presenter, so it is covered by an
+ordinary presenter test.
+
+The template renders it with the ``navbar`` macro::
 
   {% from 'macros/navbar.html' import navbar %}
 
   {% block navbar_start %}
-  {{ navbar(navbar_items) }}
+  {{ navbar(view_model.navbar_items) }}
   {% endblock %}
-
-Since the breadcrumb lives in the presenter, it is covered by an ordinary
-presenter test.
 
 
 Date and Time

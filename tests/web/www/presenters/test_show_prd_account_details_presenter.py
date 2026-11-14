@@ -1,11 +1,12 @@
 from decimal import Decimal
-from typing import List
+from typing import Callable, List
 from uuid import UUID, uuid4
 
 from parameterized import parameterized
 
 from tests.base_test_case import BaseTestCase
 from tests.datetime_service import datetime_min_utc
+from tests.web.www.session import FakeSession
 from workers_control.core.anonymization import ANONYMIZED_STR
 from workers_control.core.interactors import show_prd_account_details
 from workers_control.core.services.account_details import (
@@ -14,6 +15,7 @@ from workers_control.core.services.account_details import (
     TransferPartyType,
 )
 from workers_control.core.transfers import TransferType
+from workers_control.web.www.navbar import NavbarItem
 from workers_control.web.www.presenters.show_prd_account_details_presenter import (
     ShowPRDAccountDetailsPresenter,
 )
@@ -239,30 +241,51 @@ class ShowPRDAccountDetailsPresenterTests(BaseTestCase):
         view_model = self.presenter.present(response)
         assert view_model.transfers[0].is_debit_transfer == is_debit
 
-    def test_view_model_contains_two_navbar_items(self) -> None:
+    def test_company_viewing_own_account_sees_accounts_as_parent_page(self) -> None:
         response = self._interactor_response()
+        self.session.login_company(response.company_id)
         view_model = self.presenter.present(response)
-        assert len(view_model.navbar_items) == 2
+        assert view_model.navbar_items == [
+            NavbarItem(
+                text=self.translator.gettext("Accounts"),
+                url=self.url_index.get_company_accounts_url(
+                    company_id=response.company_id
+                ),
+            ),
+            NavbarItem(text=self.translator.gettext("Account prd"), url=None),
+        ]
 
-    def test_first_navbar_item_has_text_accounts_and_url_to_my_accounts(self) -> None:
-        response = self._interactor_response()
+    @parameterized.expand(
+        [
+            (FakeSession.login_company,),
+            (FakeSession.login_member,),
+            (FakeSession.login_accountant,),
+        ]
+    )
+    def test_other_users_see_all_companies_and_company_as_parent_pages(
+        self, log_in: Callable[[FakeSession, UUID], None]
+    ) -> None:
+        response = self._interactor_response(company_name="Bakery")
+        log_in(self.session, uuid4())
         view_model = self.presenter.present(response)
-        navbar_item = view_model.navbar_items[0]
-        assert navbar_item.text == self.translator.gettext("Accounts")
-        assert navbar_item.url == self.url_index.get_company_accounts_url(
-            company_id=response.company_id
-        )
-
-    def test_second_navbar_item_has_text_account_prd_and_no_url(self) -> None:
-        response = self._interactor_response()
-        view_model = self.presenter.present(response)
-        navbar_item = view_model.navbar_items[1]
-        assert navbar_item.text == self.translator.gettext("Account prd")
-        assert navbar_item.url is None
+        assert view_model.navbar_items == [
+            NavbarItem(
+                text=self.translator.gettext("All companies"),
+                url=self.url_index.get_query_companies_url(),
+            ),
+            NavbarItem(
+                text="Bakery",
+                url=self.url_index.get_company_summary_url(
+                    company_id=response.company_id
+                ),
+            ),
+            NavbarItem(text=self.translator.gettext("Account prd"), url=None),
+        ]
 
     def _interactor_response(
         self,
         company_id: UUID = uuid4(),
+        company_name: str = "Some company",
         transfers: List[AccountTransfer] | None = None,
         account_balance: Decimal = Decimal(0),
         plot: show_prd_account_details.PlotDetails | None = None,
@@ -272,7 +295,11 @@ class ShowPRDAccountDetailsPresenterTests(BaseTestCase):
         if plot is None:
             plot = show_prd_account_details.PlotDetails([], [])
         return show_prd_account_details.Response(
-            company_id, transfers, account_balance, plot
+            company_id=company_id,
+            company_name=company_name,
+            transfers=transfers,
+            account_balance=account_balance,
+            plot=plot,
         )
 
     def _get_transfer_info(

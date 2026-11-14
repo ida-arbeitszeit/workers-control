@@ -10,7 +10,7 @@ from workers_control.core.interactors.get_company_summary import (
 from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
-from workers_control.web.www.navbar import NavbarItem
+from workers_control.web.www.navbar import CompanyNavbarItems, NavbarItem
 
 
 @dataclass
@@ -53,6 +53,7 @@ class GetCompanySummaryViewModel:
     r_account_overview_url: str
     a_account_overview_url: str
     prd_account_overview_url: str
+    navbar_items: list[NavbarItem]
 
 
 @dataclass
@@ -61,9 +62,7 @@ class GetCompanySummarySuccessPresenter:
     url_index: UrlIndex
     control_thresholds: ControlThresholds
     datetime_formatter: DatetimeFormatter
-
-    def create_navbar_items(self) -> list[NavbarItem]:
-        return [NavbarItem(text=self.translator.gettext("Company overview"), url=None)]
+    company_navbar_items: CompanyNavbarItems
 
     def present(
         self, interactor_response: GetCompanySummarySuccess
@@ -117,6 +116,10 @@ class GetCompanySummarySuccessPresenter:
             ),
             prd_account_overview_url=self.url_index.get_company_account_prd_url(
                 company_id=interactor_response.id
+            ),
+            navbar_items=self.company_navbar_items.for_company_summary(
+                company_id=interactor_response.id,
+                company_name=interactor_response.name,
             ),
         )
 

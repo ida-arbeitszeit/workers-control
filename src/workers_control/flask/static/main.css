@@ -1,5 +1,36 @@
-.navbar-end .navbar-item {
-  padding: 0.5rem 0.25rem;
+/* site header */
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1rem;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--bulma-border-weak);
+}
+
+.site-header-home {
+  display: flex;
+}
+
+.site-header-breadcrumb {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.site-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-inline-start: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .site-header-breadcrumb {
+    order: 1;
+    flex-basis: 100%;
+    font-size: 0.875rem;
+    white-space: normal;
+  }
 }
 
 .media-right form {

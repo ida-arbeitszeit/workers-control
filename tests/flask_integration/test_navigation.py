@@ -1,4 +1,6 @@
-from tests.flask_integration.base_test_case import ViewTestCase
+from parameterized import parameterized
+
+from tests.flask_integration.base_test_case import LogInUser, ViewTestCase
 
 
 class NavigationTests(ViewTestCase):
@@ -6,31 +8,20 @@ class NavigationTests(ViewTestCase):
         super().setUp()
         self.url = "/help"
 
-    def test_logged_in_member_sees_own_name_in_navigation(self) -> None:
-        email = self.email_generator.get_random_email()
-        self.member_generator.create_member(
-            email=email, name="Navbar Member", password="password123"
-        )
-        self.login_member(email=email)
+    @parameterized.expand(
+        [
+            (LogInUser.accountant,),
+            (LogInUser.company,),
+            (LogInUser.member,),
+        ]
+    )
+    def test_logged_in_users_see_link_to_their_user_account(
+        self, login: LogInUser
+    ) -> None:
+        self.login_user(login)
         response = self.client.get(self.url)
-        assert "Navbar Member" in response.text
+        assert 'href="/user/account"' in response.text
 
-    def test_logged_in_company_sees_own_name_in_navigation(self) -> None:
-        email = self.email_generator.get_random_email()
-        self.company_generator.create_company(
-            email=email, name="Navbar Company", password="password123"
-        )
-        self.login_company(email=email)
+    def test_anonymous_users_see_no_link_to_a_user_account(self) -> None:
         response = self.client.get(self.url)
-        assert "Navbar Company" in response.text
-
-    def test_logged_in_accountant_sees_own_name_in_navigation(self) -> None:
-        self.login_accountant(name="Navbar Accountant")
-        response = self.client.get(self.url)
-        assert "Navbar Accountant" in response.text
-
-    def test_long_user_names_are_truncated_in_navigation(self) -> None:
-        self.login_accountant(name="Navbar Accountant With A Long Name")
-        response = self.client.get(self.url)
-        assert "Navbar Accountant With A Long Name" not in response.text
-        assert "Navbar Accountant..." in response.text
+        assert 'href="/user/account"' not in response.text

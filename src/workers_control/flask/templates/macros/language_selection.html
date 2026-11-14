@@ -1,18 +1,23 @@
 {% macro language_selection() %}
 
-<div class="navbar-item has-dropdown is-hoverable">
-  <a class="navbar-link">
-    {{ gettext('Language') }}
-  </a>
-  <div class="navbar-dropdown">
-    {% if languages.show_language_listing %}
-    {% for language in languages.languages_listing %}
-    <a href="{{ language.change_url }}" class="navbar-item">
-      {{ language.label }}
-    </a>
-    {% endfor %}
-    {% endif %}
+{% if languages.show_language_listing %}
+<div class="dropdown is-right">
+  <div class="dropdown-trigger">
+    <button class="button is-white" type="button" aria-expanded="false" aria-controls="language-menu"
+      aria-label="{{ gettext('Language') }}" title="{{ gettext('Language') }}">
+      <span class="icon">{{ "globe"|icon }}</span>
+    </button>
+  </div>
+  <div class="dropdown-menu" id="language-menu">
+    <div class="dropdown-content">
+      {% for language in languages.languages_listing %}
+      <a href="{{ language.change_url }}" class="dropdown-item">
+        {{ language.label }}
+      </a>
+      {% endfor %}
+    </div>
   </div>
 </div>
+{% endif %}
 
 {% endmacro %}

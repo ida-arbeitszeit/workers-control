@@ -1,9 +1,9 @@
 {% macro navbar(navbar_items) %}
     {% for navbar_item in navbar_items %}
         {% if navbar_item.url is not none %}
-        <a class="navbar-item" href="{{ navbar_item.url }}">{{ navbar_item.text }}</a>
+        <li><a href="{{ navbar_item.url }}">{{ navbar_item.text }}</a></li>
         {% else %}
-        <div class="navbar-item" aria-current="page">{{ navbar_item.text }}</div>
+        <li class="is-active"><a aria-current="page" class="has-text-dark">{{ navbar_item.text }}</a></li>
         {% endif %}
     {% endfor %}
 {% endmacro %}

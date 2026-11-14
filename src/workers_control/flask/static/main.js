@@ -1,31 +1,3 @@
-// Toggle the mobile navbar ("burger") menu, keep aria-expanded in sync, and
-// close it again when clicking outside the menu or following a navbar link.
-document.addEventListener('DOMContentLoaded', () => {
-  const burgers = Array.prototype.slice.call(
-    document.querySelectorAll('.navbar-burger'), 0);
-
-  function closeMenus() {
-    burgers.forEach((burger) => {
-      const menu = document.getElementById(burger.dataset.target);
-      burger.classList.remove('is-active');
-      if (menu) menu.classList.remove('is-active');
-      burger.setAttribute('aria-expanded', 'false');
-    });
-  }
-
-  burgers.forEach((burger) => {
-    burger.addEventListener('click', (event) => {
-      event.stopPropagation();
-      const menu = document.getElementById(burger.dataset.target);
-      const isActive = burger.classList.toggle('is-active');
-      if (menu) menu.classList.toggle('is-active', isActive);
-      burger.setAttribute('aria-expanded', isActive ? 'true' : 'false');
-    });
-  });
-
-  document.addEventListener('click', closeMenus);
-});
-
 // Detect browser timezone and store in cookie for server-side use
 (function() {
   var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -71,18 +43,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Functions to open and close an element
-  function openElement($el) {
-    $el.classList.add('is-active');
-  }
-
-  function closeElement($el) {
-    $el.classList.remove('is-active');
+  function setElementOpen($el, isOpen) {
+    $el.classList.toggle('is-active', isOpen);
+    const $trigger = $el.querySelector('.dropdown-trigger [aria-expanded]');
+    if ($trigger) {
+      $trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
   }
 
   function closeAllElementsByClassName($className) {
     (document.querySelectorAll($className) || []).forEach(($elem) => {
-      closeElement($elem);
+      setElementOpen($elem, false);
     });
   }
 
@@ -96,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let isOpen = $dropdown.classList.contains('is-active')
       closeAllElementsByClassName('.dropdown')
       if (!isOpen) {
-        openElement($dropdown);
+        setElementOpen($dropdown, true);
       }
     });
   });

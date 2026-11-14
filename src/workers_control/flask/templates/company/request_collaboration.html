@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% from 'macros/navbar.html' import navbar %}
+{% from 'macros/form_field_error.html' import display_form_field_errors %}
 
 {% block navbar_start %}
 {{ navbar(navbar_items) }}
@@ -21,59 +22,43 @@
     <div class="columns is-centered">
         <div class="column"></div>
         <div class="column is-8 has-text-centered">
-            {% if view_model and view_model.notification %}
-            <div class="box">
-                <div {% if view_model.redirect_url %}class="notification is-primary" {% else
-                    %}class="notification is-danger" {% endif %}>{{ view_model.notification }}</div>
-            </div>
-            {% endif %}
-
-            {% if form %}
-            {% for field_name, field_errors in form.errors|dictsort if field_errors %}
-            {% for error in field_errors %}
-            <div class="notification is-danger">
-                {{ error }}
-            </div>
-            {% endfor %}
-            {% endfor %}
-            {% endif %}
-
-            <div class="content">
-                {% if list_plans_view_model and list_plans_view_model.show_plan_listing %}
-                <form method="post">
-                    <div class="field has-addons has-addons-centered">
-                        <div class="control has-icons-left">
-                            <div class="select has-icons-left">
-                                <select name="plan_id" required>
-                                    <option>{{ gettext("My plan...")}}</option>
-                                    {% for plan in list_plans_view_model.plans %}
-                                    <option value="{{ plan.id }}">{{ plan.prd_name_truncated }} ({{
-                                        plan.id_truncated
-                                        }})
-                                    </option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <span class="icon is-left">
-                                {{ "file"|icon }}
-                            </span>
+            {% if list_plans_view_model and list_plans_view_model.show_plan_listing %}
+            <form method="post">
+                <div class="field has-addons has-addons-centered">
+                    <div class="control has-icons-left">
+                        <div class="select has-icons-left">
+                            <select name="plan_id" required>
+                                <option value="">{{ gettext("My plan...")}}</option>
+                                {% for plan in list_plans_view_model.plans %}
+                                <option value="{{ plan.id }}" {% if plan.id == form.plan_id_value %}selected{% endif %}>{{ plan.prd_name_truncated }} ({{
+                                    plan.id_truncated
+                                    }})
+                                </option>
+                                {% endfor %}
+                            </select>
                         </div>
+                        <span class="icon is-left">
+                            {{ "file"|icon }}
+                        </span>
+                    </div>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="{{ gettext('Collaboration ID') }}"
+                            name="collaboration_id" value="{{ form.collaboration_id_value }}" required>
+                    </div>
+                    <div class="field">
                         <div class="control">
-                            <input class="input" type="text" placeholder="{{ gettext('Collaboration ID') }}" ,
-                                name="collaboration_id" required>
-                        </div>
-                        <div class="field">
-                            <div class="control">
-                                <button class="button is-primary" name="request_collab" value="request_collab"
-                                    type="submit">{{ gettext("Request collaboration")}}</button>
-                            </div>
+                            <button class="button is-primary" name="request_collab" value="request_collab"
+                                type="submit">{{ gettext("Request collaboration")}}</button>
                         </div>
                     </div>
-                </form>
-                {% else %}
-                <p>{{ gettext("No plans yet.")}}</p>
-                {% endif %}
-            </div>
+                </div>
+            </form>
+            {% else %}
+            <p>{{ gettext("No plans yet.")}}</p>
+            {% endif %}
+            {{ display_form_field_errors(form.plan_id_errors) }}
+            {{ display_form_field_errors(form.collaboration_id_errors) }}
+            {{ display_form_field_errors(form.general_errors) }}
         </div>
         <div class="column"></div>
     </div>

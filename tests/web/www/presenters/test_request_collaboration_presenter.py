@@ -1,12 +1,18 @@
 from typing import Optional
+from uuid import uuid4
+
+from parameterized import parameterized
 
 from tests.base_test_case import BaseTestCase
+from tests.web.www.request import FakeRequest
 from workers_control.core.interactors.request_collaboration import (
     RequestCollaborationResponse,
 )
+from workers_control.web.forms import RequestCollaborationForm
 from workers_control.web.www.presenters.request_collaboration_presenter import (
     RequestCollaborationPresenter,
 )
+from workers_control.web.www.response import Redirect
 
 RejectionReason = RequestCollaborationResponse.RejectionReason
 
@@ -16,116 +22,88 @@ class RequestCollaborationPresenterTests(BaseTestCase):
         super().setUp()
         self.presenter = self.injector.get(RequestCollaborationPresenter)
 
-    def test_that_a_redirect_url_is_returned_if_request_was_successful(self) -> None:
-        view_model = self.presenter.present(self.get_successful_request())
-        assert view_model.redirect_url is not None
+    def test_that_view_returns_a_redirect_object_if_request_was_successful(
+        self,
+    ) -> None:
+        view_model = self.presenter.present(
+            self.get_successful_request(), FakeRequest()
+        )
+        assert isinstance(view_model, Redirect)
 
     def test_that_redirect_leads_to_my_collaborations_page(self) -> None:
-        view_model = self.presenter.present(self.get_successful_request())
-        assert view_model.redirect_url == self.url_index.get_my_collaborations_url()
-
-    def test_show_correct_notificiation_if_request_was_successful(self) -> None:
-        view_model = self.presenter.present(self.get_successful_request())
-        expected = self.translator.gettext("Request has been sent.")
-        self.assertEqual(view_model.notification, expected)
-
-    def test_that_no_mail_was_sent_after_successful_request(self) -> None:
-        self.presenter.present(self.get_successful_request())
-        assert not self.email_service.sent_mails
-
-    def test_no_redirect_url_is_returned_if_request_was_rejected(self) -> None:
         view_model = self.presenter.present(
-            self.get_rejected_request(rejection_reason=RejectionReason.plan_not_found)
+            self.get_successful_request(), FakeRequest()
         )
-        assert view_model.redirect_url is None
+        assert isinstance(view_model, Redirect)
+        assert view_model.url == self.url_index.get_my_collaborations_url()
 
-    def test_correct_notification_when_rejected_because_plan_not_found(self) -> None:
-        presentation = self.presenter.present(
-            self.get_rejected_request(rejection_reason=RejectionReason.plan_not_found)
-        )
-        self.assertEqual(
-            presentation.notification, self.translator.gettext("Plan not found.")
-        )
-
-    def test_correct_notification_when_rejected_because_collab_not_found(self) -> None:
-        presentation = self.presenter.present(
-            self.get_rejected_request(
-                rejection_reason=RejectionReason.collaboration_not_found
-            )
-        )
-        self.assertEqual(
-            presentation.notification,
-            self.translator.gettext("Collaboration not found."),
-        )
-
-    def test_correct_notification_when_rejected_because_plan_inactive(self) -> None:
-        presentation = self.presenter.present(
-            self.get_rejected_request(rejection_reason=RejectionReason.plan_inactive)
-        )
-        self.assertEqual(
-            presentation.notification, self.translator.gettext("Plan not active.")
-        )
-
-    def test_correct_notification_when_rejected_because_plan_has_collaboration(
+    def test_show_that_info_notification_is_issued_if_request_was_successful(
         self,
     ) -> None:
-        presentation = self.presenter.present(
-            self.get_rejected_request(
-                rejection_reason=RejectionReason.plan_has_collaboration
-            )
+        self.presenter.present(self.get_successful_request(), FakeRequest())
+        assert not self.notifier.warnings
+        assert len(self.notifier.infos) == 1
+        assert self.notifier.infos[0] == self.translator.gettext(
+            "Request has been sent."
         )
-        self.assertEqual(
-            presentation.notification,
-            self.translator.gettext(
-                "Plan is already collaborating or requested a collaboration."
+
+    def test_that_warning_notification_is_issued_if_request_was_rejected(self) -> None:
+        self.presenter.present(self.get_rejected_request(), FakeRequest())
+        assert not self.notifier.infos
+        assert len(self.notifier.warnings) == 1
+        assert self.notifier.warnings[0] == self.translator.gettext(
+            "Request was not successful."
+        )
+
+    def test_form_is_returned_if_request_was_rejected(self) -> None:
+        view_model = self.presenter.present(self.get_rejected_request(), FakeRequest())
+        assert isinstance(view_model, RequestCollaborationForm)
+
+    def test_that_form_is_returned_with_original_plan_and_collab_id(self) -> None:
+        original_plan_id = str(uuid4())
+        original_collab_id = str(uuid4())
+        request = FakeRequest()
+        request.set_form("plan_id", original_plan_id)
+        request.set_form("collaboration_id", original_collab_id)
+        view_model = self.presenter.present(self.get_rejected_request(), request)
+        assert isinstance(view_model, RequestCollaborationForm)
+        assert view_model.plan_id_value == original_plan_id
+        assert view_model.collaboration_id_value == original_collab_id
+
+    @parameterized.expand(
+        [
+            (RejectionReason.plan_not_found, "Plan not found."),
+            (RejectionReason.collaboration_not_found, "Collaboration not found."),
+            (RejectionReason.plan_inactive, "Plan not active."),
+            (
+                RejectionReason.plan_has_collaboration,
+                "Plan is already collaborating or requested a collaboration.",
             ),
-        )
-
-    def test_correct_notification_when_rejected_because_plan_is_requesting_collaboration(
-        self,
-    ) -> None:
-        presentation = self.presenter.present(
-            self.get_rejected_request(
-                rejection_reason=RejectionReason.plan_is_already_requesting_collaboration
-            )
-        )
-        self.assertEqual(
-            presentation.notification,
-            self.translator.gettext(
-                "Plan is already collaborating or requested a collaboration."
+            (
+                RejectionReason.plan_is_already_requesting_collaboration,
+                "Plan is already collaborating or requested a collaboration.",
             ),
-        )
-
-    def test_correct_notification_when_rejected_because_plan_is_public_service(
-        self,
-    ) -> None:
-        presentation = self.presenter.present(
-            self.get_rejected_request(
-                rejection_reason=RejectionReason.plan_is_public_service
-            )
-        )
-        self.assertEqual(
-            presentation.notification,
-            self.translator.gettext("Public plans cannot collaborate."),
-        )
-
-    def test_correct_notification_when_rejected_because_requester_not_planner(
-        self,
-    ) -> None:
-        presentation = self.presenter.present(
-            self.get_rejected_request(
-                rejection_reason=RejectionReason.requester_is_not_planner
-            )
-        )
-        self.assertEqual(
-            presentation.notification,
-            self.translator.gettext(
-                "Only the creator of a plan can request a collaboration."
+            (
+                RejectionReason.plan_is_public_service,
+                "Public plans cannot collaborate.",
             ),
+            (
+                RejectionReason.requester_is_not_planner,
+                "Only the creator of a plan can request a collaboration.",
+            ),
+        ]
+    )
+    def test_the_correct_error_per_rejection_reason_is_appended_to_form(
+        self, rejection_reason: RejectionReason, error_message: str
+    ) -> None:
+        view_model = self.presenter.present(
+            self.get_rejected_request(rejection_reason=rejection_reason), FakeRequest()
         )
+        assert isinstance(view_model, RequestCollaborationForm)
+        assert view_model.general_errors == [self.translator.gettext(error_message)]
 
     def get_rejected_request(
-        self, rejection_reason: RequestCollaborationResponse.RejectionReason
+        self, rejection_reason: RejectionReason = RejectionReason.plan_not_found
     ) -> RequestCollaborationResponse:
         return RequestCollaborationResponse(
             coordinator_name=None,

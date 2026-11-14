@@ -127,3 +127,12 @@ class RegisterProductiveConsumptionOfBasicServiceForm:
 class InviteWorkerToCompanyForm:
     worker_id_value: str
     worker_id_errors: list[str] = field(default_factory=list)
+
+
+@dataclass(kw_only=True)
+class RequestCollaborationForm:
+    plan_id_value: str
+    collaboration_id_value: str
+    plan_id_errors: list[str] = field(default_factory=list)
+    collaboration_id_errors: list[str] = field(default_factory=list)
+    general_errors: list[str] = field(default_factory=list)

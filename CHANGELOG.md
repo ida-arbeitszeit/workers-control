@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   SMTP connections now time out after 30 seconds.
 - On PostgreSQL, accepting a collaboration request failed with a database error.
 - Notifications for users do not overlap app content anymore.
+- Flash messages on the email confirmation pages were always German. They are
+  now translated like the rest of the interface. (#1570)
 
 ## [0.2.10] - 2026-10-31
 

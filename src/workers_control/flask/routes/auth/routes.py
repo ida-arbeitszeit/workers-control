@@ -30,6 +30,7 @@ from workers_control.flask.views.reset_password_view import ResetPasswordView
 from workers_control.flask.views.signup_accountant_view import SignupAccountantView
 from workers_control.flask.views.signup_company_view import SignupCompanyView
 from workers_control.flask.views.signup_member_view import SignupMemberView
+from workers_control.web.translator import Translator
 from workers_control.web.www.authentication import (
     CompanyAuthenticator,
     MemberAuthenticator,
@@ -80,14 +81,17 @@ class signup_member(SignupMemberView): ...
 @commit_changes
 @with_injection()
 def confirm_email_member(
-    token: str, interactor: ConfirmMemberInteractor, controller: ConfirmMemberController
+    token: str,
+    interactor: ConfirmMemberInteractor,
+    controller: ConfirmMemberController,
+    translator: Translator,
 ) -> Response:
     interactor_request = controller.process_request(token)
     if interactor_request is not None:
         response = interactor.confirm_member(request=interactor_request)
         if response.is_confirmed:
             return redirect(url_for("auth.login_member"))
-    flash("Der Bestätigungslink ist ungültig oder ist abgelaufen.")
+    flash(translator.gettext("The confirmation link is invalid or has expired."))
     return redirect(url_for("auth.unconfirmed_member"))
 
 
@@ -129,6 +133,7 @@ def confirm_email_company(
     confirm_company_interactor: ConfirmCompanyInteractor,
     session: FlaskSession,
     controller: ConfirmCompanyController,
+    translator: Translator,
 ) -> Response:
     interactor_request = controller.process_request(token=token)
     if interactor_request:
@@ -138,9 +143,9 @@ def confirm_email_company(
         if response.is_confirmed:
             assert response.user_id
             session.login_company(response.user_id)
-            flash("Das Konto wurde bestätigt. Danke!")
+            flash(translator.gettext("The account has been confirmed. Thank you!"))
             return redirect(url_for("auth.login_company"))
-    flash("Der Bestätigungslink ist ungültig oder ist abgelaufen.")
+    flash(translator.gettext("The confirmation link is invalid or has expired."))
     return redirect(url_for("auth.unconfirmed_company"))
 
 

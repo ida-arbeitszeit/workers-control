@@ -33,15 +33,13 @@ class GetCollabSummaryViewModel:
     collab_price: str
 
     plans: List[AssociatedPlan]
+    navbar_items: list[NavbarItem]
 
 
 @dataclass
 class GetCollabSummarySuccessPresenter:
     url_index: UrlIndex
     translator: Translator
-
-    def create_navbar_items(self) -> list[NavbarItem]:
-        return [NavbarItem(text=self.translator.gettext("Collaboration"), url=None)]
 
     def present(self, response: GetCollabSummaryResponse) -> GetCollabSummaryViewModel:
         return GetCollabSummaryViewModel(
@@ -84,6 +82,9 @@ class GetCollabSummarySuccessPresenter:
                     or plan.requester_is_planner,
                 )
                 for plan in response.plans
+            ],
+            navbar_items=[
+                NavbarItem(text=self.translator.gettext("Collaboration"), url=None)
             ],
         )
 

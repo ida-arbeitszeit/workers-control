@@ -53,6 +53,5 @@ class ShowMyCollaborationsView:
         )
         return render_template(
             "company/my_collaborations.html",
-            navbar_items=self.presenter.create_navbar_items(),
             **view_model.to_dict(),
         )

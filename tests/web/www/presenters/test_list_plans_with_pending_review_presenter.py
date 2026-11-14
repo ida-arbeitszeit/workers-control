@@ -107,7 +107,9 @@ class NavbarItemsTests(BaseTestCase):
         self.presenter = self.injector.get(ListPlansWithPendingReviewPresenter)
 
     def test_navbar_shows_list_unreviewed_plans_as_current_page(self) -> None:
-        items = self.presenter.create_navbar_items()
+        items = self.presenter.list_plans_with_pending_review(
+            Interactor.Response(plans=[])
+        ).navbar_items
         self.assertEqual(len(items), 1)
         self.assertEqual(
             items[0].text, self.translator.gettext("List unreviewed plans")

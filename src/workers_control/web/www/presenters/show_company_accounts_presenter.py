@@ -22,15 +22,13 @@ class ViewModel:
     url_to_account_r: str
     url_to_account_a: str
     url_to_account_prd: str
+    navbar_items: list[NavbarItem]
 
 
 @dataclass
 class ShowCompanyAccountsPresenter:
     url_index: UrlIndex
     translator: Translator
-
-    def create_navbar_items(self) -> list[NavbarItem]:
-        return [NavbarItem(text=self.translator.gettext("Accounts"), url=None)]
 
     def present(self, interactor_response: ShowCompanyAccountsResponse) -> ViewModel:
         balances = [str(round(balance, 2)) for balance in interactor_response.balances]
@@ -57,4 +55,7 @@ class ShowCompanyAccountsPresenter:
             url_to_account_prd=self.url_index.get_company_account_prd_url(
                 company_id=interactor_response.company
             ),
+            navbar_items=[
+                NavbarItem(text=self.translator.gettext("Accounts"), url=None)
+            ],
         )

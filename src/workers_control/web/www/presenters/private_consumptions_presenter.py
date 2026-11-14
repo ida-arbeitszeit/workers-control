@@ -27,13 +27,11 @@ class PrivateConsumptionsPresenter:
 
         is_consumptions_visible: bool
         consumptions: List[Consumption]
+        navbar_items: list[NavbarItem]
 
     datetime_formatter: DatetimeFormatter
     translator: Translator
     url_index: UrlIndex
-
-    def create_navbar_items(self) -> list[NavbarItem]:
-        return [NavbarItem(text=self.translator.gettext("My consumptions"), url=None)]
 
     def present_private_consumptions(self, response: Response) -> ViewModel:
         return self.ViewModel(
@@ -41,6 +39,9 @@ class PrivateConsumptionsPresenter:
             consumptions=[
                 self._present_consumption(consumption)
                 for consumption in response.consumptions
+            ],
+            navbar_items=[
+                NavbarItem(text=self.translator.gettext("My consumptions"), url=None)
             ],
         )
 

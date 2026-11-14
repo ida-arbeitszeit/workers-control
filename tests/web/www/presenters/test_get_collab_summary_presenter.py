@@ -204,6 +204,12 @@ class GetCollabSummarySuccessPresenterTests(BaseTestCase):
         view_model = self.presenter.present(response=collab_summary)
         assert view_model.plans[0].show_end_collab_button == button_is_shown
 
+    def test_navbar_shows_collaboration_as_current_page(self) -> None:
+        items = self.presenter.present(self.get_collab_summary()).navbar_items
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0].text, self.translator.gettext("Collaboration"))
+        self.assertIsNone(items[0].url)
+
     def get_associated_plan(
         self,
         requester_is_planner: Optional[bool] = None,
@@ -250,15 +256,3 @@ class GetCollabSummarySuccessPresenterTests(BaseTestCase):
             collab_price=collab_price,
             plans=plans,
         )
-
-
-class NavbarItemsTests(BaseTestCase):
-    def setUp(self) -> None:
-        super().setUp()
-        self.presenter = self.injector.get(GetCollabSummarySuccessPresenter)
-
-    def test_navbar_shows_collaboration_as_current_page(self) -> None:
-        items = self.presenter.create_navbar_items()
-        self.assertEqual(len(items), 1)
-        self.assertEqual(items[0].text, self.translator.gettext("Collaboration"))
-        self.assertIsNone(items[0].url)

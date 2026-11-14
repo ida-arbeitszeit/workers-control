@@ -88,7 +88,9 @@ class NavbarItemsTests(BaseTestCase):
         self.presenter = self.injector.get(ShowCompanyAccountsPresenter)
 
     def test_navbar_shows_accounts_as_current_page(self) -> None:
-        items = self.presenter.create_navbar_items()
+        items = self.presenter.present(
+            ShowCompanyAccountsResponse(balances=[Decimal(0)] * 4, company=uuid4())
+        ).navbar_items
         self.assertEqual(len(items), 1)
         self.assertEqual(items[0].text, self.translator.gettext("Accounts"))
         self.assertIsNone(items[0].url)

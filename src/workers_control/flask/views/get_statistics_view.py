@@ -22,6 +22,5 @@ class GetStatisticsView:
             render_template(
                 "user/statistics.html",
                 view_model=view_model,
-                navbar_items=self.presenter.create_navbar_items(),
             )
         )

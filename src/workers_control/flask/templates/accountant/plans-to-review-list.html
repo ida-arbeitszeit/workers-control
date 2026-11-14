@@ -2,7 +2,7 @@
 {% from 'macros/navbar.html' import navbar %}
 
 {% block navbar_start %}
-{{ navbar(navbar_items) }}
+{{ navbar(view_model.navbar_items) }}
 {% endblock %}
 
 {% block content %}

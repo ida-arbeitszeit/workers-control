@@ -22,5 +22,4 @@ class ListAllCollaborationsView:
         return render_template(
             "user/list_all_collaborations.html",
             view_model=view_model,
-            navbar_items=self.presenter.create_navbar_items(),
         )

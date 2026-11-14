@@ -257,7 +257,9 @@ class NavbarItemsTests(BaseTestCase):
         self.presenter = self.injector.get(ShowMemberAccountDetailsPresenter)
 
     def test_navbar_shows_my_account_as_current_page(self) -> None:
-        items = self.presenter.create_navbar_items()
+        items = self.presenter.present_member_account(
+            ShowMemberAccountDetailsResponse(transfers=[], balance=Decimal(0))
+        ).navbar_items
         self.assertEqual(len(items), 1)
         self.assertEqual(items[0].text, self.translator.gettext("My account"))
         self.assertIsNone(items[0].url)

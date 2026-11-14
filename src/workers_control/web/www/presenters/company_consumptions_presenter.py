@@ -20,6 +20,7 @@ class ViewModel:
 
     consumptions: list[Consumption]
     show_consumptions: bool
+    navbar_items: list[NavbarItem]
 
 
 @dataclass
@@ -27,9 +28,6 @@ class CompanyConsumptionsPresenter:
     datetime_formatter: DatetimeFormatter
     translator: Translator
     url_index: UrlIndex
-
-    def create_navbar_items(self) -> list[NavbarItem]:
-        return [NavbarItem(text=self.translator.gettext("My consumptions"), url=None)]
 
     def present(
         self, interactor_response: query_company_consumptions.Response
@@ -39,7 +37,13 @@ class CompanyConsumptionsPresenter:
             for consumption in interactor_response.consumptions
         ]
         show_consumptions = True if (len(consumptions) > 0) else False
-        return ViewModel(consumptions=consumptions, show_consumptions=show_consumptions)
+        return ViewModel(
+            consumptions=consumptions,
+            show_consumptions=show_consumptions,
+            navbar_items=[
+                NavbarItem(text=self.translator.gettext("My consumptions"), url=None)
+            ],
+        )
 
     def _format_consumption(
         self, consumption: query_company_consumptions.Consumption

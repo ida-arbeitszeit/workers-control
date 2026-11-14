@@ -77,7 +77,9 @@ class NavbarItemsTests(BaseTestCase):
         self.presenter = self.injector.get(ListAllCollaborationsPresenter)
 
     def test_navbar_shows_all_collaborations_as_current_page(self) -> None:
-        items = self.presenter.create_navbar_items()
+        items = self.presenter.present(
+            ListAllCollaborationsResponse(collaborations=[])
+        ).navbar_items
         self.assertEqual(len(items), 1)
         self.assertEqual(items[0].text, self.translator.gettext("All collaborations"))
         self.assertIsNone(items[0].url)

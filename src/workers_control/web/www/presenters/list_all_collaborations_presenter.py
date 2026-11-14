@@ -21,17 +21,13 @@ class ListedCollaboration:
 class ListAllCollaborationsViewModel:
     collaborations: List[ListedCollaboration]
     show_results: bool
+    navbar_items: list[NavbarItem]
 
 
 @dataclass
 class ListAllCollaborationsPresenter:
     url_index: UrlIndex
     translator: Translator
-
-    def create_navbar_items(self) -> list[NavbarItem]:
-        return [
-            NavbarItem(text=self.translator.gettext("All collaborations"), url=None)
-        ]
 
     def present(
         self, response: ListAllCollaborationsResponse
@@ -48,5 +44,9 @@ class ListAllCollaborationsPresenter:
             for collab in response.collaborations
         ]
         return ListAllCollaborationsViewModel(
-            collaborations=collaborations, show_results=bool(collaborations)
+            collaborations=collaborations,
+            show_results=bool(collaborations),
+            navbar_items=[
+                NavbarItem(text=self.translator.gettext("All collaborations"), url=None)
+            ],
         )

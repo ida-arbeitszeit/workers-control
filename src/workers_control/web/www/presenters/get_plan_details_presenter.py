@@ -37,6 +37,7 @@ class PlanDetailsWeb:
 @dataclass
 class GetPlanDetailsViewModel:
     details: PlanDetailsWeb
+    navbar_items: list[NavbarItem]
 
 
 @dataclass
@@ -45,14 +46,14 @@ class GetPlanDetailsPresenter:
     url_index: UrlIndex
     datetime_formatter: DatetimeFormatter
 
-    def create_navbar_items(self) -> list[NavbarItem]:
-        return [NavbarItem(text=self.translator.gettext("Plan information"), url=None)]
-
     def present(
         self, response: GetPlanDetailsInteractor.Response
     ) -> GetPlanDetailsViewModel:
         return GetPlanDetailsViewModel(
             details=self._format_plan_details(response.plan_details),
+            navbar_items=[
+                NavbarItem(text=self.translator.gettext("Plan information"), url=None)
+            ],
         )
 
     def _format_plan_details(self, plan_details: PlanDetails) -> PlanDetailsWeb:

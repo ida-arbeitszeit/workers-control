@@ -44,6 +44,7 @@ class ListTransfersViewModel:
     results: ResultsTable
     show_results: bool
     total_results: int
+    navbar_items: list[NavbarItem]
 
 
 @dataclass
@@ -53,9 +54,6 @@ class ListTransfersPresenter:
     url_index: UrlIndex
     datetime_formatter: DatetimeFormatter
 
-    def create_navbar_items(self) -> list[NavbarItem]:
-        return [NavbarItem(text=self.translator.gettext("All transfers"), url=None)]
-
     def present(self, response: InteractorResponse) -> ListTransfersViewModel:
         pagination = self._create_pagination(response)
         return ListTransfersViewModel(
@@ -63,6 +61,9 @@ class ListTransfersPresenter:
             results=self._create_results_table(response),
             show_results=bool(response.transfers),
             total_results=response.total_results,
+            navbar_items=[
+                NavbarItem(text=self.translator.gettext("All transfers"), url=None)
+            ],
         )
 
     def _create_results_table(self, response: InteractorResponse) -> ResultsTable:

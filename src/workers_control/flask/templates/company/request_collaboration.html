@@ -24,9 +24,9 @@
         <div class="column is-8 has-text-centered">
             {% if list_plans_view_model and list_plans_view_model.show_plan_listing %}
             <form method="post">
-                <div class="field has-addons has-addons-centered">
+                <div class="field">
                     <div class="control has-icons-left">
-                        <div class="select has-icons-left">
+                        <div class="select is-fullwidth has-icons-left">
                             <select name="plan_id" required>
                                 <option value="">{{ gettext("My plan...")}}</option>
                                 {% for plan in list_plans_view_model.plans %}
@@ -41,15 +41,17 @@
                             {{ "file"|icon }}
                         </span>
                     </div>
+                </div>
+                <div class="field">
                     <div class="control">
                         <input class="input" type="text" placeholder="{{ gettext('Collaboration ID') }}"
                             name="collaboration_id" value="{{ form.collaboration_id_value }}" required>
                     </div>
-                    <div class="field">
-                        <div class="control">
-                            <button class="button is-primary" name="request_collab" value="request_collab"
-                                type="submit">{{ gettext("Request collaboration")}}</button>
-                        </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-primary" name="request_collab" value="request_collab"
+                            type="submit">{{ gettext("Request collaboration")}}</button>
                     </div>
                 </div>
             </form>

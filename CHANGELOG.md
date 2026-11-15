@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- The request collaboration form is usable on small screens again. Its fields are
+  stacked vertically instead of being squeezed into a single row. (#1574)
 - Rejected requests no longer stay in memory until the server process restarts. Each one kept request data, so memory use grew with every rejection.
 - Harden CSP. The CSP headers emitted by the app no longer allow
   <base>, <object> and <embed> elements. Forms are only allowed to

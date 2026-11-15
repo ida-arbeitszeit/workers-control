@@ -43,13 +43,29 @@ class CompanyNavbarItems:
                 ),
                 current_page,
             ]
+        return self._company_trail(company_id, company_name) + [current_page]
+
+    def for_plan(
+        self, planner_id: UUID, planner_name: str, plan_name: str
+    ) -> list[NavbarItem]:
+        current_page = NavbarItem(text=plan_name, url=None)
+        if self._is_own_company(planner_id):
+            return [
+                NavbarItem(
+                    text=self.translator.gettext("My plans"),
+                    url=self.url_index.get_my_plans_url(),
+                ),
+                current_page,
+            ]
+        return self._company_trail(planner_id, planner_name) + [current_page]
+
+    def _company_trail(self, company_id: UUID, company_name: str) -> list[NavbarItem]:
         return [
             self._all_companies_item(),
             NavbarItem(
                 text=company_name,
                 url=self.url_index.get_company_summary_url(company_id=company_id),
             ),
-            current_page,
         ]
 
     def _is_own_company(self, company_id: UUID) -> bool:

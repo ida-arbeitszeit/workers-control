@@ -9,7 +9,7 @@ from workers_control.core.interactors.get_plan_details import (
 from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
-from workers_control.web.www.navbar import NavbarItem
+from workers_control.web.www.navbar import CompanyNavbarItems, NavbarItem
 
 
 @dataclass
@@ -45,15 +45,18 @@ class GetPlanDetailsPresenter:
     translator: Translator
     url_index: UrlIndex
     datetime_formatter: DatetimeFormatter
+    company_navbar_items: CompanyNavbarItems
 
     def present(
         self, response: GetPlanDetailsInteractor.Response
     ) -> GetPlanDetailsViewModel:
         return GetPlanDetailsViewModel(
             details=self._format_plan_details(response.plan_details),
-            navbar_items=[
-                NavbarItem(text=self.translator.gettext("Plan information"), url=None)
-            ],
+            navbar_items=self.company_navbar_items.for_plan(
+                planner_id=response.plan_details.planner_id,
+                planner_name=response.plan_details.planner_name,
+                plan_name=response.plan_details.product_name,
+            ),
         )
 
     def _format_plan_details(self, plan_details: PlanDetails) -> PlanDetailsWeb:

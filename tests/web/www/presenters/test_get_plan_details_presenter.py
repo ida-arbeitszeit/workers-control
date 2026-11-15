@@ -1,12 +1,17 @@
 from decimal import Decimal
-from uuid import uuid4
+from typing import Callable
+from uuid import UUID, uuid4
+
+from parameterized import parameterized
 
 from tests.base_test_case import BaseTestCase
 from tests.web.www.presenters.data_generators import PlanDetailsGenerator
+from tests.web.www.session import FakeSession
 from workers_control.core.interactors.get_plan_details import (
     GetPlanDetailsInteractor,
     PlanDetails,
 )
+from workers_control.web.www.navbar import NavbarItem
 from workers_control.web.www.presenters.get_plan_details_presenter import (
     GetPlanDetailsPresenter,
     PlanDetailsWeb,
@@ -17,18 +22,55 @@ class NavbarItemsTests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.presenter = self.injector.get(GetPlanDetailsPresenter)
+        self.planner = uuid4()
+        self.plan_details = self.injector.get(PlanDetailsGenerator).create_plan_details(
+            planner_id=self.planner, planner_name="Bakery", product_name="Bread"
+        )
 
-    def test_navbar_shows_plan_information_as_current_page(self) -> None:
-        items = self.presenter.present(
-            GetPlanDetailsInteractor.Response(
-                plan_details=self.injector.get(
-                    PlanDetailsGenerator
-                ).create_plan_details()
-            )
-        ).navbar_items
-        self.assertEqual(len(items), 1)
-        self.assertEqual(items[0].text, self.translator.gettext("Plan information"))
-        self.assertIsNone(items[0].url)
+    def test_planner_sees_my_plans_as_parent_page(self) -> None:
+        self.session.login_company(self.planner)
+        view_model = self.presenter.present(
+            GetPlanDetailsInteractor.Response(plan_details=self.plan_details)
+        )
+        self.assertEqual(
+            view_model.navbar_items,
+            [
+                NavbarItem(
+                    text=self.translator.gettext("My plans"),
+                    url=self.url_index.get_my_plans_url(),
+                ),
+                NavbarItem(text="Bread", url=None),
+            ],
+        )
+
+    @parameterized.expand(
+        [
+            (FakeSession.login_company,),
+            (FakeSession.login_member,),
+            (FakeSession.login_accountant,),
+        ]
+    )
+    def test_other_users_see_all_companies_and_planner_as_parent_pages(
+        self, log_in: Callable[[FakeSession, UUID], None]
+    ) -> None:
+        log_in(self.session, uuid4())
+        view_model = self.presenter.present(
+            GetPlanDetailsInteractor.Response(plan_details=self.plan_details)
+        )
+        self.assertEqual(
+            view_model.navbar_items,
+            [
+                NavbarItem(
+                    text=self.translator.gettext("All companies"),
+                    url=self.url_index.get_query_companies_url(),
+                ),
+                NavbarItem(
+                    text="Bakery",
+                    url=self.url_index.get_company_summary_url(company_id=self.planner),
+                ),
+                NavbarItem(text="Bread", url=None),
+            ],
+        )
 
 
 class FormatPlanDetailsTests(BaseTestCase):

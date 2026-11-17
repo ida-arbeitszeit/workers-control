@@ -148,7 +148,76 @@ class ListCoordinationsOfCollaborationTest(BaseTestCase):
         assert response.coordinations[1].end_time
         assert response.coordinations[2].end_time
 
+    def test_that_current_coordinator_is_involved(self) -> None:
+        coordinator = self.company_generator.create_company()
+        collab = self.collaboration_generator.create_collaboration(
+            coordinator=coordinator
+        )
+        response = self.interactor.list_coordinations(
+            self.create_interactor_request(collab=collab, requester=coordinator)
+        )
+        assert response.requester_is_involved
+
+    def test_that_former_coordinator_without_plan_is_not_involved(self) -> None:
+        former_coordinator = self.company_generator.create_company()
+        collab = self.collaboration_generator.create_collaboration(
+            coordinator=former_coordinator
+        )
+        self.coordination_tenure_generator.create_coordination_tenure(
+            collaboration=collab
+        )
+        response = self.interactor.list_coordinations(
+            self.create_interactor_request(collab=collab, requester=former_coordinator)
+        )
+        assert not response.requester_is_involved
+
+    def test_that_planner_of_plan_in_collaboration_is_involved(self) -> None:
+        planner = self.company_generator.create_company()
+        plan = self.plan_generator.create_plan(planner=planner)
+        collab = self.collaboration_generator.create_collaboration(plans=[plan])
+        response = self.interactor.list_coordinations(
+            self.create_interactor_request(collab=collab, requester=planner)
+        )
+        assert response.requester_is_involved
+
+    def test_that_planner_of_expired_plan_in_collaboration_is_not_involved(
+        self,
+    ) -> None:
+        self.datetime_service.freeze_time(datetime_utc(2000, 1, 1))
+        planner = self.company_generator.create_company()
+        plan = self.plan_generator.create_plan(planner=planner, timeframe=1)
+        collab = self.collaboration_generator.create_collaboration(plans=[plan])
+        self.datetime_service.advance_time(timedelta(days=2))
+        response = self.interactor.list_coordinations(
+            self.create_interactor_request(collab=collab, requester=planner)
+        )
+        assert not response.requester_is_involved
+
+    def test_that_planner_of_plan_in_other_collaboration_is_not_involved(
+        self,
+    ) -> None:
+        planner = self.company_generator.create_company()
+        plan = self.plan_generator.create_plan(planner=planner)
+        self.collaboration_generator.create_collaboration(plans=[plan])
+        other_collab = self.collaboration_generator.create_collaboration()
+        response = self.interactor.list_coordinations(
+            self.create_interactor_request(collab=other_collab, requester=planner)
+        )
+        assert not response.requester_is_involved
+
+    def test_that_unrelated_company_is_not_involved(self) -> None:
+        company = self.company_generator.create_company()
+        collab = self.collaboration_generator.create_collaboration()
+        response = self.interactor.list_coordinations(
+            self.create_interactor_request(collab=collab, requester=company)
+        )
+        assert not response.requester_is_involved
+
     def create_interactor_request(
-        self, collab: UUID
+        self, collab: UUID, requester: UUID | None = None
     ) -> ListCoordinationsOfCollaborationInteractor.Request:
-        return ListCoordinationsOfCollaborationInteractor.Request(collaboration=collab)
+        if requester is None:
+            requester = uuid4()
+        return ListCoordinationsOfCollaborationInteractor.Request(
+            collaboration=collab, requester=requester
+        )

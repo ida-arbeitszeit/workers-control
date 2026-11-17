@@ -148,7 +148,7 @@ class TestAcceptCoordinationTransferInteractor(BaseTestCase):
         list_coordinations_response = (
             self.list_coordinations_interactor.list_coordinations(
                 ListCoordinationsOfCollaborationInteractor.Request(
-                    collaboration=collaboration
+                    collaboration=collaboration, requester=uuid4()
                 )
             )
         )

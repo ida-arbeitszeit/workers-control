@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import Optional
 from uuid import UUID
 
+from workers_control.core.datetime_service import DatetimeService
 from workers_control.core.repositories import DatabaseGateway
 
 
@@ -17,16 +18,19 @@ class CoordinationInfo:
 @dataclass
 class ListCoordinationsOfCollaborationInteractor:
     database_gateway: DatabaseGateway
+    datetime_service: DatetimeService
 
     @dataclass
     class Request:
         collaboration: UUID
+        requester: UUID
 
     @dataclass
     class Response:
         coordinations: list[CoordinationInfo]
         collaboration_id: UUID
         collaboration_name: str
+        requester_is_involved: bool
 
     def list_coordinations(self, request: Request) -> Response:
         tenures_and_coordinators = list(
@@ -54,9 +58,24 @@ class ListCoordinationsOfCollaborationInteractor:
             .first()
         )
         assert collaboration
+        _, current_coordinator = tenures_and_coordinators[0]
 
         return self.Response(
             coordinations=coordinations,
             collaboration_id=request.collaboration,
             collaboration_name=collaboration.name,
+            requester_is_involved=current_coordinator.id == request.requester
+            or self._has_active_plan_in_collaboration(
+                request.requester, request.collaboration
+            ),
+        )
+
+    def _has_active_plan_in_collaboration(
+        self, planner: UUID, collaboration: UUID
+    ) -> bool:
+        return bool(
+            self.database_gateway.get_plans()
+            .that_are_part_of_collaboration(collaboration)
+            .that_will_expire_after(self.datetime_service.now())
+            .planned_by(planner)
         )

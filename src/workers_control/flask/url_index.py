@@ -38,6 +38,9 @@ class GeneralUrlIndex:
     def get_my_collaborations_url(self) -> str:
         return url_for("main_company.my_collaborations")
 
+    def get_list_all_collaborations_url(self) -> str:
+        return url_for("main_user.list_all_collaborations")
+
     def get_collab_summary_url(self, collab_id: UUID) -> str:
         return url_for("main_user.collab_summary", collab_id=collab_id)
 

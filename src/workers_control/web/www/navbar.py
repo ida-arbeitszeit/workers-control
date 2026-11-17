@@ -79,3 +79,40 @@ class CompanyNavbarItems:
             text=self.translator.gettext("All companies"),
             url=self.url_index.get_query_companies_url(),
         )
+
+
+@dataclass
+class CollaborationNavbarItems:
+    url_index: UrlIndex
+    translator: Translator
+
+    def for_collaboration_summary(
+        self, collab_name: str, requester_is_involved: bool
+    ) -> list[NavbarItem]:
+        return [
+            self._collaborations_item(requester_is_involved),
+            NavbarItem(text=collab_name, url=None),
+        ]
+
+    def for_coordinator_list(
+        self, collab_id: UUID, collab_name: str, requester_is_involved: bool
+    ) -> list[NavbarItem]:
+        return [
+            self._collaborations_item(requester_is_involved),
+            NavbarItem(
+                text=collab_name,
+                url=self.url_index.get_collab_summary_url(collab_id=collab_id),
+            ),
+            NavbarItem(text=self.translator.gettext("Coordinators"), url=None),
+        ]
+
+    def _collaborations_item(self, requester_is_involved: bool) -> NavbarItem:
+        if requester_is_involved:
+            return NavbarItem(
+                text=self.translator.gettext("My collaborations"),
+                url=self.url_index.get_my_collaborations_url(),
+            )
+        return NavbarItem(
+            text=self.translator.gettext("All collaborations"),
+            url=self.url_index.get_list_all_collaborations_url(),
+        )

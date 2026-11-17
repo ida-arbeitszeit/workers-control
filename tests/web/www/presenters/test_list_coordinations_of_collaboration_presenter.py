@@ -7,6 +7,7 @@ from workers_control.core.interactors.list_coordinations_of_collaboration import
     CoordinationInfo,
     ListCoordinationsOfCollaborationInteractor,
 )
+from workers_control.web.www.navbar import NavbarItem
 from workers_control.web.www.presenters.list_coordinations_of_collaboration_presenter import (
     ListCoordinationsOfCollaborationPresenter,
 )
@@ -104,6 +105,7 @@ class ListCoordinationsPresenterTests(BaseTestCase):
             ],
             collaboration_id=uuid4(),
             collaboration_name="Some collab test name",
+            requester_is_involved=False,
         )
         view_model = self.presenter.list_coordinations_of_collaboration(response)
         self.assertEqual(view_model.coordinations[0].end_time, "-")
@@ -122,30 +124,52 @@ class ListCoordinationsPresenterTests(BaseTestCase):
             view_model.coordinations[0].end_time, expected_formatted_end_time
         )
 
-    def test_presenter_shows_correct_amount_of_navbar_items(self) -> None:
-        response = self.get_interactor_response_with_one_coordination()
-        view_model = self.presenter.list_coordinations_of_collaboration(response)
-        self.assertEqual(len(view_model.navbar_items), 2)
-
-    def test_first_navbar_item_is_correct(self) -> None:
-        response = self.get_interactor_response_with_one_coordination()
-        view_model = self.presenter.list_coordinations_of_collaboration(response)
-        self.assertEqual(
-            view_model.navbar_items[0].url,
-            self.url_index.get_collab_summary_url(
-                collab_id=response.collaboration_id,
-            ),
+    def test_involved_company_sees_my_collaborations_and_collaboration_as_parents(
+        self,
+    ) -> None:
+        response = self.get_interactor_response_with_one_coordination(
+            collaboration_name="Bread collective", requester_is_involved=True
         )
+        view_model = self.presenter.list_coordinations_of_collaboration(response)
         self.assertEqual(
-            view_model.navbar_items[0].text, self.translator.gettext("Collaboration")
+            view_model.navbar_items,
+            [
+                NavbarItem(
+                    text=self.translator.gettext("My collaborations"),
+                    url=self.url_index.get_my_collaborations_url(),
+                ),
+                NavbarItem(
+                    text="Bread collective",
+                    url=self.url_index.get_collab_summary_url(
+                        collab_id=response.collaboration_id
+                    ),
+                ),
+                NavbarItem(text=self.translator.gettext("Coordinators"), url=None),
+            ],
         )
 
-    def test_second_navbar_item_is_correct(self) -> None:
-        response = self.get_interactor_response_with_one_coordination()
+    def test_uninvolved_user_sees_all_collaborations_and_collaboration_as_parents(
+        self,
+    ) -> None:
+        response = self.get_interactor_response_with_one_coordination(
+            collaboration_name="Bread collective", requester_is_involved=False
+        )
         view_model = self.presenter.list_coordinations_of_collaboration(response)
-        self.assertEqual(view_model.navbar_items[1].url, None)
         self.assertEqual(
-            view_model.navbar_items[1].text, self.translator.gettext("Coordinators")
+            view_model.navbar_items,
+            [
+                NavbarItem(
+                    text=self.translator.gettext("All collaborations"),
+                    url=self.url_index.get_list_all_collaborations_url(),
+                ),
+                NavbarItem(
+                    text="Bread collective",
+                    url=self.url_index.get_collab_summary_url(
+                        collab_id=response.collaboration_id
+                    ),
+                ),
+                NavbarItem(text=self.translator.gettext("Coordinators"), url=None),
+            ],
         )
 
     def get_interactor_response_with_zero_coordinations(
@@ -155,6 +179,7 @@ class ListCoordinationsPresenterTests(BaseTestCase):
             coordinations=[],
             collaboration_id=uuid4(),
             collaboration_name="Some collab test name",
+            requester_is_involved=False,
         )
 
     def get_interactor_response_with_one_coordination(
@@ -165,6 +190,7 @@ class ListCoordinationsPresenterTests(BaseTestCase):
         end_time: datetime = datetime_utc(2022, 3, 10, 13, 0),
         collaboration_id: UUID = uuid4(),
         collaboration_name: str = "Some collab test name",
+        requester_is_involved: bool = False,
     ) -> ListCoordinationsOfCollaborationInteractor.Response:
         return ListCoordinationsOfCollaborationInteractor.Response(
             coordinations=[
@@ -177,4 +203,5 @@ class ListCoordinationsPresenterTests(BaseTestCase):
             ],
             collaboration_id=collaboration_id,
             collaboration_name=collaboration_name,
+            requester_is_involved=requester_is_involved,
         )

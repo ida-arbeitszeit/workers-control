@@ -10,6 +10,7 @@ from workers_control.core.interactors.get_collab_summary import (
     AssociatedPlan,
     GetCollabSummaryResponse,
 )
+from workers_control.web.www.navbar import NavbarItem
 from workers_control.web.www.presenters.get_collab_summary_presenter import (
     GetCollabSummarySuccessPresenter,
 )
@@ -204,11 +205,37 @@ class GetCollabSummarySuccessPresenterTests(BaseTestCase):
         view_model = self.presenter.present(response=collab_summary)
         assert view_model.plans[0].show_end_collab_button == button_is_shown
 
-    def test_navbar_shows_collaboration_as_current_page(self) -> None:
-        items = self.presenter.present(self.get_collab_summary()).navbar_items
-        self.assertEqual(len(items), 1)
-        self.assertEqual(items[0].text, self.translator.gettext("Collaboration"))
-        self.assertIsNone(items[0].url)
+    def test_involved_company_sees_my_collaborations_as_parent_page(self) -> None:
+        collab_summary = self.get_collab_summary(
+            collab_name="Bread collective", requester_is_involved=True
+        )
+        view_model = self.presenter.present(collab_summary)
+        self.assertEqual(
+            view_model.navbar_items,
+            [
+                NavbarItem(
+                    text=self.translator.gettext("My collaborations"),
+                    url=self.url_index.get_my_collaborations_url(),
+                ),
+                NavbarItem(text="Bread collective", url=None),
+            ],
+        )
+
+    def test_uninvolved_user_sees_all_collaborations_as_parent_page(self) -> None:
+        collab_summary = self.get_collab_summary(
+            collab_name="Bread collective", requester_is_involved=False
+        )
+        view_model = self.presenter.present(collab_summary)
+        self.assertEqual(
+            view_model.navbar_items,
+            [
+                NavbarItem(
+                    text=self.translator.gettext("All collaborations"),
+                    url=self.url_index.get_list_all_collaborations_url(),
+                ),
+                NavbarItem(text="Bread collective", url=None),
+            ],
+        )
 
     def get_associated_plan(
         self,
@@ -235,6 +262,8 @@ class GetCollabSummarySuccessPresenterTests(BaseTestCase):
         collab_description: Optional[str] = None,
         coordinator_name: Optional[str] = None,
         collab_price: Optional[Decimal] = None,
+        collab_name: str = "collab name",
+        requester_is_involved: bool = True,
     ) -> GetCollabSummaryResponse:
         if plans is None:
             plans = [self.get_associated_plan()]
@@ -248,8 +277,9 @@ class GetCollabSummarySuccessPresenterTests(BaseTestCase):
             collab_price = Decimal(50.005)
         return GetCollabSummaryResponse(
             requester_is_coordinator=requester_is_coordinator,
+            requester_is_involved=requester_is_involved,
             collab_id=uuid4(),
-            collab_name="collab name",
+            collab_name=collab_name,
             collab_description=collab_description,
             current_coordinator=uuid4(),
             current_coordinator_name=coordinator_name,

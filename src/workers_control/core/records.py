@@ -10,13 +10,13 @@ from uuid import UUID
 from workers_control.core.transfers import TransferType
 
 
-@dataclass
+@dataclass(frozen=True)
 class EmailAddress:
     address: str
     confirmed_on: Optional[datetime]
 
 
-@dataclass
+@dataclass(frozen=True)
 class SocialAccounting:
     id: UUID
     account_psf: UUID
@@ -25,7 +25,7 @@ class SocialAccounting:
         return "Social Accounting"
 
 
-@dataclass
+@dataclass(frozen=True)
 class Member:
     id: UUID
     name: str
@@ -36,7 +36,7 @@ class Member:
         return self.name
 
 
-@dataclass
+@dataclass(frozen=True)
 class Company:
     id: UUID
     name: str
@@ -80,7 +80,7 @@ class Account:
     id: UUID
 
 
-@dataclass
+@dataclass(frozen=True)
 class Collaboration:
     id: UUID
     creation_date: datetime
@@ -92,7 +92,7 @@ class Collaboration:
         return self.name
 
 
-@dataclass
+@dataclass(frozen=True)
 class CoordinationTenure:
     id: UUID
     company: UUID
@@ -100,7 +100,7 @@ class CoordinationTenure:
     start_date: datetime
 
 
-@dataclass
+@dataclass(frozen=True)
 class CoordinationTransferRequest:
     id: UUID
     requesting_coordination_tenure: UUID
@@ -108,7 +108,7 @@ class CoordinationTransferRequest:
     request_date: datetime
 
 
-@dataclass
+@dataclass(frozen=True)
 class ProductionCosts:
     labour_cost: Decimal
     resource_cost: Decimal
@@ -137,7 +137,7 @@ class ProductionCosts:
         return cls(Decimal(0), Decimal(0), Decimal(0))
 
 
-@dataclass
+@dataclass(frozen=True)
 class PlanDraft:
     id: UUID
     creation_date: datetime
@@ -164,7 +164,7 @@ class PlanDraft:
         )
 
 
-@dataclass
+@dataclass(frozen=True)
 class Plan:
     id: UUID
     plan_creation_date: datetime
@@ -235,7 +235,7 @@ class Plan:
         return self.production_costs.total_cost() / Decimal(self.prd_amount)
 
 
-@dataclass
+@dataclass(frozen=True)
 class PlanApproval:
     id: UUID
     plan_id: UUID
@@ -245,7 +245,7 @@ class PlanApproval:
     transfer_of_credit_a: UUID
 
 
-@dataclass
+@dataclass(frozen=True)
 class PlanRejection:
     id: UUID
     plan_id: UUID
@@ -258,7 +258,7 @@ class ConsumptionType(Enum):
     consumption = "consumption"
 
 
-@dataclass
+@dataclass(frozen=True)
 class Transfer:
     """
     Represents a transfer of hours between accounts.
@@ -271,18 +271,15 @@ class Transfer:
     value: Decimal
     type: TransferType
 
-    def __hash__(self) -> int:
-        return hash(self.id)
 
-
-@dataclass
+@dataclass(frozen=True)
 class CompanyWorkInvite:
     id: UUID
     company: UUID
     member: UUID
 
 
-@dataclass
+@dataclass(frozen=True)
 class Accountant:
     id: UUID
     name: str
@@ -291,7 +288,7 @@ class Accountant:
         return self.name
 
 
-@dataclass
+@dataclass(frozen=True)
 class PlanningStatistics:
     average_plan_duration_in_days: Decimal
     total_planned_costs: ProductionCosts
@@ -334,14 +331,14 @@ class ProductiveConsumptionOfBasicService:
 AccountOwner = Union[Member, Company, SocialAccounting, Collaboration]
 
 
-@dataclass
+@dataclass(frozen=True)
 class AccountCredentials:
     id: UUID
     email_address: str
     password_hash: str
 
 
-@dataclass
+@dataclass(frozen=True)
 class PasswordResetRequest:
     id: UUID
     email_address: str
@@ -349,7 +346,7 @@ class PasswordResetRequest:
     created_at: datetime
 
 
-@dataclass
+@dataclass(frozen=True)
 class BasicService:
     id: UUID
     name: str
@@ -359,7 +356,7 @@ class BasicService:
     deactivated_on: Optional[datetime] = None
 
 
-@dataclass
+@dataclass(frozen=True)
 class RegisteredHoursWorked:
     id: UUID
     company: UUID
@@ -369,7 +366,7 @@ class RegisteredHoursWorked:
     registered_on: datetime
 
 
-@dataclass
+@dataclass(frozen=True)
 class Email:
     id: UUID
     created_at: datetime

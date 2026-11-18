@@ -370,63 +370,65 @@ class PlanResult(QueryResultImpl[Plan]):
 
     def update(self) -> PlanUpdate:
         return PlanUpdate(
+            database=self.database,
             items=self.items,
             update_functions=[],
-            records=self.database,
         )
 
 
 @dataclass
 class PlanUpdate:
+    database: MockDatabase
     items: Callable[[], Iterable[Plan]]
-    update_functions: List[Callable[[Plan], None]]
-    records: MockDatabase
+    update_functions: List[Callable[[Plan], Plan]]
 
     def set_collaboration(self, collaboration: Optional[UUID]) -> Self:
-        def update(plan: Plan) -> None:
+        def update(plan: Plan) -> Plan:
             if collaboration:
-                assert collaboration in self.records.collaborations
+                assert collaboration in self.database.collaborations
                 collaboration_plans = (
-                    self.records.relationships.collaboration_to_plan.get_many(
+                    self.database.relationships.collaboration_to_plan.get_many(
                         collaboration
                     )
                 )
                 if plan.id not in collaboration_plans:
-                    self.records.relationships.collaboration_to_plan.relate(
+                    self.database.relationships.collaboration_to_plan.relate(
                         collaboration, plan.id
                     )
             else:
                 current_collab = (
-                    self.records.relationships.collaboration_to_plan.get_one(plan.id)
+                    self.database.relationships.collaboration_to_plan.get_one(plan.id)
                 )
                 if current_collab:
-                    self.records.relationships.collaboration_to_plan.dissociate(
+                    self.database.relationships.collaboration_to_plan.dissociate(
                         current_collab, plan.id
                     )
+            return plan
 
         return self._add_update(update)
 
     def set_requested_collaboration(self, collaboration: Optional[UUID]) -> Self:
-        def update(plan: Plan) -> None:
-            plan.requested_collaboration = collaboration
+        def update(plan: Plan) -> Plan:
+            return replace(plan, requested_collaboration=collaboration)
 
         return self._add_update(update)
 
     def hide(self) -> Self:
-        def update(plan: records.Plan) -> None:
-            plan.hidden_by_user = True
+        def update(plan: Plan) -> Plan:
+            return replace(plan, hidden_by_user=True)
 
         return self._add_update(update)
 
     def perform(self) -> int:
         items_affected = 0
-        for item in self.items():
+        for item in list(self.items()):
             for update in self.update_functions:
-                update(item)
+                item = update(item)
+            self.database.plans[item.id] = item
             items_affected += 1
         return items_affected
 
-    def _add_update(self, update: Callable[[Plan], None]) -> Self:
+    def _add_update(self, update: Callable[[Plan], Plan]) -> Self:
         return replace(self, update_functions=self.update_functions + [update])
 
 
@@ -478,6 +480,7 @@ class PlanDraftResult(QueryResultImpl[records.PlanDraft]):
         return PlanDraftUpdate(
             database=self.database,
             items=self.items,
+            update_functions=[],
         )
 
 
@@ -485,95 +488,82 @@ class PlanDraftResult(QueryResultImpl[records.PlanDraft]):
 class PlanDraftUpdate:
     database: MockDatabase
     items: Callable[[], Iterable[PlanDraft]]
-    changes: Callable[[PlanDraft], None] = lambda _: None
+    update_functions: List[Callable[[PlanDraft], PlanDraft]]
 
     def set_product_name(self, name: str) -> Self:
-        def update(draft: PlanDraft) -> None:
-            draft.product_name = name
+        def update(draft: PlanDraft) -> PlanDraft:
+            return replace(draft, product_name=name)
 
-        return replace(
-            self,
-            changes=update,
-        )
+        return self._add_update(update)
 
     def set_amount(self, n: int) -> Self:
-        def update(draft: PlanDraft) -> None:
-            draft.amount_produced = n
+        def update(draft: PlanDraft) -> PlanDraft:
+            return replace(draft, amount_produced=n)
 
-        return replace(
-            self,
-            changes=update,
-        )
+        return self._add_update(update)
 
     def set_description(self, description: str) -> Self:
-        def update(draft: PlanDraft) -> None:
-            draft.description = description
+        def update(draft: PlanDraft) -> PlanDraft:
+            return replace(draft, description=description)
 
-        return replace(
-            self,
-            changes=update,
-        )
+        return self._add_update(update)
 
     def set_labour_cost(self, costs: Decimal) -> Self:
-        def update(draft: PlanDraft) -> None:
-            draft.production_costs.labour_cost = costs
+        def update(draft: PlanDraft) -> PlanDraft:
+            return replace(
+                draft,
+                production_costs=replace(draft.production_costs, labour_cost=costs),
+            )
 
-        return replace(
-            self,
-            changes=update,
-        )
+        return self._add_update(update)
 
     def set_means_cost(self, costs: Decimal) -> Self:
-        def update(draft: PlanDraft) -> None:
-            draft.production_costs.means_cost = costs
+        def update(draft: PlanDraft) -> PlanDraft:
+            return replace(
+                draft,
+                production_costs=replace(draft.production_costs, means_cost=costs),
+            )
 
-        return replace(
-            self,
-            changes=update,
-        )
+        return self._add_update(update)
 
     def set_resource_cost(self, costs: Decimal) -> Self:
-        def update(draft: PlanDraft) -> None:
-            draft.production_costs.resource_cost = costs
+        def update(draft: PlanDraft) -> PlanDraft:
+            return replace(
+                draft,
+                production_costs=replace(draft.production_costs, resource_cost=costs),
+            )
 
-        return replace(
-            self,
-            changes=update,
-        )
+        return self._add_update(update)
 
     def set_is_public_service(self, is_public_service: bool) -> Self:
-        def update(draft: PlanDraft) -> None:
-            draft.is_public_service = is_public_service
+        def update(draft: PlanDraft) -> PlanDraft:
+            return replace(draft, is_public_service=is_public_service)
 
-        return replace(
-            self,
-            changes=update,
-        )
+        return self._add_update(update)
 
     def set_timeframe(self, days: int) -> Self:
-        def update(draft: PlanDraft) -> None:
-            draft.timeframe = days
+        def update(draft: PlanDraft) -> PlanDraft:
+            return replace(draft, timeframe=days)
 
-        return replace(
-            self,
-            changes=update,
-        )
+        return self._add_update(update)
 
     def set_unit_of_distribution(self, unit: str) -> Self:
-        def update(draft: PlanDraft) -> None:
-            draft.unit_of_distribution = unit
+        def update(draft: PlanDraft) -> PlanDraft:
+            return replace(draft, unit_of_distribution=unit)
 
-        return replace(
-            self,
-            changes=update,
-        )
+        return self._add_update(update)
 
     def perform(self) -> int:
         items_affected = 0
-        for item in self.items():
-            self.changes(item)
+        for item in list(self.items()):
+            for update in self.update_functions:
+                item = update(item)
+            self.database.drafts[item.id] = item
             items_affected += 1
         return items_affected
+
+    def _add_update(self, update: Callable[[PlanDraft], PlanDraft]) -> Self:
+        return replace(self, update_functions=self.update_functions + [update])
 
 
 class PlanApprovalResult(QueryResultImpl[PlanApproval]): ...
@@ -732,27 +722,36 @@ class MemberResult(QueryResultImpl[Member]):
         )
 
     def update(self) -> MemberUpdate:
-        return MemberUpdate(items=self.items, update_functions=[])
+        return MemberUpdate(
+            database=self.database,
+            items=self.items,
+            update_functions=[],
+        )
 
 
 @dataclass
 class MemberUpdate:
+    database: MockDatabase
     items: Callable[[], Iterable[Member]]
-    update_functions: List[Callable[[Member], None]]
+    update_functions: List[Callable[[Member], Member]]
 
     def set_name(self, name: str) -> Self:
-        def update(member: Member) -> None:
-            member.name = name
+        def update(member: Member) -> Member:
+            return replace(member, name=name)
 
-        return replace(self, update_functions=self.update_functions + [update])
+        return self._add_update(update)
 
     def perform(self) -> int:
         items_affected = 0
-        for item in self.items():
+        for item in list(self.items()):
             for update in self.update_functions:
-                update(item)
+                item = update(item)
+            self.database.members[item.id] = item
             items_affected += 1
         return items_affected
+
+    def _add_update(self, update: Callable[[Member], Member]) -> Self:
+        return replace(self, update_functions=self.update_functions + [update])
 
 
 class CompanyResult(QueryResultImpl[Company]):
@@ -858,27 +857,36 @@ class CompanyResult(QueryResultImpl[Company]):
         )
 
     def update(self) -> CompanyUpdate:
-        return CompanyUpdate(items=self.items, update_functions=[])
+        return CompanyUpdate(
+            database=self.database,
+            items=self.items,
+            update_functions=[],
+        )
 
 
 @dataclass
 class CompanyUpdate:
+    database: MockDatabase
     items: Callable[[], Iterable[Company]]
-    update_functions: List[Callable[[Company], None]]
+    update_functions: List[Callable[[Company], Company]]
 
     def set_name(self, name: str) -> Self:
-        def update(company: Company) -> None:
-            company.name = name
+        def update(company: Company) -> Company:
+            return replace(company, name=name)
 
-        return replace(self, update_functions=self.update_functions + [update])
+        return self._add_update(update)
 
     def perform(self) -> int:
         items_affected = 0
-        for item in self.items():
+        for item in list(self.items()):
             for update in self.update_functions:
-                update(item)
+                item = update(item)
+            self.database.companies[item.id] = item
             items_affected += 1
         return items_affected
+
+    def _add_update(self, update: Callable[[Company], Company]) -> Self:
+        return replace(self, update_functions=self.update_functions + [update])
 
 
 class AccountantResult(QueryResultImpl[Accountant]):
@@ -917,27 +925,36 @@ class AccountantResult(QueryResultImpl[Accountant]):
         )
 
     def update(self) -> AccountantUpdate:
-        return AccountantUpdate(items=self.items, update_functions=[])
+        return AccountantUpdate(
+            database=self.database,
+            items=self.items,
+            update_functions=[],
+        )
 
 
 @dataclass
 class AccountantUpdate:
+    database: MockDatabase
     items: Callable[[], Iterable[Accountant]]
-    update_functions: List[Callable[[Accountant], None]]
+    update_functions: List[Callable[[Accountant], Accountant]]
 
     def set_name(self, name: str) -> Self:
-        def update(accountant: Accountant) -> None:
-            accountant.name = name
+        def update(accountant: Accountant) -> Accountant:
+            return replace(accountant, name=name)
 
-        return replace(self, update_functions=self.update_functions + [update])
+        return self._add_update(update)
 
     def perform(self) -> int:
         items_affected = 0
-        for item in self.items():
+        for item in list(self.items()):
             for update in self.update_functions:
-                update(item)
+                item = update(item)
+            self.database.accountants[item.id] = item
             items_affected += 1
         return items_affected
+
+    def _add_update(self, update: Callable[[Accountant], Accountant]) -> Self:
+        return replace(self, update_functions=self.update_functions + [update])
 
 
 class TransferResult(QueryResultImpl[records.Transfer]):
@@ -1546,30 +1563,37 @@ class EmailAddressResult(QueryResultImpl[records.EmailAddress]):
 
     def update(self) -> EmailAddressUpdate:
         return EmailAddressUpdate(
+            database=self.database,
             items=self.items,
+            update_functions=[],
         )
 
 
 @dataclass
 class EmailAddressUpdate:
+    database: MockDatabase
     items: Callable[[], Iterable[records.EmailAddress]]
-    transformation: Callable[[records.EmailAddress], None] = field(
-        default=lambda _: None
-    )
+    update_functions: List[Callable[[records.EmailAddress], records.EmailAddress]]
 
     def set_confirmation_timestamp(self, timestamp: Optional[datetime]) -> Self:
-        def transformation(item: records.EmailAddress) -> None:
-            self.transformation(item)
-            item.confirmed_on = timestamp
+        def update(address: records.EmailAddress) -> records.EmailAddress:
+            return replace(address, confirmed_on=timestamp)
 
-        return replace(self, transformation=transformation)
+        return self._add_update(update)
 
     def perform(self) -> int:
-        email_addresses_affected = 0
-        for address in self.items():
-            self.transformation(address)
-            email_addresses_affected += 1
-        return email_addresses_affected
+        items_affected = 0
+        for item in list(self.items()):
+            for update in self.update_functions:
+                item = update(item)
+            self.database.email_addresses[item.address] = item
+            items_affected += 1
+        return items_affected
+
+    def _add_update(
+        self, update: Callable[[records.EmailAddress], records.EmailAddress]
+    ) -> Self:
+        return replace(self, update_functions=self.update_functions + [update])
 
 
 class RegisteredHoursWorkedResult(QueryResultImpl[records.RegisteredHoursWorked]):
@@ -1828,51 +1852,57 @@ class AccountCredentialsResult(QueryResultImpl[records.AccountCredentials]):
 
     def update(self) -> AccountCredentialsUpdate:
         return AccountCredentialsUpdate(
-            items=self.items,
             database=self.database,
+            items=self.items,
+            update_functions=[],
         )
 
 
 @dataclass
 class AccountCredentialsUpdate:
-    items: Callable[[], Iterable[records.AccountCredentials]]
     database: MockDatabase
-    actions: List[Callable[[MockDatabase, records.AccountCredentials], None]] = field(
-        default_factory=list
-    )
-
-    def perform(self) -> int:
-        item_count = 0
-        for item in self.items():
-            item_count += 1
-            self.perform_all_actions(item)
-        return item_count
-
-    def perform_all_actions(self, item: records.AccountCredentials) -> None:
-        for action in self.actions:
-            action(self.database, item)
+    items: Callable[[], Iterable[records.AccountCredentials]]
+    update_functions: List[
+        Callable[[records.AccountCredentials], records.AccountCredentials]
+    ]
 
     def change_email_address(self, new_email_address: str) -> Self:
-        def _change_action(db: MockDatabase, item: records.AccountCredentials) -> None:
-            assert not db.indices.account_credentials_by_email_address_lowercased.get(
-                new_email_address.lower()
+        def update(
+            credentials: records.AccountCredentials,
+        ) -> records.AccountCredentials:
+            index = (
+                self.database.indices.account_credentials_by_email_address_lowercased
             )
-            assert new_email_address in db.email_addresses
-            db.indices.account_credentials_by_email_address_lowercased.remove(
-                item.email_address.lower(), item.id
-            )
-            item.email_address = new_email_address
-            db.indices.account_credentials_by_email_address_lowercased.add(
-                new_email_address.lower(), item.id
-            )
+            assert not index.get(new_email_address.lower())
+            assert new_email_address in self.database.email_addresses
+            index.remove(credentials.email_address.lower(), credentials.id)
+            index.add(new_email_address.lower(), credentials.id)
+            return replace(credentials, email_address=new_email_address)
 
-        return replace(self, actions=self.actions + [_change_action])
+        return self._add_update(update)
 
     def change_password_hash(self, new_password_hash: str) -> Self:
-        def _change_action(db: MockDatabase, item: records.AccountCredentials) -> None:
-            item.password_hash = new_password_hash
+        def update(
+            credentials: records.AccountCredentials,
+        ) -> records.AccountCredentials:
+            return replace(credentials, password_hash=new_password_hash)
 
-        return replace(self, actions=self.actions + [_change_action])
+        return self._add_update(update)
+
+    def perform(self) -> int:
+        items_affected = 0
+        for item in list(self.items()):
+            for update in self.update_functions:
+                item = update(item)
+            self.database.account_credentials[item.id] = item
+            items_affected += 1
+        return items_affected
+
+    def _add_update(
+        self,
+        update: Callable[[records.AccountCredentials], records.AccountCredentials],
+    ) -> Self:
+        return replace(self, update_functions=self.update_functions + [update])
 
 
 class BasicServiceResult(QueryResultImpl[BasicService]):
@@ -1915,6 +1945,7 @@ class BasicServiceResult(QueryResultImpl[BasicService]):
 
     def update(self) -> BasicServiceUpdate:
         return BasicServiceUpdate(
+            database=self.database,
             items=self.items,
             update_functions=[],
         )
@@ -1922,28 +1953,30 @@ class BasicServiceResult(QueryResultImpl[BasicService]):
 
 @dataclass
 class BasicServiceUpdate:
+    database: MockDatabase
     items: Callable[[], Iterable[BasicService]]
-    update_functions: List[Callable[[BasicService], None]]
+    update_functions: List[Callable[[BasicService], BasicService]]
 
     def set_deactivated_on(self, deactivated_on: datetime) -> Self:
-        def update(service: BasicService) -> None:
-            service.deactivated_on = deactivated_on
+        def update(service: BasicService) -> BasicService:
+            return replace(service, deactivated_on=deactivated_on)
 
         return self._add_update(update)
 
     def perform(self) -> int:
         items_affected = 0
-        for item in self.items():
+        for item in list(self.items()):
             for update in self.update_functions:
-                update(item)
+                item = update(item)
+            self.database.basic_services[item.id] = item
             items_affected += 1
         return items_affected
 
-    def _add_update(self, update: Callable[[BasicService], None]) -> Self:
+    def _add_update(self, update: Callable[[BasicService], BasicService]) -> Self:
         return replace(self, update_functions=self.update_functions + [update])
 
 
-@dataclass
+@dataclass(frozen=True)
 class EmailOutboxStatus:
     sent_at: Optional[datetime] = None
     retry_count: int = 0
@@ -1979,36 +2012,39 @@ class EmailResult(QueryResultImpl[records.Email]):
 class EmailUpdate:
     database: MockDatabase
     items: Callable[[], Iterable[records.Email]]
-    update_functions: List[Callable[[EmailOutboxStatus], None]]
+    update_functions: List[Callable[[EmailOutboxStatus], EmailOutboxStatus]]
 
     def set_sent_at(self, sent_at: datetime) -> Self:
-        def update(status: EmailOutboxStatus) -> None:
-            status.sent_at = sent_at
+        def update(status: EmailOutboxStatus) -> EmailOutboxStatus:
+            return replace(status, sent_at=sent_at)
 
         return self._add_update(update)
 
     def set_last_error(self, message: str) -> Self:
-        def update(status: EmailOutboxStatus) -> None:
-            status.last_error = message
+        def update(status: EmailOutboxStatus) -> EmailOutboxStatus:
+            return replace(status, last_error=message)
 
         return self._add_update(update)
 
     def increment_retry_count(self) -> Self:
-        def update(status: EmailOutboxStatus) -> None:
-            status.retry_count += 1
+        def update(status: EmailOutboxStatus) -> EmailOutboxStatus:
+            return replace(status, retry_count=status.retry_count + 1)
 
         return self._add_update(update)
 
     def perform(self) -> int:
         items_affected = 0
-        for email in self.items():
+        for email in list(self.items()):
             status = self.database.email_outbox_status[email.id]
             for update in self.update_functions:
-                update(status)
+                status = update(status)
+            self.database.email_outbox_status[email.id] = status
             items_affected += 1
         return items_affected
 
-    def _add_update(self, update: Callable[[EmailOutboxStatus], None]) -> Self:
+    def _add_update(
+        self, update: Callable[[EmailOutboxStatus], EmailOutboxStatus]
+    ) -> Self:
         return replace(self, update_functions=self.update_functions + [update])
 
 
@@ -2548,7 +2584,7 @@ class MockDatabase:
         self.plan_approvals.append(record)
         plan = self.get_plans().with_id(plan_id).first()
         assert plan
-        plan.approval_date = record.date
+        self.plans[plan_id] = replace(plan, approval_date=record.date)
         return record
 
     def get_plan_approvals(self) -> PlanApprovalResult:
@@ -2569,7 +2605,7 @@ class MockDatabase:
         )
         plan = self.get_plans().with_id(plan_id).first()
         assert plan
-        plan.rejection_date = record.date
+        self.plans[plan_id] = replace(plan, rejection_date=record.date)
         return record
 
     def create_basic_service(

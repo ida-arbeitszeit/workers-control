@@ -169,6 +169,29 @@ class InteractorTests(BaseTestCase):
         self.interactor.edit_draft(request)
         self.assertDraft(draft, lambda d: d.production_unit == "new unit")
 
+    def test_can_change_multiple_fields_in_one_edit(self) -> None:
+        planner = self.company_generator.create_company()
+        draft = self.plan_generator.draft_plan(
+            planner=planner,
+            product_name="old name",
+            costs=ProductionCosts(
+                labour_cost=Decimal("1"),
+                resource_cost=Decimal("1"),
+                means_cost=Decimal("1"),
+            ),
+        )
+        request = self.create_request(
+            draft=draft,
+            editor=planner,
+            product_name="new name",
+            labour_cost=Decimal(2),
+        )
+        self.interactor.edit_draft(request)
+        self.assertDraft(
+            draft,
+            lambda d: d.product_name == "new name" and d.labour_cost == Decimal(2),
+        )
+
     def assertDraft(
         self, draft_id: UUID, condition: Callable[[DraftDetailsSuccess], bool]
     ) -> None:

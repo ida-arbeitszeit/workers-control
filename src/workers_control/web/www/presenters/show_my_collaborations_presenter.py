@@ -84,6 +84,7 @@ class ShowMyCollaborationsViewModel:
     list_of_inbound_collab_requests: ListOfInboundCollaborationRequestsTable
     list_of_outbound_collab_requests: ListOfOutboundCollaborationRequestsTable
     list_of_my_collaborating_plans: ListOfMyCollaboratingPlans
+    navbar_items: list[NavbarItem]
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -93,9 +94,6 @@ class ShowMyCollaborationsViewModel:
 class ShowMyCollaborationsPresenter:
     url_index: UrlIndex
     translator: Translator
-
-    def create_navbar_items(self) -> list[NavbarItem]:
-        return [NavbarItem(text=self.translator.gettext("My collaborations"), url=None)]
 
     def present(
         self,
@@ -134,6 +132,9 @@ class ShowMyCollaborationsPresenter:
             list_of_inbound_collab_requests,
             list_of_outbound_collab_requests,
             list_of_my_collaborating_plans,
+            navbar_items=[
+                NavbarItem(text=self.translator.gettext("My collaborations"), url=None)
+            ],
         )
 
     def _display_coordination_table_row(

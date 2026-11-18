@@ -102,6 +102,7 @@ class ShowMyPlansViewModel:
     show_rejected_plans: bool
     rejected_plans: RejectedPlansTable
     create_draft_url: str
+    navbar_items: list[NavbarItem]
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -132,10 +133,10 @@ class ShowMyPlansPresenter:
             show_rejected_plans=bool(response.rejected_plans),
             rejected_plans=self._create_rejected_plans_table(response),
             create_draft_url=self.url_index.get_create_draft_url(),
+            navbar_items=[
+                NavbarItem(text=self.translator.gettext("My plans"), url=None)
+            ],
         )
-
-    def create_navbar_items(self) -> list[NavbarItem]:
-        return [NavbarItem(text=self.translator.gettext("My plans"), url=None)]
 
     def _create_active_plans_table(
         self, response: ShowMyPlansResponse

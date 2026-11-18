@@ -145,7 +145,9 @@ class NavbarItemsTests(BaseTestCase):
         )
 
     def test_navbar_shows_registered_working_hours_as_current_page(self) -> None:
-        items = self.presenter.create_navbar_items()
+        items = self.presenter.present(
+            list_registered_hours_worked.Response(registered_hours_worked=[])
+        ).navbar_items
         self.assertEqual(len(items), 1)
         self.assertEqual(
             items[0].text, self.translator.gettext("Registered working hours")

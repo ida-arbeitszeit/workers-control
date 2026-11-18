@@ -8,7 +8,7 @@ from workers_control.core.interactors.list_coordinations_of_collaboration import
 from workers_control.web.formatters.datetime_formatter import DatetimeFormatter
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
-from workers_control.web.www.navbar import NavbarItem
+from workers_control.web.www.navbar import CollaborationNavbarItems, NavbarItem
 
 
 @dataclass
@@ -31,6 +31,7 @@ class ListCoordinationsOfCollaborationPresenter:
     url_index: UrlIndex
     datetime_formatter: DatetimeFormatter
     translator: Translator
+    collaboration_navbar_items: CollaborationNavbarItems
 
     def list_coordinations_of_collaboration(
         self, response: Interactor.Response
@@ -62,16 +63,9 @@ class ListCoordinationsOfCollaborationPresenter:
                 )
                 for coordination in response.coordinations
             ],
-            navbar_items=[
-                NavbarItem(
-                    text=self.translator.gettext("Collaboration"),
-                    url=self.url_index.get_collab_summary_url(
-                        collab_id=response.collaboration_id,
-                    ),
-                ),
-                NavbarItem(
-                    text=self.translator.gettext("Coordinators"),
-                    url=None,
-                ),
-            ],
+            navbar_items=self.collaboration_navbar_items.for_coordinator_list(
+                collab_id=response.collaboration_id,
+                collab_name=response.collaboration_name,
+                requester_is_involved=response.requester_is_involved,
+            ),
         )

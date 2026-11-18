@@ -32,6 +32,5 @@ class QueryPrivateConsumptionsView:
             flask.render_template(
                 "member/consumptions.html",
                 view_model=view_model,
-                navbar_items=self.presenter.create_navbar_items(),
             )
         )

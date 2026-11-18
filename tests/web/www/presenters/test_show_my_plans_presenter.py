@@ -428,7 +428,7 @@ class RejectedPlansTests(PresenterBase):
 
 class NavbarItemsTests(PresenterBase):
     def test_navbar_shows_my_plans_as_current_page(self) -> None:
-        items = self.presenter.create_navbar_items()
+        items = self.presenter.present(self.create_interactor_response()).navbar_items
         self.assertEqual(len(items), 1)
         self.assertEqual(items[0].text, self.translator.gettext("My plans"))
         self.assertIsNone(items[0].url)

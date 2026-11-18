@@ -16,13 +16,11 @@ class ShowMemberAccountDetailsPresenter:
         balance: str
         is_balance_positive: bool
         transfers: list[TransferInfo]
+        navbar_items: list[NavbarItem]
 
     datetime_formatter: DatetimeFormatter
     translator: Translator
     transfer_presenter: TransferPresenter
-
-    def create_navbar_items(self) -> list[NavbarItem]:
-        return [NavbarItem(text=self.translator.gettext("My account"), url=None)]
 
     def present_member_account(
         self, interactor_response: ShowMemberAccountDetailsResponse
@@ -34,4 +32,7 @@ class ShowMemberAccountDetailsPresenter:
             balance=f"{round(interactor_response.balance, 2)}",
             is_balance_positive=interactor_response.balance >= 0,
             transfers=transfers,
+            navbar_items=[
+                NavbarItem(text=self.translator.gettext("My account"), url=None)
+            ],
         )

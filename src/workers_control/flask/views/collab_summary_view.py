@@ -32,7 +32,6 @@ class CollabSummaryView:
             return render_template(
                 "user/collab_summary.html",
                 view_model=view_model,
-                navbar_items=self.presenter.create_navbar_items(),
             )
         else:
             return http_404()

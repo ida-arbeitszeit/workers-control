@@ -85,11 +85,7 @@ def company_summary(
     interactor_response = get_company_summary.execute(company_id)
     if isinstance(interactor_response, GetCompanySummarySuccess):
         view_model = presenter.present(interactor_response)
-        return render_template(
-            "user/company_summary.html",
-            view_model=view_model,
-            navbar_items=presenter.create_navbar_items(),
-        )
+        return render_template("user/company_summary.html", view_model=view_model)
     else:
         return http_404()
 

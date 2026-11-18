@@ -21,13 +21,11 @@ class ListBasicServicesOfWorkerPresenter:
 
         is_services_visible: bool
         services: list[Service]
+        navbar_items: list[NavbarItem]
 
     datetime_formatter: DatetimeFormatter
     url_index: UrlIndex
     translator: Translator
-
-    def create_navbar_items(self) -> list[NavbarItem]:
-        return [NavbarItem(text=self.translator.gettext("My basic services"), url=None)]
 
     def present(self, response: Response) -> ViewModel:
         return self.ViewModel(
@@ -46,5 +44,8 @@ class ListBasicServicesOfWorkerPresenter:
                     ),
                 )
                 for service in response.basic_services
+            ],
+            navbar_items=[
+                NavbarItem(text=self.translator.gettext("My basic services"), url=None)
             ],
         )

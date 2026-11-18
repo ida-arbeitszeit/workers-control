@@ -4,7 +4,7 @@ from typing import List
 from workers_control.core.interactors import show_a_account_details
 from workers_control.web.translator import Translator
 from workers_control.web.url_index import UrlIndex
-from workers_control.web.www.navbar import NavbarItem
+from workers_control.web.www.navbar import CompanyNavbarItems, NavbarItem
 from workers_control.web.www.presenters.transfers import TransferInfo, TransferPresenter
 
 
@@ -20,6 +20,7 @@ class ShowAAccountDetailsPresenter:
     translator: Translator
     url_index: UrlIndex
     transfer_presenter: TransferPresenter
+    company_navbar_items: CompanyNavbarItems
 
     def present(
         self, interactor_response: show_a_account_details.Response
@@ -33,13 +34,9 @@ class ShowAAccountDetailsPresenter:
             plot_url=self.url_index.get_line_plot_of_company_a_account(
                 interactor_response.company_id
             ),
-            navbar_items=[
-                NavbarItem(
-                    text=self.translator.gettext("Accounts"),
-                    url=self.url_index.get_company_accounts_url(
-                        company_id=interactor_response.company_id
-                    ),
-                ),
-                NavbarItem(text=self.translator.gettext("Account a"), url=None),
-            ],
+            navbar_items=self.company_navbar_items.for_company_account(
+                company_id=interactor_response.company_id,
+                company_name=interactor_response.company_name,
+                account_label=self.translator.gettext("Account a"),
+            ),
         )

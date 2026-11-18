@@ -25,14 +25,10 @@ class ListPlansWithPendingReviewPresenter:
     class ViewModel:
         show_plan_list: bool
         plans: List[ListPlansWithPendingReviewPresenter.Plan]
+        navbar_items: list[NavbarItem]
 
     url_index: UrlIndex
     translator: Translator
-
-    def create_navbar_items(self) -> list[NavbarItem]:
-        return [
-            NavbarItem(text=self.translator.gettext("List unreviewed plans"), url=None)
-        ]
 
     def list_plans_with_pending_review(
         self, response: Interactor.Response
@@ -52,5 +48,10 @@ class ListPlansWithPendingReviewPresenter:
                     review_plan_url=self.url_index.get_plan_review_url(plan.id),
                 )
                 for plan in response.plans
+            ],
+            navbar_items=[
+                NavbarItem(
+                    text=self.translator.gettext("List unreviewed plans"), url=None
+                )
             ],
         )

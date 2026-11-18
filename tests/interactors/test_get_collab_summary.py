@@ -48,6 +48,46 @@ class GetCollabSummaryTests(BaseTestCase):
         )
         self.assert_success(summary, lambda s: s.requester_is_coordinator == False)
 
+    def test_that_planner_of_plan_in_collaboration_is_involved(self) -> None:
+        requester = self.company_generator.create_company()
+        plan = self.plan_generator.create_plan(planner=requester)
+        collab = self.collaboration_generator.create_collaboration(plans=[plan])
+        summary = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(requester, collab)
+        )
+        self.assert_success(summary, lambda s: s.requester_is_involved == True)
+
+    def test_that_coordinator_is_involved(self) -> None:
+        requester = self.company_generator.create_company()
+        collab = self.collaboration_generator.create_collaboration(
+            coordinator=requester
+        )
+        summary = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(requester, collab)
+        )
+        self.assert_success(summary, lambda s: s.requester_is_involved == True)
+
+    def test_that_planner_of_expired_plan_in_collaboration_is_not_involved(
+        self,
+    ) -> None:
+        self.datetime_service.freeze_time(datetime_utc(2000, 1, 1))
+        requester = self.company_generator.create_company()
+        plan = self.plan_generator.create_plan(planner=requester, timeframe=1)
+        collab = self.collaboration_generator.create_collaboration(plans=[plan])
+        self.datetime_service.advance_time(timedelta(days=2))
+        summary = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(requester, collab)
+        )
+        self.assert_success(summary, lambda s: s.requester_is_involved == False)
+
+    def test_that_unrelated_company_is_not_involved(self) -> None:
+        requester = self.company_generator.create_company()
+        collab = self.collaboration_generator.create_collaboration()
+        summary = self.get_collab_summary.execute(
+            GetCollabSummaryRequest(requester, collab)
+        )
+        self.assert_success(summary, lambda s: s.requester_is_involved == False)
+
     def test_that_correct_amount_of_associated_plans_are_shown(self) -> None:
         requester = self.company_generator.create_company_record()
         plan1 = self.plan_generator.create_plan()

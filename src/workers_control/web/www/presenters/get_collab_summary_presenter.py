@@ -6,7 +6,7 @@ from workers_control.core.interactors.get_collab_summary import GetCollabSummary
 
 from ...translator import Translator
 from ...url_index import UrlIndex
-from ..navbar import NavbarItem
+from ..navbar import CollaborationNavbarItems, NavbarItem
 
 
 @dataclass
@@ -33,15 +33,14 @@ class GetCollabSummaryViewModel:
     collab_price: str
 
     plans: List[AssociatedPlan]
+    navbar_items: list[NavbarItem]
 
 
 @dataclass
 class GetCollabSummarySuccessPresenter:
     url_index: UrlIndex
     translator: Translator
-
-    def create_navbar_items(self) -> list[NavbarItem]:
-        return [NavbarItem(text=self.translator.gettext("Collaboration"), url=None)]
+    collaboration_navbar_items: CollaborationNavbarItems
 
     def present(self, response: GetCollabSummaryResponse) -> GetCollabSummaryViewModel:
         return GetCollabSummaryViewModel(
@@ -85,6 +84,10 @@ class GetCollabSummarySuccessPresenter:
                 )
                 for plan in response.plans
             ],
+            navbar_items=self.collaboration_navbar_items.for_collaboration_summary(
+                collab_name=response.collab_name,
+                requester_is_involved=response.requester_is_involved,
+            ),
         )
 
     def __format_price(self, price_per_unit: Decimal) -> str:

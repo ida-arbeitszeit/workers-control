@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - The navigation bar is now a compact header that needs no burger menu on mobile devices. Navigation items are now icon buttons.
+- Improve breadcrumbs for collaboration pages, plan details page, company summary page and company account page.
 
 ### Fixed
 

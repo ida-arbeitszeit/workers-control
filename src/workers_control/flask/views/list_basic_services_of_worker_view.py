@@ -32,6 +32,5 @@ class ListBasicServicesOfWorkerView:
             flask.render_template(
                 "member/basic_services.html",
                 view_model=view_model,
-                navbar_items=self.presenter.create_navbar_items(),
             )
         )

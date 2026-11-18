@@ -19,6 +19,7 @@ class RegisteredHoursWorked:
 class ViewModel:
     registered_hours_worked: list[RegisteredHoursWorked]
     register_hours_worked_url: str
+    navbar_items: list[NavbarItem]
 
 
 @dataclass
@@ -26,13 +27,6 @@ class ListRegisteredHoursWorkedPresenter:
     datetime_formatter: DatetimeFormatter
     url_index: UrlIndex
     translator: Translator
-
-    def create_navbar_items(self) -> list[NavbarItem]:
-        return [
-            NavbarItem(
-                text=self.translator.gettext("Registered working hours"), url=None
-            )
-        ]
 
     def present(self, response: list_registered_hours_worked.Response) -> ViewModel:
         registered_hours_worked = [
@@ -50,4 +44,9 @@ class ListRegisteredHoursWorkedPresenter:
         return ViewModel(
             registered_hours_worked=registered_hours_worked,
             register_hours_worked_url=self.url_index.get_register_hours_worked_url(),
+            navbar_items=[
+                NavbarItem(
+                    text=self.translator.gettext("Registered working hours"), url=None
+                )
+            ],
         )

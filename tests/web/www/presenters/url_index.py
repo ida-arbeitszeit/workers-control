@@ -66,6 +66,7 @@ class UrlIndexTestImpl:
     get_line_plot_of_company_prd_account = UrlIndexMethod()
     get_line_plot_of_company_r_account = UrlIndexMethod()
     get_payout_factor_details_bar_plot_url = UrlIndexMethod()
+    get_list_all_collaborations_url = UrlIndexMethod()
     get_list_of_coordinators_url = UrlIndexMethod()
     get_member_confirmation_url = UrlIndexMethod()
     get_member_dashboard_url = UrlIndexMethod()

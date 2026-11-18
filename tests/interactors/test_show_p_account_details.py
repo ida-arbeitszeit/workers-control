@@ -32,6 +32,13 @@ class ShowMeansAccountTests(InteractorTestBase):
         )
         assert response.company_id == self.company.id
 
+    def test_company_name_is_returned(self) -> None:
+        company = self.company_generator.create_company_record(name="Bakery")
+        response = self.interactor.show_details(
+            self.create_interactor_request(company.id)
+        )
+        assert response.company_name == "Bakery"
+
 
 class MeansAccountBalanceTests(InteractorTestBase):
     def test_balance_is_zero_when_no_transfers_took_place(self) -> None:

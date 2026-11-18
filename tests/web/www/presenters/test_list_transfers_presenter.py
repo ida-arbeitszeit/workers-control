@@ -404,7 +404,7 @@ class ResultsTests(ListTransfersPresenterBase):
 
 class NavbarItemsTests(ListTransfersPresenterBase):
     def test_navbar_shows_all_transfers_as_current_page(self) -> None:
-        items = self.presenter.create_navbar_items()
+        items = self.presenter.present(self.create_interactor_response()).navbar_items
         self.assertEqual(len(items), 1)
         self.assertEqual(items[0].text, self.translator.gettext("All transfers"))
         self.assertIsNone(items[0].url)

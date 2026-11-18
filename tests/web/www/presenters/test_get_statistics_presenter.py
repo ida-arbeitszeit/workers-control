@@ -188,7 +188,7 @@ class NavbarItemsTests(BaseTestCase):
         self.presenter = self.injector.get(GetStatisticsPresenter)
 
     def test_navbar_shows_global_statistics_as_current_page(self) -> None:
-        items = self.presenter.create_navbar_items()
+        items = self.presenter.present(TESTING_RESPONSE_MODEL).navbar_items
         self.assertEqual(len(items), 1)
         self.assertEqual(items[0].text, self.translator.gettext("Global statistics"))
         self.assertIsNone(items[0].url)

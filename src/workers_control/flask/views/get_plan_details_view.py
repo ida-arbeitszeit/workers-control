@@ -25,5 +25,4 @@ class GetPlanDetailsView:
         return render_template(
             "user/plan_details.html",
             view_model=view_model,
-            navbar_items=self.presenter.create_navbar_items(),
         )

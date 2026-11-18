@@ -28,6 +28,7 @@ class AssociatedPlan:
 @dataclass
 class GetCollabSummaryResponse:
     requester_is_coordinator: bool
+    requester_is_involved: bool
     collab_id: UUID
     collab_name: str
     collab_description: str
@@ -62,8 +63,13 @@ class GetCollabSummaryInteractor:
             .that_will_expire_after(now)
         )
         plans = list(plan_result)
+        requester_is_coordinator = coordinator.id == request.requester_id
+        requester_is_planner = any(
+            plan.planner == request.requester_id for plan in plans
+        )
         return GetCollabSummaryResponse(
-            requester_is_coordinator=coordinator.id == request.requester_id,
+            requester_is_coordinator=requester_is_coordinator,
+            requester_is_involved=requester_is_coordinator or requester_is_planner,
             collab_id=collab.id,
             collab_name=collab.name,
             collab_description=collab.description,

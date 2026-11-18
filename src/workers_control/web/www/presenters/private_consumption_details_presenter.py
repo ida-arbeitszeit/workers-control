@@ -20,19 +20,11 @@ class PrivateConsumptionDetailsPresenter:
         price_per_unit: str
         price_total: str
         plan_details_url: str
+        navbar_items: list[NavbarItem]
 
     datetime_formatter: DatetimeFormatter
     url_index: UrlIndex
     translator: Translator
-
-    def create_navbar_items(self) -> list[NavbarItem]:
-        return [
-            NavbarItem(
-                text=self.translator.gettext("My consumptions"),
-                url=self.url_index.get_my_private_consumptions_url(),
-            ),
-            NavbarItem(text=self.translator.gettext("Consumption details"), url=None),
-        ]
 
     def present(
         self, response: GetPrivateConsumptionDetailsInteractor.Response
@@ -50,4 +42,13 @@ class PrivateConsumptionDetailsPresenter:
             plan_details_url=self.url_index.get_plan_details_url(
                 plan_id=response.plan_id
             ),
+            navbar_items=[
+                NavbarItem(
+                    text=self.translator.gettext("My consumptions"),
+                    url=self.url_index.get_my_private_consumptions_url(),
+                ),
+                NavbarItem(
+                    text=self.translator.gettext("Consumption details"), url=None
+                ),
+            ],
         )

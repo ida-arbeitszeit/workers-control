@@ -46,7 +46,6 @@ def list_plans_with_pending_review(
     return render_template(
         "accountant/plans-to-review-list.html",
         view_model=view_model,
-        navbar_items=presenter.create_navbar_items(),
     )
 
 

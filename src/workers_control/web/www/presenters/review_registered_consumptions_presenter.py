@@ -27,6 +27,7 @@ class Consumption:
 @dataclass
 class ViewModel:
     consumptions: list[Consumption]
+    navbar_items: list[NavbarItem]
 
 
 @dataclass
@@ -35,17 +36,19 @@ class ReviewRegisteredConsumptionsPresenter:
     url_index: UrlIndex
     translator: Translator
 
-    def create_navbar_items(self) -> list[NavbarItem]:
-        return [
-            NavbarItem(text=self.translator.gettext("My product transfers"), url=None)
-        ]
-
     def present(self, interactor_response: Interactor.Response) -> ViewModel:
         consumptions = [
             self._create_consumption(consumption)
             for consumption in interactor_response.consumptions
         ]
-        return ViewModel(consumptions=consumptions)
+        return ViewModel(
+            consumptions=consumptions,
+            navbar_items=[
+                NavbarItem(
+                    text=self.translator.gettext("My product transfers"), url=None
+                )
+            ],
+        )
 
     def _create_consumption(self, consumption: RegisteredConsumption) -> Consumption:
         return Consumption(

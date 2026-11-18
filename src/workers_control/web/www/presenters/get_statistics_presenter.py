@@ -24,15 +24,13 @@ class GetStatisticsViewModel:
 
     barplot_means_of_production_url: str
     barplot_plans_url: str
+    navbar_items: list[NavbarItem]
 
 
 @dataclass
 class GetStatisticsPresenter:
     translator: Translator
     url_index: UrlIndex
-
-    def create_navbar_items(self) -> list[NavbarItem]:
-        return [NavbarItem(text=self.translator.gettext("Global statistics"), url=None)]
 
     def present(
         self, interactor_response: StatisticsResponse
@@ -77,6 +75,9 @@ class GetStatisticsPresenter:
                 productive_plans_count,
                 interactor_response.active_plans_public_count,
             ),
+            navbar_items=[
+                NavbarItem(text=self.translator.gettext("Global statistics"), url=None)
+            ],
         )
 
     def _format_payout_factor(self, payout_factor: Decimal) -> str:

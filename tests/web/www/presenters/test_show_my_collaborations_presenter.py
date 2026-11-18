@@ -284,7 +284,16 @@ class NavbarItemsTests(BaseTestCase):
         self.presenter = self.injector.get(ShowMyCollaborationsPresenter)
 
     def test_navbar_shows_my_collaborations_as_current_page(self) -> None:
-        items = self.presenter.create_navbar_items()
+        items = self.presenter.present(
+            list_coord_response=ListCoordinationsOfCompanyResponse(coordinations=[]),
+            show_company_collaborations_response=Response(
+                inbound_collaboration_requests=[],
+                outbound_collaboration_requests=[],
+            ),
+            list_my_collaborating_plans_response=ListMyCollaboratingPlansInteractor.Response(
+                collaborating_plans=[]
+            ),
+        ).navbar_items
         self.assertEqual(len(items), 1)
         self.assertEqual(items[0].text, self.translator.gettext("My collaborations"))
         self.assertIsNone(items[0].url)

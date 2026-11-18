@@ -27,6 +27,5 @@ class ListTransfersView:
             render_template(
                 TEMPLATE_NAME,
                 view_model=view_model,
-                navbar_items=self.presenter.create_navbar_items(),
             )
         )

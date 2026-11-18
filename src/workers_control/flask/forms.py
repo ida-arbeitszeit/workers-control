@@ -210,11 +210,11 @@ class CreateCollaborationForm(Form):
 
 class CreateBasicServiceForm(Form):
     name = StringField(
-        render_kw={"placeholder": trans.lazy_gettext("Name")},
+        render_kw={"placeholder": trans.lazy_gettext("Basic service name")},
         validators=[validators.InputRequired()],
     )
     description = TextAreaField(
-        render_kw={"placeholder": trans.lazy_gettext("Description")},
+        render_kw={"placeholder": trans.lazy_gettext("Basic service description")},
         validators=[validators.InputRequired()],
     )
 

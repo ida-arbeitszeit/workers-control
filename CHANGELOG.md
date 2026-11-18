@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The navigation bar is now a compact header that needs no burger menu on mobile devices. Navigation items are now icon buttons.
 - Improve breadcrumbs for collaboration pages, plan details page, company summary page and company account page.
+- The fields of the "Create basic service" form are now labelled "Basic service name" and "Basic service description", so it is clear they describe the service and not the member creating it. (#1588)
 
 ### Fixed
 

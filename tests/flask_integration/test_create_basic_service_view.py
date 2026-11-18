@@ -87,6 +87,11 @@ class AuthenticatedMemberGetTests(ViewTestCase):
         response = self.client.get(self.URL)
         self.assertIn("data protection", response.text)
 
+    def test_fields_are_labelled_as_belonging_to_the_service(self) -> None:
+        response = self.client.get(self.URL)
+        self.assertIn("Basic service name", response.text)
+        self.assertIn("Basic service description", response.text)
+
 
 class AuthenticatedMemberPostTests(ViewTestCase):
     URL = "/member/create_basic_service"

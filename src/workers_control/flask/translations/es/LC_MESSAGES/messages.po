@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Arbeitszeitapp\n"
 "Report-Msgid-Bugs-To: community-arbeitszeitapp@systemli.org\n"
-"POT-Creation-Date: 2026-11-10 22:47+0100\n"
+"POT-Creation-Date: 2026-11-18 17:41+0100\n"
 "PO-Revision-Date: 2024-05-11 13:29+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -64,7 +64,7 @@ msgid "Include basic services"
 msgstr "Incluir servicios básicos"
 
 #: src/workers_control/flask/forms.py:97 src/workers_control/flask/forms.py:146
-#: src/workers_control/flask/forms.py:175 src/workers_control/flask/forms.py:353
+#: src/workers_control/flask/forms.py:175 src/workers_control/flask/forms.py:342
 #: src/workers_control/flask/templates/auth/login_accountant.html:17
 #: src/workers_control/flask/templates/auth/login_company.html:17
 #: src/workers_control/flask/templates/auth/login_member.html:17
@@ -100,7 +100,7 @@ msgid "Name is required"
 msgstr "Se requiere el nombre"
 
 #: src/workers_control/flask/forms.py:111 src/workers_control/flask/forms.py:155
-#: src/workers_control/flask/forms.py:364
+#: src/workers_control/flask/forms.py:353
 #: src/workers_control/flask/templates/auth/login_accountant.html:26
 #: src/workers_control/flask/templates/auth/login_company.html:26
 #: src/workers_control/flask/templates/auth/login_member.html:26
@@ -111,7 +111,7 @@ msgstr "Se requiere el nombre"
 msgid "Password"
 msgstr "Contraseña"
 
-#: src/workers_control/flask/forms.py:116 src/workers_control/flask/forms.py:369
+#: src/workers_control/flask/forms.py:116 src/workers_control/flask/forms.py:358
 #: src/workers_control/web/www/controllers/register_form_validator.py:37
 msgid "The password must be at least 8 characters in length"
 msgstr "La contraseña debe tener al menos 8 caracteres de longitud"
@@ -120,12 +120,12 @@ msgstr "La contraseña debe tener al menos 8 caracteres de longitud"
 msgid "The entered email is not the one the invitation was sent to"
 msgstr "El correo electrónico ingresado no es al que se envió la invitación"
 
-#: src/workers_control/flask/forms.py:149 src/workers_control/flask/forms.py:356
+#: src/workers_control/flask/forms.py:149 src/workers_control/flask/forms.py:345
 msgid "Email address required"
 msgstr "Se requiere una dirección de correo electrónico"
 
-#: src/workers_control/flask/forms.py:157 src/workers_control/flask/forms.py:307
-#: src/workers_control/flask/forms.py:338
+#: src/workers_control/flask/forms.py:157 src/workers_control/flask/forms.py:296
+#: src/workers_control/flask/forms.py:327
 msgid "Password is required"
 msgstr "Se requiere una contraseña"
 
@@ -142,20 +142,21 @@ msgstr "Buscar empresa"
 #: src/workers_control/flask/templates/member/basic_services.html:31
 #: src/workers_control/flask/templates/member/consumption_details.html:26
 #: src/workers_control/flask/templates/member/create_basic_service.html:32
+#: src/workers_control/flask/templates/user/collab_summary.html:27
 msgid "Description"
 msgstr "Descripción"
 
-#: src/workers_control/flask/forms.py:241
+#: src/workers_control/flask/forms.py:230
 #: src/workers_control/flask/templates/company/register_productive_consumption.html:31
 #: src/workers_control/flask/templates/company/register_productive_consumption.html:43
 #: src/workers_control/flask/templates/member/register_private_consumption.html:27
 #: src/workers_control/flask/templates/member/register_private_consumption.html:33
 #: src/workers_control/flask/templates/member/register_private_consumption.html:51
-#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:60
+#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:64
 msgid "Plan ID"
 msgstr "ID del plan"
 
-#: src/workers_control/flask/forms.py:247
+#: src/workers_control/flask/forms.py:236
 #: src/workers_control/flask/routes/plots/routes.py:79
 #: src/workers_control/flask/templates/company/consumption_details.html:38
 #: src/workers_control/flask/templates/company/register_hours_worked.html:20
@@ -168,52 +169,52 @@ msgstr "ID del plan"
 #: src/workers_control/flask/templates/member/register_private_consumption.html:68
 #: src/workers_control/flask/templates/member/register_private_consumption_of_basic_service.html:65
 #: src/workers_control/flask/templates/member/register_private_consumption_of_basic_service.html:71
-#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:94
+#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:98
 msgid "Amount"
 msgstr "Cantidad"
 
-#: src/workers_control/flask/forms.py:254
-#: src/workers_control/web/www/presenters/company_consumptions_presenter.py:65
+#: src/workers_control/flask/forms.py:243
+#: src/workers_control/web/www/presenters/company_consumptions_presenter.py:69
 #: src/workers_control/web/www/presenters/productive_consumption_details_presenter.py:64
 msgid "Fixed means of production"
 msgstr "Medios de producción fijos"
 
-#: src/workers_control/flask/forms.py:257
-#: src/workers_control/web/www/presenters/company_consumptions_presenter.py:63
+#: src/workers_control/flask/forms.py:246
+#: src/workers_control/web/www/presenters/company_consumptions_presenter.py:67
 #: src/workers_control/web/www/presenters/productive_consumption_details_presenter.py:62
 msgid "Liquid means of production"
 msgstr "Medios de producción líquidos"
 
-#: src/workers_control/flask/forms.py:261
+#: src/workers_control/flask/forms.py:250
 msgid "Type of consumption"
 msgstr "Tipo de consumo"
 
-#: src/workers_control/flask/forms.py:296
+#: src/workers_control/flask/forms.py:285
 msgid "New email address"
 msgstr "Nueva dirección de correo electrónico"
 
-#: src/workers_control/flask/forms.py:299
+#: src/workers_control/flask/forms.py:288
 msgid "Email address is required."
 msgstr "Se requiere una dirección de correo electrónico."
 
-#: src/workers_control/flask/forms.py:305 src/workers_control/flask/forms.py:336
+#: src/workers_control/flask/forms.py:294 src/workers_control/flask/forms.py:325
 msgid "Current password"
 msgstr "Contraseña actual"
 
-#: src/workers_control/flask/forms.py:329
+#: src/workers_control/flask/forms.py:318
 msgid "New name"
 msgstr "Nuevo nombre"
 
-#: src/workers_control/flask/forms.py:331
+#: src/workers_control/flask/forms.py:320
 msgid "A name is required."
 msgstr "Se requiere un nombre."
 
-#: src/workers_control/flask/forms.py:373
+#: src/workers_control/flask/forms.py:362
 #: src/workers_control/web/www/controllers/register_form_validator.py:42
 msgid "Passwords must match"
 msgstr "Las contraseñas deben coincidir"
 
-#: src/workers_control/flask/forms.py:377
+#: src/workers_control/flask/forms.py:366
 #: src/workers_control/flask/templates/auth/reset_password.html:31
 #: src/workers_control/flask/templates/auth/signup_company.html:70
 #: src/workers_control/flask/templates/auth/signup_member.html:73
@@ -291,6 +292,10 @@ msgstr "Trabajo"
 msgid "Hours"
 msgstr "Horas"
 
+#: src/workers_control/flask/templates/base.html:27
+msgid "Dashboard"
+msgstr "Tablero"
+
 #: src/workers_control/flask/templates/accountant/dashboard.html:7
 #: src/workers_control/flask/templates/company/dashboard.html:7
 #, python-format
@@ -311,7 +316,7 @@ msgstr "Acciones frecuentes"
 
 #: src/workers_control/flask/templates/accountant/dashboard.html:31
 #: src/workers_control/web/www/presenters/get_plan_for_review_presenter.py:34
-#: src/workers_control/web/www/presenters/list_plans_with_pending_review_presenter.py:34
+#: src/workers_control/web/www/presenters/list_plans_with_pending_review_presenter.py:54
 msgid "List unreviewed plans"
 msgstr "Listar planes sin revisar"
 
@@ -579,7 +584,7 @@ msgid "A platform for labour time calculation."
 msgstr "Una plataforma para el cálculo del tiempo de trabajo."
 
 #: src/workers_control/flask/templates/auth/start.html:14
-#: src/workers_control/web/www/presenters/list_transfers_presenter.py:120
+#: src/workers_control/web/www/presenters/list_transfers_presenter.py:121
 msgid "Member"
 msgstr "Miembro"
 
@@ -766,26 +771,28 @@ msgstr "Contabilidad pública"
 
 #: src/workers_control/flask/templates/company/dashboard.html:94
 #: src/workers_control/flask/templates/member/dashboard.html:96
+#: src/workers_control/web/www/navbar.py:79
 #: src/workers_control/web/www/presenters/query_companies_presenter.py:41
 msgid "All companies"
 msgstr "Todas las empresas"
 
 #: src/workers_control/flask/templates/company/dashboard.html:101
 #: src/workers_control/flask/templates/member/dashboard.html:89
-#: src/workers_control/web/www/presenters/list_transfers_presenter.py:57
+#: src/workers_control/web/www/presenters/list_transfers_presenter.py:65
 msgid "All transfers"
 msgstr "Todas las transferencias"
 
 #: src/workers_control/flask/templates/company/dashboard.html:108
 #: src/workers_control/flask/templates/user/list_all_collaborations.html:12
-#: src/workers_control/web/www/presenters/list_all_collaborations_presenter.py:33
+#: src/workers_control/web/www/navbar.py:116
+#: src/workers_control/web/www/presenters/list_all_collaborations_presenter.py:50
 msgid "All collaborations"
 msgstr "Todas las colaboraciones"
 
 #: src/workers_control/flask/templates/company/dashboard.html:116
 #: src/workers_control/flask/templates/member/dashboard.html:103
 #: src/workers_control/flask/templates/user/statistics.html:12
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:35
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:79
 #: src/workers_control/web/www/presenters/show_payout_factor_details_presenter.py:44
 #: src/workers_control/web/www/presenters/show_psf_account_details_presenter.py:38
 msgid "Global statistics"
@@ -869,7 +876,7 @@ msgid "Resend Invite"
 msgstr "Reenviar invitación"
 
 #: src/workers_control/flask/templates/company/list_registered_hours_worked.html:12
-#: src/workers_control/web/www/presenters/list_registered_hours_worked_presenter.py:33
+#: src/workers_control/web/www/presenters/list_registered_hours_worked_presenter.py:49
 #: src/workers_control/web/www/presenters/register_hours_worked_presenter.py:32
 msgid "Registered working hours"
 msgstr "Horas trabajadas registradas"
@@ -881,8 +888,10 @@ msgid "Register hours worked"
 msgstr "Registrar horas trabajadas"
 
 #: src/workers_control/flask/templates/company/my_collaborations.html:11
+#: src/workers_control/web/www/navbar.py:112
 #: src/workers_control/web/www/presenters/create_collaboration_presenter.py:27
-#: src/workers_control/web/www/presenters/show_my_collaborations_presenter.py:98
+#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:25
+#: src/workers_control/web/www/presenters/show_my_collaborations_presenter.py:136
 msgid "My collaborations"
 msgstr "Mis colaboraciones"
 
@@ -891,9 +900,9 @@ msgid "Create collaboration "
 msgstr "Crear colaboración"
 
 #: src/workers_control/flask/templates/company/my_collaborations.html:28
-#: src/workers_control/flask/templates/company/request_collaboration.html:11
-#: src/workers_control/flask/templates/company/request_collaboration.html:70
-#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:23
+#: src/workers_control/flask/templates/company/request_collaboration.html:12
+#: src/workers_control/flask/templates/company/request_collaboration.html:54
+#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:28
 msgid "Request collaboration"
 msgstr "Solicitar colaboración"
 
@@ -917,7 +926,7 @@ msgstr "Solicitud de colaboración entrante (de otros)"
 #: src/workers_control/flask/templates/company/my_collaborations.html:82
 #: src/workers_control/flask/templates/company/my_collaborations.html:135
 #: src/workers_control/flask/templates/user/show_payout_factor_details.html:51
-#: src/workers_control/web/www/presenters/private_consumptions_presenter.py:69
+#: src/workers_control/web/www/presenters/private_consumptions_presenter.py:70
 msgid "Plan"
 msgstr "Plan"
 
@@ -948,8 +957,6 @@ msgstr "Solicitudes de colaboración salientes (propias)"
 #: src/workers_control/flask/templates/company/show_coordination_transfer_request.html:19
 #: src/workers_control/flask/templates/user/collab_summary.html:12
 #: src/workers_control/flask/templates/user/list_coordinations_of_collaboration.html:19
-#: src/workers_control/web/www/presenters/get_collab_summary_presenter.py:44
-#: src/workers_control/web/www/presenters/list_coordinations_of_collaboration_presenter.py:67
 #: src/workers_control/web/www/presenters/request_coordination_transfer_presenter.py:28
 msgid "Collaboration"
 msgstr "Colaboración"
@@ -994,9 +1001,10 @@ msgid "You haven't consumed anything yet."
 msgstr "Aún no has consumido nada."
 
 #: src/workers_control/flask/templates/company/my_plans.html:10
+#: src/workers_control/web/www/navbar.py:55
 #: src/workers_control/web/www/presenters/create_draft_presenter.py:34
 #: src/workers_control/web/www/presenters/get_draft_details_presenter.py:42
-#: src/workers_control/web/www/presenters/show_my_plans_presenter.py:138
+#: src/workers_control/web/www/presenters/show_my_plans_presenter.py:137
 msgid "My plans"
 msgstr "Mis planes"
 
@@ -1005,8 +1013,8 @@ msgid "Create new plan"
 msgstr "Crear nuevo plan"
 
 #: src/workers_control/flask/templates/company/my_plans.html:18
-#: src/workers_control/web/www/presenters/get_company_summary_presenter.py:131
-#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:64
+#: src/workers_control/web/www/presenters/get_company_summary_presenter.py:134
+#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:68
 msgid "Active"
 msgstr "Activo"
 
@@ -1031,8 +1039,8 @@ msgstr "Plan colaborativo"
 #: src/workers_control/flask/templates/company/my_plans.html:80
 #: src/workers_control/flask/templates/user/query_offers.html:89
 #: src/workers_control/flask/templates/user/show_payout_factor_details.html:62
-#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:110
-#: src/workers_control/web/www/presenters/show_my_plans_presenter.py:247
+#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:114
+#: src/workers_control/web/www/presenters/show_my_plans_presenter.py:248
 msgid "Public"
 msgstr "Público"
 
@@ -1076,7 +1084,7 @@ msgstr "Costes"
 
 #: src/workers_control/flask/templates/company/my_plans.html:108
 #: src/workers_control/flask/templates/user/show_payout_factor_details.html:52
-#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:108
+#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:112
 msgid "Type"
 msgstr "Tipo"
 
@@ -1229,25 +1237,25 @@ msgstr ""
 "Tu plan con ID \"%(plan_id)s\" para el producto \"%(product_name)s\" fue "
 "rechazado por la contabilidad social."
 
-#: src/workers_control/flask/templates/company/request_collaboration.html:17
+#: src/workers_control/flask/templates/company/request_collaboration.html:18
 msgid ""
 "The coordinator of the collaboration decides if they add your plan to the "
 "collaboration."
 msgstr "El coordinador de la colaboración decide si añade tu plan a la colaboración."
 
-#: src/workers_control/flask/templates/company/request_collaboration.html:18
+#: src/workers_control/flask/templates/company/request_collaboration.html:19
 msgid "All plans in a collaboration should provide the same product."
 msgstr "Todos los planes de una colaboración deberían ofrecer el mismo producto."
 
-#: src/workers_control/flask/templates/company/request_collaboration.html:50
+#: src/workers_control/flask/templates/company/request_collaboration.html:31
 msgid "My plan..."
 msgstr "Mi plan..."
 
-#: src/workers_control/flask/templates/company/request_collaboration.html:64
+#: src/workers_control/flask/templates/company/request_collaboration.html:47
 msgid "Collaboration ID"
 msgstr "ID de la colaboración"
 
-#: src/workers_control/flask/templates/company/request_collaboration.html:76
+#: src/workers_control/flask/templates/company/request_collaboration.html:59
 msgid "No plans yet."
 msgstr "Aún no hay planes."
 
@@ -1277,7 +1285,7 @@ msgstr "Fecha de solicitud"
 
 #: src/workers_control/flask/templates/company/show_coordination_transfer_request.html:15
 #: src/workers_control/flask/templates/macros/company_summary.html:143
-#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:62
+#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:66
 msgid "Status"
 msgstr "Estado"
 
@@ -1294,7 +1302,7 @@ msgid "Accept coordination transfer"
 msgstr "Aceptar la transferencia de coordinación"
 
 #: src/workers_control/flask/templates/macros/company_summary.html:7
-#: src/workers_control/web/www/presenters/get_company_summary_presenter.py:66
+#: src/workers_control/web/www/navbar.py:27
 msgid "Company overview"
 msgstr "Resumen de la empresa"
 
@@ -1314,28 +1322,28 @@ msgstr "Métricas"
 #: src/workers_control/flask/templates/macros/company_summary.html:54
 #: src/workers_control/flask/templates/user/company_account_p.html:16
 #: src/workers_control/flask/templates/user/company_accounts.html:33
-#: src/workers_control/web/www/presenters/show_p_account_details_presenter.py:48
+#: src/workers_control/web/www/presenters/show_p_account_details_presenter.py:45
 msgid "Account p"
 msgstr "Cuenta p"
 
 #: src/workers_control/flask/templates/macros/company_summary.html:63
 #: src/workers_control/flask/templates/user/company_account_r.html:16
 #: src/workers_control/flask/templates/user/company_accounts.html:44
-#: src/workers_control/web/www/presenters/show_r_account_details_presenter.py:42
+#: src/workers_control/web/www/presenters/show_r_account_details_presenter.py:39
 msgid "Account r"
 msgstr "Cuenta r"
 
 #: src/workers_control/flask/templates/macros/company_summary.html:72
 #: src/workers_control/flask/templates/user/company_account_a.html:16
 #: src/workers_control/flask/templates/user/company_accounts.html:55
-#: src/workers_control/web/www/presenters/show_a_account_details_presenter.py:43
+#: src/workers_control/web/www/presenters/show_a_account_details_presenter.py:40
 msgid "Account a"
 msgstr "Cuenta a"
 
 #: src/workers_control/flask/templates/macros/company_summary.html:81
 #: src/workers_control/flask/templates/user/company_account_prd.html:16
 #: src/workers_control/flask/templates/user/company_accounts.html:66
-#: src/workers_control/web/www/presenters/show_prd_account_details_presenter.py:45
+#: src/workers_control/web/www/presenters/show_prd_account_details_presenter.py:41
 msgid "Account prd"
 msgstr "Cuenta prd"
 
@@ -1404,7 +1412,7 @@ msgstr ""
 "pack de seis latas."
 
 #: src/workers_control/flask/templates/macros/draft_form.html:59
-#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:91
+#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:95
 msgid "Smallest delivery unit"
 msgstr "Unidad de entrega más pequeña"
 
@@ -1438,7 +1446,7 @@ msgstr ""
 "este medio de producción fijo, el valor sería 1000."
 
 #: src/workers_control/flask/templates/macros/draft_form.html:86
-#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:96
+#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:100
 msgid "Costs for fixed means of production"
 msgstr "Costes de medios de producción fijos"
 
@@ -1453,7 +1461,7 @@ msgstr ""
 "de máquinas, etc."
 
 #: src/workers_control/flask/templates/macros/draft_form.html:98
-#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:100
+#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:104
 msgid "Costs for liquid means of production"
 msgstr "Costes de medios de producción líquidos"
 
@@ -1463,7 +1471,7 @@ msgid "Planned hours of human work."
 msgstr "Horas de trabajo humano planificadas."
 
 #: src/workers_control/flask/templates/macros/draft_form.html:110
-#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:104
+#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:108
 msgid "Costs for labour"
 msgstr "Costes de mano de obra"
 
@@ -1481,29 +1489,27 @@ msgstr ""
 msgid "This plan is a public service"
 msgstr "Este plan es un servicio público"
 
-#: src/workers_control/flask/templates/macros/language_selection.html:5
+#: src/workers_control/flask/templates/macros/language_selection.html:7
 msgid "Language"
 msgstr "Idioma"
 
-#: src/workers_control/flask/templates/macros/navigation.html:26
-msgid "Dashboard"
-msgstr "Tablero"
+#: src/workers_control/flask/templates/macros/navigation.html:12
+msgid "Breadcrumb"
+msgstr "Ruta de navegación"
 
-#: src/workers_control/flask/templates/macros/navigation.html:37
-#: src/workers_control/flask/templates/macros/navigation.html:55
+#: src/workers_control/flask/templates/macros/navigation.html:22
 msgid "Help"
 msgstr "Ayuda"
 
-#: src/workers_control/flask/templates/macros/navigation.html:43
-msgid "Back"
-msgstr "Atrás"
+#: src/workers_control/flask/templates/macros/navigation.html:27
+msgid "User account"
+msgstr "Cuenta de usuario"
 
-#: src/workers_control/flask/templates/macros/navigation.html:50
+#: src/workers_control/flask/templates/macros/navigation.html:31
 msgid "Sign out"
 msgstr "Cerrar sesión"
 
 #: src/workers_control/flask/templates/macros/plan_details.html:7
-#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:49
 msgid "Plan information"
 msgstr "Información del plan"
 
@@ -1568,7 +1574,7 @@ msgstr "Este campo muestra las horas de trabajo gastadas por unidad producida."
 #: src/workers_control/flask/templates/member/basic_services.html:13
 #: src/workers_control/flask/templates/member/dashboard.html:68
 #: src/workers_control/web/www/presenters/create_basic_service_presenter.py:27
-#: src/workers_control/web/www/presenters/list_basic_services_of_worker_presenter.py:30
+#: src/workers_control/web/www/presenters/list_basic_services_of_worker_presenter.py:49
 msgid "My basic services"
 msgstr "Mis servicios básicos"
 
@@ -1638,14 +1644,14 @@ msgid "My area"
 msgstr "Mi área"
 
 #: src/workers_control/flask/templates/member/dashboard.html:54
-#: src/workers_control/web/www/presenters/show_member_account_details_presenter.py:25
+#: src/workers_control/web/www/presenters/show_member_account_details_presenter.py:36
 msgid "My account"
 msgstr "Mi cuenta"
 
 #: src/workers_control/flask/templates/member/dashboard.html:61
-#: src/workers_control/web/www/presenters/company_consumptions_presenter.py:32
-#: src/workers_control/web/www/presenters/private_consumption_details_presenter.py:31
-#: src/workers_control/web/www/presenters/private_consumptions_presenter.py:36
+#: src/workers_control/web/www/presenters/company_consumptions_presenter.py:44
+#: src/workers_control/web/www/presenters/private_consumption_details_presenter.py:47
+#: src/workers_control/web/www/presenters/private_consumptions_presenter.py:44
 #: src/workers_control/web/www/presenters/productive_consumption_details_presenter.py:50
 msgid "My consumptions"
 msgstr "Mis consumos"
@@ -1717,10 +1723,6 @@ msgstr "Saldo:"
 msgid "Submit"
 msgstr "Enviar"
 
-#: src/workers_control/flask/templates/user/collab_summary.html:27
-msgid "Definition"
-msgstr "Definición"
-
 #: src/workers_control/flask/templates/user/collab_summary.html:33
 msgid "Current coordinator"
 msgstr "Coordinador actual"
@@ -1763,12 +1765,9 @@ msgid "The account for liquid means of production"
 msgstr "La cuenta para medios de producción líquidos"
 
 #: src/workers_control/flask/templates/user/company_accounts.html:14
+#: src/workers_control/web/www/navbar.py:41
 #: src/workers_control/web/www/presenters/get_company_dashboard_presenter.py:45
-#: src/workers_control/web/www/presenters/show_a_account_details_presenter.py:38
-#: src/workers_control/web/www/presenters/show_company_accounts_presenter.py:33
-#: src/workers_control/web/www/presenters/show_p_account_details_presenter.py:43
-#: src/workers_control/web/www/presenters/show_prd_account_details_presenter.py:39
-#: src/workers_control/web/www/presenters/show_r_account_details_presenter.py:37
+#: src/workers_control/web/www/presenters/show_company_accounts_presenter.py:59
 msgid "Accounts"
 msgstr "Cuentas"
 
@@ -2033,8 +2032,8 @@ msgid "Coverage"
 msgstr "Cobertura"
 
 #: src/workers_control/flask/templates/user/show_payout_factor_details.html:62
-#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:112
-#: src/workers_control/web/www/presenters/show_my_plans_presenter.py:249
+#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:116
+#: src/workers_control/web/www/presenters/show_my_plans_presenter.py:250
 msgid "Productive"
 msgstr "Productivo"
 
@@ -2179,6 +2178,10 @@ msgstr "Debe ser un número mayor que cero."
 msgid "You are not logged in with the correct account."
 msgstr "No has iniciado sesión con la cuenta correcta."
 
+#: src/workers_control/web/www/navbar.py:106
+msgid "Coordinators"
+msgstr "Coordinadores"
+
 #: src/workers_control/web/www/controllers/change_user_email_address_controller.py:27
 msgid "Email address remains unchanged."
 msgstr "La dirección de correo electrónico no cambia."
@@ -2265,11 +2268,11 @@ msgstr "Este no es un número válido."
 msgid "Worker ID in request is invalid or missing."
 msgstr "El ID del trabajador en la solicitud es inválido o falta."
 
-#: src/workers_control/web/www/controllers/request_collaboration_controller.py:34
+#: src/workers_control/web/www/controllers/request_collaboration_controller.py:30
 msgid "Invalid plan ID."
 msgstr "ID de plan no válido."
 
-#: src/workers_control/web/www/controllers/request_collaboration_controller.py:41
+#: src/workers_control/web/www/controllers/request_collaboration_controller.py:34
 msgid "Invalid collaboration ID."
 msgstr "ID de colaboración no válido."
 
@@ -2401,8 +2404,8 @@ msgstr "El nombre de tu cuenta ha sido cambiado."
 msgid "Your request to change your name was rejected."
 msgstr "Tu solicitud de cambio de nombre fue rechazada."
 
-#: src/workers_control/web/www/presenters/company_consumptions_presenter.py:67
-#: src/workers_control/web/www/presenters/private_consumptions_presenter.py:71
+#: src/workers_control/web/www/presenters/company_consumptions_presenter.py:71
+#: src/workers_control/web/www/presenters/private_consumptions_presenter.py:72
 msgid "Basic service"
 msgstr "Servicio básico"
 
@@ -2485,8 +2488,8 @@ msgstr "No se pudo presentar el plan con contabilidad social"
 msgid "You have four accounts"
 msgstr "Tienes cuatro cuentas"
 
-#: src/workers_control/web/www/presenters/get_company_summary_presenter.py:133
-#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:66
+#: src/workers_control/web/www/presenters/get_company_summary_presenter.py:136
+#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:70
 msgid "Inactive"
 msgstr "Inactivo"
 
@@ -2508,27 +2511,27 @@ msgstr "¡Bienvenido/a, %s!"
 msgid "Company %(company)s has invited you!"
 msgstr "¡La empresa %(company)s te ha invitado!"
 
-#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:70
+#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:74
 msgid "Planning company"
 msgstr "Empresa planificadora"
 
-#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:78
+#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:82
 msgid "Name of product"
 msgstr "Nombre del producto"
 
-#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:82
+#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:86
 msgid "Description of product"
 msgstr "Descripción del producto"
 
-#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:86
+#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:90
 msgid "Planning timeframe (days)"
 msgstr "Marco de tiempo de planificación (días)"
 
-#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:116
+#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:120
 msgid "Price (hours/unit)"
 msgstr "Precio (horas/unidad)"
 
-#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:128
+#: src/workers_control/web/www/presenters/get_plan_details_presenter.py:132
 msgid "Labour time (hours/unit)"
 msgstr "Tiempo de trabajo (horas/unidad)"
 
@@ -2536,13 +2539,13 @@ msgstr "Tiempo de trabajo (horas/unidad)"
 msgid "Review plan"
 msgstr "Revisar plan"
 
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:40
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:38
 #, python-format
 msgid "%(num).2f days"
 msgstr "%(num).2f días"
 
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:43
-#: src/workers_control/web/www/presenters/get_statistics_presenter.py:46
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:41
+#: src/workers_control/web/www/presenters/get_statistics_presenter.py:44
 #, python-format
 msgid "%(num).2f hours"
 msgstr "%(num).2f horas"
@@ -2572,11 +2575,7 @@ msgstr "La invitación ya ha sido emitida."
 msgid "Worker has been invited successfully."
 msgstr "El/la trabajador/a ha sido invitado/a con éxito."
 
-#: src/workers_control/web/www/presenters/list_coordinations_of_collaboration_presenter.py:73
-msgid "Coordinators"
-msgstr "Coordinadores"
-
-#: src/workers_control/web/www/presenters/list_transfers_presenter.py:125
+#: src/workers_control/web/www/presenters/list_transfers_presenter.py:126
 msgid "Social Accounting"
 msgstr "Contabilidad Social"
 
@@ -2605,7 +2604,7 @@ msgstr ""
 "La dirección de correo electrónico es incorrecta. ¿Ya estás registrado/a "
 "como miembro?"
 
-#: src/workers_control/web/www/presenters/private_consumption_details_presenter.py:34
+#: src/workers_control/web/www/presenters/private_consumption_details_presenter.py:51
 msgid "Consumption details"
 msgstr "Detalles del consumo"
 
@@ -2737,33 +2736,37 @@ msgstr "El rechazo del plan falló. No se envió ningún correo electrónico."
 msgid "Worker successfully removed from company."
 msgstr "Trabajador/a eliminado/a con éxito de la empresa."
 
-#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:38
+#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:42
+msgid "Request was not successful."
+msgstr "La solicitud no tuvo éxito."
+
+#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:45
 #: src/workers_control/web/www/presenters/request_coordination_transfer_presenter.py:89
 msgid "Request has been sent."
 msgstr "La solicitud ha sido enviada."
 
-#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:45
+#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:57
 msgid "Plan not found."
 msgstr "Plan no encontrado."
 
-#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:51
+#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:59
 #: src/workers_control/web/www/presenters/request_coordination_transfer_presenter.py:83
 msgid "Collaboration not found."
 msgstr "Colaboración no encontrada."
 
-#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:57
+#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:61
 msgid "Plan not active."
 msgstr "Plan no activo."
 
-#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:64
+#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:67
 msgid "Plan is already collaborating or requested a collaboration."
 msgstr "El plan ya está colaborando o ha solicitado una colaboración."
 
-#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:72
+#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:70
 msgid "Public plans cannot collaborate."
 msgstr "Los planes públicos no pueden colaborar."
 
-#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:80
+#: src/workers_control/web/www/presenters/request_collaboration_presenter.py:73
 msgid "Only the creator of a plan can request a collaboration."
 msgstr "Solo el creador de un plan puede solicitar una colaboración."
 
@@ -2831,7 +2834,7 @@ msgstr ""
 msgid "Password reset failed. Please try again."
 msgstr "El restablecimiento de la contraseña falló. Por favor, inténtalo de nuevo."
 
-#: src/workers_control/web/www/presenters/review_registered_consumptions_presenter.py:40
+#: src/workers_control/web/www/presenters/review_registered_consumptions_presenter.py:48
 msgid "My product transfers"
 msgstr "Mis transferencias de productos"
 
@@ -2862,7 +2865,7 @@ msgstr ""
 "La empresa \"%(company_name)s\" te invita a unirte a ellos. ¿Quieres "
 "aceptar esta invitación?"
 
-#: src/workers_control/web/www/presenters/show_my_plans_presenter.py:121
+#: src/workers_control/web/www/presenters/show_my_plans_presenter.py:122
 msgid "You don't have any plans."
 msgstr "No tienes ningún plan."
 
@@ -3242,4 +3245,10 @@ msgstr "Contribución al sector público"
 #~ "Todos los planes en una colaboración "
 #~ "deben ofrecer el mismo o un producto"
 #~ " similar."
+
+#~ msgid "Back"
+#~ msgstr "Atrás"
+
+#~ msgid "Definition"
+#~ msgstr "Definición"
 

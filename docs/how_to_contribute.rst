@@ -6,8 +6,10 @@ Translating the app
 -------------------
 
 We want people around the world to use the workers control app.
-To achieve this, it's crucial to translate the app into as many
-languages as we can. We are happy to help you with the translation process.
+To achieve this, it's crucial to translate the app into as many languages as possible.
+If you are a translator and would like to support us, please contact us.
+We are happy to help you with the translation process.
+No technical knowledge is required.
 
 
 Contributing code
@@ -18,6 +20,18 @@ detailed in our :doc:`getting_started` guide.
 
 You can propose changes by `forking the repository <https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo>`_ and creating a pull request on GitHub.
 Before submitting changes, run ``./run-checks`` to ensure your code meets our standards.
+
+Squash commits that belong together into one. Make sure that PRs are small enough
+to be reviewed. If you propose a large change, split it into several PRs, for example
+by first implementing the core, then the web and finally the Flask layer.
+
+If you introduce changes that may be relevant to users, operators or providers of the app,
+add an entry under "Unreleased" in CHANGELOG.md describing the change
+(without referencing an issue or pull request ID).
+
+Changes created with the help of LLMs are held to the same standards of code quality
+and reviewability as code written by humans: PRs must not be too large for a human review,
+and the code must be understandable and as clean as possible, without redundant comments.
 
 
 Working on Milestones

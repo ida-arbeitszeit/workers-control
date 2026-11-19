@@ -179,7 +179,6 @@ class Plan:
     approval_date: Optional[datetime]
     rejection_date: Optional[datetime]
     requested_collaboration: Optional[UUID]
-    hidden_by_user: bool
 
     @property
     def expected_sales_value(self) -> Decimal:

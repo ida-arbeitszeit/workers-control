@@ -236,9 +236,6 @@ class GeneralUrlIndex:
     def get_renew_plan_url(self, plan_id: UUID) -> str:
         return url_for("main_company.create_draft_from_plan", plan_id=plan_id)
 
-    def get_hide_plan_url(self, plan_id: UUID) -> str:
-        return url_for("main_company.hide_plan", plan_id=plan_id)
-
     def get_request_coordination_transfer_url(self, collab_id: UUID) -> str:
         return url_for(
             "main_company.request_coordination_transfer", collab_id=collab_id

@@ -309,11 +309,6 @@ class PlanQueryResult(SqlQueryResult[records.Plan]):
             ),
         )
 
-    def that_are_not_hidden(self) -> Self:
-        return self._with_modified_query(
-            lambda query: query.filter(models.Plan.hidden_by_user == False)
-        )
-
     def joined_with_planner_and_collaboration(self) -> SqlQueryResult[
         Tuple[
             records.Plan,
@@ -491,15 +486,6 @@ class PlanUpdate:
             plan_update_values=dict(
                 self.plan_update_values,
                 requested_collaboration=collaboration,
-            ),
-        )
-
-    def hide(self) -> Self:
-        return replace(
-            self,
-            plan_update_values=dict(
-                self.plan_update_values,
-                hidden_by_user=True,
             ),
         )
 
@@ -2802,7 +2788,6 @@ class DatabaseGatewayImpl:
             requested_collaboration=(
                 plan.requested_collaboration if plan.requested_collaboration else None
             ),
-            hidden_by_user=plan.hidden_by_user,
         )
 
     def create_collaboration(

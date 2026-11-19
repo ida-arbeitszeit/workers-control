@@ -46,7 +46,6 @@ from workers_control.core.interactors.deactivate_basic_service import (
 from workers_control.core.interactors.file_plan_with_accounting import (
     FilePlanWithAccounting,
 )
-from workers_control.core.interactors.hide_plan import HidePlanInteractor
 from workers_control.core.interactors.invite_worker_to_company import (
     InviteWorkerToCompanyInteractor,
 )
@@ -194,7 +193,6 @@ class PlanGenerator:
     create_plan_draft_interactor: CreatePlanDraft
     file_plan_with_accounting: FilePlanWithAccounting
     approve_plan_interactor: ApprovePlanInteractor
-    hide_plan: HidePlanInteractor
     get_collab_summary_interactor: get_collab_summary.GetCollabSummaryInteractor
     reject_plan_interactor: RejectPlanInteractor
 
@@ -212,7 +210,6 @@ class PlanGenerator:
         timeframe: Optional[int] = None,
         requested_collaboration: Optional[UUID] = None,
         collaboration: Optional[UUID] = None,
-        hidden_by_user: bool = False,
         rejected: bool = False,
     ) -> UUID:
         assert not (
@@ -262,8 +259,6 @@ class PlanGenerator:
                 plan_id=file_plan_response.plan_id,
                 collaboration=collaboration,
             )
-        if hidden_by_user:
-            self.hide_plan.execute(plan_id=file_plan_response.plan_id)
         return file_plan_response.plan_id
 
     def _add_plan_to_collaboration(

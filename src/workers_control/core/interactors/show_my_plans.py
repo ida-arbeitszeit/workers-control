@@ -51,7 +51,6 @@ class ShowMyPlansInteractor:
             self.database_gateway.get_plans()
             .planned_by(request.company_id)
             .ordered_by_creation_date(ascending=False)
-            .that_are_not_hidden()
             .joined_with_collaboration()
         )
         drafts = list(

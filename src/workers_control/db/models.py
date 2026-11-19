@@ -189,7 +189,6 @@ class Plan(Base):
     requested_collaboration: Mapped[UUID | None] = mapped_column(
         Uuid, ForeignKey("collaboration.id")
     )
-    hidden_by_user: Mapped[bool] = mapped_column(default=False)
 
     rejection: Mapped["PlanRejection | None"] = relationship(
         "PlanRejection", back_populates="plan"

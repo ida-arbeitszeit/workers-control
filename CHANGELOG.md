@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The navigation bar is now a compact header that needs no burger menu on mobile devices. Navigation items are now icon buttons.
 - Improve breadcrumbs for collaboration pages, plan details page, company summary page and company account page.
 
+### Removed
+
+- Companies can no longer hide expired plans from their list of plans. Plans that were hidden before are shown again.
+
 ### Fixed
 
 - The request collaboration form is usable on small screens again. Its fields are

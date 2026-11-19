@@ -281,9 +281,6 @@ class PlanResult(QueryResultImpl[Plan]):
             total_planned_costs=production_costs,
         )
 
-    def that_are_not_hidden(self) -> Self:
-        return self._filter_elements(lambda plan: not plan.hidden_by_user)
-
     def joined_with_planner_and_collaboration(self) -> QueryResultImpl[
         Tuple[
             records.Plan,
@@ -410,12 +407,6 @@ class PlanUpdate:
     def set_requested_collaboration(self, collaboration: Optional[UUID]) -> Self:
         def update(plan: Plan) -> Plan:
             return replace(plan, requested_collaboration=collaboration)
-
-        return self._add_update(update)
-
-    def hide(self) -> Self:
-        def update(plan: Plan) -> Plan:
-            return replace(plan, hidden_by_user=True)
 
         return self._add_update(update)
 
@@ -2241,7 +2232,6 @@ class MockDatabase:
             approval_date=None,
             rejection_date=None,
             requested_collaboration=None,
-            hidden_by_user=False,
         )
         self.plans[plan.id] = plan
         return plan

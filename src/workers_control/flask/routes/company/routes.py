@@ -26,7 +26,6 @@ from workers_control.flask.views.file_plan_with_accounting_view import (
 from workers_control.flask.views.get_productive_consumption_details import (
     GetProductiveConsumptionDetailsView,
 )
-from workers_control.flask.views.hide_plan_view import HidePlanView
 from workers_control.flask.views.invite_worker_to_company import (
     InviteWorkerToCompanyView,
 )
@@ -120,11 +119,6 @@ class my_plans(ShowMyPlansView): ...
 @CompanyRoute("/plan/revoke/<uuid:plan_id>", methods=["POST"])
 @as_flask_view()
 class revoke_plan_filing(RevokePlanFilingView): ...
-
-
-@CompanyRoute("/hide_plan/<uuid:plan_id>", methods=["GET", "POST"])
-@as_flask_view()
-class hide_plan(HidePlanView): ...
 
 
 @CompanyRoute("/register_hours_worked", methods=["GET", "POST"])

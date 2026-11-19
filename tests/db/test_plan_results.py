@@ -15,13 +15,6 @@ from workers_control.db import models
 
 
 class PlanResultTests(DatabaseTestCase):
-    def test_that_plan_gets_hidden(self) -> None:
-        plan = self.plan_generator.create_plan()
-        self.database_gateway.get_plans().with_id(plan).update().hide().perform()
-        plan_from_repo = self.database_gateway.get_plans().with_id(plan).first()
-        assert plan_from_repo
-        assert plan_from_repo.hidden_by_user
-
     def test_create_plan_propagates_specified_arguments_to_created_plan(self) -> None:
         expected_planner = self.company_generator.create_company()
         plan = self.database_gateway.create_plan(
@@ -724,17 +717,6 @@ class ThatAreExpiredAsOfTests(DatabaseTestCase):
         assert self.database_gateway.get_plans().that_are_expired_as_of(
             datetime_utc(2000, 1, 3)
         )
-
-
-class ThatAreNotHiddenTests(DatabaseTestCase):
-    def test_that_plan_that_is_not_hidden_will_show_in_results(self) -> None:
-        self.plan_generator.create_plan()
-        assert self.database_gateway.get_plans().that_are_not_hidden()
-
-    def test_that_plan_that_is_hidden_is_not_in_result_set(self) -> None:
-        self.plan_generator.create_plan()
-        self.database_gateway.get_plans().update().hide().perform()
-        assert not self.database_gateway.get_plans().that_are_not_hidden()
 
 
 class JoinedWithPlannerAndCollaborationTests(DatabaseTestCase):

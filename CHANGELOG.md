@@ -7,31 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.11] - 2026-11-19
+
 ### Changed
 
-- The navigation bar is now a compact header that needs no burger menu on mobile devices. Navigation items are now icon buttons.
-- Improve breadcrumbs for collaboration pages, plan details page, company summary page and company account page.
+- The navigation bar is now a compact header that needs no burger menu on mobile devices. Navigation items are now icon buttons. (#1572)
+- Improve breadcrumbs for collaboration pages, plan details page, company summary page and company account page. (#1587)
+- Update dependencies. (#1593)
 
 ### Removed
 
-- Companies can no longer hide expired plans from their list of plans. Plans that were hidden before are shown again.
+- Companies can no longer hide expired plans from their list of plans. Plans that were hidden before are shown again. (#1592)
 
 ### Fixed
 
 - The request collaboration form is usable on small screens again. Its fields are
-  stacked vertically instead of being squeezed into a single row. (#1574)
-- Rejected requests no longer stay in memory until the server process restarts. Each one kept request data, so memory use grew with every rejection.
+  stacked vertically instead of being squeezed into a single row. (#1575)
+- Rejected requests no longer stay in memory until the server process restarts. Each one kept request data, so memory use grew with every rejection. (#1557)
 - Harden CSP. The CSP headers emitted by the app no longer allow
   <base>, <object> and <embed> elements. Forms are only allowed to
-  post to the original app URI.
+  post to the original app URI. (#1562)
 - Emails that could not be delivered could stop all later emails from being sent.
-  The email worker now sends new emails before those that have failed.
+  The email worker now sends new emails before those that have failed. (#1565)
 - The email worker no longer gets stuck after a database error or when the SMTP server stops responding.
-  SMTP connections now time out after 30 seconds.
-- On PostgreSQL, accepting a collaboration request failed with a database error.
-- Notifications for users do not overlap app content anymore.
+  SMTP connections now time out after 30 seconds. (#1565)
+- On PostgreSQL, accepting a collaboration request failed with a database error. (#1568)
+- Notifications for users do not overlap app content anymore. (#1569)
 - Flash messages on the email confirmation pages were always German. They are
-  now translated like the rest of the interface. (#1570)
+  now translated like the rest of the interface. (#1573)
+- Submitting the signup form while logged in created another account.
+  Logged-in members and companies are now redirected to their dashboard instead. (#1560)
 
 ## [0.2.10] - 2026-10-31
 

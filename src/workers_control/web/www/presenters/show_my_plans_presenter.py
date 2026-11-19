@@ -50,7 +50,6 @@ class ExpiredPlansRow:
     prd_name: str
     plan_creation_date: str
     renew_plan_url: str
-    hide_plan_url: str
     is_public_service: bool
 
 
@@ -195,7 +194,6 @@ class ShowMyPlansPresenter:
                     is_public_service=plan.is_public_service,
                     plan_creation_date=self.__format_date(plan.plan_creation_date),
                     renew_plan_url=self.url_index.get_renew_plan_url(plan.id),
-                    hide_plan_url=self.url_index.get_hide_plan_url(plan.id),
                 )
                 for plan in response.expired_plans
             ],

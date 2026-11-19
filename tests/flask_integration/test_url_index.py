@@ -362,15 +362,6 @@ class GeneralUrlIndexTests(ViewTestCase):
         response = self.client.post(url)
         self.assertEqual(response.status_code, 302)
 
-    def test_hide_plan_url_for_existing_plan_leads_to_functional_url(
-        self,
-    ) -> None:
-        self.login_company()
-        plan = self.plan_generator.create_plan()
-        url = self.url_index.get_hide_plan_url(plan)
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 302)
-
     def test_request_coordination_transfer_url_for_existing_collab_leads_to_functional_url(
         self,
     ) -> None:

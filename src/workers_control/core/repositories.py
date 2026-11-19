@@ -99,11 +99,6 @@ class PlanResult(QueryResult[records.Plan], Protocol):
         included in a result set.
         """
 
-    def that_are_not_hidden(self) -> Self:
-        """Filter out those plans which are hidden. The result will
-        only contain plans that are not hidden.
-        """
-
     def joined_with_planner_and_collaboration(self) -> QueryResult[
         Tuple[
             records.Plan,
@@ -145,8 +140,6 @@ class PlanUpdate(DatabaseUpdate, Protocol):
         collaboration. The return value counts all plans that were
         updated through this method.
         """
-
-    def hide(self) -> Self: ...
 
 
 class PlanDraftResult(QueryResult[records.PlanDraft], Protocol):

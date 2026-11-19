@@ -244,10 +244,6 @@ class ExpiredPlansTests(PresenterBase):
             row.renew_plan_url,
             self.url_index.get_renew_plan_url(PLAN_ID),
         )
-        self.assertEqual(
-            row.hide_plan_url,
-            self.url_index.get_hide_plan_url(PLAN_ID),
-        )
 
 
 class NonActivePlansTests(PresenterBase):

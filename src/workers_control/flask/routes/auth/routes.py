@@ -41,13 +41,14 @@ from workers_control.web.www.controllers.confirm_company_controller import (
 from workers_control.web.www.controllers.confirm_member_controller import (
     ConfirmMemberController,
 )
+from workers_control.flask.views.start_view import StartView
 
 auth = Blueprint("auth", __name__)
 
 
 @auth.route("/")
-def start() -> Response:
-    return render_template("auth/start.html")
+@as_flask_view()
+class start(StartView): ...  
 
 
 @auth.route("/help")

@@ -30,6 +30,7 @@ from workers_control.flask.views.reset_password_view import ResetPasswordView
 from workers_control.flask.views.signup_accountant_view import SignupAccountantView
 from workers_control.flask.views.signup_company_view import SignupCompanyView
 from workers_control.flask.views.signup_member_view import SignupMemberView
+from workers_control.flask.views.start_view import StartView
 from workers_control.web.translator import Translator
 from workers_control.web.www.authentication import (
     CompanyAuthenticator,

@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The navigation bar is now a compact header that needs no burger menu on mobile devices. Navigation items are now icon buttons. (#1572)
 - Improve breadcrumbs for collaboration pages, plan details page, company summary page and company account page. (#1587)
 - Update dependencies. (#1593)
+- Logged in users are now redirected to their dashboard instead of the default landing page.
 
 ### Removed
 

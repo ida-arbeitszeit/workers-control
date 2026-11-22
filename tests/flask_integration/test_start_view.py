@@ -12,10 +12,10 @@ class UserAccessTests(ViewTestCase):
 
     @parameterized.expand(
         [
-            (LogInUser.accountant, 200),
+            (LogInUser.accountant, 302),
             (None, 200),
-            (LogInUser.company, 200),
-            (LogInUser.member, 200),
+            (LogInUser.company, 302),
+            (LogInUser.member, 302),
         ]
     )
     def test_correct_status_codes_on_get_requests(

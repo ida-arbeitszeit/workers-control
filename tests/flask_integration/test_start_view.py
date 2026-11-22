@@ -12,10 +12,10 @@ class UserAccessTests(ViewTestCase):
 
     @parameterized.expand(
         [
-            (LogInUser.accountant, 200),
+            (LogInUser.accountant, 302),
             (None, 200),
-            (LogInUser.company, 200),
-            (LogInUser.member, 200),
+            (LogInUser.company, 302),
+            (LogInUser.member, 302),
         ]
     )
     def test_correct_status_codes_on_get_requests(
@@ -27,6 +27,21 @@ class UserAccessTests(ViewTestCase):
             login=login,
             expected_code=expected_code,
         )
+
+    @parameterized.expand(
+        [
+            (LogInUser.accountant, "/accountant/dashboard"),
+            (LogInUser.company, "/company/dashboard"),
+            (LogInUser.member, "/member/dashboard"),
+        ]
+    )
+    def test_logged_in_users_are_redirected_to_their_dashboard(
+        self, login: LogInUser, expected_target_url: str
+    ) -> None:
+        self.login_user(login)
+        response = self.client.get(self.url)
+        assert response.status_code == 302
+        assert response.location == expected_target_url
 
 
 class LogoTests(ViewTestCase):

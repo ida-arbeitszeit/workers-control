@@ -42,6 +42,9 @@ sent by the browser (for nginx's ``proxy_pass``:
 ``proxy_set_header Host $host;``). Otherwise the app may reject form
 submissions as cross-origin requests.
 
+Browsers only offer to install the app on a device when it is served
+over HTTPS (see ``FORCE_HTTPS``).
+
 
 Environment variables
 .....................

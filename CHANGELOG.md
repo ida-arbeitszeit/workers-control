@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- The app can be installed on smartphones and computers. The help page explains how. (#1040)
+
 ## [0.2.11] - 2026-11-19
 
 ### Changed

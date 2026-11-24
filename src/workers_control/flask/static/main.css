@@ -55,3 +55,7 @@
   width: 50%;
   margin: 0 auto 1.5rem;
 }
+
+[data-type="copy-toggle"] .icon {
+  vertical-align: top;
+}

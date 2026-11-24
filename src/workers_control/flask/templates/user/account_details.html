@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from 'macros/copy_toggle.html' import copy_toggle %}
 
 {% block content %}
 <div class="section">
@@ -30,7 +31,9 @@
         </tr>
         <tr>
           <th>{{ gettext("Account ID:") }}</th>
-          <td>{{ view_model.user_id }}</td>
+          <td>
+            {{ view_model.user_id }}&nbsp;{{ copy_toggle(view_model.user_id) }}
+          </td>
         </tr>
       </tbody>
     </table>

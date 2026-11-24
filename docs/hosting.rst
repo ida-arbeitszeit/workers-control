@@ -45,6 +45,10 @@ submissions as cross-origin requests.
 Browsers only offer to install the app on a device when it is served
 over HTTPS (see ``FORCE_HTTPS``).
 
+The app does not compress its responses. Enable gzip compression in the
+reverse proxy for all text responses, not only for HTML pages: the
+stylesheet loaded on every page shrinks to about a tenth of its size.
+
 
 Environment variables
 .....................

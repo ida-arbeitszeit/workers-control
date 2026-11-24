@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- The app can be installed on smartphones and computers. The help page explains how. (#1040)
+- The app can be installed on smartphones and computers. The help page explains how. (#1597)
+- The hosting documentation now recommends that the reverse proxy compresses pages, stylesheets and scripts.
 
 ## [0.2.11] - 2026-11-19
 

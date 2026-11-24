@@ -1,5 +1,4 @@
 from datetime import datetime
-from decimal import Decimal
 from uuid import UUID, uuid4
 
 from parameterized import parameterized
@@ -24,7 +23,6 @@ class PresenterBase(BaseTestCase):
         self,
         plan_id: UUID | None = None,
         prd_name: str = "Product name",
-        price_per_unit: Decimal = Decimal(10),
         is_public_service: bool = False,
         plan_creation_date: datetime = datetime_utc(2020, 1, 1),
         approval_date: datetime | None = None,
@@ -38,7 +36,6 @@ class PresenterBase(BaseTestCase):
         return PlanInfo(
             id=plan_id,
             prd_name=prd_name,
-            price_per_unit=price_per_unit,
             is_public_service=is_public_service,
             plan_creation_date=plan_creation_date,
             approval_date=approval_date,
@@ -113,14 +110,12 @@ class ActivePlansTests(PresenterBase):
     def test_presenter_shows_correct_info_of_active_plan(self) -> None:
         PLAN_ID = uuid4()
         PRD_NAME = "Some product name"
-        PRICE_PER_UNIT = Decimal(10)
         IS_PUBLIC_SERVICE = True
         response = self.create_interactor_response(
             active_plans=[
                 self.create_plan_info(
                     plan_id=PLAN_ID,
                     prd_name=PRD_NAME,
-                    price_per_unit=PRICE_PER_UNIT,
                     is_public_service=IS_PUBLIC_SERVICE,
                 )
             ]
@@ -131,7 +126,6 @@ class ActivePlansTests(PresenterBase):
             plan_id=PLAN_ID
         )
         assert row.prd_name == PRD_NAME
-        assert row.price_per_unit == "10.00"
         assert row.is_public_service == IS_PUBLIC_SERVICE
 
     @parameterized.expand([(True,), (False,)])
@@ -250,13 +244,8 @@ class NonActivePlansTests(PresenterBase):
     def test_presenter_shows_correct_info_of_non_active_plan(self) -> None:
         PLAN_ID = uuid4()
         PRD_NAME = "Some product name"
-        PRICE_PER_UNIT = Decimal(22)
         response = self.create_interactor_response(
-            non_active_plans=[
-                self.create_plan_info(
-                    plan_id=PLAN_ID, prd_name=PRD_NAME, price_per_unit=PRICE_PER_UNIT
-                )
-            ]
+            non_active_plans=[self.create_plan_info(plan_id=PLAN_ID, prd_name=PRD_NAME)]
         )
         presentation = self.presenter.present(response)
         row = presentation.non_active_plans.rows[0]
@@ -267,10 +256,6 @@ class NonActivePlansTests(PresenterBase):
         self.assertEqual(
             row.prd_name,
             PRD_NAME,
-        )
-        self.assertEqual(
-            row.price_per_unit,
-            str(round(PRICE_PER_UNIT, 2)),
         )
 
     @parameterized.expand([(True,), (False,)])
@@ -393,14 +378,12 @@ class RejectedPlansTests(PresenterBase):
     def test_presenter_shows_correct_info_of_one_single_rejected_plan(self) -> None:
         PLAN_ID = uuid4()
         PRD_NAME = "Some product name"
-        PRICE_PER_UNIT = Decimal(33)
         IS_PUBLIC_SERVICE = True
         response = self.create_interactor_response(
             rejected_plans=[
                 self.create_plan_info(
                     plan_id=PLAN_ID,
                     prd_name=PRD_NAME,
-                    price_per_unit=PRICE_PER_UNIT,
                     is_public_service=IS_PUBLIC_SERVICE,
                 )
             ]
@@ -412,10 +395,6 @@ class RejectedPlansTests(PresenterBase):
             self.url_index.get_plan_details_url(plan_id=PLAN_ID),
         )
         self.assertEqual(row.prd_name, PRD_NAME)
-        self.assertEqual(
-            row.price_per_unit,
-            str(round(PRICE_PER_UNIT, 2)),
-        )
         self.assertEqual(
             row.is_public_service,
             IS_PUBLIC_SERVICE,

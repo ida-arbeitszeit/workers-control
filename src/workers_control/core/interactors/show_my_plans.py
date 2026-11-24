@@ -1,13 +1,11 @@
 from dataclasses import dataclass
 from datetime import datetime
-from decimal import Decimal
 from typing import List, Optional
 from uuid import UUID
 
 from workers_control.core import records
 from workers_control.core.datetime_service import DatetimeService
 from workers_control.core.repositories import DatabaseGateway
-from workers_control.core.services.price_calculator import PriceCalculator
 
 
 @dataclass
@@ -19,7 +17,6 @@ class ShowMyPlansRequest:
 class PlanInfo:
     id: UUID
     prd_name: str
-    price_per_unit: Decimal
     is_public_service: bool
     plan_creation_date: datetime
     approval_date: Optional[datetime]
@@ -42,7 +39,6 @@ class ShowMyPlansResponse:
 @dataclass
 class ShowMyPlansInteractor:
     database_gateway: DatabaseGateway
-    price_calculator: PriceCalculator
     datetime_service: DatetimeService
 
     def show_company_plans(self, request: ShowMyPlansRequest) -> ShowMyPlansResponse:
@@ -102,11 +98,9 @@ class ShowMyPlansInteractor:
     def _create_plan_info_from_plan(
         self, plan: records.Plan, collaboration: Optional[records.Collaboration]
     ) -> PlanInfo:
-        price_per_unit = self.price_calculator.calculate_price(plan.id)
         return PlanInfo(
             id=plan.id,
             prd_name=plan.prd_name,
-            price_per_unit=price_per_unit,
             is_public_service=plan.is_public_service,
             plan_creation_date=plan.plan_creation_date,
             approval_date=plan.approval_date,
@@ -120,7 +114,6 @@ class ShowMyPlansInteractor:
         return PlanInfo(
             id=draft.id,
             prd_name=draft.product_name,
-            price_per_unit=draft.production_costs.total_cost() / draft.amount_produced,
             is_public_service=draft.is_public_service,
             plan_creation_date=draft.creation_date,
             approval_date=None,

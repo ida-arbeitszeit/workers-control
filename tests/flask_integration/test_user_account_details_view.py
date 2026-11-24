@@ -50,6 +50,12 @@ class UserAccountDetailsViewTests(ViewTestCase):
         response = self.client.get(self.url)
         assert str(member) in response.text
 
+    def test_that_response_contains_copy_toggle_for_user_id(self) -> None:
+        user = self.login_user(LogInUser.member)
+        response = self.client.get(self.url)
+        assert 'data-type="copy-toggle"' in response.text
+        assert f'value="{user}"' in response.text
+
 
 class DateAndTimezoneTestsBase(ViewTestCase):
     def setUp(self) -> None:

@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The app can be installed on smartphones and computers. The help page explains how. (#1597)
 - The hosting documentation now recommends that the reverse proxy compresses pages, stylesheets and scripts.
+- A copy-to-clipboard-button for the account ID on the user account page.
 
 ## [0.2.11] - 2026-11-19
 

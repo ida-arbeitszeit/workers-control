@@ -1,6 +1,5 @@
 from dataclasses import asdict, dataclass
 from datetime import datetime
-from decimal import Decimal
 from typing import Any, Dict, List, Optional
 
 from workers_control.core.datetime_service import DatetimeService
@@ -16,7 +15,6 @@ from workers_control.web.www.navbar import NavbarItem
 class ActivePlansRow:
     plan_details_url: str
     prd_name: str
-    price_per_unit: str
     approval_date: str
     expiration_date: str
     expiration_relative: str
@@ -33,7 +31,6 @@ class ActivePlansTable:
 class NonActivePlansRow:
     plan_details_url: str
     prd_name: str
-    price_per_unit: str
     type_of_plan: str
     plan_creation_date: str
     revoke_plan_filing_url: str
@@ -77,7 +74,6 @@ class DraftsTable:
 class RejectedPlansRow:
     plan_details_url: str
     prd_name: str
-    price_per_unit: str
     rejection_date: str
     is_public_service: bool
     plan_creation_date: str
@@ -147,7 +143,6 @@ class ShowMyPlansPresenter:
                         plan_id=plan.id
                     ),
                     prd_name=plan.prd_name,
-                    price_per_unit=self.__format_price(plan.price_per_unit),
                     approval_date=self.__format_date(plan.approval_date),
                     expiration_date=self.__format_date(plan.expiration_date),
                     expiration_relative=self._format_days_until_expiration(
@@ -170,7 +165,6 @@ class ShowMyPlansPresenter:
                         plan_id=plan.id
                     ),
                     prd_name=f"{plan.prd_name}",
-                    price_per_unit=self.__format_price(plan.price_per_unit),
                     type_of_plan=self.__get_type_of_plan(plan.is_public_service),
                     plan_creation_date=self.__format_date(plan.plan_creation_date),
                     revoke_plan_filing_url=self.url_index.get_revoke_plan_filing_url(
@@ -225,7 +219,6 @@ class ShowMyPlansPresenter:
                         plan_id=plan.id
                     ),
                     prd_name=f"{plan.prd_name}",
-                    price_per_unit=self.__format_price(plan.price_per_unit),
                     is_public_service=plan.is_public_service,
                     plan_creation_date=self.__format_date(plan.plan_creation_date),
                 )
@@ -254,6 +247,3 @@ class ShowMyPlansPresenter:
             if date
             else "–"
         )
-
-    def __format_price(self, price_per_unit: Decimal) -> str:
-        return f"{round(price_per_unit, 2)}"

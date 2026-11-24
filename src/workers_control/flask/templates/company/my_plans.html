@@ -42,11 +42,6 @@
             {% endif %}
           </div>
         </div>
-        <div class="media-right">
-          <p class="is-size-5 pt-1">
-            {{ plan.price_per_unit }}
-          </p>
-        </div>
       </article>
       {% endfor %}
     </div>
@@ -81,11 +76,6 @@
             {% endif %}
           </div>
         </div>
-        <div class="media-right">
-          <p class="is-size-5 pt-1">
-            {{ plan.price_per_unit }}
-          </p>
-        </div>
       </article>
       {% endfor %}
     </div>
@@ -104,7 +94,6 @@
       <thead>
         <tr>
           <th></th>
-          <th>{{ gettext("Costs")}}</th>
           <th>{{ gettext("Type")}}</th>
           <th>{{ gettext("Plan created")}}</th>
           <th>{{ gettext("Revoke") }}</th>
@@ -114,7 +103,6 @@
         {% for plan in non_active_plans.rows %}
         <tr>
           <td><a href="{{ plan.plan_details_url }}">{{ plan.prd_name }}</a></td>
-          <td>{{ plan.price_per_unit }}</td>
           <td>{{ plan.type_of_plan }}</td>
           <td>{{ plan.plan_creation_date }}</td>
           <td><form method="post" action="{{ plan.revoke_plan_filing_url }}">
@@ -123,9 +111,6 @@
           </button>
           </form>
           </td>
-
-          
-          
         </tr>
         {% endfor %}
       </tbody>

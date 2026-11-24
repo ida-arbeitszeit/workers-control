@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The hosting documentation now recommends that the reverse proxy compresses pages, stylesheets and scripts.
 - A copy-to-clipboard-button for the account ID on the user account page.
 
+### Removed
+
+- The "My plans" page of companies no longer shows prices and costs.
+
 ## [0.2.11] - 2026-11-19
 
 ### Changed

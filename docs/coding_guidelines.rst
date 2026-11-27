@@ -628,11 +628,8 @@ cookie. If the cookie is not available (e.g. JavaScript is disabled), the
 Icons
 -----
 
-The icon template module ``workers_control.flask.templates.icons``
-contains Flask-based (Jinja2) HTML template icon files of form
-``<icon-name>.html``. These icon files containing one HTML SVG element
-must follow a simple but specific code style to ensure proper integration
-within the application.
+The package ``workers_control.flask.templates.icons`` contains icon files of form
+``<icon-name>.html``.
 
 .. rubric:: Template Format
     :heading-level: 3
@@ -657,8 +654,7 @@ Each icon template file must adhere to the following structure:
    </svg>
 
 1. **ViewBox Attribute**: The ``viewBox`` attribute defines the position
-   and dimension of the SVG viewport. It is essential for correct rendering
-   of the SVG.
+   and dimension of the SVG viewport.
 
    .. code:: html
 
@@ -691,13 +687,12 @@ Each icon template file must adhere to the following structure:
      ></path>
    </svg>
 
-.. rubric:: Adding Existing SVGs
+.. rubric:: Adding SVGs
     :heading-level: 3
 
-To add an existing SVG, remove all attributes from the SVG icon except
+To add an SVG, remove all attributes from the SVG icon except
 the ``viewBox`` attribute. The ``viewBox`` attribute might have
-different dimensions than our examples, which is acceptable. This
-ensures consistency and proper styling within the application. The Flask
+different dimensions than our examples, which is acceptable. The Flask
 app will populate the proper attributes in a later step automatically.
 
 **Example: Before**
@@ -741,13 +736,9 @@ they fit into the visual style.
 .. rubric:: Best Practices
     :heading-level: 3
 
--  **Naming Conventions**: Use meaningful names for your icon template
-   files that reflect the icon’s purpose or design.
+-  **Naming Conventions**: Use meaningful names for your icon template.
 -  **File Size**: Ensure that your HTML SVG elements are small in size (your
    icon template files should not exceed 1 KB in size)
-
-By following these guidelines, you ensure that SVG icons are displayed
-correctly and consistently throughout the application.
 
 .. rubric:: Usage
     :heading-level: 3
